@@ -1,0 +1,369 @@
+name: worker-deploy
+
+# DEPLOY A CLOUDFLARE WORKER, VERIFY IT LIVE, AND ROLL IT BACK WHEN THE VERIFY REFUSES IT, written once
+# (capsid docs/design/design-merge-pipeline.md section 6, PR 8; DECIDE 8, 2026-10-09). A port of capsid's own `deploy` and
+# `live` jobs (.github/workflows/ci.yml) and its scripts/rollback-guard.mjs, not a redesign: every Worker site gets what capsid
+# has, and capsid keeps its own ci.yml for now.
+#
+# TWO JOBS. `deploy` installs, runs the caller's pre-deploy guard, deploys with the pinned wrangler below and publishes the run
+# attempt it shipped in. `live gate` polls /health until it reports this run's commit, runs the caller's verify command, and on
+# a REFUSAL (exit 1) runs "Roll back the deploy this run shipped", guarded by the rollback guard so a rerun never rolls back a
+# deploy that is no longer live.
+#
+# THE NAMES ARE READ BY CAPSID. capsid's watcher (src/deploy-outcomes.ts) finds the job named "live gate", the step whose name
+# starts "Roll back", and the ::error:: annotations that step writes, and records the deploy in deploy_outcomes. The job name,
+# the step name and the three annotation sentences stay byte for byte; test/worker-deploy-workflow.test.mjs fails on a rename.
+#
+# THE GUARD IS INLINED, so it is always the guard of the same devkit commit as this file: a caller pins one sha and gets both.
+# The block in "Write the rollback guard" is scripts/rollback-guard.mjs byte for byte, and a test holds the two equal. Edit
+# the script, then regenerate the block with `node scripts/inline-rollback-guard.mjs`.
+#
+# EXIT 1 IS A REFUSAL, EXIT 3 IS "COULD NOT RUN". Only a refusal rolls back. A /health that never answered, or a verify command
+# that exits 3, fails the job without moving production: on 2026-09-18 one ECONNRESET rolled back a good capsid deploy.
+#
+# THE LIMITS (README, "The shared deploy"): Cloudflare's rollback swaps code and bindings only, is refused when D1 or KV
+# resources changed between the two versions, and never undoes a D1 migration. Data recovery is D1 Time Travel, by hand.
+#
+# A CALLER (examples/worker-deploy-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+# It calls this on a push to its default branch only, and keeps a concurrency group that never cancels a deploy in flight.
+
+on:
+  workflow_call:
+    inputs:
+      worker-name:
+        description: The Worker's name, as wrangler deploys it and as `wrangler rollback --name` takes it.
+        required: true
+        type: string
+      health-url:
+        description: The live health route. It must answer JSON whose `sha` is the deployed commit.
+        required: true
+        type: string
+      verify-command:
+        description: The live checks, run after /health reports this run's commit. Exit 0 passes, 1 refuses (rolls back), 3 could not run.
+        required: true
+        type: string
+      node-version-file:
+        description: The file naming the Node version, as actions/setup-node reads it, from the repository root.
+        required: false
+        type: string
+        default: .nvmrc
+      working-directory:
+        description: Where the Worker lives, for the install, the guard, the deploy, the verify and the rollback.
+        required: false
+        type: string
+        default: "."
+      install:
+        description: The install command for the deploy job.
+        required: false
+        type: string
+        default: npm ci
+      pre-deploy:
+        description: The caller's pre-deploy guard (a migration check, a config rebuild, a build), run with the Cloudflare secrets. Empty for none.
+        required: false
+        type: string
+        default: ""
+      sha-var:
+        description: When set, the deploy passes `--var <name>:<this run's commit>`, so /health can report it. Empty to leave it to the caller's config.
+        required: false
+        type: string
+        default: ""
+    secrets:
+      CLOUDFLARE_API_TOKEN:
+        required: true
+      CLOUDFLARE_ACCOUNT_ID:
+        required: true
+
+permissions:
+  contents: read
+
+# One pinned wrangler for the deploy and the rollback: the live gate installs nothing, so an unpinned npx would float to latest.
+env:
+  WRANGLER_VERSION: "4.107.0"
+
+jobs:
+  # No `if: secrets.X != ''` guard and no continue-on-error: a deploy whose credentials are missing fails loudly, so
+  # "deployed" and "could not deploy" never look alike. Never on pull_request: a pull request head is not what ships.
+  deploy:
+    name: deploy
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    # Which attempt of the run did the deploying. A rerun of the live gate alone keeps this job's outputs from the earlier
+    # attempt, so the rollback step can tell a rerun from the attempt that shipped (the rollback guard).
+    outputs:
+      attempt: ${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          package-manager-cache: false
+
+      - name: Install
+        env:
+          INSTALL: ${{ inputs.install }}
+        run: bash -euo pipefail -c "$INSTALL"
+
+      - name: Pre-deploy guard
+        if: inputs.pre-deploy != ''
+        env:
+          PRE_DEPLOY: ${{ inputs.pre-deploy }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bash -euo pipefail -c "$PRE_DEPLOY"
+
+      - name: Deploy
+        env:
+          WORKER: ${{ inputs.worker-name }}
+          SHA_VAR: ${{ inputs.sha-var }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          args=(deploy --name "$WORKER")
+          if [ -n "$SHA_VAR" ]; then args+=(--var "${SHA_VAR}:${GITHUB_SHA}"); fi
+          npx --yes "wrangler@${WRANGLER_VERSION}" "${args[@]}"
+          echo "deployed ${GITHUB_SHA} as ${WORKER} in attempt ${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_STEP_SUMMARY"
+
+  live:
+    name: live gate
+    needs: deploy
+    # !failure() && !cancelled(), as in capsid: a failed deploy skips the gate rather than failing it a second time.
+    if: github.event_name != 'pull_request' && !failure() && !cancelled()
+    runs-on: ubuntu-latest
+    # Above the poll budget (40 x 3s) with room for the verify command and the rollback's 20 reads.
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          package-manager-cache: false
+
+      # No install on purpose, as in capsid: the live gate runs even when install is broken. A verify command that needs
+      # dependencies installs them itself.
+
+      - name: Write the rollback guard
+        run: |
+          cat > "$RUNNER_TEMP/rollback-guard.mjs" <<'ROLLBACK_GUARD'
+          // SHOULD THE LIVE GATE'S ROLLBACK ACTUALLY ROLL ANYTHING BACK?
+          //
+          // The rollback step exists to undo THE DEPLOY THIS RUN SHIPPED when the live gate
+          // refuses it. A workflow `if:` on `needs.deploy.result` cannot express that: a rerun of
+          // only the live job keeps attempt 1's 'success', so a second rollback would move
+          // production onto whatever "the previous version" now is, which can be the refused
+          // commit. A rollback of a deploy that is no longer live is wrong in either direction,
+          // so the decision is made here, against what /health reports.
+          //
+          // Usage from the workflow:
+          //
+          //   node scripts/rollback-guard.mjs "<live sha from /health>" "<this run's GITHUB_SHA>" \
+          //     "<run_attempt the deploy job ran in>" "<this run_attempt>"
+          //
+          // Exit 0 means roll back. Exit 1 means do not, and the reason is printed. Exit 2 means
+          // the guard could not run, which is NOT permission to roll back.
+          //
+          //   node scripts/rollback-guard.mjs --after "<live sha after the rollback>" "<GITHUB_SHA>"
+          //
+          // Exit 0 means the rollback took effect: a readable sha other than this run's is live.
+          // Exit 1 means it did not, or that what is live cannot be read.
+
+          import { pathToFileURL } from "node:url";
+
+          // A sha is at least 7 hex characters. A shorter value from /health would prefix-match
+          // almost anything, so it counts as unreadable.
+          const SHA = /^[0-9a-f]{7,40}$/;
+
+          /**
+           * @param {string} liveSha the sha /health reports right now
+           * @param {string} runSha this run's own commit
+           * @param {{ deployAttempt?: string, runAttempt?: string }} [attempts] the run_attempt the
+           *   deploy job ran in, and this job's run_attempt
+           * @returns {{ roll: boolean, reason: string }}
+           */
+          export function shouldRollBack(liveSha, runSha, attempts = {}) {
+            const live = String(liveSha ?? "").trim().toLowerCase();
+            const mine = String(runSha ?? "").trim().toLowerCase();
+
+            if (!SHA.test(mine)) {
+              return { roll: false, reason: "this run's own commit was not supplied as a sha, so there is nothing to compare the live sha against." };
+            }
+            // UNREADABLE: /health did not answer, did not parse, or carried no sha. When the
+            // deploy job ran in this same attempt, this attempt shipped the version now serving,
+            // and a deploy that broke /health most needs rolling back. In a rerun, or when the
+            // attempts are not supplied, it refuses and leaves it to a human.
+            if (!SHA.test(live)) {
+              const deploy = String(attempts.deployAttempt ?? "").trim();
+              const current = String(attempts.runAttempt ?? "").trim();
+              if (deploy && deploy === current) {
+                return {
+                  roll: true,
+                  reason: `/health reported '${liveSha}', not a sha, and the deploy job ran in this attempt (${current}), so what is serving is this attempt's deploy. Rolling it back.`,
+                };
+              }
+              return {
+                roll: false,
+                reason: `/health reported '${liveSha}', so what is live cannot be established, and the deploy job ran in attempt '${deploy}', not this attempt '${current}'. Refusing to roll back rather than moving production blind. A human decides this one.`,
+              };
+            }
+            // Either may be abbreviated: /health serves the full sha today, but the comparison
+            // should not depend on that.
+            const same = live.startsWith(mine) || mine.startsWith(live);
+            if (!same) {
+              return {
+                roll: false,
+                reason: `what is live is ${live}, not this run's commit ${mine}. The deploy this run shipped is already gone, so rolling back would move production off somebody else's deploy. This is the rerun case: it is what put the refused commit back into production on 2026-09-18.`,
+              };
+            }
+            return { roll: true, reason: `${live} is live and is this run's own commit, so the deploy this run shipped is the one being rolled back.` };
+          }
+
+          /**
+           * Did the rollback take effect? Only a readable sha other than this run's says so.
+           * @param {string} afterSha the sha /health reports after the rollback
+           * @param {string} runSha this run's own commit
+           * @returns {{ moved: boolean, reason: string }}
+           */
+          export function rollbackTookEffect(afterSha, runSha) {
+            const after = String(afterSha ?? "").trim().toLowerCase();
+            const mine = String(runSha ?? "").trim().toLowerCase();
+            if (!SHA.test(after)) {
+              return { moved: false, reason: `/health reports '${afterSha}' after the rollback, so it cannot be shown that the rollback took effect.` };
+            }
+            if (!SHA.test(mine)) {
+              return { moved: false, reason: "this run's own commit was not supplied as a sha, so there is nothing to compare against." };
+            }
+            if (after.startsWith(mine) || mine.startsWith(after)) {
+              return { moved: false, reason: `${after} is still live after the rollback: the rollback did not take effect.` };
+            }
+            return { moved: true, reason: `${after} is live after the rollback.` };
+          }
+
+          // Skipped when imported by the test.
+          if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+            const args = process.argv.slice(2);
+            try {
+              if (args[0] === "--after") {
+                const after = rollbackTookEffect(args[1] ?? "", args[2] ?? "");
+                console.log(after.reason);
+                process.exit(after.moved ? 0 : 1);
+              }
+              const [liveSha, runSha, deployAttempt, runAttempt] = args;
+              const verdict = shouldRollBack(liveSha ?? "", runSha ?? "", { deployAttempt, runAttempt });
+              console.log(verdict.reason);
+              process.exit(verdict.roll ? 0 : 1);
+            } catch (err) {
+              console.error(`rollback-guard could not run: ${err instanceof Error ? err.message : String(err)}`);
+              process.exit(2);
+            }
+          }
+          ROLLBACK_GUARD
+
+      # EXPECT_SHA is this run's commit when the deploy succeeded, empty otherwise, and then the gate refuses nothing.
+      - name: verify:live
+        id: verify
+        env:
+          EXPECT_SHA: ${{ needs.deploy.result == 'success' && github.sha || '' }}
+          HEALTH_URL: ${{ inputs.health-url }}
+          VERIFY: ${{ inputs.verify-command }}
+          VERIFY_POLL_ATTEMPTS: "40"
+        run: |
+          set +e
+          code=0
+          if [ -z "$EXPECT_SHA" ]; then
+            echo "::error::the deploy job did not succeed, so there is nothing live to verify."
+            code=3
+          else
+            # Wait for /health to report this run's commit. A read with no answer at all (a reset connection, a timeout) is
+            # "no answer"; an answer that is not this commit is a refusal once the polls run out.
+            answered=0
+            matched=0
+            live=none
+            for i in $(seq 1 "$VERIFY_POLL_ATTEMPTS"); do
+              if body=$(curl -sS --max-time 10 "$HEALTH_URL"); then
+                answered=1
+                live=$(printf '%s' "$body" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(JSON.parse(s).sha??"unknown")}catch{process.stdout.write("unreadable")}})')
+                if node "$RUNNER_TEMP/rollback-guard.mjs" "$live" "$EXPECT_SHA" > /dev/null; then
+                  matched=1
+                  break
+                fi
+              fi
+              sleep 3
+            done
+            if [ "$matched" = "0" ] && [ "$answered" = "1" ]; then
+              echo "::error::/health reports ${live}, not this run's commit ${EXPECT_SHA}, after ${VERIFY_POLL_ATTEMPTS} reads."
+              code=1
+            elif [ "$matched" = "0" ]; then
+              code=3
+            fi
+            if [ "$code" = "0" ]; then
+              bash -euo pipefail -c "$VERIFY"
+              code=$?
+            fi
+          fi
+          echo "exit_code=${code}" >> "$GITHUB_OUTPUT"
+          if [ "$code" = "3" ]; then
+            echo "::error::the live gate could not run (no answer from the Worker). No gate refused this deploy, so it is not rolled back. Rerun the live job."
+          fi
+          exit "$code"
+
+      # Only if this run's deploy succeeded, then the gate REFUSED it (exit 1). A gate that could not run (exit 3) has not
+      # refused anything.
+      - name: Roll back the deploy this run shipped
+        if: failure() && needs.deploy.result == 'success' && steps.verify.outputs.exit_code == '1'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          DEPLOY_ATTEMPT: ${{ needs.deploy.outputs.attempt }}
+          HEALTH_URL: ${{ inputs.health-url }}
+          WORKER: ${{ inputs.worker-name }}
+        run: |
+          set -euo pipefail
+          GUARD="$RUNNER_TEMP/rollback-guard.mjs"
+          # No -f on curl and no abort on its failure: a /health that answers 5xx, or not at all, must reach the guard as
+          # "unreadable" rather than end this step before it decides anything.
+          live_sha() {
+            { curl -sS --max-time 10 "$HEALTH_URL" || true; } | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(JSON.parse(s).sha??"unknown")}catch{process.stdout.write("unreadable")}})'
+          }
+          ROLLBACK_FROM=$(live_sha)
+          # ROLL BACK ONLY WHAT THIS RUN PUT LIVE. `needs.deploy.result` survives a rerun of just this job, so the `if:` above
+          # is true on a rerun whose deploy happened in an earlier attempt and has already been rolled back. The guard compares
+          # what is live NOW against this run's own commit, and when /health cannot say, rolls back only if the deploy
+          # happened in this attempt.
+          if ! node "$GUARD" "${ROLLBACK_FROM}" "${GITHUB_SHA}" "${DEPLOY_ATTEMPT}" "${GITHUB_RUN_ATTEMPT}"; then
+            echo "::error::not rolling back. master and production may disagree; a human decides."
+            echo "rollback_skipped: live=${ROLLBACK_FROM} this_run=${GITHUB_SHA}" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "::warning::the live gate failed against ${ROLLBACK_FROM}; rolling back to the previous version"
+          npx --yes "wrangler@${WRANGLER_VERSION}" rollback --name "$WORKER" --message "live gate failed for ${GITHUB_SHA}" --yes
+          # The rollout is not instant, so read the sha back rather than assuming, and say so when it never moved.
+          ROLLBACK_TO=unreadable
+          for i in $(seq 1 20); do
+            ROLLBACK_TO=$(live_sha)
+            if node "$GUARD" --after "${ROLLBACK_TO}" "${GITHUB_SHA}" > /dev/null; then
+              echo "::error::rolled back: was ${ROLLBACK_FROM} (this run's commit ${GITHUB_SHA}), now ${ROLLBACK_TO}. master still points at the bad commit; land a fix or revert it."
+              echo "rollback_from=${ROLLBACK_FROM} rollback_to=${ROLLBACK_TO}" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::the rollback did not take effect: /health still reports ${ROLLBACK_TO} after 20 reads (this run's commit ${GITHUB_SHA}). Production may still be serving the refused deploy; a human decides."
+          echo "rollback_did_not_take_effect: from=${ROLLBACK_FROM} now=${ROLLBACK_TO}" >> "$GITHUB_STEP_SUMMARY"
+          exit 1

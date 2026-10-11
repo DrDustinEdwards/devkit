@@ -25,7 +25,7 @@ jobs:
       - name: Hold the shared workflows to their properties, the caller check to its pin rule, and the package to its behaviour
         run: node --test "test/*.test.mjs"
       - name: The example callers are themselves pinned
-        run: node scripts/check-callers.mjs examples/improve-score-caller.yml examples/no-bloat-caller.yml examples/ai-author-caller.yml
+        run: node scripts/check-callers.mjs examples/improve-score-caller.yml examples/no-bloat-caller.yml examples/ai-author-caller.yml examples/worker-deploy-caller.yml
       # This repository's own commits, through the bin it ships, as a caller of ai-author.yml would run it.
       - name: No AI trailer or author on new commits
         env:
