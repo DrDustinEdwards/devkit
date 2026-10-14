@@ -56,7 +56,7 @@ test("a description with no footer, a rule in the middle, or a mention in prose 
 test("the example caller passes the pin check and grants the write the workflow needs", () => {
   const caller = readFileSync(new URL("../examples/pr-footer-caller.yml", import.meta.url), "utf8");
   assert.deepEqual(callerProblems(caller), []);
-  assert.match(caller, /pull-requests: write/);
+  assert.match(caller, /permissions:\n {6}contents: read\n {6}pull-requests: write\n/);
   assert.match(caller, /types: \[opened, reopened, edited\]/);
   assert.match(caller, /workflow_dispatch:/);
 });
