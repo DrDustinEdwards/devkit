@@ -1,0 +1,19 @@
+name: pr-footer
+
+# The caller a repository keeps. Replace the sha with the commit of devkit that holds the reviewed pr-footer.yml, and keep it
+# a full sha: scripts/check-callers.mjs fails on anything else. Run it by hand once to clean every past pull request.
+
+on:
+  pull_request:
+    types: [opened, reopened, edited]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pr-footer:
+    # A called workflow holds no more than this job grants.
+    permissions:
+      pull-requests: write
+    uses: DrDustinEdwards/devkit/.github/workflows/pr-footer.yml@0000000000000000000000000000000000000000
