@@ -13,8 +13,8 @@ name: pr-footer
 # write the description. A synchronize changes no description and is skipped. ON A DISPATCH it reads every pull request
 # and fixes each one that carries the footer. An edit made with GITHUB_TOKEN starts no new run, so there is no loop.
 #
-# THE CALLER grants `pull-requests: write` to its calling job (examples/pr-footer-caller.yml), because a called workflow
-# can hold no more than its caller gives it. It pins a full 40-character sha; scripts/check-callers.mjs fails on anything
+# THE CALLER grants `contents: read` and `pull-requests: write` to its calling job (examples/pr-footer-caller.yml), because
+# a called workflow can hold no more than its caller gives it; with the write alone the run fails at startup. It pins a full 40-character sha; scripts/check-callers.mjs fails on anything
 # else.
 
 on:
