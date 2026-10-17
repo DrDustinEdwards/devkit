@@ -9,8 +9,9 @@ Shared configuration for the Dustin Edwards repositories, public so private repo
 - `.github/workflows/ai-author.yml`: the gate that refuses an AI attribution trailer on a commit a push or pull request adds, and on a pull request a commit authored or committed as Claude. Capsid alone had it; every repository calls it, the private ones included, since it takes seconds. It runs the package's `devkit-check-trailers` bin from the devkit tag the caller pins.
 - `.github/workflows/worker-deploy.yml`: the shared deploy, verify and rollback workflow for a Cloudflare Worker (capsid's merge pipeline design, section 6, PR 8). It is capsid's own `deploy` and `live gate` jobs, ported. See "The shared deploy" below.
 - `scripts/rollback-guard.mjs`: capsid's rollback guard, byte for byte, which the deploy workflow carries inline. `scripts/inline-rollback-guard.mjs` writes it into the workflow after an edit.
+- `.github/workflows/code-map.yml`: the code map a public repository publishes for the explorer at capsid.dustinedwards.info (`capsid/research/design-system-explorer.md` section 5). See "The code map" below.
 - `scripts/check-callers.mjs`: the check a caller runs on its own workflow files. Every call to this repository's workflows must pin a full 40-character commit sha, and `secrets: inherit` is refused.
-- `examples/no-bloat-caller.yml`, `examples/ai-author-caller.yml` and `examples/worker-deploy-caller.yml`: the shape of each caller.
+- `examples/no-bloat-caller.yml`, `examples/ai-author-caller.yml`, `examples/worker-deploy-caller.yml` and `examples/code-map-caller.yml`: the shape of each caller.
 - `examples/improve-score-caller.yml`: the shape of a caller. The per-repository `build` job stays in the caller; only `score` is shared.
 - `testing/` and `bin/`: the shared test helpers and the shared checks, the part of this repository that is a package (`@dustinedwards/devkit`). See below.
 - `test/`: runs the bump-consumers script against a stub of the GitHub API, and holds the shared scorer to its isolation properties (no network and read-only mounts for attempt code, the signing key in exactly two steps and never in the container, every action pinned, the attempt branch never checked out) and the check to its pin rule, and the test helpers to the behaviour their consumers rely on. CI runs them.
@@ -48,6 +49,14 @@ Secrets, passed by name (`secrets: inherit` is refused by `check-callers.mjs`): 
 The limits. Cloudflare's rollback swaps the Worker's code and bindings only. It is refused when D1 or KV resources changed between the two versions, and it never undoes a D1 migration (Cloudflare Docs, "Rollbacks"). A deploy that ran a migration is not made safe by this workflow: keep migrations a separate, human step, and check them in `pre-deploy`. Data recovery is D1 Time Travel, by hand (`wrangler d1 time-travel restore`). The rollback goes to the previous version, whatever that is; the guard is what stops a rerun from moving production onto the refused commit.
 
 The guard is inlined into the workflow so a caller's one pinned sha fixes both. After an edit to `scripts/rollback-guard.mjs`, run `node scripts/inline-rollback-guard.mjs`; the test fails while the two differ.
+
+## The code map
+
+`.github/workflows/code-map.yml` runs on a push to a public repository's default branch and replaces `code-map.json` on that repository's orphan `code-map` branch. Capsid reads it there and the explorer draws it. The script, `scripts/code-map.mjs`, is inline in the workflow, so a caller pins one sha and needs no release (`examples/code-map-caller.yml`).
+
+It reads the code through the caller's own TypeScript, so there is no new dependency: imports are resolved with the caller's compiler options, and cyclomatic complexity is counted on the syntax tree (one, plus each if, loop, case, catch, `?:`, `&&`, `||` and `??` in a function's own body). Coverage is the istanbul JSON Vitest writes (`--coverage.reporter=json`), and a Stryker `mutation.json` adds mutants and a mutation score; both are mapped onto the innermost function holding each statement or mutant. CRAP is CC² × (1 − coverage)³ + CC. A number nobody measured is null, never 0. The design named dependency-cruiser for imports; the compiler's own resolver gives the same graph without it.
+
+Inputs: `coverage-command` (empty for no coverage), `coverage-file`, `mutation-file`, `tsconfig`, `include` (the path prefix to map, default `src/`), `install` (must install `typescript`) and `node-version-file`. Locally: `node scripts/code-map.mjs --out code-map.json [--coverage coverage/coverage-final.json]` from the repository's root.
 
 ## The shared test helpers
 

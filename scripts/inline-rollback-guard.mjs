@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Writes each script a shared workflow carries into its heredoc, so a caller that pins one devkit sha runs the script of that
 // same commit: scripts/rollback-guard.mjs into the "Write the rollback guard" step of worker-deploy.yml, and
-// scripts/strip-pr-footer.mjs into pr-footer.yml. Run it after any edit to either:
+// scripts/strip-pr-footer.mjs into pr-footer.yml, and scripts/code-map.mjs into code-map.yml. Run it after any edit to one:
 //
 //   node scripts/inline-rollback-guard.mjs
 //
@@ -16,6 +16,7 @@ const INDENT = " ".repeat(10);
 const PAIRS = [
   { workflow: ".github/workflows/worker-deploy.yml", script: "scripts/rollback-guard.mjs", marker: "ROLLBACK_GUARD" },
   { workflow: ".github/workflows/pr-footer.yml", script: "scripts/strip-pr-footer.mjs", marker: "PR_FOOTER" },
+  { workflow: ".github/workflows/code-map.yml", script: "scripts/code-map.mjs", marker: "CODE_MAP" },
 ];
 
 /** The heredoc's bounds in the workflow. @param {string} workflow @param {string} marker */
