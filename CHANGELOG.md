@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `code-map.yml`: a `mutation-artifacts` input for a caller whose Stryker run is a matrix of jobs (capsid, dustinedwards-info). It calls the map as its last job, naming the artifacts that hold the reports; they are downloaded from that run alone, and `mutation-file` names them under `mutation-artifacts/`.
 - `.github/workflows/code-map-self.yml`: devkit maps its own `scripts/`, `bin/` and `testing/` after each push to main, with this commit's `code-map.yml`.
 - `code-map.yml`: a `.mjs` that ships a hand-written `.d.mts` beside it (prelum) is mapped as the source; the compiler lists only the declaration.
 - `code-map.yml`: an `npm-cache` input, false for a repository with no `package-lock.json` (site-runtime, claude-skills), which setup-node otherwise refuses.

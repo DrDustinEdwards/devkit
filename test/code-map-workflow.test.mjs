@@ -52,3 +52,13 @@ test("the example caller pins a full sha and grants the write the workflow needs
   assert.deepEqual(callerProblems(caller, "examples/code-map-caller.yml"), []);
   assert.match(caller, /contents: write/);
 });
+
+test("a matrix caller's reports come from its own run, and then the kept run is not read", () => {
+  const download = steps.find((s) => s.includes("name: Download the mutation reports")) ?? "";
+  assert.match(download, /if: inputs\.mutation-artifacts != ''/);
+  assert.match(download, /pattern: \$\{\{ inputs\.mutation-artifacts \}\}/);
+  // No run-id, repository or token: download-artifact then reads only the calling run.
+  assert.doesNotMatch(download, /run-id|repository:|github-token|token/);
+  const kept = steps.find((s) => s.includes("name: Read the kept mutation run")) ?? "";
+  assert.match(kept, /if: inputs\.mutation-command == '' && inputs\.mutation-artifacts == ''/);
+});

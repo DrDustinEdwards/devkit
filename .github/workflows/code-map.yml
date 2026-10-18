@@ -13,8 +13,9 @@ name: code-map
 # the last mutation run. That branch holds no code and nothing runs from it.
 #
 # MUTATION is heavy, so it runs only when the caller passes `mutation-command` (a weekly schedule, design D11). That run's
-# Stryker reports (`mutation-file`, a glob for one report per chunk) become mutation.json. Every other run reads the kept
-# mutation.json back from the branch: a function unchanged since keeps its numbers, and one that changed is marked stale. Capsid reads it with the contents permission its GitHub App already has. Only a public repository
+# Stryker reports (`mutation-file`, a glob for one report per chunk) become mutation.json. A caller whose mutation runs as a
+# matrix of jobs calls this as its last job with `mutation-artifacts` instead, naming the artifacts that hold the reports.
+# Every other run reads the kept mutation.json back from the branch: a function unchanged since keeps its numbers, and one that changed is marked stale. Capsid reads it with the contents permission its GitHub App already has. Only a public repository
 # calls this: Capsid refuses a map for one that is not.
 #
 # NOT A GATE. Callers run it on a push to their default branch, after their own CI, so a failure here is a red run on
@@ -52,6 +53,14 @@ on:
         default: coverage/coverage-final.json
       mutation-command:
         description: Runs Stryker and writes its JSON reports to mutation-file. Empty to reuse the kept run on the code-map branch.
+        required: false
+        type: string
+        default: ""
+      mutation-artifacts:
+        description: >-
+          The artifacts of the calling run that hold Stryker's JSON reports, a name pattern (mutation-shard-*), for a caller
+          whose mutation runs as a matrix of earlier jobs. They are downloaded into mutation-artifacts/, each in a folder of
+          its own name, so mutation-file names them from there. Empty when mutation-command or the kept run is used.
         required: false
         type: string
         default: ""
@@ -116,8 +125,17 @@ jobs:
           MUTATION: ${{ inputs.mutation-command }}
         run: bash -euo pipefail -c "$MUTATION"
 
+      # The calling run's own artifacts, read with the run's own runtime token: no token of this job's and no actions
+      # permission is involved, and nothing outside this run can be named.
+      - name: Download the mutation reports
+        if: inputs.mutation-artifacts != ''
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: ${{ inputs.mutation-artifacts }}
+          path: mutation-artifacts
+
       - name: Read the kept mutation run
-        if: inputs.mutation-command == ''
+        if: inputs.mutation-command == '' && inputs.mutation-artifacts == ''
         # No token: only a public repository calls this, and only the publish step holds the write.
         run: |
           if git fetch -q --depth 1 \
