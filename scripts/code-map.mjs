@@ -9,7 +9,14 @@
 // syntax tree. Coverage is Vitest's (istanbul's) coverage-final.json and mutation is Stryker's mutation.json, each mapped
 // onto the innermost function whose lines hold a statement or a mutant. A number nobody measured is null, never 0.
 //
-//   node code-map.mjs --out code-map.json [--tsconfig tsconfig.json] [--include src/] [--coverage <file>] [--mutation <file>]
+// Mutation runs less often than the map (weekly, design D11), so a run's reports are kept as one smaller file, mutation.json,
+// beside the map: the commit and day of the run, and per file its source then and each mutant's status and line. A later map
+// reads that file, places each mutant in the function it was made in from the source then, and carries the numbers to a
+// function whose lines are unchanged since. A function that changed, or is new, is `stale: true` with no numbers, and the
+// map names the run it read as `mutated`.
+//
+//   node code-map.mjs --out code-map.json [--tsconfig tsconfig.json] [--include src/] [--coverage <file>]
+//     [--mutation <stryker report>]... [--mutation-kept <mutation.json>] [--mutation-out <mutation.json>]
 //
 // The repository and commit come from GITHUB_REPOSITORY and GITHUB_SHA, or --repo and --sha. code-map.yml carries this file
 // byte for byte; after an edit run `node scripts/inline-rollback-guard.mjs`.
@@ -144,6 +151,26 @@ const DETECTED = new Set(["Killed", "Timeout"]);
 const VALID = new Set(["Killed", "Timeout", "Survived", "NoCoverage"]);
 
 /**
+ * One kept mutation report from a run's Stryker reports (one per chunk or shard): per file its source and each valid
+ * mutant's status and line, with the run's commit and day.
+ * @param {any[]} reports @param {string} sha @param {string} date
+ */
+export function keptReport(reports, sha, date) {
+  /** @type {Record<string, { source: string | null, mutants: { status: string, location: { start: { line: number } } }[] }>} */
+  const files = {};
+  for (const r of reports) {
+    for (const [path, f] of Object.entries(r?.files ?? {})) {
+      const mutants = (/** @type {any} */ (f).mutants ?? [])
+        .filter((/** @type {any} */ m) => VALID.has(m.status))
+        .map((/** @type {any} */ m) => ({ status: m.status, location: { start: { line: m.location.start.line } } }));
+      const was = files[path];
+      files[path] = { source: was?.source ?? /** @type {any} */ (f).source ?? null, mutants: [...(was?.mutants ?? []), ...mutants] };
+    }
+  }
+  return { version: 1, sha, date, files };
+}
+
+/**
  * The code map of a repository.
  * @param {{ ts: any, root: string, tsconfig?: string, include?: string[], coverage?: any, mutation?: any, repo: string, sha: string, date: string }} o
  */
@@ -167,6 +194,7 @@ export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/
       if (hit && mapped.has(rel(hit.resolvedFileName))) imports.add(rel(hit.resolvedFileName));
     }
     graph.set(path, [...imports].sort());
+    /** @type {{ name: string, line: number, end: number, cc: number, statements: number, covered: number, mutants: number, detected: number, stale?: true }[]} */
     const fns = functionsOf(ts, sf).map((f) => ({ ...f, statements: 0, covered: 0, mutants: 0, detected: 0 }));
 
     const cov = coverage?.[abs] ?? coverage?.[path];
@@ -180,12 +208,33 @@ export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/
     }
     const mut = mutation?.files?.[path] ?? mutation?.files?.[abs];
     if (mut) {
+      // Each mutant goes to the function it was made in, read from the file as the run saw it, so lines that moved since
+      // still meet their function.
+      const then = typeof mut.source === "string" ? functionsOf(ts, ts.createSourceFile(abs, mut.source, ts.ScriptTarget.Latest, true)).map((f) => ({ ...f, mutants: 0, detected: 0 })) : fns;
       for (const m of mut.mutants ?? []) {
         if (!VALID.has(m.status)) continue;
-        const f = innermost(fns, m.location.start.line);
+        const f = innermost(then, m.location.start.line);
         if (!f) continue;
         f.mutants++;
         if (DETECTED.has(m.status)) f.detected++;
+      }
+      if (then !== fns) {
+        // A function keeps the run's numbers only when its lines are the same as then: the nth function of a name now
+        // against the nth then.
+        const linesThen = mut.source.split("\n");
+        const linesNow = text.split("\n");
+        const body = (/** @type {string[]} */ lines, /** @type {{ line: number, end: number }} */ f) => lines.slice(f.line - 1, f.end).join("\n");
+        const keyed = (/** @type {{ name: string }[]} */ list) => {
+          /** @type {Map<string, number>} */ const n = new Map();
+          return list.map((f) => { const i = n.get(f.name) ?? 0; n.set(f.name, i + 1); return `${f.name}#${i}`; });
+        };
+        const keysThen = keyed(then);
+        const byKey = new Map(then.map((f, i) => [keysThen[i], f]));
+        keyed(fns).forEach((key, i) => {
+          const was = byKey.get(key);
+          if (was && body(linesThen, was) === body(linesNow, fns[i])) Object.assign(fns[i], { mutants: was.mutants, detected: was.detected });
+          else Object.assign(fns[i], { stale: true });
+        });
       }
     }
 
@@ -193,9 +242,10 @@ export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/
       path,
       loc: text.split("\n").filter((l) => l.trim() !== "").length,
       imports: graph.get(path),
-      functions: fns.map(({ name, line, end, cc, statements, covered, mutants, detected }) => {
+      functions: fns.map(({ name, line, end, cc, statements, covered, mutants, detected, stale }) => {
         const c = cov ? (statements === 0 ? 1 : Math.round((covered / statements) * 1000) / 1000) : null;
-        return { name, line, end, cc, coverage: c, crap: crap(cc, c), mutants: mut ? mutants : null, score: mut && mutants > 0 ? Math.round((detected / mutants) * 1000) / 10 : null };
+        const measured = mut && !stale;
+        return { name, line, end, cc, coverage: c, crap: crap(cc, c), mutants: measured ? mutants : null, score: measured && mutants > 0 ? Math.round((detected / mutants) * 1000) / 10 : null, ...(stale ? { stale } : {}) };
       }),
     };
   });
@@ -208,6 +258,7 @@ export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/
     sha,
     date,
     tools: { typescript: ts.version, coverage: coverage ? "istanbul" : null, mutation: mutation ? "stryker" : null },
+    ...(mutation?.sha && mutation.sha !== sha ? { mutated: { sha: mutation.sha, date: mutation.date } } : {}),
     modules,
     cycles,
   };
@@ -228,20 +279,26 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const a = args(process.argv.slice(2));
   const root = process.cwd();
   const json = (/** @type {string | undefined} */ f) => (f && existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : null);
-  for (const f of [a.coverage?.[0], a.mutation?.[0]]) if (f && !existsSync(f)) console.log(`::warning::${f} does not exist, so the map has no numbers from it`);
+  for (const f of [a.coverage?.[0], ...(a.mutation ?? []), a["mutation-kept"]?.[0]]) if (f && !existsSync(f)) console.log(`::warning::${f} does not exist, so the map has no numbers from it`);
   const sha = a.sha?.[0] ?? process.env.GITHUB_SHA ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const date = new Date().toISOString().slice(0, 10);
+  // A fresh run's reports win over a kept one; with neither, the map has no mutation numbers.
+  const reports = (a.mutation ?? []).map(json).filter(Boolean);
+  const mutation = reports.length ? keptReport(reports, sha, date) : json(a["mutation-kept"]?.[0]);
+  if (mutation && a["mutation-out"]?.[0]) writeFileSync(a["mutation-out"][0], `${JSON.stringify(mutation)}\n`);
   const map = codeMap({
     ts: loadTypeScript(root),
     root,
     tsconfig: a.tsconfig?.[0],
     include: a.include,
     coverage: json(a.coverage?.[0]),
-    mutation: json(a.mutation?.[0]),
+    mutation,
     repo: a.repo?.[0] ?? process.env.GITHUB_REPOSITORY ?? "",
     sha,
-    date: new Date().toISOString().slice(0, 10),
+    date,
   });
   writeFileSync(a.out?.[0] ?? "code-map.json", `${JSON.stringify(map, null, 2)}\n`);
   const fns = map.modules.reduce((n, m) => n + m.functions.length, 0);
-  console.log(`code map: ${map.modules.length} modules, ${fns} functions, ${map.cycles.length} cycles`);
+  const stale = map.modules.reduce((n, m) => n + m.functions.filter((f) => f.stale).length, 0);
+  console.log(`code map: ${map.modules.length} modules, ${fns} functions, ${map.cycles.length} cycles${map.mutated ? `; mutation from ${map.mutated.sha.slice(0, 7)} (${map.mutated.date}), ${stale} functions stale` : ""}`);
 }
