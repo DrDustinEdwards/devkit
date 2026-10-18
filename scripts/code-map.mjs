@@ -6,8 +6,13 @@
 //
 // Everything is read through the repository's own TypeScript, so there is no dependency here and no second parser:
 // imports are resolved by ts.resolveModuleName with the repository's compiler options, and complexity is counted on the
-// syntax tree. Coverage is Vitest's (istanbul's) coverage-final.json and mutation is Stryker's mutation.json, each mapped
-// onto the innermost function whose lines hold a statement or a mutant. A number nobody measured is null, never 0.
+// syntax tree. Coverage is Vitest's (istanbul's) coverage-final.json, or the lcov file `node --test
+// --experimental-test-coverage --test-reporter=lcov` writes, and mutation is Stryker's mutation.json, each mapped onto the
+// innermost function whose lines hold a statement (an lcov line) or a mutant. A number nobody measured is null, never 0.
+//
+// TypeScript and JavaScript alike: .ts, .tsx, .js, .mjs and the rest, never a declaration file or a *.test.* or *.spec.*
+// file. A repository with no tsconfig is read as plain modules (allowJs, NodeNext). `--include .` maps every folder, and
+// `--exclude <prefix>` (repeatable) leaves a path out.
 //
 // Mutation runs less often than the map (weekly, design D11), so a run's reports are kept as one smaller file, mutation.json,
 // beside the map: the commit and day of the run, and per file its source then and each mutant's status and line. A later map
@@ -15,14 +20,14 @@
 // function whose lines are unchanged since. A function that changed, or is new, is `stale: true` with no numbers, and the
 // map names the run it read as `mutated`.
 //
-//   node code-map.mjs --out code-map.json [--tsconfig tsconfig.json] [--include src/] [--coverage <file>]
+//   node code-map.mjs --out code-map.json [--tsconfig tsconfig.json] [--include src/]... [--exclude <prefix>]... [--coverage <file>]
 //     [--mutation <stryker report>]... [--mutation-kept <mutation.json>] [--mutation-out <mutation.json>]
 //
 // The repository and commit come from GITHUB_REPOSITORY and GITHUB_SHA, or --repo and --sha. code-map.yml carries this file
 // byte for byte; after an edit run `node scripts/inline-rollback-guard.mjs`.
 
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join, relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -146,6 +151,43 @@ function innermost(fns, line) {
   return best;
 }
 
+/** A module the map reads: source, not a declaration file and not a test. */
+const SOURCE = /\.[cm]?[jt]sx?$/;
+const DECLARATION = /\.d\.[cm]?ts$/;
+const TEST = /\.(test|spec)\.[cm]?[jt]sx?$/;
+
+/** Every file under a directory, leaving out node_modules and dot-folders. @param {string} dir @returns {string[]} */
+function walk(dir) {
+  return readdirSync(dir).flatMap((name) => {
+    if (name === "node_modules" || name.startsWith(".")) return [];
+    const full = join(dir, name);
+    return statSync(full).isDirectory() ? walk(full) : [full];
+  });
+}
+
+/**
+ * lcov as istanbul's coverage-final.json shape: per file, each instrumented line (DA) a statement with its hit count.
+ * Paths are resolved against the repository's root. @param {string} text @param {string} root
+ */
+export function lcovCoverage(text, root) {
+  /** @type {Record<string, { statementMap: Record<string, { start: { line: number } }>, s: Record<string, number> }>} */
+  const out = {};
+  let file = null;
+  for (const raw of text.split("\n")) {
+    const line = raw.trim();
+    if (line.startsWith("SF:")) {
+      const abs = resolve(root, line.slice(3));
+      file = out[abs] ??= { statementMap: {}, s: {} };
+    } else if (line.startsWith("DA:") && file) {
+      const [n, hits] = line.slice(3).split(",").map(Number);
+      const id = String(Object.keys(file.statementMap).length);
+      file.statementMap[id] = { start: { line: n } };
+      file.s[id] = hits;
+    } else if (line === "end_of_record") file = null;
+  }
+  return out;
+}
+
 /** Stryker's statuses: detected and valid, as its mutation score counts them. */
 const DETECTED = new Set(["Killed", "Timeout"]);
 const VALID = new Set(["Killed", "Timeout", "Survived", "NoCoverage"]);
@@ -172,13 +214,15 @@ export function keptReport(reports, sha, date) {
 
 /**
  * The code map of a repository.
- * @param {{ ts: any, root: string, tsconfig?: string, include?: string[], coverage?: any, mutation?: any, repo: string, sha: string, date: string }} o
+ * @param {{ ts: any, root: string, tsconfig?: string, include?: string[], exclude?: string[], coverage?: any, mutation?: any, repo: string, sha: string, date: string }} o
  */
-export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/"], coverage = null, mutation = null, repo, sha, date }) {
-  const parsed = ts.getParsedCommandLineOfConfigFile(resolve(root, tsconfig), {}, { ...ts.sys, onUnRecoverableConfigFileDiagnostic: (/** @type {any} */ d) => { throw new Error(ts.flattenDiagnosticMessageText(d.messageText, "\n")); } });
+export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/"], exclude = [], coverage = null, mutation = null, repo, sha, date }) {
+  const parsed = existsSync(resolve(root, tsconfig))
+    ? ts.getParsedCommandLineOfConfigFile(resolve(root, tsconfig), {}, { ...ts.sys, onUnRecoverableConfigFileDiagnostic: (/** @type {any} */ d) => { throw new Error(ts.flattenDiagnosticMessageText(d.messageText, "\n")); } })
+    : { fileNames: walk(root), options: { allowJs: true, module: ts.ModuleKind.NodeNext, moduleResolution: ts.ModuleResolutionKind.NodeNext, target: ts.ScriptTarget.ES2022 } };
   const rel = (/** @type {string} */ abs) => relative(root, abs).split(sep).join("/");
   const files = parsed.fileNames
-    .filter((f) => /\.[cm]?tsx?$/.test(f) && !/\.d\.[cm]?ts$/.test(f) && include.some((p) => rel(f).startsWith(p)))
+    .filter((f) => SOURCE.test(f) && !DECLARATION.test(f) && !TEST.test(f) && include.some((p) => p === "." || rel(f).startsWith(p)) && !exclude.some((p) => rel(f).startsWith(p)))
     .sort();
   const mapped = new Set(files.map(rel));
   const host = ts.createCompilerHost(parsed.options);
@@ -291,7 +335,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     root,
     tsconfig: a.tsconfig?.[0],
     include: a.include,
-    coverage: json(a.coverage?.[0]),
+    exclude: a.exclude,
+    coverage: a.coverage?.[0] && existsSync(a.coverage[0]) && !a.coverage[0].endsWith(".json") ? lcovCoverage(readFileSync(a.coverage[0], "utf8"), root) : json(a.coverage?.[0]),
     mutation,
     repo: a.repo?.[0] ?? process.env.GITHUB_REPOSITORY ?? "",
     sha,
