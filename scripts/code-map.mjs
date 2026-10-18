@@ -156,6 +156,14 @@ const SOURCE = /\.[cm]?[jt]sx?$/;
 const DECLARATION = /\.d\.[cm]?ts$/;
 const TEST = /\.(test|spec)\.[cm]?[jt]sx?$/;
 
+/** The JavaScript source a hand-written declaration file describes, when it sits beside it: x.d.mts for x.mjs. */
+function sourceOf(/** @type {string} */ file) {
+  const m = /^(.*)\.d\.([cm]?)ts$/.exec(file);
+  if (!m) return file;
+  const js = `${m[1]}.${m[2]}js`;
+  return existsSync(js) ? js : file;
+}
+
 /** Every file under a directory, leaving out node_modules and dot-folders. @param {string} dir @returns {string[]} */
 function walk(dir) {
   return readdirSync(dir).flatMap((name) => {
@@ -221,7 +229,8 @@ export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/
     ? ts.getParsedCommandLineOfConfigFile(resolve(root, tsconfig), {}, { ...ts.sys, onUnRecoverableConfigFileDiagnostic: (/** @type {any} */ d) => { throw new Error(ts.flattenDiagnosticMessageText(d.messageText, "\n")); } })
     : { fileNames: walk(root), options: { allowJs: true, module: ts.ModuleKind.NodeNext, moduleResolution: ts.ModuleResolutionKind.NodeNext, target: ts.ScriptTarget.ES2022 } };
   const rel = (/** @type {string} */ abs) => relative(root, abs).split(sep).join("/");
-  const files = parsed.fileNames
+  // A package that ships hand-written .d.mts beside its .mjs: the compiler lists the declaration in the source's place.
+  const files = [...new Set(parsed.fileNames.map(sourceOf))]
     .filter((f) => SOURCE.test(f) && !DECLARATION.test(f) && !TEST.test(f) && include.some((p) => p === "." || rel(f).startsWith(p)) && !exclude.some((p) => rel(f).startsWith(p)))
     .sort();
   const mapped = new Set(files.map(rel));
@@ -235,7 +244,8 @@ export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/
     const imports = new Set();
     for (const spec of specifiersOf(ts, sf)) {
       const hit = ts.resolveModuleName(spec, abs, parsed.options, host).resolvedModule;
-      if (hit && mapped.has(rel(hit.resolvedFileName))) imports.add(rel(hit.resolvedFileName));
+      const to = hit && rel(sourceOf(hit.resolvedFileName));
+      if (to && mapped.has(to)) imports.add(to);
     }
     graph.set(path, [...imports].sort());
     /** @type {{ name: string, line: number, end: number, cc: number, statements: number, covered: number, mutants: number, detected: number, stale?: true }[]} */

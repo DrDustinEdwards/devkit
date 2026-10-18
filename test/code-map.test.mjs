@@ -154,3 +154,11 @@ test("a JavaScript repository with no tsconfig is mapped as plain modules, with 
   assert.equal(grade.coverage, 0.75);
   assert.equal(fn(map, "util/twice.mjs", "twice").coverage, 1);
 });
+
+test("a .mjs beside its hand-written .d.mts is mapped as the source, and imports of it land on it", () => {
+  const root = fileURLToPath(new URL("fixtures/code-map-dts/", import.meta.url));
+  const map = codeMap({ ...base, root, include: ["."] });
+  assert.deepEqual(map.modules.map((/** @type {any} */ m) => m.path), ["a.mjs", "b.mjs"]);
+  assert.deepEqual(map.modules[1].imports, ["a.mjs"]);
+  assert.equal(fn(map, "a.mjs", "a").cc, 2);
+});
