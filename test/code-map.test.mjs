@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 
-import { codeMap, crap, cyclesOf, keptReport, loadTypeScript } from "../scripts/code-map.mjs";
+import { codeMap, crap, cyclesOf, keptReport, lcovCoverage, loadTypeScript } from "../scripts/code-map.mjs";
 
 const ROOT = fileURLToPath(new URL("fixtures/code-map/", import.meta.url));
 const ts = loadTypeScript(ROOT);
@@ -138,4 +138,19 @@ test("a kept run's numbers follow a function whose lines moved; a function that 
   const fresh = codeMap({ ...base, mutation: keptReport([stryker({ "src/a.ts": { source: src("src/a.ts"), mutants: [at(4, "Killed")] } })], base.sha, "2026-10-17") });
   assert.equal(fresh.mutated, undefined);
   assert.equal(fn(fresh, "src/a.ts", "a").score, 100);
+});
+
+test("a JavaScript repository with no tsconfig is mapped as plain modules, with lcov coverage from node --test", () => {
+  const root = fileURLToPath(new URL("fixtures/code-map-js/", import.meta.url));
+  // lines 3 to 6 of lib.mjs: the function line and the if ran, the early return did not, the last return did.
+  const lcov = ["TN:", "SF:lib.mjs", "DA:1,1", "DA:3,1", "DA:4,1", "DA:5,0", "DA:6,1", "end_of_record", "SF:util/twice.mjs", "DA:1,1", "end_of_record", ""].join("\n");
+  const coverage = lcovCoverage(lcov, root);
+  assert.deepEqual(Object.keys(coverage), [join(root, "lib.mjs"), join(root, "util/twice.mjs")]);
+  const map = codeMap({ ...base, root, include: ["."], exclude: ["docs/", "test/"], coverage });
+  assert.deepEqual(map.modules.map((/** @type {any} */ m) => m.path), ["lib.mjs", "util/twice.mjs"], "no test file, no declaration, nothing excluded");
+  assert.deepEqual(map.modules[0].imports, ["util/twice.mjs"], "a .mjs import resolves with no tsconfig");
+  const grade = fn(map, "lib.mjs", "grade");
+  assert.equal(grade.cc, 3);
+  assert.equal(grade.coverage, 0.75);
+  assert.equal(fn(map, "util/twice.mjs", "twice").coverage, 1);
 });
