@@ -1,0 +1,29 @@
+name: code-map-self
+
+# After each push to main, devkit maps its own scripts with its own code-map workflow (this commit's copy, so a change to the
+# map is measured by itself) and publishes code-map.json to the code-map branch for the Capsid system explorer.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One run at a time, so an older push's map never lands after a newer one.
+concurrency:
+  group: code-map
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  code-map:
+    # A called workflow holds no more than this job grants: the write lets it push code-map.json to the code-map branch.
+    permissions:
+      contents: write
+    uses: ./.github/workflows/code-map.yml
+    with:
+      include: scripts/ bin/ testing/
+      # Node's test runner does not create the destination folder.
+      coverage-command: mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage/lcov.info "test/*.test.mjs"
+      coverage-file: coverage/lcov.info
