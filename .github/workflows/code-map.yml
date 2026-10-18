@@ -31,6 +31,11 @@ on:
         required: false
         type: string
         default: .nvmrc
+      npm-cache:
+        description: Cache npm downloads. False for a repository with no package-lock.json, which setup-node refuses to cache.
+        required: false
+        type: boolean
+        default: true
       install:
         description: The install command. It must install typescript.
         required: false
@@ -92,7 +97,7 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: ${{ inputs.node-version-file }}
-          cache: npm
+          cache: ${{ inputs.npm-cache && 'npm' || '' }}
 
       - name: Install
         env:

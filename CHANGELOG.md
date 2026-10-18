@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `code-map.yml`: an `npm-cache` input, false for a repository with no `package-lock.json` (site-runtime, claude-skills), which setup-node otherwise refuses.
 - `code-map.yml`: JavaScript repositories. It maps .js and .mjs modules as well as TypeScript, never a `*.test.*` or `*.spec.*` file; reads a repository with no tsconfig as plain modules; takes lcov coverage from `node --test`; and `include` and the new `exclude` take several prefixes, `.` meaning every folder.
 - `code-map.yml`: a weekly mutation run (design slice 10). With `mutation-command` set, the run's Stryker reports (`mutation-file` may be a glob) are kept as `mutation.json` on the `code-map` branch; every other run reuses them, carrying a function's numbers forward only while its lines are unchanged and marking the rest `stale: true`, with the run named as `mutated`. The example caller runs it on a Monday schedule.
 - `.github/workflows/code-map.yml` and `scripts/code-map.mjs`: the code map for the system explorer (design slice 8). Per module its size, imports and import cycles; per function its complexity, coverage, CRAP and mutation score, read through the caller's own TypeScript and published to the orphan `code-map` branch. The script is inline, so callers pin a sha with no release; `examples/code-map-caller.yml` is the shape of a caller. `typescript` 5.9.3 is a dev dependency for its tests, and CI now runs `npm ci`.
