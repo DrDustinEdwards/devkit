@@ -9,8 +9,12 @@ name: code-map
 # test/code-map-workflow.test.mjs fails when the two disagree. It reads the code through the caller's own TypeScript, so the
 # caller's install must provide `typescript`.
 #
-# THE RESULT is code-map.json, alone on the orphan branch `code-map`, replaced on every run. That branch holds no code and
-# nothing runs from it. Capsid reads it with the contents permission its GitHub App already has. Only a public repository
+# THE RESULT is code-map.json on the orphan branch `code-map`, replaced on every run, beside mutation.json, the kept form of
+# the last mutation run. That branch holds no code and nothing runs from it.
+#
+# MUTATION is heavy, so it runs only when the caller passes `mutation-command` (a weekly schedule, design D11). That run's
+# Stryker reports (`mutation-file`, a glob for one report per chunk) become mutation.json. Every other run reads the kept
+# mutation.json back from the branch: a function unchanged since keeps its numbers, and one that changed is marked stale. Capsid reads it with the contents permission its GitHub App already has. Only a public repository
 # calls this: Capsid refuses a map for one that is not.
 #
 # NOT A GATE. Callers run it on a push to their default branch, after their own CI, so a failure here is a red run on
@@ -41,8 +45,13 @@ on:
         required: false
         type: string
         default: coverage/coverage-final.json
+      mutation-command:
+        description: Runs Stryker and writes its JSON reports to mutation-file. Empty to reuse the kept run on the code-map branch.
+        required: false
+        type: string
+        default: ""
       mutation-file:
-        description: A Stryker JSON report to read, if one exists. Empty for none.
+        description: The Stryker JSON reports to read, a glob allowed (reports/mutation/*.json). Empty for none.
         required: false
         type: string
         default: ""
@@ -91,6 +100,25 @@ jobs:
           COVERAGE: ${{ inputs.coverage-command }}
         run: bash -euo pipefail -c "$COVERAGE"
 
+      - name: Measure mutation
+        if: inputs.mutation-command != ''
+        env:
+          MUTATION: ${{ inputs.mutation-command }}
+        run: bash -euo pipefail -c "$MUTATION"
+
+      - name: Read the kept mutation run
+        if: inputs.mutation-command == ''
+        # No token: only a public repository calls this, and only the publish step holds the write.
+        run: |
+          if git fetch -q --depth 1 \
+            "https://github.com/${GITHUB_REPOSITORY}.git" refs/heads/code-map 2>/dev/null \
+            && git cat-file -e FETCH_HEAD:mutation.json 2>/dev/null; then
+            git show FETCH_HEAD:mutation.json > "$RUNNER_TEMP/mutation-kept.json"
+            echo "Read the kept mutation run from the code-map branch."
+          else
+            echo "No kept mutation run on the code-map branch."
+          fi
+
       - name: Write the code map
         env:
           COVERAGE_FILE: ${{ inputs.coverage-command != '' && inputs.coverage-file || '' }}
@@ -110,7 +138,14 @@ jobs:
           // syntax tree. Coverage is Vitest's (istanbul's) coverage-final.json and mutation is Stryker's mutation.json, each mapped
           // onto the innermost function whose lines hold a statement or a mutant. A number nobody measured is null, never 0.
           //
-          //   node code-map.mjs --out code-map.json [--tsconfig tsconfig.json] [--include src/] [--coverage <file>] [--mutation <file>]
+          // Mutation runs less often than the map (weekly, design D11), so a run's reports are kept as one smaller file, mutation.json,
+          // beside the map: the commit and day of the run, and per file its source then and each mutant's status and line. A later map
+          // reads that file, places each mutant in the function it was made in from the source then, and carries the numbers to a
+          // function whose lines are unchanged since. A function that changed, or is new, is `stale: true` with no numbers, and the
+          // map names the run it read as `mutated`.
+          //
+          //   node code-map.mjs --out code-map.json [--tsconfig tsconfig.json] [--include src/] [--coverage <file>]
+          //     [--mutation <stryker report>]... [--mutation-kept <mutation.json>] [--mutation-out <mutation.json>]
           //
           // The repository and commit come from GITHUB_REPOSITORY and GITHUB_SHA, or --repo and --sha. code-map.yml carries this file
           // byte for byte; after an edit run `node scripts/inline-rollback-guard.mjs`.
@@ -245,6 +280,26 @@ jobs:
           const VALID = new Set(["Killed", "Timeout", "Survived", "NoCoverage"]);
 
           /**
+           * One kept mutation report from a run's Stryker reports (one per chunk or shard): per file its source and each valid
+           * mutant's status and line, with the run's commit and day.
+           * @param {any[]} reports @param {string} sha @param {string} date
+           */
+          export function keptReport(reports, sha, date) {
+            /** @type {Record<string, { source: string | null, mutants: { status: string, location: { start: { line: number } } }[] }>} */
+            const files = {};
+            for (const r of reports) {
+              for (const [path, f] of Object.entries(r?.files ?? {})) {
+                const mutants = (/** @type {any} */ (f).mutants ?? [])
+                  .filter((/** @type {any} */ m) => VALID.has(m.status))
+                  .map((/** @type {any} */ m) => ({ status: m.status, location: { start: { line: m.location.start.line } } }));
+                const was = files[path];
+                files[path] = { source: was?.source ?? /** @type {any} */ (f).source ?? null, mutants: [...(was?.mutants ?? []), ...mutants] };
+              }
+            }
+            return { version: 1, sha, date, files };
+          }
+
+          /**
            * The code map of a repository.
            * @param {{ ts: any, root: string, tsconfig?: string, include?: string[], coverage?: any, mutation?: any, repo: string, sha: string, date: string }} o
            */
@@ -268,6 +323,7 @@ jobs:
                 if (hit && mapped.has(rel(hit.resolvedFileName))) imports.add(rel(hit.resolvedFileName));
               }
               graph.set(path, [...imports].sort());
+              /** @type {{ name: string, line: number, end: number, cc: number, statements: number, covered: number, mutants: number, detected: number, stale?: true }[]} */
               const fns = functionsOf(ts, sf).map((f) => ({ ...f, statements: 0, covered: 0, mutants: 0, detected: 0 }));
 
               const cov = coverage?.[abs] ?? coverage?.[path];
@@ -281,12 +337,33 @@ jobs:
               }
               const mut = mutation?.files?.[path] ?? mutation?.files?.[abs];
               if (mut) {
+                // Each mutant goes to the function it was made in, read from the file as the run saw it, so lines that moved since
+                // still meet their function.
+                const then = typeof mut.source === "string" ? functionsOf(ts, ts.createSourceFile(abs, mut.source, ts.ScriptTarget.Latest, true)).map((f) => ({ ...f, mutants: 0, detected: 0 })) : fns;
                 for (const m of mut.mutants ?? []) {
                   if (!VALID.has(m.status)) continue;
-                  const f = innermost(fns, m.location.start.line);
+                  const f = innermost(then, m.location.start.line);
                   if (!f) continue;
                   f.mutants++;
                   if (DETECTED.has(m.status)) f.detected++;
+                }
+                if (then !== fns) {
+                  // A function keeps the run's numbers only when its lines are the same as then: the nth function of a name now
+                  // against the nth then.
+                  const linesThen = mut.source.split("\n");
+                  const linesNow = text.split("\n");
+                  const body = (/** @type {string[]} */ lines, /** @type {{ line: number, end: number }} */ f) => lines.slice(f.line - 1, f.end).join("\n");
+                  const keyed = (/** @type {{ name: string }[]} */ list) => {
+                    /** @type {Map<string, number>} */ const n = new Map();
+                    return list.map((f) => { const i = n.get(f.name) ?? 0; n.set(f.name, i + 1); return `${f.name}#${i}`; });
+                  };
+                  const keysThen = keyed(then);
+                  const byKey = new Map(then.map((f, i) => [keysThen[i], f]));
+                  keyed(fns).forEach((key, i) => {
+                    const was = byKey.get(key);
+                    if (was && body(linesThen, was) === body(linesNow, fns[i])) Object.assign(fns[i], { mutants: was.mutants, detected: was.detected });
+                    else Object.assign(fns[i], { stale: true });
+                  });
                 }
               }
 
@@ -294,9 +371,10 @@ jobs:
                 path,
                 loc: text.split("\n").filter((l) => l.trim() !== "").length,
                 imports: graph.get(path),
-                functions: fns.map(({ name, line, end, cc, statements, covered, mutants, detected }) => {
+                functions: fns.map(({ name, line, end, cc, statements, covered, mutants, detected, stale }) => {
                   const c = cov ? (statements === 0 ? 1 : Math.round((covered / statements) * 1000) / 1000) : null;
-                  return { name, line, end, cc, coverage: c, crap: crap(cc, c), mutants: mut ? mutants : null, score: mut && mutants > 0 ? Math.round((detected / mutants) * 1000) / 10 : null };
+                  const measured = mut && !stale;
+                  return { name, line, end, cc, coverage: c, crap: crap(cc, c), mutants: measured ? mutants : null, score: measured && mutants > 0 ? Math.round((detected / mutants) * 1000) / 10 : null, ...(stale ? { stale } : {}) };
                 }),
               };
             });
@@ -309,6 +387,7 @@ jobs:
               sha,
               date,
               tools: { typescript: ts.version, coverage: coverage ? "istanbul" : null, mutation: mutation ? "stryker" : null },
+              ...(mutation?.sha && mutation.sha !== sha ? { mutated: { sha: mutation.sha, date: mutation.date } } : {}),
               modules,
               cycles,
             };
@@ -329,28 +408,36 @@ jobs:
             const a = args(process.argv.slice(2));
             const root = process.cwd();
             const json = (/** @type {string | undefined} */ f) => (f && existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : null);
-            for (const f of [a.coverage?.[0], a.mutation?.[0]]) if (f && !existsSync(f)) console.log(`::warning::${f} does not exist, so the map has no numbers from it`);
+            for (const f of [a.coverage?.[0], ...(a.mutation ?? []), a["mutation-kept"]?.[0]]) if (f && !existsSync(f)) console.log(`::warning::${f} does not exist, so the map has no numbers from it`);
             const sha = a.sha?.[0] ?? process.env.GITHUB_SHA ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+            const date = new Date().toISOString().slice(0, 10);
+            // A fresh run's reports win over a kept one; with neither, the map has no mutation numbers.
+            const reports = (a.mutation ?? []).map(json).filter(Boolean);
+            const mutation = reports.length ? keptReport(reports, sha, date) : json(a["mutation-kept"]?.[0]);
+            if (mutation && a["mutation-out"]?.[0]) writeFileSync(a["mutation-out"][0], `${JSON.stringify(mutation)}\n`);
             const map = codeMap({
               ts: loadTypeScript(root),
               root,
               tsconfig: a.tsconfig?.[0],
               include: a.include,
               coverage: json(a.coverage?.[0]),
-              mutation: json(a.mutation?.[0]),
+              mutation,
               repo: a.repo?.[0] ?? process.env.GITHUB_REPOSITORY ?? "",
               sha,
-              date: new Date().toISOString().slice(0, 10),
+              date,
             });
             writeFileSync(a.out?.[0] ?? "code-map.json", `${JSON.stringify(map, null, 2)}\n`);
             const fns = map.modules.reduce((n, m) => n + m.functions.length, 0);
-            console.log(`code map: ${map.modules.length} modules, ${fns} functions, ${map.cycles.length} cycles`);
+            const stale = map.modules.reduce((n, m) => n + m.functions.filter((f) => f.stale).length, 0);
+            console.log(`code map: ${map.modules.length} modules, ${fns} functions, ${map.cycles.length} cycles${map.mutated ? `; mutation from ${map.mutated.sha.slice(0, 7)} (${map.mutated.date}), ${stale} functions stale` : ""}`);
           }
           CODE_MAP
           set -- --out "$RUNNER_TEMP/code-map.json" --tsconfig "$TSCONFIG" --include "$INCLUDE"
           if [ -n "$COVERAGE_FILE" ]; then set -- "$@" --coverage "$COVERAGE_FILE"; fi
-          if [ -n "$MUTATION_FILE" ]; then set -- "$@" --mutation "$MUTATION_FILE"; fi
-          node "$RUNNER_TEMP/code-map.mjs" "$@"
+          # Unquoted on purpose: the glob names one report per chunk.
+          if [ -n "$MUTATION_FILE" ]; then for f in $MUTATION_FILE; do set -- "$@" --mutation "$f"; done; fi
+          if [ -f "$RUNNER_TEMP/mutation-kept.json" ]; then set -- "$@" --mutation-kept "$RUNNER_TEMP/mutation-kept.json"; fi
+          node "$RUNNER_TEMP/code-map.mjs" "$@" --mutation-out "$RUNNER_TEMP/mutation.json"
 
       - name: Publish to the code-map branch
         env:
@@ -359,9 +446,10 @@ jobs:
           out="$RUNNER_TEMP/code-map-branch"
           mkdir "$out"
           cp "$RUNNER_TEMP/code-map.json" "$out/code-map.json"
+          if [ -f "$RUNNER_TEMP/mutation.json" ]; then cp "$RUNNER_TEMP/mutation.json" "$out/mutation.json"; fi
           cd "$out"
           git init -q -b code-map
-          git add code-map.json
+          git add .
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Code map of ${GITHUB_SHA}"
           auth=$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)

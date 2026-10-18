@@ -56,7 +56,9 @@ The guard is inlined into the workflow so a caller's one pinned sha fixes both. 
 
 It reads the code through the caller's own TypeScript, so there is no new dependency: imports are resolved with the caller's compiler options, and cyclomatic complexity is counted on the syntax tree (one, plus each if, loop, case, catch, `?:`, `&&`, `||` and `??` in a function's own body). Coverage is the istanbul JSON Vitest writes (`--coverage.reporter=json`), and a Stryker `mutation.json` adds mutants and a mutation score; both are mapped onto the innermost function holding each statement or mutant. CRAP is CC² × (1 − coverage)³ + CC. A number nobody measured is null, never 0. The design named dependency-cruiser for imports; the compiler's own resolver gives the same graph without it.
 
-Inputs: `coverage-command` (empty for no coverage), `coverage-file`, `mutation-file`, `tsconfig`, `include` (the path prefix to map, default `src/`), `install` (must install `typescript`) and `node-version-file`. Locally: `node scripts/code-map.mjs --out code-map.json [--coverage coverage/coverage-final.json]` from the repository's root.
+Mutation runs only when `mutation-command` is given, which a caller does on a weekly schedule: that run's Stryker reports (`mutation-file`, a glob for one report per chunk) are kept as `mutation.json` on the `code-map` branch beside the map. Every other run reads that file back and, from the source each report holds, carries a function's numbers forward only while its lines are unchanged; a function that changed or is new is `stale: true` with no numbers, and the map names the run as `mutated: {sha, date}`.
+
+Inputs: `coverage-command` (empty for no coverage), `coverage-file`, `mutation-command`, `mutation-file`, `tsconfig`, `include` (the path prefix to map, default `src/`), `install` (must install `typescript`) and `node-version-file`. Locally: `node scripts/code-map.mjs --out code-map.json [--coverage coverage/coverage-final.json]` from the repository's root.
 
 ## The shared test helpers
 

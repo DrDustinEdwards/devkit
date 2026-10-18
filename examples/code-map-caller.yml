@@ -2,12 +2,19 @@ name: code-map
 
 # The caller a public repository keeps. Replace the sha with the commit of devkit that holds the reviewed code-map.yml, and
 # keep it a full sha: scripts/check-callers.mjs fails on anything else. It runs after a push to the default branch, so it is
-# never a gate on a pull request.
+# never a gate on a pull request. Once a week the schedule (or a manual run) also runs Stryker; a push reuses that run's numbers.
 
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "17 4 * * 1"
   workflow_dispatch:
+
+# One run at a time, so a push's map never overwrites the weekly mutation run while it is still going.
+concurrency:
+  group: code-map
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -20,3 +27,6 @@ jobs:
     uses: DrDustinEdwards/devkit/.github/workflows/code-map.yml@0000000000000000000000000000000000000000
     with:
       coverage-command: npx vitest run --coverage.enabled --coverage.provider=v8 --coverage.reporter=json --coverage.include=src/**
+      mutation-command: ${{ github.event_name != 'push' && 'npx stryker run' || '' }}
+      mutation-file: reports/mutation/*.json
+      timeout-minutes: ${{ github.event_name != 'push' && 120 || 20 }}

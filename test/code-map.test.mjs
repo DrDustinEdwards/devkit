@@ -4,10 +4,11 @@
 
 import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 
-import { codeMap, crap, cyclesOf, loadTypeScript } from "../scripts/code-map.mjs";
+import { codeMap, crap, cyclesOf, keptReport, loadTypeScript } from "../scripts/code-map.mjs";
 
 const ROOT = fileURLToPath(new URL("fixtures/code-map/", import.meta.url));
 const ts = loadTypeScript(ROOT);
@@ -99,4 +100,42 @@ test("mutants land on the innermost function; the score counts only valid mutant
   assert.equal(f.mutants, 4, "ignored and compile-error mutants are not counted");
   assert.equal(f.score, 50);
   assert.equal(fn(codeMap({ ...base, mutation }), "src/a.ts", "a").mutants, null, "a file with no report entry is unmeasured");
+});
+
+test("a kept run's numbers follow a function whose lines moved; a function that changed is stale, and the map names the run", () => {
+  const src = (/** @type {string} */ p) => readFileSync(join(ROOT, p), "utf8");
+  const at = (/** @type {number} */ line, /** @type {string} */ status) => ({ id: String(line), mutatorName: "x", status, location: { start: { line, column: 1 }, end: { line, column: 2 } } });
+  // Then, branches.ts had two more lines at the top, so classify sat two lines lower; a.ts's function body differed.
+  const branchesThen = `// then\n// then\n${src("src/branches.ts")}`;
+  const classify = fn(codeMap(base), "src/branches.ts", "classify");
+  const aThen = src("src/a.ts").replace("n - 1", "n - 2");
+  const stryker = (/** @type {Record<string, any>} */ files) => ({ schemaVersion: "1", thresholds: {}, files });
+  const kept = keptReport(
+    [
+      stryker({ "src/branches.ts": { language: "typescript", source: branchesThen, mutants: [at(classify.line + 3, "Killed"), at(classify.line + 4, "Survived"), at(classify.line + 5, "Ignored")] } }),
+      stryker({ "src/a.ts": { language: "typescript", source: aThen, mutants: [at(4, "Killed")] } }),
+    ],
+    "1".repeat(40),
+    "2026-10-12"
+  );
+  assert.equal(kept.files["src/branches.ts"].mutants.length, 2, "an ignored mutant is not kept");
+  assert.deepEqual(Object.keys(kept.files["src/branches.ts"].mutants[0]), ["status", "location"]);
+
+  const map = codeMap({ ...base, mutation: kept });
+  assert.deepEqual(map.mutated, { sha: "1".repeat(40), date: "2026-10-12" });
+  const moved = fn(map, "src/branches.ts", "classify");
+  assert.equal(moved.mutants, 2);
+  assert.equal(moved.score, 50);
+  assert.equal(moved.stale, undefined);
+  const changed = fn(map, "src/a.ts", "a");
+  assert.equal(changed.stale, true);
+  assert.equal(changed.mutants, null, "a stale function carries no old number");
+  assert.equal(changed.score, null);
+  assert.equal(fn(map, "src/b.ts", "b").mutants, null, "a file the run did not mutate is unmeasured, not stale");
+  assert.equal(fn(map, "src/b.ts", "b").stale, undefined);
+
+  // A run at the map's own commit is current: no mutated, nothing stale.
+  const fresh = codeMap({ ...base, mutation: keptReport([stryker({ "src/a.ts": { source: src("src/a.ts"), mutants: [at(4, "Killed")] } })], base.sha, "2026-10-17") });
+  assert.equal(fresh.mutated, undefined);
+  assert.equal(fn(fresh, "src/a.ts", "a").score, 100);
 });
