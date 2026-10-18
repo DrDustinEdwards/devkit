@@ -2,7 +2,7 @@
 
 Shared configuration for the Dustin Edwards repositories, public so private repositories can use it.
 
-- `default.json`: the Renovate policy (ruling 33, `dustinedwards/decisions.md`). Each repository's `renovate.json` extends it.
+- `default.json`: the Renovate policy, one file so the policy has one owner. Each repository's `renovate.json` extends it, and each setting's reason is in the description beside it.
 - `.github/workflows/improve-score.yml`: the shared improve-score workflow (D5.1). It is the `score` job that used to be copied byte for byte into five repositories, now written once. It is called, never run on its own.
 - `.github/workflows/bump-consumers.yml`: the release side of the own-packages rule in `default.json`. A package repository calls it on a tag push, and it starts a Renovate run in every repository whose `package.json` depends on that package, by ticking the manual-run box on that repository's Dependency Dashboard. Consumers are found from the manifests each time, never listed. It needs the `RENOVATE_TRIGGER_TOKEN` secret described in its header.
 - `.github/workflows/no-bloat.yml`: the no-bloat report (Knip and jscpd against the repository's baseline), written once for the three repositories that each wrote their own. Warn-only: it never turns a pull request red. It runs the package's `devkit-no-bloat` bin, so the caller lists the package in its devDependencies. Public repositories call it on every pull request; the four private ones weekly. See below.
