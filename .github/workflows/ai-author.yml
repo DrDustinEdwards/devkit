@@ -11,7 +11,9 @@ name: ai-author
 # checks nothing. A check that could not run is a failure, not a pass.
 #
 # THE BIN COMES FROM THE DEVKIT TAG THE CALLER ALREADY PINS in its package.json, installed alone through npx: no install of
-# the caller's own dependencies, so the job takes seconds. A caller without the package fails, saying so.
+# the caller's own dependencies, so the job takes seconds. A repository that has no other use for devkit (foxing, the
+# libraries) passes the tag as the `devkit` input instead of adding a dependency and a lockfile change for one bin. A
+# caller with neither fails, saying so.
 #
 # MINUTES. A called workflow bills the caller, and the full history (fetch-depth 0) is the slowest part. Public
 # repositories run free. The four private repositories run it per push too: it is the cheap check.
@@ -26,6 +28,11 @@ on:
         required: false
         type: string
         default: "24"
+      devkit:
+        description: The devkit package spec to run the bin from (DrDustinEdwards/devkit#vX.Y.Z), for a repository whose package.json does not list devkit. package.json wins when it does.
+        required: false
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -56,10 +63,12 @@ jobs:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
           PUSH_BEFORE: ${{ github.event.before }}
           PUSH_AFTER: ${{ github.sha }}
+          DEVKIT_INPUT: ${{ inputs.devkit }}
         run: |
           spec=$(node -e 'const p = JSON.parse(require("fs").readFileSync("package.json", "utf8")); const n = "@dustinedwards/devkit"; process.stdout.write(p.devDependencies?.[n] ?? p.dependencies?.[n] ?? "")' 2>/dev/null || true)
+          if [ -z "$spec" ]; then spec="$DEVKIT_INPUT"; fi
           if [ -z "$spec" ]; then
-            echo "::error::package.json does not list @dustinedwards/devkit, so the trailer check cannot run. Add it to devDependencies at a tag (see the devkit README)."
+            echo "::error::package.json does not list @dustinedwards/devkit and the caller passed no devkit input, so the trailer check cannot run. Add it to devDependencies at a tag, or pass devkit: DrDustinEdwards/devkit#<tag> (see the devkit README)."
             exit 2
           fi
           npx --yes --package "$spec" devkit-check-trailers
