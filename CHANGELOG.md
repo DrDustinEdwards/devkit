@@ -3,6 +3,13 @@
 ## Unreleased
 
 - `worker-size.yml` takes `package-manager: pnpm` (pnpm set up from the caller's packageManager field, its store cached, `pnpm install --frozen-lockfile` by default) and finds the devkit bin in the Worker's own directory before the root.
+- `code-map.yml` is two jobs: `map` runs the caller's install, tests and Stryker with `contents: read` and hands the files over as an artifact; `publish` holds the write and runs none of the caller's code. A `code-map` branch that exists but cannot be read now fails the run instead of being overwritten without its `mutation.json`.
+- `devkit-no-bloat`: a tool that cannot run fails the run (it was a warning).
+- `resetDb` (`./d1`) leaves only real FTS shadow tables to their virtual table; a real table named `<fts>_something` is cleared.
+- `stubGitHub` (`./github`) lists a directory's immediate children, a nested folder as `type: "dir"`; `versionOf` rejects a path the stub does not hold.
+- `worker-deploy.yml` never deploys on `pull_request_target`, and `devkit-check-trailers` checks that event's commits like a pull request's. Wrangler pin 4.107.0 to 4.149.0.
+- `scripts/check-callers.mjs` reads through quotes around `uses:` and `secrets: inherit`.
+- `bump-consumers.yml` fails a repository whose file tree came back truncated, and warns on a `package.json` that is not JSON.
 
 ## 0.7.0 (2026-10-21)
 

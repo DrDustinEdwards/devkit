@@ -5,6 +5,9 @@
 /** Never cleared: SQLite's own tables, D1's internal ones, and the record of which migrations ran. */
 const NEVER = /^(sqlite_|_cf_)|^d1_migrations$/;
 
+/** The shadow tables FTS5 (and FTS3/4) keeps beside a virtual table. */
+const SHADOW = ["_data", "_idx", "_content", "_docsize", "_config", "_segments", "_segdir", "_stat"];
+
 /**
  * Deletes every row of every table in `sqlite_master`, in one batch, and returns the tables it cleared. A virtual
  * table (FTS5) is cleared through itself and its shadow tables are left to it. Foreign keys are checked when the batch
@@ -21,7 +24,8 @@ export async function resetDb(db, { keep = [] } = {}) {
     .all();
   const rows = /** @type {Array<{ name: string, sql: string | null }>} */ (results);
   const virtual = rows.filter((r) => /^\s*CREATE\s+VIRTUAL\s+TABLE/i.test(r.sql ?? "")).map((r) => r.name);
-  const isShadow = (/** @type {string} */ name) => virtual.some((v) => name.startsWith(`${v}_`));
+  // Only the names FTS itself gives its shadow tables: a real table that merely starts with `<fts>_` is still cleared.
+  const isShadow = (/** @type {string} */ name) => virtual.some((v) => SHADOW.some((suffix) => name === `${v}${suffix}`));
 
   const tables = rows.map((r) => r.name).filter((name) => !NEVER.test(name) && !keep.includes(name) && !isShadow(name));
   if (tables.length === 0) return [];

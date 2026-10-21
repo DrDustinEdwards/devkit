@@ -2,7 +2,8 @@
 // The no-bloat ratchet. Knip for unused files, exports and dependencies, jscpd for duplicated blocks, each count compared
 // with the repository's own baseline. A count above its baseline fails the run (exit 1, an ::error:: line per count); a count
 // at or below it passes, and one that went down is named so the baseline can be lowered to lock the gain in. A tool that
-// cannot run is a ::warning:: naming its error, never a silent pass. The table goes to the job summary.
+// cannot run fails the run too (an ::error:: naming its error): a count nobody measured is not a pass. The table goes to the
+// job summary.
 //
 //   npx devkit-no-bloat                      report against .no-bloat.json (no file: one knip run, jscpd on its own config)
 //   npx devkit-no-bloat --config <file>      another config
@@ -217,10 +218,12 @@ function main() {
   }
 
   const { rows, errors, lowered } = compare(config.baseline ?? {}, measured.counts, config.knip);
-  const warnings = [...measured.warnings];
+  /** @type {string[]} */
+  const warnings = [];
   if (errors.length) {
     errors.push("Remove what was added. If it is deliberate, run `npx devkit-no-bloat --write-baseline` and commit the config, so the raise is reviewed.");
   }
+  errors.unshift(...measured.warnings);
   if (lowered.length) {
     warnings.push(`Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`);
   }

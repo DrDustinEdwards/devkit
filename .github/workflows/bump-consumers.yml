@@ -77,7 +77,8 @@ jobs:
               try {
                 const { data } = await github.rest.repos.getContent({ owner, repo, path, ref });
                 return JSON.parse(Buffer.from(data.content, "base64").toString("utf8"));
-              } catch {
+              } catch (error) {
+                core.warning(`${repo}: could not read ${path} as JSON (${error.message}); it is not counted as a consumer`);
                 return null;
               }
             };
@@ -100,6 +101,8 @@ jobs:
               if (repo.archived || repo.owner.login !== owner || repo.name === self) continue;
               try {
                 const { data: tree } = await github.rest.git.getTree({ owner, repo: repo.name, tree_sha: repo.default_branch, recursive: "true" });
+                // A cut tree could hide the package.json that makes this repository a consumer.
+                if (tree.truncated) throw new Error("the file tree came back truncated, so its package.json files could not all be read");
                 const manifests = tree.tree
                   .filter((entry) => entry.type === "blob" && /(^|\/)package\.json$/.test(entry.path) && !entry.path.includes("node_modules/"))
                   .map((entry) => entry.path);

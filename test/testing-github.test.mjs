@@ -26,8 +26,8 @@ test("gitBlobSha is the sha git itself gives, counting UTF-8 bytes", async () =>
   }
 });
 
-test("a file reads back as base64 with its real blob sha; a directory as an array; a missing path 404s", async (t) => {
-  const gh = stubGitHub({ owner: "Owner", repo: "site", files: { "content/a.md": "é\n", "content/b.md": "b" } });
+test("a file reads back as base64 with its real blob sha; a directory as an array of its children; a missing path 404s", async (t) => {
+  const gh = stubGitHub({ owner: "Owner", repo: "site", files: { "content/a.md": "é\n", "content/b.md": "b", "content/sub/c.md": "c" } });
   t.after(gh.restore);
 
   const file = await (await fetch(`${API}/contents/content/a.md?ref=main`)).json();
@@ -36,10 +36,11 @@ test("a file reads back as base64 with its real blob sha; a directory as an arra
   assert.equal(file.size, 3);
 
   const dir = await (await fetch(`${API}/contents/content`)).json();
-  assert.deepEqual(dir.map((e) => e.name), ["a.md", "b.md"]);
+  assert.deepEqual(dir.map((e) => `${e.name}:${e.type}`), ["a.md:file", "b.md:file", "sub:dir"]);
 
   assert.equal((await fetch(`${API}/contents/nope.md`)).status, 404);
   assert.equal(await versionOf(gh, "content/b.md"), await gitBlobSha("b"));
+  await assert.rejects(versionOf(gh, "nope.md"), /not in the stub/);
 });
 
 test("a commit applies only when the ref moves", async (t) => {

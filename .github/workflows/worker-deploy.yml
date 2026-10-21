@@ -77,14 +77,14 @@ permissions:
 
 # One pinned wrangler for the deploy and the rollback: the live gate installs nothing, so an unpinned npx would float to latest.
 env:
-  WRANGLER_VERSION: "4.107.0"
+  WRANGLER_VERSION: "4.149.0"
 
 jobs:
   # No `if: secrets.X != ''` guard and no continue-on-error: a deploy whose credentials are missing fails loudly, so
-  # "deployed" and "could not deploy" never look alike. Never on pull_request: a pull request head is not what ships.
+  # "deployed" and "could not deploy" never look alike. Never on a pull request event (either kind): a PR is not what ships.
   deploy:
     name: deploy
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -136,7 +136,7 @@ jobs:
     name: live gate
     needs: deploy
     # !failure() && !cancelled(), as in capsid: a failed deploy skips the gate rather than failing it a second time.
-    if: github.event_name != 'pull_request' && !failure() && !cancelled()
+    if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target' && !failure() && !cancelled()
     runs-on: ubuntu-latest
     # Above the poll budget (40 x 3s) with room for the verify command and the rollback's 20 reads.
     timeout-minutes: 15

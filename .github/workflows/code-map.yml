@@ -22,7 +22,9 @@ name: code-map
 # main and never a red pull request.
 #
 # THE CALLER grants `contents: write` to its calling job (examples/code-map-caller.yml), because a called workflow holds no
-# more than its caller gives it. It pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+# more than its caller gives it. Only the publish job uses it: the map job, which runs the caller's install, tests and
+# Stryker, is read-only and hands the two files over as an artifact. The caller pins a full 40-character sha;
+# scripts/check-callers.mjs fails on anything else.
 
 on:
   workflow_call:
@@ -96,8 +98,9 @@ jobs:
     name: Code map
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.timeout-minutes }}
+    # Read only: install, coverage and mutation run the caller's code and its dependencies, so this job holds no write.
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
@@ -136,15 +139,27 @@ jobs:
 
       - name: Read the kept mutation run
         if: inputs.mutation-command == '' && inputs.mutation-artifacts == ''
-        # No token: only a public repository calls this, and only the publish step holds the write.
+        # No token: only a public repository calls this. A missing branch or a branch with no mutation.json means no kept
+        # run; a branch that exists but cannot be read fails, so the publish never drops a mutation.json it could not see.
         run: |
-          if git fetch -q --depth 1 \
-            "https://github.com/${GITHUB_REPOSITORY}.git" refs/heads/code-map 2>/dev/null \
-            && git cat-file -e FETCH_HEAD:mutation.json 2>/dev/null; then
-            git show FETCH_HEAD:mutation.json > "$RUNNER_TEMP/mutation-kept.json"
-            echo "Read the kept mutation run from the code-map branch."
+          url="https://github.com/${GITHUB_REPOSITORY}.git"
+          set +e
+          git ls-remote --exit-code -q "$url" refs/heads/code-map
+          found=$?
+          set -e
+          if [ "$found" -eq 2 ]; then
+            echo "No code-map branch yet, so no kept mutation run."
+          elif [ "$found" -ne 0 ]; then
+            echo "::error::Could not read the code-map branch (git ls-remote exit $found)."
+            exit 1
           else
-            echo "No kept mutation run on the code-map branch."
+            git fetch -q --depth 1 "$url" refs/heads/code-map
+            if git cat-file -e FETCH_HEAD:mutation.json 2>/dev/null; then
+              git show FETCH_HEAD:mutation.json > "$RUNNER_TEMP/mutation-kept.json"
+              echo "Read the kept mutation run from the code-map branch."
+            else
+              echo "No kept mutation run on the code-map branch."
+            fi
           fi
 
       - name: Write the code map
@@ -342,7 +357,8 @@ jobs:
             for (const raw of text.split("\n")) {
               const line = raw.trim();
               if (line.startsWith("SF:")) {
-                const abs = resolve(root, line.slice(3));
+                // Forward slashes, as TypeScript names its files, so the lookup also matches on Windows.
+                const abs = resolve(root, line.slice(3)).replaceAll("\\", "/");
                 file = out[abs] ??= { statementMap: {}, s: {} };
               } else if (line.startsWith("DA:") && file) {
                 const [n, hits] = line.slice(3).split(",").map(Number);
@@ -526,15 +542,37 @@ jobs:
           if [ -f "$RUNNER_TEMP/mutation-kept.json" ]; then set -- "$@" --mutation-kept "$RUNNER_TEMP/mutation-kept.json"; fi
           node "$RUNNER_TEMP/code-map.mjs" "$@" --mutation-out "$RUNNER_TEMP/mutation.json"
 
+      - name: Keep the map for the publish job
+        run: |
+          mkdir "$RUNNER_TEMP/code-map-out"
+          cp "$RUNNER_TEMP/code-map.json" "$RUNNER_TEMP/code-map-out/"
+          if [ -f "$RUNNER_TEMP/mutation.json" ]; then cp "$RUNNER_TEMP/mutation.json" "$RUNNER_TEMP/code-map-out/"; fi
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: code-map-out
+          path: ${{ runner.temp }}/code-map-out
+          retention-days: 1
+
+  # The only job with the write, and it runs none of the caller's code: no checkout, no install, just the two files.
+  publish:
+    name: Publish the code map
+    needs: map
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: code-map-out
+          path: ${{ runner.temp }}/code-map-branch
+
       - name: Publish to the code-map branch
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          out="$RUNNER_TEMP/code-map-branch"
-          mkdir "$out"
-          cp "$RUNNER_TEMP/code-map.json" "$out/code-map.json"
-          if [ -f "$RUNNER_TEMP/mutation.json" ]; then cp "$RUNNER_TEMP/mutation.json" "$out/mutation.json"; fi
-          cd "$out"
+          cd "$RUNNER_TEMP/code-map-branch"
           git init -q -b code-map
           git add .
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \

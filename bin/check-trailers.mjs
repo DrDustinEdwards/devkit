@@ -92,8 +92,8 @@ const ZERO = /^0+$/;
  */
 export function rangeFromEvent(env) {
   const event = env.EVENT ?? "";
-  if (event === "pull_request") {
-    if (!env.PR_BASE || !env.PR_HEAD) throw new Error("pull_request event without PR_BASE and PR_HEAD");
+  if (event === "pull_request" || event === "pull_request_target") {
+    if (!env.PR_BASE || !env.PR_HEAD) throw new Error(`${event} event without PR_BASE and PR_HEAD`);
     return { base: env.PR_BASE, head: env.PR_HEAD, authors: true };
   }
   if (event === "push") {

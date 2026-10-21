@@ -8,7 +8,7 @@
 
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync, chmodSync, existsSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync, chmodSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -122,8 +122,8 @@ test("the Cloudflare secrets reach only the pre-deploy guard, the deploy and the
 test("the deploy job publishes the attempt it shipped in, and never deploys a pull request", () => {
   const deploy = job("deploy");
   assert.match(deploy, /\n {4}outputs:\n {6}attempt: \$\{\{ github\.run_attempt \}\}\n/, "the deploy job does not publish its attempt");
-  assert.match(deploy, /\n {4}if: github\.event_name != 'pull_request'\n/);
-  assert.match(job("live"), /\n {4}if: github\.event_name != 'pull_request' && !failure\(\) && !cancelled\(\)\n/);
+  assert.match(deploy, /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target'\n/);
+  assert.match(job("live"), /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target' && !failure\(\) && !cancelled\(\)\n/);
   assert.ok(step("Pre-deploy guard").length && deploy.indexOf("- name: Pre-deploy guard") < deploy.indexOf("- name: Deploy"), "the guard runs after the deploy");
 });
 
@@ -173,7 +173,7 @@ const health = (/** @type {string} */ sha) => JSON.stringify({ ok: true, sha });
 function runStep(name, opts) {
   const dir = opts.dir ?? mkdtempSync(join(tmpdir(), "worker-deploy-"));
   const bin = join(dir, "bin");
-  spawnSync("mkdir", ["-p", bin]);
+  mkdirSync(bin, { recursive: true });
   writeFileSync(join(dir, "health"), `${opts.health.join("\n")}\n`);
   writeFileSync(join(dir, "reads"), "0");
   const stub = (/** @type {string} */ file, /** @type {string} */ body) => {
