@@ -17,11 +17,16 @@ on:
         required: false
         type: string
         default: .nvmrc
-      install:
-        description: The install command. It must install @dustinedwards/devkit.
+      package-manager:
+        description: npm or pnpm. pnpm is set up from the caller's packageManager field, and its store is cached.
         required: false
         type: string
-        default: npm ci
+        default: npm
+      install:
+        description: The install command. It must install @dustinedwards/devkit. Empty for `npm ci` or `pnpm install --frozen-lockfile`.
+        required: false
+        type: string
+        default: ""
       prepare:
         description: Run after the install and before the check, e.g. a build, or copying wrangler.jsonc.example to wrangler.jsonc. Empty for none.
         required: false
@@ -57,14 +62,18 @@ jobs:
         with:
           persist-credentials: false
 
+      # pnpm/action-setup v4 is an annotated tag; the sha pinned is the commit it dereferences to (as in foxing's CI).
+      - if: inputs.package-manager == 'pnpm'
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: ${{ inputs.node-version-file }}
-          cache: npm
+          cache: ${{ inputs.package-manager }}
 
       - name: Install
         env:
-          INSTALL: ${{ inputs.install }}
+          INSTALL: ${{ inputs.install || (inputs.package-manager == 'pnpm' && 'pnpm install --frozen-lockfile' || 'npm ci') }}
         run: bash -euo pipefail -c "$INSTALL"
 
       - name: Prepare
@@ -78,7 +87,9 @@ jobs:
           CONFIG: ${{ inputs.config }}
           WORKDIR: ${{ inputs.working-directory }}
         run: |
-          bin="$PWD/node_modules/@dustinedwards/devkit/bin/worker-size.mjs"
+          # The Worker's own install first (a pnpm workspace package), then the repository root.
+          bin="$PWD/$WORKDIR/node_modules/@dustinedwards/devkit/bin/worker-size.mjs"
+          [ -f "$bin" ] || bin="$PWD/node_modules/@dustinedwards/devkit/bin/worker-size.mjs"
           if [ ! -f "$bin" ]; then
             echo "::error::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README)."
             exit 1
