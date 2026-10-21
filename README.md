@@ -68,7 +68,7 @@ Inputs: `coverage-command` (empty for no coverage), `coverage-file`, `mutation-c
 
 Test code that more than one repository needs, written once here. Installed by tag:
 
-    "@dustinedwards/devkit": "github:DrDustinEdwards/devkit#v0.6.0"
+    "@dustinedwards/devkit": "github:DrDustinEdwards/devkit#v0.7.0"
 
 Only `testing/`, `bin/` and this README are in the package. No dependencies and no test framework: they run in node and in workerd.
 
