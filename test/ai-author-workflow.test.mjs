@@ -1,6 +1,5 @@
 // Holds the shared trailer check's workflow to what makes it a gate every repository can call: only callable, read-only, no
-// secrets, every action pinned, the full history fetched, and no step allowed to fail quietly. Text based, as
-// workflow-policy is.
+// secrets, every action pinned, the full history fetched, and no step allowed to fail quietly. Text based.
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";

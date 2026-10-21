@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The code map (capsid/research/design-system-explorer.md section 5, slice 8): one JSON file per public repository saying,
+// The code map: one JSON file per public repository saying,
 // for every module, how big it is, what it imports and whether it sits in an import cycle, and for every function its
 // cyclomatic complexity, its share of statements covered, its CRAP score and, when a Stryker report is given, its mutants
 // and mutation score. Capsid publishes it and the explorer at capsid.dustinedwards.info draws it.

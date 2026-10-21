@@ -1,5 +1,5 @@
 // Holds the shared no-bloat workflow to what makes it safe to call from every repository: only callable, read-only, no
-// secrets, every action pinned, and never able to turn a caller's pull request red. Text based, as workflow-policy is.
+// secrets, and every action pinned. Text based.
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -31,11 +31,6 @@ test("every action is pinned to a full commit sha, and the checkout keeps no cre
   assert.ok(uses.length >= 2);
   for (const ref of uses) assert.match(ref, /@[0-9a-f]{40}$/, ref);
   assert.match(steps.find((s) => s.includes("actions/checkout@")) ?? "", /persist-credentials: false/);
-});
-
-test("warn-only: the job and every step after the checkout continue on error", () => {
-  assert.match(text, /\n {4}continue-on-error: true\n/);
-  for (const s of steps.slice(1)) assert.match(s, /continue-on-error: true/, s.split("\n")[0]);
 });
 
 test("caller input reaches a shell only through the environment, never spliced into the script", () => {

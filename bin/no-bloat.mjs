@@ -1,11 +1,8 @@
 #!/usr/bin/env node
-// The no-bloat report, written once (capsid/research/design-shared-tests.md section 3, D3 and D4 of job_bf31c124055e). Knip
-// for unused files, exports and dependencies, jscpd for duplicated blocks, each count compared with the repository's own
-// baseline, and what grew said as a ::warning:: line and a table in the job summary.
-//
-// WARN-ONLY by ruling: a number nobody has acted on is information, not a rule. It exits 0 whatever it finds, and a tool
-// that cannot run is a warning naming its error, never a silent pass. Base: capsid's scripts/no-bloat-report.mjs, with the
-// runs and the baseline read from the repository's config instead of written into the script.
+// The no-bloat ratchet. Knip for unused files, exports and dependencies, jscpd for duplicated blocks, each count compared
+// with the repository's own baseline. A count above its baseline fails the run (exit 1, an ::error:: line per count); a count
+// at or below it passes, and one that went down is named so the baseline can be lowered to lock the gain in. A tool that
+// cannot run is a ::warning:: naming its error, never a silent pass. The table goes to the job summary.
 //
 //   npx devkit-no-bloat                      report against .no-bloat.json (no file: one knip run, jscpd on its own config)
 //   npx devkit-no-bloat --config <file>      another config
@@ -87,8 +84,8 @@ export function measure(config, run, jscpdConfigured = true) {
 }
 
 /**
- * One row per finding the baseline or the measurement names, and a warning for each that grew. A finding with no baseline
- * is a row and never a warning: there is nothing to have grown from.
+ * One row per finding the baseline or the measurement names, an error for each that grew, and a note for each that went
+ * down. A finding with no baseline is a row and never an error: there is nothing to have grown from.
  * @param {Record<string, unknown>} baseline
  * @param {Counts} counts
  * @param {KnipRun[]} [knipRuns]
@@ -96,7 +93,8 @@ export function measure(config, run, jscpdConfigured = true) {
 export function compare(baseline, counts, knipRuns = [{ label: "knip" }]) {
   /** @type {Array<[string, string, number | null, number]>} */
   const rows = [];
-  const warnings = [];
+  const errors = [];
+  const lowered = [];
   const before = (/** @type {string} */ tool) => /** @type {Record<string, number> | null} */ (tool in baseline ? baseline[tool] : null);
 
   for (const [tool, now] of Object.entries(counts)) {
@@ -111,8 +109,9 @@ export function compare(baseline, counts, knipRuns = [{ label: "knip" }]) {
       rows.push([tool, key, a, b]);
       if (a !== null && b > a) {
         const args = knipRuns.find((r) => r.label === tool)?.args ?? [];
-        warnings.push(`${tool}: ${key} went from ${a} to ${b}. Run \`npx knip${args.length ? ` ${args.join(" ")}` : ""}\` to see which.`);
+        errors.push(`${tool}: ${key} went from ${a} to ${b}. Run \`npx knip${args.length ? ` ${args.join(" ")}` : ""}\` to see which.`);
       }
+      if (a !== null && b < a) lowered.push(`${tool}: ${key} ${a} to ${b}`);
     }
   }
 
@@ -121,29 +120,30 @@ export function compare(baseline, counts, knipRuns = [{ label: "knip" }]) {
     const now = counts.jscpd;
     rows.push(["jscpd", "clones", was ? (was.clones ?? 0) : null, now.clones]);
     rows.push(["jscpd", "duplicated lines %", was ? (was.percentage ?? 0) : null, now.percentage]);
+    if (was && now.clones < (was.clones ?? 0)) lowered.push(`jscpd: clones ${was.clones} to ${now.clones}`);
     if (was && now.clones > (was.clones ?? 0)) {
-      warnings.push(`jscpd: clones went from ${was.clones ?? 0} to ${now.clones} (${now.percentage}% of lines, baseline ${was.percentage ?? 0}%). Run \`npx jscpd\` to see them.`);
+      errors.push(`jscpd: clones went from ${was.clones ?? 0} to ${now.clones} (${now.percentage}% of lines, baseline ${was.percentage ?? 0}%). Run \`npx jscpd\` to see them.`);
     }
   }
-  return { rows, warnings };
+  return { rows, errors, lowered };
 }
 
 /**
  * The job summary table.
  * @param {Array<[string, string, number | null, number]>} rows
- * @param {string[]} warnings
+ * @param {string[]} problems the errors, then the warnings
  * @param {string | undefined} measuredAt
  */
-export function render(rows, warnings, measuredAt) {
+export function render(rows, problems, measuredAt) {
   const show = (/** @type {number | null} */ n) => (n === null ? "none" : String(n));
   return [
-    `### No-bloat report (warn-only; ${measuredAt ? `baseline ${measuredAt}` : "no baseline yet: run `npx devkit-no-bloat --write-baseline`"})`,
+    `### No-bloat ratchet (${measuredAt ? `baseline ${measuredAt}` : "no baseline yet: run `npx devkit-no-bloat --write-baseline`"})`,
     "",
     "| Tool | Finding | Baseline | Now |",
     "|---|---|---|---|",
     ...rows.map(([tool, key, a, b]) => `| ${tool} | ${key} | ${show(a)} | ${b}${a !== null && b > a ? " (up)" : ""} |`),
     "",
-    warnings.length ? warnings.map((w) => `- ${w}`).join("\n") : "Nothing grew past the baseline.",
+    problems.length ? problems.map((w) => `- ${w}`).join("\n") : "Nothing grew past the baseline.",
   ].join("\n");
 }
 
@@ -192,16 +192,13 @@ function main() {
 
   /** @type {Config} */
   let config = {};
-  const warnings = [];
   if (existsSync(file)) {
     try {
       config = JSON.parse(readFileSync(file, "utf8"));
     } catch (error) {
-      if (write) {
-        console.error(`devkit-no-bloat: ${file} is not JSON: ${messageOf(error)}`);
-        process.exit(1);
-      }
-      warnings.push(`${file} is not JSON (${messageOf(error)}); measured with the defaults and no baseline.`);
+      // A broken config would otherwise be no baseline, and so a ratchet that passes everything.
+      console.error(`devkit-no-bloat: ${file} is not JSON: ${messageOf(error)}`);
+      process.exit(1);
     }
   }
 
@@ -219,13 +216,20 @@ function main() {
     return;
   }
 
-  const baseline = config.baseline ?? {};
-  const { rows, warnings: grew } = compare(baseline, measured.counts, config.knip);
-  warnings.push(...measured.warnings, ...grew);
-  const table = render(rows, warnings, config.baseline?.measured_at);
+  const { rows, errors, lowered } = compare(config.baseline ?? {}, measured.counts, config.knip);
+  const warnings = [...measured.warnings];
+  if (errors.length) {
+    errors.push("Remove what was added. If it is deliberate, run `npx devkit-no-bloat --write-baseline` and commit the config, so the raise is reviewed.");
+  }
+  if (lowered.length) {
+    warnings.push(`Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`);
+  }
+  const table = render(rows, [...errors, ...warnings], config.baseline?.measured_at);
   console.log(table);
+  for (const e of errors) console.log(`::error::${e}`);
   for (const w of warnings) console.log(`::warning::${w}`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
+  if (errors.length) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.

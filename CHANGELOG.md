@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- `devkit-worker-size` bin and `.github/workflows/worker-size.yml`: the Worker bundle size budget. `wrangler deploy --dry-run`'s Total Upload (raw and gzip) against the caller's `.worker-size.json`; over budget fails. `examples/worker-size-caller.yml` is the shape of a caller.
+- `devkit-no-bloat` and `no-bloat.yml` are now a ratchet: a Knip or jscpd count above the baseline fails the run, a count that went down passes and says how to lower the baseline, and a config that is not JSON fails. The workflow no longer continues on error.
+- Removed `improve-score.yml`, `examples/improve-score-caller.yml` and their test: the improve loop is gone and no repository calls it.
 - `code-map.yml`: a `mutation-artifacts` input for a caller whose Stryker run is a matrix of jobs (capsid, dustinedwards-info). It calls the map as its last job, naming the artifacts that hold the reports; they are downloaded from that run alone, and `mutation-file` names them under `mutation-artifacts/`.
 - `.github/workflows/code-map-self.yml`: devkit maps its own `scripts/`, `bin/` and `testing/` after each push to main, with this commit's `code-map.yml`.
 - `code-map.yml`: a `.mjs` that ships a hand-written `.d.mts` beside it (prelum) is mapped as the source; the compiler lists only the declaration.

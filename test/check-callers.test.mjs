@@ -5,8 +5,8 @@ import { callerProblems } from "../scripts/check-callers.mjs";
 
 const SHA = "0123456789abcdef0123456789abcdef01234567";
 const call = (ref, extra = "") => `jobs:
-  score:
-    uses: DrDustinEdwards/devkit/.github/workflows/improve-score.yml@${ref}
+  no-bloat:
+    uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${ref}
 ${extra}`;
 
 test("a call pinned to a full commit sha is accepted", () => {
@@ -39,7 +39,7 @@ test("an uppercase or 41-character ref is not a sha", () => {
 test("secrets: inherit is refused", () => {
   const problems = callerProblems(call(SHA, "    secrets: inherit\n"));
   assert.equal(problems.length, 1);
-  assert.match(problems[0].problem, /pass IMPROVE_SCORE_KEY by name/);
+  assert.match(problems[0].problem, /pass each secret by name/);
 });
 
 test("a file that calls nothing is a problem, not a pass", () => {

@@ -1,12 +1,11 @@
 #!/usr/bin/env node
-// The check a caller of the shared improve-score workflow runs on its own workflow files:
+// The check a caller of this repository's reusable workflows runs on its own workflow files:
 //
-//   node check-callers.mjs .github/workflows/improve-score.yml [more files]
+//   node check-callers.mjs .github/workflows/no-bloat.yml [more files]
 //
-// Every `uses:` that names this repository's reusable workflows must end in `@` and a full 40-character commit sha. A branch
-// or a tag moves under a caller without a reviewed change to the caller, which is the property the shared scorer exists to
-// keep: the file that measures an attempt changes only when a reviewed pull request changes the sha. `secrets: inherit` is
-// refused too, because the key is passed by name so a reader can see exactly what the shared file receives.
+// Every `uses:` that names this repository's reusable workflows must end in `@` and a full 40-character commit sha: a branch
+// or a tag moves under a caller without a reviewed change to the caller. `secrets: inherit` is refused too, so a reader can
+// see exactly which secrets the shared file receives.
 //
 // Exit 0 when every call is pinned, 1 when any is not, 2 when a file is unreadable or names no call at all.
 
@@ -34,7 +33,7 @@ export function callerProblems(text) {
       }
     }
     if (/^\s*secrets:\s*inherit\s*$/.test(line)) {
-      problems.push({ line: index + 1, problem: "secrets: inherit hides what the shared workflow receives; pass IMPROVE_SCORE_KEY by name" });
+      problems.push({ line: index + 1, problem: "secrets: inherit hides what the shared workflow receives; pass each secret by name" });
     }
   });
   if (calls === 0) problems.push({ line: 0, problem: "no call to a devkit reusable workflow" });

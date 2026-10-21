@@ -36,7 +36,7 @@ export function inlined(workflow, marker = "ROLLBACK_GUARD") {
 }
 
 /** The workflow with the heredoc's body replaced by the script. @param {string} workflow @param {string} guard @param {string} [marker] */
-export function inline(workflow, guard, marker = "ROLLBACK_GUARD") {
+function inline(workflow, guard, marker = "ROLLBACK_GUARD") {
   const { from, end } = bounds(workflow, marker);
   const block = guard.replace(/\n$/, "").split("\n").map((line) => (line === "" ? "" : INDENT + line)).join("\n");
   return workflow.slice(0, from) + block + workflow.slice(end);

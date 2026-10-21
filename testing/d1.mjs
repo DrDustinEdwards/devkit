@@ -1,5 +1,5 @@
 // Resetting a test database between cases. A hand-written list of tables to clear drifts the day a migration adds
-// one (design-shared-tests.md, section 1: carrel's list named 27 tables by hand), so the tables are read from the
+// one, so the tables are read from the
 // schema instead. Works on any binding shaped like D1's: prepare, all, batch.
 
 /** Never cleared: SQLite's own tables, D1's internal ones, and the record of which migrations ran. */

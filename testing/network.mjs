@@ -1,6 +1,5 @@
 // The network guard every test layer writes for itself: a global fetch that refuses, and the swap underneath it.
-// Written once here (design-shared-tests.md, section 1) so the three copies stop drifting. No test framework is
-// imported: the swap is a property definition, the same one vitest's stubGlobal makes, so it works in node and workerd.
+// No test framework is imported: the swap is a property definition, the same one vitest's stubGlobal makes, so it works in node and workerd.
 
 /**
  * The URL a fetch was asked for, from any of the three shapes fetch accepts.

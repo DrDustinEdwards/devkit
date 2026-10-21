@@ -1,0 +1,24 @@
+name: worker-size
+
+# The caller a repository keeps. Replace the sha with the devkit commit that holds the reviewed worker-size.yml, and keep it
+# a full sha: scripts/check-callers.mjs fails on anything else. The repository also lists "@dustinedwards/devkit" in its
+# devDependencies at a tag, and commits its budget in .worker-size.json: { "raw_kib": 1700, "gzip_kib": 400 }.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: worker-size-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  worker-size:
+    uses: DrDustinEdwards/devkit/.github/workflows/worker-size.yml@0000000000000000000000000000000000000000
+    with:
+      # A repository that commits only wrangler.jsonc.example gives the dry run a config; omit otherwise.
+      prepare: cp wrangler.jsonc.example wrangler.jsonc
