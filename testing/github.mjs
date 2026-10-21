@@ -94,18 +94,19 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
   async function getContents(path) {
     const target = decodeURI(path.slice(`${prefix}/contents/`.length).split("?")[0] ?? "");
 
-    // A directory answers with an ARRAY and a file with an OBJECT, as GitHub does.
+    // A directory answers with an ARRAY of its immediate children and a file with an OBJECT, as GitHub does: a nested
+    // file shows as its folder, `type: "dir"`.
     const children = [...files.keys()].filter((p) => p.startsWith(`${target}/`));
     if (!files.has(target) && children.length > 0) {
+      const names = [...new Set(children.map((p) => p.slice(target.length + 1).split("/")[0] ?? ""))];
       return json(
         await Promise.all(
-          children.map(async (p) => ({
-            name: p.slice(target.length + 1),
-            path: p,
-            sha: await gitBlobSha(files.get(p) ?? ""),
-            type: "file",
-            size: (files.get(p) ?? "").length,
-          })),
+          names.map(async (name) => {
+            const path = `${target}/${name}`;
+            const content = files.get(path);
+            if (content === undefined) return { name, path, sha: await gitBlobSha(""), type: "dir", size: 0 };
+            return { name, path, sha: await gitBlobSha(content), type: "file", size: content.length };
+          }),
         ),
       );
     }
@@ -204,4 +205,8 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
  * @param {{ files: Map<string, string> }} stub
  * @param {string} path
  */
-export const versionOf = (stub, path) => gitBlobSha(stub.files.get(path) ?? "");
+export const versionOf = async (stub, path) => {
+  const content = stub.files.get(path);
+  if (content === undefined) throw new Error(`versionOf: ${path} is not in the stub`);
+  return gitBlobSha(content);
+};

@@ -157,12 +157,12 @@ test("end to end: --write-baseline records the counts, a later run that grew fai
   }
 });
 
-test("end to end: a tool that fails is a warning and exit 0; --write-baseline refuses to record a partial baseline", { skip: process.platform === "win32" }, () => {
+test("end to end: a tool that fails is an error and exit 1; --write-baseline refuses to record a partial baseline", { skip: process.platform === "win32" }, () => {
   const dir = scratch({ jscpdFails: true });
   try {
     const r = runBin(dir);
-    assert.equal(r.status, 0);
-    assert.match(r.stdout, /::warning::jscpd could not run: jscpd exited 3: jscpd: boom/);
+    assert.equal(r.status, 1);
+    assert.match(r.stdout, /::error::jscpd could not run: jscpd exited 3: jscpd: boom/);
     assert.match(r.stdout, /\| knip \| Unused files \| none \| 2 \|/);
 
     const w = runBin(dir, ["--write-baseline"]);

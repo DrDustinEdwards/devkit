@@ -184,7 +184,8 @@ export function lcovCoverage(text, root) {
   for (const raw of text.split("\n")) {
     const line = raw.trim();
     if (line.startsWith("SF:")) {
-      const abs = resolve(root, line.slice(3));
+      // Forward slashes, as TypeScript names its files, so the lookup also matches on Windows.
+      const abs = resolve(root, line.slice(3)).replaceAll("\\", "/");
       file = out[abs] ??= { statementMap: {}, s: {} };
     } else if (line.startsWith("DA:") && file) {
       const [n, hits] = line.slice(3).split(",").map(Number);

@@ -66,6 +66,7 @@ test("THE INNOCENT DIRECTION: a message that only mentions Claude or CLAUDE.md p
 
 test("the range comes from the event, and an event with no commits checks nothing", () => {
   assert.deepEqual(rangeFromEvent({ EVENT: "pull_request", PR_BASE: "a", PR_HEAD: "b" }), { base: "a", head: "b", authors: true });
+  assert.deepEqual(rangeFromEvent({ EVENT: "pull_request_target", PR_BASE: "a", PR_HEAD: "b" }), { base: "a", head: "b", authors: true });
   assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "a", PUSH_AFTER: "b" }), { base: "a", head: "b", authors: false });
   assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "0".repeat(40), PUSH_AFTER: "b" }), { base: null, head: "b", authors: false });
   assert.equal(rangeFromEvent({ EVENT: "schedule" }), null);

@@ -1,6 +1,6 @@
 // Holds the shared code-map workflow to what lets a public repository call it safely: only callable, the script it runs equal
-// to scripts/code-map.mjs, every action pinned, and the write token used by one step, which pushes one file to the code-map
-// branch and nowhere else. The caller's own code (install, coverage) never sees the token.
+// to scripts/code-map.mjs, every action pinned, and the write held by one job that runs none of the caller's code and pushes
+// to the code-map branch and nowhere else. The caller's own code (install, coverage, mutation) runs in a read-only job.
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -11,10 +11,18 @@ import { inlined } from "../scripts/inline-rollback-guard.mjs";
 
 const text = readFileSync(new URL("../.github/workflows/code-map.yml", import.meta.url), "utf8").replace(/\r\n/g, "\n");
 const code = text.split("\n").filter((line) => !/^\s*#/.test(line)).join("\n");
-const steps = code
-  .slice(code.indexOf("    steps:\n") + "    steps:\n".length)
-  .split(/\n(?=      - )/)
-  .map((s) => s.trimEnd());
+const jobs = Object.fromEntries(
+  code
+    .slice(code.indexOf("\njobs:\n") + "\njobs:\n".length)
+    .split(/\n(?= {2}\w[\w-]*:\n)/)
+    .map((block) => [block.slice(2, block.indexOf(":")), block]),
+);
+const stepsOf = (/** @type {string} */ job) =>
+  (jobs[job] ?? "")
+    .slice(jobs[job].indexOf("    steps:\n") + "    steps:\n".length)
+    .split(/\n(?=      - )/)
+    .map((s) => s.trimEnd());
+const steps = [...stepsOf("map"), ...stepsOf("publish")];
 
 test("it is only callable", () => {
   const on = text.slice(text.indexOf("\non:\n"), text.indexOf("\npermissions:"));
@@ -36,6 +44,10 @@ test("every action is pinned to a full commit sha, and checkout keeps no credent
 test("the token writes contents only, and only the publish step holds it", () => {
   assert.match(text, /\npermissions:\n {2}contents: read\n/);
   assert.deepEqual([...code.matchAll(/(\S+): write\b/g)].map((m) => m[1]), ["contents"]);
+  assert.match(jobs.map ?? "", /permissions:\n {6}contents: read\n/);
+  assert.match(jobs.publish ?? "", /permissions:\n {6}contents: write\n/);
+  // The job with the write runs none of the caller's code: no checkout, no install, no input run as a command.
+  assert.doesNotMatch(jobs.publish ?? "", /checkout|setup-node|inputs\./);
   const holders = steps.filter((s) => /github\.token|secrets\./.test(s)).map((s) => /name: (.*)/.exec(s)?.[1]);
   assert.deepEqual(holders, ["Publish to the code-map branch"]);
 });

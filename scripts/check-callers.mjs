@@ -12,7 +12,8 @@
 import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
-const SHARED = /^\s*uses:\s*(?<repo>[\w.-]+)\/devkit\/\.github\/workflows\/(?<file>[\w.-]+)@(?<ref>\S+)/;
+// A quoted value is the same value to YAML, so a quote around it is read through.
+const SHARED = /^\s*uses:\s*["']?(?<repo>[\w.-]+)\/devkit\/\.github\/workflows\/(?<file>[\w.-]+)@(?<ref>[^\s"']+)/;
 
 /**
  * @param {string} text
@@ -32,7 +33,7 @@ export function callerProblems(text) {
         problems.push({ line: index + 1, problem: `pinned to "${call.groups.ref}", not a full 40-character commit sha` });
       }
     }
-    if (/^\s*secrets:\s*inherit\s*$/.test(line)) {
+    if (/^\s*secrets:\s*(["']?)inherit\1\s*$/.test(line)) {
       problems.push({ line: index + 1, problem: "secrets: inherit hides what the shared workflow receives; pass each secret by name" });
     }
   });

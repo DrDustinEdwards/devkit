@@ -47,15 +47,18 @@ test("every table is emptied, including one no list names, and the schema stays"
   assert.equal(count(db, "people"), 1);
 });
 
-test("a full-text table is emptied through itself, its shadow tables left to it, and it still searches", async () => {
+test("a full-text table is emptied through itself, its shadow tables left to it, and it still searches; a real table named like a shadow is cleared", async () => {
   const db = d1();
   db.sqlite.exec(`
     CREATE VIRTUAL TABLE items_fts USING fts5 (title, body);
     INSERT INTO items_fts VALUES ('one', 'phage capsid');
+    CREATE TABLE items_fts_log (id INTEGER PRIMARY KEY);
+    INSERT INTO items_fts_log VALUES (1);
   `);
   const cleared = await resetDb(db);
-  assert.deepEqual(cleared, ["items_fts"]);
+  assert.deepEqual(cleared, ["items_fts", "items_fts_log"]);
   assert.equal(count(db, "items_fts"), 0);
+  assert.equal(count(db, "items_fts_log"), 0);
   db.sqlite.exec("INSERT INTO items_fts VALUES ('two', 'capsomer')");
   assert.deepEqual(db.sqlite.prepare("SELECT title FROM items_fts WHERE items_fts MATCH 'capsomer'").all().map((r) => r.title), ["two"]);
 });
