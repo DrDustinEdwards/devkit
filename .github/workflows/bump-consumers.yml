@@ -1,6 +1,6 @@
 name: bump-consumers
 
-# THE RELEASE SIDE OF "OWN PACKAGES ARRIVE AT ONCE" (job_3b09752450c1). default.json lets a release of
+# THE RELEASE SIDE OF "OWN PACKAGES ARRIVE AT ONCE". default.json lets a release of
 # one of Dustin's packages open its pull request with no cooldown and no schedule, but Renovate only
 # looks when it runs. This workflow makes it run, in every repository that depends on the package,
 # the moment the package is tagged.

@@ -1,8 +1,7 @@
 // A fake of Cloudflare Access as an OIDC provider (Access for SaaS), as a login callback reaches it: the token endpoint,
 // answering with an RS256 ID token signed by a key made here, and the JWKS endpoint serving that key's public half.
-// Taken from capsid's test-integration/access-stub.ts (design-shared-tests.md, section 1), with the issuer, the audience
-// and the claims as parameters, vitest's spy replaced by the shared fetch swap, and capsid's own client-metadata routes
-// left to a `fallback` the caller passes.
+// The issuer, the audience and the claims are parameters; any other route the code under test needs is left to a
+// `fallback` the caller passes.
 //
 // An unknown URL THROWS, so a sign-in cannot fall through to the real Access. The token is really signed and the JWKS
 // really serves its key, so the code under test verifies it exactly as it verifies Access's.

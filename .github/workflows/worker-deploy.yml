@@ -1,9 +1,8 @@
 name: worker-deploy
 
-# DEPLOY A CLOUDFLARE WORKER, VERIFY IT LIVE, AND ROLL IT BACK WHEN THE VERIFY REFUSES IT, written once
-# (capsid docs/design/design-merge-pipeline.md section 6, PR 8; DECIDE 8, 2026-10-09). A port of capsid's own `deploy` and
-# `live` jobs (.github/workflows/ci.yml) and its scripts/rollback-guard.mjs, not a redesign: every Worker site gets what capsid
-# has, and capsid keeps its own ci.yml for now.
+# DEPLOY A CLOUDFLARE WORKER, VERIFY IT LIVE, AND ROLL IT BACK WHEN THE VERIFY REFUSES IT. The same jobs as capsid's own
+# `deploy` and `live` jobs (.github/workflows/ci.yml) and its scripts/rollback-guard.mjs, so every Worker site gets what
+# capsid has.
 #
 # TWO JOBS. `deploy` installs, runs the caller's pre-deploy guard, deploys with the pinned wrangler below and publishes the run
 # attempt it shipped in. `live gate` polls /health until it reports this run's commit, runs the caller's verify command, and on

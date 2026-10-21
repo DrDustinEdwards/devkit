@@ -1,6 +1,5 @@
 // A fake of the GitHub API for code that reads and commits files through it. Stubbed at the outbound fetch, not the
-// module, because the module calling GitHub is the subject. Taken from dustinedwards-info's test/worker/github-stub.ts
-// (design-shared-tests.md, section 1), with the owner, repository and branch as parameters.
+// module, because the module calling GitHub is the subject. The owner, repository and branch are parameters.
 //
 // An unknown host or path THROWS, so nothing can fall through to the live repository. Blob shas are REAL git blob
 // shas, or a provenance check that compares them could not fail. A tree applies only when the ref moves, so a refused

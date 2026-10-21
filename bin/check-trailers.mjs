@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // REFUSES A COMMIT WHOSE MESSAGE CARRIES AN AI ATTRIBUTION TRAILER, AND, ON A PULL REQUEST, A COMMIT AUTHORED OR COMMITTED
-// AS CLAUDE. Written once (capsid/research/design-shared-tests.md section 3, D3 and D4 of job_bf31c124055e) from capsid's
-// scripts/check-commit-trailers.mjs, which was the only copy: the same rules, and the same exits.
+// AS CLAUDE.
 //
 // The no AI trailer rule. The global attribution setting covers two of the three forms, so the repositories check it
 // themselves.

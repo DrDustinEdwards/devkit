@@ -1,11 +1,9 @@
 name: ai-author
 
-# NO AI TRAILER AND NO AI AUTHOR ON NEW COMMITS, written once (capsid/research/design-shared-tests.md section 3; D3 and D4 of
-# job_bf31c124055e). Capsid's ci.yml ran it as a step of its own and no other repository had it, so sharing it adds
-# coverage rather than removing a copy. The work is the package's bin, bin/check-trailers.mjs; this file checks out the
-# history and calls it.
+# NO AI TRAILER AND NO AI AUTHOR ON NEW COMMITS. The work is the package's bin, bin/check-trailers.mjs; this file checks out
+# the history and calls it.
 #
-# A GATE. Unlike no-bloat, it fails the run: a commit this push or pull request adds that carries Co-Authored-By naming
+# A GATE. It fails the run on a commit this push or pull request adds that carries Co-Authored-By naming
 # Claude, "Generated with Claude Code", a Claude-Session link or any other trailer naming Claude, and on a pull request a
 # commit authored or committed as Claude. Older commits are not checked. A schedule or dispatch run adds no commits and
 # checks nothing. A check that could not run is a failure, not a pass.

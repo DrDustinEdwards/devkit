@@ -2,7 +2,7 @@
 // watcher reads (src/deploy-outcomes.ts in capsid): the job "live gate", the step "Roll back the deploy this run shipped" and
 // the three ::error:: sentences. A rename here blinds the watcher, so each is asserted byte for byte.
 //
-// Two kinds of case. Text cases read the workflow as the runner reads it, as workflow-policy does. Run cases take the bash of
+// Two kinds of case. Text cases read the workflow as the runner reads it. Run cases take the bash of
 // the live gate's steps out of the file and run it, with curl, npx and sleep replaced by stubs on PATH, so a planted failing
 // verify is seen to roll back, a rerun is seen to decline, and a rollback that never moves the sha is seen to fail.
 

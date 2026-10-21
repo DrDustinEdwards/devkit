@@ -1,0 +1,87 @@
+name: worker-size
+
+# The Worker bundle size budget: `wrangler deploy --dry-run` against the budget the caller commits in .worker-size.json
+# (raw and gzip, in KiB). Over budget fails the job. The work is the package's bin, bin/worker-size.mjs, so the same check
+# runs locally with `npx devkit-worker-size`; this file only checks out, installs and calls it. No Cloudflare secret: a dry
+# run never talks to the account.
+#
+# THE BIN COMES FROM THE CALLER'S OWN INSTALL: the caller lists "@dustinedwards/devkit" in its devDependencies at a tag.
+#
+# A CALLER (examples/worker-size-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+
+on:
+  workflow_call:
+    inputs:
+      node-version-file:
+        description: The file naming the Node version, as actions/setup-node reads it.
+        required: false
+        type: string
+        default: .nvmrc
+      install:
+        description: The install command. It must install @dustinedwards/devkit.
+        required: false
+        type: string
+        default: npm ci
+      prepare:
+        description: Run after the install and before the check, e.g. a build, or copying wrangler.jsonc.example to wrangler.jsonc. Empty for none.
+        required: false
+        type: string
+        default: ""
+      working-directory:
+        description: Where the Worker's wrangler config lives, relative to the repository root.
+        required: false
+        type: string
+        default: .
+      config:
+        description: The budget file, relative to working-directory (see bin/worker-size.mjs).
+        required: false
+        type: string
+        default: .worker-size.json
+      timeout-minutes:
+        required: false
+        type: number
+        default: 10
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Worker bundle size
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          cache: npm
+
+      - name: Install
+        env:
+          INSTALL: ${{ inputs.install }}
+        run: bash -euo pipefail -c "$INSTALL"
+
+      - name: Prepare
+        if: inputs.prepare != ''
+        env:
+          PREPARE: ${{ inputs.prepare }}
+        run: bash -euo pipefail -c "$PREPARE"
+
+      - name: Check
+        env:
+          CONFIG: ${{ inputs.config }}
+          WORKDIR: ${{ inputs.working-directory }}
+        run: |
+          bin="$PWD/node_modules/@dustinedwards/devkit/bin/worker-size.mjs"
+          if [ ! -f "$bin" ]; then
+            echo "::error::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README)."
+            exit 1
+          fi
+          cd "$WORKDIR"
+          node "$bin" --config "$CONFIG"

@@ -1,6 +1,6 @@
 // Runs the script of bump-consumers.yml exactly as actions/github-script runs it (an async function of github, context,
 // core and process), against a stub of the GitHub API, so the consumer rule and the checkbox edit are tested as they ship.
-// Text based on purpose, like workflow-policy.test.mjs: the workflow is read as the runner reads it.
+// Text based on purpose: the workflow is read as the runner reads it.
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
