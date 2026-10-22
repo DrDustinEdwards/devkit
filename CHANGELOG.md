@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Renovate preset: `platformAutomerge` is false. The new "Protect main" rulesets require a pull request and no status check, so GitHub's native auto-merge would merge before CI. Renovate's own automerge waits for green checks.
 - `worker-size.yml` takes `package-manager: pnpm` (pnpm set up from the caller's packageManager field, its store cached, `pnpm install --frozen-lockfile` by default) and finds the devkit bin in the Worker's own directory before the root.
 - `code-map.yml` is two jobs: `map` runs the caller's install, tests and Stryker with `contents: read` and hands the files over as an artifact; `publish` holds the write and runs none of the caller's code. A `code-map` branch that exists but cannot be read now fails the run instead of being overwritten without its `mutation.json`.
 - `devkit-no-bloat`: a tool that cannot run fails the run (it was a warning).
