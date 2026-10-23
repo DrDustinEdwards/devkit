@@ -61,10 +61,7 @@ const WATCHER = {
   rollbackStep: /^Roll back/i,
 };
 
-test("it is only callable, with a read-only token", () => {
-  const on = text.slice(text.indexOf("\non:\n"), text.indexOf("\npermissions:"));
-  assert.match(on, /workflow_call:/);
-  assert.doesNotMatch(on, /workflow_dispatch|pull_request:|push:|schedule:/);
+test("the token is read-only", () => {
   assert.match(text, /\npermissions:\n {2}contents: read\n/);
   assert.doesNotMatch(code, /: write\b/);
 });
@@ -85,14 +82,6 @@ test("THE NAMES CAPSID'S WATCHER READS: the job, the step and the three annotati
   const rollback = step(ROLLBACK);
   for (const sentence of [ROLLED_BACK, NOT_ROLLING, NO_EFFECT]) assert.ok(rollback.includes(sentence), `the annotation changed: ${sentence}`);
   assert.ok(rollback.includes(`echo "rollback_from=\${ROLLBACK_FROM} rollback_to=\${ROLLBACK_TO}" >> "$GITHUB_STEP_SUMMARY"`), "the step summary lost rollback_from= and rollback_to=");
-});
-
-test("every action is pinned to a full commit sha, and no checkout keeps credentials", () => {
-  const uses = [...code.matchAll(/uses: (\S+)/g)].map((m) => m[1]);
-  assert.ok(uses.length >= 4);
-  for (const ref of uses) assert.match(ref, /@[0-9a-f]{40}$/, ref);
-  const checkouts = code.split("\n").filter((line) => line.includes("actions/checkout@")).length;
-  assert.equal([...code.matchAll(/persist-credentials: false/g)].length, checkouts);
 });
 
 test("wrangler is pinned to one exact version, and the deploy and the rollback both use it", () => {

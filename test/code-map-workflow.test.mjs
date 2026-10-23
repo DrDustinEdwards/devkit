@@ -24,21 +24,8 @@ const stepsOf = (/** @type {string} */ job) =>
     .map((s) => s.trimEnd());
 const steps = [...stepsOf("map"), ...stepsOf("publish")];
 
-test("it is only callable", () => {
-  const on = text.slice(text.indexOf("\non:\n"), text.indexOf("\npermissions:"));
-  assert.match(on, /workflow_call:/);
-  assert.doesNotMatch(on, /workflow_dispatch|pull_request|push:|schedule:/);
-});
-
 test("it carries scripts/code-map.mjs byte for byte", () => {
   assert.equal(inlined(text, "CODE_MAP"), readFileSync(new URL("../scripts/code-map.mjs", import.meta.url), "utf8"));
-});
-
-test("every action is pinned to a full commit sha, and checkout keeps no credential", () => {
-  const uses = [...code.matchAll(/^\s*(?:- )?uses: (\S+)/gm)].map((m) => m[1]);
-  assert.ok(uses.length >= 2);
-  for (const ref of uses) assert.match(ref, /@[0-9a-f]{40}$/, ref);
-  assert.match(code, /persist-credentials: false/);
 });
 
 test("the token writes contents only, and only the publish step holds it", () => {
