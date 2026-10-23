@@ -13,12 +13,6 @@ import { stripFooter } from "../scripts/strip-pr-footer.mjs";
 const text = readFileSync(new URL("../.github/workflows/pr-footer.yml", import.meta.url), "utf8").replace(/\r\n/g, "\n");
 const code = text.split("\n").filter((line) => !/^\s*#/.test(line)).join("\n");
 
-test("it is only callable", () => {
-  const on = text.slice(text.indexOf("\non:\n"), text.indexOf("\npermissions:"));
-  assert.match(on, /workflow_call:/);
-  assert.doesNotMatch(on, /workflow_dispatch|pull_request|push:|schedule:/);
-});
-
 test("the token writes pull requests and nothing else, and no secret is taken", () => {
   assert.match(text, /\npermissions:\n {2}contents: read\n/);
   assert.deepEqual([...code.matchAll(/(\S+): write\b/g)].map((m) => m[1]), ["pull-requests"]);

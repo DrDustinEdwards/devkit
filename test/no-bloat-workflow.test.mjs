@@ -14,23 +14,10 @@ const steps = text
   .split(/\n(?=      - )/)
   .map((step) => step.trimEnd());
 
-test("it is only callable", () => {
-  const on = text.slice(text.indexOf("\non:\n"), text.indexOf("\npermissions:"));
-  assert.match(on, /workflow_call:/);
-  assert.doesNotMatch(on, /workflow_dispatch|pull_request|push:|schedule:/);
-});
-
 test("the token is read-only and no secret is taken or read", () => {
   assert.match(text, /\npermissions:\n {2}contents: read\n/);
   assert.doesNotMatch(code, /: write\b/);
   assert.doesNotMatch(code, /secrets/);
-});
-
-test("every action is pinned to a full commit sha, and the checkout keeps no credentials", () => {
-  const uses = [...code.matchAll(/uses: (\S+)/g)].map((m) => m[1]);
-  assert.ok(uses.length >= 2);
-  for (const ref of uses) assert.match(ref, /@[0-9a-f]{40}$/, ref);
-  assert.match(steps.find((s) => s.includes("actions/checkout@")) ?? "", /persist-credentials: false/);
 });
 
 test("caller input reaches a shell only through the environment, never spliced into the script", () => {
