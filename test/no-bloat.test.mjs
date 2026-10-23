@@ -157,13 +157,20 @@ test("end to end: --write-baseline records the counts, a later run that grew fai
   }
 });
 
-test("end to end: a tool that fails is an error and exit 1; --write-baseline refuses to record a partial baseline", { skip: process.platform === "win32" }, () => {
+test("end to end: a tool that fails is an error and exit 1, a warning under --warn-only; --write-baseline refuses a partial baseline", { skip: process.platform === "win32" }, () => {
   const dir = scratch({ jscpdFails: true });
   try {
     const r = runBin(dir);
     assert.equal(r.status, 1);
     assert.match(r.stdout, /::error::jscpd could not run: jscpd exited 3: jscpd: boom/);
     assert.match(r.stdout, /\| knip \| Unused files \| none \| 2 \|/);
+
+    writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify({ baseline: { knip: { "Unused files": 1 } } }));
+    const warned = runBin(dir, ["--warn-only"]);
+    assert.equal(warned.status, 0, warned.stdout);
+    assert.doesNotMatch(warned.stdout, /::error::/);
+    assert.match(warned.stdout, /::warning::jscpd could not run/);
+    assert.match(warned.stdout, /::warning::knip: Unused files went from 1 to 2/);
 
     const w = runBin(dir, ["--write-baseline"]);
     assert.equal(w.status, 1);

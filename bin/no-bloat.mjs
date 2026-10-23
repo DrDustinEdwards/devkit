@@ -8,6 +8,7 @@
 //   npx devkit-no-bloat                      report against .no-bloat.json (no file: one knip run, jscpd on its own config)
 //   npx devkit-no-bloat --config <file>      another config
 //   npx devkit-no-bloat --write-baseline     measure and record the counts as the config's baseline
+//   npx devkit-no-bloat --warn-only          the same report, every error a warning, exit 0: a report, never a gate
 //
 // The config, every field optional:
 //
@@ -134,11 +135,12 @@ export function compare(baseline, counts, knipRuns = [{ label: "knip" }]) {
  * @param {Array<[string, string, number | null, number]>} rows
  * @param {string[]} problems the errors, then the warnings
  * @param {string | undefined} measuredAt
+ * @param {boolean} [warnOnly]
  */
-export function render(rows, problems, measuredAt) {
+export function render(rows, problems, measuredAt, warnOnly = false) {
   const show = (/** @type {number | null} */ n) => (n === null ? "none" : String(n));
   return [
-    `### No-bloat ratchet (${measuredAt ? `baseline ${measuredAt}` : "no baseline yet: run `npx devkit-no-bloat --write-baseline`"})`,
+    `### No-bloat ${warnOnly ? "report (warn-only, never blocks a merge)" : "ratchet"} (${measuredAt ? `baseline ${measuredAt}` : "no baseline yet: run `npx devkit-no-bloat --write-baseline`"})`,
     "",
     "| Tool | Finding | Baseline | Now |",
     "|---|---|---|---|",
@@ -190,6 +192,7 @@ function main() {
   const root = process.cwd();
   const file = resolve(root, at >= 0 && argv[at + 1] ? argv[at + 1] : ".no-bloat.json");
   const write = argv.includes("--write-baseline");
+  const warnOnly = argv.includes("--warn-only");
 
   /** @type {Config} */
   let config = {};
@@ -227,12 +230,12 @@ function main() {
   if (lowered.length) {
     warnings.push(`Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`);
   }
-  const table = render(rows, [...errors, ...warnings], config.baseline?.measured_at);
+  const table = render(rows, [...errors, ...warnings], config.baseline?.measured_at, warnOnly);
   console.log(table);
-  for (const e of errors) console.log(`::error::${e}`);
+  for (const e of errors) console.log(`::${warnOnly ? "warning" : "error"}::${e}`);
   for (const w of warnings) console.log(`::warning::${w}`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
-  if (errors.length) process.exit(1);
+  if (errors.length && !warnOnly) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.

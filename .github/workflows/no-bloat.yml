@@ -34,6 +34,11 @@ on:
         required: false
         type: string
         default: .no-bloat.json
+      warn-only:
+        description: Report only. Growth and a tool that cannot run are warnings and the job passes (devkit-no-bloat --warn-only).
+        required: false
+        type: boolean
+        default: false
       timeout-minutes:
         required: false
         type: number
@@ -73,10 +78,11 @@ jobs:
       - name: Check
         env:
           CONFIG: ${{ inputs.config }}
+          WARN_ONLY: ${{ inputs.warn-only && '--warn-only' || '' }}
         run: |
           bin=node_modules/@dustinedwards/devkit/bin/no-bloat.mjs
           if [ ! -f "$bin" ]; then
             echo "::error::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README)."
             exit 1
           fi
-          node "$bin" --config "$CONFIG"
+          node "$bin" --config "$CONFIG" $WARN_ONLY
