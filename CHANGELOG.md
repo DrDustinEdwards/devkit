@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0 (2026-10-23)
+
+- `devkit-no-bloat --warn-only`, and `warn-only` on `no-bloat.yml`: the same report with every error a warning and exit 0. It replaces the warn-only reports in carrel (`scripts/check-bloat.mjs`, `scripts/lib/bloat.mjs`) and txasm's hand-written `no-bloat.yml`.
+- `devkit-conformance` bin: the MCP conformance gate from carrel's and dustinedwards-info's `check-conformance.mjs`, with the entries, ports, scenarios and baselines in `.conformance.json`. Where the two differed it takes the stricter check: `registration_endpoint` must be exactly `<origin>/register`, an allowlisted registration must answer 201 with a `client_id` and no token, the refusal must be 400 `invalid_redirect_uri`, and `/mcp` without a token must answer 401 with `resource_metadata` (carrel's check; `auth.resourceMetadata: false` waives it for dustinedwards-info's MCP, whose challenge does not carry it today). An `after` module keeps a site's own checks (dustinedwards-info's security headers).
+- `devkit-bootstrap` bin: the postinstall from carrel's and dustinedwards-info's `bootstrap-config.mjs`, dustinedwards-info's `wrangler-types.mjs` and germomics' `run-wrangler-types.mjs`: copy each missing `wrangler*.jsonc.example`, then `wrangler types` with stdin detached. `--check` replaces each repository's `check-postinstall.mjs` scan for a bare `wrangler types`; the stdin proof is tested here once.
+
 ## 0.9.0 (2026-10-23)
 
 - `devkit-route-weight` bin: gzip JS and CSS per route for a first visit, from a React Router client build's manifest, each file counted once. Warn-only, with an optional per-route budget and a baseline that warns on growth past a ratio and a byte floor (`.route-weight.json`); a missing build fails. It replaces the route weight scripts in dustinedwards-info, txasm, foxing, foxhound, carrel and germomics.
