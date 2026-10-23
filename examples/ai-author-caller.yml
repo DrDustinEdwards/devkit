@@ -19,4 +19,4 @@ jobs:
     uses: DrDustinEdwards/devkit/.github/workflows/ai-author.yml@0000000000000000000000000000000000000000
     # Only when package.json does not list @dustinedwards/devkit:
     # with:
-    #   devkit: DrDustinEdwards/devkit#v0.7.0
+    #   devkit: DrDustinEdwards/devkit#v0.8.0
