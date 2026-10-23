@@ -19,7 +19,7 @@
 //     "mcp": { "entry": "test/conformance/entry.ts", "config": "wrangler.jsonc", "port": 8789,
 //              "persist": ".wrangler/state-conformance", "migrate": "DB", "vars": { "NAME": "value" } },
 //     "auth": { "config": "wrangler.jsonc", "port": 8791, "persist": ".wrangler/state-conformance-auth",
-//               "localUpstream": true },
+//               "localUpstream": true, "resourceMetadata": true },
 //     "stub": 8790,
 //     "scenarios": [{ "spec": "2026-07-28", "scenario": "server-stateless", "passed": 24, "total": 28, "note": "why" }],
 //     "registration": { "allowed": "https://example.com/callback" },
@@ -29,7 +29,8 @@
 // `entry` is optional (wrangler.jsonc's main otherwise). `migrate` applies that D1 binding's migrations locally first.
 // `stub` answers every request with { ok: true } on that port, a stand-in for an API the tools call. `registration.allowed`
 // is a callback /register must accept, or { "var": "NAME" } to take the first from that var in the auth config (or its
-// .example); left out, only the refusal is checked. `after` is a module whose default export runs last with
+// .example); left out, only the refusal is checked. `resourceMetadata: false` accepts a 401 from /mcp whose challenge
+// lacks resource_metadata (RFC 9728), for a server that does not advertise it yet. `after` is a module whose default export runs last with
 // { origin, pass, fail }, for the site's own checks against the auth server.
 
 import { execFileSync, spawn } from "node:child_process";
@@ -45,7 +46,7 @@ const OFF_LIST = "http://127.0.0.1:3000/callback";
 /**
  * @typedef {{ spec: string, scenario: string, passed?: number | null, total?: number | null, note?: string }} Scenario
  * @typedef {{ entry?: string, config?: string, port?: number, persist?: string, migrate?: string, vars?: Record<string, string>,
- *   localUpstream?: boolean, scenarios?: Scenario[] }} Server
+ *   localUpstream?: boolean, resourceMetadata?: boolean, scenarios?: Scenario[] }} Server
  */
 
 /** The pass count the suite printed, in either of its two summary forms; null when it printed neither. */
@@ -194,8 +195,10 @@ async function main() {
     if (refused.status === 400 && refusedBody.error === "invalid_redirect_uri") pass("POST /register refuses a callback off the allowlist (400 invalid_redirect_uri)");
     else fail(`POST /register answered ${refused.status} ${refusedBody.error ?? ""} for a callback off the allowlist`);
     const unauth = await fetch(`${origin}/mcp`, { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
-    if (unauth.status === 401 && (unauth.headers.get("www-authenticate") ?? "").includes("resource_metadata=")) pass("/mcp without a token answers 401 with a resource_metadata challenge");
-    else fail(`/mcp without a token answered ${unauth.status} (${unauth.headers.get("www-authenticate")})`);
+    const challenge = unauth.headers.get("www-authenticate") ?? "";
+    if (unauth.status === 401 && (auth.resourceMetadata === false || challenge.includes("resource_metadata="))) {
+      pass(`/mcp without a token answers 401${auth.resourceMetadata === false ? " (resource_metadata not required by this config)" : " with a resource_metadata challenge"}`);
+    } else fail(`/mcp without a token answered ${unauth.status} (${challenge})`);
 
     if (config.after) await (await import(pathToFileURL(resolve(root, config.after)).href)).default({ origin, pass, fail });
   }
