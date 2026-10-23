@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0 (2026-10-23)
+
+- `devkit-route-weight` bin: gzip JS and CSS per route for a first visit, from a React Router client build's manifest, each file counted once. Warn-only, with an optional per-route budget and a baseline that warns on growth past a ratio and a byte floor (`.route-weight.json`); a missing build fails. It replaces the route weight scripts in dustinedwards-info, txasm, foxing, foxhound, carrel and germomics.
+
 ## 0.8.0 (2026-10-23)
 
 - Renovate preset: `platformAutomerge` is false. The new "Protect main" rulesets require a pull request and no status check, so GitHub's native auto-merge would merge before CI. Renovate's own automerge waits for green checks.
