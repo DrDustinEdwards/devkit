@@ -74,12 +74,14 @@ Test code that more than one repository needs, written once here. Installed by t
 
     "@dustinedwards/devkit": "github:DrDustinEdwards/devkit#v0.8.0"
 
-Only `testing/`, `bin/` and this README are in the package. No dependencies and no test framework: they run in node and in workerd.
+Only `testing/`, `vite/`, `bin/` and this README are in the package. No dependencies and no test framework: they run in node and in workerd.
 
 - `@dustinedwards/devkit/github`: `stubGitHub({ owner, repo, branch, files })`, a fake of the GitHub contents and Git Data API at the outbound fetch. An unknown host or route throws, blob shas are real, a tree applies only when the ref moves, `failNext` plants 500s and `history` plants the commit listing. `install: false` hands back the fake as `fetch` instead of installing it globally. `gitBlobSha` and `versionOf` come with it.
 - `@dustinedwards/devkit/network`: `refuseNetwork({ hint })`, the global fetch that throws naming the URL, and `installFetch`, the swap under it and under the GitHub fake. Each returns its restore.
 
 - `@dustinedwards/devkit/d1`: `resetDb(db, { keep })`, which empties every table `sqlite_master` lists in one batch, so a table a migration adds is cleared without anyone adding it to a list. A full-text table is cleared through itself and its shadow tables are left to it; foreign keys are checked at commit, so table order does not matter; `d1_migrations`, SQLite's and D1's own tables are never touched. It returns the tables it cleared.
 - `@dustinedwards/devkit/access`: `await stubAccess({ issuer, audience, email, authorizationUrl })`, a fake of Cloudflare Access for SaaS for one sign-in. The token endpoint answers an RS256 ID token signed by a key made per stub, carrying the issuer, the audience, the email and the nonce from the authorization URL, and the JWKS serves its public half, so the code under test verifies it as it verifies Access's. `claims` adds to every token, `token(extra)` signs one directly (also what a test sends as `Cf-Access-Jwt-Assertion`, with `jwksUrl` set to the team's `/cdn-cgi/access/certs`), and `tokenRequests` holds what the token endpoint received. An unknown URL throws unless `fallback` answers it.
+
+- `@dustinedwards/devkit/vite/site-script`: `siteScript({ entry })`, a Vite plugin for a site that sends no framework to the browser. It bundles `entry` (default `app/site.ts`) into one minified classic script at `/site.js`, served per request by `vite dev` and emitted into the client build, so a CSP's `script-src 'self'` covers it. Vite comes from the site; this package still has no dependencies.
 
 An entry point is added when a repository adopts it. A release is a tag; a consumer moves to it in its own pull request.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.0 (2026-10-24)
+
+- `@dustinedwards/devkit/vite/site-script`: `siteScript({ entry })`, the Vite plugin that bundles a site's one browser module into /site.js, so the site ships no framework to the browser. It replaces the copies in julieedwards-info's and bsw's `vite.config.ts`.
+
 ## 0.11.0 (2026-10-23)
 
 - `devkit-mutation-report` bin: the StrykerJS summary from foxhound's and germomics' `scripts/report-mutation.mjs` (score, kill matrix, pruning candidates, `--table`, `--json <file>`). Each repository's keep rule is its `--protected` regex.
