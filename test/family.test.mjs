@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { checkCopies, checkFeatures, checkLibraries, checkPins, newest } from "../bin/family.mjs";
+import { checkCopies, checkFeatures, checkLibraries, checkPins, newest, respell } from "../bin/family.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -83,4 +83,22 @@ test("each app is checked for its kind's features, files belong to the deepest a
     { apps: { ".": "site", mcp: "worker" }, waive: { aiTxt: "x", tdm: "x", sitemap: "x", llms: "x", head: "x", schema: "x", indexnow: "x", securityTxt: "x", csp: "x", cspReport: "x", health: "x", capsomer: "x" } },
   );
   assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth"]);
+});
+
+test("PLANT: security.txt's fixed Expires fails the check a month before it lapses", () => {
+  const files = { "app/security-txt.ts": 'export const SECURITY_TXT_EXPIRES = "2027-09-28T00:00:00Z";' };
+  const expiry = (/** @type {number} */ now) => checkFeatures(tree(files), { apps: { ".": "worker" } }, now).filter((f) => /security\.txt/.test(f.message));
+  assert.equal(expiry(Date.parse("2027-08-01")).length, 0);
+  assert.equal(expiry(Date.parse("2027-09-01")).length, 1);
+});
+
+test("the spelling fix rewrites a word inside a name and keeps its case, but never a contract", () => {
+  const none = /$^/g;
+  assert.equal(respell("math.katexColour === colour", "colour", "color", none, true), "math.katexColor === color"); // codespell:ignore
+  assert.equal(respell("HOSTED_WITHOUT_LICENCE", "licence", "license", none, true), "HOSTED_WITHOUT_LICENSE"); // codespell:ignore
+  assert.equal(respell("normaliseTags(x)", "normalise", "normalize", none, true), "normalizeTags(x)"); // codespell:ignore
+  // A shared package's export keeps its name; the prose beside it is fixed.
+  assert.equal(respell("normaliseTags normalise", "normalise", "normalize", none, false), "normaliseTags normalize"); // codespell:ignore
+  // PLANT: the stored value stays, the word in the sentence does not.
+  assert.equal(respell('status === "cancelled" was cancelled', "cancelled", "canceled", /"cancelled"/g, true), 'status === "cancelled" was canceled'); // codespell:ignore
 });
