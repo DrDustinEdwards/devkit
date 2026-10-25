@@ -1,0 +1,57 @@
+name: family
+
+# devkit-family (bin/family.mjs) on the caller: pins behind the newest release, local copies of shared exports, libraries a
+# shared package wraps, a family feature the site lacks, and British spelling. Nothing to install: this checks out devkit
+# at the very commit the caller pinned (github.job_workflow_sha), reads each shared package at its newest tag, and runs
+# the bin with Node alone; the spelling check
+# runs codespell through pipx, which the runner has. Exceptions live in the caller's .family.json, each with a reason.
+#
+# On a Renovate branch the pin findings are warnings, so one bump never waits on another.
+#
+# A CALLER (examples/family-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+
+on:
+  workflow_call:
+    inputs:
+      timeout-minutes:
+        required: false
+        type: number
+        default: 10
+
+permissions:
+  contents: read
+
+jobs:
+  family:
+    name: In step with the family
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ github.job_workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24
+
+      # Each shared package at its newest release, so a copy is judged against what a bump would give the site.
+      - name: Read each package at its newest release tag
+        run: |
+          for repo in prelum site-runtime site-api d1-dump devkit capsomer enarratio; do
+            url="https://github.com/DrDustinEdwards/${repo}"
+            tag=$(git ls-remote --tags --refs "$url" | sed 's#.*refs/tags/##' | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+            git clone --quiet --depth 1 --branch "$tag" "$url" "$RUNNER_TEMP/packages/$repo"
+          done
+
+      - name: Check
+        run: node .devkit/bin/family.mjs --from "$RUNNER_TEMP/packages"

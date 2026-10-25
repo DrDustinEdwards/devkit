@@ -57,7 +57,7 @@ export const FEATURES = {
   llms: { kinds: SITE, find: /site-helpers\/llms["']/, use: "Prelum ./llms llmsDocument (/llms.txt)" },
   head: { kinds: SITE, find: /site-helpers\/head["']/, use: "Prelum ./head headTags (canonical, Open Graph, Twitter)" },
   schema: { kinds: SITE, find: /site-helpers\/schema["']/, use: "Prelum ./schema (JSON-LD)" },
-  indexnow: { kinds: SITE, find: /site-helpers\/indexnow["']|\bindexNow\s*:|devkit-family indexnow/, use: "Prelum ./indexnow, or site-api's indexNow option" },
+  indexnow: { kinds: SITE, find: /site-helpers\/indexnow["']|prelum-indexnow/, use: "Prelum ./indexnow submitIndexNow (site-api onPageChange on a Carrel site; prelum-indexnow after a static deploy)" },
   securityTxt: { kinds: SITE, find: /site-runtime\/security-txt["']/, use: "site-runtime ./security-txt (/.well-known/security.txt)" },
   headers: { kinds: [...PUBLIC_OR_PRIVATE, "worker"], find: /site-runtime\/headers["']/, use: "site-runtime ./headers buildSecurityHeaders" },
   csp: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/csp["']/, use: "site-runtime ./csp buildContentSecurityPolicy" },
