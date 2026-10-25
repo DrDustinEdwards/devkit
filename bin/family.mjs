@@ -320,7 +320,7 @@ export function checkFeatures(tree, config, now = Date.now()) {
  */
 export function checkSpelling(root, config, fix = false) {
   const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" }).split("\0").filter(Boolean);
-  const skip = [...(config.spelling?.skip ?? []), "*.lock", "package-lock.json", "pnpm-lock.yaml", ".family.json"];
+  const skip = [...(config.spelling?.skip ?? []), "**/*.lock", "**/package-lock.json", "**/pnpm-lock.yaml", ".family.json"];
   const targets = files.filter((f) => !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) && !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f));
   // Names other tools own: GitHub Actions' cancelled(), Renovate's minimumReleaseAgeBehaviour, and ARIA's labelledby as a
   // camelCase name (labelledBy, ariaLabelledByElements). codespell:ignore
