@@ -1,0 +1,3 @@
+{
+  "copies": { "bin/family.mjs": "the fingerprints the check looks for are written here" }
+}

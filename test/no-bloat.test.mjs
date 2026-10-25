@@ -51,7 +51,7 @@ test("with no config: one knip run, jscpd on the root unless the repository has 
   assert.equal(configured.calls[1][1][0], "--reporters");
 });
 
-test("each knip run is labelled and passes its own arguments; jscpd's arguments come before the report flags", () => {
+test("each knip run is labeled and passes its own arguments; jscpd's arguments come before the report flags", () => {
   const { run, calls } = fakeRun();
   const { counts } = measure(
     { knip: [{ label: "knip (Worker)" }, { label: "knip (dashboard)", args: ["--directory", "dashboard"] }], jscpd: { args: ["app", "--min-lines", "8"] } },
