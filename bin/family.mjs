@@ -23,7 +23,10 @@
 //     "waive": { "indexnow": "why", "mcp:health": "why" }, a feature this repository does not need, and why
 //     "copies": { "app/lib/og.ts": "why" },               a file allowed to hold a copy, and why
 //     "libraries": { "katex": "why" },                    a direct dependency allowed, and why
-//     "spelling": { "ignore": ["word"], "skip": ["frame/**"] }      words that are data contracts; paths not checked
+//     "spelling": { "ignore": ["word"], "contracts": ["regex"], "skip": ["frame/**"] }
+//                                                         words never checked; text a regex matches (a stored value, a
+//                                                         column) left as it is, while the same word in prose is fixed;
+//                                                         paths not checked
 //   }
 //
 // On a Renovate branch (GITHUB_HEAD_REF renovate/...) the pin findings are warnings: a bump of one package must not fail
@@ -115,7 +118,7 @@ const NOT_SOURCE = /(^|\/)(node_modules|dist|build|coverage|test|tests|e2e|__tes
 /**
  * @typedef {"site" | "static" | "private" | "worker" | "package"} Kind
  * @typedef {{ apps?: Record<string, Kind>, waive?: Record<string, string>, copies?: Record<string, string>,
- *   libraries?: Record<string, string>, spelling?: { ignore?: string[], skip?: string[] } }} Config
+ *   libraries?: Record<string, string>, spelling?: { ignore?: string[], contracts?: string[], skip?: string[] } }} Config
  * @typedef {{ check: string, file?: string, line?: number, message: string, warn?: boolean }} Finding
  * @typedef {{ files: string[], read: (file: string) => string }} Tree
  * @typedef {Record<string, string>} Catalog   export name -> "package subpath"
@@ -311,7 +314,8 @@ export function checkSpelling(root, config, fix = false) {
   const targets = files.filter((f) => !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) && !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f));
   // Names other tools own: GitHub Actions' cancelled(), Renovate's minimumReleaseAgeBehaviour, and ARIA's labelledby as a
   // camelCase name (labelledBy, ariaLabelledByElements). codespell:ignore
-  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b|[lL]abelledBy`]; // codespell:ignore
+  const ignoreRegex = [String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b|[lL]abelledBy`, ...(config.spelling?.contracts ?? [])].join("|"); // codespell:ignore
+  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", ignoreRegex];
   if (config.spelling?.ignore?.length) args.push("--ignore-words-list", config.spelling.ignore.join(","));
   // The check reads each part of a camelCase or CONSTANT_CASE name as a word, since a British name is spelling too. The
   // fix rewrites whole words only: renaming an export breaks every site that imports it, so a name is renamed by hand,
