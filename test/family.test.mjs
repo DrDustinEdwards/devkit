@@ -84,3 +84,10 @@ test("each app is checked for its kind's features, files belong to the deepest a
   );
   assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth"]);
 });
+
+test("PLANT: security.txt's fixed Expires fails the check a month before it lapses", () => {
+  const files = { "app/security-txt.ts": 'export const SECURITY_TXT_EXPIRES = "2027-09-28T00:00:00Z";' };
+  const expiry = (/** @type {number} */ now) => checkFeatures(tree(files), { apps: { ".": "worker" } }, now).filter((f) => /security\.txt/.test(f.message));
+  assert.equal(expiry(Date.parse("2027-08-01")).length, 0);
+  assert.equal(expiry(Date.parse("2027-09-01")).length, 1);
+});

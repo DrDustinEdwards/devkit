@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.1 (2026-10-25)
+
+- `devkit-family` fails a month before security.txt lapses: a fixed `SECURITY_TXT_EXPIRES` is the prompt to confirm the address still delivers and move the date on. It replaces dustinedwards.info's own test of it.
+- `bytesToBase64` and `base64ToBytes` are known local names for site-runtime's `toBase64` and `fromBase64`.
+- A shared package's peer dependency (Prelum's render packs) passes the libraries check, `.family.json` `"spelling"."contracts"` keeps a stored value's spelling while the prose around it is fixed, and ARIA's `labelledBy` is not British spelling.
+
 ## 0.13.0 (2026-10-25)
 
 - `devkit-family` bin, the family check every site and package runs in CI. It fails on a shared package or devkit workflow pinned behind its newest release tag or to a raw commit; a local definition named like a shared export (or a known alias, such as `themeFromRequest` for Capsomer's `readThemeCookie`); text only a shared builder writes (`User-agent:`, `<urlset`, an IndexNow POST, `Contact: mailto:`); a direct dependency on a library a shared package wraps (marked, remark, mermaid, sanitize-html, jose...); a family feature missing for the app's kind (robots.txt, ai.txt, sitemap, llms.txt, head tags, JSON-LD, the TDM header, IndexNow, security.txt, security headers, CSP and its reports, /health, Capsomer, and the nightly dump for a D1 database); and British spelling (codespell's en-GB to en-US list). Exceptions live in `.family.json`, each with its reason. `devkit-family list` writes the list of every shared export. A repository runs it with the new reusable `family.yml` (`examples/family-caller.yml`), with nothing to install.

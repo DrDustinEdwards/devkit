@@ -107,6 +107,8 @@ export const ALIASES = {
   getThemeCookie: "readThemeCookie",
   serializeThemeCookie: "themeCookie",
   buildSecurityTxt: "securityTxt",
+  bytesToBase64: "toBase64",
+  base64ToBytes: "fromBase64",
 };
 
 // Single words too common to flag on name alone; compound names (escapeHtml, jsonLd) are distinctive, except these.
@@ -280,7 +282,7 @@ export function checkLibraries(tree, config, peers = {}) {
  * @param {Tree} tree @param {Config} config
  * @returns {Finding[]}
  */
-export function checkFeatures(tree, config) {
+export function checkFeatures(tree, config, now = Date.now()) {
   /** @type {Finding[]} */
   const found = [];
   const apps = Object.entries(config.apps ?? { ".": "site" });
@@ -294,6 +296,14 @@ export function checkFeatures(tree, config) {
     for (const [feature, { kinds, find, use }] of Object.entries(FEATURES)) {
       if (!kinds.includes(kind) || config.waive?.[`${prefix}${feature}`] || find.test(text)) continue;
       found.push({ check: "features", file: dir, message: `${kind} ${dir === "." ? "" : `${dir} `}has no ${feature}: ${use}` });
+    }
+    // security.txt's Expires is a fixed date, so somebody confirms the address still works before it lapses; this is the
+    // reminder, a month ahead.
+    for (const f of mine.filter((file) => SOURCE.test(file))) {
+      const m = /\bSECURITY_TXT_EXPIRES\s*=\s*["'`]([^"'`]+)["'`]/.exec(tree.read(f));
+      if (m && Date.parse(m[1]) - now < 30 * 86_400_000) {
+        found.push({ check: "features", file: f, message: `security.txt expires ${m[1]}: confirm its contact still delivers, then move SECURITY_TXT_EXPIRES on (under a year)` });
+      }
     }
     const d1 = mine.some((f) => /(^|\/)wrangler[^/]*\.jsonc?(\.example)?$/.test(f) && /"d1_databases"/.test(tree.read(f)));
     if (d1 && kind !== "package" && !config.waive?.[`${prefix}backup`] && !BACKUP.find.test(text)) {
