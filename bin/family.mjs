@@ -23,7 +23,7 @@
 //     "waive": { "indexnow": "why", "mcp:health": "why" }, a feature this repository does not need, and why
 //     "copies": { "app/lib/og.ts": "why" },               a file allowed to hold a copy, and why
 //     "libraries": { "katex": "why" },                    a direct dependency allowed, and why
-//     "spelling": { "ignore": ["cancelled"], "skip": ["frame/**"] }   words that are data contracts; paths not checked
+//     "spelling": { "ignore": ["word"], "skip": ["frame/**"] }      words that are data contracts; paths not checked
 //   }
 //
 // On a Renovate branch (GITHUB_HEAD_REF renovate/...) the pin findings are warnings: a bump of one package must not fail
@@ -306,10 +306,13 @@ export function checkSpelling(root, config, fix = false) {
   const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" }).split("\0").filter(Boolean);
   const skip = [...(config.spelling?.skip ?? []), "*.lock", "package-lock.json", "pnpm-lock.yaml", ".family.json"];
   const targets = files.filter((f) => !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) && !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f));
-  // GitHub Actions' cancelled() is a function name the spelling cannot change.
-  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", String.raw`\bcancelled\\?\(`];
+  // Names other tools own: GitHub Actions' cancelled() and Renovate's minimumReleaseAgeBehaviour. codespell:ignore
+  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b`]; // codespell:ignore
   if (config.spelling?.ignore?.length) args.push("--ignore-words-list", config.spelling.ignore.join(","));
-  if (fix) args.push("--write-changes");
+  // The check reads each part of a camelCase or CONSTANT_CASE name as a word, since a British name is spelling too. The
+  // fix rewrites whole words only: renaming an export breaks every site that imports it, so a name is renamed by hand,
+  // keeping the old one as an alias.
+  args.push(...(fix ? ["--write-changes"] : ["--regex", "[A-Z]?[a-z]+|[A-Z]+(?![a-z])"]));
   /** @type {Finding[]} */
   const found = [];
   for (let i = 0; i < targets.length; i += 400) {
@@ -442,6 +445,8 @@ function main(/** @type {string[]} */ argv) {
   const self = PACKAGES.find((p) => p.name === JSON.parse(readFileSync(join(root, "package.json"), "utf8")).name);
   if (self) config.apps ??= { ".": "package" };
   const { catalog } = readCatalog((name, repo) => (repo === self?.repo ? null : locate(name, repo)));
+  // A name the package exports itself is its own API, even when another package exports a different thing by that name.
+  if (self) for (const name of Object.keys(readCatalog((_, repo) => (repo === self.repo ? root : null)).catalog)) delete catalog[name];
   const lenient = (process.env.GITHUB_HEAD_REF ?? "").startsWith("renovate/");
   const findings = [
     ...checkPins(tree, lsRemoteTags, lenient),
