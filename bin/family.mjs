@@ -306,8 +306,9 @@ export function checkSpelling(root, config, fix = false) {
   const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" }).split("\0").filter(Boolean);
   const skip = [...(config.spelling?.skip ?? []), "*.lock", "package-lock.json", "pnpm-lock.yaml", ".family.json"];
   const targets = files.filter((f) => !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) && !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f));
-  // Names other tools own: GitHub Actions' cancelled() and Renovate's minimumReleaseAgeBehaviour. codespell:ignore
-  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b`]; // codespell:ignore
+  // Names other tools own: GitHub Actions' cancelled(), Renovate's minimumReleaseAgeBehaviour, and ARIA's labelledby as a
+  // camelCase name (labelledBy, ariaLabelledByElements). codespell:ignore
+  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b|[lL]abelledBy`]; // codespell:ignore
   if (config.spelling?.ignore?.length) args.push("--ignore-words-list", config.spelling.ignore.join(","));
   // The check reads each part of a camelCase or CONSTANT_CASE name as a word, since a British name is spelling too. The
   // fix rewrites whole words only: renaming an export breaks every site that imports it, so a name is renamed by hand,
