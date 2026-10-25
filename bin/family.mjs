@@ -251,19 +251,22 @@ export function checkCopies(tree, catalog, config, self) {
 }
 
 /**
- * Direct dependencies on libraries a shared package wraps.
- * @param {Tree} tree @param {Config} config
+ * Direct dependencies on libraries a shared package wraps. A library that a shared package the manifest depends on
+ * lists as a peer (Prelum's render packs) is that package's install, not a second job, and passes.
+ * @param {Tree} tree @param {Config} config @param {Record<string, string[]>} [peers] package name -> its peer dependencies
  * @returns {Finding[]}
  */
-export function checkLibraries(tree, config) {
+export function checkLibraries(tree, config, peers = {}) {
   /** @type {Finding[]} */
   const found = [];
   for (const file of tree.files.filter((f) => posix.basename(f) === "package.json")) {
     const manifest = JSON.parse(tree.read(file));
     if (PACKAGES.some((p) => p.name === manifest.name)) continue;
-    for (const dep of Object.keys({ ...manifest.dependencies, ...manifest.devDependencies })) {
+    const deps = { ...manifest.dependencies, ...manifest.devDependencies };
+    const asked = new Set(Object.keys(deps).flatMap((d) => peers[d] ?? []));
+    for (const dep of Object.keys(deps)) {
       const lib = LIBRARIES.find((l) => l.find.test(dep));
-      if (lib && !config.libraries?.[dep]) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .family.json "libraries"` });
+      if (lib && !asked.has(dep) && !config.libraries?.[dep]) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .family.json "libraries"` });
     }
   }
   return found;
@@ -427,6 +430,17 @@ function gitTree(/** @type {string} */ root) {
   };
 }
 
+/** Each located shared package's peer dependencies. @param {(name: string, repo: string) => string | null} locate */
+function peersOf(locate) {
+  /** @type {Record<string, string[]>} */
+  const peers = {};
+  for (const p of PACKAGES) {
+    const dir = locate(p.name, p.repo);
+    if (dir) peers[p.name] = Object.keys(JSON.parse(readFileSync(join(dir, "package.json"), "utf8")).peerDependencies ?? {});
+  }
+  return peers;
+}
+
 function main(/** @type {string[]} */ argv) {
   const root = process.cwd();
   const from = argv.includes("--from") ? argv[argv.indexOf("--from") + 1] : null;
@@ -452,7 +466,7 @@ function main(/** @type {string[]} */ argv) {
   const findings = [
     ...checkPins(tree, lsRemoteTags, lenient),
     ...checkCopies(tree, catalog, config, self?.label),
-    ...checkLibraries(tree, config),
+    ...checkLibraries(tree, config, peersOf(locate)),
     ...checkFeatures(tree, config),
     ...checkSpelling(root, config, argv.includes("--fix-spelling")),
   ];
