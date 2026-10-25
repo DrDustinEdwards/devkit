@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Summarises a StrykerJS run. Measurement only: it merges every mutation JSON in the report directory (one per chunk, or
+// Summarizes a StrykerJS run. Measurement only: it merges every mutation JSON in the report directory (one per chunk, or
 // mutation.json for a single run), prints the score and the pruning candidates, and deletes and decides nothing.
 //
 //   npx devkit-mutation-report --protected <regex> [--dir reports/mutation] [--table] [--json <file>]

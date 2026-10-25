@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.0 (2026-10-25)
+
+- `devkit-family` bin, the family check every site and package runs in CI. It fails on a shared package or devkit workflow pinned behind its newest release tag or to a raw commit; a local definition named like a shared export (or a known alias, such as `themeFromRequest` for Capsomer's `readThemeCookie`); text only a shared builder writes (`User-agent:`, `<urlset`, an IndexNow POST, `Contact: mailto:`); a direct dependency on a library a shared package wraps (marked, remark, mermaid, sanitize-html, jose...); a family feature missing for the app's kind (robots.txt, ai.txt, sitemap, llms.txt, head tags, JSON-LD, the TDM header, IndexNow, security.txt, security headers, CSP and its reports, /health, Capsomer, and the nightly dump for a D1 database); and British spelling (codespell's en-GB to en-US list). Exceptions live in `.family.json`, each with its reason. `devkit-family list` writes the list of every shared export.
+- `shared-list.yml`: every hour, SHARED.md from the newest release of each shared package, on the `shared-list` branch.
+
 ## 0.12.0 (2026-10-24)
 
 - `@dustinedwards/devkit/vite/site-script`: `siteScript({ entry })`, the Vite plugin that bundles a site's one browser module into /site.js, so the site ships no framework to the browser. It replaces the copies in julieedwards-info's and bsw's `vite.config.ts`.

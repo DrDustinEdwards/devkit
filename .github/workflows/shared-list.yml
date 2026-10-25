@@ -1,0 +1,59 @@
+name: shared-list
+
+# THE GENERATED LIST OF WHAT THE SHARED PACKAGES DO. Every hour (and after each push to main), each shared package is read at
+# its newest release tag and `devkit-family list` writes SHARED.md: every family feature and what provides it, then every
+# package's subpaths and the names each exports. It is published to the shared-list branch, as code-map.json is to code-map,
+# so it never needs a pull request and is never more than an hour behind a release:
+#
+#   https://github.com/DrDustinEdwards/devkit/blob/shared-list/SHARED.md
+#
+# Sessions read it before writing anything a site might share; devkit-family's failure messages point to it.
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: shared-list
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - name: Read each package at its newest release tag
+        run: |
+          mkdir -p "$RUNNER_TEMP/packages"
+          for repo in prelum site-runtime site-api d1-dump devkit capsomer enarratio; do
+            url="https://github.com/DrDustinEdwards/${repo}"
+            tag=$(git ls-remote --tags --refs "$url" | sed 's#.*refs/tags/##' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+            git clone --quiet --depth 1 --branch "$tag" "$url" "$RUNNER_TEMP/packages/$repo"
+          done
+      - name: Write SHARED.md
+        run: node bin/family.mjs list --from "$RUNNER_TEMP/packages" > "$RUNNER_TEMP/SHARED.md"
+      - name: Publish it to the shared-list branch when it changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git fetch --quiet --depth 1 origin shared-list; then git checkout --quiet -B shared-list FETCH_HEAD; else git checkout --quiet --orphan shared-list && git rm -rfq .; fi
+          cp "$RUNNER_TEMP/SHARED.md" SHARED.md
+          git add SHARED.md
+          if git diff --cached --quiet; then echo "SHARED.md is current."; exit 0; fi
+          git commit --quiet -m "SHARED.md from the newest release of each shared package"
+          git push --quiet origin shared-list

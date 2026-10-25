@@ -102,7 +102,7 @@
       "automerge": false
     },
     {
-      "description": "The framework and the Cloudflare tooling automerge on patch and minor, and never on major. React Router 8 breaks only in majors, behind future flags, so a minor cannot change behaviour the app has not opted into; the Cloudflare plugins and types are build and test plumbing that CI exercises in full, so a green run is the whole claim. Majors fall through to the floor above and stay human-merged.",
+      "description": "The framework and the Cloudflare tooling automerge on patch and minor, and never on major. React Router 8 breaks only in majors, behind future flags, so a minor cannot change behavior the app has not opted into; the Cloudflare plugins and types are build and test plumbing that CI exercises in full, so a green run is the whole claim. Majors fall through to the floor above and stay human-merged.",
       "matchPackageNames": [
         "react-router",
         "@react-router/**",
