@@ -23,7 +23,10 @@
 //     "waive": { "indexnow": "why", "mcp:health": "why" }, a feature this repository does not need, and why
 //     "copies": { "app/lib/og.ts": "why" },               a file allowed to hold a copy, and why
 //     "libraries": { "katex": "why" },                    a direct dependency allowed, and why
-//     "spelling": { "ignore": ["word"], "skip": ["frame/**"] }      words that are data contracts; paths not checked
+//     "spelling": { "ignore": ["word"], "contracts": ["regex"], "skip": ["frame/**"] }
+//                                                         words never checked; text a regex matches (a stored value, a
+//                                                         column) left as it is, while the same word in prose is fixed;
+//                                                         paths not checked
 //   }
 //
 // On a Renovate branch (GITHUB_HEAD_REF renovate/...) the pin findings are warnings: a bump of one package must not fail
@@ -115,7 +118,7 @@ const NOT_SOURCE = /(^|\/)(node_modules|dist|build|coverage|test|tests|e2e|__tes
 /**
  * @typedef {"site" | "static" | "private" | "worker" | "package"} Kind
  * @typedef {{ apps?: Record<string, Kind>, waive?: Record<string, string>, copies?: Record<string, string>,
- *   libraries?: Record<string, string>, spelling?: { ignore?: string[], skip?: string[] } }} Config
+ *   libraries?: Record<string, string>, spelling?: { ignore?: string[], contracts?: string[], skip?: string[] } }} Config
  * @typedef {{ check: string, file?: string, line?: number, message: string, warn?: boolean }} Finding
  * @typedef {{ files: string[], read: (file: string) => string }} Tree
  * @typedef {Record<string, string>} Catalog   export name -> "package subpath"
@@ -251,19 +254,22 @@ export function checkCopies(tree, catalog, config, self) {
 }
 
 /**
- * Direct dependencies on libraries a shared package wraps.
- * @param {Tree} tree @param {Config} config
+ * Direct dependencies on libraries a shared package wraps. A library that a shared package the manifest depends on
+ * lists as a peer (Prelum's render packs) is that package's install, not a second job, and passes.
+ * @param {Tree} tree @param {Config} config @param {Record<string, string[]>} [peers] package name -> its peer dependencies
  * @returns {Finding[]}
  */
-export function checkLibraries(tree, config) {
+export function checkLibraries(tree, config, peers = {}) {
   /** @type {Finding[]} */
   const found = [];
   for (const file of tree.files.filter((f) => posix.basename(f) === "package.json")) {
     const manifest = JSON.parse(tree.read(file));
     if (PACKAGES.some((p) => p.name === manifest.name)) continue;
-    for (const dep of Object.keys({ ...manifest.dependencies, ...manifest.devDependencies })) {
+    const deps = { ...manifest.dependencies, ...manifest.devDependencies };
+    const asked = new Set(Object.keys(deps).flatMap((d) => peers[d] ?? []));
+    for (const dep of Object.keys(deps)) {
       const lib = LIBRARIES.find((l) => l.find.test(dep));
-      if (lib && !config.libraries?.[dep]) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .family.json "libraries"` });
+      if (lib && !asked.has(dep) && !config.libraries?.[dep]) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .family.json "libraries"` });
     }
   }
   return found;
@@ -306,8 +312,10 @@ export function checkSpelling(root, config, fix = false) {
   const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" }).split("\0").filter(Boolean);
   const skip = [...(config.spelling?.skip ?? []), "*.lock", "package-lock.json", "pnpm-lock.yaml", ".family.json"];
   const targets = files.filter((f) => !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) && !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f));
-  // Names other tools own: GitHub Actions' cancelled() and Renovate's minimumReleaseAgeBehaviour. codespell:ignore
-  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b`]; // codespell:ignore
+  // Names other tools own: GitHub Actions' cancelled(), Renovate's minimumReleaseAgeBehaviour, and ARIA's labelledby as a
+  // camelCase name (labelledBy, ariaLabelledByElements). codespell:ignore
+  const ignoreRegex = [String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b|[lL]abelledBy`, ...(config.spelling?.contracts ?? [])].join("|"); // codespell:ignore
+  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", ignoreRegex];
   if (config.spelling?.ignore?.length) args.push("--ignore-words-list", config.spelling.ignore.join(","));
   // The check reads each part of a camelCase or CONSTANT_CASE name as a word, since a British name is spelling too. The
   // fix rewrites whole words only: renaming an export breaks every site that imports it, so a name is renamed by hand,
@@ -426,6 +434,17 @@ function gitTree(/** @type {string} */ root) {
   };
 }
 
+/** Each located shared package's peer dependencies. @param {(name: string, repo: string) => string | null} locate */
+function peersOf(locate) {
+  /** @type {Record<string, string[]>} */
+  const peers = {};
+  for (const p of PACKAGES) {
+    const dir = locate(p.name, p.repo);
+    if (dir) peers[p.name] = Object.keys(JSON.parse(readFileSync(join(dir, "package.json"), "utf8")).peerDependencies ?? {});
+  }
+  return peers;
+}
+
 function main(/** @type {string[]} */ argv) {
   const root = process.cwd();
   const from = argv.includes("--from") ? argv[argv.indexOf("--from") + 1] : null;
@@ -451,7 +470,7 @@ function main(/** @type {string[]} */ argv) {
   const findings = [
     ...checkPins(tree, lsRemoteTags, lenient),
     ...checkCopies(tree, catalog, config, self?.label),
-    ...checkLibraries(tree, config),
+    ...checkLibraries(tree, config, peersOf(locate)),
     ...checkFeatures(tree, config),
     ...checkSpelling(root, config, argv.includes("--fix-spelling")),
   ];

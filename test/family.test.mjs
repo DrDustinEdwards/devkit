@@ -68,6 +68,9 @@ test("builder text counts in code, not in a comment, and a waived file is skippe
 test("a wrapped library in a site's manifest is refused unless waived with a reason", () => {
   const files = { "package.json": '{"dependencies":{"marked":"1","katex":"1","zod":"1"}}' };
   assert.deepEqual(checkLibraries(tree(files), { libraries: { katex: "the generated stylesheet" } }).map((f) => f.message.split(" ")[0]), ["marked"]);
+  // A peer the site's shared package asks it to install is that package's job being done, not duplicated.
+  const prelum = { "package.json": '{"dependencies":{"@drdustinedwards/site-helpers":"x","remark-gfm":"1","marked":"1"}}' };
+  assert.deepEqual(checkLibraries(tree(prelum), {}, { "@drdustinedwards/site-helpers": ["remark-gfm"] }).map((f) => f.message.split(" ")[0]), ["marked"]);
 });
 
 test("each app is checked for its kind's features, files belong to the deepest app, and a D1 database needs the dump", () => {
