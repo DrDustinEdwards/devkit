@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.3 (2026-10-26)
+
+- `no-bloat.yml` takes `package-manager: pnpm`, as `worker-size.yml` does, so a pnpm repository (Foxing) calls it instead of keeping its own workflow.
+
 ## 0.13.2 (2026-10-26)
 
 - `family.yml` turns off setup-node's automatic package-manager cache, which failed the check in a pnpm repository (Foxing) because the runner has no pnpm. `ai-author.yml` already did.
