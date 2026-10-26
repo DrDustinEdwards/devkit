@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.2 (2026-10-26)
+
+- `family.yml` turns off setup-node's automatic package-manager cache, which failed the check in a pnpm repository (Foxing) because the runner has no pnpm. `ai-author.yml` already did.
+
 ## 0.13.1 (2026-10-25)
 
 - `devkit-family` fails a month before security.txt lapses: a fixed `SECURITY_TXT_EXPIRES` is the prompt to confirm the address still delivers and move the date on. It replaces dustinedwards.info's own test of it.
