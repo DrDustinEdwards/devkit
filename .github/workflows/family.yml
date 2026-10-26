@@ -43,6 +43,8 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: 24
+          # Nothing is installed, and setup-node's automatic cache fails in a pnpm repository (no pnpm on the runner).
+          package-manager-cache: false
 
       # Each shared package at its newest release, so a copy is judged against what a bump would give the site.
       - name: Read each package at its newest release tag
