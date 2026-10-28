@@ -8,8 +8,9 @@
 //   libraries  a direct dependency on a library a shared package wraps (marked, remark, mermaid, sanitize-html...);
 //   features   a family feature the repository's kind of app should have and does not import (robots.txt, security.txt,
 //              IndexNow, the CSP report endpoint, /health...);
-//   tokens     a site setting its own value for one of Capsomer's tokens (--page-max, --measure, --radius-m, --accent...):
-//              a value the family shares is set once, in Capsomer (its site layer for a site's own look), never per site;
+//   tokens     a site setting its own value for one of Capsomer's tokens (--page-max, --measure, --radius-m, --accent...),
+//              or loading its own files for the family's faces (Schibsted Grotesk, Martian Mono) instead of
+//              capsomer/fonts.css: a value the family shares is set once, in Capsomer, never per site;
 //   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere, Dustin 2026-10-25).
 //
 //   npx devkit-family                    the check, against .family.json (no file: one site at the root)
@@ -25,7 +26,8 @@
 //     "waive": { "indexnow": "why", "mcp:health": "why" }, a feature this repository does not need, and why
 //     "copies": { "app/lib/og.ts": "why" },               a file allowed to hold a copy, and why
 //     "libraries": { "katex": "why" },                    a direct dependency allowed, and why
-//     "tokens": { "--measure": "why" },                   a Capsomer token this repository sets itself, and why
+//     "tokens": { "--measure": "why", "fonts": "why" },   a Capsomer token this repository sets itself (or "fonts", its own
+//                                                         files for the family's faces), and why
 //     "spelling": { "ignore": ["word"], "contracts": ["regex"], "skip": ["frame/**"] }
 //                                                         words never checked; text a regex matches (a stored value, a
 //                                                         column) left as it is, while the same word in prose is fixed;
@@ -320,6 +322,13 @@ export function checkTokens(tree, tokens, config) {
       if (!tokens.has(name) || config.tokens?.[name] || !rootRule(code, m.index)) continue;
       const line = code.slice(0, m.index + m[1].length).split("\n").length;
       found.push({ check: "tokens", file, line, message: `${name} is Capsomer's: set it there (its site layer for this site's own look), or say why in .family.json "tokens"` });
+    }
+    if (config.tokens?.fonts) continue;
+    // The family's faces come from capsomer/fonts.css, every weight in one file each, so a bold is the same bold on every
+    // site (Dustin, 2026-10-28: sites that picked their own weights drew the footer's name differently).
+    for (const m of code.matchAll(/@fontsource(?:-variable)?\/(?:schibsted-grotesk|martian-mono)\b|@font-face\s*\{[^}]*font-family:\s*["']?(?:Schibsted Grotesk|Martian Mono)/g)) {
+      const line = code.slice(0, m.index).split("\n").length;
+      found.push({ check: "tokens", file, line, message: `the family's faces are Capsomer's: load capsomer/fonts.css instead of your own files, or say why in .family.json "tokens" "fonts"` });
     }
   }
   return found;

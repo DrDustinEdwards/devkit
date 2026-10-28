@@ -103,7 +103,7 @@ test("the spelling fix rewrites a word inside a name and keeps its case, but nev
   assert.equal(respell('status === "cancelled" was cancelled', "cancelled", "canceled", /"cancelled"/g, true), 'status === "cancelled" was canceled'); // codespell:ignore
 });
 
-test("a site's own value for a Capsomer token fails; using it, setting it for one part of the page, or a waiver passes", () => {
+test("a site's own value for a Capsomer token, or its own files for the family's faces, fails; using them, setting one for one part of the page, or a waiver passes", () => {
   const tokens = new Set(["--page-max", "--radius-m", "--text"]);
   const found = checkTokens(
     tree({
@@ -111,13 +111,16 @@ test("a site's own value for a Capsomer token fails; using it, setting it for on
       "app/site.ts": "const CSS = `:root { --radius-m: 0; }`;\n",
       "app/theme.css": "@media (prefers-color-scheme: dark) {\n  :root:not([data-theme]) {\n    --text: #fff;\n  }\n}\n",
       "app/a.test.ts": "const t = `:root { --text: red }`;\n",
+      "app/build.mjs": 'const FONTS = [\n  "@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-600-normal.woff2",\n];\n',
+      "app/fonts.css": '@font-face {\n  font-family: "Martian Mono";\n  src: url(m.woff2);\n}\n.code { font-family: "Martian Mono", monospace; }\n',
     }),
     tokens,
     { tokens: { "--text": "dark text until the colors move" } },
   );
   assert.deepEqual(
     found.map((f) => `${f.file}:${f.line}`),
-    ["app/app.css:2", "app/site.ts:1"],
+    ["app/app.css:2", "app/site.ts:1", "app/build.mjs:2", "app/fonts.css:1"],
   );
   assert.match(found[0].message, /--page-max is Capsomer's/);
+  assert.match(found[2].message, /capsomer\/fonts\.css/);
 });
