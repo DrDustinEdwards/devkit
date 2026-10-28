@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.0 (2026-10-28)
+
+- The family check's `tokens` check also fails a site that loads its own files for the family's faces (an `@fontsource` Schibsted Grotesk or Martian Mono file, or an `@font-face` for either) instead of `capsomer/fonts.css` (Dustin, 2026-10-28: sites had each picked their own weights, and the footer's bold name was drawn differently from site to site). `.family.json` `"tokens": { "fonts": "why" }` waives it.
+
 ## 0.14.0 (2026-10-28)
 
 - `devkit-family` fails a site that sets its own value for one of Capsomer's tokens for the whole page (`:root`, `html` or `body`), such as `--page-max`, `--radius-m` or `--text`, in CSS or in CSS inside a source file. A value the family shares is set once, in Capsomer, and a site's own look goes in Capsomer's site layer (Dustin, 2026-10-28: every site had kept its own page width, and the letterhead followed each one). Reading a token, and setting one for one part of a page, pass. `.family.json` `"tokens"` names a token a repository sets itself, with the reason.
