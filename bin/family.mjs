@@ -8,6 +8,8 @@
 //   libraries  a direct dependency on a library a shared package wraps (marked, remark, mermaid, sanitize-html...);
 //   features   a family feature the repository's kind of app should have and does not import (robots.txt, security.txt,
 //              IndexNow, the CSP report endpoint, /health...);
+//   tokens     a site setting its own value for one of Capsomer's tokens (--page-max, --measure, --radius-m, --accent...):
+//              a value the family shares is set once, in Capsomer (its site layer for a site's own look), never per site;
 //   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere, Dustin 2026-10-25).
 //
 //   npx devkit-family                    the check, against .family.json (no file: one site at the root)
@@ -23,6 +25,7 @@
 //     "waive": { "indexnow": "why", "mcp:health": "why" }, a feature this repository does not need, and why
 //     "copies": { "app/lib/og.ts": "why" },               a file allowed to hold a copy, and why
 //     "libraries": { "katex": "why" },                    a direct dependency allowed, and why
+//     "tokens": { "--measure": "why" },                   a Capsomer token this repository sets itself, and why
 //     "spelling": { "ignore": ["word"], "contracts": ["regex"], "skip": ["frame/**"] }
 //                                                         words never checked; text a regex matches (a stored value, a
 //                                                         column) left as it is, while the same word in prose is fixed;
@@ -277,6 +280,51 @@ export function checkLibraries(tree, config, peers = {}) {
   return found;
 }
 
+/** Capsomer's token names: every custom property its generated token files define (scale, color, themes). */
+export function capsomerTokens(/** @type {string | null} */ dir) {
+  const names = new Set();
+  if (!dir) return names;
+  for (const f of ["scale.css", "color.css", "themes.css"]) {
+    const file = join(dir, "tokens", f);
+    if (existsSync(file)) for (const m of readFileSync(file, "utf8").matchAll(/(?:^|[\s{;])(--[a-z0-9-]+)\s*:/g)) names.add(m[1]);
+  }
+  return names;
+}
+
+/** Whether the declaration at `index` sits in a rule for the whole page (:root, html, body), not one part of it. */
+function rootRule(/** @type {string} */ code, /** @type {number} */ index) {
+  const open = code.lastIndexOf("{", index);
+  if (open < 0) return false;
+  const start = Math.max(code.lastIndexOf("}", open), code.lastIndexOf(";", open), code.lastIndexOf("{", open - 1)) + 1;
+  return /(^|[\s,("'`])(:root|html|body)(?![\w-])/.test(code.slice(start, open));
+}
+
+/**
+ * A site's own value for a Capsomer token: a declaration of it for the whole page (:root, html, body), in CSS or in CSS
+ * inside a source file. Reading one with var() is a use, and setting one for one part of the page (a dark panel's --text)
+ * is that part's theme; both pass. Capsomer itself is not checked: it is where the values live.
+ * @param {Tree} tree @param {Set<string>} tokens @param {Config} config
+ * @returns {Finding[]}
+ */
+export function checkTokens(tree, tokens, config) {
+  /** @type {Finding[]} */
+  const found = [];
+  if (!tokens.size) return found;
+  for (const file of tree.files) {
+    if (!(/\.css$/.test(file) || SOURCE.test(file)) || NOT_SOURCE.test(file)) continue;
+    const text = tree.read(file);
+    // Comments may name a token; only declarations count. Blanked, not removed, so line numbers hold.
+    const code = text.replace(/\/\*[\s\S]*?\*\/|(^|[^:"'`])\/\/.*$/gm, (c) => c.replace(/[^\n]/g, " "));
+    for (const m of code.matchAll(/(^|[\s{;"'`])(--[a-z0-9-]+)\s*:(?!:)/g)) {
+      const name = m[2];
+      if (!tokens.has(name) || config.tokens?.[name] || !rootRule(code, m.index)) continue;
+      const line = code.slice(0, m.index + m[1].length).split("\n").length;
+      found.push({ check: "tokens", file, line, message: `${name} is Capsomer's: set it there (its site layer for this site's own look), or say why in .family.json "tokens"` });
+    }
+  }
+  return found;
+}
+
 /**
  * Family features each app is missing for its kind.
  * @param {Tree} tree @param {Config} config
@@ -519,6 +567,7 @@ function main(/** @type {string[]} */ argv) {
     ...checkCopies(tree, catalog, config, self?.label),
     ...checkLibraries(tree, config, peersOf(locate)),
     ...checkFeatures(tree, config),
+    ...(self?.repo === "capsomer" ? [] : checkTokens(tree, capsomerTokens(locate("capsomer", "capsomer")), config)),
     ...checkSpelling(root, config, argv.includes("--fix-spelling"), !self),
   ];
   const errors = findings.filter((f) => !f.warn);
@@ -526,7 +575,7 @@ function main(/** @type {string[]} */ argv) {
     const where = f.file ? ` file=${f.file}${f.line ? `,line=${f.line}` : ""}` : "";
     console.log(`::${f.warn ? "warning" : "error"}${where}::[${f.check}] ${f.message}`);
   }
-  const counts = ["pins", "copies", "libraries", "features", "spelling"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
+  const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
   console.log(errors.length ? `devkit-family: ${errors.length} to fix (${counts}). What the packages export: npx devkit-family list` : `devkit-family: in step with the family (${counts}).`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Family check\n\n${counts}\n`);
   return errors.length ? 1 : 0;
