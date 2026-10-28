@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { checkCopies, checkFeatures, checkLibraries, checkPins, newest, respell } from "../bin/family.mjs";
+import { checkCopies, checkFeatures, checkLibraries, checkPins, checkTokens, newest, respell } from "../bin/family.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -101,4 +101,23 @@ test("the spelling fix rewrites a word inside a name and keeps its case, but nev
   assert.equal(respell("normaliseTags normalise", "normalise", "normalize", none, false), "normaliseTags normalize"); // codespell:ignore
   // PLANT: the stored value stays, the word in the sentence does not.
   assert.equal(respell('status === "cancelled" was cancelled', "cancelled", "canceled", /"cancelled"/g, true), 'status === "cancelled" was canceled'); // codespell:ignore
+});
+
+test("a site's own value for a Capsomer token fails; using it, setting it for one part of the page, or a waiver passes", () => {
+  const tokens = new Set(["--page-max", "--radius-m", "--text"]);
+  const found = checkTokens(
+    tree({
+      "app/app.css": ":root {\n  --page-max: 1180px;\n  --mine: 1px;\n}\n.panel { --text: white; max-width: var(--page-max); }\n/* --radius-m: 0 */\n",
+      "app/site.ts": "const CSS = `:root { --radius-m: 0; }`;\n",
+      "app/theme.css": "@media (prefers-color-scheme: dark) {\n  :root:not([data-theme]) {\n    --text: #fff;\n  }\n}\n",
+      "app/a.test.ts": "const t = `:root { --text: red }`;\n",
+    }),
+    tokens,
+    { tokens: { "--text": "dark text until the colors move" } },
+  );
+  assert.deepEqual(
+    found.map((f) => `${f.file}:${f.line}`),
+    ["app/app.css:2", "app/site.ts:1"],
+  );
+  assert.match(found[0].message, /--page-max is Capsomer's/);
 });
