@@ -1,6 +1,6 @@
 {
   "name": "@dustinedwards/devkit",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
   "description": "Shared tooling for the Dustin Edwards repositories. As a package: the shared test helpers and the shared checks, installed by git tag. The Renovate policy and the reusable workflows in this repository are not part of the package.",
   "type": "module",
@@ -21,9 +21,17 @@
       "types": "./testing/access.d.mts",
       "default": "./testing/access.mjs"
     },
+    "./islands": {
+      "types": "./vite/islands.d.mts",
+      "default": "./vite/islands.mjs"
+    },
     "./vite/site-script": {
       "types": "./vite/site-script.d.mts",
       "default": "./vite/site-script.mjs"
+    },
+    "./vite/dev-toolbar": {
+      "types": "./vite/dev-toolbar.d.mts",
+      "default": "./vite/dev-toolbar.mjs"
     }
   },
   "bin": {
