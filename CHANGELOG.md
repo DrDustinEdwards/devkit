@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.0 (2026-10-29)
+
+- Islands, from Astro: `siteScript` bundles each file in `app/islands/` into its own module at `/islands/<name>.js`, and `@dustinedwards/devkit/islands` `startIslands()` loads one only when its element asks (`data-client` load, idle, visible or media), so a page pays only for the scripts it uses. Directives are Astro's, with its MIT notice.
+- Astro's dev toolbar, `@dustinedwards/devkit/vite/dev-toolbar`, in `vite dev` only: Inspect (islands), Audit (axe-core accessibility plus Astro's performance rules) and Settings. siteScript adds it to the dev `/site.js`; `toolbar: false` turns it off. Nothing of it reaches a build.
+
 ## 0.15.0 (2026-10-28)
 
 - The family check's `tokens` check also fails a site that loads its own files for the family's faces (an `@fontsource` Schibsted Grotesk or Martian Mono file, or an `@font-face` for either) instead of `capsomer/fonts.css` (Dustin, 2026-10-28: sites had each picked their own weights, and the footer's bold name was drawn differently from site to site). `.family.json` `"tokens": { "fonts": "why" }` waives it.
