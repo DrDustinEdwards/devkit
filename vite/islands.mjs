@@ -61,13 +61,18 @@ const DIRECTIVES = {
 
 const started = new WeakSet();
 
+// A built /site.js has this replaced with each island's content-hashed URL (site-script.mjs); in `vite dev`, or a page
+// bundled some other way, it is undefined and an island is /islands/<name>.js.
+const BUILT = typeof __DEVKIT_ISLANDS__ === "object" ? __DEVKIT_ISLANDS__ : {};
+const islandUrl = (name) => (Object.hasOwn(BUILT, name) ? BUILT[name] : `/islands/${name}.js`);
+
 /**
  * Starts every island under `root` (the document by default). `load` imports an island's module; the default reads
- * /islands/<name>.js, where the site-script plugin serves and builds them. An island that fails to load or throws is
+ * the built URL the site-script plugin wrote into /site.js, or /islands/<name>.js in `vite dev`. An island that fails to load or throws is
  * reported on the console and leaves the server's HTML as it was.
  * @param {{ root?: ParentNode, load?: (name: string) => Promise<{ default: (el: HTMLElement, props: unknown) => unknown }> }} [options]
  */
-export function startIslands({ root = document, load = (name) => import(/* @vite-ignore */ `/islands/${name}.js`) } = {}) {
+export function startIslands({ root = document, load = (name) => import(/* @vite-ignore */ islandUrl(name)) } = {}) {
   for (const el of root.querySelectorAll("[data-island]")) {
     if (!(el instanceof HTMLElement) || started.has(el)) continue;
     started.add(el);

@@ -4,7 +4,8 @@
 //   pins       a dependency on one of the shared packages, or a call to devkit's reusable workflows, that is not at that
 //              package's newest release tag (a raw commit counts as behind);
 //   copies     a local definition with the name of something a shared package exports, or text only a shared builder should
-//              write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST...);
+//              write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation rules, a Cloudflare
+//              Images resize, an island loader...);
 //   libraries  a direct dependency on a library a shared package wraps (marked, remark, mermaid, sanitize-html...);
 //   features   a family feature the repository's kind of app should have and does not import (robots.txt, security.txt,
 //              IndexNow, the CSP report endpoint, /health...);
@@ -85,6 +86,12 @@ export const FINGERPRINTS = [
   { find: /Contact: mailto:/, use: "site-runtime ./security-txt securityTxt" },
   { find: /property[=:]\s*["']og:/, use: "Prelum ./head headTags" },
   { find: /["']Strict-Transport-Security["']\s*[:,]/, use: "site-runtime ./headers buildSecurityHeaders" },
+  // An inline rule set (it needs its own CSP allowance) or a site's own rules file or header.
+  { find: /speculationrules|["']Speculation-Rules["']/, use: "site-runtime ./prefetch speculationRules" },
+  // Cloudflare Images called directly: the binding, or any .input(...).transform( chain.
+  { find: /\bIMAGES\s*\.\s*input\s*\(|\.input\((?:[^()]|\([^()]*\))*\)\s*\.transform\s*\(/, use: "site-runtime ./image" },
+  // A loader of its own: finding the marked elements, or importing a module from /islands/.
+  { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
 ];
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */

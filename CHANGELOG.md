@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.17.0 (2026-10-29)
+
+- Islands are named by their content in a build: `/islands/<name>-<hash>.js`, like the chunks beside them, so a site can serve `/islands/*` with `Cache-Control: immutable`. The built `/site.js` carries the name to URL map and `startIslands()`'s default `load` reads it; `vite dev`, and a page bundled without siteScript, still load `/islands/<name>.js`. Breaking for a site whose own `load` reads `/islands/<name>.js` from a build: it imports `ISLAND_URLS` instead.
+- `virtual:islands`, for a server-rendered app: `ISLAND_URLS` (name to URL, the plain name in `vite dev`) and `ISLAND_GZIP_BYTES` (the gzip -9 bytes of an island and the chunks it imports, each once: what a page that loads only that island downloads; dustinedwards.info's "N kB gzipped"). The client build and the server build share one islands build, so their URLs agree.
+- `siteScript({ entry: false })`: islands only, no `/site.js`, for an app with its own client script (a React Router site).
+- `devkit-family` finds three more local copies by their text: speculation rules of a site's own (an inline `type="speculationrules"`, the rules' media type or a `Speculation-Rules` header; site-runtime `./prefetch`), Cloudflare Images called directly (`IMAGES.input(` or an `.input(...).transform(` chain; site-runtime `./image`), and an island loader of its own (`querySelectorAll("[data-island...")` or `import("/islands/...")`; devkit `./islands`). A file that must keep one is waived in `.family.json` `"copies"`, with the reason.
+
 ## 0.16.1 (2026-10-29)
 
 - `siteScript` builds every island in one Vite build instead of one per island, so code two islands share is emitted once, as a chunk under `/islands/chunks/` that both import (same-origin, so `script-src 'self'` still covers it), and a production build runs two builds instead of one per island plus one. Each island stays at `/islands/<name>.js` with its default export; `vite dev` still serves each island whole.
