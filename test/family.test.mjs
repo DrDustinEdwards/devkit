@@ -58,11 +58,19 @@ test("builder text counts in code, not in a comment, and a waived file is skippe
       "app/robots.ts": '// writes "User-agent:" lines like Prelum\nexport const body = `User-agent: *`;\n',
       "app/sitemap.ts": "/* one <urlset> */\nexport {};\n",
       "app/og.ts": 'const t = "<urlset>";\n',
+      "app/head.tsx": '<script type="speculationrules">{rules}</script>\n',
+      "app/img.ts": "const out = await images\n  .input(object.body)\n  .transform({ width: 400 });\n",
+      "app/loader.ts": "const els = document.querySelectorAll('[data-island]');\nimport(/* @vite-ignore */ `/islands/${n}.js`);\n",
+      // Using the shared ones, and a stream's own .transform, are not copies.
+      "app/uses.ts": 'import { speculationRules } from "@dustinedwards/site-runtime/prefetch";\nconst r = speculationRules();\nstream.input.transform(r);\n',
     }),
     {},
     { copies: { "app/og.ts": "satori shows entities literally" } },
   );
-  assert.deepEqual(found.map((f) => `${f.file}:${f.line}`), ["app/robots.ts:2"]);
+  assert.deepEqual(
+    found.map((f) => `${f.file}:${f.line} ${f.message.split(" ")[3]}`),
+    ["app/robots.ts:2 Prelum", "app/head.tsx:1 site-runtime", "app/img.ts:2 site-runtime", "app/loader.ts:1 devkit"],
+  );
 });
 
 test("a wrapped library in a site's manifest is refused unless waived with a reason", () => {

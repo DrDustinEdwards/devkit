@@ -1,5 +1,6 @@
 /**
- * Islands (islands.mjs): elements marked `data-island="<name>"` load /islands/<name>.js only when the page needs it,
+ * Islands (islands.mjs): elements marked `data-island="<name>"` load their module only when the page needs it (by
+ * default the content-hashed URL a built /site.js carries, or /islands/<name>.js in `vite dev`),
  * by `data-client` (load, idle, visible or media), as Astro's client directives do (MIT, Copyright (c) 2021 Fred K.
  * Schott). The module's default export is called once with the element and its parsed `data-props`.
  */
