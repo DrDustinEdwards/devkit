@@ -3,37 +3,54 @@
 // page and a CSP's script-src 'self' covers it with no inline script. `vite dev` serves it fresh per request;
 // a build emits it into the client output. Vite is the site's own, not a dependency of this package.
 //
-// Islands (islands.mjs): each file in `islands` (default app/islands/) is bundled on its own into an ES module at
-// /islands/<name>.js, which the page imports only when an element names it, so a page pays for the scripts it uses.
+// Islands (islands.mjs): each file in `islands` (default app/islands/) becomes an ES module at /islands/<name>.js,
+// which the page imports only when an element names it, so a page pays for the scripts it uses. A build bundles them
+// all in one pass, so code two islands share is one chunk under /islands/chunks/, fetched once; `vite dev` bundles
+// the one asked for, whole. Chunks are same-origin, so script-src 'self' still covers them.
 import { readdirSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 import { build } from "vite";
 import { serveToolbar, TOOLBAR_LOADER } from "./dev-toolbar.mjs";
 import { ISLAND_NAME } from "./islands.mjs";
 
-// An island is built as an app entry, not a library, so it is minified whole (library mode keeps an ES module's
-// whitespace) and keeps its default export.
-async function bundle(entry, format = "iife") {
-  const out = await build({
-    configFile: false,
-    logLevel: "warn",
-    build:
-      format === "iife"
-        ? { write: false, minify: true, lib: { entry, formats: ["iife"], name: "site", fileName: () => "out.js" } }
-        : {
-            write: false,
-            minify: true,
-            modulePreload: false,
-            rollupOptions: {
-              input: entry,
-              preserveEntrySignatures: "exports-only",
-              output: { format: "es", entryFileNames: "out.js", inlineDynamicImports: true },
-            },
-          },
-  });
+// Islands are built as an app, not a library, so they are minified whole (library mode keeps an ES module's
+// whitespace) and keep their default export ("exports-only").
+const ISLAND_BUILD = { write: false, minify: true, modulePreload: false };
+
+async function run(options) {
+  const out = await build({ configFile: false, logLevel: "warn", build: options });
   const result = Array.isArray(out) ? out[0] : out;
-  if (!("output" in result)) throw new Error(`${entry}: the bundle produced no output`);
-  return result.output[0].code;
+  if (!("output" in result)) throw new Error("site-script: the bundle produced no output");
+  return result.output;
+}
+
+/** `entry` alone, as a classic script (/site.js) or, for an island in `vite dev`, one whole ES module. */
+async function bundle(entry, format = "iife") {
+  const output = await run(
+    format === "iife"
+      ? { write: false, minify: true, lib: { entry, formats: ["iife"], name: "site", fileName: () => "out.js" } }
+      : {
+          ...ISLAND_BUILD,
+          rollupOptions: {
+            input: entry,
+            preserveEntrySignatures: "exports-only",
+            output: { format: "es", entryFileNames: "out.js", inlineDynamicImports: true },
+          },
+        },
+  );
+  return output[0].code;
+}
+
+/** Every island in one build: islands/<name>.js each, and what two share once under islands/chunks/. */
+function bundleIslands(files) {
+  return run({
+    ...ISLAND_BUILD,
+    rollupOptions: {
+      input: Object.fromEntries(files),
+      preserveEntrySignatures: "exports-only",
+      output: { format: "es", entryFileNames: "islands/[name].js", chunkFileNames: "islands/chunks/[name]-[hash].js" },
+    },
+  });
 }
 
 /** The island modules under `dir`: name to file. A folder that does not exist has none. */
@@ -79,8 +96,10 @@ export function siteScript({ entry = "app/site.ts", islands = "app/islands", too
     async generateBundle() {
       if (this.environment.name !== "client") return;
       this.emitFile({ type: "asset", fileName: "site.js", source: await bundle(entry) });
-      for (const [name, file] of islandFiles(islands)) {
-        this.emitFile({ type: "asset", fileName: `islands/${name}.js`, source: await bundle(file, "es") });
+      const files = islandFiles(islands);
+      if (files.size === 0) return;
+      for (const out of await bundleIslands(files)) {
+        this.emitFile({ type: "asset", fileName: out.fileName, source: out.type === "chunk" ? out.code : out.source });
       }
     },
   };

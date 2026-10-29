@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.1 (2026-10-29)
+
+- `siteScript` builds every island in one Vite build instead of one per island, so code two islands share is emitted once, as a chunk under `/islands/chunks/` that both import (same-origin, so `script-src 'self'` still covers it), and a production build runs two builds instead of one per island plus one. Each island stays at `/islands/<name>.js` with its default export; `vite dev` still serves each island whole.
+
 ## 0.16.0 (2026-10-29)
 
 - Islands, from Astro: `siteScript` bundles each file in `app/islands/` into its own module at `/islands/<name>.js`, and `@dustinedwards/devkit/islands` `startIslands()` loads one only when its element asks (`data-client` load, idle, visible or media), so a page pays only for the scripts it uses. Directives are Astro's, with its MIT notice.
