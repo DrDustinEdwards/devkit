@@ -9,6 +9,7 @@ Shared tooling for the Dustin Edwards repositories, public so private repositori
   - `no-bloat.yml`: the Knip and jscpd ratchet (`devkit-no-bloat`). Public repositories call it on every pull request; private ones weekly.
   - `worker-size.yml`: the Worker bundle size budget (`devkit-worker-size`).
   - `worker-deploy.yml`: deploy, verify and roll back a Cloudflare Worker. See "The shared deploy".
+  - `restore-drill.yml`: the weekly restore drill of a site's nightly D1 dump. See "The restore drill".
   - `code-map.yml`: the code map for the explorer at capsid.dustinedwards.info. See "The code map".
   - `bump-consumers.yml`: a package repository calls it on a tag push; it starts a Renovate run in every repository whose `package.json` depends on that package. It needs the `RENOVATE_TRIGGER_TOKEN` secret described in its header.
 - `testing/` and `bin/`: the package (`@dustinedwards/devkit`): shared test helpers and shared checks. See below.
@@ -28,6 +29,7 @@ Bins in the package, so a check runs the same locally (`npx <bin>`) as in the wo
 - `devkit-check-trailers`: with no arguments it reads the range from the GitHub event (`EVENT`, `PR_BASE`, `PR_HEAD`, `PUSH_BEFORE`, `PUSH_AFTER`, set by `ai-author.yml`); locally, `npx devkit-check-trailers <base> <head> [--authors]`. Exit 1 names each commit and how to fix it; exit 2 means it could not read the commits, which is a failure, not a pass.
 
 - `devkit-live`: the completeness scoreboard. See "The scoreboard".
+- `devkit-ops-audit`: running and recovery on a live site, area 8's scoreboard check: `devkit-ops-audit --origin <origin> [--from <host>] [--health-path /health] [--repo owner/name] [--branch <branch>] [--drill-workflow <file>]`. It reads `/health` (H1: 2xx or 503, `application/health+json` or `application/json`, `Cache-Control: no-store`, `X-Robots-Tag: noindex`; H2: site-runtime's shape, `status` pass, warn or fail, `ok`, `time` and `checks`; H3: 503 for fail and only for fail; H4: `sha` of 7 to 40 hex characters; B1: a `backup` under 26 hours old with no warning; C2: a `cron` check that passes) and a random missing path (N1: a 404, never a redirect or a 200; N6: an HTML page). With `--repo`, `sha` must be the branch head (the default branch unless `--branch`; a head under 30 minutes old is a warning, a deploy may be in flight), and with `--drill-workflow`, that workflow's newest completed run on the branch must be a success under 8 days old (R1). GitHub is read without a token, or with `GITHUB_TOKEN`; a repository it cannot read is a warning. A health route elsewhere is named with `--health-path`; nothing falls back to it silently. Each finding is `::error title=<item>::<proof URL> <detail>` (or `::warning`), after one plain line per check saying what it read; exit 0 with no errors, 1 with any, 2 when the site answered nothing at all.
 
 Per-repository measurements (capsomer's page weight, capsid's dashboard size budget) stay in the repository.
 
@@ -66,12 +68,19 @@ Inputs:
 | `install` | no | `npm ci` | The deploy job's install. |
 | `pre-deploy` | no | none | The caller's guards before the deploy (a migration check, a config rebuild, a build), run with the Cloudflare secrets. A failure stops the deploy. |
 | `sha-var` | no | none | When set, the deploy passes `--var <name>:<this run's commit>`, so the Worker can report it on /health. |
+| `d1-database` | no | none | The D1 database's name. When set, the deploy job reads its Time Travel bookmark (`wrangler d1 time-travel info <db> --json`) before the pre-deploy guard, and writes it, the time and the undo command to the step summary and to the outputs `d1-bookmark` and `d1-bookmark-time`. A bookmark it cannot read stops the deploy. The token then also needs D1: Read. |
 
 Secrets, passed by name (`secrets: inherit` is refused by `check-callers.mjs`): `CLOUDFLARE_API_TOKEN`, a token that can deploy and roll back the Worker (Workers Scripts: Edit), and `CLOUDFLARE_ACCOUNT_ID`. Both are required, and a missing one fails the deploy loudly rather than skipping it.
 
-The limits. Cloudflare's rollback swaps the Worker's code and bindings only. It is refused when D1 or KV resources changed between the two versions, and it never undoes a D1 migration (Cloudflare Docs, "Rollbacks"). A deploy that ran a migration is not made safe by this workflow: keep migrations a separate, human step, and check them in `pre-deploy`. Data recovery is D1 Time Travel, by hand (`wrangler d1 time-travel restore`). The rollback goes to the previous version, whatever that is; the guard is what stops a rerun from moving production onto the refused commit.
+The limits. Cloudflare's rollback swaps the Worker's code and bindings only. It is refused when D1 or KV resources changed between the two versions, and it never undoes a D1 migration (Cloudflare Docs, "Rollbacks"). A deploy that ran a migration is not made safe by this workflow: keep migrations a separate, human step, and check them in `pre-deploy`. Data recovery is D1 Time Travel, by hand: with `d1-database` set, the run's summary holds the bookmark from before the guard and the one command that goes back to it, `npx wrangler d1 time-travel restore <db> --bookmark=<bookmark>`. The rollback goes to the previous version, whatever that is; the guard is what stops a rerun from moving production onto the refused commit.
 
 The guard is inlined into the workflow so a caller's one pinned sha fixes both. After an edit to `scripts/rollback-guard.mjs`, run `node scripts/inline-rollback-guard.mjs`; the test fails while the two differ.
+
+## The restore drill
+
+`.github/workflows/restore-drill.yml` proves a site's nightly D1 dump restores. Every site with a D1 database calls it weekly (`examples/restore-drill-caller.yml`): it runs `npx github:DrDustinEdwards/d1-dump#<d1-dump-ref> drill --bucket <bucket> --backend sqlite`, which downloads the newest complete run from the backups bucket through the R2 REST API, restores it into a scratch SQLite file and checks the copy (d1-dump README, "Restore drill"). Exit 1 is a dump the drill refused, 3 a drill that could not run; both fail the job, and the output goes to the step summary. `devkit-ops-audit --repo <repo> --drill-workflow <the caller's file>` reads the newest run (R1).
+
+Inputs: `bucket` (required), `d1-dump-ref` (required, a d1-dump release tag, so a d1-dump release reaches the drill through a reviewed change) and `node-version` (default 24). Secrets, by name: `CLOUDFLARE_API_TOKEN` (R2: Read on the bucket is enough; the sqlite backend creates no database) and `CLOUDFLARE_ACCOUNT_ID`.
 
 ## The code map
 
