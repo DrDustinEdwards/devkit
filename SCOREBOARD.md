@@ -48,20 +48,20 @@ Builder: Share SEO and other key site code. Verifier: none yet.
 Builder: Complete shared security headers and CSP. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: no live check yet
-- ❌ Germomics: no live check yet
-- ❌ julieedwards.info: no live check yet
-- ❌ TXASM: no live check yet
-- ❌ BSW: no live check yet
-- ❌ Foxhound: no live check yet
-- ❌ Foxing: no live check yet
-- ❌ Carrel: no live check yet
-- ❌ Enarratio: no live check yet
-- ❌ Capsomer: no live check yet
-- ❌ Prelum specimen: no live check yet
-- ❌ Capsid explorer: no live check yet
-- ❌ Capsid MCP: no live check yet
-- ❌ Foxhound admin MCP: no live check yet
+- ❌ dustinedwards.info: not run yet
+- ❌ Germomics: not run yet
+- ❌ julieedwards.info: not run yet
+- ❌ TXASM: not run yet
+- ❌ BSW: not run yet
+- ❌ Foxhound: not run yet
+- ❌ Foxing: not run yet
+- ❌ Carrel: not run yet
+- ❌ Enarratio: not run yet
+- ❌ Capsomer: not run yet
+- ❌ Prelum specimen: not run yet
+- ❌ Capsid explorer: not run yet
+- ❌ Capsid MCP: not run yet
+- ❌ Foxhound admin MCP: not run yet
 
 ### 3. Sign-in and access
 
