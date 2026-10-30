@@ -1,0 +1,18 @@
+{
+  "sites": [
+    { "id": "dustinedwards-info", "name": "dustinedwards.info", "repo": "dustinedwards-info", "kind": "site", "origin": "https://dustinedwards.info" },
+    { "id": "germomics", "name": "Germomics", "repo": "germomics", "kind": "site", "origin": "https://germomics.com" },
+    { "id": "julieedwards-info", "name": "julieedwards.info", "repo": "julieedwards-info", "kind": "site", "origin": "https://julieedwards.info" },
+    { "id": "txasm", "name": "TXASM", "repo": "txasm", "kind": "site", "origin": "https://txasm.org", "from": "https://txasm.dustin-edwards.workers.dev" },
+    { "id": "bsw", "name": "BSW", "repo": "bsw", "kind": "site", "origin": "https://bsw.dustin-edwards.workers.dev" },
+    { "id": "foxhound", "name": "Foxhound", "repo": "foxhound", "kind": "site", "origin": "https://foxhoundapp.com" },
+    { "id": "foxing", "name": "Foxing", "repo": "foxing", "kind": "site", "origin": "https://foxing.app" },
+    { "id": "carrel", "name": "Carrel", "repo": "carrel", "kind": "static", "origin": "https://carrel.dustinedwards.info" },
+    { "id": "enarratio", "name": "Enarratio", "repo": "enarratio", "kind": "static", "origin": "https://enarratio.dustinedwards.info" },
+    { "id": "capsomer", "name": "Capsomer", "repo": "capsomer", "kind": "static", "origin": "https://capsomer.dustinedwards.info" },
+    { "id": "prelum", "name": "Prelum specimen", "repo": "prelum", "kind": "static", "origin": "https://prelum.dustinedwards.info" },
+    { "id": "capsid", "name": "Capsid explorer", "repo": "capsid", "kind": "site", "origin": "https://capsid.dustinedwards.info" },
+    { "id": "capsid-mcp", "name": "Capsid MCP", "repo": "capsid", "kind": "worker", "origin": "https://mcp.dustinedwards.info" },
+    { "id": "foxhound-mcp", "name": "Foxhound admin MCP", "repo": "foxhound", "kind": "worker", "origin": "https://admin-mcp.foxhoundapp.com" }
+  ]
+}
