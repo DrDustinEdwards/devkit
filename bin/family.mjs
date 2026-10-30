@@ -3,12 +3,14 @@
 //
 //   pins       a dependency on one of the shared packages, or a call to devkit's reusable workflows, that is not at that
 //              package's newest release tag (a raw commit counts as behind);
-//   copies     a local definition with the name of something a shared package exports, or text only a shared builder should
-//              write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation rules, a Cloudflare
-//              Images resize, an island loader...);
+//   copies     a local definition with the name of something a shared package exports (or a known alias), or text only a
+//              shared builder should write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation
+//              rules, a Cloudflare Images resize, an island loader, JSON-LD, a hex or base64url encoder, a pre-paint theme
+//              script...), in source or in a static _headers file (a security header set);
 //   libraries  a direct dependency on a library a shared package wraps (marked, remark, mermaid, sanitize-html...);
 //   features   a family feature the repository's kind of app should have and does not import (robots.txt, security.txt,
-//              IndexNow, the CSP report endpoint, /health...);
+//              IndexNow, the CSP report endpoint, /health...), and as warnings an accessibility test, noindex on admin and
+//              login routes, and a feed's alternate link;
 //   tokens     a site setting its own value for one of Capsomer's tokens (--page-max, --measure, --radius-m, --accent...),
 //              or loading its own files for the family's faces (Schibsted Grotesk, Martian Mono) instead of
 //              capsomer/fonts.css: a value the family shares is set once, in Capsomer, never per site;
@@ -37,6 +39,11 @@
 //
 // On a Renovate branch (GITHUB_HEAD_REF renovate/...) the pin findings are warnings: a bump of one package must not fail
 // because another is also behind. A line ending in a codespell:ignore comment is a contract the spelling check leaves.
+//
+// Warnings (::warning::, exit 0) are also how a new rule arrives: a fingerprint, alias or feature marked `warn` is
+// reported for one release so the sites can move first, and fails from the next (the ones added in 0.18.0 fail from
+// 0.19.0). A few feature heuristics (an accessibility test, noindex on admin routes, a feed's alternate link) stay
+// warnings. Each is silenced the same way as a failure: "copies" for a file, "waive" for a feature.
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { appendFileSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
@@ -60,19 +67,21 @@ const PUBLIC_OR_PRIVATE = ["site", "static", "private"];
 /** Every family feature: which kinds of app need it, how its use is found, and what provides it. */
 export const FEATURES = {
   robots: { kinds: SITE, find: /site-helpers\/robots["']/, use: "Prelum ./robots robotsDocument (/robots.txt)" },
-  aiTxt: { kinds: SITE, find: /\baiTxt\b/, use: "Prelum ./robots aiTxt (/ai.txt)" },
+  aiTxt: { kinds: SITE, find: /\baiTxt(Response)?\b/, use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt)" },
   tdm: { kinds: SITE, find: /\bTDM_RESERVATION_HEADERS\b/, use: "Prelum ./robots TDM_RESERVATION_HEADERS" },
   sitemap: { kinds: SITE, find: /site-helpers\/sitemap["']/, use: "Prelum ./sitemap sitemapDocument (/sitemap.xml)" },
   llms: { kinds: SITE, find: /site-helpers\/llms["']/, use: "Prelum ./llms llmsDocument (/llms.txt)" },
   head: { kinds: SITE, find: /site-helpers\/head["']/, use: "Prelum ./head headTags (canonical, Open Graph, Twitter)" },
   schema: { kinds: SITE, find: /site-helpers\/schema["']/, use: "Prelum ./schema (JSON-LD)" },
-  indexnow: { kinds: SITE, find: /site-helpers\/indexnow["']|prelum-indexnow/, use: "Prelum ./indexnow submitIndexNow (site-api onPageChange on a Carrel site; prelum-indexnow after a static deploy)" },
+  indexnow: { kinds: SITE, find: /site-helpers\/indexnow["']|prelum-indexnow/, use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)" },
   securityTxt: { kinds: SITE, find: /site-runtime\/security-txt["']/, use: "site-runtime ./security-txt (/.well-known/security.txt)" },
   headers: { kinds: [...PUBLIC_OR_PRIVATE, "worker"], find: /site-runtime\/headers["']/, use: "site-runtime ./headers buildSecurityHeaders" },
   csp: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/csp["']/, use: "site-runtime ./csp buildContentSecurityPolicy" },
   cspReport: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/csp-report["']/, use: "site-runtime ./csp-report receiveCspReport" },
   health: { kinds: ["site", "private"], find: /site-runtime\/health["']/, use: "site-runtime ./health healthResponse (/health)" },
-  capsomer: { kinds: PUBLIC_OR_PRIVATE, find: /["']capsomer(\/[^"']*)?["']/, use: "Capsomer (tokens, components, the site layer)" },
+  // base.css, not just a token file: the element styles every family page shares. A build that copies it out of the
+  // package (Capsid's explorer: require.resolve("capsomer/package.json"), then "css/base.css") counts.
+  capsomer: { kinds: PUBLIC_OR_PRIVATE, find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']/, use: "Capsomer's capsomer/base.css (tokens, element styles, the site layer), then its components" },
 };
 /**
  * A React Router app on Workers Assets serves its built files from the assets layer, which sends them with
@@ -112,7 +121,29 @@ export const FINGERPRINTS = [
   { find: /href\s*[:=]\s*\{?\s*["'`]https:\/\/fonts\.googleapis\.com\/css|@import\s+url\(\s*["']?https:\/\/fonts\.googleapis\.com/, use: "self-hosted fonts (capsomer/fonts.css for the family's faces, Fontsource for a site's own)" },
   // A loader of its own: finding the marked elements, or importing a module from /islands/.
   { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
+  // New in 0.18.0, so warnings until 0.19.0. JSON-LD by hand: a script of that type filled by JSON.stringify in the same
+  // expression, or a node naming the context itself (Prelum's thing and graph add it).
+  { warn: true, find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
+  // Head tags by hand: a Twitter card, or a canonical link (not a Link header's `>; rel="canonical"`).
+  { warn: true, find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
+  // Bytes to hex: the toString(16).padStart(2, "0") ... join("") loop over bytes (a digest, random bytes), not a color's
+  // three channels, so only in a file that holds bytes.
+  { warn: true, also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
+  // base64url: btoa(...) and then the + to - swap, in one statement.
+  { warn: true, find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
+  // A constant-time compare of its own: OR-ing the XOR of two strings' or arrays' items.
+  { warn: true, find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
+  // Server-side Turnstile and the Access localhost bypass: each belongs once, in site-runtime, beside the client and
+  // the verifier it goes with.
+  { warn: true, find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
+  { warn: true, find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
+  // The pre-paint theme script: the stored choice read and set on the root before the page paints.
+  { warn: true, find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
+  // React Router's template error boundary, never replaced.
+  { warn: true, find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
 ];
+/** A security header set written into Cloudflare's static `_headers` (bsw's copy): new in 0.18.0, a warning until 0.19.0. */
+export const HEADERS_COPY = { warn: true, find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
 export const LIBRARIES = [
@@ -142,6 +173,70 @@ export const ALIASES = {
   bytesToBase64: "toBase64",
   base64ToBytes: "fromBase64",
 };
+
+/**
+ * Aliases new in 0.18.0 (warnings until 0.19.0). Each name is also used for other things (a Markdown `esc`, a KB path's
+ * `slugOf`, a color's `hex`), so a definition counts only when its body does the shared export's job.
+ * @type {Record<string, { target: string, body: RegExp }>}
+ */
+export const BODY_ALIASES = {
+  sha256Of: { target: "sha256Hex", body: /subtle\.digest\(/ },
+  hashToken: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashMcpToken: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashRecipient: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  generateSlug: { target: "slugify", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  slugOf: { target: "slugify", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  esc: { target: "escapeHtml", body: /&(?:amp|lt|quot);|&#/ },
+  attr: { target: "escapeHtml", body: /&(?:amp|lt|quot);|&#/ },
+  hex: { target: "toHex", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
+  b64: { target: "toBase64", body: /\bbtoa\(/ },
+};
+
+/** A definition's text: its first line and every line after it indented deeper, so a function's body or one arrow. */
+export function definitionBody(/** @type {string} */ text, /** @type {number} */ start) {
+  const lines = text.slice(start, start + 2000).split("\n");
+  const indent = /^[ \t]*/.exec(lines[0])?.[0].length ?? 0;
+  const end = lines.findIndex((l, i) => i > 0 && l.trim() !== "" && (/^[ \t]*/.exec(l)?.[0].length ?? 0) <= indent);
+  return lines.slice(0, end < 0 ? undefined : end).join("\n");
+}
+
+/**
+ * Family features found by a heuristic, so they warn instead of failing: each is a function of the app's files that
+ * answers what is missing, or null. `.family.json` "waive" silences one by its name, as it does a feature.
+ * @type {Record<string, { kinds: string[], use: string, missing: (app: { files: string[], text: string, read: (f: string) => string }) => string | null }>}
+ */
+export const ADVISORIES = {
+  // An accessibility test of its own pages: Capsomer's axe helpers or axe-core, in a test or a browser check script.
+  a11y: {
+    kinds: PUBLIC_OR_PRIVATE,
+    use: "capsomer/testing expectNoAxeViolations (or @axe-core) in a browser test",
+    missing: ({ files, read }) => (files.some((f) => SOURCE.test(f) && /["'](?:capsomer\/testing|@axe-core\/[^"']+|axe-core(?:\/[^"']*)?)["']/.test(read(f))) ? null : "no accessibility test"),
+  },
+  // An admin, login or console page kept out of search: some file that names the route also says noindex (the route,
+  // its layout, a Worker rule or a _headers block).
+  noindex: {
+    kinds: SITE,
+    use: "a robots noindex meta or X-Robots-Tag: noindex on each admin, login, signin or console route",
+    missing: ({ files, read }) => {
+      const names = new Set(files.map((f) => ADMIN_ROUTE.exec(f)?.[1]).filter((n) => n !== undefined));
+      const sayers = files.filter((f) => ((SOURCE.test(f) && !NOT_SOURCE.test(f)) || posix.basename(f) === "_headers") && /noindex/i.test(read(f)));
+      const bare = [...names].filter((n) => !sayers.some((f) => ADMIN_ROUTE.exec(f)?.[1] === n || new RegExp(`(?:^|["'\`])/${n}\\b`, "m").test(read(f))));
+      return bare.length ? `${bare.map((n) => `/${n}`).join(", ")} without noindex` : null;
+    },
+  },
+  // A feed a reader can find from the page: a rel="alternate" link of the feed's type.
+  feedLink: {
+    kinds: SITE,
+    use: '`<link rel="alternate" type="application/rss+xml">` (or atom, or feed+json) in the head',
+    missing: ({ text }) =>
+      /\b(?:rssDocument|atomDocument|jsonFeedDocument)\b|["'`]Content-Type["'`]\s*:\s*["'`]application\/(?:rss|atom)\+xml/.test(text) &&
+      !/\brel\s*[=:]\s*["'`]alternate["'`][^>{}]{0,200}?application\/(?:rss\+xml|atom\+xml|feed\+json)|application\/(?:rss\+xml|atom\+xml|feed\+json)["'`][^>{}]{0,200}?\brel\s*[=:]\s*["'`]alternate/.test(text)
+        ? "a feed and no alternate link to it"
+        : null,
+  },
+};
+/** A route file for a page search should not list, and which one (admin, login, signin, sign-in or console). */
+const ADMIN_ROUTE = /(?:^|\/)routes\/(?:[^/]*\/)*(?:[^/]*\.)?(admin|login|signin|sign-in|console)(?=[./_$-])/;
 
 // Single words too common to flag on name alone; compound names (escapeHtml, jsonLd) are distinctive, except these.
 const DISTINCT_SINGLE = new Set(["slugify"]);
@@ -256,7 +351,8 @@ export function checkCopies(tree, catalog, config, self) {
   const found = [];
   const names = Object.keys(catalog).filter(distinctive);
   const aliases = Object.keys(ALIASES).filter((a) => catalog[ALIASES[a]]);
-  const all = [...names, ...aliases];
+  const bodyAliases = Object.keys(BODY_ALIASES).filter((a) => catalog[BODY_ALIASES[a].target]);
+  const all = [...names, ...aliases, ...bodyAliases];
   const shared = new RegExp(`from\\s+["'](${PACKAGES.map((p) => p.name.replace(/[/.]/g, "\\$&")).join("|")})(/[^"']*)?["']`);
   const define = all.length ? new RegExp(`^[ \\t]*(?:export\\s+)?(?:async\\s+)?(?:function\\*?\\s+|(?:const|let|var)\\s+)(${all.join("|")})\\b\\s*[=(<:]`, "gm") : null;
   for (const file of tree.files) {
@@ -271,17 +367,32 @@ export function checkCopies(tree, catalog, config, self) {
     }
     if (define) {
       for (const m of text.matchAll(define)) {
-        const target = ALIASES[m[1]] ?? m[1];
+        const guarded = BODY_ALIASES[m[1]];
+        const target = guarded?.target ?? ALIASES[m[1]] ?? m[1];
         if (imported.has(target)) continue;
-        found.push({ check: "copies", file, line: lineOf(m.index), message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
+        if (guarded && !guarded.body.test(definitionBody(text, m.index))) continue;
+        found.push({ check: "copies", file, line: lineOf(m.index), warn: guarded ? true : undefined, message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
       }
     }
     // Comments may name what a builder writes; only code counts. Blanked, not removed, so line numbers hold.
     const code = text.replace(/\/\*[\s\S]*?\*\/|(^|[^:"'`])\/\/.*$/gm, (c) => c.replace(/[^\n]/g, " "));
-    for (const { find, use } of FINGERPRINTS) {
+    for (const { find, also, use, say, warn } of FINGERPRINTS) {
       if (self && use.startsWith(`${self} `)) continue;
       const m = find.exec(code);
-      if (m) found.push({ check: "copies", file, line: lineOf(m.index), message: `this builds what ${use} builds: use it` });
+      if (m && also && !also.test(code)) continue;
+      // One finding a line: a named copy already reported there (germomics' one-line hex) says it.
+      if (m && !found.some((f) => f.file === file && f.line === lineOf(m.index))) found.push({ check: "copies", file, line: lineOf(m.index), warn, message: say ?? `this builds what ${use} builds: use it` });
+    }
+  }
+  if (self !== "site-runtime") {
+    for (const file of tree.files.filter((f) => posix.basename(f) === "_headers" && !NOT_SOURCE.test(f) && !config.copies?.[f])) {
+      const text = tree.read(file);
+      // A comment line starts with #, so only a header line, indented under its path, matches.
+      const m = HEADERS_COPY.find.exec(text);
+      if (m) {
+        const line = text.slice(0, m.index).split("\n").length;
+        found.push({ check: "copies", file, line, warn: true, message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .family.json "copies"` });
+      }
     }
   }
   return found;
@@ -401,6 +512,19 @@ export function checkFeatures(tree, config, now = Date.now()) {
     if (d1 && kind !== "package" && !config.waive?.[`${prefix}backup`] && !BACKUP.find.test(text)) {
       found.push({ check: "features", file: dir, message: `${dir} has a D1 database and no nightly dump: ${BACKUP.use}` });
     }
+    // A Carrel site (it calls createSiteApi) tells IndexNow about each publish and schedule through site-api's hook. A
+    // createSiteApi without it either tells nobody, or hands its own submitIndexNow to onPageChange (site-api v0.9.0's way).
+    const indexnow = FEATURES.indexnow;
+    if (indexnow.kinds.includes(kind) && !config.waive?.[`${prefix}indexnow`] && indexnow.find.test(text) && /\bcreateSiteApi\s*\(/.test(text) && !/\bindexNowHook\b|prelum-indexnow/.test(text)) {
+      const how = /\bonPageChange\s*[:(]/.test(text) ? "with its own onPageChange submission" : "without IndexNow, so a publish from Carrel reaches no search engine";
+      found.push({ check: "features", file: dir, message: `${kind} ${dir === "." ? "" : `${dir} `}calls createSiteApi ${how}: hooks: [indexNowHook(...)] from site-api` });
+    }
+    const all = tree.files.filter((f) => owner(f) === dir && !/(^|\/)(node_modules|dist|build|coverage)\//.test(f));
+    for (const [name, { kinds, use, missing }] of Object.entries(ADVISORIES)) {
+      if (!kinds.includes(kind) || config.waive?.[`${prefix}${name}`]) continue;
+      const what = missing({ files: all, text, read: tree.read });
+      if (what) found.push({ check: "features", file: dir, warn: true, message: `${kind} ${dir === "." ? "" : `${dir} `}has ${what}: ${use}` });
+    }
   }
   return found;
 }
@@ -504,6 +628,15 @@ export function readCatalog(locate) {
       if (sub.includes("*")) {
         const base = sub.split("/")[1];
         const comps = existsSync(join(dir, "components")) ? readdirSync(join(dir, "components")).filter((c) => statSync(join(dir, "components", c)).isDirectory()) : [];
+        // Capsomer's behaviors are listed by what each exports (behavior/time's relative, day...), so a site writing its
+        // own finds them; the British spelling of the same subpath and the React components stay a list of components.
+        if (sub === "./behavior/*") {
+          for (const c of comps) {
+            const file = moduleFile(dir, JSON.parse(JSON.stringify(target).replaceAll("*", c)));
+            if (file) entries.push([`./${base}/${c}`, exportNames(readFileSync(file, "utf8"))]);
+          }
+          continue;
+        }
         entries.push([sub, comps.map((c) => `${base}/${c}`)]);
         continue;
       }
@@ -525,7 +658,7 @@ function moduleFile(/** @type {string} */ dir, /** @type {unknown} */ target) {
   while (t && typeof t === "object") t = t.types ?? t.import ?? t.default;
   if (typeof t !== "string") return null;
   const f = join(dir, t);
-  const candidates = [f, f.replace(/\.m?js$/, ".d.mts"), f.replace(/\.js$/, ".d.ts"), f.replace(/^(.*)\/dist\/(.*)\.d\.ts$/, "$1/src/$2.ts"), f.replace(/^(.*)\/dist\/(.*)\.js$/, "$1/src/$2.ts")];
+  const candidates = [f, f.replace(/\.m?js$/, ".d.mts"), f.replace(/\.js$/, ".d.ts"), f.replace(/^(.*)\/dist\/(.*)\.d\.ts$/, "$1/src/$2.ts"), f.replace(/^(.*)\/dist\/(.*)\.js$/, "$1/src/$2.ts"), f.replace(/^(.*)\/dist\/(.*)\.d\.ts$/, "$1/$2.ts")];
   return candidates.find((c) => existsSync(c) && statSync(c).isFile()) ?? null;
 }
 
@@ -552,6 +685,7 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
     "| Feature | Needed by | Provided by |",
     "| --- | --- | --- |",
     ...Object.entries(FEATURES).map(([f, { kinds, use }]) => `| ${f} | ${kinds.join(", ")} | ${use} |`),
+    ...Object.entries(ADVISORIES).map(([f, { kinds, use }]) => `| ${f} (a warning) | ${kinds.join(", ")} | ${use} |`),
     `| backup | any app with a D1 database | ${BACKUP.use} |`,
     `| assetCache | any React Router app (/assets/*, and /islands/* with devkit ./islands) | ${ASSET_CACHE.use} |`,
   ];
