@@ -107,6 +107,9 @@ export const FINGERPRINTS = [
   { find: /speculationrules|["']Speculation-Rules["']/, use: "site-runtime ./prefetch speculationRules" },
   // Cloudflare Images called directly: the binding, or any .input(...).transform( chain.
   { find: /\bIMAGES\s*\.\s*input\s*\(|\.input\((?:[^()]|\([^()]*\))*\)\s*\.transform\s*\(/, use: "site-runtime ./image" },
+  // A Google Fonts stylesheet linked from a page: a render-blocking request to a second origin, then the files from a
+  // third. A server fetching a face (site-runtime ./share-card googleFont) names no href and passes.
+  { find: /href\s*[:=]\s*\{?\s*["'`]https:\/\/fonts\.googleapis\.com\/css|@import\s+url\(\s*["']?https:\/\/fonts\.googleapis\.com/, use: "self-hosted fonts (capsomer/fonts.css for the family's faces, Fontsource for a site's own)" },
   // A loader of its own: finding the marked elements, or importing a module from /islands/.
   { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
 ];

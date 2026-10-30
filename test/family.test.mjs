@@ -61,15 +61,17 @@ test("builder text counts in code, not in a comment, and a waived file is skippe
       "app/head.tsx": '<script type="speculationrules">{rules}</script>\n',
       "app/img.ts": "const out = await images\n  .input(object.body)\n  .transform({ width: 400 });\n",
       "app/loader.ts": "const els = document.querySelectorAll('[data-island]');\nimport(/* @vite-ignore */ `/islands/${n}.js`);\n",
+      "app/root.tsx": 'export const links = () => [{ rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter" }];\n',
       // Using the shared ones, and a stream's own .transform, are not copies.
       "app/uses.ts": 'import { speculationRules } from "@dustinedwards/site-runtime/prefetch";\nconst r = speculationRules();\nstream.input.transform(r);\n',
+      "app/card.ts": "const css = await fetch(`https://fonts.googleapis.com/css2?family=${name}`);\n",
     }),
     {},
     { copies: { "app/og.ts": "satori shows entities literally" } },
   );
   assert.deepEqual(
     found.map((f) => `${f.file}:${f.line} ${f.message.split(" ")[3]}`),
-    ["app/robots.ts:2 Prelum", "app/head.tsx:1 site-runtime", "app/img.ts:2 site-runtime", "app/loader.ts:1 devkit"],
+    ["app/robots.ts:2 Prelum", "app/head.tsx:1 site-runtime", "app/img.ts:2 site-runtime", "app/loader.ts:1 devkit", "app/root.tsx:1 self-hosted"],
   );
 });
 
