@@ -1,0 +1,84 @@
+name: dependencies
+
+# Known vulnerabilities in the caller's dependencies. On a pull request, GitHub's dependency review fails a change that adds
+# a vulnerable package at `fail-on-severity` or above; it reads the dependency graph, which every public repository has.
+# On any other event (a push, a schedule), OSV-Scanner reads every lockfile in the repository, nested ones such as
+# mcp/package-lock.json included, and fails on any known vulnerability, because an advisory published after the merge
+# reaches nothing a pull request ever checked.
+#
+# Exceptions, each with its reason: the `allow-ghsas` input for the review, and an osv-scanner.toml at the repository root
+# (`[[IgnoredVulns]]` with `id`, `reason` and an `ignoreUntil` date) for the scan, which applies it to every lockfile.
+#
+# A CALLER (examples/dependencies-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+
+on:
+  workflow_call:
+    inputs:
+      fail-on-severity:
+        description: The lowest advisory severity that fails a pull request (low, moderate, high or critical).
+        required: false
+        type: string
+        default: high
+      fail-on-scopes:
+        description: The dependency scopes that fail a pull request. Development tools run in CI, beside its secrets.
+        required: false
+        type: string
+        default: runtime, development
+      allow-ghsas:
+        description: Advisory IDs the review allows, separated by commas; the caller says why beside each.
+        required: false
+        type: string
+        default: ""
+      timeout-minutes:
+        required: false
+        type: number
+        default: 10
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    steps:
+      # It compares the two commits' dependency graphs through the API, so nothing is checked out. No pull request comment,
+      # which would need pull-requests: write; the job summary holds the report.
+      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: ${{ inputs.fail-on-severity }}
+          fail-on-scopes: ${{ inputs.fail-on-scopes }}
+          allow-ghsas: ${{ inputs.allow-ghsas }}
+          comment-summary-in-pr: never
+
+  scan:
+    name: OSV-Scanner
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Install OSV-Scanner 2.7.0
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl -fsSLo osv-scanner https://github.com/google/osv-scanner/releases/download/v2.7.0/osv-scanner_linux_amd64
+          echo "160c6253e2922e9e0a6a9771c5c4c40a4b3c6090b34a3cdd5e80c96cc2e4218b  osv-scanner" | sha256sum -c -
+          chmod +x osv-scanner
+
+      # Without --config each lockfile reads only an osv-scanner.toml in its own folder. A package with no dependencies has no
+      # lockfile, and passes.
+      - name: Scan every lockfile
+        run: |
+          config=()
+          if [ -f osv-scanner.toml ]; then config=(--config osv-scanner.toml); fi
+          "$RUNNER_TEMP/osv-scanner" scan source --recursive --allow-no-lockfiles --format gh-annotations "${config[@]}" .

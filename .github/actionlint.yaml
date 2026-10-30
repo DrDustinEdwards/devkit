@@ -1,0 +1,6 @@
+paths:
+  # job.workflow_sha is GitHub's documented commit of the workflow file that defines the job (Contexts reference, job
+  # context); actionlint 1.7.12 does not know the job.workflow_* properties yet.
+  .github/workflows/family.yml:
+    ignore:
+      - 'property "workflow_sha" is not defined in object type \{check_run_id: number'

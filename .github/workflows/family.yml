@@ -2,7 +2,7 @@ name: family
 
 # devkit-family (bin/family.mjs) on the caller: pins behind the newest release, local copies of shared exports, libraries a
 # shared package wraps, a family feature the site lacks, and British spelling. Nothing to install: this checks out devkit
-# at the very commit the caller pinned (github.job_workflow_sha), reads each shared package at its newest tag, and runs
+# at the very commit the caller pinned (job.workflow_sha), reads each shared package at its newest tag, and runs
 # the bin with Node alone; the spelling check
 # runs codespell through pipx, which the runner has. Exceptions live in the caller's .family.json, each with a reason.
 #
@@ -33,10 +33,16 @@ jobs:
         with:
           persist-credentials: false
 
+      # An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           repository: DrDustinEdwards/devkit
-          ref: ${{ github.job_workflow_sha }}
+          ref: ${{ job.workflow_sha }}
           path: .devkit
           persist-credentials: false
 

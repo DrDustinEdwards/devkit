@@ -3,6 +3,10 @@
 ## Unreleased
 
 - `devkit-live` and `live.yml`: the completeness scoreboard. Every day each area's live check (`live/areas.json`) runs against every live site (`live/sites.json`), and the board is rebuilt from the runs and the verifiers' verdicts (`live/verdicts/`) on the `scoreboard` branch: https://github.com/DrDustinEdwards/devkit/blob/scoreboard/SCOREBOARD.md. A cell is complete only when its checks pass, a verifier who is not the builder signed it with evidence, and no run since has failed; `devkit-live lint` in CI refuses a verdict signed by its builder or marked complete without evidence. Area 1 starts with Prelum's `prelum-audit`; each area adds its check with one entry. Lines added and removed per area come from the merged pull requests labeled `completeness-area-<n>`.
+- `workflow-audit.yml`, a reusable workflow: actionlint (with shellcheck) and zizmor on the caller's workflows, failing on any actionlint finding and on any zizmor finding at `min-severity` (default `medium`) or above, as annotations. actionlint 1.7.12, shellcheck 0.11.0 and zizmor 1.31.1 are release files checked against their sha256. Exceptions live in `.github/actionlint.yaml` and `.github/zizmor.yml`. devkit's CI runs it on devkit (`examples/workflow-audit-caller.yml`).
+- `dependencies.yml`, a reusable workflow: GitHub's dependency review on a pull request (fails at `fail-on-severity`, default `high`, in runtime and development dependencies), and OSV-Scanner 2.7.0 over every lockfile on a push or a schedule (fails on any known vulnerability; exceptions in a root `osv-scanner.toml`). devkit's CI runs it on devkit (`examples/dependencies-caller.yml`).
+- `family.yml` checks devkit out at the commit the caller pinned. It read `github.job_workflow_sha`, which GitHub does not define, so the ref was empty and every caller ran devkit's default branch (a prelum run pinned to 64997ae checked out main at 03c51ee); it now reads `job.workflow_sha` and fails if that is ever empty.
+- `no-bloat.yml` and `worker-deploy.yml` pass shellcheck: a quoted optional `--warn-only`, and `_` for the unused loop counters.
 
 ## 0.18.0 (2026-10-30)
 

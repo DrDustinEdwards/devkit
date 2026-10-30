@@ -94,4 +94,4 @@ jobs:
             echo "::error::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README)."
             exit 1
           fi
-          node "$bin" --config "$CONFIG" $WARN_ONLY
+          node "$bin" --config "$CONFIG" ${WARN_ONLY:+"$WARN_ONLY"}

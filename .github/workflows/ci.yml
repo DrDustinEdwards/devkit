@@ -43,3 +43,10 @@ jobs:
           PUSH_BEFORE: ${{ github.event.before }}
           PUSH_AFTER: ${{ github.sha }}
         run: node bin/check-trailers.mjs
+
+  # devkit's own workflows through the shared audits it ships, this commit's copy of each (as code-map-self.yml does).
+  workflow-audit:
+    uses: ./.github/workflows/workflow-audit.yml
+
+  dependencies:
+    uses: ./.github/workflows/dependencies.yml

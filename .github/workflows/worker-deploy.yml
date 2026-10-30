@@ -294,7 +294,7 @@ jobs:
             answered=0
             matched=0
             live=none
-            for i in $(seq 1 "$VERIFY_POLL_ATTEMPTS"); do
+            for _ in $(seq 1 "$VERIFY_POLL_ATTEMPTS"); do
               if body=$(curl -sS --max-time 10 "$HEALTH_URL"); then
                 answered=1
                 live=$(printf '%s' "$body" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(JSON.parse(s).sha??"unknown")}catch{process.stdout.write("unreadable")}})')
@@ -354,7 +354,7 @@ jobs:
           npx --yes "wrangler@${WRANGLER_VERSION}" rollback --name "$WORKER" --message "live gate failed for ${GITHUB_SHA}" --yes
           # The rollout is not instant, so read the sha back rather than assuming, and say so when it never moved.
           ROLLBACK_TO=unreadable
-          for i in $(seq 1 20); do
+          for _ in $(seq 1 20); do
             ROLLBACK_TO=$(live_sha)
             if node "$GUARD" --after "${ROLLBACK_TO}" "${GITHUB_SHA}" > /dev/null; then
               echo "::error::rolled back: was ${ROLLBACK_FROM} (this run's commit ${GITHUB_SHA}), now ${ROLLBACK_TO}. master still points at the bad commit; land a fix or revert it."
