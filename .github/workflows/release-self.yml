@@ -1,0 +1,29 @@
+name: release-self
+
+# devkit releases itself with its own release workflow (this commit's copy), then starts the consumer bumps: merging the
+# version bump is the release, as in every package repository.
+
+on:
+  push:
+    branches: [main]
+    paths: [package.json, CHANGELOG.md]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/release.yml
+
+  bump:
+    needs: release
+    if: needs.release.outputs.created == 'true'
+    uses: ./.github/workflows/bump-consumers.yml
+    secrets:
+      token: ${{ secrets.RENOVATE_TRIGGER_TOKEN }}

@@ -7,6 +7,7 @@
 - `dependencies.yml`, a reusable workflow: GitHub's dependency review on a pull request (fails at `fail-on-severity`, default `high`, in runtime and development dependencies), and OSV-Scanner 2.7.0 over every lockfile on a push or a schedule (fails on any known vulnerability; exceptions in a root `osv-scanner.toml`). devkit's CI runs it on devkit (`examples/dependencies-caller.yml`).
 - `family.yml` checks devkit out at the commit the caller pinned. It read `github.job_workflow_sha`, which GitHub does not define, so the ref was empty and every caller ran devkit's default branch (a prelum run pinned to 64997ae checked out main at 03c51ee); it now reads `job.workflow_sha` and fails if that is ever empty.
 - `no-bloat.yml`, `worker-deploy.yml` and `live.yml` pass shellcheck: a quoted optional `--warn-only`, `_` for the unused loop counters, and `find` for the old runs.
+- `release.yml`, a reusable workflow: merging a version bump to the default branch tags `v<version>` and publishes the GitHub release with that version's CHANGELOG section, as site-runtime and Capsomer already did by hand-copied jobs. devkit releases itself with it (`release-self.yml`), so a devkit change no longer waits for a hand-made tag (#62 merged and sat untagged). Package repositories call it with `examples/release-caller.yml`.
 
 ## 0.18.0 (2026-10-30)
 
