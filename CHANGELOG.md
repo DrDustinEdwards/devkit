@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Renovate preset: React Router opens at any time with `prPriority` 5 instead of waiting for the Monday window. Family package updates, which run at any time with priority 10, held all three PR slots every Monday, so React Router fell behind in every site (txasm on 8.0.0, four sites on 8.3.1). The three-day cooldown still applies. The preset is read from `main`, so this reaches every repo on merge.
+
 ## 0.17.0 (2026-10-29)
 
 - Islands are named by their content in a build: `/islands/<name>-<hash>.js`, like the chunks beside them, so a site can serve `/islands/*` with `Cache-Control: immutable`. The built `/site.js` carries the name to URL map and `startIslands()`'s default `load` reads it; `vite dev`, and a page bundled without siteScript, still load `/islands/<name>.js`. Breaking for a site whose own `load` reads `/islands/<name>.js` from a build: it imports `ISLAND_URLS` instead.
