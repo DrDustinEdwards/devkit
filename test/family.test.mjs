@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
-import { checkCopies, checkFeatures, checkLibraries, checkPins, checkTokens, newest, respell } from "../bin/family.mjs";
+import { WORKFLOWS, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/family.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -18,13 +23,17 @@ test("a pin behind the newest tag, and a raw commit, are both refused; the newes
     tree({
       "package.json": JSON.stringify({ dependencies: { a: "github:DrDustinEdwards/prelum#v0.9.0", b: `github:DrDustinEdwards/site-runtime#${SHA_RAW}`, c: "github:DrDustinEdwards/d1-dump#v0.10.0" } }, null, 1),
       ".github/workflows/ci.yml": `uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${SHA_V2} # v0.10.0`,
+      // The tag ai-author.yml runs its bin from.
+      ".github/workflows/ai-author.yml": "    with:\n      devkit: DrDustinEdwards/devkit#v0.9.0\n",
+      ".github/workflows/other.yml": "      devkit: DrDustinEdwards/devkit#v0.10.0\n",
     }),
     tags,
   );
   assert.deepEqual(
     found.map((f) => f.message),
-    ["prelum is at v0.9.0; the newest release is v0.10.0", `site-runtime is pinned to ${SHA_RAW.slice(0, 12)}, which is no release; pin v0.10.0`],
+    ["prelum is at v0.9.0; the newest release is v0.10.0", `site-runtime is pinned to ${SHA_RAW.slice(0, 12)}, which is no release; pin v0.10.0`, "ai-author's devkit: input is at v0.9.0; the newest release is v0.10.0"],
   );
+  assert.equal(found[2].line, 2);
 });
 
 test("on a Renovate branch a stale pin is a warning, so one bump never waits on another", () => {
@@ -144,7 +153,7 @@ test("a site's own value for a Capsomer token, or its own files for the family's
   assert.match(found[2].message, /capsomer\/fonts\.css/);
 });
 
-test("PLANT: the fingerprints new in 0.18.0 warn on a copy, and their look-alikes pass", () => {
+test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.19.0 and fail from it, and their look-alikes pass", () => {
   const found = checkCopies(
     tree({
       "app/ld.tsx": '<script\n  type="application/ld+json"\n  dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}\n/>\n',
@@ -161,8 +170,8 @@ test("PLANT: the fingerprints new in 0.18.0 warn on a copy, and their look-alike
     {},
   );
   assert.deepEqual(
-    found.map((f) => `${f.file}:${f.line} ${f.warn}`),
-    ["app/ld.tsx:2 true", "app/meta.ts:1 true", "app/token.ts:2 true", "app/cmp.ts:1 true", "public/_headers:3 true"],
+    found.map((f) => `${f.file}:${f.line} ${isWarning(f, "0.18.0")} ${isWarning(f, "0.19.0")}`),
+    ["app/ld.tsx:2 true false", "app/meta.ts:1 true false", "app/token.ts:2 true false", "app/cmp.ts:1 true false", "public/_headers:3 true false"],
   );
 });
 
@@ -178,7 +187,7 @@ test("an alias that is also an ordinary name counts only when its body does the 
     { escapeHtml: "site-runtime ./html", slugify: "Prelum ./slug", toHex: "site-runtime ./encoding" },
     {},
   );
-  assert.deepEqual(found.map((f) => `${f.file}:${f.line} ${f.warn}`), ["app/html.ts:2 true", "app/key.ts:1 true"]);
+  assert.deepEqual(found.map((f) => `${f.file}:${f.line} ${isWarning(f, "0.18.0")}`), ["app/html.ts:2 true", "app/key.ts:1 true"]);
 });
 
 test("an admin or login route warns without noindex in a file that names it, and a Carrel site needs indexNowHook", () => {
@@ -193,4 +202,70 @@ test("an admin or login route warns without noindex in a file that names it, and
     found.map((f) => `${f.warn ?? false} ${f.message.split(":")[0]}`),
     ["false site calls createSiteApi with its own onPageChange submission", "true site has /login without noindex"],
   );
+});
+
+test("PLANT: a repository missing the devkit workflows its kinds need is told which; calling them, running the bin, or a waiver passes", () => {
+  const files = { "mcp/wrangler.jsonc": "{}", "mcp/src/index.ts": "export default {};" };
+  const missing = (/** @type {Record<string, string>} */ more, config = {}) =>
+    checkWorkflows(tree({ ...files, ...more }), { apps: { ".": "static", mcp: "worker" }, ...config }, { self: "prelum", private: false }).map((f) => f.message.split("devkit's ")[1].split(".yml")[0]);
+  assert.deepEqual(missing({}), WORKFLOWS.map((w) => w.name));
+  const calls = WORKFLOWS.filter((w) => !["family", "no-bloat", "worker-deploy"].includes(w.name)).map((w) => `      uses: DrDustinEdwards/devkit/.github/workflows/${w.name}.yml@${SHA_V2}`);
+  const ci = {
+    // A comment naming a workflow is no call.
+    ".github/workflows/ci.yml": `jobs:\n  a:\n${calls.join("\n")}\n  # uses: DrDustinEdwards/devkit/.github/workflows/worker-deploy.yml@${SHA_V2}\n  b:\n    steps:\n      - run: npm run check\n      - run: npx devkit-family\n`,
+    "package.json": JSON.stringify({ scripts: { check: "npm run check:bloat && tsc", "check:bloat": "devkit-no-bloat" } }),
+  };
+  assert.deepEqual(missing(ci), ["worker-deploy"]);
+  assert.deepEqual(missing(ci, { waive: { "workflow:worker-deploy": "Workers Builds deploys it" } }), []);
+});
+
+test("PLANT: a test with a fake devkit ships warns, naming the helper; using devkit's, or a stub for one case, passes", () => {
+  const found = checkFakes(
+    tree({
+      "test/github.test.ts": 'globalThis.fetch = async (url) => {\n  if (url.endsWith("/repos/o/r/contents/a.md")) return Response.json({ sha });\n};\n',
+      "test/access.test.ts": 'const pair = await crypto.subtle.generateKey({ name: "RSASSA-PKCS1-v1_5", modulusLength: 2048 }, true, ["sign"]);\nconst certs = { keys: [jwk] };\n',
+      "test/setup.ts": "beforeEach(() => {\n  vi.stubGlobal(\"fetch\", async (input) => {\n    throw new Error(`no network in tests: ${input}`);\n  });\n});\n",
+      "test/db.test.ts": 'await env.DB.batch([\n  env.DB.prepare("DELETE FROM posts"),\n  env.DB.prepare("DELETE FROM tags"),\n  env.DB.prepare("DELETE FROM media"),\n]);\n',
+      "test/loop.test.ts": 'for (const t of ["posts", "tags"]) await env.DB.prepare(`DELETE FROM ${t}`).run();\n',
+      // devkit's own helpers, a failure stubbed for one case, and a delete of some rows are not fakes.
+      "test/uses.test.ts": 'import { refuseNetwork } from "@dustinedwards/devkit/network";\nimport { resetDb } from "@dustinedwards/devkit/d1";\nvi.stubGlobal("fetch", vi.fn(async () => { throw new Error("network down"); }));\nawait db.prepare("DELETE FROM posts WHERE id = ?").run();\n',
+      "app/db.ts": 'db.prepare("DELETE FROM a");\ndb.prepare("DELETE FROM b");\ndb.prepare("DELETE FROM c");\n',
+    }),
+    {},
+  );
+  assert.deepEqual(
+    found.map((f) => `${f.file}:${f.line} ${f.message.split("use devkit ")[1].split(",")[0]} ${isWarning(f)}`),
+    ["test/github.test.ts:2 ./github stubGitHub true", "test/access.test.ts:1 ./access stubAccess true", "test/setup.ts:2 ./network refuseNetwork true", "test/db.test.ts:2 ./d1 resetDb true", "test/loop.test.ts:1 ./d1 resetDb true"],
+  );
+  assert.equal(found.filter((f) => isWarning(f, "0.20.0")).length, 0);
+});
+
+test("PLANT: an exception that excused nothing in the run is named; one that did is not", () => {
+  const config = { copies: { "app/a.ts": "kept", "app/gone.ts": "moved" }, libraries: { marked: "kept", jose: "removed" }, waive: { "mcp:health": "no mcp app" } };
+  const files = { "app/a.ts": "export function escapeHtml(s) {}\n", "package.json": '{"dependencies":{"marked":"1"}}' };
+  assert.deepEqual([...checkCopies(tree(files), catalog, config), ...checkLibraries(tree(files), config), ...checkFeatures(tree(files), { ...config, apps: { ".": "package" } })], []);
+  assert.deepEqual(
+    staleExceptions(config).map((f) => f.message.split(" excuses")[0]),
+    ['"copies" "app/gone.ts"', '"waive" "mcp:health"', '"libraries" "jose"'],
+  );
+});
+
+test("a library's package.json with exports and no kind is judged as a site, and the finding says to declare a package", () => {
+  const [first] = checkFeatures(tree({ "package.json": '{"exports":"./index.mjs"}' }), {});
+  assert.match(first.message, /"apps": \{ "\.": "package" \}/);
+});
+
+test("PLANT: a .family.json with an unknown key or kind, or a --from missing a package, stops the check (exit 2) naming what is valid", () => {
+  const root = mkdtempSync(join(tmpdir(), "family-"));
+  spawnSync("git", ["init", "-q"], { cwd: root });
+  const run = (/** @type {object} */ config, /** @type {string[]} */ args = []) => {
+    writeFileSync(join(root, ".family.json"), JSON.stringify(config));
+    const out = spawnSync(process.execPath, [fileURLToPath(new URL("../bin/family.mjs", import.meta.url)), ...args], { cwd: root, encoding: "utf8" });
+    return `${out.status} ${out.stdout.trim()}`;
+  };
+  assert.match(run({ wave: {} }), /^2 .*"wave" is no key; the valid ones are apps, waive, copies, libraries, tokens, spelling$/);
+  assert.match(run({ apps: { ".": "sitee" } }), /^2 .*"sitee", which is no kind; the valid ones are site, static, private, worker, package$/);
+  mkdirSync(join(root, "packages", "prelum"), { recursive: true });
+  writeFileSync(join(root, "packages", "prelum", "package.json"), "{}");
+  assert.match(run({ apps: { ".": "site" } }, ["--from", join(root, "packages")]), /^2 .*has no checkout of site-runtime, site-api, d1-dump, devkit, capsomer, enarratio$/);
 });
