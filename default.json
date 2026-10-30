@@ -119,6 +119,12 @@
       "groupName": "React Router"
     },
     {
+      "description": "React Router opens at any time, not only in the Monday window (Dustin, 2026-10-30). The family packages below run at any time with prPriority 10, and with prConcurrentLimit 3 and several family releases a day they held every slot each Monday: txasm stayed on 8.0.0 from June and Carrel, Foxhound, bsw and julieedwards-info on 8.3.1 while 8.4.0 (2026-09-15) and 8.5.x shipped, and txasm's Dependency Dashboard listed React Router under Awaiting Schedule. The three-day cooldown above still applies, and prPriority 5 lets it take a slot ahead of the weekly group but behind the family packages.",
+      "matchPackageNames": ["react-router", "@react-router/**"],
+      "schedule": ["* * * * *"],
+      "prPriority": 5
+    },
+    {
       "description": "better-auth automerges on patch alone. Its 1.x minors carry breaking changes by the maintainers' own account, so a minor here is a major everywhere else and gets read. Security fixes ship as patches, which is the half that must not wait for a human.",
       "matchPackageNames": ["better-auth"],
       "matchUpdateTypes": ["patch"],
