@@ -74,6 +74,23 @@ export const FEATURES = {
   health: { kinds: ["site", "private"], find: /site-runtime\/health["']/, use: "site-runtime ./health healthResponse (/health)" },
   capsomer: { kinds: PUBLIC_OR_PRIVATE, find: /["']capsomer(\/[^"']*)?["']/, use: "Capsomer (tokens, components, the site layer)" },
 };
+/**
+ * A React Router app on Workers Assets serves its built files from the assets layer, which sends them with
+ * `max-age=0, must-revalidate` unless the app's `_headers` says otherwise, so every page load revalidates every file.
+ * Vite and siteScript name each one by its content, so a year, immutable, is safe for the hashed directories.
+ */
+const HASHED_DIRS = [
+  { dir: "/assets/*", needed: () => true },
+  { dir: "/islands/*", needed: (/** @type {string} */ text) => /devkit\/islands["']/.test(text) },
+];
+export const ASSET_CACHE = { use: "public/_headers: Cache-Control: public, max-age=31536000, immutable" };
+
+/** Whether a `_headers` text gives `dir` a Cache-Control with immutable. */
+export function cachesHashed(/** @type {string} */ headers, /** @type {string} */ dir) {
+  const blocks = headers.split(/\r?\n(?=\S)/);
+  return blocks.some((b) => b.split(/\r?\n/)[0].trim() === dir && /^\s+Cache-Control:[^\n]*\bimmutable\b/im.test(b));
+}
+
 /** A D1 database needs the nightly dump, whatever the kind. */
 const BACKUP = { find: /@dustinedwards\/d1-dump["']/, use: "d1-dump runCheckedBackup and backupHealth" };
 
@@ -369,6 +386,14 @@ export function checkFeatures(tree, config, now = Date.now()) {
         found.push({ check: "features", file: f, message: `security.txt expires ${m[1]}: confirm its contact still delivers, then move SECURITY_TXT_EXPIRES on (under a year)` });
       }
     }
+    if (kind !== "package" && !config.waive?.[`${prefix}assetCache`] && mine.some((f) => /(^|\/)react-router\.config\.[mc]?[jt]s$/.test(f))) {
+      const headers = mine.filter((f) => posix.basename(f) === "_headers").map(tree.read).join("\n");
+      for (const { dir: hashed, needed } of HASHED_DIRS) {
+        if (needed(text) && !cachesHashed(headers, hashed)) {
+          found.push({ check: "features", file: dir, message: `${dir} serves ${hashed} with the assets layer's revalidate-every-load default: ${hashed} needs ${ASSET_CACHE.use}` });
+        }
+      }
+    }
     const d1 = mine.some((f) => /(^|\/)wrangler[^/]*\.jsonc?(\.example)?$/.test(f) && /"d1_databases"/.test(tree.read(f)));
     if (d1 && kind !== "package" && !config.waive?.[`${prefix}backup`] && !BACKUP.find.test(text)) {
       found.push({ check: "features", file: dir, message: `${dir} has a D1 database and no nightly dump: ${BACKUP.use}` });
@@ -525,6 +550,7 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
     "| --- | --- | --- |",
     ...Object.entries(FEATURES).map(([f, { kinds, use }]) => `| ${f} | ${kinds.join(", ")} | ${use} |`),
     `| backup | any app with a D1 database | ${BACKUP.use} |`,
+    `| assetCache | any React Router app (/assets/*, and /islands/* with devkit ./islands) | ${ASSET_CACHE.use} |`,
   ];
   for (const p of packages) {
     lines.push("", `## ${p.label} ${p.version} (DrDustinEdwards/${p.repo})`, "");
