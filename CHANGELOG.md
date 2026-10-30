@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Renovate preset: third-party updates open any time on Monday (Chicago) instead of only before 6am, and the weekly minor and patch group gets `prPriority` 4. The six-hour window had too few Renovate runs, the family packages took the PR slots in each one, and the weekly group never opened (React 19.3.1 and Vite 8.3.5 waited in every site).
 - Renovate preset: React Router opens at any time with `prPriority` 5 instead of waiting for the Monday window. Family package updates, which run at any time with priority 10, held all three PR slots every Monday, so React Router fell behind in every site (txasm on 8.0.0, four sites on 8.3.1). The three-day cooldown still applies. The preset is read from `main`, so this reaches every repo on merge.
 
 ## 0.17.0 (2026-10-29)
