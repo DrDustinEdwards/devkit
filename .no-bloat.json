@@ -1,0 +1,36 @@
+{
+  "jscpd": {
+    "args": [
+      "bin",
+      "scripts",
+      "testing",
+      "vite",
+      "--min-lines",
+      "8"
+    ]
+  },
+  "tools": {
+    "knip": "knip@6.39.0",
+    "jscpd": "jscpd@5.4.0"
+  },
+  "baseline": {
+    "measured_at": "d5377e9",
+    "knip": {
+      "Unlisted dependencies": 3
+    },
+    "jscpd": {
+      "clones": 0,
+      "lines": 0,
+      "percentage": 0
+    },
+    "tests": {
+      "files": 25,
+      "cases": 164
+    },
+    "comments": {
+      "lines": 1212,
+      "code": 5258,
+      "percentage": 18.73
+    }
+  }
+}

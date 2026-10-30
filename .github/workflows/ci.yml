@@ -34,6 +34,12 @@ jobs:
       # The check every site runs, on devkit itself: pins, copies and American spelling.
       - name: In step with the family
         run: node bin/family.mjs
+      # The no-bloat ratchet on devkit itself, through the bin it ships: Knip, jscpd, the tests and the comment share against
+      # .no-bloat.json, and on a pull request the lines it adds and removes.
+      - name: No new bloat
+        env:
+          LINES_FROM: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || '' }}
+        run: node bin/no-bloat.mjs ${LINES_FROM:+--lines-from "$LINES_FROM"}
       # This repository's own commits, through the bin it ships, as a caller of ai-author.yml would run it.
       - name: No AI trailer or author on new commits
         env:

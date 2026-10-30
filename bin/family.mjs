@@ -628,7 +628,7 @@ export const WORKFLOWS = [
   { name: "worker-size", failsFrom: "0.20.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
   // Many Workers deploy another way today (Workers Builds, a deploy job of their own), so this one stays a warning.
   { name: "worker-deploy", warn: true, needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
-  { name: "no-bloat", failsFrom: "0.20.0", runs: ["devkit-no-bloat"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
+  { name: "no-bloat", failsFrom: "0.20.0", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
   { name: "bump-consumers", failsFrom: "0.20.0", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
 ];
 
