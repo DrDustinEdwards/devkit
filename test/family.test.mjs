@@ -61,15 +61,17 @@ test("builder text counts in code, not in a comment, and a waived file is skippe
       "app/head.tsx": '<script type="speculationrules">{rules}</script>\n',
       "app/img.ts": "const out = await images\n  .input(object.body)\n  .transform({ width: 400 });\n",
       "app/loader.ts": "const els = document.querySelectorAll('[data-island]');\nimport(/* @vite-ignore */ `/islands/${n}.js`);\n",
+      "app/root.tsx": 'export const links = () => [{ rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter" }];\n',
       // Using the shared ones, and a stream's own .transform, are not copies.
       "app/uses.ts": 'import { speculationRules } from "@dustinedwards/site-runtime/prefetch";\nconst r = speculationRules();\nstream.input.transform(r);\n',
+      "app/card.ts": "const css = await fetch(`https://fonts.googleapis.com/css2?family=${name}`);\n",
     }),
     {},
     { copies: { "app/og.ts": "satori shows entities literally" } },
   );
   assert.deepEqual(
     found.map((f) => `${f.file}:${f.line} ${f.message.split(" ")[3]}`),
-    ["app/robots.ts:2 Prelum", "app/head.tsx:1 site-runtime", "app/img.ts:2 site-runtime", "app/loader.ts:1 devkit"],
+    ["app/robots.ts:2 Prelum", "app/head.tsx:1 site-runtime", "app/img.ts:2 site-runtime", "app/loader.ts:1 devkit", "app/root.tsx:1 self-hosted"],
   );
 });
 
@@ -91,6 +93,15 @@ test("each app is checked for its kind's features, files belong to the deepest a
     { apps: { ".": "site", mcp: "worker" }, waive: { aiTxt: "x", tdm: "x", sitemap: "x", llms: "x", head: "x", schema: "x", indexnow: "x", securityTxt: "x", csp: "x", cspReport: "x", health: "x", capsomer: "x", a11y: "x" } },
   );
   assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth"]);
+});
+
+test("PLANT: a React Router app without a year on its hashed files fails, and passes once _headers gives them one", () => {
+  const app = { "react-router.config.ts": "export default {};", "app/site.ts": 'import { startIslands } from "@dustinedwards/devkit/islands";' };
+  const cache = (/** @type {Record<string, string>} */ files) =>
+    checkFeatures(tree({ ...app, ...files }), { apps: { ".": "worker" } }).filter((f) => /assets layer/.test(f.message)).map((f) => f.message.split(" ")[2]);
+  assert.deepEqual(cache({}), ["/assets/*", "/islands/*"]);
+  assert.deepEqual(cache({ "public/_headers": "/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n/islands/*\n  X-Robots-Tag: noindex\n" }), ["/islands/*"]);
+  assert.deepEqual(cache({ "public/_headers": "/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n\n/islands/*\n  Cache-Control: public, max-age=31536000, immutable\n" }), []);
 });
 
 test("PLANT: security.txt's fixed Expires fails the check a month before it lapses", () => {
