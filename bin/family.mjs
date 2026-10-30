@@ -240,7 +240,7 @@ const ADMIN_ROUTE = /(?:^|\/)routes\/(?:[^/]*\/)*(?:[^/]*\.)?(admin|login|signin
 
 // Single words too common to flag on name alone; compound names (escapeHtml, jsonLd) are distinctive, except these.
 const DISTINCT_SINGLE = new Set(["slugify"]);
-const COMMON_COMPOUND = new Set(["accessToken"]);
+const COMMON_COMPOUND = new Set(["accessToken", "cacheKey"]);
 const SOURCE = /\.(m?[jt]sx?|mts|cts)$/;
 const NOT_SOURCE = /(^|\/)(node_modules|dist|build|coverage|test|tests|e2e|__tests__|fixtures)\/|\.(test|spec)\.[mc]?[jt]sx?$|\.d\.m?ts$|worker-configuration\.d\.ts$/;
 
