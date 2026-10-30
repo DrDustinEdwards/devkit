@@ -67,7 +67,7 @@ const PUBLIC_OR_PRIVATE = ["site", "static", "private"];
 /** Every family feature: which kinds of app need it, how its use is found, and what provides it. */
 export const FEATURES = {
   robots: { kinds: SITE, find: /site-helpers\/robots["']/, use: "Prelum ./robots robotsDocument (/robots.txt)" },
-  aiTxt: { kinds: SITE, find: /\baiTxt\b/, use: "Prelum ./robots aiTxt (/ai.txt)" },
+  aiTxt: { kinds: SITE, find: /\baiTxt(Response)?\b/, use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt)" },
   tdm: { kinds: SITE, find: /\bTDM_RESERVATION_HEADERS\b/, use: "Prelum ./robots TDM_RESERVATION_HEADERS" },
   sitemap: { kinds: SITE, find: /site-helpers\/sitemap["']/, use: "Prelum ./sitemap sitemapDocument (/sitemap.xml)" },
   llms: { kinds: SITE, find: /site-helpers\/llms["']/, use: "Prelum ./llms llmsDocument (/llms.txt)" },
