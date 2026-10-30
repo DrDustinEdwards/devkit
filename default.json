@@ -15,7 +15,7 @@
   "minimumReleaseAgeBehaviour": "timestamp-required",
 
   "timezone": "America/Chicago",
-  "schedule": ["before 6am on monday"],
+  "schedule": ["on monday"],
 
   "rangeStrategy": "pin",
 
@@ -68,10 +68,11 @@
       "internalChecksFilter": "strict"
     },
     {
-      "description": "ONE PR A WEEK for everything routine. A pile of single-package PRs is a pile nobody reads, and patch and minor are where the low-risk volume lives.",
+      "description": "ONE PR A WEEK for everything routine. A pile of single-package PRs is a pile nobody reads, and patch and minor are where the low-risk volume lives. It opens any time on Monday, Chicago time (the top-level schedule), with prPriority 4, ahead of other third-party updates and behind React Router (5) and the family packages (10) (Dustin, 2026-10-30). The window used to be before 6am Monday: too few Renovate runs fell in it, and the family packages took the two PRs an hour each run allows, so the group never opened. On 2026-10-30 txasm's Dependency Dashboard listed it under Awaiting Schedule with thirteen updates, React 19.3.1 and Vite 8.3.5 among them.",
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "weekly minor and patch",
-      "automerge": true
+      "automerge": true,
+      "prPriority": 4
     },
     {
       "description": "pinning a range to the installed version changes no bytes",
