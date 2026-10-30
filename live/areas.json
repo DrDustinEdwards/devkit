@@ -39,7 +39,12 @@
         { "name": "site-runtime-speed-static", "repo": "site-runtime", "bin": "site-runtime-speed", "kinds": ["static"], "args": ["--kind", "static"] }
       ]
     },
-    { "id": 8, "name": "Running and recovery", "builder": "Complete shared running and recovery", "checks": [] },
+    {
+      "id": 8,
+      "name": "Running and recovery",
+      "builder": "Complete shared running and recovery",
+      "checks": [{ "name": "ops-audit", "repo": "devkit", "bin": "devkit-ops-audit", "kinds": ["site", "worker"] }]
+    },
     { "id": 9, "name": "Accessibility and components", "builder": "Complete accessibility and Capsomer components", "checks": [] },
     {
       "id": 10,
