@@ -1,0 +1,68 @@
+name: live
+
+# THE COMPLETENESS SCOREBOARD. Every day, devkit-live (bin/live.mjs) runs each area's live check (live/areas.json) against
+# every live site (live/sites.json) and adds the run to the orphan scoreboard branch; the board is then rebuilt from the
+# runs there and the verifiers' verdicts (live/verdicts/), and published beside them:
+#
+#   https://github.com/DrDustinEdwards/devkit/blob/scoreboard/SCOREBOARD.md
+#
+# A push to main that changes live/ rebuilds the board without running the checks, so a merged verdict shows at once.
+# The run fails when any check fails or could not run, so a gap on a live site turns this red on its own.
+#
+# LIVE_GITHUB_TOKEN, when set, is a fine-grained token (resource owner DrDustinEdwards, all repositories, Pull requests
+# read, Metadata read) for counting the lines of each area's pull requests in the private repositories too.
+
+on:
+  schedule:
+    - cron: "23 6 * * *"
+  push:
+    branches: [main]
+    paths: ["live/**", "bin/live.mjs"]
+  workflow_dispatch:
+
+concurrency:
+  group: live
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  board:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - name: Run every area's checks against every live site
+        if: github.event_name != 'push'
+        env:
+          LIVE_GITHUB_TOKEN: ${{ secrets.LIVE_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node bin/live.mjs run --out "$RUNNER_TEMP/run.json"
+      - name: Add the run to the scoreboard branch and rebuild the board
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git worktree add --quiet --detach "$RUNNER_TEMP/board"
+          cd "$RUNNER_TEMP/board"
+          if git fetch --quiet --depth 1 origin scoreboard; then git checkout --quiet -B scoreboard FETCH_HEAD; else git checkout --quiet --orphan scoreboard && git rm -rfq .; fi
+          mkdir -p runs
+          if [ -f "$RUNNER_TEMP/run.json" ]; then cp "$RUNNER_TEMP/run.json" "runs/$(date -u +%F).json"; fi
+          ls runs/*.json 2>/dev/null | sort | head -n -60 | xargs -r git rm -q
+          node "$GITHUB_WORKSPACE/bin/live.mjs" board --config "$GITHUB_WORKSPACE/live" --runs runs --out board.json --md SCOREBOARD.md
+          cat SCOREBOARD.md >> "$GITHUB_STEP_SUMMARY"
+          git add -A
+          if git diff --cached --quiet; then echo "The board is current."; exit 0; fi
+          git commit --quiet -m "Scoreboard $(date -u +%F)"
+          git push --quiet origin scoreboard
+      - name: Red when any check failed or could not run
+        if: github.event_name != 'push'
+        run: node -e 'const { results } = require(process.argv[1]); const bad = results.filter((r) => r.status !== "pass"); for (const r of bad) console.log(`::error title=area ${r.area} ${r.site}::${r.check} ${r.status}${r.detail ? `: ${r.detail}` : ` (${r.errors} errors)`}`); process.exit(bad.length ? 1 : 0)' "$RUNNER_TEMP/run.json"

@@ -28,6 +28,9 @@ jobs:
         run: node --test "test/*.test.mjs"
       - name: The example callers are themselves pinned
         run: node scripts/check-callers.mjs examples/*.yml
+      # The scoreboard's site, area and verdict files, so a verdict signed by its own builder never merges.
+      - name: The scoreboard's files are sound
+        run: node bin/live.mjs lint
       # The check every site runs, on devkit itself: pins, copies and American spelling.
       - name: In step with the family
         run: node bin/family.mjs
