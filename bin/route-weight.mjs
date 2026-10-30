@@ -3,8 +3,9 @@
 // reports, per route that renders a page, the gzip bytes of the JS and CSS a first visit downloads: the client entry and
 // its imports, then every route from root down to this one with its module, imports and stylesheets, each file counted
 // once and gzipped at level 9. Chunks loaded later through import() are not in the manifest and are not counted; nor are
-// fonts and images. Warn-only: a route over the budget, or grown past the baseline, is a ::warning:: line and the run
-// passes. A missing build, a manifest naming a file the build lacks, or a config that is not JSON fails (exit 1): a report
+// fonts and images. A route over the budget, or grown past the baseline, is a ::warning:: line and the run passes, unless
+// the config sets `enforce`: then each is an ::error:: and the run fails (exit 1), and a config with no `budget_bytes`
+// fails too, since an enforced report with no budget would pass anything. A missing build, a manifest naming a file the build lacks, or a config that is not JSON fails (exit 1): a report
 // that read nothing must not look like a clean one. The table goes to the job summary.
 //
 //   npx devkit-route-weight                     report against .route-weight.json (no file: the report alone)
@@ -16,6 +17,7 @@
 //
 //   {
 //     "linked_css": true,
+//     "enforce": true,
 //     "budget_bytes": 160000,
 //     "growth": { "ratio": 0.05, "bytes": 1024 },
 //     "baseline": { "measured_at": "abc1234", "routes": { "routes/home": 118230 } }
@@ -36,7 +38,7 @@ import { gzipSync } from "node:zlib";
  *   hasDefaultExport?: boolean }} ManifestRoute
  * @typedef {{ entry: { module: string, imports?: string[], css?: string[] }, routes: Record<string, ManifestRoute> }} Manifest
  * @typedef {{ id: string, path: string, js: number, css: number, total: number }} Row
- * @typedef {{ linked_css?: boolean, budget_bytes?: number, growth?: { ratio?: number, bytes?: number },
+ * @typedef {{ linked_css?: boolean, enforce?: boolean, budget_bytes?: number, growth?: { ratio?: number, bytes?: number },
  *   baseline?: { measured_at?: string, routes?: Record<string, number> } }} Config
  */
 
@@ -174,8 +176,14 @@ function main() {
     warnings.length ? warnings.map((w) => `- ${w}`).join("\n") : "No route is over its budget or grown past its baseline.",
   ].join("\n");
   console.log(table);
-  for (const w of warnings) console.log(`::warning title=Route weight::${w}`);
+  const level = config.enforce ? "error" : "warning";
+  for (const w of warnings) console.log(`::${level} title=Route weight::${w}`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
+  if (config.enforce && config.budget_bytes === undefined) {
+    console.log("::error title=Route weight::the config enforces the report but sets no budget_bytes, so it would pass any weight.");
+    process.exit(1);
+  }
+  if (config.enforce && warnings.length) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.

@@ -10,7 +10,8 @@ name: live
 # The run fails when any check fails or could not run, so a gap on a live site turns this red on its own.
 #
 # LIVE_GITHUB_TOKEN, when set, is a fine-grained token (resource owner DrDustinEdwards, all repositories, Pull requests
-# read, Metadata read) for counting the lines of each area's pull requests in the private repositories too.
+# read, Metadata read) for counting the lines of each area's pull requests in the private repositories too. PSI_API_KEY, when
+# set, is a PageSpeed Insights API key for area 7's lab and field numbers; Google's keyless quota refuses most days.
 
 on:
   schedule:
@@ -46,6 +47,7 @@ jobs:
         env:
           LIVE_GITHUB_TOKEN: ${{ secrets.LIVE_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
+          PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
         run: node bin/live.mjs run --out "$RUNNER_TEMP/run.json"
       - name: Add the run to the scoreboard branch and rebuild the board
         run: |

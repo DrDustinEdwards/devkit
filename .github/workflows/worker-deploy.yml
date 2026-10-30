@@ -322,6 +322,36 @@ jobs:
           fi
           exit "$code"
 
+      # Every deploy starts the edge cache cold (the Worker version is in its key), so once the gate passes, each page in
+      # the sitemap at the health route's origin is fetched once: the cache tiers store it, and the first reader gets a
+      # stored page rather than a render. A site with no sitemap warms nothing. Never fails the deploy.
+      - name: Warm the stored pages
+        if: success()
+        env:
+          HEALTH_URL: ${{ inputs.health-url }}
+        run: |
+          node --input-type=module - <<'WARM' || echo "::warning::warming the stored pages did not finish"
+          const origin = new URL(process.env.HEALTH_URL).origin;
+          const locs = async (url) => {
+            const r = await fetch(url);
+            return r.ok ? [...(await r.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]) : [];
+          };
+          const top = await locs(`${origin}/sitemap.xml`);
+          const pages = top.filter((u) => !/\.xml(\?|$)/.test(u));
+          for (const index of top.filter((u) => /\.xml(\?|$)/.test(u))) pages.push(...(await locs(index)));
+          const queue = [...new Set(pages)].filter((u) => u.startsWith(origin)).slice(0, 1000);
+          const total = queue.length;
+          let stored = 0;
+          await Promise.all(Array.from({ length: 4 }, async () => {
+            for (let url = queue.shift(); url; url = queue.shift()) {
+              const r = await fetch(url).catch(() => null);
+              if (r?.ok) stored++;
+              await r?.arrayBuffer().catch(() => {});
+            }
+          }));
+          console.log(`warmed ${stored} of ${total} sitemap pages on ${origin}`);
+          WARM
+
       # Only if this run's deploy succeeded, then the gate REFUSED it (exit 1). A gate that could not run (exit 3) has not
       # refused anything.
       - name: Roll back the deploy this run shipped
