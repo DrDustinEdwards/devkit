@@ -6,7 +6,7 @@
 - `workflow-audit.yml`, a reusable workflow: actionlint (with shellcheck) and zizmor on the caller's workflows, failing on any actionlint finding and on any zizmor finding at `min-severity` (default `medium`) or above, as annotations. actionlint 1.7.12, shellcheck 0.11.0 and zizmor 1.31.1 are release files checked against their sha256. Exceptions live in `.github/actionlint.yaml` and `.github/zizmor.yml`. devkit's CI runs it on devkit (`examples/workflow-audit-caller.yml`).
 - `dependencies.yml`, a reusable workflow: GitHub's dependency review on a pull request (fails at `fail-on-severity`, default `high`, in runtime and development dependencies), and OSV-Scanner 2.7.0 over every lockfile on a push or a schedule (fails on any known vulnerability; exceptions in a root `osv-scanner.toml`). devkit's CI runs it on devkit (`examples/dependencies-caller.yml`).
 - `family.yml` checks devkit out at the commit the caller pinned. It read `github.job_workflow_sha`, which GitHub does not define, so the ref was empty and every caller ran devkit's default branch (a prelum run pinned to 64997ae checked out main at 03c51ee); it now reads `job.workflow_sha` and fails if that is ever empty.
-- `no-bloat.yml` and `worker-deploy.yml` pass shellcheck: a quoted optional `--warn-only`, and `_` for the unused loop counters.
+- `no-bloat.yml`, `worker-deploy.yml` and `live.yml` pass shellcheck: a quoted optional `--warn-only`, `_` for the unused loop counters, and `find` for the old runs.
 
 ## 0.18.0 (2026-10-30)
 

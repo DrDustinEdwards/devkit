@@ -4,3 +4,7 @@ paths:
   .github/workflows/family.yml:
     ignore:
       - 'property "workflow_sha" is not defined in object type \{check_run_id: number'
+  # The red step's node -e script is in single quotes on purpose: its ${...} are JavaScript template literals.
+  .github/workflows/live.yml:
+    ignore:
+      - 'SC2016:info:1:9:'
