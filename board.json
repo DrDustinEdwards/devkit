@@ -1,0 +1,955 @@
+{
+ "as_of": "2026-10-30T23:28:09.554Z",
+ "finished": false,
+ "public_token": true,
+ "sites": [
+  {
+   "id": "dustinedwards-info",
+   "name": "dustinedwards.info",
+   "origin": "https://dustinedwards.info"
+  },
+  {
+   "id": "germomics",
+   "name": "Germomics",
+   "origin": "https://germomics.com"
+  },
+  {
+   "id": "julieedwards-info",
+   "name": "julieedwards.info",
+   "origin": "https://julieedwards.info"
+  },
+  {
+   "id": "txasm",
+   "name": "TXASM",
+   "origin": "https://txasm.org"
+  },
+  {
+   "id": "bsw",
+   "name": "BSW",
+   "origin": "https://bsw.dustin-edwards.workers.dev"
+  },
+  {
+   "id": "foxhound",
+   "name": "Foxhound",
+   "origin": "https://foxhoundapp.com"
+  },
+  {
+   "id": "foxing",
+   "name": "Foxing",
+   "origin": "https://foxing.app"
+  },
+  {
+   "id": "carrel",
+   "name": "Carrel",
+   "origin": "https://carrel.dustinedwards.info"
+  },
+  {
+   "id": "enarratio",
+   "name": "Enarratio",
+   "origin": "https://enarratio.dustinedwards.info"
+  },
+  {
+   "id": "capsomer",
+   "name": "Capsomer",
+   "origin": "https://capsomer.dustinedwards.info"
+  },
+  {
+   "id": "prelum",
+   "name": "Prelum specimen",
+   "origin": "https://prelum.dustinedwards.info"
+  },
+  {
+   "id": "capsid",
+   "name": "Capsid explorer",
+   "origin": "https://capsid.dustinedwards.info"
+  },
+  {
+   "id": "capsid-mcp",
+   "name": "Capsid MCP",
+   "origin": "https://mcp.dustinedwards.info"
+  },
+  {
+   "id": "foxhound-mcp",
+   "name": "Foxhound admin MCP",
+   "origin": "https://admin-mcp.foxhoundapp.com"
+  }
+ ],
+ "areas": [
+  {
+   "id": 1,
+   "name": "Search, sharing and AI answers",
+   "builder": "Share SEO and other key site code",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "prelum-audit could not run: prelum v0.18.0 has no prelum-audit bin yet"
+    },
+    "capsid-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "foxhound-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    }
+   }
+  },
+  {
+   "id": 2,
+   "name": "Security headers and CSP",
+   "builder": "Complete shared security headers and CSP",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 3,
+   "name": "Sign-in and access",
+   "builder": "Complete shared sign-in and access",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 4,
+   "name": "Writing and rendering",
+   "builder": "Complete shared writing and rendering",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 5,
+   "name": "Carrel editing contract",
+   "builder": "Complete Carrel editing contract",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 6,
+   "name": "Images and media",
+   "builder": "Complete shared images and media",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 7,
+   "name": "Speed and caching",
+   "builder": "Complete shared speed and caching",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 8,
+   "name": "Running and recovery",
+   "builder": "Complete shared running and recovery",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 9,
+   "name": "Accessibility and components",
+   "builder": "Complete accessibility and Capsomer components",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 10,
+   "name": "Charts",
+   "builder": "Complete shared charts",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 11,
+   "name": "AI and MCP",
+   "builder": "Complete shared AI and MCP code",
+   "verifier": null,
+   "lines": {
+    "prs": 0,
+    "added": 0,
+    "removed": 0
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  },
+  {
+   "id": 12,
+   "name": "Checks and tooling",
+   "builder": "Complete shared checks and tooling",
+   "verifier": null,
+   "lines": {
+    "prs": 2,
+    "added": 548,
+    "removed": 1
+   },
+   "cells": {
+    "package": {
+     "status": "missing",
+     "reason": "no verifier has checked the package"
+    },
+    "dustinedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "julieedwards-info": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "txasm": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "bsw": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "enarratio": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "prelum": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    }
+   }
+  }
+ ]
+}
