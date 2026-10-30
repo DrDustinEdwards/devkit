@@ -23,7 +23,15 @@
     { "id": 8, "name": "Running and recovery", "builder": "Complete shared running and recovery", "checks": [] },
     { "id": 9, "name": "Accessibility and components", "builder": "Complete accessibility and Capsomer components", "checks": [] },
     { "id": 10, "name": "Charts", "builder": "Complete shared charts", "checks": [] },
-    { "id": 11, "name": "AI and MCP", "builder": "Complete shared AI and MCP code", "checks": [] },
+    {
+      "id": 11,
+      "name": "AI and MCP",
+      "builder": "Complete shared AI and MCP code",
+      "checks": [
+        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["worker"], "args": ["--kind", "worker"] },
+        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["site", "static"], "args": ["--kind", "site"] }
+      ]
+    },
     { "id": 12, "name": "Checks and tooling", "builder": "Complete shared checks and tooling", "checks": [] }
   ]
 }
