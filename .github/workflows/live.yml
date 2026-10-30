@@ -65,4 +65,5 @@ jobs:
           git push --quiet origin scoreboard
       - name: Red when any check failed or could not run
         if: github.event_name != 'push'
-        run: node -e 'const { results } = require(process.argv[1]); const bad = results.filter((r) => r.status !== "pass"); for (const r of bad) console.log(`::error title=area ${r.area} ${r.site}::${r.check} ${r.status}${r.detail ? `: ${r.detail}` : ` (${r.errors} errors)`}`); process.exit(bad.length ? 1 : 0)' "$RUNNER_TEMP/run.json"
+        run: |
+          node -e 'const { results } = require(process.argv[1]); const bad = results.filter((r) => r.status !== "pass"); for (const r of bad) console.log(`::error title=area ${r.area} ${r.site}::${r.check} ${r.status}${r.detail ? `: ${r.detail}` : ` (${r.errors} errors)`}`); process.exit(bad.length ? 1 : 0)' "$RUNNER_TEMP/run.json"
