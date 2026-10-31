@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- The tool downloads in `workflow-audit.yml` and `dependencies.yml` retry three times, so one dropped connection (a TLS reset fetching zizmor from PyPI) no longer fails the check.
+- `release-self.yml` no longer starts `bump-consumers.yml`: that needed a `RENOVATE_TRIGGER_TOKEN` secret in devkit, and Renovate finds a devkit tag on its regular runs.
 - `devkit-live` reported checks: a check that needs a site's secrets runs where they live and publishes its result on its own https origin (`"report"` in `areas.json` in place of `repo` and `bin`); the daily run reads it, and a stale, unreadable or incomplete report is an error, never a pass. No site key goes into GitHub.
 
 ## 0.20.1 (2026-10-31)
