@@ -1,0 +1,100 @@
+name: access-drift
+
+# THE DAILY ACCESS DRIFT CHECK (area 3, I2) of a site behind Cloudflare Access. site-runtime-access-drift reads the Access
+# application's policies through the Cloudflare API and compares the addresses they let in with the site's own admin list,
+# so a person taken off one and not the other is found the next morning.
+#
+# THE SITE'S LIST COMES FROM THE SITE: its adminListResponse route (site-runtime ./access-drift, ADMIN_LIST_PATH) answers
+# salted hashes of its admin addresses, behind Access, to an Access service token only. So no copy of ADMIN_EMAILS is kept in
+# GitHub; the job holds the service token's id and secret, and the Access application needs a Service Auth policy for it
+# (Service Auth policies let no person in, so the drift check ignores them).
+#
+# NOT SET UP IS A FAILURE, never a skip: a missing secret or input fails the job with an annotation that names it, so a site
+# that has not finished setup reads red on its Actions page instead of passing quietly.
+#
+# EXIT 0 THE LISTS MATCH, 1 DRIFT, 2 COULD NOT RUN. Either failure fails the job; addresses print masked, since the logs of a
+# public repository are public.
+#
+# A CALLER (examples/access-drift-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+# It pins site-runtime too: `site-runtime-ref` has no default, so a new release reaches the check through a reviewed change.
+
+on:
+  workflow_call:
+    inputs:
+      app:
+        description: The Access application's name, such as sample-login.
+        required: true
+        type: string
+      admins-url:
+        description: The site's admin list route behind Access, such as https://example.com/admin/access-drift.
+        required: true
+        type: string
+      site-runtime-ref:
+        description: The site-runtime release tag the check runs, v0.59.0 or later.
+        required: true
+        type: string
+      node-version:
+        description: The Node version.
+        required: false
+        type: string
+        default: "24"
+    secrets:
+      ACCESS_READ_TOKEN:
+        description: A Cloudflare API token with Access Apps and Policies Read (and Zero Trust Read for email lists).
+        required: false
+      CLOUDFLARE_ACCOUNT_ID:
+        required: false
+      ACCESS_CLIENT_ID:
+        description: The Access service token's client id.
+        required: false
+      ACCESS_CLIENT_SECRET:
+        description: The Access service token's client secret.
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    name: access drift
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: ${{ inputs.node-version }}
+          package-manager-cache: false
+
+      - name: Compare Access with the site's admin list
+        env:
+          APP: ${{ inputs.app }}
+          ADMINS_URL: ${{ inputs.admins-url }}
+          SITE_RUNTIME_REF: ${{ inputs.site-runtime-ref }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.ACCESS_READ_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ACCESS_CLIENT_ID: ${{ secrets.ACCESS_CLIENT_ID }}
+          ACCESS_CLIENT_SECRET: ${{ secrets.ACCESS_CLIENT_SECRET }}
+        run: |
+          missing=""
+          for name in CLOUDFLARE_API_TOKEN:ACCESS_READ_TOKEN CLOUDFLARE_ACCOUNT_ID:CLOUDFLARE_ACCOUNT_ID \
+            ACCESS_CLIENT_ID:ACCESS_CLIENT_ID ACCESS_CLIENT_SECRET:ACCESS_CLIENT_SECRET; do
+            var=${name%%:*}
+            [ -n "${!var}" ] || missing="$missing ${name#*:}"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error title=I2 access drift::not set up: the secret(s)${missing} are missing, so the Access policy of ${APP} is not checked."
+            exit 2
+          fi
+          set +e
+          npx --yes --package "github:DrDustinEdwards/site-runtime#${SITE_RUNTIME_REF}" site-runtime-access-drift \
+            --account "$CLOUDFLARE_ACCOUNT_ID" --app "$APP" --admins-url "$ADMINS_URL" 2>&1 | tee "$RUNNER_TEMP/drift.txt"
+          code=${PIPESTATUS[0]}
+          { echo '```'; cat "$RUNNER_TEMP/drift.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$code" = "1" ]; then
+            echo "::error::Access and the site's admin list of ${APP} differ; the annotations name each difference."
+          elif [ "$code" != "0" ]; then
+            echo "::error::the access drift check could not run (exit ${code}); nothing was proven about ${APP}."
+          fi
+          exit "$code"
