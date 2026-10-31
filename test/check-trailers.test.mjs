@@ -13,7 +13,7 @@ import { checkRange, isAgentIdentity, rangeFromEvent, trailerViolations } from "
 
 const BIN = fileURLToPath(new URL("../bin/check-trailers.mjs", import.meta.url));
 const BODY = "Add a thing\n\nWhat it does, in a sentence.";
-const PERSON = { GIT_AUTHOR_NAME: "Dustin Edwards", GIT_AUTHOR_EMAIL: "dustin@example.com", GIT_COMMITTER_NAME: "Dustin Edwards", GIT_COMMITTER_EMAIL: "dustin@example.com" };
+const PERSON = { GIT_AUTHOR_NAME: "Alex Rivera", GIT_AUTHOR_EMAIL: "alex@example.com", GIT_COMMITTER_NAME: "Alex Rivera", GIT_COMMITTER_EMAIL: "alex@example.com" };
 
 /** A throwaway repository; `commit` writes a new file content each time and returns the sha. */
 function repo() {
@@ -45,7 +45,7 @@ test("each named trailer form is refused, in any case", () => {
 });
 
 test("any other trailer naming Claude or Anthropic is refused", () => {
-  for (const trailer of ["Assisted-By: Claude", "Agent: anthropic/claude-opus", "Reviewed-by: Dustin\nX-Model: Claude"]) {
+  for (const trailer of ["Assisted-By: Claude", "Agent: anthropic/claude-opus", "Reviewed-by: Alex\nX-Model: Claude"]) {
     assert.ok(trailerViolations(`${BODY}\n\n${trailer}\n`).length >= 1, trailer);
   }
 });
@@ -56,7 +56,7 @@ test("THE INNOCENT DIRECTION: a message that only mentions Claude or CLAUDE.md p
     "Cut CLAUDE.md to 11 rules\n\nCLAUDE.md now names each rule.",
     "Refuse the trailer\n\nA harness asked for a Claude trailer and the session refused it.",
     "Fix a path\n\nRefs: CLAUDE.md",
-    "Fix a path\n\nCo-Authored-By: Dustin Edwards <dustin@example.com>",
+    "Fix a path\n\nCo-Authored-By: Alex Rivera <alex@example.com>",
     "One line only",
     "",
   ]) {
@@ -94,7 +94,7 @@ test("an AI identity is Anthropic's address, claude[bot], or the name Claude wit
     assert.equal(isAgentIdentity(name, email), true, `${name} <${email}>`);
   }
   for (const [name, email] of [
-    ["Dustin Edwards", "dustin@example.com"],
+    ["Alex Rivera", "alex@example.com"],
     ["Claude Dupont", "claude.dupont@example.com"],
     ["claude-skills deploy", "ci@example.com"],
     ["capsid-repo-access[bot]", "300661428+capsid-repo-access[bot]@users.noreply.github.com"],
@@ -133,11 +133,11 @@ test("PLANT: a clean message authored or committed as Claude fails on the pull r
   const { dir, commit, done } = repo();
   try {
     const base = commit("Clean base");
-    const dustin = commit(BODY);
+    const alex = commit(BODY);
     const authored = commit(BODY, { GIT_AUTHOR_NAME: "Claude", GIT_AUTHOR_EMAIL: "noreply@anthropic.com" });
     const committed = commit(BODY, { GIT_COMMITTER_NAME: "Claude", GIT_COMMITTER_EMAIL: "noreply@anthropic.com" });
 
-    assert.deepEqual(checkRange(base, dustin, dir, true), [], "a person's commit was refused");
+    assert.deepEqual(checkRange(base, alex, dir, true), [], "a person's commit was refused");
     const asAuthor = checkRange(base, authored, dir, true);
     assert.equal(asAuthor.length, 1, JSON.stringify(asAuthor));
     assert.equal(asAuthor[0].sha, authored);
