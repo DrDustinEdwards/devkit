@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.11 (2026-10-31)
+
+- `code-map.yml` maps a repository on TypeScript 7. The native compiler ships no JavaScript compiler API, so d1-dump's map failed with "ts.getParsedCommandLineOfConfigFile is not a function" after Renovate moved it to 7.0.2. The map job now installs TypeScript 6.0.3 beside the script when the caller's own has no compiler API, and `loadTypeScript` skips a TypeScript without it.
+
 ## 0.20.10 (2026-10-31)
 
 - `devkit-warm <origin> [--sha <commit>]` (bin/warm.mjs): warms the stored pages after a deploy for a site that deploys outside `worker-deploy.yml` (dustinedwards.info's `ship`, Workers Builds). It is the shared deploy's "Warm the stored pages" loop: every sitemap page on the origin, an index followed one level, at most 1000, four at a time. `--sha` first waits up to 10 minutes for `/health` to name that commit. It never fails; a warm that cannot finish is a warning.
