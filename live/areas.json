@@ -76,7 +76,14 @@
             "dustinedwards-info": ["--repo", "DrDustinEdwards/dustinedwards-info", "--drill-workflow", "restore-drill.yml"]
           }
         }
-      ]
+      ],
+      "skip": {
+        "capsid": "static: the explorer is prerendered pages on an assets Worker whose script only sends the 404 page, with no database, binding, cron or backup to report; Capsid's health is capsid-mcp's /health",
+        "carrel": "static: the public page is an assets Worker with no binding and nothing private (carrel docs/public-site.md); Carrel's health is carrel-mcp's /health",
+        "enarratio": "static: an assets-only docs site with no database, binding, cron or backup; Capsid's watcher probes its root",
+        "capsomer": "static: an assets-only showcase with no database, binding, cron or backup; Capsid's watcher probes its root",
+        "prelum": "static: an assets-only specimen with no database, binding, cron or backup; Capsid's watcher probes its root"
+      }
     },
     { "id": 9, "name": "Accessibility and components", "builder": "Complete accessibility and Capsomer components", "checks": [] },
     {
