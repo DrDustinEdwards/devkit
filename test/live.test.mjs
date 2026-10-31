@@ -22,7 +22,7 @@ test("the repository's own site, area and verdict files are sound", () => {
   assert.deepEqual(lintConfig(loadConfig()), []);
 });
 
-test("a check's exit code decides pass, fail or could not run, and its annotations are the findings", () => {
+test("a check's exit code, or its fresh report, decides pass, fail or could not run, and its annotations are the findings", () => {
   const output = "::error title=canonical-missing::https://a.example.com/ no canonical link\n::warning title=og::x\nsummary";
   assert.deepEqual(
     { ...resultOf({ code: 1, output, seconds: 2 }), findings: undefined },
@@ -30,9 +30,7 @@ test("a check's exit code decides pass, fail or could not run, and its annotatio
   );
   assert.equal(resultOf({ code: 0, output: "", seconds: 1 }).status, "pass");
   assert.equal(resultOf({ code: 2, output: "boom", seconds: 1 }).status, "error");
-});
-
-test("a reported check passes only on a fresh report that names the site and has no error finding", () => {
+  // A reported check passes only on a fresh report that names the site and has no error finding.
   const check = { name: "conformance", report: "https://reporter.example.com/report.json" };
   const now = new Date("2026-11-01T12:00:00Z");
   const report = (at, entry) => ({ check: "conformance", at, sites: { "https://a.example.com": entry } });
