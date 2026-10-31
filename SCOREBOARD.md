@@ -15,7 +15,7 @@ Newest run 2026-10-31 13:06 UTC. Filled only from the live checks and the verifi
 | 5. Carrel editing contract | ❌ | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
 | 6. Images and media | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | +23097 | −2090 |
 | 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +6435 | −3179 |
-| 8. Running and recovery | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +24854 | −1688 |
+| 8. Running and recovery | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | +24854 | −1688 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
 | 10. Charts | ❌ | ❌ | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | +15662 | −4962 |
 | 11. AI and MCP | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | +15354 | −5124 |
@@ -256,8 +256,6 @@ Builder: Complete shared running and recovery. Verifier: Verify running and reco
 - 🟡 BSW: health passes; deploy record, gradual rollout, preview and runbooks missing
 - 🟡 Foxhound: migrations without bookmark; 404 rows kept 365 days; local cron ledger records skips as success; oauth hashes dumped; drill never run
 - 🟡 Foxing: COVERS not backed up; files pass not complete; drill never run
-- ❌ Capsid explorer: ops-audit: 1 errors
-  - H1: https://capsid.dustinedwards.info/health answers 404, not 2xx or 503; Content-Type is 'text/html; charset=utf-8', not application/health+json or application/json; Cache-Control is 'public, max-age=3600', without no-store; X-Robots-Tag is 'none', without noindex; the body is not JSON
 - ❌ Capsid MCP: ops-audit: 2 errors
   - H1: https://mcp.dustinedwards.info/health Cache-Control is 'none', without no-store; X-Robots-Tag is 'none', without noindex
   - H2: https://mcp.dustinedwards.info/health the body does not carry status (is 'ok', not pass, warn or fail), ok, time, checks
