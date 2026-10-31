@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.19.0 (2026-10-31)
+
 - `devkit-live` and `live.yml`: the completeness scoreboard. Every day each area's live check (`live/areas.json`) runs against every live site (`live/sites.json`), and the board is rebuilt from the runs and the verifiers' verdicts (`live/verdicts/`) on the `scoreboard` branch: https://github.com/DrDustinEdwards/devkit/blob/scoreboard/SCOREBOARD.md. A cell is complete only when its checks pass, a verifier who is not the builder signed it with evidence, and no run since has failed; `devkit-live lint` in CI refuses a verdict signed by its builder or marked complete without evidence. Area 1 starts with Prelum's `prelum-audit`; each area adds its check with one entry. Lines added and removed per area come from the merged pull requests labeled `completeness-area-<n>`.
 - Area 3 (sign-in and access) runs site-runtime's `site-runtime-sign-in` (site-runtime 0.38.0) on sites and Workers; julieedwards-info and bsw are skipped, with no sign-in, admin pages or MCP server.
 - Area 7 (speed and caching) runs site-runtime's `site-runtime-speed`, with `--kind static` for static sites through a check's new `args`. `live.yml` passes the `PSI_API_KEY` secret to the checks for PageSpeed Insights.
