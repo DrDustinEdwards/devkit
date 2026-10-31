@@ -51,7 +51,7 @@ test("a full-text table is emptied through itself, its shadow tables left to it,
   const db = d1();
   db.sqlite.exec(`
     CREATE VIRTUAL TABLE items_fts USING fts5 (title, body);
-    INSERT INTO items_fts VALUES ('one', 'phage capsid');
+    INSERT INTO items_fts VALUES ('one', 'getting started');
     CREATE TABLE items_fts_log (id INTEGER PRIMARY KEY);
     INSERT INTO items_fts_log VALUES (1);
   `);

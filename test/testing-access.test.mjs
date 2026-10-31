@@ -21,7 +21,7 @@ async function verify(/** @type {string} */ jwt, /** @type {string} */ jwksUrl) 
 }
 
 test("the token endpoint answers an ID token the JWKS verifies, with the issuer, audience, email and the flow's nonce", async () => {
-  const stub = await stubAccess({ issuer: ISSUER, audience: "sample-client", email: "dustin@example.com", authorizationUrl: AUTHORIZE });
+  const stub = await stubAccess({ issuer: ISSUER, audience: "sample-client", email: "alex@example.com", authorizationUrl: AUTHORIZE });
   const exchange = (/** @type {Record<string, string>} */ form) =>
     fetch(`${ISSUER}/token`, { method: "POST", body: new URLSearchParams({ grant_type: "authorization_code", code: "c", redirect_uri: "https://app.test/cb", ...form }) });
   try {
@@ -39,7 +39,7 @@ test("the token endpoint answers an ID token the JWKS verifies, with the issuer,
     assert.equal(header.alg, "RS256");
     assert.equal(claims.iss, ISSUER);
     assert.equal(claims.aud, "sample-client");
-    assert.equal(claims.email, "dustin@example.com");
+    assert.equal(claims.email, "alex@example.com");
     assert.equal(claims.nonce, "n-123");
     assert.ok(claims.exp > claims.iat);
     assert.equal(stub.tokenRequests.length, 1);
