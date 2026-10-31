@@ -30,6 +30,9 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
     reflow: { scrollWidth: 320, clientWidth: 320 },
     clipped: [],
     motion: [{ name: "fade", target: "p", duration: 0, iterations: 1 }],
+    forced: { axe: [], keyboard: [stop(0, "a.skip", { skipTargetsMain: true })] },
+    zoom: { scrollWidth: 720, clientWidth: 720, navLinks: 0, toggle: "button.menu" },
+    escape: [{ sel: "button.menu", opened: true, closed: true, focusBack: true }, { sel: "button.share", opened: false }],
   };
   const broken = {
     url: "https://a.example.com/about",
@@ -49,6 +52,18 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
     reflow: { scrollWidth: 402, clientWidth: 320, widest: { sel: "a.chip", right: 402 } },
     clipped: [{ sel: "p.clamp", dir: "vertical" }],
     motion: [{ name: "spin", target: "svg", duration: 800, iterations: "infinite" }],
+    // In forced colors a rule the normal views passed is new, one they failed is not repeated, and the color rules say
+    // nothing (the palette is the reader's); a ring drawn with a background goes, and a stop that already showed nothing
+    // is not counted twice.
+    forced: {
+      axe: [region, { ...contrast, id: "link-in-text-block" }, { id: "button-name", impact: "critical", tags: ["wcag2a"], nodes: 1, target: "button.icon" }],
+      keyboard: [stop(0, "button.menu", { focused: style() }), stop(1, "input#q", { focused: style() })],
+    },
+    zoom: { scrollWidth: 800, clientWidth: 720, navLinks: 0, toggle: null },
+    escape: [
+      { sel: "button.menu", opened: true, closed: false },
+      { sel: "button.share", opened: true, closed: true, focusBack: false },
+    ],
   };
   const findings = judgeSite({ statement: { url: "https://a.example.com/accessibility", status: 404 }, pages: [clean, { ...broken, basics: { ...broken.basics, title: "Home" } }] });
   assert.deepEqual(findings.filter((f) => f.url === clean.url), []);
@@ -60,9 +75,15 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
     "error L2 no visible focus on 1 of 13 stops",
     "error L2 focus hidden under sticky `header.sticky` on 1 stops",
     "error L2 focus trap",
+    "error L2 Escape did not close what `button.menu` opened",
+    "error L2 focus did not return to `button.share` after Escape closed what it opened",
     "error L3 scrolls sideways at 320 px",
     "error L3 text clipped with WCAG 1.4.12 text spacing",
+    "error L3 200% zoom proxy",
+    "error L3 200% zoom proxy",
     "error L4 animations still running with reduced motion",
+    "error L4 axe button-name",
+    "error L4 no visible focus in forced colors on 1 stops",
     "error S2 no lang on <html>",
     "warning S2 2 h1 elements, not one",
     "warning S2 heading levels skipped",
@@ -73,6 +94,7 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
   ]);
   assert.match(findings[0].detail, /at 1440-light, 390-dark: 5 elements, first `\.btn`/);
   assert.match(findings[3].detail, /`input#q`$/);
+  assert.match(findings.find((f) => /forced colors on/.test(f.detail)).detail, /`button\.menu`$/);
 });
 
 test("pages are picked by type from the sitemap, never an asset", () => {

@@ -2,7 +2,8 @@
 // devkit-a11y: the live accessibility check (area 9). It loads a site's home page, a 404 and up to --max-pages sitemap
 // pages of different types in Chromium and measures each: axe-core (WCAG 2.2 A and AA plus best practice) at 1440 and
 // 390 px in light and dark, a 40-press Tab walk, reflow at 320 px, WCAG 1.4.12 text spacing, animations under reduced
-// motion, and the page's structure; then the site's /accessibility statement. bin/a11y-judge.mjs turns the measurements
+// motion, Escape on the menus and dialogs the walk reaches, axe and focus again in forced colors, a 720 px proxy for 200%
+// zoom, and the page's structure; then the site's /accessibility statement. bin/a11y-judge.mjs turns the measurements
 // into findings, each titled with the checklist item it proves (L1 to L4, S2, S3, S6).
 //
 //   devkit-a11y --origin https://example.com [--from https://preview.example.workers.dev] [--max-pages 8]
@@ -28,6 +29,8 @@ const VIEWS = [
   { width: 390, height: 844, scheme: "dark" },
 ];
 const TAB_PRESSES = 40;
+const FORCED_PRESSES = 20;
+const ESCAPE_CONTROLS = 3;
 const PAUSE_MS = 700;
 const sleep = (/** @type {number} */ ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -124,14 +127,15 @@ async function axe(AxeBuilder, page) {
 }
 
 /** Every Tab press from the top of the page: what took focus, how it looked, and what covered it. */
-async function keyboardWalk(page) {
+async function keyboardWalk(page, count = TAB_PRESSES) {
   await page.mouse.click(1, 1).catch(() => {});
   await page.evaluate(() => {
+    for (const el of document.querySelectorAll("[data-devkit-tab]")) el.removeAttribute("data-devkit-tab");
     document.activeElement?.blur?.();
     window.scrollTo(0, 0);
   });
   const presses = [];
-  for (let i = 0; i < TAB_PRESSES; i++) {
+  for (let i = 0; i < count; i++) {
     await page.keyboard.press("Tab");
     await sleep(120);
     presses.push(
@@ -163,6 +167,8 @@ async function keyboardWalk(page) {
           const main = document.querySelector("main, [role=main]");
           skipTargetsMain = Boolean(target && main && (target === main || main.contains(target) || target.contains(main) || target.nextElementSibling === main));
         }
+        // A button that opens something (a menu, a dialog, the header sheet): the Escape test comes back to it.
+        if (el.matches("button, [role=button]") && ["aria-expanded", "aria-haspopup", "popovertarget"].some((a) => el.hasAttribute(a))) el.setAttribute("data-devkit-opener", "");
         const text = (el.innerText || el.getAttribute("aria-label") || "").trim().slice(0, 40);
         return { key, sel: window.__sel(el), text, same, focused: window.__style(el), covered, offscreen, skipTargetsMain };
       }, i),
@@ -199,6 +205,54 @@ function reflow(page) {
     }
     return { scrollWidth, clientWidth, widest };
   });
+}
+
+/** The 720 px viewport that stands in for 200% zoom of a 1440 px window: sideways scroll, and a way to the navigation. */
+function zoomProxy(page) {
+  return page.evaluate(() => {
+    const visible = (el) => {
+      const r = el.getBoundingClientRect();
+      const cs = getComputedStyle(el);
+      return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none";
+    };
+    const navLinks = [...document.querySelectorAll("nav a[href], [role=navigation] a[href]")].filter(visible).length;
+    const toggle = [...document.querySelectorAll("button[aria-expanded], button[aria-controls], [popovertarget], summary")].find((el) => visible(el) && !el.disabled && el.tabIndex >= 0);
+    return { scrollWidth: document.documentElement.scrollWidth, clientWidth: document.documentElement.clientWidth, navLinks, toggle: toggle ? window.__sel(toggle) : null };
+  });
+}
+
+/** Up to ESCAPE_CONTROLS openers the walk reached: Enter opens it, Escape must close it and put focus back on it. */
+async function escapeCloses(page) {
+  const results = [];
+  const url = page.url();
+  for (const opener of (await page.$$("[data-devkit-opener]")).slice(0, ESCAPE_CONTROLS)) {
+    const state = () =>
+      opener.evaluate((el) => ({
+        expanded: el.getAttribute("aria-expanded") === "true",
+        layers: document.querySelectorAll("dialog[open], :popover-open").length + [...document.querySelectorAll("[aria-modal=true]")].filter((m) => m.getClientRects().length).length,
+        focusBack: document.activeElement === el,
+        sel: window.__sel(el),
+      }));
+    const before = await state();
+    if (!(await opener.isVisible())) continue;
+    await opener.focus();
+    await page.keyboard.press("Enter");
+    await sleep(400);
+    if (page.url() !== url) break;
+    const open = await state();
+    const opened = open.expanded || open.layers > before.layers;
+    if (!opened) {
+      results.push({ sel: before.sel, opened });
+      continue;
+    }
+    await page.keyboard.press("Escape");
+    await sleep(400);
+    const after = await state();
+    const closed = !after.expanded && after.layers <= before.layers;
+    results.push({ sel: before.sel, opened, closed, focusBack: after.focusBack });
+    if (!closed) break;
+  }
+  return results;
 }
 
 /** Elements whose text the WCAG 1.4.12 spacing pushes out of an overflow-hidden box that held it before. */
@@ -266,9 +320,19 @@ async function scanPage(browser, AxeBuilder, { url, why }) {
     await sleep(400);
     scan.clipped = await textSpacing(page);
     scan.keyboard = await keyboardWalk(page);
+    await page.emulateMedia({ colorScheme: "light", forcedColors: "active" });
+    await sleep(400);
+    scan.forced = { axe: await axe(AxeBuilder, page), keyboard: await keyboardWalk(page, FORCED_PRESSES) };
+    await page.emulateMedia({ colorScheme: "light", forcedColors: "none" });
     await page.setViewportSize({ width: 320, height: 640 });
     await sleep(500);
     scan.reflow = await reflow(page);
+    await page.setViewportSize({ width: 720, height: 450 });
+    await sleep(500);
+    scan.zoom = await zoomProxy(page);
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await sleep(400);
+    scan.escape = await escapeCloses(page).catch(() => undefined);
     await context.close();
     await sleep(PAUSE_MS);
     scan.motion = await motion(browser, url);
