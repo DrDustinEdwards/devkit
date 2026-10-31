@@ -5,6 +5,10 @@
 - Area 6 on the scoreboard checks kind `app` too (`live/areas.json`), so the daily run grades the Capsid Portal with `site-runtime-images` (0.61.0 or later reports a home page that sends a stranger to a sign-in as one C1 error: a shared link shows the sign-in's card). Carrel Desk is skipped for area 6, having nothing public to share, and the signed-in pages of both are listed as unchecked.
 - `devkit-live`: an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes through `site_args` (`--start`, `--pages`, from Prelum v0.25.0), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
 
+## 0.20.22 (2026-10-31)
+
+- `worker-deploy.yml`: a gradual rollout runs `wrangler triggers deploy` after the split. A version upload leaves routes, custom domains and cron schedules as they were (Cloudflare Docs, "Deployment management"), so a changed cron would have stayed on the old schedule. The input and README now also say gradual is not for a Worker that declares its Durable Objects in `exports` (area 8, D4).
+
 ## 0.20.21 (2026-10-31)
 
 - `conformance.yml`: the MCP conformance gate on Actions (area 11, P2 to P7 and P10). It runs `devkit-conformance` from the server's own install against its `.conformance.json`, in `working-directory` for a server in `mcp/`, the job Carrel ran on its own. The caller is `examples/conformance-caller.yml`. The network check (`devkit-shared`) asks for it, as a warning until 0.21.0, in every repository with an MCP server (a source file importing site-runtime `./mcp-server` or `./mcp-login`); a CI step that runs `devkit-conformance`, as Carrel's does, counts.
