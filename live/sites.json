@@ -16,6 +16,8 @@
     { "id": "foxhound-mcp", "name": "Foxhound admin MCP", "repo": "foxhound", "kind": "worker", "origin": "https://admin-mcp.foxhoundapp.com" },
     { "id": "dustinedwards-mcp", "name": "Dustin Edwards admin MCP", "repo": "dustinedwards-info", "kind": "worker", "origin": "https://admin-mcp.dustinedwards.info" },
     { "id": "carrel-mcp", "name": "Carrel MCP", "repo": "carrel", "kind": "worker", "origin": "https://carrel-mcp.dustinedwards.info" },
-    { "id": "foxing-mcp", "name": "Foxing admin MCP", "repo": "foxing", "kind": "worker", "origin": "https://admin-mcp.foxing.app" }
+    { "id": "foxing-mcp", "name": "Foxing admin MCP", "repo": "foxing", "kind": "worker", "origin": "https://admin-mcp.foxing.app" },
+    { "id": "capsid-portal", "name": "Capsid Portal", "repo": "capsid", "kind": "app", "origin": "https://portal.dustinedwards.info" },
+    { "id": "carrel-desk", "name": "Carrel Desk", "repo": "carrel", "kind": "app", "origin": "https://desk.dustinedwards.info" }
   ]
 }

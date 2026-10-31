@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.18 (2026-10-31)
+
+- `devkit-shared` fails a site-runtime pin behind a minor that has been out three days or more (`FRESH` in `bin/shared.mjs`); a pin behind a younger release is the usual warning. site-runtime releases many minors a day, so the grace window is time, not a count of minors, and a fresh release never turns a site red. The release dates come from the GitHub releases API (one to three requests, with the run's token in `shared.yml`); when they cannot be read the rule is a warning that says so, never a silent pass.
+- The scoreboard grades Capsid Portal and Carrel Desk (`live/sites.json`, kind `app`: a signed-in app behind Access, which only the checks that name `app` grade). Area 2 runs `site-runtime-security` against both, and reads `signed-in-security`, the signed-in crawl Capsid's Worker runs and publishes at https://mcp.dustinedwards.info/reports/signed-in-security.json, since the Access credential it needs never goes to GitHub.
+
 ## 0.20.17 (2026-10-31)
 
 - `devkit-a11y`: the live accessibility check, and area 9's check on the scoreboard (`live/areas.json`; the two MCP endpoints are skipped, having no public pages). It scans a site's home page, a 404 and up to eight sitemap pages of different types in Chromium with axe-core, a Tab walk, Escape on the menus and dialogs it reaches, reflow at 320 px, text spacing, a 720 px proxy for 200% zoom, reduced motion, axe and focus again in forced colors, and the page structure, and checks for an `/accessibility` statement; each finding is titled with the checklist item it proves (L1 to L4, S2, S3, S6), WCAG failures as errors and axe best practice as warnings. Playwright and `@axe-core/playwright` come from where it runs, so the package still installs no dependencies; `live.yml` installs them and Chromium before the checks. The scoreboard runs it from devkit's newest release tag, so area 9 reads "no devkit-a11y bin yet" until the release that carries it.

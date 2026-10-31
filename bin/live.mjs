@@ -13,7 +13,8 @@
 //
 //   { "name": "prelum-audit", "repo": "prelum", "bin": "prelum-audit", "kinds": ["site", "static"], "ref": "v0.19.0" }
 //
-// "kinds" are the site kinds it applies to (site, static, worker); "args", when given, follow --origin and --from (one bin
+// "kinds" are the site kinds it applies to (site, static, worker, app: a signed-in app behind Access, which only the checks
+// that name it grade); "args", when given, follow --origin and --from (one bin
 // run two ways, once per kind). "site_args" adds arguments for one site only, after "args", keyed by site id: area 8 gives
 // each site with a restore drill its repository and drill workflow (`--repo owner/name --drill-workflow restore-drill.yml`).
 // An area's "skip" names a site the area does not apply to, and why. A check's bin inherits the run's environment, so
@@ -53,7 +54,7 @@ import { parseArgs } from "node:util";
 
 export const CLEAN_DAYS = 7;
 const OWNER = "DrDustinEdwards";
-const KINDS = ["site", "static", "worker"];
+const KINDS = ["site", "static", "worker", "app"];
 const VERDICTS = ["complete", "partial", "missing"];
 const MAX_FINDINGS = 100;
 const CHECK_TIMEOUT_MS = 20 * 60_000;

@@ -6,7 +6,8 @@ name: shared
 # the bin with Node alone; the spelling check
 # runs codespell through pipx, which the runner has. Exceptions live in the caller's .shared.json, each with a reason.
 #
-# A pin behind its newest release is a warning; one to a raw commit fails.
+# A pin behind its newest release is a warning; one to a raw commit fails, and so does a site-runtime pin behind a minor
+# released three days ago or more (FRESH in bin/shared.mjs; the run's token reads the release dates).
 #
 # A CALLER (examples/shared-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
 
@@ -62,4 +63,6 @@ jobs:
           done
 
       - name: Check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: node .devkit/bin/shared.mjs --from "$RUNNER_TEMP/packages"

@@ -18,7 +18,7 @@ test("the newest tag is compared as a version, not as text", () => {
   assert.equal(newest(["v0.9.0", "v0.10.0", "v0.2.0", "latest"]), "v0.10.0");
 });
 
-test("a raw commit is refused, a pin behind the newest tag is a warning; the newest tag and its commit pass", () => {
+test("a raw commit is refused, a pin behind the newest tag is a warning, and a site-runtime pin behind a minor out three days fails", () => {
   const found = checkPins(
     tree({
       "package.json": JSON.stringify({ dependencies: { a: "github:DrDustinEdwards/prelum#v0.9.0", b: `github:DrDustinEdwards/site-runtime#${SHA_RAW}`, c: "github:DrDustinEdwards/d1-dump#v0.10.0", d: "git+https://github.com/DrDustinEdwards/capsomer.git#v0.9.0", enarratio: "^0.9.0" } }, null, 1),
@@ -43,6 +43,18 @@ test("a raw commit is refused, a pin behind the newest tag is a warning; the new
   );
   assert.deepEqual([found[4].line, found[5].line], [2, 2]);
   assert.deepEqual(found.map((f) => isWarning(f)), [true, false, true, true, true, true]);
+  // A FRESH package: behind a minor out three days fails, behind a younger one warns, unread dates warn.
+  const now = Date.parse("2026-11-10T00:00:00Z");
+  const dates = { "site-runtime": { "v0.9.0": "2026-11-01T00:00:00Z", "v0.10.0": "2026-11-09T00:00:00Z" }, prelum: new Error("GitHub answered 403") };
+  const pins = (ref) => checkPins(tree({ "package.json": `{"dependencies":{"s":"github:DrDustinEdwards/site-runtime#${ref}"}}` }), tags, dates, now);
+  const behind = pins("v0.2.0");
+  assert.equal(behind[0].message, "site-runtime is at v0.2.0, behind v0.9, a minor out more than 3 days; bump to v0.10.0");
+  assert.equal(isWarning(behind[0]), false);
+  const fresh = pins("v0.9.0");
+  assert.equal(fresh[0].message, "site-runtime is at v0.9.0; the newest release is v0.10.0");
+  assert.equal(isWarning(fresh[0]), true);
+  assert.equal(isWarning(fresh[1]), true);
+  assert.match(fresh[1].message, /prelum's release dates could not be read/);
 });
 
 const catalog = { escapeHtml: "site-runtime ./html", slugify: "Prelum ./slug", render: "Prelum ./render", readThemeCookie: "Capsomer ./theme" };
