@@ -3,5 +3,8 @@
     "bin/family.mjs": "the fingerprints the check looks for are written here",
     "testing/access.mjs": "the Access test fake signs its own tokens; devkit depends on no shared package, so it cannot import site-runtime's encoding",
     "testing/github.mjs": "the GitHub fake writes real git blob shas in hex; devkit depends on no shared package, so it cannot import site-runtime's encoding"
+  },
+  "waive": {
+    "workflow:bump-consumers": "a personal account has no shared Actions secret, so the ping would need its own token copy here; Renovate finds devkit's tags on its regular runs"
   }
 }
