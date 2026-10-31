@@ -1,0 +1,98 @@
+{
+  "area": 7,
+  "verifier": "Verify shared speed and caching",
+  "date": "2026-10-31",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.50.0/bin/speed.mjs"
+      ],
+      "note": "site-runtime ships every helper, but route-budget enforcement and post-deploy warming are opt-in and several sites skip them (D5, B6); the speed check reads a Workers static-assets 404 as stored even when it is no-store"
+    },
+    "dustinedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://dustinedwards.info/"
+      ],
+      "note": "C5: http://www and http + trailing slash take 2 redirects (3 for http://www + slash); B6: no warming after deploy"
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": [
+        "https://germomics.com/"
+      ],
+      "note": "C5: http://www takes 2 redirects; B6: no warming after deploy; D5: route budget not enforced; D4: about 55 KiB unused JS"
+    },
+    "julieedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://julieedwards.info/"
+      ],
+      "note": "C5: http://www and http + trailing slash take 2 redirects"
+    },
+    "txasm": {
+      "verdict": "partial",
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/meetings"
+      ],
+      "note": "B7: a conditional request answers 500 (error 1101) on every page; D1: on workers.dev, no 103; D5 not enforced; D4 about 52 KiB unused JS"
+    },
+    "bsw": {
+      "verdict": "partial",
+      "evidence": [
+        "https://bsw.dustin-edwards.workers.dev/sitemap.xml"
+      ],
+      "note": "B1: 18 sitemap URLs carry a trailing slash and answer 301; D1: on workers.dev, no 103"
+    },
+    "foxhound": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxhoundapp.com/"
+      ],
+      "note": "C5: http://www and http + trailing slash take 2 redirects; D5: budget set but not enforced; D4 about 49 KiB unused JS"
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxing.app/books/813-leblanc"
+      ],
+      "note": "A3: home 98 desktop, book page 80 phone; C5: http + trailing slash takes 2 redirects; D5 not enforced; D4 about 48 KiB unused JS"
+    },
+    "carrel": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel.dustinedwards.info/"
+      ],
+      "note": "B4: a 404 is sent public, max-age=0; D5: the desk's route budget is not enforced"
+    },
+    "enarratio": {
+      "verdict": "partial",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/"
+      ],
+      "note": "A3: Lighthouse 68 phone, 71 desktop (4.7 s blocking time); D1: no Link preload; E1: Cloudflare's generic speculation rules"
+    },
+    "capsomer": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/"
+      ],
+      "note": "D1: no Link preload on any page; E1: Cloudflare's generic speculation rules; B4: a 404 is sent public, max-age=300"
+    },
+    "prelum": {
+      "verdict": "partial",
+      "evidence": [
+        "https://prelum.dustinedwards.info/"
+      ],
+      "note": "E1: Cloudflare's generic speculation rules; D3: 20 faces use font-display block"
+    },
+    "capsid": {
+      "verdict": "missing",
+      "evidence": [
+        "https://capsid.dustinedwards.info/"
+      ],
+      "note": "none of area 7's headers: a cookie request gets public, max-age=3600; no Link preload or 103; no Server-Timing; generic speculation rules; a 404 is public, max-age=3600"
+    }
+  }
+}
