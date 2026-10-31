@@ -64,16 +64,18 @@ test("THE INNOCENT DIRECTION: a message that only mentions Claude or CLAUDE.md p
   }
 });
 
-test("the range comes from the event, and an event with no commits checks nothing", () => {
+test("the range comes from the event, and an event with no commits checks nothing; one it does not know is an error", () => {
   assert.deepEqual(rangeFromEvent({ EVENT: "pull_request", PR_BASE: "a", PR_HEAD: "b" }), { base: "a", head: "b", authors: true });
   assert.deepEqual(rangeFromEvent({ EVENT: "pull_request_target", PR_BASE: "a", PR_HEAD: "b" }), { base: "a", head: "b", authors: true });
   assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "a", PUSH_AFTER: "b" }), { base: "a", head: "b", authors: false });
   assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "0".repeat(40), PUSH_AFTER: "b" }), { base: null, head: "b", authors: false });
   assert.equal(rangeFromEvent({ EVENT: "schedule" }), null);
   assert.equal(rangeFromEvent({ EVENT: "workflow_dispatch" }), null);
-  // Fails closed: a pull_request or push without its shas is an error, not a pass.
+  // Fails closed: a pull_request or push without its shas is an error, not a pass, and so is an event it does not know.
   assert.throws(() => rangeFromEvent({ EVENT: "pull_request", PR_BASE: "a" }));
   assert.throws(() => rangeFromEvent({ EVENT: "push" }));
+  assert.throws(() => rangeFromEvent({ EVENT: "merge_group" }), /merge_group event without/);
+  assert.throws(() => rangeFromEvent({ EVENT: "release" }), /event 'release' is not one this check knows/);
 });
 
 test("an AI identity is Anthropic's address, claude[bot], or the name Claude with a product word; a person is not", () => {
@@ -153,7 +155,7 @@ test("PLANT: a clean message authored or committed as Claude fails on the pull r
   }
 });
 
-test("the bin as the workflow runs it: exit 1 with the way to re-author on a pull request, 0 on a push, 0 on a schedule, 2 when it cannot read", () => {
+test("the bin as the workflow runs it: exit 1 with the way to re-author on a pull request or merge group, 0 on a push, 0 on a schedule, 2 when it cannot read or does not know the event", () => {
   const { dir, commit, done } = repo();
   try {
     const base = commit("Base");
@@ -165,8 +167,13 @@ test("the bin as the workflow runs it: exit 1 with the way to re-author on a pul
     assert.match(pr.stderr, /has an AI identity \(author Claude <noreply@anthropic.com>\)/);
     assert.match(pr.stderr, /--reset-author/);
 
+    const event = join(dir, "event.json");
+    writeFileSync(event, JSON.stringify({ merge_group: { base_sha: base, head_sha: head } }));
+    assert.equal(run({ EVENT: "merge_group", GITHUB_EVENT_PATH: event }).status, 1);
+
     assert.equal(run({ EVENT: "push", PUSH_BEFORE: base, PUSH_AFTER: head }).status, 0);
     assert.match(run({ EVENT: "schedule" }).stdout, /adds no commits; nothing to check/);
+    assert.equal(run({ EVENT: "workflow_run" }).status, 2);
     assert.equal(run({ EVENT: "pull_request", PR_BASE: "1".repeat(40), PR_HEAD: head }).status, 2);
     assert.equal(run({ EVENT: "push" }).status, 2);
   } finally {

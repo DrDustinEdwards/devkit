@@ -58,7 +58,7 @@ jobs:
           if git fetch --quiet --depth 1 origin scoreboard; then git checkout --quiet -B scoreboard FETCH_HEAD; else git checkout --quiet --orphan scoreboard && git rm -rfq .; fi
           mkdir -p runs
           if [ -f "$RUNNER_TEMP/run.json" ]; then cp "$RUNNER_TEMP/run.json" "runs/$(date -u +%F).json"; fi
-          ls runs/*.json 2>/dev/null | sort | head -n -60 | xargs -r git rm -q
+          find runs -maxdepth 1 -name '*.json' | sort | head -n -60 | xargs -r git rm -q
           node "$GITHUB_WORKSPACE/bin/live.mjs" board --config "$GITHUB_WORKSPACE/live" --runs runs --out board.json --md SCOREBOARD.md
           cat SCOREBOARD.md >> "$GITHUB_STEP_SUMMARY"
           git add -A

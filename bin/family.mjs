@@ -14,20 +14,31 @@
 //   tokens     a site setting its own value for one of Capsomer's tokens (--page-max, --measure, --radius-m, --accent...),
 //              or loading its own files for the family's faces (Schibsted Grotesk, Martian Mono) instead of
 //              capsomer/fonts.css: a value the family shares is set once, in Capsomer, never per site;
-//   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere, Dustin 2026-10-25).
+//   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere, Dustin 2026-10-25);
+//   workflows  a devkit workflow the repository's kinds need and no workflow calls: ai-author, pr-footer, family,
+//              workflow-audit and dependencies everywhere, worker-size and worker-deploy for an app with a wrangler
+//              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package;
+//   fakes      a test fake of its own where devkit has one: a GitHub API fake, an Access key pair and key set, a fetch
+//              that refuses every URL, a list of DELETE FROMs (./github, ./access, ./network, ./d1);
+//   config     .family.json itself: an unknown key or kind stops the check (exit 2), and an exception that excused
+//              nothing in this run is a warning.
 //
 //   npx devkit-family                    the check, against .family.json (no file: one site at the root)
 //   npx devkit-family --fix-spelling     rewrite the British spellings in place, then run the check
 //   npx devkit-family list               the generated list of every shared package's exports and every family feature
 //   --from <dir>                         read the packages from checkouts named by repository (dir/prelum, dir/site-runtime...)
-//                                        instead of node_modules
+//                                        instead of node_modules; a checkout missing there stops the check (exit 2)
+//
+// Without --from a package not in node_modules is named in a warning: copies of its exports (and, for Capsomer, its
+// tokens) are not checked, and no exception is judged stale, since what it would excuse was not looked for.
 //
 // The config, every field optional:
 //
 //   {
 //     "apps": { ".": "site", "mcp": "worker" },          kind per directory: site, static, private, worker or package
-//     "waive": { "indexnow": "why", "mcp:health": "why" }, a feature this repository does not need, and why
-//     "copies": { "app/lib/og.ts": "why" },               a file allowed to hold a copy, and why
+//     "waive": { "indexnow": "why", "mcp:health": "why", "workflow:worker-deploy": "why" },
+//                                                         a feature or devkit workflow this repository does not need, and why
+//     "copies": { "app/lib/og.ts": "why" },               a file allowed to hold a copy (or a test, a fake), and why
 //     "libraries": { "katex": "why" },                    a direct dependency allowed, and why
 //     "tokens": { "--measure": "why", "fonts": "why" },   a Capsomer token this repository sets itself (or "fonts", its own
 //                                                         files for the family's faces), and why
@@ -40,10 +51,11 @@
 // On a Renovate branch (GITHUB_HEAD_REF renovate/...) the pin findings are warnings: a bump of one package must not fail
 // because another is also behind. A line ending in a codespell:ignore comment is a contract the spelling check leaves.
 //
-// Warnings (::warning::, exit 0) are also how a new rule arrives: a fingerprint, alias or feature marked `warn` is
-// reported for one release so the sites can move first, and fails from the next (the ones added in 0.18.0 fail from
-// 0.19.0). A few feature heuristics (an accessibility test, noindex on admin routes, a feed's alternate link) stay
-// warnings. Each is silenced the same way as a failure: "copies" for a file, "waive" for a feature.
+// Warnings (::warning::, exit 0) are also how a new rule arrives: a rule's `failsFrom` names the devkit release it fails
+// from, compared with this devkit's own package.json version, so it warns for one release while the sites move and the
+// release itself flips it. A few feature heuristics (an accessibility test, noindex on admin routes, a feed's alternate
+// link), worker-deploy and a stale exception stay warnings. Each is silenced the same way as a failure: "copies" for a
+// file, "waive" for a feature or workflow.
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { appendFileSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
@@ -121,29 +133,29 @@ export const FINGERPRINTS = [
   { find: /href\s*[:=]\s*\{?\s*["'`]https:\/\/fonts\.googleapis\.com\/css|@import\s+url\(\s*["']?https:\/\/fonts\.googleapis\.com/, use: "self-hosted fonts (capsomer/fonts.css for the family's faces, Fontsource for a site's own)" },
   // A loader of its own: finding the marked elements, or importing a module from /islands/.
   { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
-  // New in 0.18.0, so warnings until 0.19.0. JSON-LD by hand: a script of that type filled by JSON.stringify in the same
+  // JSON-LD by hand: a script of that type filled by JSON.stringify in the same
   // expression, or a node naming the context itself (Prelum's thing and graph add it).
-  { warn: true, find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
+  { failsFrom: "0.21.0", find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
   // Head tags by hand: a Twitter card, or a canonical link (not a Link header's `>; rel="canonical"`).
-  { warn: true, find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
+  { failsFrom: "0.21.0", find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
   // Bytes to hex: the toString(16).padStart(2, "0") ... join("") loop over bytes (a digest, random bytes), not a color's
   // three channels, so only in a file that holds bytes.
-  { warn: true, also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
+  { failsFrom: "0.21.0", also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
   // base64url: btoa(...) and then the + to - swap, in one statement.
-  { warn: true, find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
+  { failsFrom: "0.21.0", find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
   // A constant-time compare of its own: OR-ing the XOR of two strings' or arrays' items.
-  { warn: true, find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
+  { failsFrom: "0.21.0", find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
   // Server-side Turnstile and the Access localhost bypass: each belongs once, in site-runtime, beside the client and
   // the verifier it goes with.
-  { warn: true, find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
-  { warn: true, find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
+  { failsFrom: "0.21.0", find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
+  { failsFrom: "0.21.0", find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
   // The pre-paint theme script: the stored choice read and set on the root before the page paints.
-  { warn: true, find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
+  { failsFrom: "0.21.0", find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
   // React Router's template error boundary, never replaced.
-  { warn: true, find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
+  { failsFrom: "0.21.0", find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
 ];
-/** A security header set written into Cloudflare's static `_headers` (bsw's copy): new in 0.18.0, a warning until 0.19.0. */
-export const HEADERS_COPY = { warn: true, find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
+/** A security header set written into Cloudflare's static `_headers` (bsw's copy). */
+export const HEADERS_COPY = { failsFrom: "0.21.0", find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
 export const LIBRARIES = [
@@ -175,21 +187,21 @@ export const ALIASES = {
 };
 
 /**
- * Aliases new in 0.18.0 (warnings until 0.19.0). Each name is also used for other things (a Markdown `esc`, a KB path's
- * `slugOf`, a color's `hex`), so a definition counts only when its body does the shared export's job.
- * @type {Record<string, { target: string, body: RegExp }>}
+ * Aliases that are also ordinary names (a Markdown `esc`, a KB path's `slugOf`, a color's `hex`), so a definition counts
+ * only when its body does the shared export's job.
+ * @type {Record<string, { target: string, failsFrom: string, body: RegExp }>}
  */
 export const BODY_ALIASES = {
-  sha256Of: { target: "sha256Hex", body: /subtle\.digest\(/ },
-  hashToken: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  hashMcpToken: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  hashRecipient: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  generateSlug: { target: "slugify", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
-  slugOf: { target: "slugify", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
-  esc: { target: "escapeHtml", body: /&(?:amp|lt|quot);|&#/ },
-  attr: { target: "escapeHtml", body: /&(?:amp|lt|quot);|&#/ },
-  hex: { target: "toHex", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
-  b64: { target: "toBase64", body: /\bbtoa\(/ },
+  sha256Of: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(/ },
+  hashToken: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashMcpToken: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashRecipient: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  generateSlug: { target: "slugify", failsFrom: "0.21.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  slugOf: { target: "slugify", failsFrom: "0.21.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  esc: { target: "escapeHtml", failsFrom: "0.21.0", body: /&(?:amp|lt|quot);|&#/ },
+  attr: { target: "escapeHtml", failsFrom: "0.21.0", body: /&(?:amp|lt|quot);|&#/ },
+  hex: { target: "toHex", failsFrom: "0.21.0", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
+  b64: { target: "toBase64", failsFrom: "0.21.0", body: /\bbtoa\(/ },
 };
 
 /** A definition's text: its first line and every line after it indented deeper, so a function's body or one arrow. */
@@ -224,13 +236,13 @@ export const ADVISORIES = {
       return bare.length ? `${bare.map((n) => `/${n}`).join(", ")} without noindex` : null;
     },
   },
-  // A feed a reader can find from the page: a rel="alternate" link of the feed's type.
+  // A feed a reader can find from the page: a rel="alternate" link of the feed's type, in code, not a comment.
   feedLink: {
     kinds: SITE,
     use: '`<link rel="alternate" type="application/rss+xml">` (or atom, or feed+json) in the head',
     missing: ({ text }) =>
       /\b(?:rssDocument|atomDocument|jsonFeedDocument)\b|["'`]Content-Type["'`]\s*:\s*["'`]application\/(?:rss|atom)\+xml/.test(text) &&
-      !/\brel\s*[=:]\s*["'`]alternate["'`][^>{}]{0,200}?application\/(?:rss\+xml|atom\+xml|feed\+json)|application\/(?:rss\+xml|atom\+xml|feed\+json)["'`][^>{}]{0,200}?\brel\s*[=:]\s*["'`]alternate/.test(text)
+      !/\brel\s*[=:]\s*["'`]alternate["'`][^>{}]{0,200}?application\/(?:rss\+xml|atom\+xml|feed\+json)|application\/(?:rss\+xml|atom\+xml|feed\+json)["'`][^>{}]{0,200}?\brel\s*[=:]\s*["'`]alternate/.test(blankComments(text))
         ? "a feed and no alternate link to it"
         : null,
   },
@@ -247,8 +259,9 @@ const NOT_SOURCE = /(^|\/)(node_modules|dist|build|coverage|test|tests|e2e|__tes
 /**
  * @typedef {"site" | "static" | "private" | "worker" | "package"} Kind
  * @typedef {{ apps?: Record<string, Kind>, waive?: Record<string, string>, copies?: Record<string, string>,
- *   libraries?: Record<string, string>, spelling?: { ignore?: string[], contracts?: string[], skip?: string[] } }} Config
- * @typedef {{ check: string, file?: string, line?: number, message: string, warn?: boolean }} Finding
+ *   libraries?: Record<string, string>, tokens?: Record<string, string>,
+ *   spelling?: { ignore?: string[], contracts?: string[], skip?: string[] } }} Config
+ * @typedef {{ check: string, file?: string, line?: number, message: string, warn?: boolean, failsFrom?: string }} Finding
  * @typedef {{ files: string[], read: (file: string) => string }} Tree
  * @typedef {Record<string, string>} Catalog   export name -> "package subpath"
  * @typedef {(repo: string) => { tags: string[], commits: Record<string, string> }} TagReader
@@ -266,6 +279,56 @@ function compare(a, b) {
   if (!x || !y) return 0;
   for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] - y[i];
   return 0;
+}
+
+/** This devkit's own version, which each rule's failsFrom is compared with. */
+export const VERSION = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version;
+
+/** Whether a finding is a warning: one always, or a rule's that fails only from a later devkit release. */
+export function isWarning(/** @type {Finding} */ f, version = VERSION) {
+  return f.warn === true || (f.failsFrom !== undefined && compare(version, f.failsFrom) < 0);
+}
+
+export const KINDS = ["site", "static", "private", "worker", "package"];
+const CONFIG_KEYS = { apps: 0, waive: 0, copies: 0, libraries: 0, tokens: 0, spelling: ["ignore", "contracts", "skip"] };
+
+/** Refuses a .family.json the check would misread: an unknown key (a typo'd "wave" waives nothing) or kind. */
+export function validateConfig(/** @type {Record<string, any>} */ config) {
+  const bad = (/** @type {string} */ what, /** @type {string[]} */ valid) => {
+    throw new Error(`.family.json: ${what}; the valid ones are ${valid.join(", ")}`);
+  };
+  for (const key of Object.keys(config)) if (!(key in CONFIG_KEYS)) bad(`"${key}" is no key`, Object.keys(CONFIG_KEYS));
+  for (const key of Object.keys(config.spelling ?? {})) if (!CONFIG_KEYS.spelling.includes(key)) bad(`"spelling" has no "${key}"`, CONFIG_KEYS.spelling);
+  for (const [dir, kind] of Object.entries(config.apps ?? {})) if (!KINDS.includes(kind)) bad(`"apps" "${dir}" is "${kind}", which is no kind`, KINDS);
+}
+
+/** The exceptions each config excused something with, so the ones that excused nothing can be named. */
+const EXCUSED = new WeakMap();
+
+/** Whether .family.json excuses `key` in `section` ("copies", "waive", "libraries", "tokens"), remembered when it does. */
+export function excused(/** @type {Config} */ config, /** @type {string} */ section, /** @type {string} */ key) {
+  if (!(/** @type {Record<string, any>} */ (config)[section]?.[key])) return false;
+  used(config, section, key);
+  return true;
+}
+
+function used(/** @type {Config} */ config, /** @type {string} */ section, /** @type {string} */ key) {
+  if (!EXCUSED.has(config)) EXCUSED.set(config, new Set());
+  EXCUSED.get(config).add(`${section}\0${key}`);
+}
+
+/** Each exception in .family.json that excused nothing in this run: dead config, or a rule that moved past it. */
+export function staleExceptions(/** @type {Config} */ config) {
+  const seen = EXCUSED.get(config) ?? new Set();
+  /** @type {[string, string][]} */
+  const all = [
+    ...["copies", "waive", "libraries", "tokens"].flatMap((s) => Object.keys(/** @type {Record<string, any>} */ (config)[s] ?? {}).map((k) => /** @type {[string, string]} */ ([s, k]))),
+    ...(config.spelling?.ignore ?? []).map((k) => /** @type {[string, string]} */ (["spelling.ignore", k])),
+    ...(config.spelling?.contracts ?? []).map((k) => /** @type {[string, string]} */ (["spelling.contracts", k])),
+  ];
+  return all
+    .filter(([s, k]) => !seen.has(`${s}\0${k}`))
+    .map(([s, k]) => ({ check: "config", file: ".family.json", warn: true, message: `${s.split(".").map((p) => `"${p}"`).join(" ")} "${k}" excuses nothing in this run: remove it` }));
 }
 
 /** The newest release tag of a repository. */
@@ -296,15 +359,16 @@ export function checkPins(tree, readTags, lenient = false) {
   /** @type {Record<string, ReturnType<TagReader>>} */
   const cache = {};
   const tagsOf = (/** @type {string} */ repo) => (cache[repo] ??= readTags(repo));
-  const judge = (/** @type {string} */ file, /** @type {number} */ line, /** @type {string} */ repo, /** @type {string} */ ref) => {
+  /** @param {string} file @param {number} line @param {string} repo @param {string} ref @param {string} [failsFrom] */
+  const judge = (file, line, repo, ref, what = repo, failsFrom = undefined) => {
     const { tags, commits } = tagsOf(repo);
     const latest = newest(tags);
     if (!latest) return;
     let at = semver(ref) ? (ref.startsWith("v") ? ref : `v${ref}`) : Object.keys(commits).find((t) => commits[t] === ref && semver(t));
     if (!at) {
-      found.push({ check: "pins", file, line, warn: lenient, message: `${repo} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
+      found.push({ check: "pins", file, line, warn: lenient, failsFrom, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
     } else if (compare(at, latest) < 0) {
-      found.push({ check: "pins", file, line, warn: lenient, message: `${repo} is at ${at}; the newest release is ${latest}` });
+      found.push({ check: "pins", file, line, warn: lenient, failsFrom, message: `${what} is at ${at}; the newest release is ${latest}` });
     }
   };
   for (const file of tree.files) {
@@ -317,6 +381,8 @@ export function checkPins(tree, readTags, lenient = false) {
       for (const m of text.matchAll(/"enarratio":\s*"\^?~?(\d+\.\d+\.\d+)"/g)) judge(file, lineOf(m.index), "enarratio", m[1]);
     } else if (/^\.github\/workflows\/.+\.ya?ml$/.test(file)) {
       for (const m of text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/[\w.-]+@([0-9a-f]{40})/gi)) judge(file, lineOf(m.index), "devkit", m[1]);
+      // The tag ai-author.yml runs check-trailers from, for a repository whose package.json does not list devkit.
+      for (const m of text.matchAll(/^[ \t]*devkit:[ \t]*["']?DrDustinEdwards\/devkit#([^\s"'#]+)/gim)) judge(file, lineOf(m.index), "devkit", m[1], "ai-author's devkit: input", "0.21.0");
     }
   }
   return found;
@@ -333,6 +399,11 @@ export function exportNames(/** @type {string} */ src) {
     }
   }
   return [...names];
+}
+
+/** Code without its comments, blanked rather than removed so line numbers hold. */
+function blankComments(/** @type {string} */ text) {
+  return text.replace(/\/\*[\s\S]*?\*\/|(^|[^:"'`])\/\/.*$/gm, (c) => c.replace(/[^\n]/g, " "));
 }
 
 /** Whether a name is distinctive enough to flag a local definition of it. */
@@ -356,9 +427,11 @@ export function checkCopies(tree, catalog, config, self) {
   const shared = new RegExp(`from\\s+["'](${PACKAGES.map((p) => p.name.replace(/[/.]/g, "\\$&")).join("|")})(/[^"']*)?["']`);
   const define = all.length ? new RegExp(`^[ \\t]*(?:export\\s+)?(?:async\\s+)?(?:function\\*?\\s+|(?:const|let|var)\\s+)(${all.join("|")})\\b\\s*[=(<:]`, "gm") : null;
   for (const file of tree.files) {
-    if (!SOURCE.test(file) || NOT_SOURCE.test(file) || config.copies?.[file]) continue;
+    if (!SOURCE.test(file) || NOT_SOURCE.test(file)) continue;
     const text = tree.read(file);
     const lineOf = (/** @type {number} */ index) => text.slice(0, index).split("\n").length;
+    /** @type {Finding[]} */
+    const mine = [];
     // A wrapper that imports the shared export it is named after is a use, not a copy.
     const imported = new Set();
     for (const m of text.matchAll(/import\s*(?:type\s*)?\{([^}]*)\}\s*from\s*["'][^"']+["']/g)) {
@@ -371,27 +444,28 @@ export function checkCopies(tree, catalog, config, self) {
         const target = guarded?.target ?? ALIASES[m[1]] ?? m[1];
         if (imported.has(target)) continue;
         if (guarded && !guarded.body.test(definitionBody(text, m.index))) continue;
-        found.push({ check: "copies", file, line: lineOf(m.index), warn: guarded ? true : undefined, message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
+        mine.push({ check: "copies", file, line: lineOf(m.index), failsFrom: guarded?.failsFrom, message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
       }
     }
-    // Comments may name what a builder writes; only code counts. Blanked, not removed, so line numbers hold.
-    const code = text.replace(/\/\*[\s\S]*?\*\/|(^|[^:"'`])\/\/.*$/gm, (c) => c.replace(/[^\n]/g, " "));
-    for (const { find, also, use, say, warn } of FINGERPRINTS) {
+    // Comments may name what a builder writes; only code counts.
+    const code = blankComments(text);
+    for (const { find, also, use, say, failsFrom } of FINGERPRINTS) {
       if (self && use.startsWith(`${self} `)) continue;
       const m = find.exec(code);
       if (m && also && !also.test(code)) continue;
       // One finding a line: a named copy already reported there (germomics' one-line hex) says it.
-      if (m && !found.some((f) => f.file === file && f.line === lineOf(m.index))) found.push({ check: "copies", file, line: lineOf(m.index), warn, message: say ?? `this builds what ${use} builds: use it` });
+      if (m && !mine.some((f) => f.line === lineOf(m.index))) mine.push({ check: "copies", file, line: lineOf(m.index), failsFrom, message: say ?? `this builds what ${use} builds: use it` });
     }
+    if (mine.length && !excused(config, "copies", file)) found.push(...mine);
   }
   if (self !== "site-runtime") {
-    for (const file of tree.files.filter((f) => posix.basename(f) === "_headers" && !NOT_SOURCE.test(f) && !config.copies?.[f])) {
+    for (const file of tree.files.filter((f) => posix.basename(f) === "_headers" && !NOT_SOURCE.test(f))) {
       const text = tree.read(file);
       // A comment line starts with #, so only a header line, indented under its path, matches.
       const m = HEADERS_COPY.find.exec(text);
-      if (m) {
+      if (m && !excused(config, "copies", file)) {
         const line = text.slice(0, m.index).split("\n").length;
-        found.push({ check: "copies", file, line, warn: true, message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .family.json "copies"` });
+        found.push({ check: "copies", file, line, failsFrom: HEADERS_COPY.failsFrom, message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .family.json "copies"` });
       }
     }
   }
@@ -414,7 +488,7 @@ export function checkLibraries(tree, config, peers = {}) {
     const asked = new Set(Object.keys(deps).flatMap((d) => peers[d] ?? []));
     for (const dep of Object.keys(deps)) {
       const lib = LIBRARIES.find((l) => l.find.test(dep));
-      if (lib && !asked.has(dep) && !config.libraries?.[dep]) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .family.json "libraries"` });
+      if (lib && !asked.has(dep) && !excused(config, "libraries", dep)) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .family.json "libraries"` });
     }
   }
   return found;
@@ -453,23 +527,29 @@ export function checkTokens(tree, tokens, config) {
   for (const file of tree.files) {
     if (!(/\.css$/.test(file) || SOURCE.test(file)) || NOT_SOURCE.test(file)) continue;
     const text = tree.read(file);
-    // Comments may name a token; only declarations count. Blanked, not removed, so line numbers hold.
-    const code = text.replace(/\/\*[\s\S]*?\*\/|(^|[^:"'`])\/\/.*$/gm, (c) => c.replace(/[^\n]/g, " "));
+    // Comments may name a token; only declarations count.
+    const code = blankComments(text);
     for (const m of code.matchAll(/(^|[\s{;"'`])(--[a-z0-9-]+)\s*:(?!:)/g)) {
       const name = m[2];
-      if (!tokens.has(name) || config.tokens?.[name] || !rootRule(code, m.index)) continue;
+      if (!tokens.has(name) || !rootRule(code, m.index) || excused(config, "tokens", name)) continue;
       const line = code.slice(0, m.index + m[1].length).split("\n").length;
       found.push({ check: "tokens", file, line, message: `${name} is Capsomer's: set it there (its site layer for this site's own look), or say why in .family.json "tokens"` });
     }
-    if (config.tokens?.fonts) continue;
     // The family's faces come from capsomer/fonts.css, every weight in one file each, so a bold is the same bold on every
     // site (Dustin, 2026-10-28: sites that picked their own weights drew the footer's name differently).
     for (const m of code.matchAll(/@fontsource(?:-variable)?\/(?:schibsted-grotesk|martian-mono)\b|@font-face\s*\{[^}]*font-family:\s*["']?(?:Schibsted Grotesk|Martian Mono)/g)) {
+      if (excused(config, "tokens", "fonts")) break;
       const line = code.slice(0, m.index).split("\n").length;
       found.push({ check: "tokens", file, line, message: `the family's faces are Capsomer's: load capsomer/fonts.css instead of your own files, or say why in .family.json "tokens" "fonts"` });
     }
   }
   return found;
+}
+
+/** Which app a file belongs to: the deepest app directory that holds it. @param {[string, string][]} apps */
+function ownerOf(apps) {
+  return (/** @type {string} */ file) =>
+    apps.map(([dir]) => dir).filter((dir) => dir === "." || file === dir || file.startsWith(`${dir}/`)).sort((a, b) => b.length - a.length)[0];
 }
 
 /**
@@ -481,16 +561,17 @@ export function checkFeatures(tree, config, now = Date.now()) {
   /** @type {Finding[]} */
   const found = [];
   const apps = Object.entries(config.apps ?? { ".": "site" });
-  // Each file belongs to the deepest app directory that holds it.
-  const owner = (/** @type {string} */ file) =>
-    apps.map(([dir]) => dir).filter((dir) => dir === "." || file === dir || file.startsWith(`${dir}/`)).sort((a, b) => b.length - a.length)[0];
+  const owner = ownerOf(apps);
+  // A library with no kind is judged as the default site; the finding says how to say otherwise.
+  const manifest = JSON.parse(tree.read("package.json") || "{}");
+  const library = !config.apps && (manifest.exports || manifest.bin) ? ` (package.json has ${manifest.exports ? "exports" : "a bin"}: a library says .family.json "apps": { ".": "package" })` : "";
   for (const [dir, kind] of apps) {
     const mine = tree.files.filter((f) => owner(f) === dir && !NOT_SOURCE.test(f));
     const text = mine.filter((f) => SOURCE.test(f) || /\.(css|ya?ml)$/.test(f) || posix.basename(f) === "package.json").map(tree.read).join("\n");
     const prefix = dir === "." ? "" : `${dir}:`;
     for (const [feature, { kinds, find, use }] of Object.entries(FEATURES)) {
-      if (!kinds.includes(kind) || config.waive?.[`${prefix}${feature}`] || find.test(text)) continue;
-      found.push({ check: "features", file: dir, message: `${kind} ${dir === "." ? "" : `${dir} `}has no ${feature}: ${use}` });
+      if (!kinds.includes(kind) || find.test(text) || excused(config, "waive", `${prefix}${feature}`)) continue;
+      found.push({ check: "features", file: dir, message: `${kind} ${dir === "." ? "" : `${dir} `}has no ${feature}: ${use}${library}` });
     }
     // security.txt's Expires is a fixed date, so somebody confirms the address still works before it lapses; this is the
     // reminder, a month ahead.
@@ -500,30 +581,133 @@ export function checkFeatures(tree, config, now = Date.now()) {
         found.push({ check: "features", file: f, message: `security.txt expires ${m[1]}: confirm its contact still delivers, then move SECURITY_TXT_EXPIRES on (under a year)` });
       }
     }
-    if (kind !== "package" && !config.waive?.[`${prefix}assetCache`] && mine.some((f) => /(^|\/)react-router\.config\.[mc]?[jt]s$/.test(f))) {
+    if (kind !== "package" && mine.some((f) => /(^|\/)react-router\.config\.[mc]?[jt]s$/.test(f))) {
       const headers = mine.filter((f) => posix.basename(f) === "_headers").map(tree.read).join("\n");
       for (const { dir: hashed, needed } of HASHED_DIRS) {
-        if (needed(text) && !cachesHashed(headers, hashed)) {
+        if (needed(text) && !cachesHashed(headers, hashed) && !excused(config, "waive", `${prefix}assetCache`)) {
           found.push({ check: "features", file: dir, message: `${dir} serves ${hashed} with the assets layer's revalidate-every-load default: ${hashed} needs ${ASSET_CACHE.use}` });
         }
       }
     }
     const d1 = mine.some((f) => /(^|\/)wrangler[^/]*\.jsonc?(\.example)?$/.test(f) && /"d1_databases"/.test(tree.read(f)));
-    if (d1 && kind !== "package" && !config.waive?.[`${prefix}backup`] && !BACKUP.find.test(text)) {
+    if (d1 && kind !== "package" && !BACKUP.find.test(text) && !excused(config, "waive", `${prefix}backup`)) {
       found.push({ check: "features", file: dir, message: `${dir} has a D1 database and no nightly dump: ${BACKUP.use}` });
     }
     // A Carrel site (it calls createSiteApi) tells IndexNow about each publish and schedule through site-api's hook. A
     // createSiteApi without it either tells nobody, or hands its own submitIndexNow to onPageChange (site-api v0.9.0's way).
     const indexnow = FEATURES.indexnow;
-    if (indexnow.kinds.includes(kind) && !config.waive?.[`${prefix}indexnow`] && indexnow.find.test(text) && /\bcreateSiteApi\s*\(/.test(text) && !/\bindexNowHook\b|prelum-indexnow/.test(text)) {
+    if (indexnow.kinds.includes(kind) && indexnow.find.test(text) && /\bcreateSiteApi\s*\(/.test(text) && !/\bindexNowHook\b|prelum-indexnow/.test(text) && !excused(config, "waive", `${prefix}indexnow`)) {
       const how = /\bonPageChange\s*[:(]/.test(text) ? "with its own onPageChange submission" : "without IndexNow, so a publish from Carrel reaches no search engine";
       found.push({ check: "features", file: dir, message: `${kind} ${dir === "." ? "" : `${dir} `}calls createSiteApi ${how}: hooks: [indexNowHook(...)] from site-api` });
     }
     const all = tree.files.filter((f) => owner(f) === dir && !/(^|\/)(node_modules|dist|build|coverage)\//.test(f));
     for (const [name, { kinds, use, missing }] of Object.entries(ADVISORIES)) {
-      if (!kinds.includes(kind) || config.waive?.[`${prefix}${name}`]) continue;
+      if (!kinds.includes(kind)) continue;
       const what = missing({ files: all, text, read: tree.read });
-      if (what) found.push({ check: "features", file: dir, warn: true, message: `${kind} ${dir === "." ? "" : `${dir} `}has ${what}: ${use}` });
+      if (what && !excused(config, "waive", `${prefix}${name}`)) found.push({ check: "features", file: dir, warn: true, message: `${kind} ${dir === "." ? "" : `${dir} `}has ${what}: ${use}` });
+    }
+  }
+  return found;
+}
+
+/** A wrangler config: the app it sits in is a Worker. */
+const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
+
+/**
+ * The devkit workflows a repository needs, by what it holds: `needed` says why, or null. `runs` names the bin (or, in
+ * devkit, the file) a workflow runs, so CI running that itself, directly or through a package script, counts as the call.
+ * @typedef {{ workers: string[], script: boolean, private?: boolean, self?: string }} Holds
+ * @type {{ name: string, failsFrom?: string, warn?: boolean, runs?: string[], example?: string, needed: (repo: Holds) => string | null }[]}
+ */
+export const WORKFLOWS = [
+  { name: "ai-author", failsFrom: "0.21.0", runs: ["devkit-check-trailers", "bin/check-trailers.mjs"], needed: () => "every repository" },
+  { name: "pr-footer", failsFrom: "0.21.0", needed: () => "every repository" },
+  { name: "family", failsFrom: "0.21.0", runs: ["devkit-family", "bin/family.mjs"], needed: () => "every repository" },
+  { name: "workflow-audit", failsFrom: "0.21.0", needed: () => "every repository" },
+  { name: "dependencies", failsFrom: "0.21.0", needed: () => "every repository" },
+  { name: "worker-size", failsFrom: "0.21.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
+  // Many Workers deploy another way today (Workers Builds, a deploy job of their own), so this one stays a warning.
+  { name: "worker-deploy", warn: true, needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
+  { name: "no-bloat", failsFrom: "0.21.0", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
+  { name: "bump-consumers", failsFrom: "0.21.0", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
+];
+
+/**
+ * The devkit workflows the repository's kinds need and no workflow calls. Several apps need the union of their kinds'.
+ * @param {Tree} tree @param {Config} config @param {{ self?: string, private?: boolean }} [repo] `private` from the GitHub
+ *   event; unknown (a local run), no-bloat is only a warning
+ * @returns {Finding[]}
+ */
+export function checkWorkflows(tree, config, repo = {}) {
+  // What the workflows run, without their comments; in devkit, without the reusable workflows it ships for others.
+  const text = tree.files
+    .filter((f) => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(f))
+    .map((f) => tree.read(f).replace(/(^|\s)#.*$/gm, "$1"))
+    .filter((t) => repo.self !== "devkit" || !/^\s*workflow_call:/m.test(t))
+    .join("\n");
+  const called = new Set([...text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/([\w.-]+?)\.ya?ml@/gi)].map((m) => m[1]));
+  // devkit calls its own workflows by path.
+  if (repo.self === "devkit") for (const m of text.matchAll(/uses:\s*\.\/\.github\/workflows\/([\w.-]+?)\.ya?ml/g)) called.add(m[1]);
+  const scripts = tree.files.filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f)).flatMap((f) => Object.entries(JSON.parse(tree.read(f)).scripts ?? {}));
+  const invokes = (/** @type {string} */ cmd, /** @type {string} */ name) => new RegExp(`\\b(?:run(?:-script)?|pnpm|yarn|npm)\\s+(?:--?\\S+\\s+)*${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w:.-])`).test(cmd);
+  /** @returns {boolean} */
+  const reaches = (/** @type {string} */ cmd, /** @type {string} */ bin, seen = new Set()) =>
+    cmd.includes(bin) || scripts.some(([name, body]) => !seen.has(name) && invokes(cmd, name) && reaches(String(body), bin, seen.add(name)));
+  const apps = Object.entries(config.apps ?? { ".": "site" });
+  const owner = ownerOf(apps);
+  const workers = apps
+    .filter(([dir, kind]) => ["site", "private", "worker"].includes(kind) && tree.files.some((f) => WRANGLER.test(f) && !NOT_SOURCE.test(f) && owner(f) === dir))
+    .map(([dir]) => (dir === "." ? "the root" : dir));
+  const script = tree.files.some((f) => SOURCE.test(f) && !NOT_SOURCE.test(f));
+  /** @type {Finding[]} */
+  const found = [];
+  for (const { name, failsFrom, warn, runs = [], example = `examples/${name}-caller.yml`, needed } of WORKFLOWS) {
+    const why = needed({ workers, script, private: repo.private, self: repo.self });
+    if (!why || called.has(name) || runs.some((bin) => reaches(text, bin)) || excused(config, "waive", `workflow:${name}`)) continue;
+    // Outside Actions the repository's visibility is unknown, so no-bloat can only say what it would need.
+    const unsure = name === "no-bloat" && repo.private === undefined;
+    found.push({
+      check: "workflows",
+      file: ".github/workflows",
+      warn: warn || unsure || undefined,
+      failsFrom,
+      message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .family.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
+    });
+  }
+  return found;
+}
+
+const TEST = /(^|\/)(test|tests|e2e|__tests__|test-integration)\/|\.(test|spec)\.[mc]?[jt]sx?$/;
+const FETCH_SWAP = String.raw`(?:globalThis\.fetch\s*=|stubGlobal\(\s*["'\x60]fetch["'\x60]\s*,|defineProperty\(\s*globalThis\s*,\s*["'\x60]fetch["'\x60]\s*,\s*\{\s*value\s*:|spyOn\(\s*globalThis\s*,\s*["'\x60]fetch["'\x60]\s*\)\s*\.mock\w*\()`;
+const DELETE_ALL = String.raw`DELETE FROM\s+["'\x60]?[\w$]+["'\x60]?(?=\s*(?:["'\x60;),]|$))`;
+
+/** Test fakes of a repository's own where devkit has one: every pattern in `find` matches the test file. */
+export const FAKES = [
+  // GitHub's contents or git data routes answered behind a fetch stub.
+  { failsFrom: "0.21.0", find: [/\/repos\/[^\s"'`]*\/(?:git\/(?:refs?|trees|commits|blobs)|contents)\b/, new RegExp(FETCH_SWAP)], use: "devkit ./github stubGitHub", say: "a GitHub API fake of its own" },
+  // An RSA key pair made here and a key set served from it: an Access issuer of its own.
+  { failsFrom: "0.21.0", find: [/generateKey\(\s*\{\s*name\s*:\s*["'`]RSASSA-PKCS1-v1_5|generateKeyPair(?:Sync)?\(\s*["'`](?:RS256|rsa)["'`]/, /cdn-cgi\/access\/certs|\bjwks\b|["']?keys["']?\s*:\s*\[\s*(?:\{\s*\.\.\.)?\s*\w*[jJ]wk\b/], use: "devkit ./access stubAccess", say: "an Access fake of its own (a key pair it signs with and the key set it serves)" },
+  // A fetch whose whole body throws an error naming the URL.
+  { failsFrom: "0.21.0", find: [new RegExp(`${FETCH_SWAP}\\s*(?:vi\\.fn\\(\\s*)?(?:async\\s*)?(?:function\\s*)?\\(?[^)]*\\)?\\s*(?::\\s*[\\w<>]+\\s*)?(?:=>)?\\s*\\{?\\s*(?:throw\\s+new\\s+\\w*Error\\(\\s*|(?:return\\s+)?Promise\\.reject\\(\\s*(?:new\\s+\\w*Error\\(\\s*)?)\\x60[^\\x60]*\\$\\{`)], use: "devkit ./network refuseNetwork", say: "a fetch that refuses the network, written here" },
+  // Tables cleared by hand: three DELETE FROMs with no WHERE close together, or one in a loop.
+  { failsFrom: "0.21.0", find: [new RegExp(`${DELETE_ALL}[^]{0,400}?${DELETE_ALL}[^]{0,400}?${DELETE_ALL}|\\bfor\\s*\\(\\s*(?:const|let)\\s+\\w+\\s+of\\s+[^)]+\\)[^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{|\\]\\s*\\.(?:map|forEach)\\([^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{`, "im")], use: "devkit ./d1 resetDb", say: "a hand list of tables to clear, which drifts the day a migration adds one" },
+];
+
+/**
+ * Test files holding a fake devkit already ships. Only this check reads tests.
+ * @param {Tree} tree @param {Config} config @param {string} [self]
+ * @returns {Finding[]}
+ */
+export function checkFakes(tree, config, self) {
+  /** @type {Finding[]} */
+  const found = [];
+  if (self === "devkit") return found;
+  for (const file of tree.files.filter((f) => SOURCE.test(f) && TEST.test(f) && !/(^|\/)(node_modules|dist|build|coverage|fixtures)\//.test(f))) {
+    const code = blankComments(tree.read(file));
+    for (const { find, use, say, failsFrom } of FAKES) {
+      const m = find[0].exec(code);
+      if (!m || !find.every((f) => f.test(code)) || excused(config, "copies", file)) continue;
+      found.push({ check: "fakes", file, line: code.slice(0, m.index).split("\n").length, failsFrom, message: `${say}: use ${use}, or say why in .family.json "copies"` });
     }
   }
   return found;
@@ -562,22 +746,38 @@ export function checkSpelling(root, config, fix = false, names = true) {
   const targets = files.filter((f) => !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) && !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f));
   // Names other tools own: GitHub Actions' cancelled(), Renovate's minimumReleaseAgeBehaviour, and ARIA's labelledby as a // codespell:ignore
   // camelCase name (labelledBy, ariaLabelledByElements). codespell:ignore
-  const ignoreRegex = [String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b|[lL]abelledBy`, ...(config.spelling?.contracts ?? [])].join("|"); // codespell:ignore
-  const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", ignoreRegex];
-  if (config.spelling?.ignore?.length) args.push("--ignore-words-list", config.spelling.ignore.join(","));
-  // Each part of a camelCase or CONSTANT_CASE name is read as a word, since a British name is spelling too.
-  args.push("--regex", "[A-Z]?[a-z]+|[A-Z]+(?![a-z])");
-  /** @type {Finding[]} */
-  const found = [];
-  /** @type {{ file: string, line: number, from: string, to: string }[]} */
-  const hits = [];
-  for (let i = 0; i < targets.length; i += 400) {
-    const run = codespell([...args, "--", ...targets.slice(i, i + 400)], root);
-    for (const line of run.split("\n")) {
-      const m = /^(.+?):(\d+): (\S+) ==> (\S+)/.exec(line);
-      if (!m) continue;
-      hits.push({ file: m[1], line: Number(m[2]), from: m[3], to: m[4] });
-      found.push({ check: "spelling", file: m[1], line: Number(m[2]), message: `${m[3]} is British; write ${m[4]} (or end the line with a codespell:ignore comment if it is a data contract)` });
+  const builtIn = String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b|[lL]abelledBy`; // codespell:ignore
+  const { ignore = [], contracts = [] } = config.spelling ?? {};
+  const ignoreRegex = [builtIn, ...contracts].join("|");
+  /** @returns {{ file: string, line: number, from: string, to: string }[]} */
+  const read = (/** @type {string} */ regex, /** @type {string[]} */ words) => {
+    const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", regex];
+    if (words.length) args.push("--ignore-words-list", words.join(","));
+    // Each part of a camelCase or CONSTANT_CASE name is read as a word, since a British name is spelling too.
+    args.push("--regex", "[A-Z]?[a-z]+|[A-Z]+(?![a-z])");
+    const out = [];
+    for (let i = 0; i < targets.length; i += 400) {
+      for (const line of codespell([...args, "--", ...targets.slice(i, i + 400)], root).split("\n")) {
+        const m = /^(.+?):(\d+): (\S+) ==> (\S+)/.exec(line);
+        if (m) out.push({ file: m[1], line: Number(m[2]), from: m[3], to: m[4] });
+      }
+    }
+    return out;
+  };
+  const hits = read(ignoreRegex, ignore);
+  const found = hits.map(({ file, line, from, to }) => ({ check: "spelling", file, line, message: `${from} is British; write ${to} (or end the line with a codespell:ignore comment if it is a data contract)` }));
+  // An ignore or contract is used when a run without the repository's own finds more, in its word or on a line it matches.
+  if (!fix && (ignore.length || contracts.length)) {
+    const seen = new Set(hits.map((h) => `${h.file}:${h.line}:${h.from}`));
+    const more = read(builtIn, []).filter((h) => !seen.has(`${h.file}:${h.line}:${h.from}`));
+    for (const word of ignore) if (more.some((h) => h.from.toLowerCase() === word.toLowerCase())) used(config, "spelling.ignore", word);
+    for (const contract of contracts) {
+      /** @type {RegExp | null} */
+      let re = null;
+      try {
+        re = new RegExp(contract);
+      } catch {}
+      if (!re || more.some((h) => re.test(readFileSync(join(root, h.file), "utf8").split("\n")[h.line - 1] ?? ""))) used(config, "spelling.contracts", contract);
     }
   }
   if (!fix) return found;
@@ -733,14 +933,21 @@ function main(/** @type {string[]} */ argv) {
   }
   /** @type {Config} */
   const config = existsSync(join(root, ".family.json")) ? JSON.parse(readFileSync(join(root, ".family.json"), "utf8")) : {};
+  validateConfig(config);
   const tree = gitTree(root);
   // A shared package defines its own exports; it is checked against the others, as a package, not a site.
-  const self = PACKAGES.find((p) => p.name === JSON.parse(readFileSync(join(root, "package.json"), "utf8")).name);
+  const name = existsSync(join(root, "package.json")) ? JSON.parse(readFileSync(join(root, "package.json"), "utf8")).name : undefined;
+  const self = PACKAGES.find((p) => p.name === name);
   if (self) config.apps ??= { ".": "package" };
+  // A package the check cannot read is a check that did not run: in CI (--from) that stops it, locally it is said.
+  const missing = PACKAGES.filter((p) => p.repo !== self?.repo && !locate(p.name, p.repo)).map((p) => p.repo);
+  if (from && missing.length) throw new Error(`--from ${from} has no checkout of ${missing.join(", ")}`);
   const { catalog } = readCatalog((name, repo) => (repo === self?.repo ? null : locate(name, repo)));
   // A name the package exports itself is its own API, even when another package exports a different thing by that name.
   if (self) for (const name of Object.keys(readCatalog((_, repo) => (repo === self.repo ? root : null)).catalog)) delete catalog[name];
   const lenient = (process.env.GITHUB_HEAD_REF ?? "").startsWith("renovate/");
+  // Whether the repository is private, from the event Actions hands every run; unknown locally.
+  const event = process.env.GITHUB_EVENT_PATH && existsSync(process.env.GITHUB_EVENT_PATH) ? JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf8")) : {};
   const findings = [
     ...checkPins(tree, lsRemoteTags, lenient),
     ...checkCopies(tree, catalog, config, self?.label),
@@ -748,13 +955,21 @@ function main(/** @type {string[]} */ argv) {
     ...checkFeatures(tree, config),
     ...(self?.repo === "capsomer" ? [] : checkTokens(tree, capsomerTokens(locate("capsomer", "capsomer")), config)),
     ...checkSpelling(root, config, argv.includes("--fix-spelling"), !self),
+    ...checkWorkflows(tree, config, { self: self?.repo, private: event.repository?.private }),
+    ...checkFakes(tree, config, self?.label),
   ];
-  const errors = findings.filter((f) => !f.warn);
+  if (missing.length) {
+    const tokens = missing.includes("capsomer") && self?.repo !== "capsomer" ? " and Capsomer's tokens" : "";
+    findings.push({ check: "config", warn: true, message: `not installed here: ${missing.join(", ")}, so copies of their exports${tokens} were not checked and no exception was judged stale; npm install, or --from <dir> of checkouts (CI reads them all)` });
+  } else {
+    findings.push(...staleExceptions(config));
+  }
+  const errors = findings.filter((f) => !isWarning(f));
   for (const f of findings) {
     const where = f.file ? ` file=${f.file}${f.line ? `,line=${f.line}` : ""}` : "";
-    console.log(`::${f.warn ? "warning" : "error"}${where}::[${f.check}] ${f.message}`);
+    console.log(`::${isWarning(f) ? "warning" : "error"}${where}::[${f.check}] ${f.message}`);
   }
-  const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
+  const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling", "workflows", "fakes", "config"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
   console.log(errors.length ? `devkit-family: ${errors.length} to fix (${counts}). What the packages export: npx devkit-family list` : `devkit-family: in step with the family (${counts}).`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Family check\n\n${counts}\n`);
   return errors.length ? 1 : 0;

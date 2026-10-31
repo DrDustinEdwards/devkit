@@ -49,6 +49,7 @@ const script = (name) => {
 
 const LIVE_GATE = "live gate";
 const ROLLBACK = "Roll back the deploy this run shipped";
+const BOOKMARK = "Record the D1 Time Travel bookmark";
 const ROLLED_BACK = `echo "::error::rolled back: was \${ROLLBACK_FROM} (this run's commit \${GITHUB_SHA}), now \${ROLLBACK_TO}. master still points at the bad commit; land a fix or revert it."`;
 const NOT_ROLLING = `echo "::error::not rolling back. master and production may disagree; a human decides."`;
 const NO_EFFECT = `echo "::error::the rollback did not take effect: /health still reports \${ROLLBACK_TO} after 20 reads (this run's commit \${GITHUB_SHA}). Production may still be serving the refused deploy; a human decides."`;
@@ -84,27 +85,28 @@ test("THE NAMES CAPSID'S WATCHER READS: the job, the step and the three annotati
   assert.ok(rollback.includes(`echo "rollback_from=\${ROLLBACK_FROM} rollback_to=\${ROLLBACK_TO}" >> "$GITHUB_STEP_SUMMARY"`), "the step summary lost rollback_from= and rollback_to=");
 });
 
-test("wrangler is pinned to one exact version, and the deploy and the rollback both use it", () => {
+test("wrangler is pinned to one exact version, and the bookmark, the deploy and the rollback all use it", () => {
   const pinned = /\nenv:\n {2}WRANGLER_VERSION: "(\d+\.\d+\.\d+)"\n/.exec(text);
   assert.ok(pinned, "WRANGLER_VERSION is not an exact version");
   assert.match(step("Deploy"), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" "\$\{args\[@\]\}"/);
   assert.match(step(ROLLBACK), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" rollback --name "\$WORKER"/);
+  assert.match(step(BOOKMARK), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" d1 time-travel info "\$DB" --json/);
   // No other wrangler, floating or pinned elsewhere.
-  assert.deepEqual([...code.matchAll(/wrangler@(\S+)/g)].map((m) => m[1]), ['${WRANGLER_VERSION}"', '${WRANGLER_VERSION}"']);
+  assert.deepEqual([...code.matchAll(/wrangler@(\S+)/g)].map((m) => m[1]), Array(3).fill('${WRANGLER_VERSION}"'));
 });
 
 test("caller input reaches a shell only through the environment, never spliced into the script", () => {
-  for (const name of ["Install", "Pre-deploy guard", "Deploy", "Write the rollback guard", "verify:live", ROLLBACK]) {
+  for (const name of ["Install", BOOKMARK, "Pre-deploy guard", "Deploy", "Write the rollback guard", "verify:live", ROLLBACK]) {
     const s = step(name);
     assert.doesNotMatch(s.slice(s.indexOf("run:")), /\$\{\{/, name);
   }
 });
 
-test("the Cloudflare secrets reach only the pre-deploy guard, the deploy and the rollback", () => {
+test("the Cloudflare secrets reach only the bookmark, the pre-deploy guard, the deploy and the rollback", () => {
   const holders = [...text.matchAll(/\n {6}- name: (.+)\n[\s\S]*?(?=\n {6}- |\n {2}[\w-]+:\n|$)/g)]
     .filter((m) => m[0].includes("secrets.CLOUDFLARE_API_TOKEN"))
     .map((m) => m[1]);
-  assert.deepEqual(holders, ["Pre-deploy guard", "Deploy", ROLLBACK]);
+  assert.deepEqual(holders, [BOOKMARK, "Pre-deploy guard", "Deploy", ROLLBACK]);
   assert.doesNotMatch(step("verify:live"), /secrets\./);
 });
 
@@ -114,6 +116,7 @@ test("the deploy job publishes the attempt it shipped in, and never deploys a pu
   assert.match(deploy, /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target'\n/);
   assert.match(job("live"), /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target' && !failure\(\) && !cancelled\(\)\n/);
   assert.ok(step("Pre-deploy guard").length && deploy.indexOf("- name: Pre-deploy guard") < deploy.indexOf("- name: Deploy"), "the guard runs after the deploy");
+  assert.ok(deploy.indexOf(`- name: ${BOOKMARK}`) < deploy.indexOf("- name: Pre-deploy guard"), "the D1 bookmark is read after the guard that runs migrations");
 });
 
 test("the rollback runs on a refusal only, calls the guard before wrangler, reads /health without -f, and checks the sha moved", () => {

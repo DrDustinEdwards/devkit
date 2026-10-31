@@ -24,7 +24,8 @@ export type GitHubStub = {
 
 /**
  * Stands up the fake for one repository. Installed as the global fetch unless `install` is false. An unknown host or
- * route throws; blob shas are real.
+ * route throws; blob shas are real. Writes answer 201 and a ref update that is not a fast forward 422 unless `force`,
+ * as GitHub does.
  */
 export function stubGitHub(options: {
   owner: string;
@@ -35,6 +36,8 @@ export function stubGitHub(options: {
   files?: Record<string, string>;
   /** Default true. */
   install?: boolean;
+  /** Makes the repository private: a request without this token answers 404, with another one 401. */
+  token?: string;
 }): GitHubStub;
 
 /** The blob sha of a file as the stub holds it now. */

@@ -16,6 +16,16 @@
 // "kinds" are the site kinds it applies to (site, static, worker); "args", when given, follow --origin and --from (one bin
 // run two ways, once per kind). An area's "skip" names a site the area does not apply to, and why.
 //
+// A REPORTED check is one that needs a site's secrets, so it runs where the secrets already live and publishes its result
+// on that system's own https origin; GitHub never holds a site key. The run reads the report instead of running a bin:
+//
+//   { "name": "carrel-conformance", "report": "https://carrel.example.com/reports/conformance.json", "max_age_minutes": 60 }
+//
+// The report is { "check", "at", "ref", "sites": { "<site origin or from>": { "status": "pass" | "fail" | "error", "findings":
+// [{ "severity": "error" | "warning", "check", "detail" }] } } }, findings as a bin's annotations would give them and never
+// a secret. TLS on the reporter's own origin is what makes it the reporter's. A report that cannot be read, is older than
+// max_age_minutes (default 60), names another check or leaves a site out is "error" for that site, never a pass.
+//
 // A VERDICT is live/verdicts/area-<n>.json, written by the verifier thread, which must not be the area's builder:
 //
 //   { "area": 2, "verifier": "Verify security headers and CSP", "date": "2026-11-02",
@@ -45,6 +55,8 @@ const VERDICTS = ["complete", "partial", "missing"];
 const MAX_FINDINGS = 100;
 const CHECK_TIMEOUT_MS = 20 * 60_000;
 const PARALLEL = 4;
+const REPORT_MAX_AGE_MINUTES = 60;
+const STATUSES = ["pass", "fail", "error"];
 
 const live = new URL("../live/", import.meta.url);
 const readJson = (/** @type {string | URL} */ path) => JSON.parse(readFileSync(path, "utf8"));
@@ -77,7 +89,9 @@ export function lintConfig({ sites, areas, verdicts }) {
   for (const area of areas) {
     if (!area.builder) problems.push(`area ${area.id} names no builder`);
     for (const check of area.checks) {
-      if (!check.name || !check.repo || !check.bin) problems.push(`area ${area.id} has a check without a name, repo and bin`);
+      if (check.report !== undefined) {
+        if (!check.name || check.repo || check.bin || !/^https:\/\/[a-z0-9.-]+\//.test(check.report)) problems.push(`area ${area.id} check ${check.name} needs a name and an https report URL, and no repo or bin`);
+      } else if (!check.name || !check.repo || !check.bin) problems.push(`area ${area.id} has a check without a name, repo and bin`);
       for (const kind of check.kinds ?? []) if (!KINDS.includes(kind)) problems.push(`area ${area.id} check ${check.name} names kind ${kind}`);
       if (check.args !== undefined && !(Array.isArray(check.args) && check.args.every((arg) => typeof arg === "string"))) problems.push(`area ${area.id} check ${check.name} has args that are not a list of strings`);
     }
@@ -127,6 +141,34 @@ export function resultOf({ code, output, seconds }) {
   const status = code === 0 ? "pass" : code === 1 ? "fail" : "error";
   const tail = status === "error" ? output.trim().split("\n").slice(-3).join(" ").slice(0, 300) : undefined;
   return { status, errors, warnings: findings.length - errors, findings: findings.slice(0, MAX_FINDINGS), seconds, ...(tail ? { detail: tail } : {}) };
+}
+
+/** One site's result from a reported check's report (null when it could not be read), checked for name and age. Pure. */
+export function reportedResult(report, check, site, now = new Date()) {
+  const error = (detail) => ({ status: "error", errors: 0, warnings: 0, findings: [], detail });
+  if (!report || typeof report !== "object") return error(`could not read ${check.report}`);
+  if (report.check !== check.name) return error(`${check.report} reports ${report.check}, not ${check.name}`);
+  const age = (now.getTime() - Date.parse(report.at)) / 60_000;
+  const maxAge = check.max_age_minutes ?? REPORT_MAX_AGE_MINUTES;
+  if (!(age >= -5 && age <= maxAge)) return error(`${check.report} is from ${report.at}, more than ${maxAge} minutes ago`);
+  const entry = report.sites?.[site.origin] ?? (site.from ? report.sites?.[site.from] : undefined);
+  if (!entry || !STATUSES.includes(entry.status)) return error(`${check.report} has no result for ${site.origin}`);
+  const findings = (Array.isArray(entry.findings) ? entry.findings : [])
+    .filter((f) => ["error", "warning"].includes(f?.severity))
+    .map((f) => ({ severity: f.severity, check: String(f.check ?? "").slice(0, 200), detail: String(f.detail ?? "").slice(0, 600) }));
+  const errors = findings.filter((f) => f.severity === "error").length;
+  // A pass with an error finding is not a pass.
+  const status = entry.status === "pass" && errors ? "fail" : entry.status;
+  return { status, errors, warnings: findings.length - errors, findings: findings.slice(0, MAX_FINDINGS), seconds: 0 };
+}
+
+async function fetchReport(/** @type {string} */ url) {
+  try {
+    const resp = await fetch(url, { headers: { Accept: "application/json" }, redirect: "error", signal: AbortSignal.timeout(30_000) });
+    return resp.ok ? await resp.json() : null;
+  } catch {
+    return null;
+  }
 }
 
 /** The newest vX.Y.Z tag of one of the family's repositories. */
@@ -200,6 +242,7 @@ async function linesFor(/** @type {number} */ area, /** @type {string | undefine
 export async function runAll({ sites, areas }, { onlyAreas, onlySites, token, log = console.error } = {}) {
   const root = mkdtempSync(join(tmpdir(), "devkit-live-"));
   const cache = new Map();
+  const reports = new Map();
   const jobs = [];
   const results = [];
   for (const area of areas) {
@@ -208,6 +251,13 @@ export async function runAll({ sites, areas }, { onlyAreas, onlySites, token, lo
       if (onlySites && !onlySites.includes(site.id)) continue;
       if (area.skip?.[site.id]) continue;
       for (const check of checksFor(area, site)) {
+        if (check.report) {
+          if (!reports.has(check.report)) reports.set(check.report, fetchReport(check.report));
+          const report = await reports.get(check.report);
+          const record = { area: area.id, site: site.id, check: check.name, ref: typeof report?.ref === "string" ? report.ref.slice(0, 60) : null };
+          results.push({ ...record, ...reportedResult(report, check, site) });
+          continue;
+        }
         const { ref, bin, error } = install(check, cache, root);
         const record = { area: area.id, site: site.id, check: check.name, ref };
         if (error) {

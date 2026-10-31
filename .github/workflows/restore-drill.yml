@@ -1,0 +1,70 @@
+name: restore-drill
+
+# THE WEEKLY RESTORE DRILL of a site's nightly D1 dump. A backup is proven by restoring it: d1-dump downloads the newest
+# complete run from the site's backups bucket through the R2 REST API, restores it into a scratch SQLite file and checks
+# the copy (d1-dump README, "Restore drill"). Every site with a D1 database calls this weekly; devkit-ops-audit's R1 reads
+# the caller's newest run, which must be a success under eight days old.
+#
+# THE SQLITE BACKEND, named explicitly: with the Cloudflare variables set, d1-dump would otherwise pick the d1 backend, which
+# creates a database and needs a token that can. This token only reads the bucket.
+#
+# EXIT 0 PASSED, 1 THE DRILL REFUSED THE DUMP, 3 COULD NOT RUN. Either failure fails the job; the annotation says which.
+#
+# A CALLER (examples/restore-drill-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+# It pins d1-dump too: `d1-dump-ref` has no default, so a d1-dump release reaches the drill through a reviewed change.
+
+on:
+  workflow_call:
+    inputs:
+      bucket:
+        description: The R2 bucket the nightly dump writes to (the BACKUPS binding's bucket name).
+        required: true
+        type: string
+      d1-dump-ref:
+        description: The d1-dump release tag the drill runs, such as v0.7.0.
+        required: true
+        type: string
+      node-version:
+        description: The Node version; d1-dump needs 24.14.1 or later.
+        required: false
+        type: string
+        default: "24"
+    secrets:
+      CLOUDFLARE_API_TOKEN:
+        required: true
+      CLOUDFLARE_ACCOUNT_ID:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  drill:
+    name: restore drill
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: ${{ inputs.node-version }}
+          package-manager-cache: false
+
+      - name: Restore the newest complete dump and check it
+        env:
+          BUCKET: ${{ inputs.bucket }}
+          D1_DUMP_REF: ${{ inputs.d1-dump-ref }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set +e
+          npx --yes "github:DrDustinEdwards/d1-dump#${D1_DUMP_REF}" drill --bucket "$BUCKET" --backend sqlite 2>&1 | tee "$RUNNER_TEMP/drill.txt"
+          code=${PIPESTATUS[0]}
+          { echo '```'; cat "$RUNNER_TEMP/drill.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$code" = "1" ]; then
+            echo "::error::the restore drill refused the newest dump of ${BUCKET}; the backup does not restore."
+          elif [ "$code" != "0" ]; then
+            echo "::error::the restore drill could not run (exit ${code}); nothing was proven about ${BUCKET}."
+          fi
+          exit "$code"

@@ -1,0 +1,89 @@
+name: dependencies
+
+# Known vulnerabilities in the caller's dependencies, found by OSV-Scanner in every lockfile in the repository, nested ones
+# such as mcp/package-lock.json included. On a pull request (or a merge queue entry) it scans the base commit too and fails
+# only on a vulnerability the change adds, so a repository with old advisories can still merge; on any other event (a
+# push, a schedule) it fails on every known vulnerability, because an advisory published after the merge reaches nothing a
+# pull request ever checked. This is OSV-Scanner's documented pull request mode (google.github.io/osv-scanner/github-action)
+# run with the binary below; GitHub's dependency review does the same job but needs the dependency graph turned on, and paid
+# Code Security in a private repository.
+#
+# Exceptions, each with its reason, go in an osv-scanner.toml at the repository root (`[[IgnoredVulns]]` with `id`, `reason`
+# and an `ignoreUntil` date), which applies it to every lockfile.
+#
+# A CALLER (examples/dependencies-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+
+on:
+  workflow_call:
+    inputs:
+      timeout-minutes:
+        required: false
+        type: number
+        default: 10
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: OSV-Scanner
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          path: head
+          persist-credentials: false
+
+      - if: env.BASE_SHA != ''
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ env.BASE_SHA }}
+          path: base
+          persist-credentials: false
+
+      - name: Install OSV-Scanner 2.7.0
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl -fsSL --retry 3 --retry-all-errors --connect-timeout 20 -o osv-scanner https://github.com/google/osv-scanner/releases/download/v2.7.0/osv-scanner_linux_amd64
+          echo "160c6253e2922e9e0a6a9771c5c4c40a4b3c6090b34a3cdd5e80c96cc2e4218b  osv-scanner" | sha256sum -c -
+          chmod +x osv-scanner
+
+      # Without --config each lockfile reads only an osv-scanner.toml in its own folder, so the head's root file applies to
+      # both scans. A package with no dependencies has no lockfile, and passes. Exit 1 means vulnerabilities were found;
+      # anything above it is a failed scan. A vulnerability is the same one in both scans when its ecosystem, package and
+      # advisory match, so a version bump that keeps the hole is not new and one that brings a new advisory is.
+      - name: Scan every lockfile
+        run: |
+          set -uo pipefail
+          config=()
+          if [ -f head/osv-scanner.toml ]; then config=(--config "$PWD/head/osv-scanner.toml"); fi
+          scan() {
+            "$RUNNER_TEMP/osv-scanner" scan source --recursive --allow-no-lockfiles --format json "${config[@]}" "$1" > "$RUNNER_TEMP/$1.json"
+            local code=$?
+            if [ "$code" -gt 1 ]; then echo "::error::OSV-Scanner could not scan $1 (exit $code)."; exit "$code"; fi
+            jq -r --arg root "$PWD/$1/" '.results[] | (.source.path | ltrimstr($root)) as $file | .packages[] | .package as $p
+              | .groups[] | [$p.ecosystem, $p.name, (.ids | sort | first), $p.version, $file, (.max_severity // "")] | @tsv' \
+              "$RUNNER_TEMP/$1.json" | sort -u > "$RUNNER_TEMP/$1.tsv"
+          }
+          scan head
+          if [ -n "$BASE_SHA" ]; then
+            scan base
+            cut -f1-3 "$RUNNER_TEMP/base.tsv" | sort -u > "$RUNNER_TEMP/known"
+            awk -F '\t' 'NR == FNR { known[$0]; next } !(($1 FS $2 FS $3) in known)' OFS='\t' "$RUNNER_TEMP/known" "$RUNNER_TEMP/head.tsv" > "$RUNNER_TEMP/found"
+            what="this change adds"
+          else
+            cp "$RUNNER_TEMP/head.tsv" "$RUNNER_TEMP/found"
+            what="known"
+          fi
+          count=$(wc -l < "$RUNNER_TEMP/found")
+          while IFS=$'\t' read -r eco name id version file severity; do
+            echo "::error file=$file,title=$id::$eco $name $version has $id (severity ${severity:-unknown}): https://osv.dev/$id"
+          done < "$RUNNER_TEMP/found"
+          if [ "$count" -gt 0 ]; then echo "Vulnerabilities $what: $count."; exit 1; fi
+          echo "No vulnerabilities $what."

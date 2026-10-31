@@ -1,14 +1,18 @@
 name: code-map-self
 
 # After each push to main, devkit maps its own scripts with its own code-map workflow (this commit's copy, so a change to the
-# map is measured by itself) and publishes code-map.json to the code-map branch for the Capsid system explorer.
+# map is measured by itself) and publishes code-map.json to the code-map branch for the Capsid system explorer. Once a week
+# (and on a manual run) it also runs Stryker on its own checks (stryker.config.mjs), failing below a module's bar; a push
+# reuses that run's numbers.
 
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "41 4 * * 1"
   workflow_dispatch:
 
-# One run at a time, so an older push's map never lands after a newer one.
+# One run at a time, so an older push's map never lands after a newer one, nor over the weekly mutation run.
 concurrency:
   group: code-map
   cancel-in-progress: false
@@ -27,3 +31,6 @@ jobs:
       # Node's test runner does not create the destination folder.
       coverage-command: mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage/lcov.info "test/*.test.mjs"
       coverage-file: coverage/lcov.info
+      mutation-command: ${{ github.event_name != 'push' && 'node stryker.config.mjs' || '' }}
+      mutation-file: reports/mutation/*.json
+      timeout-minutes: ${{ github.event_name != 'push' && 90 || 20 }}

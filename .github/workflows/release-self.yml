@@ -1,0 +1,24 @@
+name: release-self
+
+# devkit releases itself with its own release workflow (this commit's copy): merging the version bump is the release, as
+# in every package repository. It starts no consumer bumps: that needs a token secret in this repository, and Renovate
+# finds the new tag on its own regular runs.
+
+on:
+  push:
+    branches: [main]
+    paths: [package.json, CHANGELOG.md]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/release.yml
+
