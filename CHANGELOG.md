@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.18.1 (2026-10-30)
+## 0.18.1 (2026-10-31)
 
 - The `cacheKey` change listed under 0.18.0 (#62) merged after the v0.18.0 tag, so it ships here.
 - `devkit-no-bloat` counts the tests and gates them like Knip and jscpd: the test files (`tests.files`, default `**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}`) and the `test(` and `it(` cases in them (node:test, vitest, Playwright), read from the source without running anything. A rise fails, so a pull request that adds a test raises the baseline (`--write-baseline`) in the same reviewed diff. A repository with no `tests` entry in its baseline gets a row and no failure until it records one.
