@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.6 (2026-10-31)
+
+- `devkit-family`: a local copy found by its name (a definition named like a shared export) is a warning until 0.21.0, like the copies found by their text. Names are read from each package's newest release, so a new export such as site-api's `readEmbedded` turned every repository defining one red on its next push, before any of them could move.
+
 ## 0.20.5 (2026-10-31)
 
 - `devkit-family`: a pin behind its package's newest release is a warning, on every branch. Renovate opens that bump, and failing on it turned every repository's family check red, and mailed the owner, each time a shared package released. A pin to a raw commit still fails.

@@ -486,11 +486,11 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
   const site = run(["--from", from]);
   assert.equal(site.status, 1);
   assert.deepEqual(site.lines.filter((l) => l.startsWith("::error")), [
-    "::error file=src/index.ts,line=2::[copies] slugify is a local copy of Prelum ./slug slugify: import it",
     `::error file=src/app.css,line=2::[tokens] --page-max is Capsomer's: set it there (its site layer for this site's own look), or say why in .family.json "tokens"`,
   ]);
+  assert.ok(site.lines.includes("::warning file=src/index.ts,line=2::[copies] slugify is a local copy of Prelum ./slug slugify: import it"));
   assert.ok(site.lines.includes('::warning file=.family.json::[config] "copies" "src/gone.ts" excuses nothing in this run: remove it'));
-  assert.match(site.lines.at(-1) ?? "", /^devkit-family: 2 to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, config 1\)/);
+  assert.match(site.lines.at(-1) ?? "", /^devkit-family: 1 to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, config 1\)/);
   assert.match(readFileSync(summary, "utf8"), /^### Family check\n\npins 0, copies 1,/);
 
   // Prelum checking itself: its own export is its API, not a copy.
