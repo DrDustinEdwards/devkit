@@ -35,6 +35,7 @@
     }
   },
   "bin": {
+    "devkit-a11y": "./bin/a11y.mjs",
     "devkit-bootstrap": "./bin/bootstrap.mjs",
     "devkit-check-trailers": "./bin/check-trailers.mjs",
     "devkit-conformance": "./bin/conformance.mjs",

@@ -42,6 +42,13 @@ jobs:
         with:
           node-version-file: .nvmrc
           package-manager-cache: false
+      # Area 9's devkit-a11y drives Chromium with axe-core and finds both from the working directory, so they install here
+      # without touching the lockfile; the check packages themselves install with --ignore-scripts and bring neither.
+      - name: Chromium and axe-core for the accessibility check
+        if: github.event_name != 'push'
+        run: |
+          npm install --no-save --no-audit --no-fund --ignore-scripts playwright@1.63.0 @axe-core/playwright@4.14.0
+          npx playwright install --with-deps chromium
       - name: Run every area's checks against every live site
         if: github.event_name != 'push'
         env:
