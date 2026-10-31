@@ -48,7 +48,13 @@
       "id": 6,
       "name": "Images and media",
       "builder": "Complete shared images and media",
-      "checks": [{ "name": "site-runtime-images", "repo": "site-runtime", "bin": "site-runtime-images", "kinds": ["site", "static"] }]
+      "checks": [{ "name": "site-runtime-images", "repo": "site-runtime", "bin": "site-runtime-images", "kinds": ["site", "static", "app"] }],
+      "skip": {
+        "carrel-desk": "a private writing desk behind Access with nothing public to share, so no share card is wanted; its signed-in pages are listed as unchecked"
+      },
+      "unchecked": {
+        "Capsid Portal and Carrel Desk pages behind sign-in": "a stranger's crawl sees only the redirect to Access, so the images on the signed-in pages (Desk's media library, the Portal's views) are not checked live"
+      }
     },
     {
       "id": 7,
