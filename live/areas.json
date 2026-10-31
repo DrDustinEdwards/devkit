@@ -6,7 +6,12 @@
       "builder": "Share SEO and other key site code",
       "checks": [{ "name": "prelum-audit", "repo": "prelum", "bin": "prelum-audit", "kinds": ["site", "static"] }]
     },
-    { "id": 2, "name": "Security headers and CSP", "builder": "Complete shared security headers and CSP", "checks": [] },
+    {
+      "id": 2,
+      "name": "Security headers and CSP",
+      "builder": "Complete shared security headers and CSP",
+      "checks": [{ "name": "site-runtime-security", "repo": "site-runtime", "bin": "site-runtime-security", "kinds": ["site", "static", "worker"] }]
+    },
     {
       "id": 3,
       "name": "Sign-in and access",
