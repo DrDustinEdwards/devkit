@@ -1,15 +1,15 @@
 {
- "at": "2026-10-31T10:10:36.700Z",
+ "at": "2026-10-31T13:06:20.228Z",
  "public_token": true,
  "results": [
   {
    "area": 1,
    "site": "bsw",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
    "errors": 19,
-   "warnings": 18,
+   "warnings": 0,
    "findings": [
     {
      "severity": "error",
@@ -17,207 +17,117 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/ the sitemap lists a noindex page"
     },
     {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/grant-proposal-support/, which redirects to https://bsw.dustin-edwards.workers.dev/grant-proposal-support"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/manuscript-editing/, which redirects to https://bsw.dustin-edwards.workers.dev/manuscript-editing"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/visual-design/, which redirects to https://bsw.dustin-edwards.workers.dev/visual-design"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/language-support/, which redirects to https://bsw.dustin-edwards.workers.dev/language-support"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/career-development/, which redirects to https://bsw.dustin-edwards.workers.dev/career-development"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/editing-process/, which redirects to https://bsw.dustin-edwards.workers.dev/editing-process"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/institutional-partnerships/, which redirects to https://bsw.dustin-edwards.workers.dev/institutional-partnerships"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/pricing/, which redirects to https://bsw.dustin-edwards.workers.dev/pricing"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/our-experts/, which redirects to https://bsw.dustin-edwards.workers.dev/our-experts"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/knowledge-hub/, which redirects to https://bsw.dustin-edwards.workers.dev/knowledge-hub"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/contact-us/, which redirects to https://bsw.dustin-edwards.workers.dev/contact-us"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/about-us/, which redirects to https://bsw.dustin-edwards.workers.dev/about-us"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/careers/, which redirects to https://bsw.dustin-edwards.workers.dev/careers"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/editing-guarantee/, which redirects to https://bsw.dustin-edwards.workers.dev/editing-guarantee"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/security-confidentiality/, which redirects to https://bsw.dustin-edwards.workers.dev/security-confidentiality"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/privacy-policy/, which redirects to https://bsw.dustin-edwards.workers.dev/privacy-policy"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/terms-of-service/, which redirects to https://bsw.dustin-edwards.workers.dev/terms-of-service"
-    },
-    {
-     "severity": "warning",
-     "check": "link-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ links to https://bsw.dustin-edwards.workers.dev/cookie-policy/, which redirects to https://bsw.dustin-edwards.workers.dev/cookie-policy"
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/manuscript-editing/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/visual-design/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/language-support/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/career-development the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/career-development/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/editing-process the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/editing-process/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/institutional-partnerships the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/institutional-partnerships/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/pricing the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/pricing/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/our-experts the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/our-experts/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/knowledge-hub the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/knowledge-hub/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/about-us the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/about-us/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/careers the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/careers/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/contact-us the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/contact-us/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/editing-guarantee the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/editing-guarantee/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/security-confidentiality the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/security-confidentiality/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/privacy-policy the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/privacy-policy/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/terms-of-service the sitemap lists a noindex page"
     },
     {
      "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/terms-of-service/ the sitemap lists a URL that redirects"
-    },
-    {
-     "severity": "error",
-     "check": "sitemap-redirect",
-     "detail": "https://bsw.dustin-edwards.workers.dev/cookie-policy/ the sitemap lists a URL that redirects"
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/cookie-policy the sitemap lists a noindex page"
     }
    ],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 1,
    "site": "capsid",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 16
+   "seconds": 5
   },
   {
    "area": 1,
    "site": "capsomer",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
    "errors": 7,
-   "warnings": 140,
+   "warnings": 142,
    "findings": [
     {
      "severity": "warning",
@@ -720,13 +630,13 @@
      "detail": "https://capsomer.dustinedwards.info/components/posts-list/ links to https://capsomer.dustinedwards.info/components/posts-list/states.html?theme=dark, which redirects to /components/posts-list/states?theme=dark"
     }
    ],
-   "seconds": 11
+   "seconds": 14
   },
   {
    "area": 1,
    "site": "carrel",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -737,9 +647,9 @@
    "area": 1,
    "site": "dustinedwards-info",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
-   "status": "pass",
-   "errors": 0,
+   "ref": "v0.24.0",
+   "status": "fail",
+   "errors": 1,
    "warnings": 178,
    "findings": [
     {
@@ -776,6 +686,11 @@
      "severity": "warning",
      "check": "card-incomplete",
      "detail": "https://dustinedwards.info/colophon no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
+    },
+    {
+     "severity": "error",
+     "check": "link-broken",
+     "detail": "https://dustinedwards.info/colophon links to https://dustinedwards.info/api/health, which answers 503"
     },
     {
      "severity": "warning",
@@ -1236,20 +1151,15 @@
      "severity": "warning",
      "check": "card-incomplete",
      "detail": "https://dustinedwards.info/research/lab/primers/rev-3-ltr-reverse no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-pr-rt-forward no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
     }
    ],
-   "seconds": 77
+   "seconds": 91
   },
   {
    "area": 1,
    "site": "enarratio",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
    "errors": 1,
    "warnings": 2,
@@ -1276,10 +1186,10 @@
    "area": 1,
    "site": "foxhound",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
-   "status": "fail",
-   "errors": 1,
-   "warnings": 13,
+   "ref": "v0.24.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 12,
    "findings": [
     {
      "severity": "warning",
@@ -1340,28 +1250,18 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxhoundapp.com/docs/recovery links to https://foxhoundapp.com/recovery/sequence, which redirects to /login"
-    },
-    {
-     "severity": "error",
-     "check": "icon-missing",
-     "detail": "https://foxhoundapp.com/favicon.ico answers 404 text/html; charset=utf-8"
-    },
-    {
-     "severity": "warning",
-     "check": "icon-manifest",
-     "detail": "https://foxhoundapp.com/ the home page links no manifest"
     }
    ],
-   "seconds": 36
+   "seconds": 35
   },
   {
    "area": 1,
    "site": "foxing",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 1372,
+   "warnings": 673,
    "findings": [
     {
      "severity": "warning",
@@ -1545,11 +1445,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/813-leblanc no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1562,11 +1457,6 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/lists, which redirects to /login"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
     },
     {
      "severity": "warning",
@@ -1585,11 +1475,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1602,11 +1487,6 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/lists, which redirects to /login"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
     },
     {
      "severity": "warning",
@@ -1625,11 +1505,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-confession-tolstoy no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1642,11 +1517,6 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/lists, which redirects to /login"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
     },
     {
      "severity": "warning",
@@ -1665,11 +1535,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1682,11 +1547,6 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/lists, which redirects to /login"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
     },
     {
      "severity": "warning",
@@ -1705,11 +1565,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1722,11 +1577,6 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/lists, which redirects to /login"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-daughter-of-eve-balzac no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
     },
     {
      "severity": "warning",
@@ -1745,11 +1595,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1762,11 +1607,6 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/lists, which redirects to /login"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-day-at-a-time-alexander no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
     },
     {
      "severity": "warning",
@@ -1785,11 +1625,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-dolls-house-ibsen no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1802,11 +1637,6 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/lists, which redirects to /login"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
     },
     {
      "severity": "warning",
@@ -1825,11 +1655,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1845,11 +1670,6 @@
     },
     {
      "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://foxing.app/books/a-general-view-of-positivism-comte no og:image:type, og:image:width, og:image:height, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     },
@@ -1862,177 +1682,121 @@
      "severity": "warning",
      "check": "link-redirect",
      "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
     }
    ],
-   "seconds": 781
+   "seconds": 375
   },
   {
    "area": 1,
    "site": "germomics",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 24,
-   "findings": [
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/ no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/episodes no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/writing no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/archive no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/data no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/games no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/subscribe no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/about no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/about/dustin-edwards no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/privacy no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/terms no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/contact no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/txasm no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/season/1 no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/antitoxin-togo-please no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/hell-on-weils no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/rabies-day-out no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/a-boy-named-flu no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/theres-something-about-typhoid-mary no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/its-on-the-syphilis no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/one-flew-over-the-kuru-nest no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/confessions-of-a-cholera-girl no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/on-the-right-taq no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    },
-    {
-     "severity": "warning",
-     "check": "card-incomplete",
-     "detail": "https://germomics.com/a-sky-full-of-sars no og:image:width, og:image:height, og:image:alt, so the card is drawn late or unnamed"
-    }
-   ],
-   "seconds": 9
+   "warnings": 0,
+   "findings": [],
+   "seconds": 11
   },
   {
    "area": 1,
    "site": "julieedwards-info",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 1,
    "site": "prelum",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
-   "errors": 2,
-   "warnings": 2,
+   "errors": 1,
+   "warnings": 0,
    "findings": [
-    {
-     "severity": "error",
-     "check": "canonical-missing",
-     "detail": "https://prelum.dustinedwards.info/ no canonical link"
-    },
-    {
-     "severity": "warning",
-     "check": "og-title-missing",
-     "detail": "https://prelum.dustinedwards.info/ no og:title, so a shared link's card falls back to a guess"
-    },
-    {
-     "severity": "warning",
-     "check": "card-missing",
-     "detail": "https://prelum.dustinedwards.info/ no og:image, so a shared link has no card"
-    },
     {
      "severity": "error",
      "check": "link-broken",
@@ -2045,7 +1809,7 @@
    "area": 1,
    "site": "txasm",
    "check": "prelum-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
    "errors": 40,
    "warnings": 82,
@@ -2551,13 +2315,13 @@
      "detail": "https://txasm.org/newsletters/fall-1988-newsletter links to https://txasm.org/register, which answers 404"
     }
    ],
-   "seconds": 216
+   "seconds": 160
   },
   {
    "area": 2,
    "site": "bsw",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2568,7 +2332,7 @@
    "area": 2,
    "site": "capsid",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 4,
    "warnings": 0,
@@ -2586,7 +2350,7 @@
     {
      "severity": "error",
      "check": "C14",
-     "detail": "https://capsid.dustinedwards.info/site-runtime-security-6efd7d09-8f97-446b-bec1-76a64c040a05 (404) violations are reported to both sinks (report-uri and report-to): no report-to: the browsers that read only the other one report nowhere"
+     "detail": "https://capsid.dustinedwards.info/site-runtime-security-39a2dc02-0aa6-4e26-9d08-aa83df09acf0 (404) violations are reported to both sinks (report-uri and report-to): no report-to: the browsers that read only the other one report nowhere"
     },
     {
      "severity": "error",
@@ -2600,7 +2364,7 @@
    "area": 2,
    "site": "capsid-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2611,7 +2375,7 @@
    "area": 2,
    "site": "capsomer",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2622,69 +2386,51 @@
    "area": 2,
    "site": "carrel",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 2,
    "site": "carrel-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
-   "status": "fail",
-   "errors": 1,
+   "ref": "v0.56.0",
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://carrel-mcp.dustinedwards.info/.well-known/security.txt (404) security.txt is served: answers 404"
-    }
-   ],
+   "findings": [],
    "seconds": 1
   },
   {
    "area": 2,
    "site": "dustinedwards-info",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
-   "status": "fail",
-   "errors": 1,
+   "ref": "v0.56.0",
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "T2",
-     "detail": "https://dustinedwards.info/about/ (301) Strict-Transport-Security is present: ABSENT"
-    }
-   ],
+   "findings": [],
    "seconds": 1
   },
   {
    "area": 2,
    "site": "dustinedwards-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
-   "status": "fail",
-   "errors": 1,
+   "ref": "v0.56.0",
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://admin-mcp.dustinedwards.info/.well-known/security.txt (404) security.txt is served: answers 404"
-    }
-   ],
+   "findings": [],
    "seconds": 1
   },
   {
    "area": 2,
    "site": "enarratio",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2695,155 +2441,29 @@
    "area": 2,
    "site": "foxhound",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 2,
    "site": "foxhound-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
-   "status": "fail",
-   "errors": 25,
+   "ref": "v0.56.0",
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "I2",
-     "detail": "https://admin-mcp.foxhoundapp.com/ (404) Cross-Origin-Resource-Policy is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H5",
-     "detail": "https://admin-mcp.foxhoundapp.com/ (404) Permissions-Policy is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "T2",
-     "detail": "https://admin-mcp.foxhoundapp.com/ (404) Strict-Transport-Security is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H8",
-     "detail": "https://admin-mcp.foxhoundapp.com/ (404) X-DNS-Prefetch-Control is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H3",
-     "detail": "https://admin-mcp.foxhoundapp.com/ (404) X-Frame-Options is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H8",
-     "detail": "https://admin-mcp.foxhoundapp.com/ (404) X-Permitted-Cross-Domain-Policies is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "I2",
-     "detail": "https://admin-mcp.foxhoundapp.com/sitemap.xml (404) Cross-Origin-Resource-Policy is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H5",
-     "detail": "https://admin-mcp.foxhoundapp.com/sitemap.xml (404) Permissions-Policy is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "T2",
-     "detail": "https://admin-mcp.foxhoundapp.com/sitemap.xml (404) Strict-Transport-Security is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H8",
-     "detail": "https://admin-mcp.foxhoundapp.com/sitemap.xml (404) X-DNS-Prefetch-Control is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H3",
-     "detail": "https://admin-mcp.foxhoundapp.com/sitemap.xml (404) X-Frame-Options is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H8",
-     "detail": "https://admin-mcp.foxhoundapp.com/sitemap.xml (404) X-Permitted-Cross-Domain-Policies is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "I2",
-     "detail": "https://admin-mcp.foxhoundapp.com/site-runtime-security-99967b13-14e8-4876-922b-b1c7ef5f10ee (404) Cross-Origin-Resource-Policy is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H5",
-     "detail": "https://admin-mcp.foxhoundapp.com/site-runtime-security-99967b13-14e8-4876-922b-b1c7ef5f10ee (404) Permissions-Policy is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "T2",
-     "detail": "https://admin-mcp.foxhoundapp.com/site-runtime-security-99967b13-14e8-4876-922b-b1c7ef5f10ee (404) Strict-Transport-Security is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H8",
-     "detail": "https://admin-mcp.foxhoundapp.com/site-runtime-security-99967b13-14e8-4876-922b-b1c7ef5f10ee (404) X-DNS-Prefetch-Control is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H3",
-     "detail": "https://admin-mcp.foxhoundapp.com/site-runtime-security-99967b13-14e8-4876-922b-b1c7ef5f10ee (404) X-Frame-Options is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H8",
-     "detail": "https://admin-mcp.foxhoundapp.com/site-runtime-security-99967b13-14e8-4876-922b-b1c7ef5f10ee (404) X-Permitted-Cross-Domain-Policies is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "I2",
-     "detail": "https://admin-mcp.foxhoundapp.com/.well-known/security.txt (404) Cross-Origin-Resource-Policy is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H5",
-     "detail": "https://admin-mcp.foxhoundapp.com/.well-known/security.txt (404) Permissions-Policy is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "T2",
-     "detail": "https://admin-mcp.foxhoundapp.com/.well-known/security.txt (404) Strict-Transport-Security is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H8",
-     "detail": "https://admin-mcp.foxhoundapp.com/.well-known/security.txt (404) X-DNS-Prefetch-Control is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H3",
-     "detail": "https://admin-mcp.foxhoundapp.com/.well-known/security.txt (404) X-Frame-Options is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "H8",
-     "detail": "https://admin-mcp.foxhoundapp.com/.well-known/security.txt (404) X-Permitted-Cross-Domain-Policies is present: ABSENT"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://admin-mcp.foxhoundapp.com/.well-known/security.txt (404) security.txt is served: answers 404"
-    }
-   ],
-   "seconds": 0
+   "findings": [],
+   "seconds": 1
   },
   {
    "area": 2,
    "site": "foxing",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2854,7 +2474,7 @@
    "area": 2,
    "site": "foxing-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 74,
    "warnings": 0,
@@ -3067,57 +2687,57 @@
     {
      "severity": "error",
      "check": "I1",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) Cross-Origin-Opener-Policy is present: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) Cross-Origin-Opener-Policy is present: ABSENT"
     },
     {
      "severity": "error",
      "check": "I2",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) Cross-Origin-Resource-Policy is present: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) Cross-Origin-Resource-Policy is present: ABSENT"
     },
     {
      "severity": "error",
      "check": "H5",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) Permissions-Policy is present: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) Permissions-Policy is present: ABSENT"
     },
     {
      "severity": "error",
      "check": "H4",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) Referrer-Policy is present: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) Referrer-Policy is present: ABSENT"
     },
     {
      "severity": "error",
      "check": "T2",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) Strict-Transport-Security covers subdomains: got \"max-age=63072000\""
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) Strict-Transport-Security covers subdomains: got \"max-age=63072000\""
     },
     {
      "severity": "error",
      "check": "H1",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) X-Content-Type-Options is present: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) X-Content-Type-Options is present: ABSENT"
     },
     {
      "severity": "error",
      "check": "H8",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) X-DNS-Prefetch-Control is present: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) X-DNS-Prefetch-Control is present: ABSENT"
     },
     {
      "severity": "error",
      "check": "H3",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) X-Frame-Options is present: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) X-Frame-Options is present: ABSENT"
     },
     {
      "severity": "error",
      "check": "H8",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) X-Permitted-Cross-Domain-Policies is present: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) X-Permitted-Cross-Domain-Policies is present: ABSENT"
     },
     {
      "severity": "error",
      "check": "H6",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) no header names the software that served it (OSHP's remove list): sends Server: Vercel"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) no header names the software that served it (OSHP's remove list): sends Server: Vercel"
     },
     {
      "severity": "error",
      "check": "C1",
-     "detail": "https://admin-mcp.foxing.app/site-runtime-security-752ba54e-1585-47b8-8092-1c5d93dd4b56 (404) the Content-Security-Policy is enforced, not only reported: ABSENT"
+     "detail": "https://admin-mcp.foxing.app/site-runtime-security-00e05607-5cf8-425d-970c-11a1c2246902 (404) the Content-Security-Policy is enforced, not only reported: ABSENT"
     },
     {
      "severity": "error",
@@ -3236,18 +2856,24 @@
    "area": 2,
    "site": "germomics",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
-   "status": "pass",
-   "errors": 0,
+   "ref": "v0.56.0",
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
-   "findings": [],
-   "seconds": 3
+   "findings": [
+    {
+     "severity": "error",
+     "check": "C6",
+     "detail": "https://germomics.com/ 34 element(s) carry a nonce the header does not name"
+    }
+   ],
+   "seconds": 1
   },
   {
    "area": 2,
    "site": "julieedwards-info",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3258,7 +2884,7 @@
    "area": 2,
    "site": "prelum",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3269,7 +2895,7 @@
    "area": 2,
    "site": "txasm",
    "check": "site-runtime-security",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 1,
@@ -3286,7 +2912,7 @@
    "area": 3,
    "site": "capsid",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3297,7 +2923,7 @@
    "area": 3,
    "site": "capsid-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3308,18 +2934,18 @@
    "area": 3,
    "site": "carrel-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 3,
    "site": "dustinedwards-info",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3330,7 +2956,7 @@
    "area": 3,
    "site": "dustinedwards-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3341,24 +2967,18 @@
    "area": 3,
    "site": "foxhound",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
-   "status": "fail",
-   "errors": 1,
+   "ref": "v0.56.0",
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "H4",
-     "detail": "https://foxhoundapp.com/.well-known/oauth-authorization-server client_id_metadata_document_supported is not true: no Client ID Metadata Documents"
-    }
-   ],
+   "findings": [],
    "seconds": 2
   },
   {
    "area": 3,
    "site": "foxhound-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3369,7 +2989,7 @@
    "area": 3,
    "site": "foxing",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 1,
    "warnings": 0,
@@ -3386,7 +3006,7 @@
    "area": 3,
    "site": "foxing-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 1,
    "warnings": 0,
@@ -3403,7 +3023,7 @@
    "area": 3,
    "site": "germomics",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3414,20 +3034,15 @@
    "area": 3,
    "site": "txasm",
    "check": "site-runtime-sign-in",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 1,
-   "warnings": 2,
+   "warnings": 1,
    "findings": [
     {
      "severity": "error",
      "check": "A1",
      "detail": "https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options the passkey's rpId is txasm.dustin-edwards.workers.dev, not txasm.org: a passkey made here will not work on the site"
-    },
-    {
-     "severity": "warning",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/sign-in/confirm?token=sign-in-check-not-a-token&callbackURL=%2F no confirm page for the mailed link: answered 404 (expected 200 with a POST form, or 405)"
     },
     {
      "severity": "warning",
@@ -3441,18 +3056,74 @@
    "area": 4,
    "site": "bsw",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 0,
-   "findings": [],
+   "warnings": 11,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/visual-design h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/language-support h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/career-development h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/editing-process h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/institutional-partnerships h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/pricing h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/editing-guarantee h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/security-confidentiality h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/privacy-policy h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/terms-of-service h3 follows h1"
+    },
+    {
+     "severity": "warning",
+     "check": "writing-heading-order",
+     "detail": "https://bsw.dustin-edwards.workers.dev/cookie-policy h3 follows h1"
+    }
+   ],
    "seconds": 1
   },
   {
    "area": 4,
    "site": "capsid",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3463,18 +3134,18 @@
    "area": 4,
    "site": "capsomer",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 5
   },
   {
    "area": 4,
    "site": "carrel",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3485,7 +3156,7 @@
    "area": 4,
    "site": "dustinedwards-info",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
    "errors": 8,
    "warnings": 60,
@@ -3837,7 +3508,7 @@
    "area": 4,
    "site": "enarratio",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3848,10 +3519,10 @@
    "area": 4,
    "site": "foxhound",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 54,
+   "warnings": 6,
    "findings": [
     {
      "severity": "warning",
@@ -3882,246 +3553,6 @@
      "severity": "warning",
      "check": "writing-heading-order",
      "detail": "https://foxhoundapp.com/compare h3 follows h1"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/foxhound-vs-stripe-smart-retries rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/best-dunning-software-2026 rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/foxhound-vs-churn-buster rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/foxhound-vs-churnkey rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/foxhound-vs-paddle-retain rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/payment-failure-as-churn-signal rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/mrr-movement-explained rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/how-to-reduce-saas-churn rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/annual-to-monthly-churn-signal rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/customer-health-score-stripe rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/win-back-churned-customers rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/what-is-friendly-fraud rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-chargeback-reason-codes rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-dispute-evidence rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/chargeback-rebuttal-letter rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/how-to-prevent-chargebacks rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/visa-compelling-evidence-3 rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/involuntary-vs-voluntary-churn rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/how-much-revenue-losing-failed-payments rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-smart-retries-vs-dunning rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/expiring-cards-silent-mrr-killer rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/how-to-reduce-involuntary-churn-stripe rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-account-updater rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/why-dunning-tools-fail rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/dunning-email-sequence rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-transaction-not-allowed rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-revocation-of-authorization rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-do-not-try-again rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-call-issuer rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-fraudulent-decline rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-disputes-guide rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-failed-payment-recovery rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-lost-card rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-processing-error rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-incorrect-cvc rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-stolen-card rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-expired-card rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-do-not-honor rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-card-velocity-exceeded rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-insufficient-funds rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-generic-decline rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-render-version",
-     "detail": "https://foxhoundapp.com/blog/stripe-decline-codes rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-heading-order",
-     "detail": "https://foxhoundapp.com/blog/tag/disputes h3 follows h1"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-heading-order",
-     "detail": "https://foxhoundapp.com/blog/tag/comparisons h3 follows h1"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-heading-order",
-     "detail": "https://foxhoundapp.com/blog/tag/payment-recovery h3 follows h1"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-heading-order",
-     "detail": "https://foxhoundapp.com/blog/tag/subscription-intelligence h3 follows h1"
-    },
-    {
-     "severity": "warning",
-     "check": "writing-heading-order",
-     "detail": "https://foxhoundapp.com/blog/tag/decline-codes h3 follows h1"
     }
    ],
    "seconds": 4
@@ -4130,7 +3561,7 @@
    "area": 4,
    "site": "foxing",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 1,
@@ -4141,24 +3572,24 @@
      "detail": "https://foxing.app/books h3 follows h1"
     }
    ],
-   "seconds": 4
+   "seconds": 6
   },
   {
    "area": 4,
    "site": "germomics",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 5
+   "seconds": 2
   },
   {
    "area": 4,
    "site": "julieedwards-info",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 1,
@@ -4175,7 +3606,7 @@
    "area": 4,
    "site": "prelum",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 3,
@@ -4202,7 +3633,7 @@
    "area": 4,
    "site": "txasm",
    "check": "prelum-content",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 1,
@@ -4213,7 +3644,7 @@
      "detail": "https://txasm.org/award-nominations rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
     }
    ],
-   "seconds": 3
+   "seconds": 4
   },
   {
    "area": 5,
@@ -4276,7 +3707,7 @@
    "area": 5,
    "site": "dustinedwards-info",
    "check": "site-api-live",
-   "ref": "v0.17.0",
+   "ref": "v0.18.0",
    "status": "fail",
    "errors": 4,
    "warnings": 0,
@@ -4294,15 +3725,15 @@
     {
      "severity": "error",
      "check": "K4",
-     "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-72bb35d686d1 an unknown route has cache-control private, no-store, expected no-store"
+     "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-5ca7fb85b2d0 an unknown route has cache-control private, no-store, expected no-store"
     },
     {
      "severity": "error",
      "check": "K2",
-     "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-72bb35d686d1 an unknown route is application/json; charset=utf-8, expected application/problem+json"
+     "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-5ca7fb85b2d0 an unknown route is application/json; charset=utf-8, expected application/problem+json"
     }
    ],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 5,
@@ -4319,7 +3750,7 @@
    "area": 5,
    "site": "foxhound",
    "check": "site-api-live",
-   "ref": "v0.17.0",
+   "ref": "v0.18.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4331,23 +3762,17 @@
    "site": "foxing",
    "check": "carrel-conformance",
    "ref": "site-api v0.17.0",
-   "status": "fail",
-   "errors": 1,
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "M1",
-     "detail": "https://foxing.app/api/carrel/v1 preview: a tiny source answers HTML that is never indexed failed"
-    }
-   ],
+   "findings": [],
    "seconds": 0
   },
   {
    "area": 5,
    "site": "foxing",
    "check": "site-api-live",
-   "ref": "v0.17.0",
+   "ref": "v0.18.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4369,17 +3794,11 @@
    "area": 5,
    "site": "germomics",
    "check": "site-api-live",
-   "ref": "v0.17.0",
+   "ref": "v0.18.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 1,
-   "findings": [
-    {
-     "severity": "warning",
-     "check": "E2",
-     "detail": "https://germomics.com/preview/wskPYGsI9RtZyaIQCTztMmy2GsrjWK5Q1XZ_1c62flQ answers the site's own 404, not a preview link's: the site does not mount preview links yet"
-    }
-   ],
+   "warnings": 0,
+   "findings": [],
    "seconds": 0
   },
   {
@@ -4397,7 +3816,7 @@
    "area": 5,
    "site": "julieedwards-info",
    "check": "site-api-live",
-   "ref": "v0.17.0",
+   "ref": "v0.18.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4419,7 +3838,7 @@
    "area": 5,
    "site": "txasm",
    "check": "site-api-live",
-   "ref": "v0.17.0",
+   "ref": "v0.18.0",
    "status": "fail",
    "errors": 3,
    "warnings": 0,
@@ -4432,21 +3851,21 @@
     {
      "severity": "error",
      "check": "K4",
-     "detail": "https://txasm.org/api/carrel/v1/site-api-live-874cbdb66d6f an unknown route answered 302 without the key, expected 401"
+     "detail": "https://txasm.org/api/carrel/v1/site-api-live-07d3287f4fdd an unknown route answered 302 without the key, expected 401"
     },
     {
      "severity": "error",
      "check": "E2",
-     "detail": "https://txasm.org/preview/Zvu2ljYZ8MzVxVwaOGor-JoOgz-3WNnXzJMJg9X_2-c an unknown preview link answered 302, expected 404"
+     "detail": "https://txasm.org/preview/qyUUIopudurFdz6RRZA9AKz-sediXAqe5cNjqqnjIAE an unknown preview link answered 302, expected 404"
     }
    ],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 6,
    "site": "bsw",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 1,
    "warnings": 1,
@@ -4468,7 +3887,7 @@
    "area": 6,
    "site": "capsid",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4479,7 +3898,7 @@
    "area": 6,
    "site": "capsomer",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4490,7 +3909,7 @@
    "area": 6,
    "site": "carrel",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4501,7 +3920,7 @@
    "area": 6,
    "site": "dustinedwards-info",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 59,
    "warnings": 2,
@@ -4812,13 +4231,13 @@
      "detail": "https://dustinedwards.info/teaching/phage-discovery 9 content images on this page, and its sitemap entry has no image:image"
     }
    ],
-   "seconds": 7
+   "seconds": 2
   },
   {
    "area": 6,
    "site": "enarratio",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4829,7 +4248,7 @@
    "area": 6,
    "site": "foxhound",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4840,61 +4259,11 @@
    "area": 6,
    "site": "foxing",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
-   "errors": 154,
-   "warnings": 18,
+   "errors": 9,
+   "warnings": 2,
    "findings": [
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/813-leblanc.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-bid-for-fortune-boothby.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-bride-of-a-summers-day-pirkis.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-christmas-carol-dickens.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-confession-tolstoy.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-connecticut-yankee-in-king-arthurs-court-twain.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-country-gentleman-and-his-family-oliphant.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-cycle-of-the-west-neihardt.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-damsel-in-distress-wodehouse.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/ https://covers.foxing.app/a-daughter-of-eve-balzac.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
     {
      "severity": "error",
      "check": "C3",
@@ -4904,131 +4273,6 @@
      "severity": "warning",
      "check": "C8",
      "detail": "https://foxing.app/ 10 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/813-leblanc.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-bid-for-fortune-boothby.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-bride-of-a-summers-day-pirkis.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-christmas-carol-dickens.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-confession-tolstoy.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-connecticut-yankee-in-king-arthurs-court-twain.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-country-gentleman-and-his-family-oliphant.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-cycle-of-the-west-neihardt.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-damsel-in-distress-wodehouse.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-daughter-of-eve-balzac.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-daughter-of-the-samurai-sugimoto.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-day-at-a-time-alexander.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-dolls-house-ibsen.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-farewell-to-arms-hemingway.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-general-history-of-the-pirates-johnson.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-general-view-of-positivism-comte.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-gentleman-of-leisure-wodehouse.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-hazard-of-new-fortunes-howells.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-high-wind-in-jamaica-hughes.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-house-of-gentlefolk-turgenev.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-journal-of-the-plague-year-defoe.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-little-princess-burnett.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-man-could-stand-up--ford.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books https://covers.foxing.app/a-marriage-settlement-balzac.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A5",
-     "detail": "https://foxing.app/books 6 images are fetchpriority=\"high\"; more than two competes with the one that is the largest paint"
     },
     {
      "severity": "error",
@@ -5074,458 +4318,23 @@
      "severity": "error",
      "check": "C3",
      "detail": "https://foxing.app/features no og:image:type"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/813-leblanc https://covers.foxing.app/813-leblanc.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/813-leblanc https://covers.foxing.app/the-experiences-of-loveday-brooke-lady-detective-pirkis.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/813-leblanc https://covers.foxing.app/the-big-bow-mystery-zangwill.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/813-leblanc https://covers.foxing.app/the-hidden-staircase-keene.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/813-leblanc https://covers.foxing.app/the-box-office-murders-crofts.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/813-leblanc https://covers.foxing.app/the-rasp-macdonald.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/813-leblanc https://covers.foxing.app/major-barbara-shaw.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://foxing.app/books/813-leblanc no og:image:width, og:image:height, og:image:type"
-    },
-    {
-     "severity": "warning",
-     "check": "C8",
-     "detail": "https://foxing.app/books/813-leblanc 7 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby https://covers.foxing.app/a-bid-for-fortune-boothby.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby https://covers.foxing.app/indian-fairy-tales-jacobs.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby https://covers.foxing.app/kai-lungs-golden-hours-bramah.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby https://covers.foxing.app/the-maracot-deep-doyle.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby https://covers.foxing.app/the-well-at-the-worlds-end-morris.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby https://covers.foxing.app/the-demi-gods-stephens.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby https://covers.foxing.app/short-fiction-howard.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby no og:image:width, og:image:height, og:image:type"
-    },
-    {
-     "severity": "warning",
-     "check": "C8",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby 7 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis https://covers.foxing.app/a-bride-of-a-summers-day-pirkis.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis https://covers.foxing.app/iola-leroy-harper.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis https://covers.foxing.app/the-trail-of-the-serpent-braddon.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis https://covers.foxing.app/the-benson-murder-case-dine.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis https://covers.foxing.app/a-man-could-stand-up--ford.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis https://covers.foxing.app/something-new-wodehouse.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis https://covers.foxing.app/short-fiction-smith.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis no og:image:width, og:image:height, og:image:type"
-    },
-    {
-     "severity": "warning",
-     "check": "C8",
-     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis 7 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens https://covers.foxing.app/a-christmas-carol-dickens.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens https://covers.foxing.app/chivalry-cabell.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens https://covers.foxing.app/wet-magic-nesbit.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens https://covers.foxing.app/the-call-of-the-wild-london.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens https://covers.foxing.app/the-wood-beyond-the-world-morris.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens https://covers.foxing.app/the-picture-of-dorian-gray-wilde.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens https://covers.foxing.app/moonfleet-falkner.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens no og:image:width, og:image:height, og:image:type"
-    },
-    {
-     "severity": "warning",
-     "check": "C8",
-     "detail": "https://foxing.app/books/a-christmas-carol-dickens 7 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-confession-tolstoy https://covers.foxing.app/a-confession-tolstoy.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://foxing.app/books/a-confession-tolstoy no og:image:width, og:image:height, og:image:type"
-    },
-    {
-     "severity": "warning",
-     "check": "C8",
-     "detail": "https://foxing.app/books/a-confession-tolstoy 1 content image on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain https://covers.foxing.app/a-connecticut-yankee-in-king-arthurs-court-twain.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain https://covers.foxing.app/the-big-time-leiber.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain https://covers.foxing.app/five-children-and-it-nesbit.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain https://covers.foxing.app/the-return-mare.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain https://covers.foxing.app/moby-dick-melville.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain https://covers.foxing.app/the-invisible-man-wells.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain https://covers.foxing.app/the-wonderful-adventures-of-nils-lagerlof.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain no og:image:width, og:image:height, og:image:type"
-    },
-    {
-     "severity": "warning",
-     "check": "C8",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain 7 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant https://covers.foxing.app/a-country-gentleman-and-his-family-oliphant.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant no og:image:width, og:image:height, og:image:type"
-    },
-    {
-     "severity": "warning",
-     "check": "C8",
-     "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant 1 content image on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt https://covers.foxing.app/a-cycle-of-the-west-neihardt.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt https://covers.foxing.app/on-liberty-mill.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
-    },
-    {
-     "severity": "error",
-     "check": "A2",
-     "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt https://covers.foxing.app/don-juan-byron.jpg is 400 px wide with no srcset and sizes, so every screen downloads the whole of it"
     }
    ],
-   "seconds": 10
+   "seconds": 26
   },
   {
    "area": 6,
    "site": "germomics",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
-   "status": "fail",
-   "errors": 48,
-   "warnings": 11,
+   "ref": "v0.56.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 10,
    "findings": [
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/ no twitter:image:alt"
-    },
-    {
-     "severity": "warning",
-     "check": "C2",
-     "detail": "https://images.germomics.com/brand/germomics-artwork-1400.jpg the og:image is 1400 by 1400, not 1200 by 630"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/ no og:image:width, og:image:height, og:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/episodes no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/episodes answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/writing no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/writing answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/archive no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/archive answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/data no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/data answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/games no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/games answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/subscribe no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/subscribe answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/about no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/about answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/about/dustin-edwards no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/about/dustin-edwards answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/privacy no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/privacy answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/terms no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/terms answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/contact no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/contact answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/txasm no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/txasm answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/season/1 no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://images.germomics.com/cover.jpg the og:image of https://germomics.com/season/1 answers 404"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/antitoxin-togo-please no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/antitoxin-togo-please no og:image:width, og:image:height, og:image:alt"
-    },
     {
      "severity": "warning",
      "check": "C8",
      "detail": "https://germomics.com/antitoxin-togo-please 3 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/hell-on-weils no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/hell-on-weils no og:image:width, og:image:height, og:image:alt"
     },
     {
      "severity": "warning",
@@ -5533,29 +4342,9 @@
      "detail": "https://germomics.com/hell-on-weils 2 content images on this page, and its sitemap entry has no image:image"
     },
     {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/rabies-day-out no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/rabies-day-out no og:image:width, og:image:height, og:image:alt"
-    },
-    {
      "severity": "warning",
      "check": "C8",
      "detail": "https://germomics.com/rabies-day-out 2 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/a-boy-named-flu no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/a-boy-named-flu no og:image:width, og:image:height, og:image:alt"
     },
     {
      "severity": "warning",
@@ -5563,29 +4352,9 @@
      "detail": "https://germomics.com/a-boy-named-flu 2 content images on this page, and its sitemap entry has no image:image"
     },
     {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/theres-something-about-typhoid-mary no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/theres-something-about-typhoid-mary no og:image:width, og:image:height, og:image:alt"
-    },
-    {
      "severity": "warning",
      "check": "C8",
      "detail": "https://germomics.com/theres-something-about-typhoid-mary 2 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/its-on-the-syphilis no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/its-on-the-syphilis no og:image:width, og:image:height, og:image:alt"
     },
     {
      "severity": "warning",
@@ -5593,29 +4362,9 @@
      "detail": "https://germomics.com/its-on-the-syphilis 2 content images on this page, and its sitemap entry has no image:image"
     },
     {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/one-flew-over-the-kuru-nest no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/one-flew-over-the-kuru-nest no og:image:width, og:image:height, og:image:alt"
-    },
-    {
      "severity": "warning",
      "check": "C8",
      "detail": "https://germomics.com/one-flew-over-the-kuru-nest 2 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/confessions-of-a-cholera-girl no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/confessions-of-a-cholera-girl no og:image:width, og:image:height, og:image:alt"
     },
     {
      "severity": "warning",
@@ -5623,29 +4372,9 @@
      "detail": "https://germomics.com/confessions-of-a-cholera-girl 2 content images on this page, and its sitemap entry has no image:image"
     },
     {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/on-the-right-taq no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/on-the-right-taq no og:image:width, og:image:height, og:image:alt"
-    },
-    {
      "severity": "warning",
      "check": "C8",
      "detail": "https://germomics.com/on-the-right-taq 2 content images on this page, and its sitemap entry has no image:image"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/a-sky-full-of-sars no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://germomics.com/a-sky-full-of-sars no og:image:width, og:image:height, og:image:alt"
     },
     {
      "severity": "warning",
@@ -5653,13 +4382,13 @@
      "detail": "https://germomics.com/a-sky-full-of-sars 2 content images on this page, and its sitemap entry has no image:image"
     }
    ],
-   "seconds": 10
+   "seconds": 3
   },
   {
    "area": 6,
    "site": "julieedwards-info",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 2,
    "warnings": 0,
@@ -5675,15 +4404,15 @@
      "detail": "https://julieedwards.info/ https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg is 2048 px wide (the file) with no srcset and sizes, so every screen downloads the whole of it"
     }
    ],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 6,
    "site": "prelum",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
-   "errors": 6,
+   "errors": 3,
    "warnings": 0,
    "findings": [
     {
@@ -5700,21 +4429,6 @@
      "severity": "error",
      "check": "A5",
      "detail": "https://prelum.dustinedwards.info/ 3 images are fetchpriority=\"high\"; more than two competes with the one that is the largest paint"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://prelum.dustinedwards.info/ no twitter:card; summary_large_image shows the card full width"
-    },
-    {
-     "severity": "error",
-     "check": "C3",
-     "detail": "https://prelum.dustinedwards.info/ no twitter:image:alt"
-    },
-    {
-     "severity": "error",
-     "check": "C1",
-     "detail": "https://prelum.dustinedwards.info/ no og:image, so a shared link has no card"
     }
    ],
    "seconds": 0
@@ -5723,7 +4437,7 @@
    "area": 6,
    "site": "txasm",
    "check": "site-runtime-images",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -5734,101 +4448,11 @@
    "area": 7,
    "site": "bsw",
    "check": "site-runtime-speed",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
-   "errors": 24,
+   "errors": 6,
    "warnings": 2,
    "findings": [
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/manuscript-editing/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/visual-design/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/language-support/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/career-development/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/editing-process/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/institutional-partnerships/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/pricing/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/our-experts/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/knowledge-hub/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/about-us/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/careers/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/contact-us/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/editing-guarantee/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/security-confidentiality/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/privacy-policy/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/terms-of-service/ a sitemap page answered 301"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://bsw.dustin-edwards.workers.dev/cookie-policy/ a sitemap page answered 301"
-    },
     {
      "severity": "error",
      "check": "C1",
@@ -5870,15 +4494,15 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/ desktop: PageSpeed Insights answered 429"
     }
    ],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 7,
    "site": "capsid",
    "check": "site-runtime-speed",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
-   "errors": 91,
+   "errors": 92,
    "warnings": 2,
    "findings": [
     {
@@ -5990,6 +4614,11 @@
      "severity": "error",
      "check": "D1",
      "detail": "https://capsid.dustinedwards.info/flows/job-life/1/ no Link preload header for Early Hints"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://capsid.dustinedwards.info/s/d1-dump/ not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=3600"
     },
     {
      "severity": "error",
@@ -6353,211 +4982,11 @@
    "area": 7,
    "site": "capsomer",
    "check": "site-runtime-speed-static",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
-   "errors": 44,
+   "errors": 3,
    "warnings": 2,
    "findings": [
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/make/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/approval-sheet/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/attention-list/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/authorship/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/avatar/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/banner/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/breadcrumb/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/bulk-bar/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/button/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/catalog/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/combobox/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/command-menu/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/confirm-dialog/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/detail-panel/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/dialog/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/disclosure/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/draft-compare/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/drop-zone/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/email/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/empty/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/error-page/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/family-footer/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/feed/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/field/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/chips/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/flag-list/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/history-list/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/listbox/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/manual/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/markdown-editor/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/media/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/media-library/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/mentions-list/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/menu/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://capsomer.dustinedwards.info/components/message/ no Link preload header for Early Hints"
-    },
     {
      "severity": "error",
      "check": "B4",
@@ -6572,11 +5001,6 @@
      "severity": "error",
      "check": "D1",
      "detail": "https://capsomer.dustinedwards.info/ no 103 Early Hints before the page"
-    },
-    {
-     "severity": "error",
-     "check": "E1",
-     "detail": "https://capsomer.dustinedwards.info/ Cloudflare's generic rules (\"/cdn-cgi/speculation\"), not site-runtime's ./prefetch file"
     },
     {
      "severity": "warning",
@@ -6595,7 +5019,7 @@
    "area": 7,
    "site": "carrel",
    "check": "site-runtime-speed-static",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 3,
    "warnings": 2,
@@ -6632,7 +5056,7 @@
    "area": 7,
    "site": "dustinedwards-info",
    "check": "site-runtime-speed",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 2,
    "warnings": 2,
@@ -6658,37 +5082,17 @@
      "detail": "https://dustinedwards.info/ desktop: PageSpeed Insights answered 429"
     }
    ],
-   "seconds": 12
+   "seconds": 5
   },
   {
    "area": 7,
    "site": "enarratio",
    "check": "site-runtime-speed-static",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
-   "errors": 7,
+   "errors": 2,
    "warnings": 2,
    "findings": [
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://enarratio.dustinedwards.info/ no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://enarratio.dustinedwards.info/example no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://enarratio.dustinedwards.info/capsomer no Link preload header for Early Hints"
-    },
-    {
-     "severity": "error",
-     "check": "D1",
-     "detail": "https://enarratio.dustinedwards.info/astro no Link preload header for Early Hints"
-    },
     {
      "severity": "error",
      "check": "B4",
@@ -6698,11 +5102,6 @@
      "severity": "error",
      "check": "D1",
      "detail": "https://enarratio.dustinedwards.info/ no 103 Early Hints before the page"
-    },
-    {
-     "severity": "error",
-     "check": "E1",
-     "detail": "https://enarratio.dustinedwards.info/ Cloudflare's generic rules (\"/cdn-cgi/speculation\"), not site-runtime's ./prefetch file"
     },
     {
      "severity": "warning",
@@ -6715,13 +5114,13 @@
      "detail": "https://enarratio.dustinedwards.info/ desktop: PageSpeed Insights answered 429"
     }
    ],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 7,
    "site": "foxhound",
    "check": "site-runtime-speed",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 2,
    "warnings": 2,
@@ -6747,13 +5146,13 @@
      "detail": "https://foxhoundapp.com/ desktop: PageSpeed Insights answered 429"
     }
    ],
-   "seconds": 5
+   "seconds": 4
   },
   {
    "area": 7,
    "site": "foxing",
    "check": "site-runtime-speed",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 2,
    "warnings": 2,
@@ -6779,13 +5178,13 @@
      "detail": "https://foxing.app/ desktop: PageSpeed Insights answered 429"
     }
    ],
-   "seconds": 9
+   "seconds": 7
   },
   {
    "area": 7,
    "site": "germomics",
    "check": "site-runtime-speed",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 3,
    "warnings": 2,
@@ -6816,13 +5215,13 @@
      "detail": "https://germomics.com/ desktop: PageSpeed Insights answered 429"
     }
    ],
-   "seconds": 15
+   "seconds": 5
   },
   {
    "area": 7,
    "site": "julieedwards-info",
    "check": "site-runtime-speed",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 2,
    "warnings": 2,
@@ -6854,9 +5253,9 @@
    "area": 7,
    "site": "prelum",
    "check": "site-runtime-speed-static",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
-   "errors": 8,
+   "errors": 7,
    "warnings": 2,
    "findings": [
     {
@@ -6895,11 +5294,6 @@
      "detail": "https://prelum.dustinedwards.info/ no 103 Early Hints before the page"
     },
     {
-     "severity": "error",
-     "check": "E1",
-     "detail": "https://prelum.dustinedwards.info/ Cloudflare's generic rules (\"/cdn-cgi/speculation\"), not site-runtime's ./prefetch file"
-    },
-    {
      "severity": "warning",
      "check": "A3",
      "detail": "https://prelum.dustinedwards.info/ mobile: PageSpeed Insights answered 429"
@@ -6916,211 +5310,11 @@
    "area": 7,
    "site": "txasm",
    "check": "site-runtime-speed",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
-   "errors": 42,
+   "errors": 2,
    "warnings": 2,
    "findings": [
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awardees a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/award-nominations a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/branch-officers a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/archive/abstract-books a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/trail a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/sponsorship a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/contact a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/thomas-s-matney-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings/spring-2026/program a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/archive/programs a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/s-e-sulkin-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings/spring-2026/abstracts a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1988-newsletter a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/sarah-a-mcintire-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings/fall-2025/program a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1987-newsletter a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/samuel-kaplan-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings/fall-2025/abstracts a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/spring-1983-newsletter a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/o-b-williams-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings/spring-2025/program a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/spring-1981-newsletter a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/joan-abramowitz-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings/spring-2025/abstracts a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1971-newsletter a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/charlie-gauntt-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings/fall-2024/program a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1967-newsletter a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/orville-wyss-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings/fall-2024/abstracts a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/spring-1966-newsletter a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/graduate-student-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/faculty-education-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/faculty-mentor-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/distinguished-service-award a conditional request with the page's own validator answered 500, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://txasm.dustin-edwards.workers.dev/awards/lifetime-achievement-award a conditional request with the page's own validator answered 500, not 304"
-    },
     {
      "severity": "error",
      "check": "C1",
@@ -7142,13 +5336,13 @@
      "detail": "https://txasm.dustin-edwards.workers.dev/ desktop: PageSpeed Insights answered 429"
     }
    ],
-   "seconds": 4
+   "seconds": 3
   },
   {
    "area": 8,
    "site": "bsw",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -7159,7 +5353,7 @@
    "area": 8,
    "site": "capsid",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "fail",
    "errors": 1,
    "warnings": 0,
@@ -7176,7 +5370,7 @@
    "area": 8,
    "site": "capsid-mcp",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "fail",
    "errors": 2,
    "warnings": 0,
@@ -7198,35 +5392,35 @@
    "area": 8,
    "site": "carrel-mcp",
    "check": "ops-audit",
-   "ref": "v0.20.9",
-   "status": "pass",
-   "errors": 0,
-   "warnings": 0,
-   "findings": [],
-   "seconds": 1
-  },
-  {
-   "area": 8,
-   "site": "dustinedwards-info",
-   "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "fail",
    "errors": 1,
    "warnings": 0,
    "findings": [
     {
      "severity": "error",
-     "check": "H1",
-     "detail": "https://dustinedwards.info/health answers 404, not 2xx or 503; Content-Type is 'text/html; charset=utf-8', not application/health+json or application/json; X-Robots-Tag is 'none', without noindex; the body is not JSON"
+     "check": "R1",
+     "detail": "https://github.com/DrDustinEdwards/carrel/actions/runs/41199714431 the newest restore drill ended failure"
     }
    ],
-   "seconds": 0
+   "seconds": 1
+  },
+  {
+   "area": 8,
+   "site": "dustinedwards-info",
+   "check": "ops-audit",
+   "ref": "v0.20.14",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "findings": [],
+   "seconds": 3
   },
   {
    "area": 8,
    "site": "dustinedwards-mcp",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "fail",
    "errors": 1,
    "warnings": 0,
@@ -7243,26 +5437,32 @@
    "area": 8,
    "site": "foxhound",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "pass",
    "errors": 0,
-   "warnings": 0,
-   "findings": [],
-   "seconds": 1
+   "warnings": 1,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "B1",
+     "detail": "https://foxhoundapp.com/health backup warning: no complete files pass of media found"
+    }
+   ],
+   "seconds": 2
   },
   {
    "area": 8,
    "site": "foxhound-mcp",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "fail",
    "errors": 1,
    "warnings": 0,
    "findings": [
     {
      "severity": "error",
-     "check": "H1",
-     "detail": "https://admin-mcp.foxhoundapp.com/health Content-Type is 'text/plain; charset=utf-8', not application/health+json or application/json; the body is not JSON"
+     "check": "H2",
+     "detail": "https://admin-mcp.foxhoundapp.com/health the body does not carry status, time, checks (the old shape: site-runtime's health gives { status, ok, time, checks: [{ name, status }] })"
     }
    ],
    "seconds": 0
@@ -7271,7 +5471,7 @@
    "area": 8,
    "site": "foxing",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "pass",
    "errors": 0,
    "warnings": 1,
@@ -7288,7 +5488,7 @@
    "area": 8,
    "site": "foxing-mcp",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "fail",
    "errors": 4,
    "warnings": 0,
@@ -7311,7 +5511,7 @@
     {
      "severity": "error",
      "check": "N1",
-     "detail": "https://admin-mcp.foxing.app/6278c687-9a0f-48a1-b4ee-e1f52e7022b1 a missing page answers 403, not 404"
+     "detail": "https://admin-mcp.foxing.app/f1d61e80-d94a-4a25-b764-a831dbd5efda a missing page answers 403, not 404"
     }
    ],
    "seconds": 0
@@ -7320,35 +5520,51 @@
    "area": 8,
    "site": "germomics",
    "check": "ops-audit",
-   "ref": "v0.20.9",
-   "status": "pass",
-   "errors": 0,
+   "ref": "v0.20.14",
+   "status": "fail",
+   "errors": 2,
    "warnings": 1,
    "findings": [
+    {
+     "severity": "error",
+     "check": "H4",
+     "detail": "https://germomics.com/health no sha, so the deployed commit cannot be read"
+    },
     {
      "severity": "warning",
      "check": "B1",
      "detail": "https://germomics.com/health backup warning: no complete files pass of audio found"
+    },
+    {
+     "severity": "error",
+     "check": "R1",
+     "detail": "https://github.com/DrDustinEdwards/germomics/actions/runs/41199707154 the newest restore drill ended failure"
     }
    ],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 8,
    "site": "julieedwards-info",
    "check": "ops-audit",
-   "ref": "v0.20.9",
-   "status": "pass",
-   "errors": 0,
+   "ref": "v0.20.14",
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
-   "findings": [],
-   "seconds": 0
+   "findings": [
+    {
+     "severity": "error",
+     "check": "R1",
+     "detail": "https://github.com/DrDustinEdwards/julieedwards-info/actions/runs/41199709537 the newest restore drill ended failure"
+    }
+   ],
+   "seconds": 1
   },
   {
    "area": 8,
    "site": "txasm",
    "check": "ops-audit",
-   "ref": "v0.20.9",
+   "ref": "v0.20.14",
    "status": "pass",
    "errors": 0,
    "warnings": 1,
@@ -7365,42 +5581,26 @@
    "area": 10,
    "site": "capsid",
    "check": "chart-audit",
-   "ref": "v0.23.0",
-   "status": "fail",
-   "errors": 2,
+   "ref": "v0.24.0",
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsid.dustinedwards.info/numbers/ \"Jobs finished per week\" (bar), light: 8 marks under 3:1, lowest <rect in bar> #fdfdfe on #f1fdfd at 1.02:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsid.dustinedwards.info/numbers/ \"Jobs finished per week\" (bar), dark: 8 marks under 3:1, lowest <rect in bar> #18161c on #070f0f at 1.08:1"
-    }
-   ],
-   "seconds": 69
+   "findings": [],
+   "seconds": 82
   },
   {
    "area": 10,
    "site": "capsomer",
    "check": "chart-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
-   "errors": 53,
+   "errors": 31,
    "warnings": 35,
    "findings": [
     {
      "severity": "error",
      "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Jobs run per day\" (bar), light: 14 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Response time, median\" (line), light: 2 text under 4.5:1, lowest \"foxhound.app\" #cc4f0c on #fdfdfe at 4.40:1"
+     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Response time, median\" (line), light: 2 text under 4.5:1, lowest \"example.com\" #cc4f0c on #fdfdfe at 4.40:1"
     },
     {
      "severity": "error",
@@ -7410,117 +5610,12 @@
     {
      "severity": "error",
      "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the purple family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the fox family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the teal family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the amber family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the navy family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the forest family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the magenta family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the cerulean family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the olive family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the rose family\" (bar), light: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Jobs run per day\" (bar), dark: 14 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Response time, median\" (line), dark: 2 text under 4.5:1, lowest \"foxhound.app\" #cc4f0c on #fdfdfe at 4.40:1"
+     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Response time, median\" (line), dark: 2 text under 4.5:1, lowest \"example.com\" #cc4f0c on #fdfdfe at 4.40:1"
     },
     {
      "severity": "error",
      "check": "B1",
      "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Requests per hour, last 12 hours\" (heat-strip), dark: 8 marks under 3:1, lowest <rect> #e4dcf8 on #fdfdfe at 1.30:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the purple family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the fox family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the teal family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the amber family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the navy family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the forest family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the magenta family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the cerulean family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the olive family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the rose family\" (bar), dark: 21 marks under 3:1, lowest <rect in bar> #fdfdfe on #fdfdfe at 1.00:1"
     },
     {
      "severity": "error",
@@ -7735,72 +5830,72 @@
     {
      "severity": "error",
      "check": "B18",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of foxhound.app, 7 days: 7 periods, 6 up, 1 down; 85.\" (uptime-strip): no visible title"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of example.org, 7 days: 7 periods, 6 up, 1 down; 85.7\" (uptime-strip): no visible title"
     },
     {
      "severity": "error",
      "check": "B18",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of foxhound.app, 7 days: 7 periods, 6 up, 1 down; 85.\" (uptime-strip): no finding sentence in the HTML"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of example.org, 7 days: 7 periods, 6 up, 1 down; 85.7\" (uptime-strip): no finding sentence in the HTML"
     },
     {
      "severity": "error",
      "check": "B18",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of foxhound.app, 7 days: 7 periods, 6 up, 1 down; 85.\" (uptime-strip): no caption"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of example.org, 7 days: 7 periods, 6 up, 1 down; 85.7\" (uptime-strip): no caption"
     },
     {
      "severity": "error",
      "check": "B18",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of carrel.app, 7 days: 7 periods, 7 up; 100% availabl\" (uptime-strip): no visible title"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of docs.example.com, 7 days: 7 periods, 7 up; 100% av\" (uptime-strip): no visible title"
     },
     {
      "severity": "error",
      "check": "B18",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of carrel.app, 7 days: 7 periods, 7 up; 100% availabl\" (uptime-strip): no finding sentence in the HTML"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of docs.example.com, 7 days: 7 periods, 7 up; 100% av\" (uptime-strip): no finding sentence in the HTML"
     },
     {
      "severity": "error",
      "check": "B18",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of carrel.app, 7 days: 7 periods, 7 up; 100% availabl\" (uptime-strip): no caption"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of docs.example.com, 7 days: 7 periods, 7 up; 100% av\" (uptime-strip): no caption"
     },
     {
      "severity": "error",
      "check": "B30",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of foxhound.app, 7 days: 7 periods, 6 up, 1 down; 85.\" (uptime-strip): no data table"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of example.org, 7 days: 7 periods, 6 up, 1 down; 85.7\" (uptime-strip): no data table"
     },
     {
      "severity": "error",
      "check": "B30",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of carrel.app, 7 days: 7 periods, 7 up; 100% availabl\" (uptime-strip): no data table"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of docs.example.com, 7 days: 7 periods, 7 up; 100% av\" (uptime-strip): no data table"
     },
     {
      "severity": "warning",
      "check": "C1",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of foxhound.app, 7 days: 7 periods, 6 up, 1 down; 85.\" (uptime-strip): no CSV link"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of example.org, 7 days: 7 periods, 6 up, 1 down; 85.7\" (uptime-strip): no CSV link"
     },
     {
      "severity": "warning",
      "check": "C1",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of carrel.app, 7 days: 7 periods, 7 up; 100% availabl\" (uptime-strip): no CSV link"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of docs.example.com, 7 days: 7 periods, 7 up; 100% av\" (uptime-strip): no CSV link"
     },
     {
      "severity": "warning",
      "check": "C2",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of foxhound.app, 7 days: 7 periods, 6 up, 1 down; 85.\" (uptime-strip): no source line"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of example.org, 7 days: 7 periods, 6 up, 1 down; 85.7\" (uptime-strip): no source line"
     },
     {
      "severity": "warning",
      "check": "C2",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of carrel.app, 7 days: 7 periods, 7 up; 100% availabl\" (uptime-strip): no source line"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of docs.example.com, 7 days: 7 periods, 7 up; 100% av\" (uptime-strip): no source line"
     },
     {
      "severity": "warning",
      "check": "F",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of foxhound.app, 7 days: 7 periods, 6 up, 1 down; 85.\" (uptime-strip): not in Capsomer's chart frame (.cap-chart)"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of example.org, 7 days: 7 periods, 6 up, 1 down; 85.7\" (uptime-strip): not in Capsomer's chart frame (.cap-chart)"
     },
     {
      "severity": "warning",
      "check": "F",
-     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of carrel.app, 7 days: 7 periods, 7 up; 100% availabl\" (uptime-strip): not in Capsomer's chart frame (.cap-chart)"
+     "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?theme=light \"Uptime of docs.example.com, 7 days: 7 periods, 7 up; 100% av\" (uptime-strip): not in Capsomer's chart frame (.cap-chart)"
     },
     {
      "severity": "error",
@@ -7833,38 +5928,28 @@
      "detail": "https://capsomer.dustinedwards.info/components/usage-meter/states?theme=light \"frame\" (frame): no source line"
     }
    ],
-   "seconds": 134
+   "seconds": 121
   },
   {
    "area": 10,
    "site": "carrel",
    "check": "chart-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 4
   },
   {
    "area": 10,
    "site": "dustinedwards-info",
    "check": "chart-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
-   "errors": 9,
+   "errors": 6,
    "warnings": 6,
    "findings": [
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://dustinedwards.info/cv \"Output by year\" (bar), light: 29 marks under 3:1, lowest <rect in year 2005, Awards: 1> #fdfdfe on #fdfdfe at 1.00:1"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://dustinedwards.info/cv \"Output by year\" (bar), dark: 29 marks under 3:1, lowest <rect in year 2005, Awards: 1> #18161c on #0e0c12 at 1.08:1"
-    },
     {
      "severity": "error",
      "check": "B18",
@@ -7894,11 +5979,6 @@
      "severity": "error",
      "check": "B18",
      "detail": "https://dustinedwards.info/cv \"Students mentored\" (sparkline): no caption"
-    },
-    {
-     "severity": "error",
-     "check": "B28",
-     "detail": "https://dustinedwards.info/cv \"Output by year\" (bar): the SVG has role=\"group\", not role=\"img\""
     },
     {
      "severity": "warning",
@@ -7931,13 +6011,13 @@
      "detail": "https://dustinedwards.info/cv \"Students mentored\" (sparkline): no source line"
     }
    ],
-   "seconds": 196
+   "seconds": 119
   },
   {
    "area": 10,
    "site": "enarratio",
    "check": "chart-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
    "errors": 55,
    "warnings": 6,
@@ -8248,35 +6328,35 @@
      "detail": "https://enarratio.dustinedwards.info/example \"Entries per year: 6 values, from 3 to 9; lowest 3, highest 1\" (sparkline+heat-strip): no source line"
     }
    ],
-   "seconds": 37
+   "seconds": 33
   },
   {
    "area": 10,
    "site": "foxhound",
    "check": "chart-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 57
+   "seconds": 76
   },
   {
    "area": 10,
    "site": "foxing",
    "check": "chart-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 1172
+   "seconds": 819
   },
   {
    "area": 10,
    "site": "germomics",
    "check": "chart-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "pass",
    "errors": 0,
    "warnings": 2,
@@ -8292,13 +6372,13 @@
      "detail": "https://germomics.com/data/influenza-1918 #influenza-1918-timeline (line): not in Capsomer's chart frame (.cap-chart)"
     }
    ],
-   "seconds": 32
+   "seconds": 47
   },
   {
    "area": 10,
    "site": "prelum",
    "check": "chart-audit",
-   "ref": "v0.23.0",
+   "ref": "v0.24.0",
    "status": "fail",
    "errors": 2,
    "warnings": 0,
@@ -8314,13 +6394,13 @@
      "detail": "https://prelum.dustinedwards.info/ \"Two series\" (line), dark: 2 text under 4.5:1, lowest \"Alpha\" #8c5fd2 on #12181c at 3.99:1"
     }
    ],
-   "seconds": 10
+   "seconds": 6
   },
   {
    "area": 11,
    "site": "bsw",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8331,7 +6411,7 @@
    "area": 11,
    "site": "capsid",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8342,18 +6422,18 @@
    "area": 11,
    "site": "capsid-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 11,
    "site": "capsomer",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8364,7 +6444,7 @@
    "area": 11,
    "site": "carrel",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8375,7 +6455,7 @@
    "area": 11,
    "site": "carrel-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8386,7 +6466,7 @@
    "area": 11,
    "site": "dustinedwards-info",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8397,24 +6477,18 @@
    "area": 11,
    "site": "dustinedwards-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 1,
-   "findings": [
-    {
-     "severity": "warning",
-     "check": "P10",
-     "detail": "https://admin-mcp.dustinedwards.info/mcp Origin https://evil.example got 401, not 403: the token check runs before the Origin check"
-    }
-   ],
-   "seconds": 1
+   "warnings": 0,
+   "findings": [],
+   "seconds": 0
   },
   {
    "area": 11,
    "site": "enarratio",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8425,56 +6499,29 @@
    "area": 11,
    "site": "foxhound",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
-   "status": "fail",
-   "errors": 4,
+   "ref": "v0.56.0",
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "A1",
-     "detail": "https://foxhoundapp.com/.well-known/oauth-protected-resource/mcp scopes_supported (merchant) lists no read scope"
-    },
-    {
-     "severity": "error",
-     "check": "A1",
-     "detail": "https://foxhoundapp.com/.well-known/oauth-protected-resource scopes_supported (merchant) lists no read scope"
-    },
-    {
-     "severity": "error",
-     "check": "A4",
-     "detail": "https://foxhoundapp.com/.well-known/oauth-authorization-server client_id_metadata_document_supported is not true"
-    },
-    {
-     "severity": "error",
-     "check": "A4",
-     "detail": "https://foxhoundapp.com/.well-known/oauth-authorization-server authorization_response_iss_parameter_supported is not true"
-    }
-   ],
-   "seconds": 3
+   "findings": [],
+   "seconds": 2
   },
   {
    "area": 11,
    "site": "foxhound-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 1,
-   "findings": [
-    {
-     "severity": "warning",
-     "check": "P10",
-     "detail": "https://admin-mcp.foxhoundapp.com/mcp Origin https://evil.example got 401, not 403: the token check runs before the Origin check"
-    }
-   ],
+   "warnings": 0,
+   "findings": [],
    "seconds": 0
   },
   {
    "area": 11,
    "site": "foxing",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8485,7 +6532,7 @@
    "area": 11,
    "site": "foxing-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "fail",
    "errors": 2,
    "warnings": 0,
@@ -8507,7 +6554,7 @@
    "area": 11,
    "site": "germomics",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8518,18 +6565,18 @@
    "area": 11,
    "site": "julieedwards-info",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 11,
    "site": "prelum",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -8540,34 +6587,34 @@
    "area": 11,
    "site": "txasm",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.50.0",
+   "ref": "v0.56.0",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   }
  ],
  "lines": {
   "1": {
-   "prs": 23,
-   "added": 6153,
-   "removed": 562
+   "prs": 26,
+   "added": 15923,
+   "removed": 606
   },
   "2": {
-   "prs": 29,
-   "added": 47674,
-   "removed": 5489
+   "prs": 41,
+   "added": 48020,
+   "removed": 6230
   },
   "3": {
-   "prs": 25,
-   "added": 3718,
-   "removed": 1025
+   "prs": 33,
+   "added": 5556,
+   "removed": 1273
   },
   "4": {
-   "prs": 14,
-   "added": 5013,
-   "removed": 2583
+   "prs": 17,
+   "added": 6126,
+   "removed": 2805
   },
   "5": {
    "prs": 12,
@@ -8575,19 +6622,19 @@
    "removed": 7178
   },
   "6": {
-   "prs": 9,
-   "added": 16870,
-   "removed": 1140
+   "prs": 12,
+   "added": 23097,
+   "removed": 2090
   },
   "7": {
-   "prs": 22,
-   "added": 2528,
-   "removed": 1566
+   "prs": 45,
+   "added": 6435,
+   "removed": 3179
   },
   "8": {
-   "prs": 20,
-   "added": 12828,
-   "removed": 749
+   "prs": 38,
+   "added": 24854,
+   "removed": 1688
   },
   "9": {
    "prs": 0,
@@ -8595,14 +6642,14 @@
    "removed": 0
   },
   "10": {
-   "prs": 15,
-   "added": 15608,
-   "removed": 4921
+   "prs": 20,
+   "added": 15662,
+   "removed": 4962
   },
   "11": {
-   "prs": 10,
-   "added": 5125,
-   "removed": 5022
+   "prs": 12,
+   "added": 15354,
+   "removed": 5124
   },
   "12": {
    "prs": 4,
