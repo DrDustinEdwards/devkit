@@ -18,7 +18,7 @@ Newest run 2026-10-31 13:06 UTC. Filled only from the live checks and the verifi
 | 8. Running and recovery | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +24854 | −1688 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +0 | −0 |
 | 10. Charts | ❌ | ❌ | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | · | · | +15662 | −4962 |
-| 11. AI and MCP | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | +15354 | −5124 |
+| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | +15354 | −5124 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 Lines count public repositories only until the LIVE_GITHUB_TOKEN secret is set.
@@ -335,25 +335,21 @@ Builder: Complete shared charts. Verifier: none yet.
 
 ### 11. AI and MCP
 
-Builder: Complete shared AI and MCP code. Verifier: none yet.
+Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 
-- ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: checks pass; no verifier yet
-- 🟡 Germomics: checks pass; no verifier yet
-- 🟡 julieedwards.info: checks pass; no verifier yet
-- 🟡 TXASM: checks pass; no verifier yet
-- 🟡 BSW: checks pass; no verifier yet
-- 🟡 Foxhound: checks pass; no verifier yet
-- 🟡 Foxing: checks pass; no verifier yet
-- 🟡 Carrel: checks pass; no verifier yet
-- 🟡 Enarratio: checks pass; no verifier yet
-- 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Prelum specimen: checks pass; no verifier yet
-- 🟡 Capsid explorer: checks pass; no verifier yet
-- 🟡 Capsid MCP: checks pass; no verifier yet
-- 🟡 Foxhound admin MCP: checks pass; no verifier yet
-- 🟡 Dustin Edwards admin MCP: checks pass; no verifier yet
-- 🟡 Carrel MCP: checks pass; no verifier yet
+- 🟡 Package: live check covers 7 of 89 items; conformance off Actions except Carrel; no static AI rules or pin comparison in devkit; toolsForGrant and fireOnce unused; no tool icons, tool-list pin, cancel on close; log has no export, retention, alert or Portal view; no shared agent keys; suggester metadata and Llama list
+- 🟡 dustinedwards.info: Ask caches answers cut at max_tokens; Ask bypasses the gateway and untrusted(); suggester pins site-api v0.14.0
+- 🟡 Germomics: local style text instead of WRITING_RULES; suggester gaps from the package
+- 🟡 julieedwards.info: suggester on site-api v0.17.0: no timeout, JSON mode or prose check
+- 🟡 TXASM: suggester inherits the package gaps (feature metadata, Llama list)
+- 🟡 Foxhound: merchant MCP off the shared door: rate limit fails open, log after the call and fails open, open registration, own OAuth and era code, destructive tools unconfirmed, no outputSchema; local dash lines
+- 🟡 Foxing: Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0
+- 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
+- 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
+- 🟡 Capsid MCP: no insufficient_scope step-up; no shared audience check; own scope.ts; PRM lists read only; own routine guard; no conformance; KV capsid-oauth not capsid-mcp-oauth
+- 🟡 Foxhound admin MCP: own scope names; no Host check; no conformance; read grant sees write tools
+- 🟡 Dustin Edwards admin MCP: PRM lists read only; no shared audience check; raw error text; no rate-limit row; site-runtime v0.54.0; /health has no sha; conformance not in CI; KV titled OAUTH_KV
+- 🟡 Carrel MCP: own scope names; write ticked by default; own agent keys; read grant sees write tools
 - ❌ Foxing admin MCP: site-runtime-ai-audit: 2 errors
   - A1: https://admin-mcp.foxing.app/.well-known/oauth-protected-resource/mcp answered 403 application/json, neither 404 nor a JSON object
   - A1: https://admin-mcp.foxing.app/.well-known/oauth-protected-resource answered 403 application/json, neither 404 nor a JSON object

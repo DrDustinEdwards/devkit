@@ -5738,7 +5738,7 @@
    "id": 11,
    "name": "AI and MCP",
    "builder": "Complete shared AI and MCP code",
-   "verifier": null,
+   "verifier": "Verify area 11 AI and MCP",
    "lines": {
     "prs": 12,
     "added": 15354,
@@ -5747,87 +5747,151 @@
    "unchecked": {},
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "partial",
+     "reason": "live check covers 7 of 89 items; conformance off Actions except Carrel; no static AI rules or pin comparison in devkit; toolsForGrant and fireOnce unused; no tool icons, tool-list pin, cancel on close; log has no export, retention, alert or Portal view; no shared agent keys; suggester metadata and Llama list",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/site-runtime/blob/main/bin/ai-audit.mjs",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/main/mcp-server.mjs",
+      "https://github.com/DrDustinEdwards/devkit/blob/main/bin/conformance.mjs"
+     ]
     },
     "dustinedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "Ask caches answers cut at max_tokens; Ask bypasses the gateway and untrusted(); suggester pins site-api v0.14.0",
+     "evidence": [
+      "https://dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/app/routes/search.ask.ts"
+     ],
      "clean_days": 1
     },
     "germomics": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "local style text instead of WRITING_RULES; suggester gaps from the package",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
+     ],
      "clean_days": 1
     },
     "julieedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "suggester on site-api v0.17.0: no timeout, JSON mode or prose check",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
+     ],
      "clean_days": 1
     },
     "txasm": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "suggester inherits the package gaps (feature metadata, Llama list)",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
+     ],
      "clean_days": 1
     },
     "bsw": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "no MCP server or model call on main; ai-audit 0/0",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
+      "https://github.com/DrDustinEdwards/bsw"
+     ],
      "clean_days": 1
     },
     "foxhound": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "merchant MCP off the shared door: rate limit fails open, log after the call and fails open, open registration, own OAuth and era code, destructive tools unconfirmed, no outputSchema; local dash lines",
+     "evidence": [
+      "https://foxhoundapp.com/.well-known/oauth-authorization-server",
+      "https://github.com/DrDustinEdwards/foxhound/blob/main/app/lib/mcp/handler.server.ts"
+     ],
      "clean_days": 1
     },
     "foxing": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0",
+     "evidence": [
+      "https://foxing.app/",
+      "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
+     ],
      "clean_days": 1
     },
     "carrel": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "routine re-fire guard not atomic; shared fireOnce unused",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
+     ],
      "clean_days": 1
     },
     "enarratio": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "no MCP server or model call; ai-audit 0/0",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/enarratio"
+     ],
      "clean_days": 1
     },
     "capsomer": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "no MCP server or model call; ai-audit 0/0",
+     "evidence": [
+      "https://capsomer.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/capsomer"
+     ],
      "clean_days": 1
     },
     "prelum": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "no MCP server or model call; ai-audit 0/0",
+     "evidence": [
+      "https://prelum.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/prelum"
+     ],
      "clean_days": 1
     },
     "capsid": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "AI Search reranker has no timeout or gateway and returns raw upstream errors",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
+     ],
      "clean_days": 1
     },
     "capsid-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no insufficient_scope step-up; no shared audience check; own scope.ts; PRM lists read only; own routine guard; no conformance; KV capsid-oauth not capsid-mcp-oauth",
+     "evidence": [
+      "https://mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp",
+      "https://github.com/DrDustinEdwards/capsid/blob/master/src/scope.ts"
+     ],
      "clean_days": 1
     },
     "foxhound-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "own scope names; no Host check; no conformance; read grant sees write tools",
+     "evidence": [
+      "https://admin-mcp.foxhoundapp.com/health",
+      "https://github.com/DrDustinEdwards/foxhound/blob/main/mcp/src/scopes.ts"
+     ],
      "clean_days": 1
     },
     "dustinedwards-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "PRM lists read only; no shared audience check; raw error text; no rate-limit row; site-runtime v0.54.0; /health has no sha; conformance not in CI; KV titled OAUTH_KV",
+     "evidence": [
+      "https://admin-mcp.dustinedwards.info/health",
+      "https://admin-mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp"
+     ],
      "clean_days": 1
     },
     "carrel-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "own scope names; write ticked by default; own agent keys; read grant sees write tools",
+     "evidence": [
+      "https://carrel-mcp.dustinedwards.info/health",
+      "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/mcp/scopes.ts"
+     ],
      "clean_days": 1
     },
     "foxing-mcp": {
