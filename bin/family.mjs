@@ -236,13 +236,13 @@ export const ADVISORIES = {
       return bare.length ? `${bare.map((n) => `/${n}`).join(", ")} without noindex` : null;
     },
   },
-  // A feed a reader can find from the page: a rel="alternate" link of the feed's type.
+  // A feed a reader can find from the page: a rel="alternate" link of the feed's type, in code, not a comment.
   feedLink: {
     kinds: SITE,
     use: '`<link rel="alternate" type="application/rss+xml">` (or atom, or feed+json) in the head',
     missing: ({ text }) =>
       /\b(?:rssDocument|atomDocument|jsonFeedDocument)\b|["'`]Content-Type["'`]\s*:\s*["'`]application\/(?:rss|atom)\+xml/.test(text) &&
-      !/\brel\s*[=:]\s*["'`]alternate["'`][^>{}]{0,200}?application\/(?:rss\+xml|atom\+xml|feed\+json)|application\/(?:rss\+xml|atom\+xml|feed\+json)["'`][^>{}]{0,200}?\brel\s*[=:]\s*["'`]alternate/.test(text)
+      !/\brel\s*[=:]\s*["'`]alternate["'`][^>{}]{0,200}?application\/(?:rss\+xml|atom\+xml|feed\+json)|application\/(?:rss\+xml|atom\+xml|feed\+json)["'`][^>{}]{0,200}?\brel\s*[=:]\s*["'`]alternate/.test(blankComments(text))
         ? "a feed and no alternate link to it"
         : null,
   },

@@ -86,6 +86,8 @@ Mutation runs only when `mutation-command` is given, which a caller does on a we
 
 Inputs: `coverage-command` (empty for no coverage), `coverage-file`, `mutation-command`, `mutation-artifacts` (for a caller whose Stryker run is a matrix of earlier jobs: the pattern of the artifacts holding the reports, downloaded from that run into `mutation-artifacts/<artifact>/`), `mutation-file`, `tsconfig` (a repository without one is read as plain JavaScript modules), `include` (path prefixes to map, separated by spaces, default `src/`; `.` for every folder), `exclude` (prefixes to leave out), `install` (must install `typescript`; a JavaScript repository can add it with `npm i --no-save typescript`), `npm-cache` (false for a repository with no `package-lock.json`) and `node-version-file`. Locally: `node scripts/code-map.mjs --out code-map.json [--coverage coverage/coverage-final.json]` from the repository's root.
 
+devkit maps itself the same way (`code-map-self.yml`), and once a week mutation-tests its own checks: `node stryker.config.mjs` runs Stryker 10.1.1 (through npx, so nothing is installed) once per module in `bin/` and `scripts/`, each against its own test file, and fails when a module's score falls below its bar in `stryker.config.mjs` (`thresholds.break`). One module: `MODULE=family npx --package @stryker-mutator/core@10.1.1 stryker run`, report in `reports/mutation/family.json`.
+
 ## The shared test helpers
 
 Test code that more than one repository needs, written once here. Installed by tag:

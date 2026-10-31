@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- `devkit-family`'s feed-link warning no longer counts an alternate link that is only in a comment.
+- devkit mutation-tests its own checks once a week: `code-map-self.yml` runs `node stryker.config.mjs` on a schedule (and on a manual run), which runs Stryker 10.1.1 once per module in `bin/` and `scripts/` against that module's own test file and fails a module below its bar (`thresholds.break`, the score each reached: 72% for `family.mjs`, 86% for `no-bloat.mjs`). The reports feed devkit's own code map. One run of the whole suite per mutant would take hours (worker-deploy's polls), so each module runs alone. `knip.json` names the config as an entry.
+- Every claim a check makes now has a planted mistake that fails it and a clean case that passes: the twelve `devkit-family` fingerprints that never fired in a test (`<urlset`, `<rss`, an IndexNow POST, `Contact: mailto:`, `og:`, `Strict-Transport-Security`, a Twitter card, base64url, Turnstile's siteverify, `ACCESS_DEV_BYPASS`, the theme script, `"Oops!"`), a shared package skipping its own, a devkit workflow and a `git+https` or `enarratio` version pin behind the newest tag, library look-alikes (`rss-parser`, `node-jose`), the accessibility and feed-link warnings, `createSiteApi` without IndexNow and with `indexNowHook`, the spelling check through a stand-in codespell (skip, ignore, contracts, `--fix-spelling`, a codespell that fails), the bin's `list`, `--from` and local runs; `devkit-worker-size` over its raw budget, a failed dry run, no Total Upload line, MiB sizes, `args`, `--config` and a budget that is not JSON or not numbers; `devkit-route-weight`'s budget and growth warnings and its three failures; `devkit-mutation-report`, which had no test; `devkit-no-bloat`'s Knip run that fails, `--config`, the line counts of a diff (renames, new and deleted files, quoted paths) and the scanner's regex and template cases; and `devkit-conformance` end to end against stand-ins for wrangler and the suite.
+
 ## 0.18.1 (2026-10-30)
 
 - The `cacheKey` change listed under 0.18.0 (#62) merged after the v0.18.0 tag, so it ships here.
