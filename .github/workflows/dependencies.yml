@@ -56,7 +56,7 @@ jobs:
 
       # Without --config each lockfile reads only an osv-scanner.toml in its own folder, so the head's root file applies to
       # both scans. A package with no dependencies has no lockfile, and passes. Exit 1 means vulnerabilities were found;
-      # anything above it is a failed scan. A vulnerability is the same one in both scans when its ecosystem, package and
+      # anything above it is a failed scan (the runner's bash -e would stop on either, hence `|| code=$?`). A vulnerability is the same one in both scans when its ecosystem, package and
       # advisory match, so a version bump that keeps the hole is not new and one that brings a new advisory is.
       - name: Scan every lockfile
         run: |
@@ -64,8 +64,8 @@ jobs:
           config=()
           if [ -f head/osv-scanner.toml ]; then config=(--config "$PWD/head/osv-scanner.toml"); fi
           scan() {
-            "$RUNNER_TEMP/osv-scanner" scan source --recursive --allow-no-lockfiles --format json "${config[@]}" "$1" > "$RUNNER_TEMP/$1.json"
-            local code=$?
+            local code=0
+            "$RUNNER_TEMP/osv-scanner" scan source --recursive --allow-no-lockfiles --format json "${config[@]}" "$1" > "$RUNNER_TEMP/$1.json" || code=$?
             if [ "$code" -gt 1 ]; then echo "::error::OSV-Scanner could not scan $1 (exit $code)."; exit "$code"; fi
             jq -r --arg root "$PWD/$1/" '.results[] | (.source.path | ltrimstr($root)) as $file | .packages[] | .package as $p
               | .groups[] | [$p.ecosystem, $p.name, (.ids | sort | first), $p.version, $file, (.max_severity // "")] | @tsv' \
