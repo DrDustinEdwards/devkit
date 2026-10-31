@@ -1812,7 +1812,7 @@
    "id": 2,
    "name": "Security headers and CSP",
    "builder": "Complete shared security headers and CSP",
-   "verifier": null,
+   "verifier": "Verify security headers across sites",
    "lines": {
     "prs": 41,
     "added": 48020,
@@ -1820,12 +1820,22 @@
    },
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "partial",
+     "reason": "opt-in-only grading of C3/C7/C9/S2/I3; report sink drops integrity and coep reports; no COEP report-to; applyHeaderSet has no 101 guard; Portal and Desk not on the board; no signed-in crawl; Access 4xx not treated as the gate; zone CAA/DNSSEC/preload open",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/check.mjs",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/csp-report.mjs",
+      "https://github.com/DrDustinEdwards/devkit/blob/main/live/sites.json"
+     ]
     },
     "dustinedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "COOP same-origin-allow-popups reason matches no code (no window.open), so the I3 deviation falls with it; own MEDIA_CSP and pinned media test; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "germomics": {
@@ -1841,47 +1851,83 @@
     },
     "julieedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "local Referrer-Policy literal (workers/app.ts:94); no requireJson; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://julieedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "txasm": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "A6 declared while bsw in the same situation sends noindex; txasm.org alias now a suspended page; v0.57.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://txasm.dustin-edwards.workers.dev/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "bsw": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "pinned v0.50.1; registry 0.57.1 opt-ins are not in its code; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "foxhound": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "C9/I3 waived until a signed-in crawl nobody builds; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://foxhoundapp.com/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "foxing": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "own 101 guard instead of shared; pinned header test; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://foxing.app/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "carrel": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "local preview XFO and policy; pinned csp tests; own 101 guard; Desk security.txt behind Access; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://carrel.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "enarratio": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "/assets/* skips the Worker; not_found_handling none unlike capsomer/prelum; v0.52.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "capsomer": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no S2 or I3 met or declared; /fonts/* skips the Worker; v0.52.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://capsomer.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "prelum": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no S2 or I3 met or declared; local nosniff/CSP in render-link-icons.mjs; four paths skip the Worker; v0.53.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://prelum.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "capsid": {
@@ -1912,22 +1958,38 @@
     },
     "capsid-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://mcp.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "foxhound-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://admin-mcp.foxhoundapp.com/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "dustinedwards-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://admin-mcp.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "carrel-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1",
+     "evidence": [
+      "https://carrel-mcp.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+     ],
      "clean_days": 1
     },
     "foxing-mcp": {

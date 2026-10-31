@@ -9,7 +9,7 @@ Newest run 2026-10-31 13:06 UTC. Filled only from the live checks and the verifi
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
 | 1. Search, sharing and AI answers | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | +15923 | −606 |
-| 2. Security headers and CSP | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | +48020 | −6230 |
+| 2. Security headers and CSP | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | +48020 | −6230 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | ❌ | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | ❌ | +5556 | −1273 |
 | 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | +6126 | −2805 |
 | 5. Carrel editing contract | ❌ | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
@@ -63,30 +63,30 @@ Builder: Share SEO and other key site code. Verifier: none yet.
 
 ### 2. Security headers and CSP
 
-Builder: Complete shared security headers and CSP. Verifier: none yet.
+Builder: Complete shared security headers and CSP. Verifier: Verify security headers across sites.
 
-- ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: checks pass; no verifier yet
+- 🟡 Package: opt-in-only grading of C3/C7/C9/S2/I3; report sink drops integrity and coep reports; no COEP report-to; applyHeaderSet has no 101 guard; Portal and Desk not on the board; no signed-in crawl; Access 4xx not treated as the gate; zone CAA/DNSSEC/preload open
+- 🟡 dustinedwards.info: COOP same-origin-allow-popups reason matches no code (no window.open), so the I3 deviation falls with it; own MEDIA_CSP and pinned media test; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
 - ❌ Germomics: site-runtime-security: 1 errors
   - C6: https://germomics.com/ 34 element(s) carry a nonce the header does not name
-- 🟡 julieedwards.info: checks pass; no verifier yet
-- 🟡 TXASM: checks pass; no verifier yet
-- 🟡 BSW: checks pass; no verifier yet
-- 🟡 Foxhound: checks pass; no verifier yet
-- 🟡 Foxing: checks pass; no verifier yet
-- 🟡 Carrel: checks pass; no verifier yet
-- 🟡 Enarratio: checks pass; no verifier yet
-- 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Prelum specimen: checks pass; no verifier yet
+- 🟡 julieedwards.info: local Referrer-Policy literal (workers/app.ts:94); no requireJson; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 TXASM: A6 declared while bsw in the same situation sends noindex; txasm.org alias now a suspended page; v0.57.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 BSW: pinned v0.50.1; registry 0.57.1 opt-ins are not in its code; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Foxhound: C9/I3 waived until a signed-in crawl nobody builds; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Foxing: own 101 guard instead of shared; pinned header test; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Carrel: local preview XFO and policy; pinned csp tests; own 101 guard; Desk security.txt behind Access; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Enarratio: /assets/* skips the Worker; not_found_handling none unlike capsomer/prelum; v0.52.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Capsomer: no S2 or I3 met or declared; /fonts/* skips the Worker; v0.52.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Prelum specimen: no S2 or I3 met or declared; local nosniff/CSP in render-link-icons.mjs; four paths skip the Worker; v0.53.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
 - ❌ Capsid explorer: site-runtime-security: 4 errors
   - C14: https://capsid.dustinedwards.info/ (200) violations are reported to both sinks (report-uri and report-to): no report-to: the browsers that read only the other one report nowhere
   - C14: https://capsid.dustinedwards.info/systems/ (200) violations are reported to both sinks (report-uri and report-to): no report-to: the browsers that read only the other one report nowhere
   - C14: https://capsid.dustinedwards.info/site-runtime-security-39a2dc02-0aa6-4e26-9d08-aa83df09acf0 (404) violations are reported to both sinks (report-uri and report-to): no report-to: the browsers that read only the other one report nowhere
   - C14: https://capsid.dustinedwards.info/ (405) violations are reported to both sinks (report-uri and report-to): no report-to: the browsers that read only the other one report nowhere
-- 🟡 Capsid MCP: checks pass; no verifier yet
-- 🟡 Foxhound admin MCP: checks pass; no verifier yet
-- 🟡 Dustin Edwards admin MCP: checks pass; no verifier yet
-- 🟡 Carrel MCP: checks pass; no verifier yet
+- 🟡 Capsid MCP: no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Foxhound admin MCP: no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Dustin Edwards admin MCP: no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
+- 🟡 Carrel MCP: no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1
 - ❌ Foxing admin MCP: site-runtime-security: 74 errors
   - I1: https://admin-mcp.foxing.app/ (404) Cross-Origin-Opener-Policy is present: ABSENT
   - I2: https://admin-mcp.foxing.app/ (404) Cross-Origin-Resource-Policy is present: ABSENT
