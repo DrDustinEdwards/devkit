@@ -12,7 +12,7 @@ Newest run 2026-10-30 23:28 UTC. Filled only from the live checks and the verifi
 | 2. Security headers and CSP | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
 | 3. Sign-in and access | ❌ | ❌ | ❌ | · | ❌ | · | ❌ | ❌ | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
 | 4. Writing and rendering | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
-| 5. Carrel editing contract | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 5. Carrel editing contract | ❌ | ❌ | ❌ | ❌ | ❌ | · | ❌ | ❌ | · | · | · | · | · | · | · | · | · | · | +0 | −0 |
 | 6. Images and media | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +0 | −0 |
 | 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +0 | −0 |
 | 8. Running and recovery | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
@@ -111,23 +111,12 @@ Builder: Complete shared writing and rendering. Verifier: none yet.
 Builder: Complete Carrel editing contract. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: no live check yet
-- ❌ Germomics: no live check yet
-- ❌ julieedwards.info: no live check yet
-- ❌ TXASM: no live check yet
-- ❌ BSW: no live check yet
-- ❌ Foxhound: no live check yet
-- ❌ Foxing: no live check yet
-- ❌ Carrel: no live check yet
-- ❌ Enarratio: no live check yet
-- ❌ Capsomer: no live check yet
-- ❌ Prelum specimen: no live check yet
-- ❌ Capsid explorer: no live check yet
-- ❌ Capsid MCP: no live check yet
-- ❌ Foxhound admin MCP: no live check yet
-- ❌ Dustin Edwards admin MCP: no live check yet
-- ❌ Carrel MCP: no live check yet
-- ❌ Foxing admin MCP: no live check yet
+- ❌ dustinedwards.info: not run yet
+- ❌ Germomics: not run yet
+- ❌ julieedwards.info: not run yet
+- ❌ TXASM: not run yet
+- ❌ Foxhound: not run yet
+- ❌ Foxing: not run yet
 
 ### 6. Images and media
 

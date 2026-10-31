@@ -447,71 +447,71 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "germomics": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "julieedwards-info": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "txasm": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "bsw": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no Carrel site API: its content is not edited through Carrel"
     },
     "foxhound": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "foxing": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "carrel": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a static"
     },
     "enarratio": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a static"
     },
     "capsomer": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a static"
     },
     "prelum": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a static"
     },
     "capsid": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no Carrel site API: the explorer serves the knowledge base, not posts"
     },
     "capsid-mcp": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a worker"
     },
     "foxhound-mcp": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a worker"
     },
     "dustinedwards-mcp": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a worker"
     },
     "carrel-mcp": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a worker"
     },
     "foxing-mcp": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a worker"
     }
    }
   },
