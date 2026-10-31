@@ -38,7 +38,7 @@
     "devkit-bootstrap": "./bin/bootstrap.mjs",
     "devkit-check-trailers": "./bin/check-trailers.mjs",
     "devkit-conformance": "./bin/conformance.mjs",
-    "devkit-family": "./bin/shared.mjs",
+    "devkit-family": "./bin/family.mjs",
     "devkit-live": "./bin/live.mjs",
     "devkit-mutation-report": "./bin/mutation-report.mjs",
     "devkit-no-bloat": "./bin/no-bloat.mjs",
