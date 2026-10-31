@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.20.0 (2026-10-31)
+
+- `devkit-ops-audit`, area 8's scoreboard check (running and recovery), on the scoreboard's contract (`--origin`, `--from`, one annotation per finding titled with its checklist item, exit 0, 1 or 2). It reads a site's `/health` for its headers (H1), site-runtime's new shape `{ status, ok, time, checks, sha?, backup? }` (H2; the old shape, with no `status`, is an error naming what it lacks), a status code that agrees with `status` (H3), a deployed `sha` (H4, and with `--repo` the branch head, a warning for the first 30 minutes), a backup under 26 hours old (B1) and the `cron` check (C2, a warning); a missing page for an HTML 404 (N1, N6); and with `--drill-workflow`, a passing restore drill under 8 days old (R1). dustinedwards.info serves `/api/health` and passes `--health-path /api/health`; there is no silent fallback. On the live sites today: germomics and Foxing lack `status`, `checks` and `sha`; Capsid's MCP Worker sends `status: "ok"`, no `no-store` or `noindex`, a 38-hour-old backup and a plain-text 404.
+- `restore-drill.yml`, the weekly restore drill every site with a D1 database calls (`examples/restore-drill-caller.yml`): d1-dump's `drill --bucket` downloads the newest complete dump through the R2 REST API and restores it into SQLite. The caller pins d1-dump with `d1-dump-ref`, which has no default.
+- `worker-deploy.yml` takes `d1-database`: before the pre-deploy guard, where callers run migrations, the deploy job reads the database's Time Travel bookmark (`wrangler d1 time-travel info --json`, with the pinned wrangler) and writes it, its time and `npx wrangler d1 time-travel restore <db> --bookmark=<bookmark>` to the step summary and the workflow outputs `d1-bookmark` and `d1-bookmark-time`, so a bad migration is one command to undo. Cloudflare's rollback never undoes one. A bookmark it cannot read stops the deploy before the migration.
 
 ## 0.19.0 (2026-10-31)
 

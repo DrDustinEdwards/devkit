@@ -21,7 +21,9 @@ name: worker-deploy
 # that exits 3, fails the job without moving production: on 2026-09-18 one ECONNRESET rolled back a good capsid deploy.
 #
 # THE LIMITS (README, "The shared deploy"): Cloudflare's rollback swaps code and bindings only, is refused when D1 or KV
-# resources changed between the two versions, and never undoes a D1 migration. Data recovery is D1 Time Travel, by hand.
+# resources changed between the two versions, and never undoes a D1 migration. Data recovery is D1 Time Travel, by hand: with
+# `d1-database` set, the deploy job writes the bookmark from before the pre-deploy guard, and the restore command, to its
+# summary.
 #
 # A CALLER (examples/worker-deploy-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
 # It calls this on a push to its default branch only, and keeps a concurrency group that never cancels a deploy in flight.
@@ -66,6 +68,18 @@ on:
         required: false
         type: string
         default: ""
+      d1-database:
+        description: The D1 database's name. When set, its Time Travel bookmark is read before the pre-deploy guard (where migrations run), so a bad migration is one restore to undo. Empty for none.
+        required: false
+        type: string
+        default: ""
+    outputs:
+      d1-bookmark:
+        description: The D1 Time Travel bookmark read before the pre-deploy guard, when `d1-database` is set.
+        value: ${{ jobs.deploy.outputs.d1-bookmark }}
+      d1-bookmark-time:
+        description: When that bookmark was read, in UTC (RFC 3339).
+        value: ${{ jobs.deploy.outputs.d1-bookmark-time }}
     secrets:
       CLOUDFLARE_API_TOKEN:
         required: true
@@ -96,6 +110,8 @@ jobs:
     # attempt, so the rollback step can tell a rerun from the attempt that shipped (the rollback guard).
     outputs:
       attempt: ${{ github.run_attempt }}
+      d1-bookmark: ${{ steps.bookmark.outputs.bookmark }}
+      d1-bookmark-time: ${{ steps.bookmark.outputs.time }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
@@ -110,6 +126,31 @@ jobs:
         env:
           INSTALL: ${{ inputs.install }}
         run: bash -euo pipefail -c "$INSTALL"
+
+      # The undo point for a migration, read before the guard that runs one. Wrangler's rollback never undoes a migration;
+      # a Time Travel restore to this bookmark does. A bookmark that cannot be read stops the deploy before any migration.
+      - name: Record the D1 Time Travel bookmark
+        id: bookmark
+        if: inputs.d1-database != ''
+        env:
+          DB: ${{ inputs.d1-database }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          info=$(npx --yes "wrangler@${WRANGLER_VERSION}" d1 time-travel info "$DB" --json) || info=""
+          bookmark=$(printf '%s' "$info" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const b=JSON.parse(s.slice(s.indexOf("{"))).bookmark;if(typeof b!=="string"||!b)process.exit(1);process.stdout.write(b)})') || {
+            echo "::error::could not read the Time Travel bookmark of ${DB}, so this deploy stops before any migration runs without an undo point."
+            exit 1
+          }
+          echo "bookmark=${bookmark}" >> "$GITHUB_OUTPUT"
+          echo "time=${at}" >> "$GITHUB_OUTPUT"
+          {
+            echo "D1 ${DB} before this deploy: bookmark ${bookmark} at ${at}. To undo a migration this deploy ran:"
+            echo ""
+            echo "    npx wrangler d1 time-travel restore ${DB} --bookmark=${bookmark}"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Pre-deploy guard
         if: inputs.pre-deploy != ''
