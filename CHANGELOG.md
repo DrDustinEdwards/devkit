@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.20.22 (2026-10-31)
+
+- `devkit-ops-audit` (area 8, round 2): with `--repo`, a GitHub read that fails (401, 403, 429, a 5xx, no answer) is "could not run", exit 2, never a warning and exit 0, so a broken token cannot show green. New H5: `/health`'s `checks` against the bindings the repository's wrangler config declares (`--wrangler <path>`, else the root config), each binding without a check an error unless `.ops-audit.json` beside the config names it under `unprobed` with a reason (or maps it to its check under `checks`). N6 now asks for the shared error page: the 404 is HTML with a `<title>` and Capsomer's ErrorPage region (class `cap-error-page`, `ERROR_PAGE_MARKER`), not any `text/html`.
+- `live/areas.json`: area 8 gives `--repo` to bsw, Capsid's MCP (with `--drill-workflow restore-rehearsal.yml`, Capsid's drill) and the three admin MCPs (each with its `--wrangler`), and Foxing its `apps/web` config.
+- `worker-deploy.yml` (D4): a gradual rollout that passed the live gate is judged by its errors too. "Compare the error rates" reads both versions' requests and errors since the split from the GraphQL Analytics API and refuses the new version (rolled back) when it has 3 or more errors at more than twice the old rate and a point above it; under 20 requests it promotes on the gate with a warning; an unreadable read leaves the split (exit 3). The token needs Account Analytics Read. `gradual-percent` and `preview` stay opt-in: README, "Why both stay opt-in".
 - Area 6 on the scoreboard checks kind `app` too (`live/areas.json`), so the daily run grades the Capsid Portal with `site-runtime-images` (0.61.0 or later reports a home page that sends a stranger to a sign-in as one C1 error: a shared link shows the sign-in's card). Carrel Desk is skipped for area 6, having nothing public to share, and the signed-in pages of both are listed as unchecked.
 - `devkit-live`: an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes through `site_args` (`--start`, `--pages`, from Prelum v0.25.0), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
 

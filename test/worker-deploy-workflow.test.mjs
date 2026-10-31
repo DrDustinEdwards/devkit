@@ -51,6 +51,7 @@ const LIVE_GATE = "live gate";
 const ROLLBACK = "Roll back the deploy this run shipped";
 const BOOKMARK = "Record the D1 Time Travel bookmark";
 const PROMOTE = "Promote the gradual rollout";
+const ERRORS = "Compare the error rates";
 const PREVIEW = "Upload the preview version";
 const ROLLED_BACK = `echo "::error::rolled back: was \${ROLLBACK_FROM} (this run's commit \${GITHUB_SHA}), now \${ROLLBACK_TO}. master still points at the bad commit; land a fix or revert it."`;
 const NOT_ROLLING = `echo "::error::not rolling back. master and production may disagree; a human decides."`;
@@ -110,7 +111,7 @@ test("the Cloudflare secrets reach only the bookmark, the pre-deploy guard, the 
   const holders = [...text.matchAll(/\n {6}- name: (.+)\n[\s\S]*?(?=\n {6}- |\n {2}[\w-]+:\n|$)/g)]
     .filter((m) => m[0].includes("secrets.CLOUDFLARE_API_TOKEN"))
     .map((m) => m[1]);
-  assert.deepEqual(holders, [BOOKMARK, "Pre-deploy guard", "Deploy", PROMOTE, ROLLBACK, "Preview build", PREVIEW]);
+  assert.deepEqual(holders, [BOOKMARK, "Pre-deploy guard", "Deploy", ERRORS, PROMOTE, ROLLBACK, "Preview build", PREVIEW]);
   assert.doesNotMatch(step("verify:live"), /secrets\./);
 });
 
@@ -129,7 +130,7 @@ test("the deploy job publishes the attempt it shipped in, and never deploys a pu
 
 test("the rollback runs on a refusal only, calls the guard before wrangler, reads /health without -f, and checks the sha moved", () => {
   const body = step(ROLLBACK);
-  assert.match(body, /if: failure\(\) && needs\.deploy\.result == 'success' && steps\.verify\.outputs\.exit_code == '1'\n/);
+  assert.match(body, /if: failure\(\) && needs\.deploy\.result == 'success' && \(steps\.verify\.outputs\.exit_code == '1' \|\| steps\.errors\.outputs\.exit_code == '1'\)\n/);
   assert.match(text, /- name: verify:live\n\s+id: verify\n/, "the verify step has no id, so its exit code cannot be read");
   assert.match(step("verify:live"), /echo "exit_code=\$\{code\}" >> "\$GITHUB_OUTPUT"/);
   const guardAt = body.indexOf('node "$GUARD" "${ROLLBACK_FROM}"');
@@ -342,4 +343,23 @@ test("RUN: a refused gradual rollout reads the new version through its override 
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test("RUN PLANT: a gradual version with a worse error rate is refused (exit 1); too few requests promotes with a warning", () => {
+  const rows = (fresh, old) => JSON.stringify({ data: { viewer: { accounts: [{ workersInvocationsAdaptive: [
+    { sum: fresh, dimensions: { scriptVersion: "new-version" } },
+    { sum: old, dimensions: { scriptVersion: "old-version" } },
+  ] }] } } });
+  const env = { VERSION_ID: "new-version", PREVIOUS_VERSION_ID: "old-version", SPLIT_AT: "2026-10-31T00:00:00Z", MIN_REQUESTS: "20", MIN_ERRORS: "3", CLOUDFLARE_ACCOUNT_ID: "x", CLOUDFLARE_API_TOKEN: "x" };
+  const worse = runStep(ERRORS, { health: [rows({ requests: 100, errors: 9 }, { requests: 900, errors: 9 })], env });
+  assert.equal(worse.status, 1, worse.stdout + worse.stderr);
+  assert.match(worse.output, /^exit_code=1$/m, "the refusal is not recorded, so the rollback's if: would not run");
+  const fine = runStep(ERRORS, { health: [rows({ requests: 100, errors: 1 }, { requests: 900, errors: 9 })], env });
+  assert.equal(fine.status, 0, fine.stdout + fine.stderr);
+  const few = runStep(ERRORS, { health: [rows({ requests: 5, errors: 5 }, { requests: 900, errors: 0 })], env });
+  assert.equal(few.status, 0, few.stdout + few.stderr);
+  assert.match(few.stdout, /::warning::.*too few to compare/);
+  const unread = runStep(ERRORS, { health: [JSON.stringify({ data: null, errors: [{ message: "not authorized" }] })], env });
+  assert.equal(unread.status, 3);
+  assert.match(unread.summary, /versions deploy new-version@100%/);
 });
