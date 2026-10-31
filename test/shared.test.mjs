@@ -149,7 +149,7 @@ test("each app is checked for its kind's features, files belong to the deepest a
     }),
     { apps: { ".": "site", mcp: "worker" }, waive: { aiTxt: "x", tdm: "x", sitemap: "x", llms: "x", head: "x", schema: "x", indexnow: "x", securityTxt: "x", csp: "x", cspReport: "x", health: "x", capsomer: "x", a11y: "x" } },
   );
-  assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth"]);
+  assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth"]);
 });
 
 test("PLANT: a React Router app without a year on its hashed files fails, and passes once _headers gives them one", () => {
