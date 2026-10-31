@@ -6,7 +6,7 @@ import { delimiter, dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { WORKFLOWS, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/family.mjs";
+import { WORKFLOWS, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -23,7 +23,7 @@ test("a raw commit is refused, a pin behind the newest tag is a warning; the new
     tree({
       "package.json": JSON.stringify({ dependencies: { a: "github:DrDustinEdwards/prelum#v0.9.0", b: `github:DrDustinEdwards/site-runtime#${SHA_RAW}`, c: "github:DrDustinEdwards/d1-dump#v0.10.0", d: "git+https://github.com/DrDustinEdwards/capsomer.git#v0.9.0", enarratio: "^0.9.0" } }, null, 1),
       "app/package.json": '{"dependencies":{"enarratio":"0.10.0"}}',
-      ".github/workflows/ci.yml": `uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${SHA_V2} # v0.10.0\nuses: DrDustinEdwards/devkit/.github/workflows/family.yml@${"1".repeat(40)} # v0.9.0`,
+      ".github/workflows/ci.yml": `uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${SHA_V2} # v0.10.0\nuses: DrDustinEdwards/devkit/.github/workflows/shared.yml@${"1".repeat(40)} # v0.9.0`,
       // The tag ai-author.yml runs its bin from.
       ".github/workflows/ai-author.yml": "    with:\n      devkit: DrDustinEdwards/devkit#v0.9.0\n",
       ".github/workflows/other.yml": "      devkit: DrDustinEdwards/devkit#v0.10.0\n",
@@ -349,10 +349,10 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
   const missing = (/** @type {Record<string, string>} */ more, config = {}) =>
     checkWorkflows(tree({ ...files, ...more }), { apps: { ".": "static", mcp: "worker" }, ...config }, { self: "prelum", private: false }).map((f) => f.message.split("devkit's ")[1].split(".yml")[0]);
   assert.deepEqual(missing({}), WORKFLOWS.map((w) => w.name));
-  const calls = WORKFLOWS.filter((w) => !["family", "no-bloat", "worker-deploy"].includes(w.name)).map((w) => `      uses: DrDustinEdwards/devkit/.github/workflows/${w.name}.yml@${SHA_V2}`);
+  const calls = WORKFLOWS.filter((w) => !["shared", "no-bloat", "worker-deploy"].includes(w.name)).map((w) => `      uses: DrDustinEdwards/devkit/.github/workflows/${w.name}.yml@${SHA_V2}`);
   const ci = {
     // A comment naming a workflow is no call.
-    ".github/workflows/ci.yml": `jobs:\n  a:\n${calls.join("\n")}\n  # uses: DrDustinEdwards/devkit/.github/workflows/worker-deploy.yml@${SHA_V2}\n  b:\n    steps:\n      - run: npm run check\n      - run: npx devkit-family\n`,
+    ".github/workflows/ci.yml": `jobs:\n  a:\n${calls.join("\n")}\n  # uses: DrDustinEdwards/devkit/.github/workflows/worker-deploy.yml@${SHA_V2}\n  b:\n    steps:\n      - run: npm run check\n      - run: npx devkit-shared\n`,
     "package.json": JSON.stringify({ scripts: { check: "npm run check:bloat && tsc", "check:bloat": "devkit-no-bloat" } }),
   };
   assert.deepEqual(missing(ci), ["worker-deploy"]);
@@ -360,7 +360,7 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
   // devkit calls its own by path, and a reusable workflow it ships for others is no call; locally no-bloat only warns.
   const devkit = checkWorkflows(
     tree({
-      ".github/workflows/ci.yml": "jobs:\n  a:\n    uses: ./.github/workflows/family.yml\n",
+      ".github/workflows/ci.yml": "jobs:\n  a:\n    uses: ./.github/workflows/shared.yml\n",
       ".github/workflows/pr-footer.yml": `on:\n  workflow_call:\njobs:\n  a:\n    uses: DrDustinEdwards/devkit/.github/workflows/pr-footer.yml@${SHA_V2}\n`,
       "wrangler.jsonc": "{}",
       "test/fixtures/site/wrangler.jsonc": "{}",
@@ -424,12 +424,12 @@ test("a library's package.json with exports and no kind is judged as a site, and
   assert.match(first.message, /"apps": \{ "\.": "package" \}/);
 });
 
-test("PLANT: a .family.json with an unknown key or kind, or a --from missing a package, stops the check (exit 2) naming what is valid", () => {
+test("PLANT: a .shared.json with an unknown key or kind, or a --from missing a package, stops the check (exit 2) naming what is valid", () => {
   const root = mkdtempSync(join(tmpdir(), "family-"));
   spawnSync("git", ["init", "-q"], { cwd: root });
   const run = (/** @type {object} */ config, /** @type {string[]} */ args = []) => {
-    writeFileSync(join(root, ".family.json"), JSON.stringify(config));
-    const out = spawnSync(process.execPath, [fileURLToPath(new URL("../bin/family.mjs", import.meta.url)), ...args], { cwd: root, encoding: "utf8" });
+    writeFileSync(join(root, ".shared.json"), JSON.stringify(config));
+    const out = spawnSync(process.execPath, [fileURLToPath(new URL("../bin/shared.mjs", import.meta.url)), ...args], { cwd: root, encoding: "utf8" });
     return `${out.status} ${out.stdout.trim()}`;
   };
   assert.match(run({ wave: {} }), /^2 .*"wave" is no key; the valid ones are apps, waive, copies, libraries, tokens, spelling$/);
@@ -467,13 +467,13 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
     "enarratio/index.mjs": "export class ChartView {}\n",
   }).root;
   const { root, PATH } = repo({
-    ".family.json": JSON.stringify({ apps: { ".": "worker" }, copies: { "src/gone.ts": "moved" } }),
+    ".shared.json": JSON.stringify({ apps: { ".": "worker" }, copies: { "src/gone.ts": "moved" } }),
     "src/index.ts": 'import { buildSecurityHeaders } from "@dustinedwards/site-runtime/headers";\nexport function slugify(s) {}\nexport function stubGitHub() {}\n',
     "src/app.css": ":root {\n  --page-max: 1px;\n}\n",
   });
   const summary = join(root, "summary.md");
   const run = (/** @type {string[]} */ args) => {
-    const out = spawnSync(process.execPath, [fileURLToPath(new URL("../bin/family.mjs", import.meta.url)), ...args], { cwd: root, encoding: "utf8", env: { ...process.env, PATH, GITHUB_STEP_SUMMARY: summary, GITHUB_HEAD_REF: "" } });
+    const out = spawnSync(process.execPath, [fileURLToPath(new URL("../bin/shared.mjs", import.meta.url)), ...args], { cwd: root, encoding: "utf8", env: { ...process.env, PATH, GITHUB_STEP_SUMMARY: summary, GITHUB_HEAD_REF: "" } });
     return { status: out.status, lines: out.stdout.trim().split("\n") };
   };
 
@@ -486,12 +486,12 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
   const site = run(["--from", from]);
   assert.equal(site.status, 1);
   assert.deepEqual(site.lines.filter((l) => l.startsWith("::error")), [
-    `::error file=src/app.css,line=2::[tokens] --page-max is Capsomer's: set it there (its site layer for this site's own look), or say why in .family.json "tokens"`,
+    `::error file=src/app.css,line=2::[tokens] --page-max is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"`,
   ]);
   assert.ok(site.lines.includes("::warning file=src/index.ts,line=2::[copies] slugify is a local copy of Prelum ./slug slugify: import it"));
-  assert.ok(site.lines.includes('::warning file=.family.json::[config] "copies" "src/gone.ts" excuses nothing in this run: remove it'));
-  assert.match(site.lines.at(-1) ?? "", /^devkit-family: 1 to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, config 1\)/);
-  assert.match(readFileSync(summary, "utf8"), /^### Family check\n\npins 0, copies 1,/);
+  assert.ok(site.lines.includes('::warning file=.shared.json::[config] "copies" "src/gone.ts" excuses nothing in this run: remove it'));
+  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: 1 to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, config 1\)/);
+  assert.match(readFileSync(summary, "utf8"), /^### Shared-code check\n\npins 0, copies 1,/);
 
   // Prelum checking itself: its own export is its API, not a copy.
   writeFileSync(join(root, "package.json"), pkg("@drdustinedwards/site-helpers", { exports: { "./slug": "./src/index.ts" } }));

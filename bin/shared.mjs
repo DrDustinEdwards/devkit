@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The family check: what keeps a repository in step with the shared packages. It fails (exit 1, an ::error:: line each) on
+// The shared-code check: what keeps a repository in step with the shared packages. It fails (exit 1, an ::error:: line each) on
 //
 //   pins       a dependency on one of the shared packages, or a call to devkit's reusable workflows, on a raw commit
 //              rather than a release tag (a pin behind the newest release is a warning: Renovate opens that bump, and
@@ -16,17 +16,17 @@
 //              or loading its own files for the family's faces (Schibsted Grotesk, Martian Mono) instead of
 //              capsomer/fonts.css: a value the family shares is set once, in Capsomer, never per site;
 //   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere, Dustin 2026-10-25);
-//   workflows  a devkit workflow the repository's kinds need and no workflow calls: ai-author, pr-footer, family,
+//   workflows  a devkit workflow the repository's kinds need and no workflow calls: ai-author, pr-footer, shared,
 //              workflow-audit and dependencies everywhere, worker-size and worker-deploy for an app with a wrangler
 //              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package;
 //   fakes      a test fake of its own where devkit has one: a GitHub API fake, an Access key pair and key set, a fetch
 //              that refuses every URL, a list of DELETE FROMs (./github, ./access, ./network, ./d1);
-//   config     .family.json itself: an unknown key or kind stops the check (exit 2), and an exception that excused
+//   config     .shared.json itself: an unknown key or kind stops the check (exit 2), and an exception that excused
 //              nothing in this run is a warning.
 //
-//   npx devkit-family                    the check, against .family.json (no file: one site at the root)
-//   npx devkit-family --fix-spelling     rewrite the British spellings in place, then run the check
-//   npx devkit-family list               the generated list of every shared package's exports and every family feature
+//   npx devkit-shared                    the check, against .shared.json (no file: one site at the root)
+//   npx devkit-shared --fix-spelling     rewrite the British spellings in place, then run the check
+//   npx devkit-shared list               the generated list of every shared package's exports and every family feature
 //   --from <dir>                         read the packages from checkouts named by repository (dir/prelum, dir/site-runtime...)
 //                                        instead of node_modules; a checkout missing there stops the check (exit 2)
 //
@@ -214,7 +214,7 @@ export function definitionBody(/** @type {string} */ text, /** @type {number} */
 
 /**
  * Family features found by a heuristic, so they warn instead of failing: each is a function of the app's files that
- * answers what is missing, or null. `.family.json` "waive" silences one by its name, as it does a feature.
+ * answers what is missing, or null. `.shared.json` "waive" silences one by its name, as it does a feature.
  * @type {Record<string, { kinds: string[], use: string, missing: (app: { files: string[], text: string, read: (f: string) => string }) => string | null }>}
  */
 export const ADVISORIES = {
@@ -292,10 +292,10 @@ export function isWarning(/** @type {Finding} */ f, version = VERSION) {
 export const KINDS = ["site", "static", "private", "worker", "package"];
 const CONFIG_KEYS = { apps: 0, waive: 0, copies: 0, libraries: 0, tokens: 0, spelling: ["ignore", "contracts", "skip"] };
 
-/** Refuses a .family.json the check would misread: an unknown key (a typo'd "wave" waives nothing) or kind. */
+/** Refuses a .shared.json the check would misread: an unknown key (a typo'd "wave" waives nothing) or kind. */
 export function validateConfig(/** @type {Record<string, any>} */ config) {
   const bad = (/** @type {string} */ what, /** @type {string[]} */ valid) => {
-    throw new Error(`.family.json: ${what}; the valid ones are ${valid.join(", ")}`);
+    throw new Error(`.shared.json: ${what}; the valid ones are ${valid.join(", ")}`);
   };
   for (const key of Object.keys(config)) if (!(key in CONFIG_KEYS)) bad(`"${key}" is no key`, Object.keys(CONFIG_KEYS));
   for (const key of Object.keys(config.spelling ?? {})) if (!CONFIG_KEYS.spelling.includes(key)) bad(`"spelling" has no "${key}"`, CONFIG_KEYS.spelling);
@@ -305,7 +305,7 @@ export function validateConfig(/** @type {Record<string, any>} */ config) {
 /** The exceptions each config excused something with, so the ones that excused nothing can be named. */
 const EXCUSED = new WeakMap();
 
-/** Whether .family.json excuses `key` in `section` ("copies", "waive", "libraries", "tokens"), remembered when it does. */
+/** Whether .shared.json excuses `key` in `section` ("copies", "waive", "libraries", "tokens"), remembered when it does. */
 export function excused(/** @type {Config} */ config, /** @type {string} */ section, /** @type {string} */ key) {
   if (!(/** @type {Record<string, any>} */ (config)[section]?.[key])) return false;
   used(config, section, key);
@@ -317,7 +317,7 @@ function used(/** @type {Config} */ config, /** @type {string} */ section, /** @
   EXCUSED.get(config).add(`${section}\0${key}`);
 }
 
-/** Each exception in .family.json that excused nothing in this run: dead config, or a rule that moved past it. */
+/** Each exception in .shared.json that excused nothing in this run: dead config, or a rule that moved past it. */
 export function staleExceptions(/** @type {Config} */ config) {
   const seen = EXCUSED.get(config) ?? new Set();
   /** @type {[string, string][]} */
@@ -328,7 +328,7 @@ export function staleExceptions(/** @type {Config} */ config) {
   ];
   return all
     .filter(([s, k]) => !seen.has(`${s}\0${k}`))
-    .map(([s, k]) => ({ check: "config", file: ".family.json", warn: true, message: `${s.split(".").map((p) => `"${p}"`).join(" ")} "${k}" excuses nothing in this run: remove it` }));
+    .map(([s, k]) => ({ check: "config", file: ".shared.json", warn: true, message: `${s.split(".").map((p) => `"${p}"`).join(" ")} "${k}" excuses nothing in this run: remove it` }));
 }
 
 /** The newest release tag of a repository. */
@@ -471,7 +471,7 @@ export function checkCopies(tree, catalog, config, self) {
       const m = HEADERS_COPY.find.exec(text);
       if (m && !excused(config, "copies", file)) {
         const line = text.slice(0, m.index).split("\n").length;
-        found.push({ check: "copies", file, line, failsFrom: HEADERS_COPY.failsFrom, message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .family.json "copies"` });
+        found.push({ check: "copies", file, line, failsFrom: HEADERS_COPY.failsFrom, message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .shared.json "copies"` });
       }
     }
   }
@@ -494,7 +494,7 @@ export function checkLibraries(tree, config, peers = {}) {
     const asked = new Set(Object.keys(deps).flatMap((d) => peers[d] ?? []));
     for (const dep of Object.keys(deps)) {
       const lib = LIBRARIES.find((l) => l.find.test(dep));
-      if (lib && !asked.has(dep) && !excused(config, "libraries", dep)) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .family.json "libraries"` });
+      if (lib && !asked.has(dep) && !excused(config, "libraries", dep)) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .shared.json "libraries"` });
     }
   }
   return found;
@@ -539,14 +539,14 @@ export function checkTokens(tree, tokens, config) {
       const name = m[2];
       if (!tokens.has(name) || !rootRule(code, m.index) || excused(config, "tokens", name)) continue;
       const line = code.slice(0, m.index + m[1].length).split("\n").length;
-      found.push({ check: "tokens", file, line, message: `${name} is Capsomer's: set it there (its site layer for this site's own look), or say why in .family.json "tokens"` });
+      found.push({ check: "tokens", file, line, message: `${name} is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"` });
     }
     // The family's faces come from capsomer/fonts.css, every weight in one file each, so a bold is the same bold on every
     // site (Dustin, 2026-10-28: sites that picked their own weights drew the footer's name differently).
     for (const m of code.matchAll(/@fontsource(?:-variable)?\/(?:schibsted-grotesk|martian-mono)\b|@font-face\s*\{[^}]*font-family:\s*["']?(?:Schibsted Grotesk|Martian Mono)/g)) {
       if (excused(config, "tokens", "fonts")) break;
       const line = code.slice(0, m.index).split("\n").length;
-      found.push({ check: "tokens", file, line, message: `the family's faces are Capsomer's: load capsomer/fonts.css instead of your own files, or say why in .family.json "tokens" "fonts"` });
+      found.push({ check: "tokens", file, line, message: `the family's faces are Capsomer's: load capsomer/fonts.css instead of your own files, or say why in .shared.json "tokens" "fonts"` });
     }
   }
   return found;
@@ -570,7 +570,7 @@ export function checkFeatures(tree, config, now = Date.now()) {
   const owner = ownerOf(apps);
   // A library with no kind is judged as the default site; the finding says how to say otherwise.
   const manifest = JSON.parse(tree.read("package.json") || "{}");
-  const library = !config.apps && (manifest.exports || manifest.bin) ? ` (package.json has ${manifest.exports ? "exports" : "a bin"}: a library says .family.json "apps": { ".": "package" })` : "";
+  const library = !config.apps && (manifest.exports || manifest.bin) ? ` (package.json has ${manifest.exports ? "exports" : "a bin"}: a library says .shared.json "apps": { ".": "package" })` : "";
   for (const [dir, kind] of apps) {
     const mine = tree.files.filter((f) => owner(f) === dir && !NOT_SOURCE.test(f));
     const text = mine.filter((f) => SOURCE.test(f) || /\.(css|ya?ml)$/.test(f) || posix.basename(f) === "package.json").map(tree.read).join("\n");
@@ -628,7 +628,7 @@ const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
 export const WORKFLOWS = [
   { name: "ai-author", failsFrom: "0.21.0", runs: ["devkit-check-trailers", "bin/check-trailers.mjs"], needed: () => "every repository" },
   { name: "pr-footer", failsFrom: "0.21.0", needed: () => "every repository" },
-  { name: "family", failsFrom: "0.21.0", runs: ["devkit-family", "bin/family.mjs"], needed: () => "every repository" },
+  { name: "shared", failsFrom: "0.21.0", runs: ["devkit-shared", "bin/shared.mjs"], needed: () => "every repository" },
   { name: "workflow-audit", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "dependencies", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "worker-size", failsFrom: "0.21.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
@@ -677,7 +677,7 @@ export function checkWorkflows(tree, config, repo = {}) {
       file: ".github/workflows",
       warn: warn || unsure || undefined,
       failsFrom,
-      message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .family.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
+      message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .shared.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
     });
   }
   return found;
@@ -713,7 +713,7 @@ export function checkFakes(tree, config, self) {
     for (const { find, use, say, failsFrom } of FAKES) {
       const m = find[0].exec(code);
       if (!m || !find.every((f) => f.test(code)) || excused(config, "copies", file)) continue;
-      found.push({ check: "fakes", file, line: code.slice(0, m.index).split("\n").length, failsFrom, message: `${say}: use ${use}, or say why in .family.json "copies"` });
+      found.push({ check: "fakes", file, line: code.slice(0, m.index).split("\n").length, failsFrom, message: `${say}: use ${use}, or say why in .shared.json "copies"` });
     }
   }
   return found;
@@ -748,7 +748,7 @@ export function respell(text, from, to, protect, names) {
  */
 export function checkSpelling(root, config, fix = false, names = true) {
   const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" }).split("\0").filter(Boolean);
-  const skip = [...(config.spelling?.skip ?? []), "**/*.lock", "**/package-lock.json", "**/pnpm-lock.yaml", ".family.json"];
+  const skip = [...(config.spelling?.skip ?? []), "**/*.lock", "**/package-lock.json", "**/pnpm-lock.yaml", ".shared.json"];
   const targets = files.filter((f) => !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) && !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f));
   // Names other tools own: GitHub Actions' cancelled(), Renovate's minimumReleaseAgeBehaviour, and ARIA's labelledby as a // codespell:ignore
   // camelCase name (labelledBy, ariaLabelledByElements). codespell:ignore
@@ -884,7 +884,7 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
   const lines = [
     "# What the shared packages already do",
     "",
-    "Generated by `devkit-family list`; do not edit by hand. Before writing anything a site might share, look here: if a package exports it, import it. `npx devkit-family` fails a repository that copies one of these, misses a family feature, or pins an old release.",
+    "Generated by `devkit-shared list`; do not edit by hand. Before writing anything a site might share, look here: if a package exports it, import it. `npx devkit-shared` fails a repository that copies one of these, misses a family feature, or pins an old release.",
     "",
     "## Family features",
     "",
@@ -938,7 +938,10 @@ function main(/** @type {string[]} */ argv) {
     return 0;
   }
   /** @type {Config} */
-  const config = existsSync(join(root, ".family.json")) ? JSON.parse(readFileSync(join(root, ".family.json"), "utf8")) : {};
+  // .family.json is the config's name before 0.20.8, read until a repository renames it.
+  const configFile = [".shared.json", ".family.json"].find((f) => existsSync(join(root, f)));
+  const config = configFile ? JSON.parse(readFileSync(join(root, configFile), "utf8")) : {};
+  if (configFile === ".family.json") console.log("::warning file=.family.json::[config] .family.json is now .shared.json: rename it");
   validateConfig(config);
   const tree = gitTree(root);
   // A shared package defines its own exports; it is checked against the others, as a package, not a site.
@@ -975,8 +978,8 @@ function main(/** @type {string[]} */ argv) {
     console.log(`::${isWarning(f) ? "warning" : "error"}${where}::[${f.check}] ${f.message}`);
   }
   const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling", "workflows", "fakes", "config"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
-  console.log(errors.length ? `devkit-family: ${errors.length} to fix (${counts}). What the packages export: npx devkit-family list` : `devkit-family: in step with the family (${counts}).`);
-  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Family check\n\n${counts}\n`);
+  console.log(errors.length ? `devkit-shared: ${errors.length} to fix (${counts}). What the packages export: npx devkit-shared list` : `devkit-shared: uses the shared code (${counts}).`);
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Shared-code check\n\n${counts}\n`);
   return errors.length ? 1 : 0;
 }
 
@@ -984,7 +987,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   try {
     process.exitCode = main(process.argv.slice(2));
   } catch (error) {
-    console.log(`::error::devkit-family could not run: ${error instanceof Error ? error.message : String(error)}`);
+    console.log(`::error::devkit-shared could not run: ${error instanceof Error ? error.message : String(error)}`);
     process.exitCode = 2;
   }
 }

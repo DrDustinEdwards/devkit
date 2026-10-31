@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.8 (2026-10-31)
+
+- The family check is now the shared-code check: `devkit-shared` (bin/shared.mjs), `shared.yml` (job "Uses the shared code") and `.shared.json`. `devkit-family`, `family.yml` and `.family.json` still work, with a warning to rename, and are removed in 0.21.0.
+
 ## 0.20.7 (2026-10-31)
 
 - `devkit-family`: a local copy found by its name (a definition named like a shared export) is a warning until 0.21.0, like the copies found by their text. Names are read from each package's newest release, so a new export such as site-api's `readEmbedded` turned every repository defining one red on its next push, before any of them could move.

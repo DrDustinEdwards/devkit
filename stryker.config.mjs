@@ -3,7 +3,7 @@
 // own tests take under 2 s. Each module fails its run below its bar (thresholds.break).
 //
 //   node stryker.config.mjs                                                every module, as code-map-self.yml runs it
-//   MODULE=family npx --package @stryker-mutator/core@10.1.1 stryker run   one
+//   MODULE=shared npx --package @stryker-mutator/core@10.1.1 stryker run   one
 //
 // Not here: scripts/strip-pr-footer.mjs and scripts/inline-rollback-guard.mjs, whose tests hold the workflows' inlined
 // copies to the files byte for byte, which an instrumented copy never is, and scripts/code-map.mjs, two of whose coverage
@@ -17,7 +17,7 @@ export const BARS = {
   "bin/bootstrap": 47,
   "bin/check-trailers": 70,
   "bin/conformance": 51,
-  "bin/family": 72,
+  "bin/shared": 72,
   "bin/live": 26,
   "bin/mutation-report": 84,
   "bin/no-bloat": 86,
@@ -27,7 +27,7 @@ export const BARS = {
   "scripts/rollback-guard": 70,
 };
 
-const module = process.env.MODULE?.includes("/") ? process.env.MODULE : `bin/${process.env.MODULE ?? "family"}`;
+const module = process.env.MODULE?.includes("/") ? process.env.MODULE : `bin/${process.env.MODULE ?? "shared"}`;
 const name = module.split("/")[1];
 if (!(module in BARS)) throw new Error(`MODULE=${process.env.MODULE} is none of ${Object.keys(BARS).join(", ")}`);
 
