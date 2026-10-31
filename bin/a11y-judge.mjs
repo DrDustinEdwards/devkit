@@ -13,7 +13,7 @@ export const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"
 const FORCED_COLOR_RULES = ["color-contrast", "color-contrast-enhanced", "link-in-text-block"];
 
 /** Tab presses on one element in a row before the walk calls it a trap; fewer is focus moving inside an iframe. */
-export const TRAP_PRESSES = 10;
+const TRAP_PRESSES = 10;
 
 /**
  * Up to `max` sitemap pages of different types: about, contact and sign-in first, then detail and list pages alternately,
@@ -56,7 +56,7 @@ export function pickPages(origin, urls, max) {
 }
 
 /** Whether a focused element looks different from itself unfocused: an outline that paints, or any other style changed. */
-export function focusVisible(/** @type {Record<string, string>} */ focused, /** @type {Record<string, string> | undefined} */ unfocused) {
+function focusVisible(/** @type {Record<string, string>} */ focused, /** @type {Record<string, string> | undefined} */ unfocused) {
   const outline = focused.outline ?? "";
   const outlinePaints = !/^none/.test(outline) && !/ 0px /.test(`${outline} `) && !/rgba\(\d+, \d+, \d+, 0\)$/.test(outline);
   return outlinePaints || Object.keys(focused).some((key) => key !== "outline" && unfocused !== undefined && focused[key] !== unfocused[key]);
@@ -218,7 +218,7 @@ function judgeForced(/** @type {PageScan} */ page, add) {
 }
 
 /** Each place the heading level jumps by more than one, and a first heading below h2. */
-export function headingSkips(/** @type {{ level: number, sel: string }[]} */ headings) {
+function headingSkips(/** @type {{ level: number, sel: string }[]} */ headings) {
   const skips = headings.length && headings[0].level > 2 ? [`starts at h${headings[0].level}`] : [];
   for (let i = 1; i < headings.length; i++) {
     if (headings[i].level > headings[i - 1].level + 1) skips.push(`h${headings[i - 1].level} to h${headings[i].level} at \`${headings[i].sel}\``);
