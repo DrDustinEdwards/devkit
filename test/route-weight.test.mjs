@@ -39,8 +39,20 @@ const read = (/** @type {string} */ url) => {
 };
 const size = (/** @type {Buffer} */ bytes) => bytes.length;
 
-test("each route weighs the entry and its chain from root, each file once; root and resource routes have no row", () => {
+test("each route weighs the entry and its chain from root, each file once; root and resource routes have no row; with a /site.js, only a hydrating chain weighs React", () => {
   assert.deepEqual(routeWeights(MANIFEST, read, size), [
+    { id: "routes/admin.users", path: "/admin/users", js: 110111, css: 1000, total: 111111 },
+    { id: "routes/admin", path: "/admin", js: 10111, css: 1000, total: 11111 },
+  ]);
+  // With a /site.js, a route whose chain declares hydrate: true weighs React; any other weighs /site.js and its stylesheets.
+  const files = { ...FILES, "/site.js": 7, "/assets/admin.js": `var k={hydrate:!0};${"x".repeat(10000 - 19)}` };
+  const readWith = (/** @type {string} */ url) => {
+    const file = files[/** @type {keyof typeof files} */ (url)];
+    return Buffer.from(typeof file === "string" ? file : "x".repeat(file));
+  };
+  const plain = { ...MANIFEST, routes: { ...MANIFEST.routes, "routes/about": { id: "routes/about", parentId: "root", path: "about", module: "/assets/admin.users.js", css: ["/assets/app.css"], hasDefaultExport: true } } };
+  assert.deepEqual(routeWeights(plain, readWith, size, false, "/site.js"), [
+    { id: "routes/about", path: "/about", js: 7, css: 1001000, total: 1001007 },
     { id: "routes/admin.users", path: "/admin/users", js: 110111, css: 1000, total: 111111 },
     { id: "routes/admin", path: "/admin", js: 10111, css: 1000, total: 11111 },
   ]);

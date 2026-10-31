@@ -2,7 +2,40 @@
 
 ## Unreleased
 
-- `devkit-live`: a site's `checkArgs` in `sites.json` (`{ "<check name>": [...] }`) follow the check's own `args` on that site alone, and an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes (`--start`, `--pages`, from the next Prelum release), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
+- `devkit-live`: an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes through `site_args` (`--start`, `--pages`, from Prelum v0.25.0), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
+
+## 0.20.18 (2026-10-31)
+
+- `devkit-shared` fails a site-runtime pin behind a minor that has been out three days or more (`FRESH` in `bin/shared.mjs`); a pin behind a younger release is the usual warning. site-runtime releases many minors a day, so the grace window is time, not a count of minors, and a fresh release never turns a site red. The release dates come from the GitHub releases API (one to three requests, with the run's token in `shared.yml`); when they cannot be read the rule is a warning that says so, never a silent pass.
+- The scoreboard grades Capsid Portal and Carrel Desk (`live/sites.json`, kind `app`: a signed-in app behind Access, which only the checks that name `app` grade). Area 2 runs `site-runtime-security` against both, and reads `signed-in-security`, the signed-in crawl Capsid's Worker runs and publishes at https://mcp.dustinedwards.info/reports/signed-in-security.json, since the Access credential it needs never goes to GitHub.
+
+## 0.20.17 (2026-10-31)
+
+- `devkit-a11y`: the live accessibility check, and area 9's check on the scoreboard (`live/areas.json`; the two MCP endpoints are skipped, having no public pages). It scans a site's home page, a 404 and up to eight sitemap pages of different types in Chromium with axe-core, a Tab walk, Escape on the menus and dialogs it reaches, reflow at 320 px, text spacing, a 720 px proxy for 200% zoom, reduced motion, axe and focus again in forced colors, and the page structure, and checks for an `/accessibility` statement; each finding is titled with the checklist item it proves (L1 to L4, S2, S3, S6), WCAG failures as errors and axe best practice as warnings. Playwright and `@axe-core/playwright` come from where it runs, so the package still installs no dependencies; `live.yml` installs them and Chromium before the checks. The scoreboard runs it from devkit's newest release tag, so area 9 reads "no devkit-a11y bin yet" until the release that carries it.
+
+## 0.20.16 (2026-10-31)
+
+- `devkit-migrations <dir> --apply <database>`: applies a deploy's pending D1 migrations, so no site needs a hand-run step before a merge. Migrations that only add are applied after the D1 Time Travel bookmark is read and its restore command written to the log and the step summary; one that drops, renames, deletes rows or says `-- contract:` is refused with the hand-run command. An unreadable list or bookmark, a failed apply, or a database still behind afterwards exits 1 before the deploy.
+
+## 0.20.15 (2026-10-31)
+
+- `worker-deploy.yml` takes a gradual rollout, opt-in (`gradual-percent`, `gradual-minutes`): it uploads a version, splits traffic with the live one, gates the new version through a version override, and promotes it or rolls back to the old one by id. And a preview per pull request, opt-in (`preview`, `preview-build`): `wrangler versions upload --preview-alias pr-<number>` on a pull request from the same repository, its URL in the summary and the `preview-url` output. Both off by default, so a caller that changes nothing deploys as before.
+- `docs/runbook.md`: the one runbook for every site (area 8, R3, I1, I2, B9): site down, database down, bad deploy, stale backup, lost data (D1 Time Travel with the exact commands, a dump restore, files from R2 with d1-dump's `restoreFiles`), each site's RPO and RTO, and the incident record format. Sites link to it.
+
+## 0.20.14 (2026-10-31)
+
+- The scoreboard runs area 8's deployed-commit (H4) and restore-drill (R1) checks daily. A check in `live/areas.json` takes `site_args`, arguments for one site keyed by its id, after `args`; area 8 gives Foxhound, Foxing, germomics, julieedwards.info, TXASM, Carrel's MCP Worker and dustinedwards.info `--repo DrDustinEdwards/<repo> --drill-workflow restore-drill.yml`. `devkit-live lint` refuses site_args for an unknown site or that are not a list of strings.
+- `devkit-console` (bin/console.mjs): the console ratchet. It counts the raw `console.*` calls in server code, outside comments and strings, against the baseline in `.console.json`, and fails when the count rises, naming each file above its own count; `--write-baseline` records it.
+- `devkit-migrations <dir>` (bin/migrations.mjs): the expand-only migration check, moved from dustinedwards.info's `scripts/check-migrations.mjs` and given the directory as an argument. Each migration's sha256 is recorded in `<dir>/manifest.json` (dustinedwards.info's manifest reads as it is); an edited, unrecorded, renamed or deleted migration fails, and so does a new one that drops or renames a table or column without a `-- contract: <reason>` line. With a local wrangler database it also compares the `d1_migrations` ledger with the files.
+
+## 0.20.13 (2026-10-31)
+
+- `devkit-route-weight` weighs what a page on an opt-in hydration site downloads. When the client build has a /site.js (devkit's siteScript), a route whose chain declares `handle = { hydrate: true }` weighs the client entry and its chain as before. Any other route weighs /site.js and its stylesheets, because it loads no React. Before this, every route counted the full React bundle, so a public page that started loading React again would still pass a budget set for the app pages. txasm's public pages now weigh about 35 KB, where they weighed about 157 KB.
+- The network check counts site-runtime's `./static-site` as receiving CSP reports: `staticSite` answers the report path itself, so a static site on it no longer imports `./csp-report`.
+
+## 0.20.12 (2026-10-31)
+
+- The shared-code check's `headers` feature accepts site-runtime's `withMcpHeaders` (./mcp-server), which sets an MCP door's whole header set, so a door that adopted it no longer fails "has no headers".
 
 ## 0.20.11 (2026-10-31)
 
@@ -78,6 +111,7 @@
 - `devkit-ops-audit`, area 8's scoreboard check (running and recovery), on the scoreboard's contract (`--origin`, `--from`, one annotation per finding titled with its checklist item, exit 0, 1 or 2). It reads a site's `/health` for its headers (H1), site-runtime's new shape `{ status, ok, time, checks, sha?, backup? }` (H2; the old shape, with no `status`, is an error naming what it lacks), a status code that agrees with `status` (H3), a deployed `sha` (H4, and with `--repo` the branch head, a warning for the first 30 minutes), a backup under 26 hours old (B1) and the `cron` check (C2, a warning); a missing page for an HTML 404 (N1, N6); and with `--drill-workflow`, a passing restore drill under 8 days old (R1). dustinedwards.info serves `/api/health` and passes `--health-path /api/health`; there is no silent fallback. On the live sites today: germomics and Foxing lack `status`, `checks` and `sha`; Capsid's MCP Worker sends `status: "ok"`, no `no-store` or `noindex`, a 38-hour-old backup and a plain-text 404.
 - `restore-drill.yml`, the weekly restore drill every site with a D1 database calls (`examples/restore-drill-caller.yml`): d1-dump's `drill --bucket` downloads the newest complete dump through the R2 REST API and restores it into SQLite. The caller pins d1-dump with `d1-dump-ref`, which has no default.
 - `worker-deploy.yml` takes `d1-database`: before the pre-deploy guard, where callers run migrations, the deploy job reads the database's Time Travel bookmark (`wrangler d1 time-travel info --json`, with the pinned wrangler) and writes it, its time and `npx wrangler d1 time-travel restore <db> --bookmark=<bookmark>` to the step summary and the workflow outputs `d1-bookmark` and `d1-bookmark-time`, so a bad migration is one command to undo. Cloudflare's rollback never undoes one. A bookmark it cannot read stops the deploy before the migration.
+
 
 ## 0.19.0 (2026-10-31)
 

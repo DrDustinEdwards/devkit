@@ -10,7 +10,10 @@
       "id": 2,
       "name": "Security headers and CSP",
       "builder": "Complete shared security headers and CSP",
-      "checks": [{ "name": "site-runtime-security", "repo": "site-runtime", "bin": "site-runtime-security", "kinds": ["site", "static", "worker"] }]
+      "checks": [
+        { "name": "site-runtime-security", "repo": "site-runtime", "bin": "site-runtime-security", "kinds": ["site", "static", "worker", "app"] },
+        { "name": "signed-in-security", "report": "https://mcp.dustinedwards.info/reports/signed-in-security.json", "kinds": ["app"], "max_age_minutes": 180 }
+      ]
     },
     {
       "id": 3,
@@ -60,14 +63,62 @@
       "id": 8,
       "name": "Running and recovery",
       "builder": "Complete shared running and recovery",
-      "checks": [{ "name": "ops-audit", "repo": "devkit", "bin": "devkit-ops-audit", "kinds": ["site", "worker"] }]
+      "checks": [
+        {
+          "name": "ops-audit",
+          "repo": "devkit",
+          "bin": "devkit-ops-audit",
+          "kinds": ["site", "worker"],
+          "site_args": {
+            "foxhound": ["--repo", "DrDustinEdwards/foxhound", "--drill-workflow", "restore-drill.yml"],
+            "foxing": ["--repo", "DrDustinEdwards/foxing", "--drill-workflow", "restore-drill.yml"],
+            "germomics": ["--repo", "DrDustinEdwards/germomics", "--drill-workflow", "restore-drill.yml"],
+            "julieedwards-info": ["--repo", "DrDustinEdwards/julieedwards-info", "--drill-workflow", "restore-drill.yml"],
+            "txasm": ["--repo", "DrDustinEdwards/txasm", "--drill-workflow", "restore-drill.yml"],
+            "carrel-mcp": ["--repo", "DrDustinEdwards/carrel", "--drill-workflow", "restore-drill.yml"],
+            "dustinedwards-info": ["--repo", "DrDustinEdwards/dustinedwards-info", "--drill-workflow", "restore-drill.yml"]
+          }
+        }
+      ],
+      "skip": {
+        "capsid": "static: the explorer is prerendered pages on an assets Worker whose script only sends the 404 page, with no database, binding, cron or backup to report; Capsid's health is capsid-mcp's /health",
+        "carrel": "static: the public page is an assets Worker with no binding and nothing private (carrel docs/public-site.md); Carrel's health is carrel-mcp's /health",
+        "enarratio": "static: an assets-only docs site with no database, binding, cron or backup; Capsid's watcher probes its root",
+        "capsomer": "static: an assets-only showcase with no database, binding, cron or backup; Capsid's watcher probes its root",
+        "prelum": "static: an assets-only specimen with no database, binding, cron or backup; Capsid's watcher probes its root"
+      }
     },
-    { "id": 9, "name": "Accessibility and components", "builder": "Complete accessibility and Capsomer components", "checks": [] },
+    {
+      "id": 9,
+      "name": "Accessibility and components",
+      "builder": "Complete accessibility and Capsomer components",
+      "checks": [{ "name": "devkit-a11y", "repo": "devkit", "bin": "devkit-a11y", "kinds": ["site", "static", "worker"] }],
+      "skip": {
+        "capsid-mcp": "an MCP endpoint with no public pages to scan",
+        "foxhound-mcp": "an MCP endpoint with no public pages to scan"
+      }
+    },
     {
       "id": 10,
       "name": "Charts",
       "builder": "Complete shared charts",
-      "checks": [{ "name": "chart-audit", "repo": "prelum", "bin": "prelum-chart-audit", "kinds": ["site", "static"], "args": ["--strict-frame"] }],
+      "checks": [
+        {
+          "name": "chart-audit",
+          "repo": "prelum",
+          "bin": "prelum-chart-audit",
+          "kinds": ["site", "static"],
+          "args": ["--strict-frame"],
+          "site_args": {
+            "foxhound": [
+              "--start", "https://foxhoundapp.com/demos/dashboard",
+              "--start", "https://foxhoundapp.com/demos/recovery",
+              "--start", "https://foxhoundapp.com/demos/intelligence",
+              "--pages", "/demos/dashboard,/demos/recovery,/demos/intelligence"
+            ]
+          }
+        }
+      ],
       "skip": {
         "txasm": "nothing to chart: no charts, meters or data SVGs, and no numbers that should be one (charts audit, 30 Oct 2026)",
         "julieedwards-info": "nothing to chart: a one-page campaign site with no charts or data SVGs (charts audit, 30 Oct 2026)",

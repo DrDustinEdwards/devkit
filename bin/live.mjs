@@ -13,11 +13,13 @@
 //
 //   { "name": "prelum-audit", "repo": "prelum", "bin": "prelum-audit", "kinds": ["site", "static"], "ref": "v0.19.0" }
 //
-// "kinds" are the site kinds it applies to (site, static, worker); "args", when given, follow --origin and --from (one bin
-// run two ways, once per kind). A site's "checkArgs" ({ "<check name>": ["--flag", "value"] }) follow the check's own args
-// on that site alone, for what a crawl cannot find there (pages only a demo session shows). An area's "skip" names a site
-// the area does not apply to, and why; its "unchecked" names what its checks cannot reach (a signed-in site or page), and
-// why, so the board says so instead of looking finished.
+// "kinds" are the site kinds it applies to (site, static, worker, app: a signed-in app behind Access, which only the checks
+// that name it grade); "args", when given, follow --origin and --from (one bin
+// run two ways, once per kind). "site_args" adds arguments for one site only, after "args", keyed by site id: area 8 gives
+// each site with a restore drill its repository and drill workflow (`--repo owner/name --drill-workflow restore-drill.yml`).
+// An area's "skip" names a site the area does not apply to, and why; its "unchecked" names what its checks cannot reach (a
+// signed-in site or page), and why, so the board says so instead of looking finished. A check's bin inherits the run's
+// environment, so GITHUB_TOKEN reaches it.
 //
 // A REPORTED check is one that needs a site's secrets, so it runs where the secrets already live and publishes its result
 // on that system's own https origin; GitHub never holds a site key. The run reads the report instead of running a bin:
@@ -53,7 +55,7 @@ import { parseArgs } from "node:util";
 
 export const CLEAN_DAYS = 7;
 const OWNER = "DrDustinEdwards";
-const KINDS = ["site", "static", "worker"];
+const KINDS = ["site", "static", "worker", "app"];
 const VERDICTS = ["complete", "partial", "missing"];
 const MAX_FINDINGS = 100;
 const CHECK_TIMEOUT_MS = 20 * 60_000;
@@ -84,14 +86,6 @@ export function lintConfig({ sites, areas, verdicts }) {
     if (siteIds.has(site.id)) problems.push(`site ${site.id} is listed twice`);
     siteIds.add(site.id);
     if (!KINDS.includes(site.kind)) problems.push(`site ${site.id} has kind ${site.kind}, not one of ${KINDS.join(", ")}`);
-    if (site.checkArgs !== undefined) {
-      const ok = typeof site.checkArgs === "object" && !Array.isArray(site.checkArgs) && site.checkArgs !== null;
-      for (const [name, args] of Object.entries(ok ? site.checkArgs : {})) {
-        if (!areas.some((area) => area.checks.some((check) => check.name === name && !check.report))) problems.push(`site ${site.id} has checkArgs for ${name}, which is no run check`);
-        if (!(Array.isArray(args) && args.every((arg) => typeof arg === "string"))) problems.push(`site ${site.id} checkArgs for ${name} are not a list of strings`);
-      }
-      if (!ok) problems.push(`site ${site.id} checkArgs is not an object of check names`);
-    }
     for (const key of ["origin", "from"]) {
       if (site[key] !== undefined && !/^https:\/\/[a-z0-9.-]+$/.test(site[key])) problems.push(`site ${site.id} ${key} ${site[key]} is not a bare https origin`);
     }
@@ -104,7 +98,11 @@ export function lintConfig({ sites, areas, verdicts }) {
         if (!check.name || check.repo || check.bin || !/^https:\/\/[a-z0-9.-]+\//.test(check.report)) problems.push(`area ${area.id} check ${check.name} needs a name and an https report URL, and no repo or bin`);
       } else if (!check.name || !check.repo || !check.bin) problems.push(`area ${area.id} has a check without a name, repo and bin`);
       for (const kind of check.kinds ?? []) if (!KINDS.includes(kind)) problems.push(`area ${area.id} check ${check.name} names kind ${kind}`);
-      if (check.args !== undefined && !(Array.isArray(check.args) && check.args.every((arg) => typeof arg === "string"))) problems.push(`area ${area.id} check ${check.name} has args that are not a list of strings`);
+      if (check.args !== undefined && !isStrings(check.args)) problems.push(`area ${area.id} check ${check.name} has args that are not a list of strings`);
+      for (const [id, args] of Object.entries(check.site_args ?? {})) {
+        if (!siteIds.has(id)) problems.push(`area ${area.id} check ${check.name} has site_args for unknown site ${id}`);
+        if (!isStrings(args)) problems.push(`area ${area.id} check ${check.name} has site_args for ${id} that are not a list of strings`);
+      }
     }
     for (const id of Object.keys(area.skip ?? {})) if (!siteIds.has(id)) problems.push(`area ${area.id} skips unknown site ${id}`);
     for (const [what, why] of Object.entries(area.unchecked ?? {})) if (typeof why !== "string" || !why) problems.push(`area ${area.id} leaves ${what} unchecked without a reason`);
@@ -128,6 +126,8 @@ export function lintConfig({ sites, areas, verdicts }) {
   }
   return problems;
 }
+
+const isStrings = (/** @type {unknown} */ list) => Array.isArray(list) && list.every((item) => typeof item === "string");
 
 const same = (/** @type {string} */ a, /** @type {string} */ b) => Boolean(a) && a.trim().toLowerCase() === b?.trim().toLowerCase();
 
@@ -276,7 +276,7 @@ export async function runAll({ sites, areas }, { onlyAreas, onlySites, token, lo
           results.push({ ...record, status: "error", errors: 0, warnings: 0, findings: [], detail: error });
           continue;
         }
-        const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : []), ...(check.args ?? []), ...(site.checkArgs?.[check.name] ?? [])];
+        const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : []), ...(check.args ?? []), ...(check.site_args?.[site.id] ?? [])];
         jobs.push(async () => {
           const result = resultOf(await runBin(bin, args));
           log(`area ${area.id} ${site.id} ${check.name}: ${result.status} (${result.errors} errors, ${result.warnings} warnings, ${result.seconds}s)`);
