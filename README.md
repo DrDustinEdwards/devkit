@@ -58,6 +58,8 @@ Two jobs:
 - `deploy` checks out, installs, runs the caller's pre-deploy guard, runs `wrangler deploy` with the wrangler version pinned in the file, and publishes the run attempt it shipped in. Never on a pull request.
 - `live gate` polls the health URL (40 reads, 3 seconds apart) until its JSON `sha` is this run's commit, then runs the verify command. Exit 0 passes. Exit 1 is a refusal, and only a refusal runs "Roll back the deploy this run shipped": the rollback guard rolls back only when what is live is this run's commit (or /health is unreadable and the deploy ran in this same attempt), runs `wrangler rollback`, and reads /health until the sha moves. Exit 3, or a /health that never answered, is "could not run": the job fails and nothing rolls back.
 
+Once the gate passes, "Warm the stored pages" fetches every sitemap page once, so the first reader gets a stored page. A site that deploys another way runs the same loop with `npx devkit-warm <origin> [--sha <commit>]` after its deploy; `--sha` waits up to 10 minutes for `/health` to name that commit first. It never fails the run.
+
 capsid's watcher reads the job name `live gate`, the step name, and the step's three `::error::` sentences ("rolled back: was ...", "not rolling back. ...", "the rollback did not take effect: ...") to write `deploy_outcomes`, and the step summary carries `rollback_from=` and `rollback_to=`. `test/worker-deploy-workflow.test.mjs` fails on a change to any of them.
 
 Inputs:

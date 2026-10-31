@@ -367,7 +367,8 @@ jobs:
 
       # Every deploy starts the edge cache cold (the Worker version is in its key), so once the gate passes, each page in
       # the sitemap at the health route's origin is fetched once: the cache tiers store it, and the first reader gets a
-      # stored page rather than a render. A site with no sitemap warms nothing. Never fails the deploy.
+      # stored page rather than a render. A site with no sitemap warms nothing. Never fails the deploy. bin/warm.mjs is the
+      # same loop for sites that deploy outside this workflow; change both.
       - name: Warm the stored pages
         if: success()
         env:
