@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.4 (2026-10-31)
+
+- `worker-deploy.yml` reads the D1 Time Travel bookmark outside the checkout, so wrangler finds the database by name through the API. In 0.20.1 to 0.20.3 it read the caller's `wrangler.jsonc`, whose id the pre-deploy guard had not written yet, and Carrel's deploy stopped there.
+
 ## 0.20.3 (2026-10-31)
 
 - `dependencies.yml` reads OSV-Scanner's exit code under the runner's `bash -e`: in 0.20.2, exit 1 (vulnerabilities found) stopped the step before the base comparison, so a pull request failed on old advisories it did not add (prelum #128).

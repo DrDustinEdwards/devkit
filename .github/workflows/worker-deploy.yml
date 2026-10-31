@@ -129,6 +129,8 @@ jobs:
 
       # The undo point for a migration, read before the guard that runs one. Wrangler's rollback never undoes a migration;
       # a Time Travel restore to this bookmark does. A bookmark that cannot be read stops the deploy before any migration.
+      # It runs outside the checkout so wrangler finds the database by name through the API, not by a config id the
+      # pre-deploy guard has not written yet (Carrel's placeholder id failed here, 2026-10-31).
       - name: Record the D1 Time Travel bookmark
         id: bookmark
         if: inputs.d1-database != ''
@@ -139,7 +141,7 @@ jobs:
         run: |
           set -euo pipefail
           at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          info=$(npx --yes "wrangler@${WRANGLER_VERSION}" d1 time-travel info "$DB" --json) || info=""
+          info=$(cd "$RUNNER_TEMP" && npx --yes "wrangler@${WRANGLER_VERSION}" d1 time-travel info "$DB" --json) || info=""
           bookmark=$(printf '%s' "$info" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const b=JSON.parse(s.slice(s.indexOf("{"))).bookmark;if(typeof b!=="string"||!b)process.exit(1);process.stdout.write(b)})') || {
             echo "::error::could not read the Time Travel bookmark of ${DB}, so this deploy stops before any migration runs without an undo point."
             exit 1
