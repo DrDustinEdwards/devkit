@@ -10,7 +10,7 @@ Newest run 2026-10-30 23:28 UTC. Filled only from the live checks and the verifi
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
 | 1. Search, sharing and AI answers | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +0 | −0 |
 | 2. Security headers and CSP | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
-| 3. Sign-in and access | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 3. Sign-in and access | ❌ | ❌ | ❌ | · | ❌ | · | ❌ | ❌ | · | · | · | · | ❌ | ❌ | ❌ | +0 | −0 |
 | 4. Writing and rendering | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
 | 5. Carrel editing contract | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
 | 6. Images and media | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
@@ -68,20 +68,14 @@ Builder: Complete shared security headers and CSP. Verifier: none yet.
 Builder: Complete shared sign-in and access. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: no live check yet
-- ❌ Germomics: no live check yet
-- ❌ julieedwards.info: no live check yet
-- ❌ TXASM: no live check yet
-- ❌ BSW: no live check yet
-- ❌ Foxhound: no live check yet
-- ❌ Foxing: no live check yet
-- ❌ Carrel: no live check yet
-- ❌ Enarratio: no live check yet
-- ❌ Capsomer: no live check yet
-- ❌ Prelum specimen: no live check yet
-- ❌ Capsid explorer: no live check yet
-- ❌ Capsid MCP: no live check yet
-- ❌ Foxhound admin MCP: no live check yet
+- ❌ dustinedwards.info: not run yet
+- ❌ Germomics: not run yet
+- ❌ TXASM: not run yet
+- ❌ Foxhound: not run yet
+- ❌ Foxing: not run yet
+- ❌ Capsid explorer: not run yet
+- ❌ Capsid MCP: not run yet
+- ❌ Foxhound admin MCP: not run yet
 
 ### 4. Writing and rendering
 
