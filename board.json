@@ -3012,7 +3012,7 @@
    "id": 5,
    "name": "Carrel editing contract",
    "builder": "Complete Carrel editing contract",
-   "verifier": null,
+   "verifier": "Verify area 5 Carrel editing contract",
    "lines": {
     "prs": 12,
     "added": 37767,
@@ -3021,8 +3021,16 @@
    "unchecked": {},
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "partial",
+     "reason": "no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/server.ts",
+      "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/webmention.ts",
+      "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/bin/site-api-live.mjs",
+      "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/conformance.ts",
+      "https://github.com/DrDustinEdwards/carrel/blob/main/app/routes/editor.tsx",
+      "https://github.com/DrDustinEdwards/capsomer/blob/main/components/posts-list/posts-list.react.tsx"
+     ]
     },
     "dustinedwards-info": {
      "status": "missing",
@@ -3097,12 +3105,20 @@
     },
     "germomics": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "author filter 501 though show.author is the byline; deleted post 404 not 410; preview is a hand-written shell; no series; no setTags; revisions author 'germomics', pages no history; admin.content.$key still writes pages outside Carrel",
+     "evidence": [
+      "https://germomics.com/api/carrel/v1/meta",
+      "https://github.com/DrDustinEdwards/germomics/blob/f86a616/app/lib/carrel/adapter.server.ts"
+     ],
      "clean_days": 1
     },
     "julieedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "pins v0.17.0 so webmentions can read the stale edge copy, sent on publish only; live section with a draft reads as draft; revisions capped at 50; no delete or unpublish (needs ruling); preview without page chrome",
+     "evidence": [
+      "https://julieedwards.info/api/carrel/v1/meta",
+      "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/lib/carrel/sections.server.ts"
+     ],
      "clean_days": 1
     },
     "txasm": {
@@ -3132,12 +3148,20 @@
     },
     "foxhound": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently",
+     "evidence": [
+      "https://foxhoundapp.com/api/carrel/v1/meta",
+      "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/lib/carrel/adapter.server.ts"
+     ],
      "clean_days": 1
     },
     "foxing": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "author filter 501 though author_id exists and JSON-LD credits Foxing; pins v0.17.0 so webmentions can read the stale edge copy; deleted post 404 not 410; preview hand-written shell; no series; redirects not removed on delete (301 to 404); revision author raw id",
+     "evidence": [
+      "https://foxing.app/api/carrel/v1/meta",
+      "https://github.com/DrDustinEdwards/foxing/blob/6a2a21d/apps/web/app/lib/carrel/journal-adapter.server.ts"
+     ],
      "clean_days": 1
     },
     "carrel": {

@@ -12,7 +12,7 @@ Newest run 2026-10-31 13:06 UTC. Filled only from the live checks and the verifi
 | 2. Security headers and CSP | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | +48020 | −6230 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | ❌ | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | +5556 | −1273 |
 | 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6126 | −2805 |
-| 5. Carrel editing contract | ❌ | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
+| 5. Carrel editing contract | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
 | 6. Images and media | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | ❌ | · | +23097 | −2090 |
 | 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6435 | −3179 |
 | 8. Running and recovery | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +24854 | −1688 |
@@ -139,23 +139,23 @@ Builder: Complete shared writing and rendering. Verifier: none yet.
 
 ### 5. Carrel editing contract
 
-Builder: Complete Carrel editing contract. Verifier: none yet.
+Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editing contract.
 
-- ❌ Package: no verifier has checked the package
+- 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
 - ❌ dustinedwards.info: carrel-conformance: 9 errors; site-api-live: 4 errors
   - M1: https://dustinedwards.info/api/carrel/v1 meta: answers with this contract's schema hash failed
   - M1: https://dustinedwards.info/api/carrel/v1 errors: problem details with type, title and status failed
   - M1: https://dustinedwards.info/api/carrel/v1 preview: a tiny source answers HTML that is never indexed failed
   - M1: https://dustinedwards.info/api/carrel/v1 publish with a future publishedAt: refused, or not implemented where the site cannot set the date failed
   - M1: https://dustinedwards.info/api/carrel/v1 content rename of an unknown id: refused, or not implemented where the site lacks it failed
-- 🟡 Germomics: checks pass; no verifier yet
-- 🟡 julieedwards.info: checks pass; no verifier yet
+- 🟡 Germomics: author filter 501 though show.author is the byline; deleted post 404 not 410; preview is a hand-written shell; no series; no setTags; revisions author 'germomics', pages no history; admin.content.$key still writes pages outside Carrel
+- 🟡 julieedwards.info: pins v0.17.0 so webmentions can read the stale edge copy, sent on publish only; live section with a draft reads as draft; revisions capped at 50; no delete or unpublish (needs ruling); preview without page chrome
 - ❌ TXASM: site-api-live: 3 errors
   - K4: https://txasm.org/api/carrel/v1/meta meta answered 302 without the key, expected 401
   - K4: https://txasm.org/api/carrel/v1/site-api-live-07d3287f4fdd an unknown route answered 302 without the key, expected 401
   - E2: https://txasm.org/preview/qyUUIopudurFdz6RRZA9AKz-sediXAqe5cNjqqnjIAE an unknown preview link answered 302, expected 404
-- 🟡 Foxhound: checks pass; no verifier yet
-- 🟡 Foxing: checks pass; no verifier yet
+- 🟡 Foxhound: a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently
+- 🟡 Foxing: author filter 501 though author_id exists and JSON-LD credits Foxing; pins v0.17.0 so webmentions can read the stale edge copy; deleted post 404 not 410; preview hand-written shell; no series; redirects not removed on delete (301 to 404); revision author raw id
 
 ### 6. Images and media
 
