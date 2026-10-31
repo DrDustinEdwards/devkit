@@ -85,7 +85,16 @@
         "prelum": "static: an assets-only specimen with no database, binding, cron or backup; Capsid's watcher probes its root"
       }
     },
-    { "id": 9, "name": "Accessibility and components", "builder": "Complete accessibility and Capsomer components", "checks": [] },
+    {
+      "id": 9,
+      "name": "Accessibility and components",
+      "builder": "Complete accessibility and Capsomer components",
+      "checks": [{ "name": "devkit-a11y", "repo": "devkit", "bin": "devkit-a11y", "kinds": ["site", "static", "worker"] }],
+      "skip": {
+        "capsid-mcp": "an MCP endpoint with no public pages to scan",
+        "foxhound-mcp": "an MCP endpoint with no public pages to scan"
+      }
+    },
     {
       "id": 10,
       "name": "Charts",
