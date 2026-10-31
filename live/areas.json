@@ -12,7 +12,7 @@
       "builder": "Complete shared security headers and CSP",
       "checks": [
         { "name": "site-runtime-security", "repo": "site-runtime", "bin": "site-runtime-security", "kinds": ["site", "static", "worker", "app"] },
-        { "name": "signed-in-security", "report": "https://mcp.dustinedwards.info/reports/signed-in-security.json", "kinds": ["app"], "max_age_minutes": 180 }
+        { "name": "signed-in-security", "report": "https://mcp.dustinedwards.info/reports/signed-in-security.json", "site_reports": { "carrel-desk": "https://carrel-mcp.dustinedwards.info/reports/signed-in-security.json" }, "kinds": ["app"], "max_age_minutes": 180 }
       ]
     },
     {
