@@ -52,7 +52,8 @@
     "README.md"
   ],
   "scripts": {
-    "test": "node --test \"test/*.test.mjs\""
+    "test": "node --test \"test/*.test.mjs\"",
+    "contract": "node scripts/fakes-contract.mjs"
   },
   "license": "UNLICENSED",
   "devDependencies": {
