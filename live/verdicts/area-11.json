@@ -1,0 +1,147 @@
+{
+  "area": 11,
+  "verifier": "Verify area 11 AI and MCP",
+  "date": "2026-10-31",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/site-runtime/blob/main/bin/ai-audit.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/main/mcp-server.mjs",
+        "https://github.com/DrDustinEdwards/devkit/blob/main/bin/conformance.mjs"
+      ],
+      "note": "live check covers 7 of 89 items; conformance off Actions except Carrel; no static AI rules or pin comparison in devkit; toolsForGrant and fireOnce unused; no tool icons, tool-list pin, cancel on close; log has no export, retention, alert or Portal view; no shared agent keys; suggester metadata and Llama list"
+    },
+    "dustinedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/app/routes/search.ask.ts"
+      ],
+      "note": "Ask caches answers cut at max_tokens; Ask bypasses the gateway and untrusted(); suggester pins site-api v0.14.0"
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
+      ],
+      "note": "local style text instead of WRITING_RULES; suggester gaps from the package"
+    },
+    "julieedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
+      ],
+      "note": "suggester on site-api v0.17.0: no timeout, JSON mode or prose check"
+    },
+    "txasm": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
+      ],
+      "note": "suggester inherits the package gaps (feature metadata, Llama list)"
+    },
+    "bsw": {
+      "verdict": "complete",
+      "evidence": [
+        "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
+        "https://github.com/DrDustinEdwards/bsw"
+      ],
+      "note": "no MCP server or model call on main; ai-audit 0/0"
+    },
+    "foxhound": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxhoundapp.com/.well-known/oauth-authorization-server",
+        "https://github.com/DrDustinEdwards/foxhound/blob/main/app/lib/mcp/handler.server.ts"
+      ],
+      "note": "merchant MCP off the shared door: rate limit fails open, log after the call and fails open, open registration, own OAuth and era code, destructive tools unconfirmed, no outputSchema; local dash lines"
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxing.app/",
+        "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
+      ],
+      "note": "Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0"
+    },
+    "carrel": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
+      ],
+      "note": "routine re-fire guard not atomic; shared fireOnce unused"
+    },
+    "enarratio": {
+      "verdict": "complete",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/enarratio"
+      ],
+      "note": "no MCP server or model call; ai-audit 0/0"
+    },
+    "capsomer": {
+      "verdict": "complete",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/capsomer"
+      ],
+      "note": "no MCP server or model call; ai-audit 0/0"
+    },
+    "prelum": {
+      "verdict": "complete",
+      "evidence": [
+        "https://prelum.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/prelum"
+      ],
+      "note": "no MCP server or model call; ai-audit 0/0"
+    },
+    "capsid": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
+      ],
+      "note": "AI Search reranker has no timeout or gateway and returns raw upstream errors"
+    },
+    "capsid-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp",
+        "https://github.com/DrDustinEdwards/capsid/blob/master/src/scope.ts"
+      ],
+      "note": "no insufficient_scope step-up; no shared audience check; own scope.ts; PRM lists read only; own routine guard; no conformance; KV capsid-oauth not capsid-mcp-oauth"
+    },
+    "foxhound-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.foxhoundapp.com/health",
+        "https://github.com/DrDustinEdwards/foxhound/blob/main/mcp/src/scopes.ts"
+      ],
+      "note": "own scope names; no Host check; no conformance; read grant sees write tools"
+    },
+    "dustinedwards-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.dustinedwards.info/health",
+        "https://admin-mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp"
+      ],
+      "note": "PRM lists read only; no shared audience check; raw error text; no rate-limit row; site-runtime v0.54.0; /health has no sha; conformance not in CI; KV titled OAUTH_KV"
+    },
+    "carrel-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel-mcp.dustinedwards.info/health",
+        "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/mcp/scopes.ts"
+      ],
+      "note": "own scope names; write ticked by default; own agent keys; read grant sees write tools"
+    },
+    "foxing-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.foxing.app/health",
+        "https://github.com/DrDustinEdwards/foxing/blob/main/mcp/src/tools.ts"
+      ],
+      "note": "site-runtime v0.50.1; raw error text; three destructive tools unconfirmed; offset paging; no conformance"
+    }
+  }
+}
