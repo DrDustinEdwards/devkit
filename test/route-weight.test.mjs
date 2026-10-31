@@ -53,6 +53,20 @@ test("with linkedCss, a stylesheet the counted JS names by URL is counted, once"
   );
 });
 
+test("with a /site.js, a route whose chain declares hydrate: true weighs React; any other weighs /site.js and its stylesheets", () => {
+  const files = { ...FILES, "/site.js": 7, "/assets/admin.js": `var k={hydrate:!0};${"x".repeat(10000 - 19)}` };
+  const readWith = (/** @type {string} */ url) => {
+    const file = files[/** @type {keyof typeof files} */ (url)];
+    return Buffer.from(typeof file === "string" ? file : "x".repeat(file));
+  };
+  const plain = { ...MANIFEST, routes: { ...MANIFEST.routes, "routes/about": { id: "routes/about", parentId: "root", path: "about", module: "/assets/admin.users.js", css: ["/assets/app.css"], hasDefaultExport: true } } };
+  assert.deepEqual(routeWeights(plain, readWith, size, false, "/site.js"), [
+    { id: "routes/about", path: "/about", js: 7, css: 1001000, total: 1001007 },
+    { id: "routes/admin.users", path: "/admin/users", js: 110111, css: 1000, total: 111111 },
+    { id: "routes/admin", path: "/admin", js: 10111, css: 1000, total: 11111 },
+  ]);
+});
+
 test("a route over the budget warns, and so does one grown past both the ratio and the bytes; at either limit it passes", () => {
   const row = (/** @type {string} */ id, /** @type {number} */ total) => ({ id, path: `/${id}`, js: total, css: 0, total });
   const rows = [row("over", 3001), row("at-budget", 3000), row("grown", 2201), row("at-ratio", 2200), row("at-bytes", 500)];

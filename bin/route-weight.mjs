@@ -8,6 +8,11 @@
 // fails too, since an enforced report with no budget would pass anything. A missing build, a manifest naming a file the build lacks, or a config that is not JSON fails (exit 1): a report
 // that read nothing must not look like a clean one. The table goes to the job summary.
 //
+// A site that hydrates only the routes that ask (`export const handle = { hydrate: true }`, with devkit's siteScript
+// serving /site.js to every other page) is read as such when the build has a /site.js: a route whose chain declares
+// `hydrate: true` weighs as above, and any other route weighs /site.js and its chain's stylesheets, which is what its
+// page downloads. Islands load through import() and are not counted.
+//
 //   npx devkit-route-weight                     report against .route-weight.json (no file: the report alone)
 //   npx devkit-route-weight --client <dir>      another client build (default build/client)
 //   npx devkit-route-weight --config <file>     another config
@@ -42,6 +47,9 @@ import { gzipSync } from "node:zlib";
  *   baseline?: { measured_at?: string, routes?: Record<string, number> } }} Config
  */
 
+/** A route module's `handle = { hydrate: true }`, as the build writes it (`{hydrate:!0}`) or as written. */
+const HYDRATE = /[{,]\s*hydrate\s*:\s*(?:!0|true)\s*[,}]/;
+
 /** The manifest object from the text of manifest-*.js (`window.__reactRouterManifest={...};`). */
 export function parseManifest(/** @type {string} */ text) {
   return /** @type {Manifest} */ (JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1)));
@@ -53,9 +61,11 @@ export function parseManifest(/** @type {string} */ text) {
  * @param {(url: string) => Buffer} read the bytes of a file named as the manifest names it ("/assets/x.js")
  * @param {(bytes: Buffer) => number} gzip the compressed size
  * @param {boolean} [linkedCss] also count a stylesheet the counted JS names by URL
+ * @param {string} [siteScript] the build's /site.js, when it has one: a route whose chain does not declare
+ *   `hydrate: true` loads it in place of React
  * @returns {Row[]}
  */
-export function routeWeights(manifest, read, gzip, linkedCss = false) {
+export function routeWeights(manifest, read, gzip, linkedCss = false, siteScript = undefined) {
   /** @type {Map<string, { bytes: Buffer, gzip: number }>} */
   const files = new Map();
   const file = (/** @type {string} */ url) => {
@@ -74,11 +84,12 @@ export function routeWeights(manifest, read, gzip, linkedCss = false) {
       /** @type {ManifestRoute[]} */
       const chain = [];
       for (let at = /** @type {ManifestRoute | undefined} */ (route); at; at = at.parentId ? routes[at.parentId] : undefined) chain.unshift(at);
-      const js = new Set([entry.module, ...(entry.imports ?? [])]);
+      const hydrates = !siteScript || chain.some((step) => step.module && HYDRATE.test(file(step.module).bytes.toString("utf8")));
+      const js = new Set(hydrates ? [entry.module, ...(entry.imports ?? [])] : [/** @type {string} */ (siteScript)]);
       const css = new Set(entry.css ?? []);
       for (const step of chain) {
-        if (step.module) js.add(step.module);
-        for (const url of step.imports ?? []) js.add(url);
+        if (hydrates && step.module) js.add(step.module);
+        if (hydrates) for (const url of step.imports ?? []) js.add(url);
         for (const url of step.css ?? []) css.add(url);
       }
       if (linkedCss) for (const url of js) for (const m of file(url).bytes.toString("utf8").matchAll(/\/assets\/[\w.-]+\.css/g)) css.add(m[0]);
@@ -149,7 +160,8 @@ function main() {
     return readFileSync(path);
   };
   const gzip = (/** @type {Buffer} */ bytes) => gzipSync(bytes, { level: 9 }).length;
-  const rows = routeWeights(parseManifest(readFileSync(join(assets, manifestFile), "utf8")), read, gzip, config.linked_css);
+  const siteScript = existsSync(join(client, "site.js")) ? "/site.js" : undefined;
+  const rows = routeWeights(parseManifest(readFileSync(join(assets, manifestFile), "utf8")), read, gzip, config.linked_css, siteScript);
 
   if (argv.includes("--write-baseline")) {
     config.baseline = { measured_at: shortHead(root), routes: Object.fromEntries(rows.map((row) => [row.id, row.total])) };
