@@ -3,7 +3,9 @@
 //
 //   pins       a dependency on one of the shared packages, or a call to devkit's reusable workflows, on a raw commit
 //              rather than a release tag (a pin behind the newest release is a warning: Renovate opens that bump, and
-//              failing on it turned every repository red each time a package released);
+//              failing on it turned every repository red each time a package released), and a site-runtime pin behind
+//              the newest minor released FRESH_DAYS ago or more (its header registry is what the live check grades, so
+//              a site that drifts further builds one set of headers and is graded against another);
 //   copies     a local definition with the name of something a shared package exports (or a known alias), or text only a
 //              shared builder should write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation
 //              rules, a Cloudflare Images resize, an island loader, JSON-LD, a hex or base64url encoder, a pre-paint theme
@@ -349,11 +351,49 @@ export function lsRemoteTags(/** @type {string} */ repo) {
 }
 
 /**
- * Pins on a raw commit (an error), or behind the newest tag (a warning).
- * @param {Tree} tree @param {TagReader} readTags
+ * The packages a pin may not stay behind for long, and the days a new minor release gets before a pin behind it fails.
+ * site-runtime releases many minors a day, so the window is time, not a count of minors: a pin fails once it is behind
+ * a minor that has been out FRESH_DAYS days, and a minor younger than that is the usual warning.
+ */
+export const FRESH = /** @type {Record<string, number>} */ ({ "site-runtime": 3 });
+const DAY_MS = 86_400_000;
+
+/**
+ * The newest major.minor among releases published at or before `cutoff`, from { tag: ISO date }; null for none.
+ * @param {Record<string, string>} dates @param {number} cutoff
+ */
+export function settledMinor(dates, cutoff) {
+  const settled = Object.entries(dates).filter(([tag, at]) => semver(tag) && Date.parse(at) <= cutoff).map(([tag]) => tag);
+  const top = newest(settled);
+  return top ? /** @type {number[]} */ (semver(top)).slice(0, 2) : null;
+}
+
+/**
+ * Release tag -> publish date for one repository, from the GitHub releases API: up to three pages, stopping once a page
+ * reaches past the oldest date the rule can need. GITHUB_TOKEN, when set, lifts the anonymous rate limit.
+ * @param {string} repo @param {number} since
+ */
+export async function releaseDates(repo, since) {
+  /** @type {Record<string, string>} */
+  const dates = {};
+  const headers = { Accept: "application/vnd.github+json", "User-Agent": "devkit-shared", ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}) };
+  for (let page = 1; page <= 3; page++) {
+    const res = await fetch(`https://api.github.com/repos/DrDustinEdwards/${repo}/releases?per_page=100&page=${page}`, { headers, signal: AbortSignal.timeout(20_000) });
+    if (!res.ok) throw new Error(`GitHub answered ${res.status} for ${repo}'s releases`);
+    const list = /** @type {{ tag_name: string, published_at: string | null, draft: boolean }[]} */ (await res.json());
+    for (const r of list) if (!r.draft && r.published_at) dates[r.tag_name] = r.published_at;
+    if (list.length < 100 || list.some((r) => r.published_at && Date.parse(r.published_at) < since)) break;
+  }
+  return dates;
+}
+
+/**
+ * Pins on a raw commit (an error), behind the newest tag (a warning), or, for a FRESH package, behind a minor that has
+ * been out FRESH days (an error). `dates` holds each FRESH package's release dates, or the reason they could not be read.
+ * @param {Tree} tree @param {TagReader} readTags @param {Record<string, Record<string, string> | Error>} [dates]
  * @returns {Finding[]}
  */
-export function checkPins(tree, readTags) {
+export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
   /** @type {Finding[]} */
   const found = [];
   /** @type {Record<string, ReturnType<TagReader>>} */
@@ -368,7 +408,15 @@ export function checkPins(tree, readTags) {
     if (!at) {
       found.push({ check: "pins", file, line, failsFrom, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
     } else if (compare(at, latest) < 0) {
-      found.push({ check: "pins", file, line, warn: true, message: `${what} is at ${at}; the newest release is ${latest}` });
+      const days = FRESH[repo];
+      const known = dates[repo];
+      const settled = days && known && !(known instanceof Error) ? settledMinor(known, now - days * DAY_MS) : null;
+      const [major, minor] = /** @type {number[]} */ (semver(at));
+      if (settled && (major < settled[0] || (major === settled[0] && minor < settled[1]))) {
+        found.push({ check: "pins", file, line, message: `${what} is at ${at}, behind v${settled.join(".")}, a minor out more than ${days} days; bump to ${latest}` });
+      } else {
+        found.push({ check: "pins", file, line, warn: true, message: `${what} is at ${at}; the newest release is ${latest}` });
+      }
     }
   };
   for (const file of tree.files) {
@@ -384,6 +432,9 @@ export function checkPins(tree, readTags) {
       // The tag ai-author.yml runs check-trailers from, for a repository whose package.json does not list devkit.
       for (const m of text.matchAll(/^[ \t]*devkit:[ \t]*["']?DrDustinEdwards\/devkit#([^\s"'#]+)/gim)) judge(file, lineOf(m.index), "devkit", m[1], "ai-author's devkit: input", "0.21.0");
     }
+  }
+  for (const [repo, known] of Object.entries(dates)) {
+    if (known instanceof Error) found.push({ check: "pins", warn: true, message: `${repo}'s release dates could not be read (${known.message}), so its ${FRESH[repo]}-day rule was not judged` });
   }
   return found;
 }
@@ -925,7 +976,7 @@ function peersOf(locate) {
   return peers;
 }
 
-function main(/** @type {string[]} */ argv) {
+async function main(/** @type {string[]} */ argv) {
   const root = process.cwd();
   const from = argv.includes("--from") ? argv[argv.indexOf("--from") + 1] : null;
   // Installed packages by default; --from reads checkouts named by repository, for a tree with nothing installed.
@@ -956,8 +1007,14 @@ function main(/** @type {string[]} */ argv) {
   if (self) for (const name of Object.keys(readCatalog((_, repo) => (repo === self.repo ? root : null)).catalog)) delete catalog[name];
   // Whether the repository is private, from the event Actions hands every run; unknown locally.
   const event = process.env.GITHUB_EVENT_PATH && existsSync(process.env.GITHUB_EVENT_PATH) ? JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf8")) : {};
+  /** @type {Record<string, Record<string, string> | Error>} */
+  const dates = {};
+  for (const [repo, days] of Object.entries(FRESH)) {
+    if (repo === self?.repo || !tree.files.some((f) => posix.basename(f) === "package.json" && tree.read(f).includes(`DrDustinEdwards/${repo}#`))) continue;
+    dates[repo] = await releaseDates(repo, Date.now() - days * DAY_MS).catch((error) => (error instanceof Error ? error : new Error(String(error))));
+  }
   const findings = [
-    ...checkPins(tree, lsRemoteTags),
+    ...checkPins(tree, lsRemoteTags, dates),
     ...checkCopies(tree, catalog, config, self?.label),
     ...checkLibraries(tree, config, peersOf(locate)),
     ...checkFeatures(tree, config),
@@ -984,13 +1041,13 @@ function main(/** @type {string[]} */ argv) {
 }
 
 /** The command line: main's exit code, or 2 when the check could not run. */
-export function cli(/** @type {string[]} */ argv) {
+export async function cli(/** @type {string[]} */ argv) {
   try {
-    return main(argv);
+    return await main(argv);
   } catch (error) {
     console.log(`::error::devkit-shared could not run: ${error instanceof Error ? error.message : String(error)}`);
     return 2;
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) process.exitCode = cli(process.argv.slice(2));
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) process.exitCode = await cli(process.argv.slice(2));
