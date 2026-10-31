@@ -229,9 +229,11 @@ jobs:
             exit 1
           }
           npx --yes "wrangler@${WRANGLER_VERSION}" versions deploy "${version}@${GRADUAL}%" "${previous}@$((100 - GRADUAL))%" --name "$WORKER" --message "${GITHUB_SHA} at ${GRADUAL}%" --yes
-          echo "version-id=${version}" >> "$GITHUB_OUTPUT"
-          echo "previous-version-id=${previous}" >> "$GITHUB_OUTPUT"
-          echo "split-at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          {
+            echo "version-id=${version}"
+            echo "previous-version-id=${previous}"
+            echo "split-at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          } >> "$GITHUB_OUTPUT"
           {
             echo "deployed ${GITHUB_SHA} as ${WORKER} version ${version} to ${GRADUAL}% of traffic, beside ${previous}, in attempt ${GITHUB_RUN_ATTEMPT}. To send everything back:"
             echo ""
@@ -470,9 +472,13 @@ jobs:
         run: |
           set +e
           now=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          # The $ names are GraphQL variables and node's, not the shell's.
+          # shellcheck disable=SC2016
           query='query($account: string!, $script: string!, $since: Time!, $until: Time!) { viewer { accounts(filter: { accountTag: $account }) { workersInvocationsAdaptive(limit: 100, filter: { scriptName: $script, datetime_geq: $since, datetime_leq: $until }) { sum { requests errors } dimensions { scriptVersion } } } } }'
+          # shellcheck disable=SC2016
           body=$(node -e 'process.stdout.write(JSON.stringify({ query: process.argv[1], variables: { account: process.env.CLOUDFLARE_ACCOUNT_ID, script: process.env.WORKER, since: process.env.SPLIT_AT, until: process.argv[2] } }))' "$query" "$now")
           answer=$(curl -sS --max-time 20 -X POST https://api.cloudflare.com/client/v4/graphql -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" --data "$body")
+          # shellcheck disable=SC2016
           printf '%s' "$answer" | node -e '
             let s = "";
             process.stdin.on("data", (d) => (s += d)).on("end", () => {
