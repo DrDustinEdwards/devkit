@@ -22,7 +22,12 @@
         "bsw": "no sign-in, admin pages or MCP server"
       }
     },
-    { "id": 4, "name": "Writing and rendering", "builder": "Complete shared writing and rendering", "checks": [] },
+    {
+      "id": 4,
+      "name": "Writing and rendering",
+      "builder": "Complete shared writing and rendering",
+      "checks": [{ "name": "prelum-content", "repo": "prelum", "bin": "prelum-content", "kinds": ["site", "static"] }]
+    },
     {
       "id": 5,
       "name": "Carrel editing contract",
