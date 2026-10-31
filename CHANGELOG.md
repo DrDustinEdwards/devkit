@@ -1,8 +1,108 @@
 # Changelog
 
-## Unreleased
+## 0.20.17 (2026-10-31)
 
 - `devkit-a11y`: the live accessibility check, and area 9's check on the scoreboard (`live/areas.json`; the two MCP endpoints are skipped, having no public pages). It scans a site's home page, a 404 and up to eight sitemap pages of different types in Chromium with axe-core, a Tab walk, Escape on the menus and dialogs it reaches, reflow at 320 px, text spacing, a 720 px proxy for 200% zoom, reduced motion, axe and focus again in forced colors, and the page structure, and checks for an `/accessibility` statement; each finding is titled with the checklist item it proves (L1 to L4, S2, S3, S6), WCAG failures as errors and axe best practice as warnings. Playwright and `@axe-core/playwright` come from where it runs, so the package still installs no dependencies; `live.yml` installs them and Chromium before the checks. The scoreboard runs it from devkit's newest release tag, so area 9 reads "no devkit-a11y bin yet" until the release that carries it.
+
+## 0.20.16 (2026-10-31)
+
+- `devkit-migrations <dir> --apply <database>`: applies a deploy's pending D1 migrations, so no site needs a hand-run step before a merge. Migrations that only add are applied after the D1 Time Travel bookmark is read and its restore command written to the log and the step summary; one that drops, renames, deletes rows or says `-- contract:` is refused with the hand-run command. An unreadable list or bookmark, a failed apply, or a database still behind afterwards exits 1 before the deploy.
+
+## 0.20.15 (2026-10-31)
+
+- `worker-deploy.yml` takes a gradual rollout, opt-in (`gradual-percent`, `gradual-minutes`): it uploads a version, splits traffic with the live one, gates the new version through a version override, and promotes it or rolls back to the old one by id. And a preview per pull request, opt-in (`preview`, `preview-build`): `wrangler versions upload --preview-alias pr-<number>` on a pull request from the same repository, its URL in the summary and the `preview-url` output. Both off by default, so a caller that changes nothing deploys as before.
+- `docs/runbook.md`: the one runbook for every site (area 8, R3, I1, I2, B9): site down, database down, bad deploy, stale backup, lost data (D1 Time Travel with the exact commands, a dump restore, files from R2 with d1-dump's `restoreFiles`), each site's RPO and RTO, and the incident record format. Sites link to it.
+
+## 0.20.14 (2026-10-31)
+
+- The scoreboard runs area 8's deployed-commit (H4) and restore-drill (R1) checks daily. A check in `live/areas.json` takes `site_args`, arguments for one site keyed by its id, after `args`; area 8 gives Foxhound, Foxing, germomics, julieedwards.info, TXASM, Carrel's MCP Worker and dustinedwards.info `--repo DrDustinEdwards/<repo> --drill-workflow restore-drill.yml`. `devkit-live lint` refuses site_args for an unknown site or that are not a list of strings.
+- `devkit-console` (bin/console.mjs): the console ratchet. It counts the raw `console.*` calls in server code, outside comments and strings, against the baseline in `.console.json`, and fails when the count rises, naming each file above its own count; `--write-baseline` records it.
+- `devkit-migrations <dir>` (bin/migrations.mjs): the expand-only migration check, moved from dustinedwards.info's `scripts/check-migrations.mjs` and given the directory as an argument. Each migration's sha256 is recorded in `<dir>/manifest.json` (dustinedwards.info's manifest reads as it is); an edited, unrecorded, renamed or deleted migration fails, and so does a new one that drops or renames a table or column without a `-- contract: <reason>` line. With a local wrangler database it also compares the `d1_migrations` ledger with the files.
+
+## 0.20.13 (2026-10-31)
+
+- `devkit-route-weight` weighs what a page on an opt-in hydration site downloads. When the client build has a /site.js (devkit's siteScript), a route whose chain declares `handle = { hydrate: true }` weighs the client entry and its chain as before. Any other route weighs /site.js and its stylesheets, because it loads no React. Before this, every route counted the full React bundle, so a public page that started loading React again would still pass a budget set for the app pages. txasm's public pages now weigh about 35 KB, where they weighed about 157 KB.
+- The network check counts site-runtime's `./static-site` as receiving CSP reports: `staticSite` answers the report path itself, so a static site on it no longer imports `./csp-report`.
+
+## 0.20.12 (2026-10-31)
+
+- The shared-code check's `headers` feature accepts site-runtime's `withMcpHeaders` (./mcp-server), which sets an MCP door's whole header set, so a door that adopted it no longer fails "has no headers".
+
+## 0.20.11 (2026-10-31)
+
+- `code-map.yml` maps a repository on TypeScript 7. The native compiler ships no JavaScript compiler API, so d1-dump's map failed with "ts.getParsedCommandLineOfConfigFile is not a function" after Renovate moved it to 7.0.2. The map job now installs TypeScript 6.0.3 beside the script when the caller's own has no compiler API, and `loadTypeScript` skips a TypeScript without it.
+
+## 0.20.10 (2026-10-31)
+
+- `devkit-warm <origin> [--sha <commit>]` (bin/warm.mjs): warms the stored pages after a deploy for a site that deploys outside `worker-deploy.yml` (dustinedwards.info's `ship`, Workers Builds). It is the shared deploy's "Warm the stored pages" loop: every sitemap page on the origin, an index followed one level, at most 1000, four at a time. `--sha` first waits up to 10 minutes for `/health` to name that commit. It never fails; a warm that cannot finish is a warning.
+
+## 0.20.9 (2026-10-31)
+
+- `bin/family.mjs` is back as a shim that runs the shared-code check. An old `family.yml` (v0.18.0 on a branch Foxhound had open) checks out devkit's default branch and runs that path, and failed with "Cannot find module" once 0.20.8 renamed it. It stays until 0.21.0.
+
+## 0.20.8 (2026-10-31)
+
+- The family check is now the shared-code check: `devkit-shared` (bin/shared.mjs), `shared.yml` (job "Uses the shared code") and `.shared.json`. `devkit-family`, `family.yml` and `.family.json` still work, with a warning to rename, and are removed in 0.21.0.
+
+## 0.20.7 (2026-10-31)
+
+- `devkit-family`: a local copy found by its name (a definition named like a shared export) is a warning until 0.21.0, like the copies found by their text. Names are read from each package's newest release, so a new export such as site-api's `readEmbedded` turned every repository defining one red on its next push, before any of them could move.
+
+## 0.20.6 (2026-10-31)
+
+- `devkit-ops-audit` asks for an HTML 404 (N6) only where the home page is HTML, so an API or MCP Worker that serves no pages (Carrel's AI door) answers its 404 in its own type. The plain line says when N6 was not asked.
+
+## 0.20.5 (2026-10-31)
+
+- `devkit-family`: a pin behind its package's newest release is a warning, on every branch. Renovate opens that bump, and failing on it turned every repository's family check red, and mailed the owner, each time a shared package released. A pin to a raw commit still fails.
+- `dependencies.yml` on a push or a schedule lists the known vulnerabilities as warnings and in the job summary, without failing. A pull request still fails on a vulnerability it adds.
+
+## 0.20.4 (2026-10-31)
+
+- `worker-deploy.yml` reads the D1 Time Travel bookmark outside the checkout, so wrangler finds the database by name through the API. In 0.20.1 to 0.20.3 it read the caller's `wrangler.jsonc`, whose id the pre-deploy guard had not written yet, and Carrel's deploy stopped there.
+
+## 0.20.3 (2026-10-31)
+
+- `dependencies.yml` reads OSV-Scanner's exit code under the runner's `bash -e`: in 0.20.2, exit 1 (vulnerabilities found) stopped the step before the base comparison, so a pull request failed on old advisories it did not add (prelum #128).
+
+## 0.20.2 (2026-10-31)
+
+- The tool downloads in `workflow-audit.yml` and `dependencies.yml` retry three times, so one dropped connection (a TLS reset fetching zizmor from PyPI) no longer fails the check.
+- `release-self.yml` no longer starts `bump-consumers.yml`: that needed a `RENOVATE_TRIGGER_TOKEN` secret in devkit, and Renovate finds a devkit tag on its regular runs.
+- `devkit-live` reported checks: a check that needs a site's secrets runs where they live and publishes its result on its own https origin (`"report"` in `areas.json` in place of `repo` and `bin`); the daily run reads it, and a stale, unreadable or incomplete report is an error, never a pass. No site key goes into GitHub.
+
+## 0.20.1 (2026-10-31)
+
+- Area 6 (images and media) runs site-runtime's `site-runtime-images` (site-runtime 0.43.0) on sites and static sites: srcset, sizes and dimensions, AVIF and WebP, one priority image, oversized files, `/media` caching, alt text, share-card size and tags, image sitemaps, GPS left in published files, and captions on video and audio (A2 to A5, A7, A12, B1, B2, C1 to C3, C8, D2, E1 to E3).
+- `devkit-no-bloat` counts the tests and gates them like Knip and jscpd: the test files (`tests.files`, default `**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}`) and the `test(` and `it(` cases in them (node:test, vitest, Playwright), read from the source without running anything. A rise fails, so a pull request that adds a test raises the baseline (`--write-baseline`) in the same reviewed diff. A repository with no `tests` entry in its baseline gets a row and no failure until it records one.
+- `devkit-no-bloat` records the share of source lines that are comment lines (`comments`: JS, TS and CSS, minified files and `worker-configuration.d.ts` left out). A rise of more than `comments.tolerance` points (default 1) with more comment lines than the baseline is a warning; `"comments": { "fail": true }` makes it a failure.
+- `devkit-no-bloat --lines-from <rev>`: the lines added and removed since the merge base with `<rev>`, as code, tests, comments, docs and other, in the job summary. `no-bloat.yml` passes it on a pull request (its checkout fetches two commits there) and posts nothing.
+- `devkit-no-bloat` gates jscpd's duplicated lines (`jscpd.lines` in the baseline) beside its clones. The percentage is shown and not gated, as before; the README said it was. It fails, instead of passing, on Knip output with no heading it reads, a jscpd run that read no files, and a baseline entry that no run in the config measures (a removed `knip` run, or `"jscpd": false` with a jscpd baseline).
+- `devkit-check-trailers` checks a `merge_group` event (its base and head from `GITHUB_EVENT_PATH`, authors included) and fails with exit 2 on an event it does not know, where before any event but push and pull_request passed. Schedule, `workflow_dispatch` and `repository_dispatch` still pass.
+- `workflow-audit.yml`, a reusable workflow: actionlint (with shellcheck) and zizmor on the caller's workflows, failing on any actionlint finding and on any zizmor finding at `min-severity` (default `medium`) or above, as annotations. actionlint 1.7.12, shellcheck 0.11.0 and zizmor 1.31.1 are release files checked against their sha256. Exceptions live in `.github/actionlint.yaml` and `.github/zizmor.yml`. devkit's CI runs it on devkit (`examples/workflow-audit-caller.yml`).
+- `dependencies.yml`, a reusable workflow: OSV-Scanner 2.7.0 over every lockfile. On a pull request or a merge queue entry it fails on a vulnerability the change adds (it scans the base commit too); on a push or a schedule it fails on any known vulnerability. Exceptions go in a root `osv-scanner.toml`. It needs no repository setting, unlike GitHub's dependency review. devkit's CI runs it on devkit (`examples/dependencies-caller.yml`).
+- `family.yml` checks devkit out at the commit the caller pinned. It read `github.job_workflow_sha`, which GitHub does not define, so the ref was empty and every caller ran devkit's default branch (a prelum run pinned to 64997ae checked out main at 03c51ee); it now reads `job.workflow_sha` and fails if that is ever empty.
+- `no-bloat.yml`, `worker-deploy.yml` and `live.yml` pass shellcheck: a quoted optional `--warn-only`, `_` for the unused loop counters, and `find` for the old runs.
+- `release.yml`, a reusable workflow: merging a version bump to the default branch tags `v<version>` and publishes the GitHub release with that version's CHANGELOG section, as site-runtime and Capsomer already did by hand-copied jobs. devkit releases itself with it (`release-self.yml`), so a devkit change no longer waits for a hand-made tag (#62 merged and sat untagged). Package repositories call it with `examples/release-caller.yml`.
+- `devkit-family` rules flip by release: each rule names the devkit version it fails from (`failsFrom`), compared with devkit's own `package.json` version, so releasing that version is the flip. The 0.18.0 warnings (the JSON-LD, head tag, hex, base64url, compare, Turnstile, `ACCESS_DEV_BYPASS`, theme script and `"Oops!"` fingerprints, the `_headers` security set and the body-checked aliases) were promised to fail from 0.19.0, but 0.19.0 and 0.20.0 still shipped them as warnings and seven repositories still hold copies, so they fail from 0.21.0, with the rules below.
+- `devkit-family` finds a devkit workflow a repository's kinds need and none of its workflows call: `ai-author`, `pr-footer`, `family`, `workflow-audit` and `dependencies` everywhere; `worker-size` (and `worker-deploy`, a lasting warning while Workers deploy other ways) for an app of kind `site`, `private` or `worker` with a wrangler config; `no-bloat` in a public repository with JavaScript or TypeScript (public from the Actions event; locally a warning); `bump-consumers` in a shared package. CI running the bin itself (carrel's `devkit-no-bloat`, devkit's own `node bin/family.mjs`), directly or through a package script, counts. `.family.json` `"waive": { "workflow:<name>": "why" }` waives one. A repository with several apps needs the union of their kinds'.
+- `devkit-family` judges the `devkit:` input a repository passes `ai-author.yml` against devkit's newest tag (astro, site-api, d1-dump, site-runtime, prelum and Foxing pass `DrDustinEdwards/devkit#v0.11.0`).
+- `devkit-family` reads test files for one rule, `fakes`: a GitHub API fake of contents or git data routes behind a fetch stub, an Access key pair with the key set it serves, a fetch that refuses every URL, or a list of `DELETE FROM`s (three close together, or one in a loop), each naming devkit's `./github`, `./access`, `./network` or `./d1`. Today: Capsid 30 (5 GitHub, 2 Access, 23 table lists), germomics 8, dustinedwards.info 1, Foxing 1, Foxhound none, and d1-dump 1, a test that empties its database on purpose (a `copies` waiver). `.family.json` `"copies"` waives a file.
+- `devkit-family` stops (exit 2) on an unknown `.family.json` key (a typo'd `"wave"` waived nothing) or kind (`"sitee"`), naming the valid ones, and on a `--from` directory missing one of the packages. Locally, a package not in `node_modules` is named in a warning instead of silently turning off the copies (and, for Capsomer, the tokens) it would have checked.
+- `devkit-family` names each exception in `.family.json` that excused nothing in the run (`copies`, `waive`, `libraries`, `tokens`, `spelling.ignore`, `spelling.contracts`), as a warning, once every package was read: Foxing's and germomics' `cacheKey` copies, Foxhound's `jose`, Carrel's three `kindOf` copies (renamed since), Capsomer's `email.ts` (its own export), dustinedwards.info's `llms`, and a contract each in Capsid and Foxing that the built-in one or another contract already covers.
+- `devkit-family` runs in a repository with no root `package.json` (capsid-bench) instead of stopping, and a library with `exports` or a `bin` and no kind in `.family.json` is told to say `"apps": { ".": "package" }`.
+- `devkit-family`'s feed-link warning no longer counts an alternate link that is only in a comment.
+- devkit mutation-tests its own checks once a week: `code-map-self.yml` runs `node stryker.config.mjs` on a schedule (and on a manual run), which runs Stryker 10.1.1 once per module in `bin/` and `scripts/` against that module's own test file and fails a module below its bar (`thresholds.break`, the score each reached: 72% for `family.mjs`, 86% for `no-bloat.mjs`). The reports feed devkit's own code map. One run of the whole suite per mutant would take hours (worker-deploy's polls), so each module runs alone. `knip.json` names the config as an entry.
+- Every claim a check makes now has a planted mistake that fails it and a clean case that passes: the twelve `devkit-family` fingerprints that never fired in a test (`<urlset`, `<rss`, an IndexNow POST, `Contact: mailto:`, `og:`, `Strict-Transport-Security`, a Twitter card, base64url, Turnstile's siteverify, `ACCESS_DEV_BYPASS`, the theme script, `"Oops!"`), a shared package skipping its own, a devkit workflow and a `git+https` or `enarratio` version pin behind the newest tag, library look-alikes (`rss-parser`, `node-jose`), the accessibility and feed-link warnings, `createSiteApi` without IndexNow and with `indexNowHook`, the spelling check through a stand-in codespell (skip, ignore, contracts, `--fix-spelling`, a codespell that fails), the bin's `list`, `--from` and local runs; `devkit-worker-size` over its raw budget, a failed dry run, no Total Upload line, MiB sizes, `args`, `--config` and a budget that is not JSON or not numbers; `devkit-route-weight`'s budget and growth warnings and its three failures; `devkit-mutation-report`, which had no test; `devkit-no-bloat`'s Knip run that fails, `--config`, the line counts of a diff (renames, new and deleted files, quoted paths) and the scanner's regex and template cases; and `devkit-conformance` end to end against stand-ins for wrangler and the suite.
+- Test fakes match the real services. `./github`: tree and commit shas are 40 hex digits; a ref update that is not a fast forward answers 422 unless `force`; blob, tree and commit writes answer 201; `GET git/commits/:sha` answers the commit asked for; `base_tree`, `?ref=`, a base64 blob and a `Request`'s method, headers and body are honored; contents base64 is wrapped as GitHub wraps it; `token` makes the repository private (404 without it, 401 with another). A tree without `base_tree`, or a commit without `message` and `tree`, now means what it means on GitHub. `./access`: `token()` carries Cloudflare's application-token claims (`aud` an array, `nbf`, `type`, `identity_nonce`, `sub`, `country`); the JWKS serves two keys with `public_cert` and `public_certs`, kids are 64 hex digits and `rotate()` moves to a new key; the token endpoint checks `grant_type`, `redirect_uri` and the PKCE verifier, and answers `access_token` and `expires_in` too. A test that compared `aud` to a string from `token()`, or relied on the kid `stub-kid`, changes with it.
+- `test/testing-contract.test.mjs` and `npm run contract`: the fakes checked against GitHub's OpenAPI description and Cloudflare's documented token and certs.
+
+## 0.20.0 (2026-10-31)
+
+- `devkit-ops-audit`, area 8's scoreboard check (running and recovery), on the scoreboard's contract (`--origin`, `--from`, one annotation per finding titled with its checklist item, exit 0, 1 or 2). It reads a site's `/health` for its headers (H1), site-runtime's new shape `{ status, ok, time, checks, sha?, backup? }` (H2; the old shape, with no `status`, is an error naming what it lacks), a status code that agrees with `status` (H3), a deployed `sha` (H4, and with `--repo` the branch head, a warning for the first 30 minutes), a backup under 26 hours old (B1) and the `cron` check (C2, a warning); a missing page for an HTML 404 (N1, N6); and with `--drill-workflow`, a passing restore drill under 8 days old (R1). dustinedwards.info serves `/api/health` and passes `--health-path /api/health`; there is no silent fallback. On the live sites today: germomics and Foxing lack `status`, `checks` and `sha`; Capsid's MCP Worker sends `status: "ok"`, no `no-store` or `noindex`, a 38-hour-old backup and a plain-text 404.
+- `restore-drill.yml`, the weekly restore drill every site with a D1 database calls (`examples/restore-drill-caller.yml`): d1-dump's `drill --bucket` downloads the newest complete dump through the R2 REST API and restores it into SQLite. The caller pins d1-dump with `d1-dump-ref`, which has no default.
+- `worker-deploy.yml` takes `d1-database`: before the pre-deploy guard, where callers run migrations, the deploy job reads the database's Time Travel bookmark (`wrangler d1 time-travel info --json`, with the pinned wrangler) and writes it, its time and `npx wrangler d1 time-travel restore <db> --bookmark=<bookmark>` to the step summary and the workflow outputs `d1-bookmark` and `d1-bookmark-time`, so a bad migration is one command to undo. Cloudflare's rollback never undoes one. A bookmark it cannot read stops the deploy before the migration.
+
 
 ## 0.19.0 (2026-10-31)
 

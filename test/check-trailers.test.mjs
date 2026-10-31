@@ -13,7 +13,7 @@ import { checkRange, isAgentIdentity, rangeFromEvent, trailerViolations } from "
 
 const BIN = fileURLToPath(new URL("../bin/check-trailers.mjs", import.meta.url));
 const BODY = "Add a thing\n\nWhat it does, in a sentence.";
-const PERSON = { GIT_AUTHOR_NAME: "Dustin Edwards", GIT_AUTHOR_EMAIL: "dustin@example.com", GIT_COMMITTER_NAME: "Dustin Edwards", GIT_COMMITTER_EMAIL: "dustin@example.com" };
+const PERSON = { GIT_AUTHOR_NAME: "Alex Rivera", GIT_AUTHOR_EMAIL: "alex@example.com", GIT_COMMITTER_NAME: "Alex Rivera", GIT_COMMITTER_EMAIL: "alex@example.com" };
 
 /** A throwaway repository; `commit` writes a new file content each time and returns the sha. */
 function repo() {
@@ -45,7 +45,7 @@ test("each named trailer form is refused, in any case", () => {
 });
 
 test("any other trailer naming Claude or Anthropic is refused", () => {
-  for (const trailer of ["Assisted-By: Claude", "Agent: anthropic/claude-opus", "Reviewed-by: Dustin\nX-Model: Claude"]) {
+  for (const trailer of ["Assisted-By: Claude", "Agent: anthropic/claude-opus", "Reviewed-by: Alex\nX-Model: Claude"]) {
     assert.ok(trailerViolations(`${BODY}\n\n${trailer}\n`).length >= 1, trailer);
   }
 });
@@ -56,7 +56,7 @@ test("THE INNOCENT DIRECTION: a message that only mentions Claude or CLAUDE.md p
     "Cut CLAUDE.md to 11 rules\n\nCLAUDE.md now names each rule.",
     "Refuse the trailer\n\nA harness asked for a Claude trailer and the session refused it.",
     "Fix a path\n\nRefs: CLAUDE.md",
-    "Fix a path\n\nCo-Authored-By: Dustin Edwards <dustin@example.com>",
+    "Fix a path\n\nCo-Authored-By: Alex Rivera <alex@example.com>",
     "One line only",
     "",
   ]) {
@@ -64,16 +64,18 @@ test("THE INNOCENT DIRECTION: a message that only mentions Claude or CLAUDE.md p
   }
 });
 
-test("the range comes from the event, and an event with no commits checks nothing", () => {
+test("the range comes from the event, and an event with no commits checks nothing; one it does not know is an error", () => {
   assert.deepEqual(rangeFromEvent({ EVENT: "pull_request", PR_BASE: "a", PR_HEAD: "b" }), { base: "a", head: "b", authors: true });
   assert.deepEqual(rangeFromEvent({ EVENT: "pull_request_target", PR_BASE: "a", PR_HEAD: "b" }), { base: "a", head: "b", authors: true });
   assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "a", PUSH_AFTER: "b" }), { base: "a", head: "b", authors: false });
   assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "0".repeat(40), PUSH_AFTER: "b" }), { base: null, head: "b", authors: false });
   assert.equal(rangeFromEvent({ EVENT: "schedule" }), null);
   assert.equal(rangeFromEvent({ EVENT: "workflow_dispatch" }), null);
-  // Fails closed: a pull_request or push without its shas is an error, not a pass.
+  // Fails closed: a pull_request or push without its shas is an error, not a pass, and so is an event it does not know.
   assert.throws(() => rangeFromEvent({ EVENT: "pull_request", PR_BASE: "a" }));
   assert.throws(() => rangeFromEvent({ EVENT: "push" }));
+  assert.throws(() => rangeFromEvent({ EVENT: "merge_group" }), /merge_group event without/);
+  assert.throws(() => rangeFromEvent({ EVENT: "release" }), /event 'release' is not one this check knows/);
 });
 
 test("an AI identity is Anthropic's address, claude[bot], or the name Claude with a product word; a person is not", () => {
@@ -92,7 +94,7 @@ test("an AI identity is Anthropic's address, claude[bot], or the name Claude wit
     assert.equal(isAgentIdentity(name, email), true, `${name} <${email}>`);
   }
   for (const [name, email] of [
-    ["Dustin Edwards", "dustin@example.com"],
+    ["Alex Rivera", "alex@example.com"],
     ["Claude Dupont", "claude.dupont@example.com"],
     ["claude-skills deploy", "ci@example.com"],
     ["capsid-repo-access[bot]", "300661428+capsid-repo-access[bot]@users.noreply.github.com"],
@@ -131,11 +133,11 @@ test("PLANT: a clean message authored or committed as Claude fails on the pull r
   const { dir, commit, done } = repo();
   try {
     const base = commit("Clean base");
-    const dustin = commit(BODY);
+    const alex = commit(BODY);
     const authored = commit(BODY, { GIT_AUTHOR_NAME: "Claude", GIT_AUTHOR_EMAIL: "noreply@anthropic.com" });
     const committed = commit(BODY, { GIT_COMMITTER_NAME: "Claude", GIT_COMMITTER_EMAIL: "noreply@anthropic.com" });
 
-    assert.deepEqual(checkRange(base, dustin, dir, true), [], "a person's commit was refused");
+    assert.deepEqual(checkRange(base, alex, dir, true), [], "a person's commit was refused");
     const asAuthor = checkRange(base, authored, dir, true);
     assert.equal(asAuthor.length, 1, JSON.stringify(asAuthor));
     assert.equal(asAuthor[0].sha, authored);
@@ -153,7 +155,7 @@ test("PLANT: a clean message authored or committed as Claude fails on the pull r
   }
 });
 
-test("the bin as the workflow runs it: exit 1 with the way to re-author on a pull request, 0 on a push, 0 on a schedule, 2 when it cannot read", () => {
+test("the bin as the workflow runs it: exit 1 with the way to re-author on a pull request or merge group, 0 on a push, 0 on a schedule, 2 when it cannot read or does not know the event", () => {
   const { dir, commit, done } = repo();
   try {
     const base = commit("Base");
@@ -165,8 +167,13 @@ test("the bin as the workflow runs it: exit 1 with the way to re-author on a pul
     assert.match(pr.stderr, /has an AI identity \(author Claude <noreply@anthropic.com>\)/);
     assert.match(pr.stderr, /--reset-author/);
 
+    const event = join(dir, "event.json");
+    writeFileSync(event, JSON.stringify({ merge_group: { base_sha: base, head_sha: head } }));
+    assert.equal(run({ EVENT: "merge_group", GITHUB_EVENT_PATH: event }).status, 1);
+
     assert.equal(run({ EVENT: "push", PUSH_BEFORE: base, PUSH_AFTER: head }).status, 0);
     assert.match(run({ EVENT: "schedule" }).stdout, /adds no commits; nothing to check/);
+    assert.equal(run({ EVENT: "workflow_run" }).status, 2);
     assert.equal(run({ EVENT: "pull_request", PR_BASE: "1".repeat(40), PR_HEAD: head }).status, 2);
     assert.equal(run({ EVENT: "push" }).status, 2);
   } finally {

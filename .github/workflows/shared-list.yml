@@ -1,13 +1,13 @@
 name: shared-list
 
 # THE GENERATED LIST OF WHAT THE SHARED PACKAGES DO. Every hour (and after each push to main), each shared package is read at
-# its newest release tag and `devkit-family list` writes SHARED.md: every family feature and what provides it, then every
+# its newest release tag and `devkit-shared list` writes SHARED.md: every family feature and what provides it, then every
 # package's subpaths and the names each exports. It is published to the shared-list branch, as code-map.json is to code-map,
 # so it never needs a pull request and is never more than an hour behind a release:
 #
 #   https://github.com/DrDustinEdwards/devkit/blob/shared-list/SHARED.md
 #
-# Sessions read it before writing anything a site might share; devkit-family's failure messages point to it.
+# Sessions read it before writing anything a site might share; devkit-shared's failure messages point to it.
 
 on:
   schedule:
@@ -46,7 +46,7 @@ jobs:
             git clone --quiet --depth 1 --branch "$tag" "$url" "$RUNNER_TEMP/packages/$repo"
           done
       - name: Write SHARED.md
-        run: node bin/family.mjs list --from "$RUNNER_TEMP/packages" > "$RUNNER_TEMP/SHARED.md"
+        run: node bin/shared.mjs list --from "$RUNNER_TEMP/packages" > "$RUNNER_TEMP/SHARED.md"
       - name: Publish it to the shared-list branch when it changed
         run: |
           git config user.name "github-actions[bot]"

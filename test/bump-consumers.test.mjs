@@ -129,14 +129,14 @@ test("a dry run ticks nothing", async () => {
 test("a consumer without Renovate is a warning naming it, and archived repositories and node_modules are skipped", async () => {
   const { updates, log } = await run({
     capsomer: { files: { "package.json": { name: "capsomer" } } },
-    txasm: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } } } },
+    blog: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } } } },
     old: { archived: true, files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.1.0" } } }, issues: [dashboard()] },
     vendored: { files: { "node_modules/x/package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.1.0" } } }, issues: [dashboard()] },
     ticked: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" } } }, issues: [{ ...dashboard(), body: "- [x] <!-- manual job -->x" }] },
     impostor: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" } } }, issues: [{ ...dashboard(), user: "someone" }] },
   });
   assert.equal(updates.length, 0);
-  assert.ok(log.warnings.some((w) => w.startsWith("txasm:")));
+  assert.ok(log.warnings.some((w) => w.startsWith("blog:")));
   assert.ok(log.warnings.some((w) => w.startsWith("impostor:")), "only an issue opened by renovate[bot] is the dashboard");
   assert.ok(log.info.some((line) => line.startsWith("ticked") && line.includes("already requested")));
   assert.equal(log.failed, null);

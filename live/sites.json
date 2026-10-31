@@ -13,6 +13,9 @@
     { "id": "prelum", "name": "Prelum specimen", "repo": "prelum", "kind": "static", "origin": "https://prelum.dustinedwards.info" },
     { "id": "capsid", "name": "Capsid explorer", "repo": "capsid", "kind": "site", "origin": "https://capsid.dustinedwards.info" },
     { "id": "capsid-mcp", "name": "Capsid MCP", "repo": "capsid", "kind": "worker", "origin": "https://mcp.dustinedwards.info" },
-    { "id": "foxhound-mcp", "name": "Foxhound admin MCP", "repo": "foxhound", "kind": "worker", "origin": "https://admin-mcp.foxhoundapp.com" }
+    { "id": "foxhound-mcp", "name": "Foxhound admin MCP", "repo": "foxhound", "kind": "worker", "origin": "https://admin-mcp.foxhoundapp.com" },
+    { "id": "dustinedwards-mcp", "name": "Dustin Edwards admin MCP", "repo": "dustinedwards-info", "kind": "worker", "origin": "https://admin-mcp.dustinedwards.info" },
+    { "id": "carrel-mcp", "name": "Carrel MCP", "repo": "carrel", "kind": "worker", "origin": "https://carrel-mcp.dustinedwards.info" },
+    { "id": "foxing-mcp", "name": "Foxing admin MCP", "repo": "foxing", "kind": "worker", "origin": "https://admin-mcp.foxing.app" }
   ]
 }

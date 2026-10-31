@@ -1,0 +1,65 @@
+name: shared
+
+# devkit-shared (bin/shared.mjs) on the caller: pins behind the newest release, local copies of shared exports, libraries a
+# shared package wraps, a family feature the site lacks, and British spelling. Nothing to install: this checks out devkit
+# at the very commit the caller pinned (job.workflow_sha), reads each shared package at its newest tag, and runs
+# the bin with Node alone; the spelling check
+# runs codespell through pipx, which the runner has. Exceptions live in the caller's .shared.json, each with a reason.
+#
+# A pin behind its newest release is a warning; one to a raw commit fails.
+#
+# A CALLER (examples/shared-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+
+on:
+  workflow_call:
+    inputs:
+      timeout-minutes:
+        required: false
+        type: number
+        default: 10
+
+permissions:
+  contents: read
+
+jobs:
+  shared:
+    name: Uses the shared code
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      # An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24
+          # Nothing is installed, and setup-node's automatic cache fails in a pnpm repository (no pnpm on the runner).
+          package-manager-cache: false
+
+      # Each shared package at its newest release, so a copy is judged against what a bump would give the site.
+      - name: Read each package at its newest release tag
+        run: |
+          for repo in prelum site-runtime site-api d1-dump devkit capsomer enarratio; do
+            url="https://github.com/DrDustinEdwards/${repo}"
+            tag=$(git ls-remote --tags --refs "$url" | sed 's#.*refs/tags/##' | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+            git clone --quiet --depth 1 --branch "$tag" "$url" "$RUNNER_TEMP/packages/$repo"
+          done
+
+      - name: Check
+        run: node .devkit/bin/shared.mjs --from "$RUNNER_TEMP/packages"

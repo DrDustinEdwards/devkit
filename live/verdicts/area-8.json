@@ -1,0 +1,130 @@
+{
+  "area": 8,
+  "verifier": "Verify running and recovery across sites",
+  "date": "2026-10-31",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/site-runtime/blob/main/health.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/main/cron.mjs",
+        "https://github.com/DrDustinEdwards/devkit/blob/main/.github/workflows/worker-deploy.yml"
+      ],
+      "note": "ok is false on warn; no Images/DO checks; cronCheck waits 2x interval; no per-job timeout; requestFields lacks status; no console ratchet; no shared redirect/410 table; no gradual rollout, preview or expand-only check; no runbook; scoreboard never runs the sha or drill checks"
+    },
+    "dustinedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://dustinedwards.info/api/health",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/scripts/lib/uptimerobot.mjs"
+      ],
+      "note": "/api/health answers 503 while /health passes, and UptimeRobot and Capsid's watcher read /api/health; no 404 count; own deploy without rollback or bookmark; shared drill never run"
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": [
+        "https://germomics.com/health"
+      ],
+      "note": "no sha: Workers Builds still deploys; drill never run; files pass not complete"
+    },
+    "julieedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://julieedwards.info/health"
+      ],
+      "note": "no backup exclude (preview_links.token_hash dumped); drill never run; site-runtime v0.47.0"
+    },
+    "txasm": {
+      "verdict": "partial",
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/health"
+      ],
+      "note": "files pass not complete; R2 check at fail level; drill never run"
+    },
+    "bsw": {
+      "verdict": "partial",
+      "evidence": [
+        "https://bsw.dustin-edwards.workers.dev/health"
+      ],
+      "note": "health passes; deploy record, gradual rollout, preview and runbooks missing"
+    },
+    "foxhound": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxhoundapp.com/health"
+      ],
+      "note": "migrations without bookmark; 404 rows kept 365 days; local cron ledger records skips as success; oauth hashes dumped; drill never run"
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxing.app/health"
+      ],
+      "note": "COVERS not backed up; files pass not complete; drill never run"
+    },
+    "carrel": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel.dustinedwards.info/health"
+      ],
+      "note": "app host has no /health; no 404 count; www deploys locally; drill never run"
+    },
+    "capsid": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsid.dustinedwards.info/health"
+      ],
+      "note": "/health 404"
+    },
+    "capsid-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://mcp.dustinedwards.info/health",
+        "https://github.com/DrDustinEdwards/capsid/actions/runs/40369574870"
+      ],
+      "note": "local health in the old shape; local backup; last restore rehearsal failed; no 404 count; own deploy"
+    },
+    "foxhound-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.foxhoundapp.com/health"
+      ],
+      "note": "text/plain ok; deployed by hand"
+    },
+    "dustinedwards-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.dustinedwards.info/health"
+      ],
+      "note": "text/plain ok; no CI deploy"
+    },
+    "carrel-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel-mcp.dustinedwards.info/health"
+      ],
+      "note": "serves cfc6eb2, not main d4b64b4"
+    },
+    "foxing-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.foxing.app/health"
+      ],
+      "note": "host answers a Vercel 404; route not set"
+    },
+    "capsomer": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/health"
+      ],
+      "note": "static; Workers Builds deploy; no health or exemption stated"
+    },
+    "prelum": {
+      "verdict": "partial",
+      "evidence": [
+        "https://prelum.dustinedwards.info/health"
+      ],
+      "note": "static; local deploy; not in the watcher"
+    }
+  }
+}

@@ -5,18 +5,21 @@ import test from "node:test";
 import { gitBlobSha, stubGitHub, versionOf } from "@dustinedwards/devkit/github";
 
 const API = "https://api.github.com/repos/Owner/site";
+const text = (base64) => new TextDecoder().decode(Uint8Array.from(atob(base64), (c) => c.charCodeAt(0)));
 const post = (path, body) => fetch(`${API}${path}`, { method: "POST", body: JSON.stringify(body) });
 
-/** A commit the way a caller makes one: blobs, a tree, a commit, then the ref moves. */
-async function commit(changes, { moveRef = true, branch = "main" } = {}) {
+/** A commit the way a caller makes one: the head, blobs, a tree over the head's, a commit on it, then the ref moves. */
+async function commit(changes, { moveRef = true, parent, force } = {}) {
+  const head = parent ?? (await (await fetch(`${API}/git/ref/heads/main`)).json()).object.sha;
+  const { tree: base } = await (await fetch(`${API}/git/commits/${head}`)).json();
   const tree = [];
   for (const [path, content] of Object.entries(changes)) {
     if (content === null) tree.push({ path, sha: null });
     else tree.push({ path, sha: (await (await post("/git/blobs", { content })).json()).sha });
   }
-  await post("/git/trees", { tree });
-  const { sha } = await (await post("/git/commits", {})).json();
-  if (moveRef) await fetch(`${API}/git/refs/heads/${branch}`, { method: "PATCH", body: JSON.stringify({ sha }) });
+  const { sha: treeSha } = await (await post("/git/trees", { base_tree: base.sha, tree })).json();
+  const { sha } = await (await post("/git/commits", { message: "m", tree: treeSha, parents: [head] })).json();
+  if (moveRef) return fetch(`${API}/git/refs/heads/main`, { method: "PATCH", body: JSON.stringify({ sha, force }) });
 }
 
 test("gitBlobSha is the sha git itself gives, counting UTF-8 bytes", async () => {
@@ -31,7 +34,7 @@ test("a file reads back as base64 with its real blob sha; a directory as an arra
   t.after(gh.restore);
 
   const file = await (await fetch(`${API}/contents/content/a.md?ref=main`)).json();
-  assert.equal(new TextDecoder().decode(Uint8Array.from(atob(file.content), (c) => c.charCodeAt(0))), "é\n");
+  assert.equal(text(file.content), "é\n");
   assert.equal(file.sha, await gitBlobSha("é\n"));
   assert.equal(file.size, 3);
 
@@ -43,19 +46,38 @@ test("a file reads back as base64 with its real blob sha; a directory as an arra
   await assert.rejects(versionOf(gh, "nope.md"), /not in the stub/);
 });
 
-test("a commit applies only when the ref moves", async (t) => {
-  const gh = stubGitHub({ owner: "Owner", repo: "site", files: { "a.md": "old", "gone.md": "x" } });
+test("a commit applies only when the ref moves, and a stale one is refused unless forced", async (t) => {
+  const gh = stubGitHub({ owner: "Owner", repo: "site", files: { "a.md": "old", "gone.md": "x", "kept.md": "k" } });
   t.after(gh.restore);
+  const start = (await (await fetch(`${API}/git/ref/heads/main`)).json()).object.sha;
 
   await commit({ "a.md": "refused" }, { moveRef: false });
   assert.equal(gh.files.get("a.md"), "old");
 
-  await commit({ "a.md": "new", "gone.md": null });
-  assert.equal(gh.files.get("a.md"), "new");
-  assert.equal(gh.files.has("gone.md"), false);
+  assert.equal((await commit({ "a.md": "new", "gone.md": null })).status, 200);
+  assert.deepEqual(Object.fromEntries(gh.files), { "a.md": "new", "kept.md": "k" });
   const ref = await (await fetch(`${API}/git/ref/heads/main`)).json();
-  assert.match(ref.object.sha, /^commit/);
-  assert.deepEqual(gh.calls.map((c) => c.method).slice(-5), ["POST", "POST", "POST", "PATCH", "GET"]);
+  assert.match(ref.object.sha, /^[0-9a-f]{40}$/);
+  assert.notEqual(ref.object.sha, start);
+
+  const stale = await commit({ "a.md": "lost update" }, { parent: start });
+  assert.deepEqual([stale.status, (await stale.json()).message], [422, "Update is not a fast forward"]);
+  assert.equal(gh.files.get("a.md"), "new");
+  assert.equal((await commit({ "a.md": "forced" }, { parent: start, force: true })).status, 200);
+  assert.deepEqual(Object.fromEntries(gh.files), { "a.md": "forced", "gone.md": "x", "kept.md": "k" });
+  assert.equal(text((await (await fetch(`${API}/contents/a.md?ref=${ref.object.sha}`)).json()).content), "new");
+});
+
+test("a private repository answers 404 without its token and 401 with another; a Request is read whole", async (t) => {
+  const gh = stubGitHub({ owner: "Owner", repo: "site", token: "ghs_sample" });
+  t.after(gh.restore);
+  assert.equal((await fetch(`${API}/git/ref/heads/main`)).status, 404);
+  assert.equal((await fetch(`${API}/git/ref/heads/main`, { headers: { Authorization: "Bearer other" } })).status, 401);
+  const blob = new Request(`${API}/git/blobs`, { method: "POST", headers: { Authorization: "token ghs_sample" }, body: JSON.stringify({ content: "aGk=", encoding: "base64" }) });
+  const answer = await fetch(blob);
+  assert.equal(answer.status, 201);
+  assert.equal((await answer.json()).sha, await gitBlobSha("hi"));
+  assert.deepEqual(gh.calls.at(-1), { method: "POST", path: "/repos/Owner/site/git/blobs", body: { content: "aGk=", encoding: "base64" } });
 });
 
 test("a tree that names a blob nobody posted throws", async (t) => {

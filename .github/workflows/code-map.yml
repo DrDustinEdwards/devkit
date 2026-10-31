@@ -162,6 +162,18 @@ jobs:
             fi
           fi
 
+      # TypeScript 7 is the native compiler and ships no JavaScript compiler API (d1-dump's map failed with
+      # "ts.getParsedCommandLineOfConfigFile is not a function"). A caller on it gets TypeScript 6, the last release with
+      # that API, beside the script in $RUNNER_TEMP, where the script looks when the caller's own cannot serve.
+      - name: TypeScript for the map
+        run: |
+          if node -e 'process.exit(typeof require("typescript").createSourceFile === "function" ? 0 : 1)' 2>/dev/null; then
+            echo "The caller's TypeScript has the compiler API."
+          else
+            echo "The caller's TypeScript has no compiler API; installing TypeScript 6.0.3 for the map."
+            npm install --no-save --no-audit --no-fund --ignore-scripts --prefix "$RUNNER_TEMP" typescript@6.0.3
+          fi
+
       - name: Write the code map
         env:
           COVERAGE_FILE: ${{ inputs.coverage-command != '' && inputs.coverage-file || '' }}
@@ -211,16 +223,21 @@ jobs:
             return Math.round((cc * cc * (1 - coverage) ** 3 + cc) * 100) / 100;
           }
 
-          /** The repository's TypeScript, from its own node_modules, so the map parses what its compiler parses. */
+          /**
+           * The repository's TypeScript, from its own node_modules, so the map parses what its compiler parses. TypeScript 7 (the
+           * native compiler) has no JavaScript compiler API, so a repository on it is read through the TypeScript 6 that code-map.yml
+           * installs beside this script instead.
+           */
           export function loadTypeScript(/** @type {string} */ root) {
             for (const base of [join(root, "package.json"), import.meta.url]) {
               try {
-                return createRequire(base)("typescript");
+                const ts = createRequire(base)("typescript");
+                if (typeof ts.createSourceFile === "function") return ts;
               } catch {
                 // Try the next place.
               }
             }
-            throw new Error("typescript is not installed in the repository; the code map reads its code through it");
+            throw new Error("no typescript with the compiler API (5 or 6) is installed; the code map reads the code through it");
           }
 
           /**

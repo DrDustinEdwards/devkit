@@ -22,9 +22,31 @@
         "bsw": "no sign-in, admin pages or MCP server"
       }
     },
-    { "id": 4, "name": "Writing and rendering", "builder": "Complete shared writing and rendering", "checks": [] },
-    { "id": 5, "name": "Carrel editing contract", "builder": "Complete Carrel editing contract", "checks": [] },
-    { "id": 6, "name": "Images and media", "builder": "Complete shared images and media", "checks": [] },
+    {
+      "id": 4,
+      "name": "Writing and rendering",
+      "builder": "Complete shared writing and rendering",
+      "checks": [{ "name": "prelum-content", "repo": "prelum", "bin": "prelum-content", "kinds": ["site", "static"] }]
+    },
+    {
+      "id": 5,
+      "name": "Carrel editing contract",
+      "builder": "Complete Carrel editing contract",
+      "checks": [
+        { "name": "site-api-live", "repo": "site-api", "bin": "site-api-live", "kinds": ["site"] },
+        { "name": "carrel-conformance", "report": "https://carrel-mcp.dustinedwards.info/reports/conformance.json", "kinds": ["site"], "max_age_minutes": 60 }
+      ],
+      "skip": {
+        "bsw": "no Carrel site API: its content is not edited through Carrel",
+        "capsid": "no Carrel site API: the explorer serves the knowledge base, not posts"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Images and media",
+      "builder": "Complete shared images and media",
+      "checks": [{ "name": "site-runtime-images", "repo": "site-runtime", "bin": "site-runtime-images", "kinds": ["site", "static"] }]
+    },
     {
       "id": 7,
       "name": "Speed and caching",
@@ -34,7 +56,35 @@
         { "name": "site-runtime-speed-static", "repo": "site-runtime", "bin": "site-runtime-speed", "kinds": ["static"], "args": ["--kind", "static"] }
       ]
     },
-    { "id": 8, "name": "Running and recovery", "builder": "Complete shared running and recovery", "checks": [] },
+    {
+      "id": 8,
+      "name": "Running and recovery",
+      "builder": "Complete shared running and recovery",
+      "checks": [
+        {
+          "name": "ops-audit",
+          "repo": "devkit",
+          "bin": "devkit-ops-audit",
+          "kinds": ["site", "worker"],
+          "site_args": {
+            "foxhound": ["--repo", "DrDustinEdwards/foxhound", "--drill-workflow", "restore-drill.yml"],
+            "foxing": ["--repo", "DrDustinEdwards/foxing", "--drill-workflow", "restore-drill.yml"],
+            "germomics": ["--repo", "DrDustinEdwards/germomics", "--drill-workflow", "restore-drill.yml"],
+            "julieedwards-info": ["--repo", "DrDustinEdwards/julieedwards-info", "--drill-workflow", "restore-drill.yml"],
+            "txasm": ["--repo", "DrDustinEdwards/txasm", "--drill-workflow", "restore-drill.yml"],
+            "carrel-mcp": ["--repo", "DrDustinEdwards/carrel", "--drill-workflow", "restore-drill.yml"],
+            "dustinedwards-info": ["--repo", "DrDustinEdwards/dustinedwards-info", "--drill-workflow", "restore-drill.yml"]
+          }
+        }
+      ],
+      "skip": {
+        "capsid": "static: the explorer is prerendered pages on an assets Worker whose script only sends the 404 page, with no database, binding, cron or backup to report; Capsid's health is capsid-mcp's /health",
+        "carrel": "static: the public page is an assets Worker with no binding and nothing private (carrel docs/public-site.md); Carrel's health is carrel-mcp's /health",
+        "enarratio": "static: an assets-only docs site with no database, binding, cron or backup; Capsid's watcher probes its root",
+        "capsomer": "static: an assets-only showcase with no database, binding, cron or backup; Capsid's watcher probes its root",
+        "prelum": "static: an assets-only specimen with no database, binding, cron or backup; Capsid's watcher probes its root"
+      }
+    },
     {
       "id": 9,
       "name": "Accessibility and components",
@@ -45,8 +95,26 @@
         "foxhound-mcp": "an MCP endpoint with no public pages to scan"
       }
     },
-    { "id": 10, "name": "Charts", "builder": "Complete shared charts", "checks": [] },
-    { "id": 11, "name": "AI and MCP", "builder": "Complete shared AI and MCP code", "checks": [] },
+    {
+      "id": 10,
+      "name": "Charts",
+      "builder": "Complete shared charts",
+      "checks": [{ "name": "chart-audit", "repo": "prelum", "bin": "prelum-chart-audit", "kinds": ["site", "static"] }],
+      "skip": {
+        "txasm": "nothing to chart: no charts, meters or data SVGs, and no numbers that should be one (charts audit, 30 Oct 2026)",
+        "julieedwards-info": "nothing to chart: a one-page campaign site with no charts or data SVGs (charts audit, 30 Oct 2026)",
+        "bsw": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
+      }
+    },
+    {
+      "id": 11,
+      "name": "AI and MCP",
+      "builder": "Complete shared AI and MCP code",
+      "checks": [
+        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["worker"], "args": ["--kind", "worker"] },
+        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["site", "static"], "args": ["--kind", "site"] }
+      ]
+    },
     { "id": 12, "name": "Checks and tooling", "builder": "Complete shared checks and tooling", "checks": [] }
   ]
 }
