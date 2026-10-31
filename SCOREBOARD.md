@@ -10,7 +10,7 @@ Newest run 2026-10-31 10:10 UTC. Filled only from the live checks and the verifi
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
 | 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | +6153 | −562 |
 | 2. Security headers and CSP | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | +47674 | −5489 |
-| 3. Sign-in and access | ❌ | 🟡 | 🟡 | · | ❌ | · | ❌ | ❌ | · | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | +3718 | −1025 |
+| 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | ❌ | ❌ | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | ❌ | +3718 | −1025 |
 | 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | +5013 | −2583 |
 | 5. Carrel editing contract | ❌ | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | ❌ | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
 | 6. Images and media | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | +16870 | −1140 |
@@ -104,22 +104,18 @@ Builder: Complete shared security headers and CSP. Verifier: none yet.
 
 ### 3. Sign-in and access
 
-Builder: Complete shared sign-in and access. Verifier: none yet.
+Builder: Complete shared sign-in and access. Verifier: Verify shared sign-in and access.
 
-- ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: checks pass; no verifier yet
-- 🟡 Germomics: checks pass; no verifier yet
+- 🟡 Package: passkey delete and email change need no fresh sign-in; a new link resets the three tries; Turnstile off when a key is missing; no new-device or recovery notice, no security history, no spike alert
+- 🟡 dustinedwards.info: /lab has no Access app in front (unsigned GET answers 503) and is outside the idle sign-out; admin refusals not logged
+- 🟡 Germomics: admin items pass; the admin 403 is not logged and nothing alerts on spikes (F2, F3)
 - ❌ TXASM: site-runtime-sign-in: 1 errors
   - A1: https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options the passkey's rpId is txasm.dustin-edwards.workers.dev, not txasm.org: a passkey made here will not work on the site
 - ❌ Foxhound: site-runtime-sign-in: 1 errors
   - H4: https://foxhoundapp.com/.well-known/oauth-authorization-server client_id_metadata_document_supported is not true: no Client ID Metadata Documents
 - ❌ Foxing: site-runtime-sign-in: 1 errors
   - H1: https://admin-mcp.foxing.app/mcp the MCP server answered 403 to a request with no token, not 401
-- 🟡 Capsid explorer: checks pass; no verifier yet
-- 🟡 Capsid MCP: checks pass; no verifier yet
-- 🟡 Foxhound admin MCP: checks pass; no verifier yet
-- 🟡 Dustin Edwards admin MCP: checks pass; no verifier yet
-- 🟡 Carrel MCP: checks pass; no verifier yet
+- 🟡 Capsid explorer: Portal session is a 12-hour cookie with no 1-hour idle sign-out and no server-side revoke; Portal sign-ins not logged
 - ❌ Foxing admin MCP: site-runtime-sign-in: 1 errors
   - D10: https://admin-mcp.foxing.app/admin an admin response (403) has no noindex
 

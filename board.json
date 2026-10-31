@@ -2125,7 +2125,7 @@
    "id": 3,
    "name": "Sign-in and access",
    "builder": "Complete shared sign-in and access",
-   "verifier": null,
+   "verifier": "Verify shared sign-in and access",
    "lines": {
     "prs": 25,
     "added": 3718,
@@ -2133,17 +2133,29 @@
    },
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "partial",
+     "reason": "passkey delete and email change need no fresh sign-in; a new link resets the three tries; Turnstile off when a key is missing; no new-device or recovery notice, no security history, no spike alert",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in.mjs#L238",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in.mjs#L465",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in-account.mjs#L21"
+     ]
     },
     "dustinedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "/lab has no Access app in front (unsigned GET answers 503) and is outside the idle sign-out; admin refusals not logged",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/workers/app.ts#L212",
+      "https://dustinedwards.info/lab"
+     ],
      "clean_days": 1
     },
     "germomics": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "admin items pass; the admin 403 is not logged and nothing alerts on spikes (F2, F3)",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
+     ],
      "clean_days": 1
     },
     "julieedwards-info": {
@@ -2215,27 +2227,46 @@
     },
     "capsid": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "Portal session is a 12-hour cookie with no 1-hour idle sign-out and no server-side revoke; Portal sign-ins not logged",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
+     ],
      "clean_days": 1
     },
     "capsid-mcp": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "H1-H8 pass in code and live (shared consent, CIMD and registration, audit log)",
+     "evidence": [
+      "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
+      "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
+     ],
      "clean_days": 1
     },
     "foxhound-mcp": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "H1-H8 pass in code and live; the shared live check's list skips this host, so it was run by hand",
+     "evidence": [
+      "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
+      "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
+     ],
      "clean_days": 1
     },
     "dustinedwards-mcp": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "H1-H8 pass in code and live",
+     "evidence": [
+      "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
+      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
+     ],
      "clean_days": 1
     },
     "carrel-mcp": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "H1-H8 pass in code and live; MCP sign-ins are not in the call log, which H8 does not require",
+     "evidence": [
+      "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
+      "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
+     ],
      "clean_days": 1
     },
     "foxing-mcp": {
