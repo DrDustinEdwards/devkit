@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.20.2 (2026-10-31)
 
 - The tool downloads in `workflow-audit.yml` and `dependencies.yml` retry three times, so one dropped connection (a TLS reset fetching zizmor from PyPI) no longer fails the check.
 - `release-self.yml` no longer starts `bump-consumers.yml`: that needed a `RENOVATE_TRIGGER_TOKEN` secret in devkit, and Renovate finds a devkit tag on its regular runs.
