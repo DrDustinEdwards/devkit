@@ -42,6 +42,7 @@ test("a missing page must be an HTML 404, never a redirect or a soft 200", () =>
   assert.deepEqual(items(notFoundFindings({ url, status: 301, contentType: "", location: "/" })), ["error N1"]);
   assert.deepEqual(items(notFoundFindings({ url, status: 200, contentType: "text/html", location: "" })), ["error N1"]);
   assert.deepEqual(items(notFoundFindings({ url, status: 404, contentType: "application/json", location: "" })), ["error N6"]);
+  assert.deepEqual(notFoundFindings({ url, status: 404, contentType: "text/plain", location: "", pages: false }), []);
 });
 
 test("H4 matches an abbreviated sha, waits 30 minutes for a deploy in flight; R1 needs a success within 8 days", () => {

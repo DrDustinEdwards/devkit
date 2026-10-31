@@ -1,8 +1,12 @@
 # Changelog
 
-## 0.20.6 (2026-10-31)
+## 0.20.7 (2026-10-31)
 
 - `devkit-family`: a local copy found by its name (a definition named like a shared export) is a warning until 0.21.0, like the copies found by their text. Names are read from each package's newest release, so a new export such as site-api's `readEmbedded` turned every repository defining one red on its next push, before any of them could move.
+
+## 0.20.6 (2026-10-31)
+
+- `devkit-ops-audit` asks for an HTML 404 (N6) only where the home page is HTML, so an API or MCP Worker that serves no pages (Carrel's AI door) answers its 404 in its own type. The plain line says when N6 was not asked.
 
 ## 0.20.5 (2026-10-31)
 

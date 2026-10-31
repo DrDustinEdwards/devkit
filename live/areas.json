@@ -23,7 +23,19 @@
       }
     },
     { "id": 4, "name": "Writing and rendering", "builder": "Complete shared writing and rendering", "checks": [] },
-    { "id": 5, "name": "Carrel editing contract", "builder": "Complete Carrel editing contract", "checks": [] },
+    {
+      "id": 5,
+      "name": "Carrel editing contract",
+      "builder": "Complete Carrel editing contract",
+      "checks": [
+        { "name": "site-api-live", "repo": "site-api", "bin": "site-api-live", "kinds": ["site"] },
+        { "name": "carrel-conformance", "report": "https://carrel-mcp.dustinedwards.info/reports/conformance.json", "kinds": ["site"], "max_age_minutes": 60 }
+      ],
+      "skip": {
+        "bsw": "no Carrel site API: its content is not edited through Carrel",
+        "capsid": "no Carrel site API: the explorer serves the knowledge base, not posts"
+      }
+    },
     {
       "id": 6,
       "name": "Images and media",
