@@ -413,6 +413,12 @@ export function distinctive(/** @type {string} */ name) {
 }
 
 /**
+ * A copy found by name is judged against each package's newest release, so a new shared export would turn every
+ * repository with a same-named function red on its next push, before any of them could move. It warns until this release.
+ */
+const NAMED_COPY_FAILS_FROM = "0.21.0";
+
+/**
  * Local copies: definitions named like a shared export (or a known alias of one), and builder fingerprints.
  * @param {Tree} tree @param {Catalog} catalog @param {Config} config @param {string} [self] the package this repository is, if any
  * @returns {Finding[]}
@@ -444,7 +450,7 @@ export function checkCopies(tree, catalog, config, self) {
         const target = guarded?.target ?? ALIASES[m[1]] ?? m[1];
         if (imported.has(target)) continue;
         if (guarded && !guarded.body.test(definitionBody(text, m.index))) continue;
-        mine.push({ check: "copies", file, line: lineOf(m.index), failsFrom: guarded?.failsFrom, message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
+        mine.push({ check: "copies", file, line: lineOf(m.index), failsFrom: guarded?.failsFrom ?? NAMED_COPY_FAILS_FROM, message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
       }
     }
     // Comments may name what a builder writes; only code counts.
