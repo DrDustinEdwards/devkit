@@ -15,7 +15,7 @@ Newest run 2026-10-31 10:10 UTC. Filled only from the live checks and the verifi
 | 5. Carrel editing contract | ❌ | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | ❌ | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
 | 6. Images and media | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | +16870 | −1140 |
 | 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +2528 | −1566 |
-| 8. Running and recovery | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | +12828 | −749 |
+| 8. Running and recovery | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | +12828 | −749 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
 | 10. Charts | ❌ | ❌ | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +15608 | −4921 |
 | 11. AI and MCP | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | +5125 | −5022 |
@@ -268,17 +268,17 @@ Builder: Complete shared speed and caching. Verifier: none yet.
 
 ### 8. Running and recovery
 
-Builder: Complete shared running and recovery. Verifier: none yet.
+Builder: Complete shared running and recovery. Verifier: Verify running and recovery across sites.
 
-- ❌ Package: no verifier has checked the package
+- 🟡 Package: ok is false on warn; no Images/DO checks; cronCheck waits 2x interval; no per-job timeout; requestFields lacks status; no console ratchet; no shared redirect/410 table; no gradual rollout, preview or expand-only check; no runbook; scoreboard never runs the sha or drill checks
 - ❌ dustinedwards.info: ops-audit: 1 errors
   - H1: https://dustinedwards.info/health answers 404, not 2xx or 503; Content-Type is 'text/html; charset=utf-8', not application/health+json or application/json; X-Robots-Tag is 'none', without noindex; the body is not JSON
-- 🟡 Germomics: checks pass; no verifier yet
-- 🟡 julieedwards.info: checks pass; no verifier yet
-- 🟡 TXASM: checks pass; no verifier yet
-- 🟡 BSW: checks pass; no verifier yet
-- 🟡 Foxhound: checks pass; no verifier yet
-- 🟡 Foxing: checks pass; no verifier yet
+- 🟡 Germomics: no sha: Workers Builds still deploys; drill never run; files pass not complete
+- 🟡 julieedwards.info: no backup exclude (preview_links.token_hash dumped); drill never run; site-runtime v0.47.0
+- 🟡 TXASM: files pass not complete; R2 check at fail level; drill never run
+- 🟡 BSW: health passes; deploy record, gradual rollout, preview and runbooks missing
+- 🟡 Foxhound: migrations without bookmark; 404 rows kept 365 days; local cron ledger records skips as success; oauth hashes dumped; drill never run
+- 🟡 Foxing: COVERS not backed up; files pass not complete; drill never run
 - ❌ Capsid explorer: ops-audit: 1 errors
   - H1: https://capsid.dustinedwards.info/health answers 404, not 2xx or 503; Content-Type is 'text/html; charset=utf-8', not application/health+json or application/json; Cache-Control is 'public, max-age=3600', without no-store; X-Robots-Tag is 'none', without noindex; the body is not JSON
 - ❌ Capsid MCP: ops-audit: 2 errors
@@ -288,7 +288,7 @@ Builder: Complete shared running and recovery. Verifier: none yet.
   - H1: https://admin-mcp.foxhoundapp.com/health Content-Type is 'text/plain; charset=utf-8', not application/health+json or application/json; the body is not JSON
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
   - H1: https://admin-mcp.dustinedwards.info/health Content-Type is 'text/plain; charset=utf-8', not application/health+json or application/json; the body is not JSON
-- 🟡 Carrel MCP: checks pass; no verifier yet
+- 🟡 Carrel MCP: serves cfc6eb2, not main d4b64b4
 - ❌ Foxing admin MCP: ops-audit: 4 errors
   - H1: https://admin-mcp.foxing.app/health answers 403, not 2xx or 503; X-Robots-Tag is 'none', without noindex
   - H2: https://admin-mcp.foxing.app/health the body does not carry status, ok, time, checks (the old shape: site-runtime's health gives { status, ok, time, checks: [{ name, status }] })

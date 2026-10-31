@@ -5535,7 +5535,7 @@
    "id": 8,
    "name": "Running and recovery",
    "builder": "Complete shared running and recovery",
-   "verifier": null,
+   "verifier": "Verify running and recovery across sites",
    "lines": {
     "prs": 20,
     "added": 12828,
@@ -5543,8 +5543,13 @@
    },
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "partial",
+     "reason": "ok is false on warn; no Images/DO checks; cronCheck waits 2x interval; no per-job timeout; requestFields lacks status; no console ratchet; no shared redirect/410 table; no gradual rollout, preview or expand-only check; no runbook; scoreboard never runs the sha or drill checks",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/site-runtime/blob/main/health.mjs",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/main/cron.mjs",
+      "https://github.com/DrDustinEdwards/devkit/blob/main/.github/workflows/worker-deploy.yml"
+     ]
     },
     "dustinedwards-info": {
      "status": "missing",
@@ -5559,32 +5564,50 @@
     },
     "germomics": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no sha: Workers Builds still deploys; drill never run; files pass not complete",
+     "evidence": [
+      "https://germomics.com/health"
+     ],
      "clean_days": 1
     },
     "julieedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no backup exclude (preview_links.token_hash dumped); drill never run; site-runtime v0.47.0",
+     "evidence": [
+      "https://julieedwards.info/health"
+     ],
      "clean_days": 1
     },
     "txasm": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "files pass not complete; R2 check at fail level; drill never run",
+     "evidence": [
+      "https://txasm.dustin-edwards.workers.dev/health"
+     ],
      "clean_days": 1
     },
     "bsw": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "health passes; deploy record, gradual rollout, preview and runbooks missing",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/health"
+     ],
      "clean_days": 1
     },
     "foxhound": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "migrations without bookmark; 404 rows kept 365 days; local cron ledger records skips as success; oauth hashes dumped; drill never run",
+     "evidence": [
+      "https://foxhoundapp.com/health"
+     ],
      "clean_days": 1
     },
     "foxing": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "COVERS not backed up; files pass not complete; drill never run",
+     "evidence": [
+      "https://foxing.app/health"
+     ],
      "clean_days": 1
     },
     "carrel": {
@@ -5654,7 +5677,10 @@
     },
     "carrel-mcp": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "serves cfc6eb2, not main d4b64b4",
+     "evidence": [
+      "https://carrel-mcp.dustinedwards.info/health"
+     ],
      "clean_days": 1
     },
     "foxing-mcp": {
