@@ -135,27 +135,27 @@ export const FINGERPRINTS = [
   { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
   // JSON-LD by hand: a script of that type filled by JSON.stringify in the same
   // expression, or a node naming the context itself (Prelum's thing and graph add it).
-  { failsFrom: "0.19.0", find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
+  { failsFrom: "0.20.0", find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
   // Head tags by hand: a Twitter card, or a canonical link (not a Link header's `>; rel="canonical"`).
-  { failsFrom: "0.19.0", find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
+  { failsFrom: "0.20.0", find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
   // Bytes to hex: the toString(16).padStart(2, "0") ... join("") loop over bytes (a digest, random bytes), not a color's
   // three channels, so only in a file that holds bytes.
-  { failsFrom: "0.19.0", also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
+  { failsFrom: "0.20.0", also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
   // base64url: btoa(...) and then the + to - swap, in one statement.
-  { failsFrom: "0.19.0", find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
+  { failsFrom: "0.20.0", find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
   // A constant-time compare of its own: OR-ing the XOR of two strings' or arrays' items.
-  { failsFrom: "0.19.0", find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
+  { failsFrom: "0.20.0", find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
   // Server-side Turnstile and the Access localhost bypass: each belongs once, in site-runtime, beside the client and
   // the verifier it goes with.
-  { failsFrom: "0.19.0", find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
-  { failsFrom: "0.19.0", find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
+  { failsFrom: "0.20.0", find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
+  { failsFrom: "0.20.0", find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
   // The pre-paint theme script: the stored choice read and set on the root before the page paints.
-  { failsFrom: "0.19.0", find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
+  { failsFrom: "0.20.0", find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
   // React Router's template error boundary, never replaced.
-  { failsFrom: "0.19.0", find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
+  { failsFrom: "0.20.0", find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
 ];
 /** A security header set written into Cloudflare's static `_headers` (bsw's copy). */
-export const HEADERS_COPY = { failsFrom: "0.19.0", find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
+export const HEADERS_COPY = { failsFrom: "0.20.0", find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
 export const LIBRARIES = [
@@ -192,16 +192,16 @@ export const ALIASES = {
  * @type {Record<string, { target: string, failsFrom: string, body: RegExp }>}
  */
 export const BODY_ALIASES = {
-  sha256Of: { target: "sha256Hex", failsFrom: "0.19.0", body: /subtle\.digest\(/ },
-  hashToken: { target: "sha256Hex", failsFrom: "0.19.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  hashMcpToken: { target: "sha256Hex", failsFrom: "0.19.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  hashRecipient: { target: "sha256Hex", failsFrom: "0.19.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  generateSlug: { target: "slugify", failsFrom: "0.19.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
-  slugOf: { target: "slugify", failsFrom: "0.19.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
-  esc: { target: "escapeHtml", failsFrom: "0.19.0", body: /&(?:amp|lt|quot);|&#/ },
-  attr: { target: "escapeHtml", failsFrom: "0.19.0", body: /&(?:amp|lt|quot);|&#/ },
-  hex: { target: "toHex", failsFrom: "0.19.0", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
-  b64: { target: "toBase64", failsFrom: "0.19.0", body: /\bbtoa\(/ },
+  sha256Of: { target: "sha256Hex", failsFrom: "0.20.0", body: /subtle\.digest\(/ },
+  hashToken: { target: "sha256Hex", failsFrom: "0.20.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashMcpToken: { target: "sha256Hex", failsFrom: "0.20.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashRecipient: { target: "sha256Hex", failsFrom: "0.20.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  generateSlug: { target: "slugify", failsFrom: "0.20.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  slugOf: { target: "slugify", failsFrom: "0.20.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  esc: { target: "escapeHtml", failsFrom: "0.20.0", body: /&(?:amp|lt|quot);|&#/ },
+  attr: { target: "escapeHtml", failsFrom: "0.20.0", body: /&(?:amp|lt|quot);|&#/ },
+  hex: { target: "toHex", failsFrom: "0.20.0", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
+  b64: { target: "toBase64", failsFrom: "0.20.0", body: /\bbtoa\(/ },
 };
 
 /** A definition's text: its first line and every line after it indented deeper, so a function's body or one arrow. */

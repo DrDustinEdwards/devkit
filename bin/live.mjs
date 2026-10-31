@@ -13,8 +13,8 @@
 //
 //   { "name": "prelum-audit", "repo": "prelum", "bin": "prelum-audit", "kinds": ["site", "static"], "ref": "v0.19.0" }
 //
-// "kinds" are the site kinds it applies to (site, static, worker); an area's "skip" names a site the area does not apply
-// to, and why.
+// "kinds" are the site kinds it applies to (site, static, worker); "args", when given, follow --origin and --from (one bin
+// run two ways, once per kind). An area's "skip" names a site the area does not apply to, and why.
 //
 // A VERDICT is live/verdicts/area-<n>.json, written by the verifier thread, which must not be the area's builder:
 //
@@ -79,6 +79,7 @@ export function lintConfig({ sites, areas, verdicts }) {
     for (const check of area.checks) {
       if (!check.name || !check.repo || !check.bin) problems.push(`area ${area.id} has a check without a name, repo and bin`);
       for (const kind of check.kinds ?? []) if (!KINDS.includes(kind)) problems.push(`area ${area.id} check ${check.name} names kind ${kind}`);
+      if (check.args !== undefined && !(Array.isArray(check.args) && check.args.every((arg) => typeof arg === "string"))) problems.push(`area ${area.id} check ${check.name} has args that are not a list of strings`);
     }
     for (const id of Object.keys(area.skip ?? {})) if (!siteIds.has(id)) problems.push(`area ${area.id} skips unknown site ${id}`);
   }
@@ -213,7 +214,7 @@ export async function runAll({ sites, areas }, { onlyAreas, onlySites, token, lo
           results.push({ ...record, status: "error", errors: 0, warnings: 0, findings: [], detail: error });
           continue;
         }
-        const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : [])];
+        const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : []), ...(check.args ?? [])];
         jobs.push(async () => {
           const result = resultOf(await runBin(bin, args));
           log(`area ${area.id} ${site.id} ${check.name}: ${result.status} (${result.errors} errors, ${result.warnings} warnings, ${result.seconds}s)`);

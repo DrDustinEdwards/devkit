@@ -253,7 +253,7 @@ test("a site's own value for a Capsomer token, or its own files for the family's
   assert.match(found[2].message, /capsomer\/fonts\.css/);
 });
 
-test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.19.0 and fail from it, and their look-alikes pass", () => {
+test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.20.0 and fail from it, and their look-alikes pass", () => {
   const files = tree({
     "app/ld.tsx": '<script\n  type="application/ld+json"\n  dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}\n/>\n',
     "app/meta.ts": 'export const meta = () => [{ tagName: "link", rel: "canonical", href }];\n',
@@ -275,7 +275,7 @@ test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.19.0 and fail
     "public/_headers": "# Strict-Transport-Security: is set by the Worker\n/*\n  Strict-Transport-Security: max-age=63072000\n",
   });
   assert.deepEqual(
-    checkCopies(files, {}, {}).map((f) => `${f.file}:${f.line} ${isWarning(f, "0.18.0")} ${isWarning(f, "0.19.0")}`),
+    checkCopies(files, {}, {}).map((f) => `${f.file}:${f.line} ${isWarning(f, "0.18.0")} ${isWarning(f, "0.20.0")}`),
     [
       "app/ld.tsx:2 true false",
       "app/meta.ts:1 true false",
