@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.20.14 (2026-10-31)
+
+- The scoreboard runs area 8's deployed-commit (H4) and restore-drill (R1) checks daily. A check in `live/areas.json` takes `site_args`, arguments for one site keyed by its id, after `args`; area 8 gives Foxhound, Foxing, germomics, julieedwards.info, TXASM, Carrel's MCP Worker and dustinedwards.info `--repo DrDustinEdwards/<repo> --drill-workflow restore-drill.yml`. `devkit-live lint` refuses site_args for an unknown site or that are not a list of strings.
+- `devkit-console` (bin/console.mjs): the console ratchet. It counts the raw `console.*` calls in server code, outside comments and strings, against the baseline in `.console.json`, and fails when the count rises, naming each file above its own count; `--write-baseline` records it.
+- `devkit-migrations <dir>` (bin/migrations.mjs): the expand-only migration check, moved from dustinedwards.info's `scripts/check-migrations.mjs` and given the directory as an argument. Each migration's sha256 is recorded in `<dir>/manifest.json` (dustinedwards.info's manifest reads as it is); an edited, unrecorded, renamed or deleted migration fails, and so does a new one that drops or renames a table or column without a `-- contract: <reason>` line. With a local wrangler database it also compares the `d1_migrations` ledger with the files.
+
 ## 0.20.13 (2026-10-31)
 
 - `devkit-route-weight` weighs what a page on an opt-in hydration site downloads. When the client build has a /site.js (devkit's siteScript), a route whose chain declares `handle = { hydrate: true }` weighs the client entry and its chain as before. Any other route weighs /site.js and its stylesheets, because it loads no React. Before this, every route counted the full React bundle, so a public page that started loading React again would still pass a budget set for the app pages. txasm's public pages now weigh about 35 KB, where they weighed about 157 KB.

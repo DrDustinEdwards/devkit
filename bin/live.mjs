@@ -14,7 +14,10 @@
 //   { "name": "prelum-audit", "repo": "prelum", "bin": "prelum-audit", "kinds": ["site", "static"], "ref": "v0.19.0" }
 //
 // "kinds" are the site kinds it applies to (site, static, worker); "args", when given, follow --origin and --from (one bin
-// run two ways, once per kind). An area's "skip" names a site the area does not apply to, and why.
+// run two ways, once per kind). "site_args" adds arguments for one site only, after "args", keyed by site id: area 8 gives
+// each site with a restore drill its repository and drill workflow (`--repo owner/name --drill-workflow restore-drill.yml`).
+// An area's "skip" names a site the area does not apply to, and why. A check's bin inherits the run's environment, so
+// GITHUB_TOKEN reaches it.
 //
 // A REPORTED check is one that needs a site's secrets, so it runs where the secrets already live and publishes its result
 // on that system's own https origin; GitHub never holds a site key. The run reads the report instead of running a bin:
@@ -93,7 +96,11 @@ export function lintConfig({ sites, areas, verdicts }) {
         if (!check.name || check.repo || check.bin || !/^https:\/\/[a-z0-9.-]+\//.test(check.report)) problems.push(`area ${area.id} check ${check.name} needs a name and an https report URL, and no repo or bin`);
       } else if (!check.name || !check.repo || !check.bin) problems.push(`area ${area.id} has a check without a name, repo and bin`);
       for (const kind of check.kinds ?? []) if (!KINDS.includes(kind)) problems.push(`area ${area.id} check ${check.name} names kind ${kind}`);
-      if (check.args !== undefined && !(Array.isArray(check.args) && check.args.every((arg) => typeof arg === "string"))) problems.push(`area ${area.id} check ${check.name} has args that are not a list of strings`);
+      if (check.args !== undefined && !isStrings(check.args)) problems.push(`area ${area.id} check ${check.name} has args that are not a list of strings`);
+      for (const [id, args] of Object.entries(check.site_args ?? {})) {
+        if (!siteIds.has(id)) problems.push(`area ${area.id} check ${check.name} has site_args for unknown site ${id}`);
+        if (!isStrings(args)) problems.push(`area ${area.id} check ${check.name} has site_args for ${id} that are not a list of strings`);
+      }
     }
     for (const id of Object.keys(area.skip ?? {})) if (!siteIds.has(id)) problems.push(`area ${area.id} skips unknown site ${id}`);
   }
@@ -116,6 +123,8 @@ export function lintConfig({ sites, areas, verdicts }) {
   }
   return problems;
 }
+
+const isStrings = (/** @type {unknown} */ list) => Array.isArray(list) && list.every((item) => typeof item === "string");
 
 const same = (/** @type {string} */ a, /** @type {string} */ b) => Boolean(a) && a.trim().toLowerCase() === b?.trim().toLowerCase();
 
@@ -264,7 +273,7 @@ export async function runAll({ sites, areas }, { onlyAreas, onlySites, token, lo
           results.push({ ...record, status: "error", errors: 0, warnings: 0, findings: [], detail: error });
           continue;
         }
-        const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : []), ...(check.args ?? [])];
+        const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : []), ...(check.args ?? []), ...(check.site_args?.[site.id] ?? [])];
         jobs.push(async () => {
           const result = resultOf(await runBin(bin, args));
           log(`area ${area.id} ${site.id} ${check.name}: ${result.status} (${result.errors} errors, ${result.warnings} warnings, ${result.seconds}s)`);
