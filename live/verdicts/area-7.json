@@ -6,9 +6,10 @@
     "package": {
       "verdict": "partial",
       "evidence": [
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.50.0/bin/speed.mjs"
+        "https://github.com/DrDustinEdwards/devkit/actions/runs/41189998648",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.50.0/speed.mjs"
       ],
-      "note": "site-runtime ships every helper, but route-budget enforcement and post-deploy warming are opt-in and several sites skip them (D5, B6); the speed check reads a Workers static-assets 404 as stored even when it is no-store"
+      "note": "site-runtime-speed v0.50.0 reports false failures on every site, so no cell can pass: its user agent gets no 103 from Cloudflare (a browser or curl does), its hashed-file test matches unhashed names such as apple-touch-icon.png (C1), and it reads a static-assets 404 as stored even when sent no-store (B4). Route-budget enforcement and post-deploy warming are opt-in and several sites skip them (D5, B6)."
     },
     "dustinedwards-info": {
       "verdict": "partial",
