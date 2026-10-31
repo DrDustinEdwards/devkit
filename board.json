@@ -72,6 +72,21 @@
    "id": "foxhound-mcp",
    "name": "Foxhound admin MCP",
    "origin": "https://admin-mcp.foxhoundapp.com"
+  },
+  {
+   "id": "dustinedwards-mcp",
+   "name": "Dustin Edwards admin MCP",
+   "origin": "https://admin-mcp.dustinedwards.info"
+  },
+  {
+   "id": "carrel-mcp",
+   "name": "Carrel MCP",
+   "origin": "https://carrel-mcp.dustinedwards.info"
+  },
+  {
+   "id": "foxing-mcp",
+   "name": "Foxing admin MCP",
+   "origin": "https://admin-mcp.foxing.app"
   }
  ],
  "areas": [
@@ -143,6 +158,18 @@
      "reason": "no check for a worker"
     },
     "foxhound-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "dustinedwards-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "carrel-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "foxing-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
     }
@@ -218,6 +245,18 @@
     "foxhound-mcp": {
      "status": "missing",
      "reason": "not run yet"
+    },
+    "dustinedwards-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "carrel-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "foxing-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
     }
    }
   },
@@ -289,6 +328,18 @@
      "reason": "not run yet"
     },
     "foxhound-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "dustinedwards-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "carrel-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "foxing-mcp": {
      "status": "missing",
      "reason": "not run yet"
     }
@@ -364,6 +415,18 @@
     "foxhound-mcp": {
      "status": "missing",
      "reason": "no live check yet"
+    },
+    "dustinedwards-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
     }
    }
   },
@@ -435,6 +498,18 @@
      "reason": "no live check yet"
     },
     "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "dustinedwards-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing-mcp": {
      "status": "missing",
      "reason": "no live check yet"
     }
@@ -510,6 +585,18 @@
     "foxhound-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
+    },
+    "dustinedwards-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "carrel-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "foxing-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
     }
    }
   },
@@ -581,6 +668,18 @@
      "reason": "no check for a worker"
     },
     "foxhound-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "dustinedwards-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "carrel-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "foxing-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
     }
@@ -656,6 +755,18 @@
     "foxhound-mcp": {
      "status": "missing",
      "reason": "not run yet"
+    },
+    "dustinedwards-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "carrel-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "foxing-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
     }
    }
   },
@@ -727,6 +838,18 @@
      "reason": "no live check yet"
     },
     "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "dustinedwards-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing-mcp": {
      "status": "missing",
      "reason": "no live check yet"
     }
@@ -802,6 +925,18 @@
     "foxhound-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
+    },
+    "dustinedwards-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "carrel-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "foxing-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
     }
    }
   },
@@ -822,59 +957,71 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "germomics": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "julieedwards-info": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "txasm": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "bsw": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "foxhound": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "foxing": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "carrel": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "enarratio": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "capsomer": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "prelum": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "capsid": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "capsid-mcp": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "foxhound-mcp": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
+    },
+    "dustinedwards-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "carrel-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "foxing-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
     }
    }
   },
@@ -946,6 +1093,18 @@
      "reason": "no live check yet"
     },
     "foxhound-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "dustinedwards-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "foxing-mcp": {
      "status": "missing",
      "reason": "no live check yet"
     }

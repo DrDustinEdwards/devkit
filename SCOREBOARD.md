@@ -6,20 +6,20 @@ Newest run 2026-10-30 23:28 UTC. Filled only from the live checks and the verifi
 
 ✅ complete · 🟡 partial · ❌ missing · `·` does not apply
 
-| Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Lines added | Lines removed |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +0 | −0 |
-| 2. Security headers and CSP | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
-| 3. Sign-in and access | ❌ | ❌ | ❌ | · | ❌ | · | ❌ | ❌ | · | · | · | · | ❌ | ❌ | ❌ | +0 | −0 |
-| 4. Writing and rendering | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
-| 5. Carrel editing contract | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
-| 6. Images and media | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +0 | −0 |
-| 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +0 | −0 |
-| 8. Running and recovery | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | ❌ | ❌ | ❌ | +0 | −0 |
-| 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
-| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +0 | −0 |
-| 11. AI and MCP | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
-| 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +548 | −1 |
+| Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Lines added | Lines removed |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
+| 1. Search, sharing and AI answers | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +0 | −0 |
+| 2. Security headers and CSP | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 3. Sign-in and access | ❌ | ❌ | ❌ | · | ❌ | · | ❌ | ❌ | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 4. Writing and rendering | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 5. Carrel editing contract | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 6. Images and media | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +0 | −0 |
+| 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +0 | −0 |
+| 8. Running and recovery | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +0 | −0 |
+| 11. AI and MCP | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +548 | −1 |
 
 Lines count public repositories only until the LIVE_GITHUB_TOKEN secret is set.
 
@@ -62,6 +62,9 @@ Builder: Complete shared security headers and CSP. Verifier: none yet.
 - ❌ Capsid explorer: not run yet
 - ❌ Capsid MCP: not run yet
 - ❌ Foxhound admin MCP: not run yet
+- ❌ Dustin Edwards admin MCP: not run yet
+- ❌ Carrel MCP: not run yet
+- ❌ Foxing admin MCP: not run yet
 
 ### 3. Sign-in and access
 
@@ -76,6 +79,9 @@ Builder: Complete shared sign-in and access. Verifier: none yet.
 - ❌ Capsid explorer: not run yet
 - ❌ Capsid MCP: not run yet
 - ❌ Foxhound admin MCP: not run yet
+- ❌ Dustin Edwards admin MCP: not run yet
+- ❌ Carrel MCP: not run yet
+- ❌ Foxing admin MCP: not run yet
 
 ### 4. Writing and rendering
 
@@ -96,6 +102,9 @@ Builder: Complete shared writing and rendering. Verifier: none yet.
 - ❌ Capsid explorer: no live check yet
 - ❌ Capsid MCP: no live check yet
 - ❌ Foxhound admin MCP: no live check yet
+- ❌ Dustin Edwards admin MCP: no live check yet
+- ❌ Carrel MCP: no live check yet
+- ❌ Foxing admin MCP: no live check yet
 
 ### 5. Carrel editing contract
 
@@ -116,6 +125,9 @@ Builder: Complete Carrel editing contract. Verifier: none yet.
 - ❌ Capsid explorer: no live check yet
 - ❌ Capsid MCP: no live check yet
 - ❌ Foxhound admin MCP: no live check yet
+- ❌ Dustin Edwards admin MCP: no live check yet
+- ❌ Carrel MCP: no live check yet
+- ❌ Foxing admin MCP: no live check yet
 
 ### 6. Images and media
 
@@ -168,6 +180,9 @@ Builder: Complete shared running and recovery. Verifier: none yet.
 - ❌ Capsid explorer: not run yet
 - ❌ Capsid MCP: not run yet
 - ❌ Foxhound admin MCP: not run yet
+- ❌ Dustin Edwards admin MCP: not run yet
+- ❌ Carrel MCP: not run yet
+- ❌ Foxing admin MCP: not run yet
 
 ### 9. Accessibility and components
 
@@ -188,6 +203,9 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 - ❌ Capsid explorer: no live check yet
 - ❌ Capsid MCP: no live check yet
 - ❌ Foxhound admin MCP: no live check yet
+- ❌ Dustin Edwards admin MCP: no live check yet
+- ❌ Carrel MCP: no live check yet
+- ❌ Foxing admin MCP: no live check yet
 
 ### 10. Charts
 
@@ -209,20 +227,23 @@ Builder: Complete shared charts. Verifier: none yet.
 Builder: Complete shared AI and MCP code. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: no live check yet
-- ❌ Germomics: no live check yet
-- ❌ julieedwards.info: no live check yet
-- ❌ TXASM: no live check yet
-- ❌ BSW: no live check yet
-- ❌ Foxhound: no live check yet
-- ❌ Foxing: no live check yet
-- ❌ Carrel: no live check yet
-- ❌ Enarratio: no live check yet
-- ❌ Capsomer: no live check yet
-- ❌ Prelum specimen: no live check yet
-- ❌ Capsid explorer: no live check yet
-- ❌ Capsid MCP: no live check yet
-- ❌ Foxhound admin MCP: no live check yet
+- ❌ dustinedwards.info: not run yet
+- ❌ Germomics: not run yet
+- ❌ julieedwards.info: not run yet
+- ❌ TXASM: not run yet
+- ❌ BSW: not run yet
+- ❌ Foxhound: not run yet
+- ❌ Foxing: not run yet
+- ❌ Carrel: not run yet
+- ❌ Enarratio: not run yet
+- ❌ Capsomer: not run yet
+- ❌ Prelum specimen: not run yet
+- ❌ Capsid explorer: not run yet
+- ❌ Capsid MCP: not run yet
+- ❌ Foxhound admin MCP: not run yet
+- ❌ Dustin Edwards admin MCP: not run yet
+- ❌ Carrel MCP: not run yet
+- ❌ Foxing admin MCP: not run yet
 
 ### 12. Checks and tooling
 
@@ -243,3 +264,6 @@ Builder: Complete shared checks and tooling. Verifier: none yet.
 - ❌ Capsid explorer: no live check yet
 - ❌ Capsid MCP: no live check yet
 - ❌ Foxhound admin MCP: no live check yet
+- ❌ Dustin Edwards admin MCP: no live check yet
+- ❌ Carrel MCP: no live check yet
+- ❌ Foxing admin MCP: no live check yet
