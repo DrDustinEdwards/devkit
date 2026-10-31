@@ -43,8 +43,8 @@ jobs:
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP"
-          curl -fsSLo actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
-          curl -fsSLo shellcheck.tar.xz https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz
+          curl -fsSL --retry 3 --retry-all-errors --connect-timeout 20 -o actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          curl -fsSL --retry 3 --retry-all-errors --connect-timeout 20 -o shellcheck.tar.xz https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz
           sha256sum -c - <<'SUMS'
           8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  actionlint.tar.gz
           8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198  shellcheck.tar.xz
@@ -73,7 +73,7 @@ jobs:
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP"
-          curl -fsSLo zizmor.whl https://files.pythonhosted.org/packages/py3/z/zizmor/zizmor-1.31.1-py3-none-manylinux_2_28_x86_64.whl
+          curl -fsSL --retry 3 --retry-all-errors --connect-timeout 20 -o zizmor.whl https://files.pythonhosted.org/packages/py3/z/zizmor/zizmor-1.31.1-py3-none-manylinux_2_28_x86_64.whl
           echo "58e878eb2dbd2c6183c105e1ac28c14f7dd1eca44a783f1fe2a69647d012c410  zizmor.whl" | sha256sum -c -
           unzip -p zizmor.whl zizmor-1.31.1.data/scripts/zizmor > zizmor
           chmod +x zizmor
