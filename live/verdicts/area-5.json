@@ -1,0 +1,68 @@
+{
+  "area": 5,
+  "verifier": "Verify area 5 Carrel editing contract",
+  "date": "2026-10-31",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/server.ts",
+        "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/webmention.ts",
+        "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/bin/site-api-live.mjs",
+        "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/conformance.ts",
+        "https://github.com/DrDustinEdwards/carrel/blob/main/app/routes/editor.tsx",
+        "https://github.com/DrDustinEdwards/capsomer/blob/main/components/posts-list/posts-list.react.tsx"
+      ],
+      "note": "no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong"
+    },
+    "dustinedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://dustinedwards.info/api/carrel/v1/meta",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/19ec1e6/app/lib/carrel/site-api.server.ts",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/19ec1e6/app/routes/blog.$slug.tsx"
+      ],
+      "note": "site-api-live red (private, no-store); no postFields or authors, author filter 501 though the page credits Dustin Edwards; deleted post 404 not 410; no mentions group, own admin.mentions.tsx remains; backdated publish reads back as today; q title+slug only, no total, sort ignored; no setTags; own purge in savePost; pins v0.17.0"
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": [
+        "https://germomics.com/api/carrel/v1/meta",
+        "https://github.com/DrDustinEdwards/germomics/blob/f86a616/app/lib/carrel/adapter.server.ts"
+      ],
+      "note": "author filter 501 though show.author is the byline; deleted post 404 not 410; preview is a hand-written shell; no series; no setTags; revisions author 'germomics', pages no history; admin.content.$key still writes pages outside Carrel"
+    },
+    "julieedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://julieedwards.info/api/carrel/v1/meta",
+        "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/lib/carrel/sections.server.ts"
+      ],
+      "note": "pins v0.17.0 so webmentions can read the stale edge copy, sent on publish only; live section with a draft reads as draft; revisions capped at 50; no delete or unpublish (needs ruling); preview without page chrome"
+    },
+    "txasm": {
+      "verdict": "partial",
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/api/carrel/v1/meta",
+        "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/lib/site-meta.ts"
+      ],
+      "note": "daily site-api-live probes txasm.org (bin ignores --from); IndexNow origin txasm.org so Carrel publishes are skipped; preview hand-written shell; revisions capped at 50, older unopenable; no delete or unpublish (needs ruling); no media shrink"
+    },
+    "foxhound": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxhoundapp.com/api/carrel/v1/meta",
+        "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/lib/carrel/adapter.server.ts"
+      ],
+      "note": "a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently"
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxing.app/api/carrel/v1/meta",
+        "https://github.com/DrDustinEdwards/foxing/blob/6a2a21d/apps/web/app/lib/carrel/journal-adapter.server.ts"
+      ],
+      "note": "author filter 501 though author_id exists and JSON-LD credits Foxing; pins v0.17.0 so webmentions can read the stale edge copy; deleted post 404 not 410; preview hand-written shell; no series; redirects not removed on delete (301 to 404); revision author raw id"
+    }
+  }
+}
