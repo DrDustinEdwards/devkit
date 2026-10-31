@@ -135,27 +135,27 @@ export const FINGERPRINTS = [
   { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
   // JSON-LD by hand: a script of that type filled by JSON.stringify in the same
   // expression, or a node naming the context itself (Prelum's thing and graph add it).
-  { failsFrom: "0.20.0", find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
+  { failsFrom: "0.21.0", find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
   // Head tags by hand: a Twitter card, or a canonical link (not a Link header's `>; rel="canonical"`).
-  { failsFrom: "0.20.0", find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
+  { failsFrom: "0.21.0", find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
   // Bytes to hex: the toString(16).padStart(2, "0") ... join("") loop over bytes (a digest, random bytes), not a color's
   // three channels, so only in a file that holds bytes.
-  { failsFrom: "0.20.0", also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
+  { failsFrom: "0.21.0", also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
   // base64url: btoa(...) and then the + to - swap, in one statement.
-  { failsFrom: "0.20.0", find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
+  { failsFrom: "0.21.0", find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
   // A constant-time compare of its own: OR-ing the XOR of two strings' or arrays' items.
-  { failsFrom: "0.20.0", find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
+  { failsFrom: "0.21.0", find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
   // Server-side Turnstile and the Access localhost bypass: each belongs once, in site-runtime, beside the client and
   // the verifier it goes with.
-  { failsFrom: "0.20.0", find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
-  { failsFrom: "0.20.0", find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
+  { failsFrom: "0.21.0", find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
+  { failsFrom: "0.21.0", find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
   // The pre-paint theme script: the stored choice read and set on the root before the page paints.
-  { failsFrom: "0.20.0", find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
+  { failsFrom: "0.21.0", find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
   // React Router's template error boundary, never replaced.
-  { failsFrom: "0.20.0", find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
+  { failsFrom: "0.21.0", find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
 ];
 /** A security header set written into Cloudflare's static `_headers` (bsw's copy). */
-export const HEADERS_COPY = { failsFrom: "0.20.0", find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
+export const HEADERS_COPY = { failsFrom: "0.21.0", find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
 export const LIBRARIES = [
@@ -192,16 +192,16 @@ export const ALIASES = {
  * @type {Record<string, { target: string, failsFrom: string, body: RegExp }>}
  */
 export const BODY_ALIASES = {
-  sha256Of: { target: "sha256Hex", failsFrom: "0.20.0", body: /subtle\.digest\(/ },
-  hashToken: { target: "sha256Hex", failsFrom: "0.20.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  hashMcpToken: { target: "sha256Hex", failsFrom: "0.20.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  hashRecipient: { target: "sha256Hex", failsFrom: "0.20.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  generateSlug: { target: "slugify", failsFrom: "0.20.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
-  slugOf: { target: "slugify", failsFrom: "0.20.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
-  esc: { target: "escapeHtml", failsFrom: "0.20.0", body: /&(?:amp|lt|quot);|&#/ },
-  attr: { target: "escapeHtml", failsFrom: "0.20.0", body: /&(?:amp|lt|quot);|&#/ },
-  hex: { target: "toHex", failsFrom: "0.20.0", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
-  b64: { target: "toBase64", failsFrom: "0.20.0", body: /\bbtoa\(/ },
+  sha256Of: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(/ },
+  hashToken: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashMcpToken: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashRecipient: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  generateSlug: { target: "slugify", failsFrom: "0.21.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  slugOf: { target: "slugify", failsFrom: "0.21.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  esc: { target: "escapeHtml", failsFrom: "0.21.0", body: /&(?:amp|lt|quot);|&#/ },
+  attr: { target: "escapeHtml", failsFrom: "0.21.0", body: /&(?:amp|lt|quot);|&#/ },
+  hex: { target: "toHex", failsFrom: "0.21.0", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
+  b64: { target: "toBase64", failsFrom: "0.21.0", body: /\bbtoa\(/ },
 };
 
 /** A definition's text: its first line and every line after it indented deeper, so a function's body or one arrow. */
@@ -382,7 +382,7 @@ export function checkPins(tree, readTags, lenient = false) {
     } else if (/^\.github\/workflows\/.+\.ya?ml$/.test(file)) {
       for (const m of text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/[\w.-]+@([0-9a-f]{40})/gi)) judge(file, lineOf(m.index), "devkit", m[1]);
       // The tag ai-author.yml runs check-trailers from, for a repository whose package.json does not list devkit.
-      for (const m of text.matchAll(/^[ \t]*devkit:[ \t]*["']?DrDustinEdwards\/devkit#([^\s"'#]+)/gim)) judge(file, lineOf(m.index), "devkit", m[1], "ai-author's devkit: input", "0.20.0");
+      for (const m of text.matchAll(/^[ \t]*devkit:[ \t]*["']?DrDustinEdwards\/devkit#([^\s"'#]+)/gim)) judge(file, lineOf(m.index), "devkit", m[1], "ai-author's devkit: input", "0.21.0");
     }
   }
   return found;
@@ -620,16 +620,16 @@ const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
  * @type {{ name: string, failsFrom?: string, warn?: boolean, runs?: string[], example?: string, needed: (repo: Holds) => string | null }[]}
  */
 export const WORKFLOWS = [
-  { name: "ai-author", failsFrom: "0.20.0", runs: ["devkit-check-trailers", "bin/check-trailers.mjs"], needed: () => "every repository" },
-  { name: "pr-footer", failsFrom: "0.20.0", needed: () => "every repository" },
-  { name: "family", failsFrom: "0.20.0", runs: ["devkit-family", "bin/family.mjs"], needed: () => "every repository" },
-  { name: "workflow-audit", failsFrom: "0.20.0", needed: () => "every repository" },
-  { name: "dependencies", failsFrom: "0.20.0", needed: () => "every repository" },
-  { name: "worker-size", failsFrom: "0.20.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
+  { name: "ai-author", failsFrom: "0.21.0", runs: ["devkit-check-trailers", "bin/check-trailers.mjs"], needed: () => "every repository" },
+  { name: "pr-footer", failsFrom: "0.21.0", needed: () => "every repository" },
+  { name: "family", failsFrom: "0.21.0", runs: ["devkit-family", "bin/family.mjs"], needed: () => "every repository" },
+  { name: "workflow-audit", failsFrom: "0.21.0", needed: () => "every repository" },
+  { name: "dependencies", failsFrom: "0.21.0", needed: () => "every repository" },
+  { name: "worker-size", failsFrom: "0.21.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
   // Many Workers deploy another way today (Workers Builds, a deploy job of their own), so this one stays a warning.
   { name: "worker-deploy", warn: true, needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
-  { name: "no-bloat", failsFrom: "0.20.0", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
-  { name: "bump-consumers", failsFrom: "0.20.0", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
+  { name: "no-bloat", failsFrom: "0.21.0", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
+  { name: "bump-consumers", failsFrom: "0.21.0", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
 ];
 
 /**
@@ -684,13 +684,13 @@ const DELETE_ALL = String.raw`DELETE FROM\s+["'\x60]?[\w$]+["'\x60]?(?=\s*(?:["'
 /** Test fakes of a repository's own where devkit has one: every pattern in `find` matches the test file. */
 export const FAKES = [
   // GitHub's contents or git data routes answered behind a fetch stub.
-  { failsFrom: "0.20.0", find: [/\/repos\/[^\s"'`]*\/(?:git\/(?:refs?|trees|commits|blobs)|contents)\b/, new RegExp(FETCH_SWAP)], use: "devkit ./github stubGitHub", say: "a GitHub API fake of its own" },
+  { failsFrom: "0.21.0", find: [/\/repos\/[^\s"'`]*\/(?:git\/(?:refs?|trees|commits|blobs)|contents)\b/, new RegExp(FETCH_SWAP)], use: "devkit ./github stubGitHub", say: "a GitHub API fake of its own" },
   // An RSA key pair made here and a key set served from it: an Access issuer of its own.
-  { failsFrom: "0.20.0", find: [/generateKey\(\s*\{\s*name\s*:\s*["'`]RSASSA-PKCS1-v1_5|generateKeyPair(?:Sync)?\(\s*["'`](?:RS256|rsa)["'`]/, /cdn-cgi\/access\/certs|\bjwks\b|["']?keys["']?\s*:\s*\[\s*(?:\{\s*\.\.\.)?\s*\w*[jJ]wk\b/], use: "devkit ./access stubAccess", say: "an Access fake of its own (a key pair it signs with and the key set it serves)" },
+  { failsFrom: "0.21.0", find: [/generateKey\(\s*\{\s*name\s*:\s*["'`]RSASSA-PKCS1-v1_5|generateKeyPair(?:Sync)?\(\s*["'`](?:RS256|rsa)["'`]/, /cdn-cgi\/access\/certs|\bjwks\b|["']?keys["']?\s*:\s*\[\s*(?:\{\s*\.\.\.)?\s*\w*[jJ]wk\b/], use: "devkit ./access stubAccess", say: "an Access fake of its own (a key pair it signs with and the key set it serves)" },
   // A fetch whose whole body throws an error naming the URL.
-  { failsFrom: "0.20.0", find: [new RegExp(`${FETCH_SWAP}\\s*(?:vi\\.fn\\(\\s*)?(?:async\\s*)?(?:function\\s*)?\\(?[^)]*\\)?\\s*(?::\\s*[\\w<>]+\\s*)?(?:=>)?\\s*\\{?\\s*(?:throw\\s+new\\s+\\w*Error\\(\\s*|(?:return\\s+)?Promise\\.reject\\(\\s*(?:new\\s+\\w*Error\\(\\s*)?)\\x60[^\\x60]*\\$\\{`)], use: "devkit ./network refuseNetwork", say: "a fetch that refuses the network, written here" },
+  { failsFrom: "0.21.0", find: [new RegExp(`${FETCH_SWAP}\\s*(?:vi\\.fn\\(\\s*)?(?:async\\s*)?(?:function\\s*)?\\(?[^)]*\\)?\\s*(?::\\s*[\\w<>]+\\s*)?(?:=>)?\\s*\\{?\\s*(?:throw\\s+new\\s+\\w*Error\\(\\s*|(?:return\\s+)?Promise\\.reject\\(\\s*(?:new\\s+\\w*Error\\(\\s*)?)\\x60[^\\x60]*\\$\\{`)], use: "devkit ./network refuseNetwork", say: "a fetch that refuses the network, written here" },
   // Tables cleared by hand: three DELETE FROMs with no WHERE close together, or one in a loop.
-  { failsFrom: "0.20.0", find: [new RegExp(`${DELETE_ALL}[^]{0,400}?${DELETE_ALL}[^]{0,400}?${DELETE_ALL}|\\bfor\\s*\\(\\s*(?:const|let)\\s+\\w+\\s+of\\s+[^)]+\\)[^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{|\\]\\s*\\.(?:map|forEach)\\([^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{`, "im")], use: "devkit ./d1 resetDb", say: "a hand list of tables to clear, which drifts the day a migration adds one" },
+  { failsFrom: "0.21.0", find: [new RegExp(`${DELETE_ALL}[^]{0,400}?${DELETE_ALL}[^]{0,400}?${DELETE_ALL}|\\bfor\\s*\\(\\s*(?:const|let)\\s+\\w+\\s+of\\s+[^)]+\\)[^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{|\\]\\s*\\.(?:map|forEach)\\([^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{`, "im")], use: "devkit ./d1 resetDb", say: "a hand list of tables to clear, which drifts the day a migration adds one" },
 ];
 
 /**

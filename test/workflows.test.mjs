@@ -21,6 +21,7 @@ test("the shared workflows are the ones every repository calls", () => {
     "no-bloat.yml",
     "pr-footer.yml",
     "release.yml",
+    "restore-drill.yml",
     "worker-deploy.yml",
     "worker-size.yml",
     "workflow-audit.yml",

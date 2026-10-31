@@ -253,7 +253,7 @@ test("a site's own value for a Capsomer token, or its own files for the family's
   assert.match(found[2].message, /capsomer\/fonts\.css/);
 });
 
-test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.20.0 and fail from it, and their look-alikes pass", () => {
+test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.21.0 and fail from it, and their look-alikes pass", () => {
   const files = tree({
     "app/ld.tsx": '<script\n  type="application/ld+json"\n  dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}\n/>\n',
     "app/meta.ts": 'export const meta = () => [{ tagName: "link", rel: "canonical", href }];\n',
@@ -275,7 +275,7 @@ test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.20.0 and fail
     "public/_headers": "# Strict-Transport-Security: is set by the Worker\n/*\n  Strict-Transport-Security: max-age=63072000\n",
   });
   assert.deepEqual(
-    checkCopies(files, {}, {}).map((f) => `${f.file}:${f.line} ${isWarning(f, "0.18.0")} ${isWarning(f, "0.20.0")}`),
+    checkCopies(files, {}, {}).map((f) => `${f.file}:${f.line} ${isWarning(f, "0.18.0")} ${isWarning(f, "0.21.0")}`),
     [
       "app/ld.tsx:2 true false",
       "app/meta.ts:1 true false",
@@ -374,7 +374,7 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
     { self: "devkit" },
   );
   assert.deepEqual(
-    devkit.map((f) => `${f.message.split(" calls")[0]} ${f.message.split("devkit's ")[1].split(".yml")[0]} ${isWarning(f, "0.20.0")}`),
+    devkit.map((f) => `${f.message.split(" calls")[0]} ${f.message.split("devkit's ")[1].split(".yml")[0]} ${isWarning(f, "0.21.0")}`),
     [
       "every repository ai-author false",
       "every repository pr-footer false",
@@ -410,7 +410,7 @@ test("PLANT: a test with a fake devkit ships warns, naming the helper; using dev
     found.map((f) => `${f.file}:${f.line} ${f.message.split("use devkit ")[1].split(",")[0]} ${isWarning(f)}`),
     ["test/github.test.ts:2 ./github stubGitHub true", "test/access.test.ts:1 ./access stubAccess true", "test/setup.ts:2 ./network refuseNetwork true", "test/db.test.ts:2 ./d1 resetDb true", "test/loop.test.ts:1 ./d1 resetDb true", "test/trees.test.ts:1 ./github stubGitHub true", "test/rsa.test.ts:1 ./access stubAccess true", "test/rsa2.test.ts:1 ./access stubAccess true"],
   );
-  assert.equal(found.filter((f) => isWarning(f, "0.20.0")).length, 0);
+  assert.equal(found.filter((f) => isWarning(f, "0.21.0")).length, 0);
 });
 
 test("PLANT: an exception that excused nothing in the run is named; one that did is not", () => {
