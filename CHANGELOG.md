@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.15 (2026-10-31)
+
+- `worker-deploy.yml` takes a gradual rollout, opt-in (`gradual-percent`, `gradual-minutes`): it uploads a version, splits traffic with the live one, gates the new version through a version override, and promotes it or rolls back to the old one by id. And a preview per pull request, opt-in (`preview`, `preview-build`): `wrangler versions upload --preview-alias pr-<number>` on a pull request from the same repository, its URL in the summary and the `preview-url` output. Both off by default, so a caller that changes nothing deploys as before.
+- `docs/runbook.md`: the one runbook for every site (area 8, R3, I1, I2, B9): site down, database down, bad deploy, stale backup, lost data (D1 Time Travel with the exact commands, a dump restore, files from R2 with d1-dump's `restoreFiles`), each site's RPO and RTO, and the incident record format. Sites link to it.
+
 ## 0.20.14 (2026-10-31)
 
 - The scoreboard runs area 8's deployed-commit (H4) and restore-drill (R1) checks daily. A check in `live/areas.json` takes `site_args`, arguments for one site keyed by its id, after `args`; area 8 gives Foxhound, Foxing, germomics, julieedwards.info, TXASM, Carrel's MCP Worker and dustinedwards.info `--repo DrDustinEdwards/<repo> --drill-workflow restore-drill.yml`. `devkit-live lint` refuses site_args for an unknown site or that are not a list of strings.

@@ -73,6 +73,26 @@ on:
         required: false
         type: string
         default: ""
+      gradual-percent:
+        description: Opt in to a gradual rollout (D4). 0, the default, deploys with `wrangler deploy`. 1 to 99 uploads a version, gives it this share of traffic beside the live one, gates it through a version override, then gives it all traffic. Not for a Worker with a Durable Object migration to apply.
+        required: false
+        type: number
+        default: 0
+      gradual-minutes:
+        description: With gradual-percent, how long the new version serves its share of real traffic before the verify command runs (0 to 25).
+        required: false
+        type: number
+        default: 10
+      preview:
+        description: Opt in to a preview per pull request (D6). For a pull request from this repository, it uploads a version that is not deployed, with the preview alias pr-<number>, and writes its URL to the summary. Needs Version URLs on (workers_dev or preview_urls); none for a Worker with a Durable Object.
+        required: false
+        type: boolean
+        default: false
+      preview-build:
+        description: With preview, what to run before the upload (a config rebuild, a build), with the Cloudflare secrets. Never the pre-deploy guard, which may migrate the live database. Empty for none.
+        required: false
+        type: string
+        default: ""
     outputs:
       d1-bookmark:
         description: The D1 Time Travel bookmark read before the pre-deploy guard, when `d1-database` is set.
@@ -80,6 +100,12 @@ on:
       d1-bookmark-time:
         description: When that bookmark was read, in UTC (RFC 3339).
         value: ${{ jobs.deploy.outputs.d1-bookmark-time }}
+      version-id:
+        description: With gradual-percent, the version this run uploaded.
+        value: ${{ jobs.deploy.outputs.version-id }}
+      preview-url:
+        description: With preview, the pull request's preview URL.
+        value: ${{ jobs.preview.outputs.url }}
     secrets:
       CLOUDFLARE_API_TOKEN:
         required: true
@@ -112,6 +138,8 @@ jobs:
       attempt: ${{ github.run_attempt }}
       d1-bookmark: ${{ steps.bookmark.outputs.bookmark }}
       d1-bookmark-time: ${{ steps.bookmark.outputs.time }}
+      version-id: ${{ steps.deploy.outputs.version-id }}
+      previous-version-id: ${{ steps.deploy.outputs.previous-version-id }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
@@ -162,18 +190,51 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: bash -euo pipefail -c "$PRE_DEPLOY"
 
+      # GRADUAL (gradual-percent 1 to 99): upload a version, then split traffic between it and the version serving most of
+      # it now (`wrangler versions deploy <new>@<p>% <old>@<rest>%`, Cloudflare Docs, "Gradual deployments"). The live gate
+      # reads the new version through Cloudflare-Workers-Version-Overrides, and promotes it to 100% once it passes.
       - name: Deploy
+        id: deploy
         env:
           WORKER: ${{ inputs.worker-name }}
           SHA_VAR: ${{ inputs.sha-var }}
+          GRADUAL: ${{ inputs.gradual-percent }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          args=(deploy --name "$WORKER")
+          if ! [[ "$GRADUAL" =~ ^[0-9]+$ ]] || [ "$GRADUAL" -gt 99 ]; then
+            echo "::error::gradual-percent is a whole number from 0 to 99, not ${GRADUAL}."
+            exit 1
+          fi
+          if [ "$GRADUAL" = "0" ]; then
+            args=(deploy --name "$WORKER")
+            if [ -n "$SHA_VAR" ]; then args+=(--var "${SHA_VAR}:${GITHUB_SHA}"); fi
+            npx --yes "wrangler@${WRANGLER_VERSION}" "${args[@]}"
+            echo "deployed ${GITHUB_SHA} as ${WORKER} in attempt ${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          # The version serving the most traffic now is the one the new version shares with, and the one a refusal returns to.
+          previous=$(npx --yes "wrangler@${WRANGLER_VERSION}" deployments status --name "$WORKER" --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const v=(JSON.parse(s.slice(s.indexOf("{"))).versions??[]).sort((a,b)=>b.percentage-a.percentage)[0];if(!v?.version_id)process.exit(1);process.stdout.write(v.version_id)})') || {
+            echo "::error::could not read the live version of ${WORKER}, so a gradual rollout has nothing to share traffic with. Deploy it once with gradual-percent 0."
+            exit 1
+          }
+          out="$RUNNER_TEMP/wrangler-output.ndjson"
+          args=(versions upload --name "$WORKER" --message "${GITHUB_SHA}")
           if [ -n "$SHA_VAR" ]; then args+=(--var "${SHA_VAR}:${GITHUB_SHA}"); fi
-          npx --yes "wrangler@${WRANGLER_VERSION}" "${args[@]}"
-          echo "deployed ${GITHUB_SHA} as ${WORKER} in attempt ${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_STEP_SUMMARY"
+          WRANGLER_OUTPUT_FILE_PATH="$out" npx --yes "wrangler@${WRANGLER_VERSION}" "${args[@]}"
+          version=$(node -e 'const l=require("fs").readFileSync(process.argv[1],"utf8").split("\n").filter(Boolean).map(JSON.parse).find(e=>e.type==="version-upload");if(!l?.version_id)process.exit(1);process.stdout.write(l.version_id)' "$out") || {
+            echo "::error::the version uploaded, but wrangler's output file names no version id, so nothing was deployed."
+            exit 1
+          }
+          npx --yes "wrangler@${WRANGLER_VERSION}" versions deploy "${version}@${GRADUAL}%" "${previous}@$((100 - GRADUAL))%" --name "$WORKER" --message "${GITHUB_SHA} at ${GRADUAL}%" --yes
+          echo "version-id=${version}" >> "$GITHUB_OUTPUT"
+          echo "previous-version-id=${previous}" >> "$GITHUB_OUTPUT"
+          {
+            echo "deployed ${GITHUB_SHA} as ${WORKER} version ${version} to ${GRADUAL}% of traffic, beside ${previous}, in attempt ${GITHUB_RUN_ATTEMPT}. To send everything back:"
+            echo ""
+            echo "    npx wrangler versions deploy ${previous}@100% --name ${WORKER} --yes"
+          } >> "$GITHUB_STEP_SUMMARY"
 
   live:
     name: live gate
@@ -181,8 +242,8 @@ jobs:
     # !failure() && !cancelled(), as in capsid: a failed deploy skips the gate rather than failing it a second time.
     if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target' && !failure() && !cancelled()
     runs-on: ubuntu-latest
-    # Above the poll budget (40 x 3s) with room for the verify command and the rollback's 20 reads.
-    timeout-minutes: 15
+    # Above the poll budget (40 x 3s) with room for the verify command, the rollback's 20 reads and gradual-minutes (25 at most).
+    timeout-minutes: 45
     permissions:
       contents: read
     defaults:
@@ -325,9 +386,18 @@ jobs:
           HEALTH_URL: ${{ inputs.health-url }}
           VERIFY: ${{ inputs.verify-command }}
           VERIFY_POLL_ATTEMPTS: "40"
+          WORKER: ${{ inputs.worker-name }}
+          VERSION_ID: ${{ needs.deploy.outputs.version-id }}
+          GRADUAL_MINUTES: ${{ inputs.gradual-minutes }}
         run: |
           set +e
           code=0
+          # A gradual rollout is read through a version override, so every read reaches the new version, not the split.
+          override=()
+          if [ -n "$VERSION_ID" ]; then
+            export WORKERS_VERSION_OVERRIDE="${WORKER}=\"${VERSION_ID}\""
+            override=(-H "Cloudflare-Workers-Version-Overrides: ${WORKERS_VERSION_OVERRIDE}")
+          fi
           if [ -z "$EXPECT_SHA" ]; then
             echo "::error::the deploy job did not succeed, so there is nothing live to verify."
             code=3
@@ -338,7 +408,7 @@ jobs:
             matched=0
             live=none
             for _ in $(seq 1 "$VERIFY_POLL_ATTEMPTS"); do
-              if body=$(curl -sS --max-time 10 "$HEALTH_URL"); then
+              if body=$(curl -sS --max-time 10 "${override[@]}" "$HEALTH_URL"); then
                 answered=1
                 live=$(printf '%s' "$body" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(JSON.parse(s).sha??"unknown")}catch{process.stdout.write("unreadable")}})')
                 if node "$RUNNER_TEMP/rollback-guard.mjs" "$live" "$EXPECT_SHA" > /dev/null; then
@@ -354,6 +424,16 @@ jobs:
             elif [ "$matched" = "0" ]; then
               code=3
             fi
+            # The new version serves its share of real traffic for gradual-minutes before the verify command judges it.
+            if [ "$code" = "0" ] && [ -n "$VERSION_ID" ]; then
+              if ! [[ "$GRADUAL_MINUTES" =~ ^[0-9]+$ ]] || [ "$GRADUAL_MINUTES" -gt 25 ]; then
+                echo "::error::gradual-minutes is a whole number from 0 to 25, not ${GRADUAL_MINUTES}."
+                code=3
+              else
+                echo "version ${VERSION_ID} serves its share for ${GRADUAL_MINUTES} minutes before the verify command runs"
+                sleep "$((GRADUAL_MINUTES * 60))"
+              fi
+            fi
             if [ "$code" = "0" ]; then
               bash -euo pipefail -c "$VERIFY"
               code=$?
@@ -364,6 +444,19 @@ jobs:
             echo "::error::the live gate could not run (no answer from the Worker). No gate refused this deploy, so it is not rolled back. Rerun the live job."
           fi
           exit "$code"
+
+      # A gradual rollout that passed the gate takes all the traffic.
+      - name: Promote the gradual rollout
+        if: success() && needs.deploy.outputs.version-id != ''
+        env:
+          WORKER: ${{ inputs.worker-name }}
+          VERSION_ID: ${{ needs.deploy.outputs.version-id }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          npx --yes "wrangler@${WRANGLER_VERSION}" versions deploy "${VERSION_ID}@100%" --name "$WORKER" --message "${GITHUB_SHA} passed the live gate" --yes
+          echo "promoted ${VERSION_ID} (${GITHUB_SHA}) to 100%" >> "$GITHUB_STEP_SUMMARY"
 
       # Every deploy starts the edge cache cold (the Worker version is in its key), so once the gate passes, each page in
       # the sitemap at the health route's origin is fetched once: the cache tiers store it, and the first reader gets a
@@ -406,13 +499,19 @@ jobs:
           DEPLOY_ATTEMPT: ${{ needs.deploy.outputs.attempt }}
           HEALTH_URL: ${{ inputs.health-url }}
           WORKER: ${{ inputs.worker-name }}
+          VERSION_ID: ${{ needs.deploy.outputs.version-id }}
+          PREVIOUS_VERSION_ID: ${{ needs.deploy.outputs.previous-version-id }}
         run: |
           set -euo pipefail
           GUARD="$RUNNER_TEMP/rollback-guard.mjs"
+          # In a gradual rollout the refused version is read through its override; once it is out of the deployment,
+          # Cloudflare ignores the override and the read reaches what serves everyone.
+          override=()
+          if [ -n "${VERSION_ID:-}" ]; then override=(-H "Cloudflare-Workers-Version-Overrides: ${WORKER}=\"${VERSION_ID}\""); fi
           # No -f on curl and no abort on its failure: a /health that answers 5xx, or not at all, must reach the guard as
           # "unreadable" rather than end this step before it decides anything.
           live_sha() {
-            { curl -sS --max-time 10 "$HEALTH_URL" || true; } | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(JSON.parse(s).sha??"unknown")}catch{process.stdout.write("unreadable")}})'
+            { curl -sS --max-time 10 "${override[@]}" "$HEALTH_URL" || true; } | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(JSON.parse(s).sha??"unknown")}catch{process.stdout.write("unreadable")}})'
           }
           ROLLBACK_FROM=$(live_sha)
           # ROLL BACK ONLY WHAT THIS RUN PUT LIVE. `needs.deploy.result` survives a rerun of just this job, so the `if:` above
@@ -425,7 +524,9 @@ jobs:
             exit 0
           fi
           echo "::warning::the live gate failed against ${ROLLBACK_FROM}; rolling back to the previous version"
-          npx --yes "wrangler@${WRANGLER_VERSION}" rollback --name "$WORKER" --message "live gate failed for ${GITHUB_SHA}" --yes
+          # A gradual rollout goes back to the version it shared traffic with; otherwise wrangler's default, the last
+          # deployment that served one version at 100%.
+          npx --yes "wrangler@${WRANGLER_VERSION}" rollback --name "$WORKER" --message "live gate failed for ${GITHUB_SHA}" --yes ${PREVIOUS_VERSION_ID:+"$PREVIOUS_VERSION_ID"}
           # The rollout is not instant, so read the sha back rather than assuming, and say so when it never moved.
           ROLLBACK_TO=unreadable
           for _ in $(seq 1 20); do
@@ -440,3 +541,70 @@ jobs:
           echo "::error::the rollback did not take effect: /health still reports ${ROLLBACK_TO} after 20 reads (this run's commit ${GITHUB_SHA}). Production may still be serving the refused deploy; a human decides."
           echo "rollback_did_not_take_effect: from=${ROLLBACK_FROM} now=${ROLLBACK_TO}" >> "$GITHUB_STEP_SUMMARY"
           exit 1
+
+  # A PREVIEW PER PULL REQUEST (D6), opt-in. `wrangler versions upload --preview-alias pr-<number>` uploads a version that is
+  # never deployed and gives it a stable URL, <alias>-<worker>.<subdomain>.workers.dev (Cloudflare Docs, "Preview URLs").
+  # Only for a pull request from this repository: a fork's code never runs with the secrets. The preview runs with the
+  # live Worker's bindings, its D1 and buckets included, so it is for a site where a reviewer's clicks may touch them.
+  # The pre-deploy guard never runs here: it may migrate the live database.
+  preview:
+    name: preview
+    if: inputs.preview && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    outputs:
+      url: ${{ steps.upload.outputs.url }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          package-manager-cache: false
+
+      - name: Install
+        env:
+          INSTALL: ${{ inputs.install }}
+        run: bash -euo pipefail -c "$INSTALL"
+
+      - name: Preview build
+        if: inputs.preview-build != ''
+        env:
+          PREVIEW_BUILD: ${{ inputs.preview-build }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bash -euo pipefail -c "$PREVIEW_BUILD"
+
+      - name: Upload the preview version
+        id: upload
+        env:
+          WORKER: ${{ inputs.worker-name }}
+          SHA_VAR: ${{ inputs.sha-var }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          alias="pr-${PR_NUMBER}"
+          # The alias, a dash and the Worker's name make one DNS label, at most 63 characters.
+          if [ $(( ${#alias} + 1 + ${#WORKER} )) -gt 63 ]; then
+            echo "::error::${alias}-${WORKER} is longer than the 63 characters a preview URL's label allows."
+            exit 1
+          fi
+          out="$RUNNER_TEMP/wrangler-output.ndjson"
+          args=(versions upload --name "$WORKER" --preview-alias "$alias" --message "preview of #${PR_NUMBER} at ${GITHUB_SHA}")
+          if [ -n "$SHA_VAR" ]; then args+=(--var "${SHA_VAR}:${GITHUB_SHA}"); fi
+          WRANGLER_OUTPUT_FILE_PATH="$out" npx --yes "wrangler@${WRANGLER_VERSION}" "${args[@]}"
+          url=$(node -e 'const l=require("fs").readFileSync(process.argv[1],"utf8").split("\n").filter(Boolean).map(JSON.parse).find(e=>e.type==="version-upload");const u=l?.preview_alias_url??l?.preview_url;if(!u)process.exit(1);process.stdout.write(u)' "$out") || {
+            echo "::error::the version uploaded, but wrangler gave no preview URL: turn on Version URLs (workers_dev or preview_urls), and note that a Worker with a Durable Object has none."
+            exit 1
+          }
+          echo "url=${url}" >> "$GITHUB_OUTPUT"
+          echo "preview of #${PR_NUMBER} (${GITHUB_SHA}): ${url}" >> "$GITHUB_STEP_SUMMARY"

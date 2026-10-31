@@ -82,6 +82,19 @@ Secrets, passed by name (`secrets: inherit` is refused by `check-callers.mjs`): 
 
 The limits. Cloudflare's rollback swaps the Worker's code and bindings only. It is refused when D1 or KV resources changed between the two versions, and it never undoes a D1 migration (Cloudflare Docs, "Rollbacks"). A deploy that ran a migration is not made safe by this workflow: keep migrations a separate, human step, and check them in `pre-deploy`. Data recovery is D1 Time Travel, by hand: with `d1-database` set, the run's summary holds the bookmark from before the guard and the one command that goes back to it, `npx wrangler d1 time-travel restore <db> --bookmark=<bookmark>`. The rollback goes to the previous version, whatever that is; the guard is what stops a rerun from moving production onto the refused commit.
 
+**Gradual rollout (opt-in, `gradual-percent`).** With 1 to 99, the deploy job reads the version serving most traffic now (`wrangler deployments status --json`), uploads this commit as a new version (`wrangler versions upload`, its id read from wrangler's output file), and splits traffic: `wrangler versions deploy <new>@<p>% <old>@<rest>% --yes`. The live gate reads `/health` through the `Cloudflare-Workers-Version-Overrides: <worker>="<version id>"` header, so every read reaches the new version, and gives the verify command the same value in `WORKERS_VERSION_OVERRIDE` for its own requests. The new version serves its share of real traffic for `gradual-minutes` (default 10, at most 25) before the verify command runs. A pass runs "Promote the gradual rollout" (`versions deploy <new>@100%`); a refusal rolls back to the old version by id. A gate that could not run leaves the split as it is, and the summary has the command that sends everything back. Not for a Worker with a Durable Object migration to apply (Cloudflare applies those only with `wrangler deploy`), and the first deploy of a Worker must be a plain one. Cloudflare Docs: "Gradual deployments", "Version overrides".
+
+**Preview per pull request (opt-in, `preview`).** On a pull request from the same repository (a fork's never gets the secrets), the `preview` job installs, runs `preview-build` if set, and uploads a version that is never deployed: `wrangler versions upload --preview-alias pr-<number>`. Its URL, `pr-<number>-<worker>.<subdomain>.workers.dev`, goes to the summary and the `preview-url` output. The caller adds `pull_request` to its triggers. The pre-deploy guard never runs for a preview, since it may migrate the live database, but the preview runs with the live Worker's bindings, its D1 and buckets included. It needs Version URLs on (`workers_dev`, or `"preview_urls": true`), and Cloudflare gives a Worker with a Durable Object none. Cloudflare Docs: "Preview URLs".
+
+| Input | Default | What it is |
+|---|---|---|
+| `gradual-percent` | `0` | 0 deploys at once. 1 to 99 is the new version's share of traffic before the gate promotes it. |
+| `gradual-minutes` | `10` | How long that share runs before the verify command, 0 to 25. |
+| `preview` | `false` | Upload a preview version for each pull request from this repository. |
+| `preview-build` | none | Run before the preview upload, with the Cloudflare secrets (a config rebuild, a build). |
+
+When something breaks after a deploy, or anywhere else, the steps are in [docs/runbook.md](docs/runbook.md): site down, database down, bad deploy, stale backup and lost data, each site's RPO and RTO, and the incident record.
+
 The guard is inlined into the workflow so a caller's one pinned sha fixes both. After an edit to `scripts/rollback-guard.mjs`, run `node scripts/inline-rollback-guard.mjs`; the test fails while the two differ.
 
 ## The restore drill
