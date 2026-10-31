@@ -50,6 +50,8 @@ const script = (name) => {
 const LIVE_GATE = "live gate";
 const ROLLBACK = "Roll back the deploy this run shipped";
 const BOOKMARK = "Record the D1 Time Travel bookmark";
+const PROMOTE = "Promote the gradual rollout";
+const PREVIEW = "Upload the preview version";
 const ROLLED_BACK = `echo "::error::rolled back: was \${ROLLBACK_FROM} (this run's commit \${GITHUB_SHA}), now \${ROLLBACK_TO}. master still points at the bad commit; land a fix or revert it."`;
 const NOT_ROLLING = `echo "::error::not rolling back. master and production may disagree; a human decides."`;
 const NO_EFFECT = `echo "::error::the rollback did not take effect: /health still reports \${ROLLBACK_TO} after 20 reads (this run's commit \${GITHUB_SHA}). Production may still be serving the refused deploy; a human decides."`;
@@ -92,11 +94,13 @@ test("wrangler is pinned to one exact version, and the bookmark, the deploy and 
   assert.match(step(ROLLBACK), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" rollback --name "\$WORKER"/);
   assert.match(step(BOOKMARK), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" d1 time-travel info "\$DB" --json/);
   // No other wrangler, floating or pinned elsewhere.
-  assert.deepEqual([...code.matchAll(/wrangler@(\S+)/g)].map((m) => m[1]), Array(3).fill('${WRANGLER_VERSION}"'));
+  const uses = [...code.matchAll(/wrangler@(\S+)/g)].map((m) => m[1]);
+  assert.ok(uses.length >= 3);
+  assert.deepEqual(new Set(uses), new Set(['${WRANGLER_VERSION}"']));
 });
 
 test("caller input reaches a shell only through the environment, never spliced into the script", () => {
-  for (const name of ["Install", BOOKMARK, "Pre-deploy guard", "Deploy", "Write the rollback guard", "verify:live", ROLLBACK]) {
+  for (const name of ["Install", BOOKMARK, "Pre-deploy guard", "Deploy", "Write the rollback guard", "verify:live", PROMOTE, ROLLBACK, "Preview build", PREVIEW]) {
     const s = step(name);
     assert.doesNotMatch(s.slice(s.indexOf("run:")), /\$\{\{/, name);
   }
@@ -106,7 +110,7 @@ test("the Cloudflare secrets reach only the bookmark, the pre-deploy guard, the 
   const holders = [...text.matchAll(/\n {6}- name: (.+)\n[\s\S]*?(?=\n {6}- |\n {2}[\w-]+:\n|$)/g)]
     .filter((m) => m[0].includes("secrets.CLOUDFLARE_API_TOKEN"))
     .map((m) => m[1]);
-  assert.deepEqual(holders, [BOOKMARK, "Pre-deploy guard", "Deploy", ROLLBACK]);
+  assert.deepEqual(holders, [BOOKMARK, "Pre-deploy guard", "Deploy", PROMOTE, ROLLBACK, "Preview build", PREVIEW]);
   assert.doesNotMatch(step("verify:live"), /secrets\./);
 });
 
@@ -137,6 +141,20 @@ test("the rollback runs on a refusal only, calls the guard before wrangler, read
 test("the guard the workflow runs is scripts/rollback-guard.mjs byte for byte (regenerate: node scripts/inline-rollback-guard.mjs)", () => {
   const guard = readFileSync(new URL("../scripts/rollback-guard.mjs", import.meta.url), "utf8");
   assert.equal(inlined(text), guard);
+});
+
+test("gradual and preview are opt-in: a split goes back to the version it shared with, and a preview never runs the guard", () => {
+  assert.match(text, /\n {6}gradual-percent:\n[\s\S]*?default: 0\n/);
+  assert.match(text, /\n {6}preview:\n[\s\S]*?default: false\n/);
+  assert.match(step("Deploy"), /versions deploy "\$\{version\}@\$\{GRADUAL\}%" "\$\{previous\}@\$\(\(100 - GRADUAL\)\)%"/);
+  assert.match(step("verify:live"), /Cloudflare-Workers-Version-Overrides: \$\{WORKERS_VERSION_OVERRIDE\}/);
+  assert.match(step(PROMOTE), /if: success\(\) && needs\.deploy\.outputs\.version-id != ''\n/);
+  assert.match(step(PROMOTE), /versions deploy "\$\{VERSION_ID\}@100%"/);
+  assert.match(step(ROLLBACK), /--yes \$\{PREVIOUS_VERSION_ID:\+"\$PREVIOUS_VERSION_ID"\}\n/);
+  const preview = job("preview");
+  assert.match(preview, /\n {4}if: inputs\.preview && github\.event_name == 'pull_request' && github\.event\.pull_request\.head\.repo\.full_name == github\.repository\n/);
+  assert.match(step(PREVIEW), /versions upload --name "\$WORKER" --preview-alias "\$alias"/);
+  assert.doesNotMatch(preview, /PRE_DEPLOY|rollback|versions deploy/);
 });
 
 test("a gate: nothing continues on error", () => {
@@ -318,6 +336,19 @@ test("RUN: a verify command that could not run (exit 3) is recorded as such, so 
     const could = verify(dir, [health(THIS_RUN)], "exit 3");
     assert.equal(could.status, 3);
     assert.match(could.output, /^exit_code=3$/m);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("RUN: a refused gradual rollout reads the new version through its override and rolls back to the version it shared with", () => {
+  const dir = gate();
+  try {
+    const env = { DEPLOY_ATTEMPT: "1", GITHUB_RUN_ATTEMPT: "1", VERSION_ID: "new-version", PREVIOUS_VERSION_ID: "old-version" };
+    const back = runStep(ROLLBACK, { dir, health: [health(THIS_RUN), health(PREVIOUS)], env });
+    assert.equal(back.status, 0, back.stdout + back.stderr);
+    assert.match(back.npx, / rollback --name sample --message live gate failed for \S+ --yes old-version$/m);
+    assert.deepEqual(WATCHER.rolledBack.exec(back.stdout)?.slice(1), [THIS_RUN, PREVIOUS]);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
