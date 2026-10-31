@@ -8,6 +8,14 @@ name: restore-drill
 # THE SQLITE BACKEND, named explicitly: with the Cloudflare variables set, d1-dump would otherwise pick the d1 backend, which
 # creates a database and needs a token that can. This token only reads the bucket.
 #
+# THE FILES DRILL (R3) follows: `d1-dump drill-files` restores a sample of each files backup in the bucket (files/<name>/)
+# with restoreFiles into a scratch directory and checks the restored bytes against the copies and their etags. It runs the
+# d1-dump release named in D1_DUMP_FILES_REF below (the first with drill-files), so every caller gets it with its devkit pin;
+# a bucket with no files backup passes with nothing to drill.
+#
+# A FAILURE REACHES DUSTIN on the scoreboard as well as GitHub's mail: devkit-ops-audit's R1 reads this workflow's newest
+# run for every site in live/areas.json each day, and the board shows the site red until a drill passes.
+#
 # EXIT 0 PASSED, 1 THE DRILL REFUSED THE DUMP, 3 COULD NOT RUN. Either failure fails the job; the annotation says which.
 #
 # A CALLER (examples/restore-drill-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
@@ -24,6 +32,11 @@ on:
         description: The d1-dump release tag the drill runs, such as v0.7.0.
         required: true
         type: string
+      files-sample:
+        description: How many copies of each files backup the files drill restores and checks.
+        required: false
+        type: number
+        default: 5
       node-version:
         description: The Node version; d1-dump needs 24.14.1 or later.
         required: false
@@ -37,6 +50,9 @@ on:
 
 permissions:
   contents: read
+
+env:
+  D1_DUMP_FILES_REF: v0.10.0
 
 jobs:
   drill:
@@ -66,5 +82,25 @@ jobs:
             echo "::error::the restore drill refused the newest dump of ${BUCKET}; the backup does not restore."
           elif [ "$code" != "0" ]; then
             echo "::error::the restore drill could not run (exit ${code}); nothing was proven about ${BUCKET}."
+          fi
+          exit "$code"
+
+      # Runs after a refused dump too, so one run says whether the files restore as well.
+      - name: Restore a sample of files and check the bytes
+        if: success() || failure()
+        env:
+          BUCKET: ${{ inputs.bucket }}
+          SAMPLE: ${{ inputs.files-sample }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set +e
+          npx --yes "github:DrDustinEdwards/d1-dump#${D1_DUMP_FILES_REF}" drill-files --bucket "$BUCKET" --sample "$SAMPLE" 2>&1 | tee "$RUNNER_TEMP/files.txt"
+          code=${PIPESTATUS[0]}
+          { echo '```'; cat "$RUNNER_TEMP/files.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$code" = "1" ]; then
+            echo "::error::the files drill refused a restored file from ${BUCKET}; a files backup does not restore byte for byte."
+          elif [ "$code" != "0" ]; then
+            echo "::error::the files drill could not run (exit ${code}); nothing was proven about the files in ${BUCKET}."
           fi
           exit "$code"
