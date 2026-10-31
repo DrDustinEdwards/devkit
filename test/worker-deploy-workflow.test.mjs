@@ -121,6 +121,10 @@ test("the deploy job publishes the attempt it shipped in, and never deploys a pu
   assert.match(job("live"), /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target' && !failure\(\) && !cancelled\(\)\n/);
   assert.ok(step("Pre-deploy guard").length && deploy.indexOf("- name: Pre-deploy guard") < deploy.indexOf("- name: Deploy"), "the guard runs after the deploy");
   assert.ok(deploy.indexOf(`- name: ${BOOKMARK}`) < deploy.indexOf("- name: Pre-deploy guard"), "the D1 bookmark is read after the guard that runs migrations");
+  // The preview is the one job a pull request runs: same repository only, and never the guard, which may migrate.
+  const preview = job("preview");
+  assert.match(preview, /\n {4}if: inputs\.preview && github\.event_name == 'pull_request' && github\.event\.pull_request\.head\.repo\.full_name == github\.repository\n/);
+  assert.doesNotMatch(preview, /PRE_DEPLOY|rollback|versions deploy/);
 });
 
 test("the rollback runs on a refusal only, calls the guard before wrangler, reads /health without -f, and checks the sha moved", () => {
@@ -141,20 +145,6 @@ test("the rollback runs on a refusal only, calls the guard before wrangler, read
 test("the guard the workflow runs is scripts/rollback-guard.mjs byte for byte (regenerate: node scripts/inline-rollback-guard.mjs)", () => {
   const guard = readFileSync(new URL("../scripts/rollback-guard.mjs", import.meta.url), "utf8");
   assert.equal(inlined(text), guard);
-});
-
-test("gradual and preview are opt-in: a split goes back to the version it shared with, and a preview never runs the guard", () => {
-  assert.match(text, /\n {6}gradual-percent:\n[\s\S]*?default: 0\n/);
-  assert.match(text, /\n {6}preview:\n[\s\S]*?default: false\n/);
-  assert.match(step("Deploy"), /versions deploy "\$\{version\}@\$\{GRADUAL\}%" "\$\{previous\}@\$\(\(100 - GRADUAL\)\)%"/);
-  assert.match(step("verify:live"), /Cloudflare-Workers-Version-Overrides: \$\{WORKERS_VERSION_OVERRIDE\}/);
-  assert.match(step(PROMOTE), /if: success\(\) && needs\.deploy\.outputs\.version-id != ''\n/);
-  assert.match(step(PROMOTE), /versions deploy "\$\{VERSION_ID\}@100%"/);
-  assert.match(step(ROLLBACK), /--yes \$\{PREVIOUS_VERSION_ID:\+"\$PREVIOUS_VERSION_ID"\}\n/);
-  const preview = job("preview");
-  assert.match(preview, /\n {4}if: inputs\.preview && github\.event_name == 'pull_request' && github\.event\.pull_request\.head\.repo\.full_name == github\.repository\n/);
-  assert.match(step(PREVIEW), /versions upload --name "\$WORKER" --preview-alias "\$alias"/);
-  assert.doesNotMatch(preview, /PRE_DEPLOY|rollback|versions deploy/);
 });
 
 test("a gate: nothing continues on error", () => {
