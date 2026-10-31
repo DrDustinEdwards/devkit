@@ -1,0 +1,152 @@
+{
+  "area": 2,
+  "verifier": "Verify security headers across sites",
+  "date": "2026-10-31",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/check.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/csp-report.mjs",
+        "https://github.com/DrDustinEdwards/devkit/blob/main/live/sites.json"
+      ],
+      "note": "opt-in-only grading of C3/C7/C9/S2/I3; report sink drops integrity and coep reports; no COEP report-to; applyHeaderSet has no 101 guard; Portal and Desk not on the board; no signed-in crawl; Access 4xx not treated as the gate; zone CAA/DNSSEC/preload open"
+    },
+    "dustinedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "COOP same-origin-allow-popups reason matches no code (no window.open), so the I3 deviation falls with it; own MEDIA_CSP and pinned media test; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": [
+        "https://germomics.com/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "I3 'cannot be staged' cites a fixable shared-code gap; v0.57.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "julieedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://julieedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "local Referrer-Policy literal (workers/app.ts:94); no requireJson; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "txasm": {
+      "verdict": "partial",
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "A6 declared while bsw in the same situation sends noindex; txasm.org alias now a suspended page; v0.57.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "bsw": {
+      "verdict": "partial",
+      "evidence": [
+        "https://bsw.dustin-edwards.workers.dev/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "pinned v0.50.1; registry 0.57.1 opt-ins are not in its code; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "foxhound": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxhoundapp.com/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "C9/I3 waived until a signed-in crawl nobody builds; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxing.app/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "own 101 guard instead of shared; pinned header test; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "carrel": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "local preview XFO and policy; pinned csp tests; own 101 guard; Desk security.txt behind Access; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "enarratio": {
+      "verdict": "partial",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "/assets/* skips the Worker; not_found_handling none unlike capsomer/prelum; v0.52.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "capsomer": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "no S2 or I3 met or declared; /fonts/* skips the Worker; v0.52.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "prelum": {
+      "verdict": "partial",
+      "evidence": [
+        "https://prelum.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "no S2 or I3 met or declared; local nosniff/CSP in render-link-icons.mjs; four paths skip the Worker; v0.53.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "capsid": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsid.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "no S2 or I3 met or declared; Portal cookies hand-built without __Host- (no hostCookie); Portal not on the board; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "capsid-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://mcp.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "foxhound-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.foxhoundapp.com/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "dustinedwards-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "carrel-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel-mcp.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+      ],
+      "note": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+    },
+    "foxing-mcp": {
+      "verdict": "missing",
+      "evidence": [
+        "https://admin-mcp.foxing.app/"
+      ],
+      "note": "73 errors live: still Vercel; the foxing-admin-mcp Worker is deployed nowhere (workers.dev answers 1042)"
+    }
+  }
+}
