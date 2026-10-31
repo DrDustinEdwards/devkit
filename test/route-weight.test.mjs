@@ -39,21 +39,12 @@ const read = (/** @type {string} */ url) => {
 };
 const size = (/** @type {Buffer} */ bytes) => bytes.length;
 
-test("each route weighs the entry and its chain from root, each file once; root and resource routes have no row", () => {
+test("each route weighs the entry and its chain from root, each file once; root and resource routes have no row; with a /site.js, only a hydrating chain weighs React", () => {
   assert.deepEqual(routeWeights(MANIFEST, read, size), [
     { id: "routes/admin.users", path: "/admin/users", js: 110111, css: 1000, total: 111111 },
     { id: "routes/admin", path: "/admin", js: 10111, css: 1000, total: 11111 },
   ]);
-});
-
-test("with linkedCss, a stylesheet the counted JS names by URL is counted, once", () => {
-  assert.deepEqual(
-    routeWeights(MANIFEST, read, size, true).map((r) => r.css),
-    [1001000, 1001000],
-  );
-});
-
-test("with a /site.js, a route whose chain declares hydrate: true weighs React; any other weighs /site.js and its stylesheets", () => {
+  // With a /site.js, a route whose chain declares hydrate: true weighs React; any other weighs /site.js and its stylesheets.
   const files = { ...FILES, "/site.js": 7, "/assets/admin.js": `var k={hydrate:!0};${"x".repeat(10000 - 19)}` };
   const readWith = (/** @type {string} */ url) => {
     const file = files[/** @type {keyof typeof files} */ (url)];
@@ -65,6 +56,13 @@ test("with a /site.js, a route whose chain declares hydrate: true weighs React; 
     { id: "routes/admin.users", path: "/admin/users", js: 110111, css: 1000, total: 111111 },
     { id: "routes/admin", path: "/admin", js: 10111, css: 1000, total: 11111 },
   ]);
+});
+
+test("with linkedCss, a stylesheet the counted JS names by URL is counted, once", () => {
+  assert.deepEqual(
+    routeWeights(MANIFEST, read, size, true).map((r) => r.css),
+    [1001000, 1001000],
+  );
 });
 
 test("a route over the budget warns, and so does one grown past both the ratio and the bytes; at either limit it passes", () => {
