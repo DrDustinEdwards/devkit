@@ -983,11 +983,14 @@ function main(/** @type {string[]} */ argv) {
   return errors.length ? 1 : 0;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+/** The command line: main's exit code, or 2 when the check could not run. */
+export function cli(/** @type {string[]} */ argv) {
   try {
-    process.exitCode = main(process.argv.slice(2));
+    return main(argv);
   } catch (error) {
     console.log(`::error::devkit-shared could not run: ${error instanceof Error ? error.message : String(error)}`);
-    process.exitCode = 2;
+    return 2;
   }
 }
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) process.exitCode = cli(process.argv.slice(2));
