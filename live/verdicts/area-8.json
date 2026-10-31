@@ -1,130 +1,154 @@
 {
   "area": 8,
-  "verifier": "Verify running and recovery across sites",
+  "verifier": "Verify area 8 round 2",
   "date": "2026-10-31",
   "cells": {
     "package": {
       "verdict": "partial",
       "evidence": [
-        "https://github.com/DrDustinEdwards/site-runtime/blob/main/health.mjs",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/main/cron.mjs",
-        "https://github.com/DrDustinEdwards/devkit/blob/main/.github/workflows/worker-deploy.yml"
+        "https://github.com/DrDustinEdwards/devkit/blob/005509b/.github/workflows/worker-deploy.yml",
+        "https://github.com/DrDustinEdwards/devkit/blob/005509b/bin/ops-audit.mjs",
+        "https://github.com/DrDustinEdwards/devkit/blob/005509b/docs/runbook.md",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/bef1640/health.mjs"
       ],
-      "note": "ok is false on warn; no Images/DO checks; cronCheck waits 2x interval; no per-job timeout; requestFields lacks status; no console ratchet; no shared redirect/410 table; no gradual rollout, preview or expand-only check; no runbook; scoreboard never runs the sha or drill checks"
+      "note": "Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status"
     },
     "dustinedwards-info": {
       "verdict": "partial",
       "evidence": [
+        "https://dustinedwards.info/health",
         "https://dustinedwards.info/api/health",
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/scripts/lib/uptimerobot.mjs"
+        "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/41201621515"
       ],
-      "note": "/api/health answers 503 while /health passes, and UptimeRobot and Capsid's watcher read /api/health; no 404 count; own deploy without rollback or bookmark; shared drill never run"
+      "note": "No 404 count (privacy page fix is one PR, a fixable blocker); public /api/health still routed with no noindex; cron check 'backup never ran' pending tonight's 05:00 run; own deploy (ship.mjs) and own check-migrations.mjs; d1-dump v0.8.0; drill passed 12:33"
     },
     "germomics": {
       "verdict": "partial",
       "evidence": [
-        "https://germomics.com/health"
+        "https://germomics.com/health",
+        "https://github.com/DrDustinEdwards/germomics/actions/runs/41218962831",
+        "https://github.com/DrDustinEdwards/germomics/actions/runs/41218270512"
       ],
-      "note": "no sha: Workers Builds still deploys; drill never run; files pass not complete"
+      "note": "Deploys from GitHub at head f86a616 and drill passed; 404 is React Router's default page, not the shared error page; first audio/images files pass pending (03:17 cron, may take several nights); counted tables only"
     },
     "julieedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://julieedwards.info/health"
+        "https://julieedwards.info/health",
+        "https://github.com/DrDustinEdwards/julieedwards-info/actions/runs/41219125249"
       ],
-      "note": "no backup exclude (preview_links.token_hash dumped); drill never run; site-runtime v0.47.0"
+      "note": "Health passes at head, drill passed, excludes set; D4/D6 off; d1-dump v0.8.0"
     },
     "txasm": {
       "verdict": "partial",
       "evidence": [
-        "https://txasm.dustin-edwards.workers.dev/health"
+        "https://txasm.dustin-edwards.workers.dev/health",
+        "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
       ],
-      "note": "files pass not complete; R2 check at fail level; drill never run"
+      "note": "Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off"
     },
     "bsw": {
       "verdict": "partial",
       "evidence": [
-        "https://bsw.dustin-edwards.workers.dev/health"
+        "https://bsw.dustin-edwards.workers.dev/health",
+        "https://github.com/DrDustinEdwards/bsw/blob/69daae0/package.json"
       ],
-      "note": "health passes; deploy record, gradual rollout, preview and runbooks missing"
+      "note": "site-runtime v0.50.1; 404 is React Router's default page; no console ratchet; no request log wrapper; no --repo in areas.json; D4/D6 off"
     },
     "foxhound": {
       "verdict": "partial",
       "evidence": [
-        "https://foxhoundapp.com/health"
+        "https://foxhoundapp.com/health",
+        "https://github.com/DrDustinEdwards/foxhound/actions/runs/41201511209"
       ],
-      "note": "migrations without bookmark; 404 rows kept 365 days; local cron ledger records skips as success; oauth hashes dumped; drill never run"
+      "note": "Health and drill pass; TOOL_CALL_LOG and EMAIL unprobed; runCronJob wrapper and own cron-health job remain; 140 raw console calls; first media files pass pending (03:00 cron)"
     },
     "foxing": {
       "verdict": "partial",
       "evidence": [
-        "https://foxing.app/health"
+        "https://foxing.app/health",
+        "https://github.com/DrDustinEdwards/foxing/actions/runs/41199704778"
       ],
-      "note": "COVERS not backed up; files pass not complete; drill never run"
+      "note": "Health and drill pass; EMAIL unprobed; first media and covers files pass pending (03:17 cron); d1-dump v0.8.0"
     },
     "carrel": {
       "verdict": "partial",
       "evidence": [
-        "https://carrel.dustinedwards.info/health"
+        "https://carrel.dustinedwards.info/"
       ],
-      "note": "app host has no /health; no 404 count; www deploys locally; drill never run"
+      "note": "Static public page, skip stated; Desk's health is a separate gap (carrel-desk)"
     },
     "capsid": {
       "verdict": "partial",
       "evidence": [
-        "https://capsid.dustinedwards.info/health"
+        "https://capsid.dustinedwards.info/"
       ],
-      "note": "/health 404"
+      "note": "Static explorer, skip stated; not in Capsid's watcher; explorer deploys locally (explorer.yml) with no sampling rate stated"
     },
     "capsid-mcp": {
       "verdict": "partial",
       "evidence": [
         "https://mcp.dustinedwards.info/health",
-        "https://github.com/DrDustinEdwards/capsid/actions/runs/40369574870"
+        "https://github.com/DrDustinEdwards/capsid/actions/runs/41200976069"
       ],
-      "note": "local health in the old shape; local backup; last restore rehearsal failed; no 404 count; own deploy"
+      "note": "Shared health; cron warn 'skills-refresh failing, site-repair failing' at 16:34 (fix deployed, unproven until runs); 528-line backup wrapper; own runTask ledger; own deploy (ci.yml); watcher's analytics read could-not-run on all 16 sites, so 5xx alerts cannot fire; U1 inside Cloudflare only; TLS at 14 days not 21; rehearsal passed 12:24 but not in areas.json"
     },
     "foxhound-mcp": {
       "verdict": "partial",
       "evidence": [
         "https://admin-mcp.foxhoundapp.com/health"
       ],
-      "note": "text/plain ok; deployed by hand"
+      "note": "Old shape {ok, sha} from local door.ts:60 (ops-audit H2 error); no binding probed; no sampling rate"
     },
     "dustinedwards-mcp": {
       "verdict": "partial",
       "evidence": [
         "https://admin-mcp.dustinedwards.info/health"
       ],
-      "note": "text/plain ok; no CI deploy"
+      "note": "Shared shape but no sha and checks [] (ops-audit H4 error); deployed by ship:mcp, not worker-deploy"
     },
     "carrel-mcp": {
       "verdict": "partial",
       "evidence": [
-        "https://carrel-mcp.dustinedwards.info/health"
+        "https://carrel-mcp.dustinedwards.info/health",
+        "https://github.com/DrDustinEdwards/carrel/actions/runs/41219136277"
       ],
-      "note": "serves cfc6eb2, not main d4b64b4"
+      "note": "Health passes, all bindings probed; drill passed; head 9189bb3 deploy in flight at 16:38 (673402c live)"
     },
     "foxing-mcp": {
       "verdict": "partial",
       "evidence": [
         "https://admin-mcp.foxing.app/health"
       ],
-      "note": "host answers a Vercel 404; route not set"
+      "note": "Old shape {ok, sha} from local login-handler.ts:33 (ops-audit H2 error); site-runtime v0.50.1; worker-deploy v0.20.8; no binding probed"
     },
     "capsomer": {
       "verdict": "partial",
       "evidence": [
-        "https://capsomer.dustinedwards.info/health"
+        "https://capsomer.dustinedwards.info/"
       ],
-      "note": "static; Workers Builds deploy; no health or exemption stated"
+      "note": "Static, skip stated; Workers Builds deploy, not worker-deploy; records no deploy"
     },
     "prelum": {
       "verdict": "partial",
       "evidence": [
-        "https://prelum.dustinedwards.info/health"
+        "https://prelum.dustinedwards.info/"
       ],
-      "note": "static; local deploy; not in the watcher"
+      "note": "Static, skip stated; local deploy (specimen.yml:52); records no deploy"
+    },
+    "capsid-portal": {
+      "verdict": "partial",
+      "evidence": [
+        "https://portal.dustinedwards.info/health"
+      ],
+      "note": "/health redirects to Access; an Access Bypass app on /health plus a Worker exemption fixes it"
+    },
+    "carrel-desk": {
+      "verdict": "partial",
+      "evidence": [
+        "https://desk.dustinedwards.info/health"
+      ],
+      "note": "/health stopped by Access at the edge; fixable with an Access Bypass app on desk.dustinedwards.info/health plus a gate.ts exemption; not watched by Capsid"
     }
   }
 }
