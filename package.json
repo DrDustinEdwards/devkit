@@ -1,6 +1,6 @@
 {
   "name": "@dustinedwards/devkit",
-  "version": "0.20.19",
+  "version": "0.20.22",
   "private": true,
   "description": "Shared tooling for the Dustin Edwards repositories. As a package: the shared test helpers and the shared checks, installed by git tag. The Renovate policy and the reusable workflows in this repository are not part of the package.",
   "type": "module",

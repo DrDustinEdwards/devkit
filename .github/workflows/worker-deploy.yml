@@ -74,7 +74,7 @@ on:
         type: string
         default: ""
       gradual-percent:
-        description: Opt in to a gradual rollout (D4). 0, the default, deploys with `wrangler deploy`. 1 to 99 uploads a version, gives it this share of traffic beside the live one, gates it through a version override, then gives it all traffic. Not for a Worker with a Durable Object migration to apply.
+        description: Opt in to a gradual rollout (D4). 0, the default, deploys with `wrangler deploy`. 1 to 99 uploads a version, gives it this share of traffic beside the live one, applies the config's triggers (routes, crons), gates it through a version override, then gives it all traffic. Not for a Worker with a Durable Object migration to apply, nor one that declares its Durable Objects in `exports` (Cloudflare does not support gradual deployments there).
         required: false
         type: number
         default: 0
@@ -228,6 +228,10 @@ jobs:
             exit 1
           }
           npx --yes "wrangler@${WRANGLER_VERSION}" versions deploy "${version}@${GRADUAL}%" "${previous}@$((100 - GRADUAL))%" --name "$WORKER" --message "${GITHUB_SHA} at ${GRADUAL}%" --yes
+          # A version upload leaves the Worker's triggers as they were (Cloudflare Docs, "Deployment management"): routes,
+          # custom domains and cron schedules apply only through `triggers deploy`, from the same config, so a changed
+          # cron is never left behind the code that expects it.
+          npx --yes "wrangler@${WRANGLER_VERSION}" triggers deploy --name "$WORKER"
           echo "version-id=${version}" >> "$GITHUB_OUTPUT"
           echo "previous-version-id=${previous}" >> "$GITHUB_OUTPUT"
           {

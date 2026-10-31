@@ -30,6 +30,8 @@
 // [{ "severity": "error" | "warning", "check", "detail" }] } } }, findings as a bin's annotations would give them and never
 // a secret. TLS on the reporter's own origin is what makes it the reporter's. A report that cannot be read, is older than
 // max_age_minutes (default 60), names another check or leaves a site out is "error" for that site, never a pass.
+// "site_reports" reads one site's result from another reporter, keyed by site id: each app grades its own signed-in
+// pages where its credential lives, so Desk's signed-in-security comes from Carrel and the Portal's from Capsid.
 //
 // A VERDICT is live/verdicts/area-<n>.json, written by the verifier thread, which must not be the area's builder:
 //
@@ -99,6 +101,10 @@ export function lintConfig({ sites, areas, verdicts }) {
       } else if (!check.name || !check.repo || !check.bin) problems.push(`area ${area.id} has a check without a name, repo and bin`);
       for (const kind of check.kinds ?? []) if (!KINDS.includes(kind)) problems.push(`area ${area.id} check ${check.name} names kind ${kind}`);
       if (check.args !== undefined && !isStrings(check.args)) problems.push(`area ${area.id} check ${check.name} has args that are not a list of strings`);
+      for (const [id, url] of Object.entries(check.site_reports ?? {})) {
+        if (!siteIds.has(id)) problems.push(`area ${area.id} check ${check.name} has a site_reports entry for unknown site ${id}`);
+        if (check.report === undefined || !/^https:\/\/[a-z0-9.-]+\//.test(url)) problems.push(`area ${area.id} check ${check.name} site_reports ${id} needs a reported check and an https URL`);
+      }
       for (const [id, args] of Object.entries(check.site_args ?? {})) {
         if (!siteIds.has(id)) problems.push(`area ${area.id} check ${check.name} has site_args for unknown site ${id}`);
         if (!isStrings(args)) problems.push(`area ${area.id} check ${check.name} has site_args for ${id} that are not a list of strings`);
@@ -132,7 +138,10 @@ const isStrings = (/** @type {unknown} */ list) => Array.isArray(list) && list.e
 const same = (/** @type {string} */ a, /** @type {string} */ b) => Boolean(a) && a.trim().toLowerCase() === b?.trim().toLowerCase();
 
 /** The checks of an area that apply to a site. */
-const checksFor = (area, site) => area.checks.filter((check) => (check.kinds ?? ["site", "static"]).includes(site.kind));
+const checksFor = (area, site) =>
+  area.checks
+    .filter((check) => (check.kinds ?? ["site", "static"]).includes(site.kind))
+    .map((check) => (check.site_reports?.[site.id] ? { ...check, report: check.site_reports[site.id] } : check));
 
 /** The annotation lines of a check's output, as findings. */
 export function parseFindings(/** @type {string} */ output) {

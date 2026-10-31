@@ -12,7 +12,7 @@
       "builder": "Complete shared security headers and CSP",
       "checks": [
         { "name": "site-runtime-security", "repo": "site-runtime", "bin": "site-runtime-security", "kinds": ["site", "static", "worker", "app"] },
-        { "name": "signed-in-security", "report": "https://mcp.dustinedwards.info/reports/signed-in-security.json", "kinds": ["app"], "max_age_minutes": 180 }
+        { "name": "signed-in-security", "report": "https://mcp.dustinedwards.info/reports/signed-in-security.json", "site_reports": { "carrel-desk": "https://carrel-mcp.dustinedwards.info/reports/signed-in-security.json" }, "kinds": ["app"], "max_age_minutes": 180 }
       ]
     },
     {
@@ -48,7 +48,13 @@
       "id": 6,
       "name": "Images and media",
       "builder": "Complete shared images and media",
-      "checks": [{ "name": "site-runtime-images", "repo": "site-runtime", "bin": "site-runtime-images", "kinds": ["site", "static"] }]
+      "checks": [{ "name": "site-runtime-images", "repo": "site-runtime", "bin": "site-runtime-images", "kinds": ["site", "static", "app"] }],
+      "skip": {
+        "carrel-desk": "a private writing desk behind Access with nothing public to share, so no share card is wanted; its signed-in pages are listed as unchecked"
+      },
+      "unchecked": {
+        "Capsid Portal and Carrel Desk pages behind sign-in": "a stranger's crawl sees only the redirect to Access, so the images on the signed-in pages (Desk's media library, the Portal's views) are not checked live"
+      }
     },
     {
       "id": 7,

@@ -6,7 +6,7 @@ import { delimiter, dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { WORKFLOWS, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
+import { WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -55,6 +55,12 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
   assert.equal(isWarning(fresh[0]), true);
   assert.equal(isWarning(fresh[1]), true);
   assert.match(fresh[1].message, /prelum's release dates could not be read/);
+  // An MCP server (S7): more than one minor behind the newest fails from 0.21.0 whatever the release's age; one behind is the usual warning.
+  const server = (ref) =>
+    checkPins(tree({ "mcp/package.json": `{"dependencies":{"s":"github:DrDustinEdwards/site-runtime#${ref}"}}`, "mcp/src/door.ts": 'import { x } from "@dustinedwards/site-runtime/mcp-login";' }), tags, {}, now)[0];
+  assert.match(server("v0.2.0").message, /^the MCP server in mcp runs site-runtime v0\.2\.0, more than one minor behind v0\.10\.0/);
+  assert.equal(isWarning(server("v0.2.0"), "0.21.0"), false);
+  assert.equal(server("v0.9.0").message, "site-runtime is at v0.9.0; the newest release is v0.10.0");
 });
 
 const catalog = { escapeHtml: "site-runtime ./html", slugify: "Prelum ./slug", render: "Prelum ./render", readThemeCookie: "Capsomer ./theme" };
@@ -143,7 +149,7 @@ test("each app is checked for its kind's features, files belong to the deepest a
     }),
     { apps: { ".": "site", mcp: "worker" }, waive: { aiTxt: "x", tdm: "x", sitemap: "x", llms: "x", head: "x", schema: "x", indexnow: "x", securityTxt: "x", csp: "x", cspReport: "x", health: "x", capsomer: "x", a11y: "x" } },
   );
-  assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth"]);
+  assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth"]);
 });
 
 test("PLANT: a React Router app without a year on its hashed files fails, and passes once _headers gives them one", () => {
@@ -357,7 +363,7 @@ test("an admin or login route warns without noindex in a file that names it, a s
 });
 
 test("PLANT: a repository missing the devkit workflows its kinds need is told which; calling them, running the bin, or a waiver passes", () => {
-  const files = { "mcp/wrangler.jsonc": "{}", "mcp/src/index.ts": "export default {};" };
+  const files = { "mcp/package.json": "{}", "mcp/wrangler.jsonc": "{}", "mcp/src/index.ts": 'import { routeMcpEra } from "@dustinedwards/site-runtime/mcp-server";' };
   const missing = (/** @type {Record<string, string>} */ more, config = {}) =>
     checkWorkflows(tree({ ...files, ...more }), { apps: { ".": "static", mcp: "worker" }, ...config }, { self: "prelum", private: false }).map((f) => f.message.split("devkit's ")[1].split(".yml")[0]);
   assert.deepEqual(missing({}), WORKFLOWS.map((w) => w.name));
@@ -395,6 +401,35 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
     ],
   );
   assert.match(devkit[6].message, /\(a warning here: only Actions says whether this repository is public\)$/);
+});
+
+test("PLANT: a model call or prompt that skips the shared pieces is flagged with its checklist item; the shared way passes", () => {
+  const bad = {
+    "app/sdk.ts": 'import Anthropic from "@anthropic-ai/sdk";\nconst client = new Anthropic({ apiKey });',
+    "app/run.ts": "const a = await env.AI.run(MODEL, { messages, max_tokens: 300 });",
+    "app/ask.ts": "export const ask = (env) => env.AI_SEARCH.chatCompletions({ messages });",
+    "app/parse.ts": 'import { messages } from "@dustinedwards/site-runtime/anthropic";\nconst json = /\\{[\\s\\S]*\\}/.exec(text);',
+    "app/prompt.ts": 'const rules = ["Never use em dashes or en dashes."];',
+    "app/fire.ts": 'import { fireRoutine } from "@dustinedwards/site-runtime/routine";',
+  };
+  const good = {
+    "app/run.ts": "const a = await env.AI.run(MODEL, { messages, max_tokens: 300 }, { gateway, signal: AbortSignal.timeout(30_000) });",
+    "app/ask.ts": "const late = new Promise((_, no) => setTimeout(no, 5000));\nexport const ask = (env) => Promise.race([env.AI_SEARCH.chatCompletions({ messages }), late]);",
+    // A regex over a tool's output, in a file with no model call, and a comment naming the dash rule.
+    "scripts/read.mjs": "const rows = JSON.parse(out.match(/\\[[\\s\\S]*\\]/)[0]);",
+    "app/prompt.ts": 'import { WRITING_RULES } from "@dustinedwards/site-runtime/prose";\n// Do not use em dashes: WRITING_RULES says so.\nconst system = WRITING_RULES;',
+    "app/fire.ts": 'import { fireOnce } from "@dustinedwards/site-runtime/routine";',
+  };
+  const found = checkAi(tree(bad), {});
+  assert.deepEqual(
+    found.map((f) => `${f.file}:${f.line} ${/^\[(\w+)\]/.exec(f.message.slice(f.message.indexOf("[")))?.[1]}`),
+    ["app/sdk.ts:1 C1", "app/run.ts:1 C2", "app/ask.ts:1 C13", "app/parse.ts:2 C6", "app/prompt.ts:1 W5", "app/fire.ts:1 R2"],
+  );
+  // The Workers AI run names what it lacks: here the timeout and the gateway, not max_tokens.
+  assert.match(found[1].message, /without a timeout \(signal: AbortSignal\.timeout\(ms\), C2\), the gateway \(gateway: \{ id, metadata \}, G1\): /);
+  assert.ok(found.every((f) => isWarning(f, "0.20.20") && !isWarning(f, "0.21.0")));
+  assert.deepEqual(checkAi(tree(good), {}), []);
+  assert.deepEqual(checkAi(tree({ "app/fire.ts": bad["app/fire.ts"] }), { copies: { "app/fire.ts": "its own guard, moving in R3" } }), []);
 });
 
 test("PLANT: a test with a fake devkit ships warns, naming the helper; using devkit's, or a stub for one case, passes", () => {
@@ -502,7 +537,7 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
   ]);
   assert.ok(site.lines.includes("::warning file=src/index.ts,line=2::[copies] slugify is a local copy of Prelum ./slug slugify: import it"));
   assert.ok(site.lines.includes('::warning file=.shared.json::[config] "copies" "src/gone.ts" excuses nothing in this run: remove it'));
-  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: 1 to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, config 1\)/);
+  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: 1 to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, ai 0, config 1\)/);
   assert.match(readFileSync(summary, "utf8"), /^### Shared-code check\n\npins 0, copies 1,/);
 
   // Prelum checking itself: its own export is its API, not a copy.
