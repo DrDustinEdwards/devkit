@@ -17,6 +17,7 @@ test("the shared workflows are the ones every repository calls", () => {
     "ai-author.yml",
     "bump-consumers.yml",
     "code-map.yml",
+    "conformance.yml",
     "dependencies.yml",
     "family.yml",
     "no-bloat.yml",

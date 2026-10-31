@@ -4,6 +4,12 @@
 
 - `devkit-live`: an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes through `site_args` (`--start`, `--pages`, from Prelum v0.25.0), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
 
+## 0.20.21 (2026-10-31)
+
+- `conformance.yml`: the MCP conformance gate on Actions (area 11, P2 to P7 and P10). It runs `devkit-conformance` from the server's own install against its `.conformance.json`, in `working-directory` for a server in `mcp/`, the job Carrel ran on its own. The caller is `examples/conformance-caller.yml`. The network check (`devkit-shared`) asks for it, as a warning until 0.21.0, in every repository with an MCP server (a source file importing site-runtime `./mcp-server` or `./mcp-login`); a CI step that runs `devkit-conformance`, as Carrel's does, counts.
+- `devkit-shared` checks the AI code (area 11), each finding naming its checklist item, as warnings until 0.21.0: Anthropic's Messages API called outside site-runtime `./anthropic` (C1, G1); a Workers AI `AI.run` without `signal`, `gateway` or `max_tokens` (C2, G1, C5); an AI Search answer or reranker with no timeout near it (C2, C13); JSON cut out of a model's free text with a regex, in a file that calls a model (C6); a prompt's own dash rule instead of WRITING_RULES (W5); and `fireRoutine` imported, a routine fired outside `fireOnce` (R2). A file kept on purpose is excused in `.shared.json` "copies". On the family's main branches today: Capsid 2 (the AI Search reranker's timeout, its own routine guard), Carrel 1 (R2), Foxhound 4 and germomics 3 (W5), site-api 1 (C6); none elsewhere.
+- `devkit-shared` holds every MCP server to one site-runtime door (S7): an MCP server's site-runtime pin more than one minor behind the newest release fails from 0.21.0, whatever the release's age; one minor behind is the usual warning.
+
 ## 0.20.20 (2026-10-31)
 
 - `devkit-shared`: a site-runtime registry entry (`@dustinedwards/site-runtime/sites`) counts as the `headers` and `csp` features. A static site's Worker is `staticSite({ site })` and its `_headers` comes from `site-runtime-headers`, both of which build the set and the page policy from the entry, so it no longer imports `./headers` or `./csp` itself (area 2, site-runtime 0.58.0).

@@ -8,7 +8,8 @@
 // upstream SDK gaps; asserting nothing would be a gate that cannot notice the protocol breaking. Judged on the parsed
 // count, not the exit code: on Windows the suite can abort in teardown after printing its results.
 //
-// Runs locally, never on Actions (a full sweep takes minutes against wrangler dev).
+// Runs locally and on Actions: devkit's conformance.yml is the job every MCP server's repository calls
+// (examples/conformance-caller.yml). A full sweep takes a few minutes against wrangler dev.
 //
 //   npx devkit-conformance                    reads .conformance.json
 //   npx devkit-conformance --config <file>
