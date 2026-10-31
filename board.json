@@ -87,6 +87,16 @@
    "id": "foxing-mcp",
    "name": "Foxing admin MCP",
    "origin": "https://admin-mcp.foxing.app"
+  },
+  {
+   "id": "capsid-portal",
+   "name": "Capsid Portal",
+   "origin": "https://portal.dustinedwards.info"
+  },
+  {
+   "id": "carrel-desk",
+   "name": "Carrel Desk",
+   "origin": "https://desk.dustinedwards.info"
   }
  ],
  "areas": [
@@ -1805,6 +1815,14 @@
     "foxing-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -2367,6 +2385,14 @@
        "detail": "https://admin-mcp.foxing.app/ SITERUNTIME answers 404; want 400, 405 or 501 for a method the site does not define"
       }
      ]
+    },
+    "capsid-portal": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
+    "carrel-desk": {
+     "status": "missing",
+     "reason": "not run yet"
     }
    }
   },
@@ -2521,6 +2547,14 @@
        "detail": "https://admin-mcp.foxing.app/admin an admin response (403) has no noindex"
       }
      ]
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -2959,6 +2993,14 @@
     "foxing-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -3132,6 +3174,14 @@
     "foxing-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -3629,6 +3679,14 @@
     "foxing-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -4488,6 +4546,14 @@
     "foxing-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -4678,6 +4744,14 @@
        "detail": "https://admin-mcp.foxing.app/f1d61e80-d94a-4a25-b764-a831dbd5efda a missing page answers 403, not 404"
       }
      ]
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -4763,6 +4837,14 @@
     "foxing-mcp": {
      "status": "missing",
      "reason": "not run yet"
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -5566,6 +5648,14 @@
     "foxing-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -5679,6 +5769,14 @@
        "detail": "https://admin-mcp.foxing.app/.well-known/oauth-protected-resource answered 403 application/json, neither 404 nor a JSON object"
       }
      ]
+    },
+    "capsid-portal": {
+     "status": "n/a",
+     "reason": "no check for a app"
+    },
+    "carrel-desk": {
+     "status": "n/a",
+     "reason": "no check for a app"
     }
    }
   },
@@ -5762,6 +5860,14 @@
      "reason": "no live check yet"
     },
     "foxing-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "capsid-portal": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "carrel-desk": {
      "status": "missing",
      "reason": "no live check yet"
     }

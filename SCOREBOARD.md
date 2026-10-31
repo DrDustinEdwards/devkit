@@ -6,20 +6,20 @@ Newest run 2026-10-31 13:06 UTC. Filled only from the live checks and the verifi
 
 ✅ complete · 🟡 partial · ❌ missing · `·` does not apply
 
-| Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Lines added | Lines removed |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | +15923 | −606 |
-| 2. Security headers and CSP | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | +48020 | −6230 |
-| 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | ❌ | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | ❌ | +5556 | −1273 |
-| 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | +6126 | −2805 |
-| 5. Carrel editing contract | ❌ | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
-| 6. Images and media | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | +23097 | −2090 |
-| 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | +6435 | −3179 |
-| 8. Running and recovery | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | +24854 | −1688 |
-| 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | +0 | −0 |
-| 10. Charts | ❌ | ❌ | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | +15662 | −4962 |
-| 11. AI and MCP | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | +15354 | −5124 |
-| 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
+| Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
+| 1. Search, sharing and AI answers | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | · | · | +15923 | −606 |
+| 2. Security headers and CSP | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | +48020 | −6230 |
+| 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | ❌ | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | ❌ | · | · | +5556 | −1273 |
+| 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6126 | −2805 |
+| 5. Carrel editing contract | ❌ | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
+| 6. Images and media | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | · | · | +23097 | −2090 |
+| 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6435 | −3179 |
+| 8. Running and recovery | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +24854 | −1688 |
+| 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +0 | −0 |
+| 10. Charts | ❌ | ❌ | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | · | · | +15662 | −4962 |
+| 11. AI and MCP | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | +15354 | −5124 |
+| 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 Lines count public repositories only until the LIVE_GITHUB_TOKEN secret is set.
 
@@ -93,6 +93,8 @@ Builder: Complete shared security headers and CSP. Verifier: Verify security hea
   - H5: https://admin-mcp.foxing.app/ (404) Permissions-Policy is present: ABSENT
   - H4: https://admin-mcp.foxing.app/ (404) Referrer-Policy is present: ABSENT
   - T2: https://admin-mcp.foxing.app/ (404) Strict-Transport-Security covers subdomains: got "max-age=63072000"
+- ❌ Capsid Portal: not run yet
+- ❌ Carrel Desk: not run yet
 
 ### 3. Sign-in and access
 
@@ -371,3 +373,5 @@ Builder: Complete shared checks and tooling. Verifier: none yet.
 - ❌ Dustin Edwards admin MCP: no live check yet
 - ❌ Carrel MCP: no live check yet
 - ❌ Foxing admin MCP: no live check yet
+- ❌ Capsid Portal: no live check yet
+- ❌ Carrel Desk: no live check yet
