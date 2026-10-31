@@ -28,7 +28,7 @@
       "evidence": [
         "https://germomics.com/a-boy-named-flu"
       ],
-      "note": "episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labelled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper"
+      "note": "episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper"
     },
     "julieedwards-info": {
       "verdict": "partial",
