@@ -2,6 +2,7 @@
 
 ## 0.20.1 (2026-10-31)
 
+- Area 6 (images and media) runs site-runtime's `site-runtime-images` (site-runtime 0.43.0) on sites and static sites: srcset, sizes and dimensions, AVIF and WebP, one priority image, oversized files, `/media` caching, alt text, share-card size and tags, image sitemaps, GPS left in published files, and captions on video and audio (A2 to A5, A7, A12, B1, B2, C1 to C3, C8, D2, E1 to E3).
 - `devkit-no-bloat` counts the tests and gates them like Knip and jscpd: the test files (`tests.files`, default `**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}`) and the `test(` and `it(` cases in them (node:test, vitest, Playwright), read from the source without running anything. A rise fails, so a pull request that adds a test raises the baseline (`--write-baseline`) in the same reviewed diff. A repository with no `tests` entry in its baseline gets a row and no failure until it records one.
 - `devkit-no-bloat` records the share of source lines that are comment lines (`comments`: JS, TS and CSS, minified files and `worker-configuration.d.ts` left out). A rise of more than `comments.tolerance` points (default 1) with more comment lines than the baseline is a warning; `"comments": { "fail": true }` makes it a failure.
 - `devkit-no-bloat --lines-from <rev>`: the lines added and removed since the merge base with `<rev>`, as code, tests, comments, docs and other, in the job summary. `no-bloat.yml` passes it on a pull request (its checkout fetches two commits there) and posts nothing.

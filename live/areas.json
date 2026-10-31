@@ -24,7 +24,12 @@
     },
     { "id": 4, "name": "Writing and rendering", "builder": "Complete shared writing and rendering", "checks": [] },
     { "id": 5, "name": "Carrel editing contract", "builder": "Complete Carrel editing contract", "checks": [] },
-    { "id": 6, "name": "Images and media", "builder": "Complete shared images and media", "checks": [] },
+    {
+      "id": 6,
+      "name": "Images and media",
+      "builder": "Complete shared images and media",
+      "checks": [{ "name": "site-runtime-images", "repo": "site-runtime", "bin": "site-runtime-images", "kinds": ["site", "static"] }]
+    },
     {
       "id": 7,
       "name": "Speed and caching",
@@ -36,7 +41,17 @@
     },
     { "id": 8, "name": "Running and recovery", "builder": "Complete shared running and recovery", "checks": [] },
     { "id": 9, "name": "Accessibility and components", "builder": "Complete accessibility and Capsomer components", "checks": [] },
-    { "id": 10, "name": "Charts", "builder": "Complete shared charts", "checks": [] },
+    {
+      "id": 10,
+      "name": "Charts",
+      "builder": "Complete shared charts",
+      "checks": [{ "name": "chart-audit", "repo": "prelum", "bin": "prelum-chart-audit", "kinds": ["site", "static"] }],
+      "skip": {
+        "txasm": "nothing to chart: no charts, meters or data SVGs, and no numbers that should be one (charts audit, 30 Oct 2026)",
+        "julieedwards-info": "nothing to chart: a one-page campaign site with no charts or data SVGs (charts audit, 30 Oct 2026)",
+        "bsw": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
+      }
+    },
     { "id": 11, "name": "AI and MCP", "builder": "Complete shared AI and MCP code", "checks": [] },
     { "id": 12, "name": "Checks and tooling", "builder": "Complete shared checks and tooling", "checks": [] }
   ]
