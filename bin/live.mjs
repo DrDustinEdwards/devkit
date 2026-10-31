@@ -14,7 +14,10 @@
 //   { "name": "prelum-audit", "repo": "prelum", "bin": "prelum-audit", "kinds": ["site", "static"], "ref": "v0.19.0" }
 //
 // "kinds" are the site kinds it applies to (site, static, worker); "args", when given, follow --origin and --from (one bin
-// run two ways, once per kind). An area's "skip" names a site the area does not apply to, and why.
+// run two ways, once per kind). A site's "checkArgs" ({ "<check name>": ["--flag", "value"] }) follow the check's own args
+// on that site alone, for what a crawl cannot find there (pages only a demo session shows). An area's "skip" names a site
+// the area does not apply to, and why; its "unchecked" names what its checks cannot reach (a signed-in site or page), and
+// why, so the board says so instead of looking finished.
 //
 // A REPORTED check is one that needs a site's secrets, so it runs where the secrets already live and publishes its result
 // on that system's own https origin; GitHub never holds a site key. The run reads the report instead of running a bin:
@@ -81,6 +84,14 @@ export function lintConfig({ sites, areas, verdicts }) {
     if (siteIds.has(site.id)) problems.push(`site ${site.id} is listed twice`);
     siteIds.add(site.id);
     if (!KINDS.includes(site.kind)) problems.push(`site ${site.id} has kind ${site.kind}, not one of ${KINDS.join(", ")}`);
+    if (site.checkArgs !== undefined) {
+      const ok = typeof site.checkArgs === "object" && !Array.isArray(site.checkArgs) && site.checkArgs !== null;
+      for (const [name, args] of Object.entries(ok ? site.checkArgs : {})) {
+        if (!areas.some((area) => area.checks.some((check) => check.name === name && !check.report))) problems.push(`site ${site.id} has checkArgs for ${name}, which is no run check`);
+        if (!(Array.isArray(args) && args.every((arg) => typeof arg === "string"))) problems.push(`site ${site.id} checkArgs for ${name} are not a list of strings`);
+      }
+      if (!ok) problems.push(`site ${site.id} checkArgs is not an object of check names`);
+    }
     for (const key of ["origin", "from"]) {
       if (site[key] !== undefined && !/^https:\/\/[a-z0-9.-]+$/.test(site[key])) problems.push(`site ${site.id} ${key} ${site[key]} is not a bare https origin`);
     }
@@ -96,6 +107,7 @@ export function lintConfig({ sites, areas, verdicts }) {
       if (check.args !== undefined && !(Array.isArray(check.args) && check.args.every((arg) => typeof arg === "string"))) problems.push(`area ${area.id} check ${check.name} has args that are not a list of strings`);
     }
     for (const id of Object.keys(area.skip ?? {})) if (!siteIds.has(id)) problems.push(`area ${area.id} skips unknown site ${id}`);
+    for (const [what, why] of Object.entries(area.unchecked ?? {})) if (typeof why !== "string" || !why) problems.push(`area ${area.id} leaves ${what} unchecked without a reason`);
   }
   for (const verdict of verdicts) {
     const area = byArea.get(verdict.area);
@@ -264,7 +276,7 @@ export async function runAll({ sites, areas }, { onlyAreas, onlySites, token, lo
           results.push({ ...record, status: "error", errors: 0, warnings: 0, findings: [], detail: error });
           continue;
         }
-        const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : []), ...(check.args ?? [])];
+        const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : []), ...(check.args ?? []), ...(site.checkArgs?.[check.name] ?? [])];
         jobs.push(async () => {
           const result = resultOf(await runBin(bin, args));
           log(`area ${area.id} ${site.id} ${check.name}: ${result.status} (${result.errors} errors, ${result.warnings} warnings, ${result.seconds}s)`);
@@ -314,11 +326,13 @@ export function buildBoard({ sites, areas, verdicts }, runs) {
       }
       cells[site.id] = siteCell({ area, site, names, verdict, signedByBuilder, ordered, newest, cellOf, passed });
     }
+    // What the checks cannot reach is not proven, so the job is not finished while an area lists any.
+    if (Object.keys(area.unchecked ?? {}).length) finished = false;
     for (const [id, cell] of Object.entries(cells)) {
       if (cell.status === "n/a") continue;
       if (cell.status !== "complete" || (id !== "package" && cell.clean_days < CLEAN_DAYS)) finished = false;
     }
-    return { id: area.id, name: area.name, builder: area.builder, verifier: verdict?.verifier ?? null, lines: newest?.lines?.[area.id] ?? null, cells };
+    return { id: area.id, name: area.name, builder: area.builder, verifier: verdict?.verifier ?? null, lines: newest?.lines?.[area.id] ?? null, unchecked: area.unchecked ?? {}, cells };
   });
   return { as_of: newest?.at ?? null, finished, public_token: newest?.public_token ?? true, sites: sites.map(({ id, name, origin }) => ({ id, name, origin })), areas: board };
 }
@@ -360,13 +374,15 @@ export function boardMarkdown(board) {
   out.push("", "## Why a cell is not complete", "");
   for (const area of board.areas) {
     const open = Object.entries(area.cells).filter(([, cell]) => cell.status !== "complete" && cell.status !== "n/a");
-    if (!open.length) continue;
+    const unchecked = Object.entries(area.unchecked ?? {});
+    if (!open.length && !unchecked.length) continue;
     out.push(`### ${area.id}. ${area.name}`, "", `Builder: ${area.builder}. Verifier: ${area.verifier ?? "none yet"}.`, "");
     for (const [id, cell] of open) {
       const name = id === "package" ? "Package" : board.sites.find((s) => s.id === id).name;
       out.push(`- ${MARK[cell.status]} ${name}: ${cell.reason.replace(/\|/g, "\\|")}`);
       for (const finding of (cell.findings ?? []).filter((f) => f.severity === "error").slice(0, 5)) out.push(`  - ${finding.check}: ${finding.detail}`);
     }
+    for (const [what, why] of unchecked) out.push(`- Not checked, ${what}: ${why.replace(/\|/g, "\\|")}`);
     out.push("");
   }
   return `${out.join("\n").trimEnd()}\n`;
