@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.16 (2026-10-31)
+
+- `devkit-migrations <dir> --apply <database>`: applies a deploy's pending D1 migrations, so no site needs a hand-run step before a merge. Migrations that only add are applied after the D1 Time Travel bookmark is read and its restore command written to the log and the step summary; one that drops, renames, deletes rows or says `-- contract:` is refused with the hand-run command. An unreadable list or bookmark, a failed apply, or a database still behind afterwards exits 1 before the deploy.
+
 ## 0.20.15 (2026-10-31)
 
 - `worker-deploy.yml` takes a gradual rollout, opt-in (`gradual-percent`, `gradual-minutes`): it uploads a version, splits traffic with the live one, gates the new version through a version override, and promotes it or rolls back to the old one by id. And a preview per pull request, opt-in (`preview`, `preview-build`): `wrangler versions upload --preview-alias pr-<number>` on a pull request from the same repository, its URL in the summary and the `preview-url` output. Both off by default, so a caller that changes nothing deploys as before.
