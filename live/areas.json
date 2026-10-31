@@ -57,7 +57,15 @@
         "bsw": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
       }
     },
-    { "id": 11, "name": "AI and MCP", "builder": "Complete shared AI and MCP code", "checks": [] },
+    {
+      "id": 11,
+      "name": "AI and MCP",
+      "builder": "Complete shared AI and MCP code",
+      "checks": [
+        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["worker"], "args": ["--kind", "worker"] },
+        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["site", "static"], "args": ["--kind", "site"] }
+      ]
+    },
     { "id": 12, "name": "Checks and tooling", "builder": "Complete shared checks and tooling", "checks": [] }
   ]
 }
