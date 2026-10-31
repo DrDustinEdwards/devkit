@@ -60,7 +60,23 @@
       "id": 8,
       "name": "Running and recovery",
       "builder": "Complete shared running and recovery",
-      "checks": [{ "name": "ops-audit", "repo": "devkit", "bin": "devkit-ops-audit", "kinds": ["site", "worker"] }]
+      "checks": [
+        {
+          "name": "ops-audit",
+          "repo": "devkit",
+          "bin": "devkit-ops-audit",
+          "kinds": ["site", "worker"],
+          "site_args": {
+            "foxhound": ["--repo", "DrDustinEdwards/foxhound", "--drill-workflow", "restore-drill.yml"],
+            "foxing": ["--repo", "DrDustinEdwards/foxing", "--drill-workflow", "restore-drill.yml"],
+            "germomics": ["--repo", "DrDustinEdwards/germomics", "--drill-workflow", "restore-drill.yml"],
+            "julieedwards-info": ["--repo", "DrDustinEdwards/julieedwards-info", "--drill-workflow", "restore-drill.yml"],
+            "txasm": ["--repo", "DrDustinEdwards/txasm", "--drill-workflow", "restore-drill.yml"],
+            "carrel-mcp": ["--repo", "DrDustinEdwards/carrel", "--drill-workflow", "restore-drill.yml"],
+            "dustinedwards-info": ["--repo", "DrDustinEdwards/dustinedwards-info", "--drill-workflow", "restore-drill.yml"]
+          }
+        }
+      ]
     },
     { "id": 9, "name": "Accessibility and components", "builder": "Complete accessibility and Capsomer components", "checks": [] },
     {
