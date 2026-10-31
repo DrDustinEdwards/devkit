@@ -1,0 +1,108 @@
+{
+  "area": 6,
+  "verifier": "Verify area 6 images and media",
+  "date": "2026-10-31",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/site-runtime/blob/6a75dab/image.mjs#L140-L150",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/6a75dab/bin/images.mjs",
+        "https://github.com/DrDustinEdwards/site-api/blob/2f3b4b2/src/media-upload.ts#L329-L338",
+        "https://github.com/DrDustinEdwards/prelum/blob/c64508e/render-diagram.mjs#L79-L104",
+        "https://github.com/DrDustinEdwards/prelum/blob/c64508e/render-nomath.mjs#L376"
+      ],
+      "note": "uploads built (HEIC, GPS strip, placeholder); a replace keeps the immutable size URL; pictureProps carries no placeholder; Prelum picture drops source media (GIF never moves) and counts priority per render; unsized diagram img; credit/license never reach the renderer; no 1.91:1 cover crop, no 16:9/4:3/1:1 set, no og:video; respond sets no CORP; AVIF not stripped; images check skips A6 and C9 and never runs on the Portal"
+    },
+    "dustinedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp?w=640",
+        "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/19ec1e6/scripts/build-og.mjs"
+      ],
+      "note": "phage-hunters /media sizes max-age=86400 not immutable; cards from its own satori script, cover shared uncropped; no Carrel share-image field; diagram img unsized with role=button; no placeholder; podcast has no transcript link"
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": [
+        "https://germomics.com/a-boy-named-flu"
+      ],
+      "note": "episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper"
+    },
+    "julieedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
+        "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
+      ],
+      "note": "profile photo 884 KB, 2048 px, unsized, no srcset, 3.1x at 670 px, cached 4 h, other host without preconnect; must go into the library; fallback img unsized"
+    },
+    "txasm": {
+      "verdict": "partial",
+      "evidence": [
+        "https://txasm.org/og-card.png",
+        "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
+      ],
+      "note": "og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap"
+    },
+    "bsw": {
+      "verdict": "missing",
+      "evidence": [
+        "https://bsw.dustin-edwards.workers.dev/services/grant-review.webp",
+        "https://github.com/DrDustinEdwards/bsw/blob/69daae0/app/routes/home.tsx#L108-L115"
+      ],
+      "note": "no image pipeline, /media, uploads or library; not a Carrel site; static files with a hand srcset; images check fails A2; logo 2.2x; only the logo card"
+    },
+    "foxhound": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
+      ],
+      "note": "cover picture is its own code, not pictureProps; a cover outside the library is unsized; no placeholder, credit, ImageObject or image sitemap; footer SVG has no loading/decoding"
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxing.app/books",
+        "https://github.com/DrDustinEdwards/foxing/blob/6a2a21d/apps/web/app/lib/seo.ts#L33"
+      ],
+      "note": "site card has no og:image:type (9 pages); LCP cover lazy and 5 to 10 lazy covers above the fold; Journal body images have no srcset or AVIF; no Carrel share-image field; journalCovers drops focus; no placeholder or image sitemap"
+    },
+    "carrel": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel.dustinedwards.info/"
+      ],
+      "note": "images check passes; share card answers CORP same-origin"
+    },
+    "enarratio": {
+      "verdict": "partial",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/"
+      ],
+      "note": "images check passes; share card answers CORP same-origin"
+    },
+    "capsomer": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/"
+      ],
+      "note": "images check passes; share card answers CORP same-origin"
+    },
+    "prelum": {
+      "verdict": "partial",
+      "evidence": [
+        "https://prelum.dustinedwards.info/"
+      ],
+      "note": "images check fails: unsized diagram SVGs, 3 fetchpriority=high, 48 px icon shown at 16 px; share card CORP same-origin"
+    },
+    "capsid": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsid.dustinedwards.info/"
+      ],
+      "note": "images check passes; share card answers CORP same-origin"
+    }
+  }
+}
