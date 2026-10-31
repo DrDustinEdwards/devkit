@@ -102,11 +102,32 @@
       "id": 10,
       "name": "Charts",
       "builder": "Complete shared charts",
-      "checks": [{ "name": "chart-audit", "repo": "prelum", "bin": "prelum-chart-audit", "kinds": ["site", "static"] }],
+      "checks": [
+        {
+          "name": "chart-audit",
+          "repo": "prelum",
+          "bin": "prelum-chart-audit",
+          "kinds": ["site", "static"],
+          "args": ["--strict-frame"],
+          "site_args": {
+            "foxhound": [
+              "--start", "https://foxhoundapp.com/demos/dashboard",
+              "--start", "https://foxhoundapp.com/demos/recovery",
+              "--start", "https://foxhoundapp.com/demos/intelligence",
+              "--pages", "/demos/dashboard,/demos/recovery,/demos/intelligence"
+            ]
+          }
+        }
+      ],
       "skip": {
         "txasm": "nothing to chart: no charts, meters or data SVGs, and no numbers that should be one (charts audit, 30 Oct 2026)",
         "julieedwards-info": "nothing to chart: a one-page campaign site with no charts or data SVGs (charts audit, 30 Oct 2026)",
         "bsw": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
+      },
+      "unchecked": {
+        "Capsid Portal (portal.dustinedwards.info)": "signed-in only; charts covered by Capsid's own browser tests until a public demo route exists",
+        "Foxing /stats, /year and /goals": "signed-in only; no live check sees these charts until a public demo route exists",
+        "Carrel desk (desk.dustinedwards.info)": "signed-in only, behind Access; no live check sees this chart until a public demo route exists"
       }
     },
     {

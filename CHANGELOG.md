@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `devkit-live`: an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes through `site_args` (`--start`, `--pages`, from Prelum v0.25.0), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
+
 ## 0.20.18 (2026-10-31)
 
 - `devkit-shared` fails a site-runtime pin behind a minor that has been out three days or more (`FRESH` in `bin/shared.mjs`); a pin behind a younger release is the usual warning. site-runtime releases many minors a day, so the grace window is time, not a count of minors, and a fresh release never turns a site red. The release dates come from the GitHub releases API (one to three requests, with the run's token in `shared.yml`); when they cannot be read the rule is a warning that says so, never a silent pass.

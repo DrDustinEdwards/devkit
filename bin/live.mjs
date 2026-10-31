@@ -17,8 +17,9 @@
 // that name it grade); "args", when given, follow --origin and --from (one bin
 // run two ways, once per kind). "site_args" adds arguments for one site only, after "args", keyed by site id: area 8 gives
 // each site with a restore drill its repository and drill workflow (`--repo owner/name --drill-workflow restore-drill.yml`).
-// An area's "skip" names a site the area does not apply to, and why. A check's bin inherits the run's environment, so
-// GITHUB_TOKEN reaches it.
+// An area's "skip" names a site the area does not apply to, and why; its "unchecked" names what its checks cannot reach (a
+// signed-in site or page), and why, so the board says so instead of looking finished. A check's bin inherits the run's
+// environment, so GITHUB_TOKEN reaches it.
 //
 // A REPORTED check is one that needs a site's secrets, so it runs where the secrets already live and publishes its result
 // on that system's own https origin; GitHub never holds a site key. The run reads the report instead of running a bin:
@@ -104,6 +105,7 @@ export function lintConfig({ sites, areas, verdicts }) {
       }
     }
     for (const id of Object.keys(area.skip ?? {})) if (!siteIds.has(id)) problems.push(`area ${area.id} skips unknown site ${id}`);
+    for (const [what, why] of Object.entries(area.unchecked ?? {})) if (typeof why !== "string" || !why) problems.push(`area ${area.id} leaves ${what} unchecked without a reason`);
   }
   for (const verdict of verdicts) {
     const area = byArea.get(verdict.area);
@@ -324,11 +326,13 @@ export function buildBoard({ sites, areas, verdicts }, runs) {
       }
       cells[site.id] = siteCell({ area, site, names, verdict, signedByBuilder, ordered, newest, cellOf, passed });
     }
+    // What the checks cannot reach is not proven, so the job is not finished while an area lists any.
+    if (Object.keys(area.unchecked ?? {}).length) finished = false;
     for (const [id, cell] of Object.entries(cells)) {
       if (cell.status === "n/a") continue;
       if (cell.status !== "complete" || (id !== "package" && cell.clean_days < CLEAN_DAYS)) finished = false;
     }
-    return { id: area.id, name: area.name, builder: area.builder, verifier: verdict?.verifier ?? null, lines: newest?.lines?.[area.id] ?? null, cells };
+    return { id: area.id, name: area.name, builder: area.builder, verifier: verdict?.verifier ?? null, lines: newest?.lines?.[area.id] ?? null, unchecked: area.unchecked ?? {}, cells };
   });
   return { as_of: newest?.at ?? null, finished, public_token: newest?.public_token ?? true, sites: sites.map(({ id, name, origin }) => ({ id, name, origin })), areas: board };
 }
@@ -370,13 +374,15 @@ export function boardMarkdown(board) {
   out.push("", "## Why a cell is not complete", "");
   for (const area of board.areas) {
     const open = Object.entries(area.cells).filter(([, cell]) => cell.status !== "complete" && cell.status !== "n/a");
-    if (!open.length) continue;
+    const unchecked = Object.entries(area.unchecked ?? {});
+    if (!open.length && !unchecked.length) continue;
     out.push(`### ${area.id}. ${area.name}`, "", `Builder: ${area.builder}. Verifier: ${area.verifier ?? "none yet"}.`, "");
     for (const [id, cell] of open) {
       const name = id === "package" ? "Package" : board.sites.find((s) => s.id === id).name;
       out.push(`- ${MARK[cell.status]} ${name}: ${cell.reason.replace(/\|/g, "\\|")}`);
       for (const finding of (cell.findings ?? []).filter((f) => f.severity === "error").slice(0, 5)) out.push(`  - ${finding.check}: ${finding.detail}`);
     }
+    for (const [what, why] of unchecked) out.push(`- Not checked, ${what}: ${why.replace(/\|/g, "\\|")}`);
     out.push("");
   }
   return `${out.join("\n").trimEnd()}\n`;
