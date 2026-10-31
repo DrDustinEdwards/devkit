@@ -2552,12 +2552,12 @@
      ]
     },
     "capsid-portal": {
-     "status": "n/a",
-     "reason": "no check for a app"
+     "status": "missing",
+     "reason": "not run yet"
     },
     "carrel-desk": {
-     "status": "n/a",
-     "reason": "no check for a app"
+     "status": "missing",
+     "reason": "not run yet"
     }
    }
   },
