@@ -1,6 +1,6 @@
 {
   "name": "@dustinedwards/devkit",
-  "version": "0.20.9",
+  "version": "0.20.10",
   "private": true,
   "description": "Shared tooling for the Dustin Edwards repositories. As a package: the shared test helpers and the shared checks, installed by git tag. The Renovate policy and the reusable workflows in this repository are not part of the package.",
   "type": "module",
@@ -45,6 +45,7 @@
     "devkit-ops-audit": "./bin/ops-audit.mjs",
     "devkit-route-weight": "./bin/route-weight.mjs",
     "devkit-shared": "./bin/shared.mjs",
+    "devkit-warm": "./bin/warm.mjs",
     "devkit-worker-size": "./bin/worker-size.mjs"
   },
   "files": [

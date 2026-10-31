@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.10 (2026-10-31)
+
+- `devkit-warm <origin> [--sha <commit>]` (bin/warm.mjs): warms the stored pages after a deploy for a site that deploys outside `worker-deploy.yml` (dustinedwards.info's `ship`, Workers Builds). It is the shared deploy's "Warm the stored pages" loop: every sitemap page on the origin, an index followed one level, at most 1000, four at a time. `--sha` first waits up to 10 minutes for `/health` to name that commit. It never fails; a warm that cannot finish is a warning.
+
 ## 0.20.9 (2026-10-31)
 
 - `bin/family.mjs` is back as a shim that runs the shared-code check. An old `family.yml` (v0.18.0 on a branch Foxhound had open) checks out devkit's default branch and runs that path, and failed with "Cannot find module" once 0.20.8 renamed it. It stays until 0.21.0.
