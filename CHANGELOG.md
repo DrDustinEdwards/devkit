@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.13 (2026-10-31)
+
+- `devkit-route-weight` weighs what a page on an opt-in hydration site downloads. When the client build has a /site.js (devkit's siteScript), a route whose chain declares `handle = { hydrate: true }` weighs the client entry and its chain as before. Any other route weighs /site.js and its stylesheets, because it loads no React. Before this, every route counted the full React bundle, so a public page that started loading React again would still pass a budget set for the app pages. txasm's public pages now weigh about 35 KB, where they weighed about 157 KB.
+- The network check counts site-runtime's `./static-site` as receiving CSP reports: `staticSite` answers the report path itself, so a static site on it no longer imports `./csp-report`.
+
 ## 0.20.12 (2026-10-31)
 
 - The shared-code check's `headers` feature accepts site-runtime's `withMcpHeaders` (./mcp-server), which sets an MCP door's whole header set, so a door that adopted it no longer fails "has no headers".

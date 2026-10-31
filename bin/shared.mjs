@@ -89,7 +89,7 @@ export const FEATURES = {
   securityTxt: { kinds: SITE, find: /site-runtime\/security-txt["']/, use: "site-runtime ./security-txt (/.well-known/security.txt)" },
   headers: { kinds: [...PUBLIC_OR_PRIVATE, "worker"], find: /site-runtime\/headers["']|\bwithMcpHeaders\b/, use: "site-runtime ./headers buildSecurityHeaders" },
   csp: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/csp["']/, use: "site-runtime ./csp buildContentSecurityPolicy" },
-  cspReport: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/csp-report["']/, use: "site-runtime ./csp-report receiveCspReport" },
+  cspReport: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/(csp-report|static-site)["']/, use: "site-runtime ./csp-report receiveCspReport (./static-site staticSite receives them for a static site)" },
   health: { kinds: ["site", "private"], find: /site-runtime\/health["']/, use: "site-runtime ./health healthResponse (/health)" },
   // base.css, not just a token file: the element styles every family page shares. A build that copies it out of the
   // package (Capsid's explorer: require.resolve("capsomer/package.json"), then "css/base.css") counts.
