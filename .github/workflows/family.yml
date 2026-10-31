@@ -1,14 +1,16 @@
-name: family
+# family.yml is shared.yml under its name before 0.20.8, so a caller whose pin moves without renaming its file still
+# runs. It is removed in 0.21.0: callers use shared.yml (examples/shared-caller.yml).
+name: shared
 
-# devkit-family (bin/family.mjs) on the caller: pins behind the newest release, local copies of shared exports, libraries a
+# devkit-shared (bin/shared.mjs) on the caller: pins behind the newest release, local copies of shared exports, libraries a
 # shared package wraps, a family feature the site lacks, and British spelling. Nothing to install: this checks out devkit
 # at the very commit the caller pinned (job.workflow_sha), reads each shared package at its newest tag, and runs
 # the bin with Node alone; the spelling check
-# runs codespell through pipx, which the runner has. Exceptions live in the caller's .family.json, each with a reason.
+# runs codespell through pipx, which the runner has. Exceptions live in the caller's .shared.json, each with a reason.
 #
-# On a Renovate branch the pin findings are warnings, so one bump never waits on another.
+# A pin behind its newest release is a warning; one to a raw commit fails.
 #
-# A CALLER (examples/family-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+# A CALLER (examples/shared-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
 
 on:
   workflow_call:
@@ -22,8 +24,8 @@ permissions:
   contents: read
 
 jobs:
-  family:
-    name: In step with the family
+  shared:
+    name: Uses the shared code
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.timeout-minutes }}
     permissions:
@@ -62,4 +64,4 @@ jobs:
           done
 
       - name: Check
-        run: node .devkit/bin/family.mjs --from "$RUNNER_TEMP/packages"
+        run: node .devkit/bin/shared.mjs --from "$RUNNER_TEMP/packages"

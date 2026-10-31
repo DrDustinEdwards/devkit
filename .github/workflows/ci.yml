@@ -32,8 +32,8 @@ jobs:
       - name: The scoreboard's files are sound
         run: node bin/live.mjs lint
       # The check every site runs, on devkit itself: pins, copies and American spelling.
-      - name: In step with the family
-        run: node bin/family.mjs
+      - name: Uses the shared code
+        run: node bin/shared.mjs
       # The no-bloat ratchet on devkit itself, through the bin it ships: Knip, jscpd, the tests and the comment share against
       # .no-bloat.json, and on a pull request the lines it adds and removes.
       - name: No new bloat

@@ -1,6 +1,6 @@
 {
   "copies": {
-    "bin/family.mjs": "the fingerprints the check looks for are written here",
+    "bin/shared.mjs": "the fingerprints the check looks for are written here",
     "testing/access.mjs": "the Access test fake signs its own tokens; devkit depends on no shared package, so it cannot import site-runtime's encoding",
     "testing/github.mjs": "the GitHub fake writes real git blob shas in hex; devkit depends on no shared package, so it cannot import site-runtime's encoding"
   },
