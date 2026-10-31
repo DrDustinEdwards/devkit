@@ -21,7 +21,7 @@
 //
 //   { "name": "carrel-conformance", "report": "https://carrel.example.com/reports/conformance.json", "max_age_minutes": 60 }
 //
-// The report is { "check", "at", "ref", "sites": { "<site origin>": { "status": "pass" | "fail" | "error", "findings":
+// The report is { "check", "at", "ref", "sites": { "<site origin or from>": { "status": "pass" | "fail" | "error", "findings":
 // [{ "severity": "error" | "warning", "check", "detail" }] } } }, findings as a bin's annotations would give them and never
 // a secret. TLS on the reporter's own origin is what makes it the reporter's. A report that cannot be read, is older than
 // max_age_minutes (default 60), names another check or leaves a site out is "error" for that site, never a pass.
@@ -151,7 +151,7 @@ export function reportedResult(report, check, site, now = new Date()) {
   const age = (now.getTime() - Date.parse(report.at)) / 60_000;
   const maxAge = check.max_age_minutes ?? REPORT_MAX_AGE_MINUTES;
   if (!(age >= -5 && age <= maxAge)) return error(`${check.report} is from ${report.at}, more than ${maxAge} minutes ago`);
-  const entry = report.sites?.[site.origin];
+  const entry = report.sites?.[site.origin] ?? (site.from ? report.sites?.[site.from] : undefined);
   if (!entry || !STATUSES.includes(entry.status)) return error(`${check.report} has no result for ${site.origin}`);
   const findings = (Array.isArray(entry.findings) ? entry.findings : [])
     .filter((f) => ["error", "warning"].includes(f?.severity))

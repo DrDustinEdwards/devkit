@@ -41,6 +41,9 @@ test("a reported check passes only on a fresh report that names the site and has
   assert.equal(status(report("2026-11-01T10:00:00Z", { status: "pass", findings: [] })), "error");
   assert.equal(status({ ...report("2026-11-01T11:50:00Z", {}), sites: {} }), "error");
   assert.equal(status(null), "error");
+  const served = { ...sites[0], from: "https://a.workers.example.com" };
+  const viaFrom = { check: "conformance", at: "2026-11-01T11:50:00Z", sites: { [served.from]: { status: "pass", findings: [] } } };
+  assert.equal(reportedResult(viaFrom, check, served, now).status, "pass");
   assert.equal(status(report("2026-11-01T11:50:00Z", { status: "pass", findings: [{ severity: "error", check: "C1", detail: "x" }] })), "fail");
 });
 
