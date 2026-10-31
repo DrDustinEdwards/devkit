@@ -1,0 +1,6695 @@
+{
+  "version": 1,
+  "repo": "DrDustinEdwards/devkit",
+  "sha": "8a4e871eebe89744d8fecc6cbaaf4ab5bedd263e",
+  "date": "2026-10-31",
+  "tools": {
+    "typescript": "5.9.3",
+    "coverage": "istanbul",
+    "mutation": null
+  },
+  "modules": [
+    {
+      "path": "bin/a11y-judge.mjs",
+      "loc": 220,
+      "imports": [],
+      "functions": [
+        {
+          "name": "pickPages",
+          "line": 23,
+          "end": 56,
+          "cc": 12,
+          "coverage": 0.926,
+          "crap": 12.06,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "take",
+          "line": 41,
+          "end": 43,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:45>",
+          "line": 45,
+          "end": 45,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:47>",
+          "line": 47,
+          "end": 47,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:49>",
+          "line": 49,
+          "end": 49,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:55>",
+          "line": 55,
+          "end": 55,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "focusVisible",
+          "line": 59,
+          "end": 63,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:62>",
+          "line": 62,
+          "end": 62,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "judgeSite",
+          "line": 94,
+          "end": 136,
+          "cc": 32,
+          "coverage": 0.921,
+          "crap": 32.5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "add",
+          "line": 97,
+          "end": 97,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:111>",
+          "line": 111,
+          "end": 111,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:116>",
+          "line": 116,
+          "end": 116,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:117>",
+          "line": 117,
+          "end": 117,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:131>",
+          "line": 131,
+          "end": 131,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "judgeAxe",
+          "line": 139,
+          "end": 157,
+          "cc": 11,
+          "coverage": 0.833,
+          "crap": 11.56,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:154>",
+          "line": 154,
+          "end": 154,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "judgeKeyboard",
+          "line": 160,
+          "end": 190,
+          "cc": 19,
+          "coverage": 0.958,
+          "crap": 19.03,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:170>",
+          "line": 170,
+          "end": 170,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:170>",
+          "line": 170,
+          "end": 170,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:176>",
+          "line": 176,
+          "end": 176,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:177>",
+          "line": 177,
+          "end": 177,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:178>",
+          "line": 178,
+          "end": 178,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:179>",
+          "line": 179,
+          "end": 179,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:181>",
+          "line": 181,
+          "end": 181,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:182>",
+          "line": 182,
+          "end": 182,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "unseenStops",
+          "line": 196,
+          "end": 200,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:198>",
+          "line": 198,
+          "end": 198,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:199>",
+          "line": 199,
+          "end": 199,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "judgeForced",
+          "line": 203,
+          "end": 218,
+          "cc": 10,
+          "coverage": 1,
+          "crap": 10,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:208>",
+          "line": 208,
+          "end": 208,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:208>",
+          "line": 208,
+          "end": 208,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:210>",
+          "line": 210,
+          "end": 210,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:211>",
+          "line": 211,
+          "end": 211,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:215>",
+          "line": 215,
+          "end": 215,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:216>",
+          "line": 216,
+          "end": 216,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:217>",
+          "line": 217,
+          "end": 217,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "headingSkips",
+          "line": 221,
+          "end": 227,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "list",
+          "line": 229,
+          "end": 229,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "annotation",
+          "line": 232,
+          "end": 234,
+          "cc": 1,
+          "coverage": 0.333,
+          "crap": 1.3,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/a11y.mjs",
+      "loc": 385,
+      "imports": [
+        "bin/a11y-judge.mjs"
+      ],
+      "functions": [
+        {
+          "name": "sleep",
+          "line": 35,
+          "end": 35,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:35>",
+          "line": 35,
+          "end": 35,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "load",
+          "line": 63,
+          "end": 72,
+          "cc": 4,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "fetchText",
+          "line": 74,
+          "end": 81,
+          "cc": 3,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "locs",
+          "line": 83,
+          "end": 83,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:83>",
+          "line": 83,
+          "end": 83,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "sitemapUrls",
+          "line": 86,
+          "end": 93,
+          "cc": 3,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "move",
+          "line": 87,
+          "end": 87,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "settle",
+          "line": 95,
+          "end": 98,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:96>",
+          "line": 96,
+          "end": 96,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "basics",
+          "line": 100,
+          "end": 118,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:101>",
+          "line": 101,
+          "end": 117,
+          "cc": 3,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:102>",
+          "line": 102,
+          "end": 102,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "outside",
+          "line": 103,
+          "end": 103,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:103>",
+          "line": 103,
+          "end": 103,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:108>",
+          "line": 108,
+          "end": 108,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:115>",
+          "line": 115,
+          "end": 115,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "axe",
+          "line": 120,
+          "end": 127,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:123>",
+          "line": 123,
+          "end": 123,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "keyboardWalk",
+          "line": 130,
+          "end": 184,
+          "cc": 5,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:131>",
+          "line": 131,
+          "end": 131,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:132>",
+          "line": 132,
+          "end": 136,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:142>",
+          "line": 142,
+          "end": 174,
+          "cc": 32,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:171>",
+          "line": 171,
+          "end": 171,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:177>",
+          "line": 177,
+          "end": 177,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:179>",
+          "line": 179,
+          "end": 179,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:179>",
+          "line": 179,
+          "end": 179,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:183>",
+          "line": 183,
+          "end": 183,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "reflow",
+          "line": 186,
+          "end": 208,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:187>",
+          "line": 187,
+          "end": 207,
+          "cc": 9,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "inScroller",
+          "line": 191,
+          "end": 194,
+          "cc": 4,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "zoomProxy",
+          "line": 211,
+          "end": 222,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:212>",
+          "line": 212,
+          "end": 221,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "visible",
+          "line": 213,
+          "end": 217,
+          "cc": 4,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:219>",
+          "line": 219,
+          "end": 219,
+          "cc": 3,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "escapeCloses",
+          "line": 225,
+          "end": 256,
+          "cc": 8,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "state",
+          "line": 229,
+          "end": 235,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:230>",
+          "line": 230,
+          "end": 235,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:232>",
+          "line": 232,
+          "end": 232,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "textSpacing",
+          "line": 259,
+          "end": 280,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "clipped",
+          "line": 260,
+          "end": 273,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:261>",
+          "line": 261,
+          "end": 273,
+          "cc": 14,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "hides",
+          "line": 262,
+          "end": 262,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:274>",
+          "line": 274,
+          "end": 274,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:278>",
+          "line": 278,
+          "end": 278,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:279>",
+          "line": 279,
+          "end": 279,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "motion",
+          "line": 282,
+          "end": 298,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:289>",
+          "line": 289,
+          "end": 293,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:290>",
+          "line": 290,
+          "end": 290,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:290>",
+          "line": 290,
+          "end": 293,
+          "cc": 5,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "scanPage",
+          "line": 301,
+          "end": 346,
+          "cc": 4,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:335>",
+          "line": 335,
+          "end": 335,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:342>",
+          "line": 342,
+          "end": 342,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 348,
+          "end": 402,
+          "cc": 17,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:372>",
+          "line": 372,
+          "end": 372,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:373>",
+          "line": 373,
+          "end": 373,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:398>",
+          "line": 398,
+          "end": 398,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:399>",
+          "line": 399,
+          "end": 399,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:399>",
+          "line": 399,
+          "end": 399,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:404>",
+          "line": 404,
+          "end": 407,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/bootstrap.mjs",
+      "loc": 63,
+      "imports": [],
+      "functions": [
+        {
+          "name": "missingConfigs",
+          "line": 23,
+          "end": 28,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:26>",
+          "line": 26,
+          "end": 26,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:27>",
+          "line": 27,
+          "end": 27,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "bareTypes",
+          "line": 31,
+          "end": 33,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:32>",
+          "line": 32,
+          "end": 32,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "wranglerEntry",
+          "line": 35,
+          "end": 41,
+          "cc": 3,
+          "coverage": 0.571,
+          "crap": 3.71,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 43,
+          "end": 69,
+          "cc": 12,
+          "coverage": 0.926,
+          "crap": 12.06,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/check-trailers.mjs",
+      "loc": 181,
+      "imports": [],
+      "functions": [
+        {
+          "name": "trailerViolations",
+          "line": 47,
+          "end": 68,
+          "cc": 10,
+          "coverage": 1,
+          "crap": 10,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:54>",
+          "line": 54,
+          "end": 54,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:62>",
+          "line": 62,
+          "end": 62,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "isAgentIdentity",
+          "line": 82,
+          "end": 86,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "rangeFromEvent",
+          "line": 96,
+          "end": 116,
+          "cc": 15,
+          "coverage": 1,
+          "crap": 15,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkRange",
+          "line": 125,
+          "end": 146,
+          "cc": 11,
+          "coverage": 1,
+          "crap": 11,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "git",
+          "line": 126,
+          "end": 126,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 148,
+          "end": 189,
+          "cc": 15,
+          "coverage": 1,
+          "crap": 15,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:153>",
+          "line": 153,
+          "end": 153,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:182>",
+          "line": 182,
+          "end": 182,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:183>",
+          "line": 183,
+          "end": 183,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/conformance.mjs",
+      "loc": 210,
+      "imports": [],
+      "functions": [
+        {
+          "name": "summarize",
+          "line": 53,
+          "end": 59,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "judge",
+          "line": 66,
+          "end": 77,
+          "cc": 8,
+          "coverage": 1,
+          "crap": 8,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 79,
+          "end": 213,
+          "cc": 26,
+          "coverage": 0.892,
+          "crap": 26.85,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "log",
+          "line": 92,
+          "end": 92,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "pass",
+          "line": 93,
+          "end": 93,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "fail",
+          "line": 94,
+          "end": 94,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "wrangler",
+          "line": 96,
+          "end": 96,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "dev",
+          "line": 97,
+          "end": 112,
+          "cc": 6,
+          "coverage": 1,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:109>",
+          "line": 109,
+          "end": 109,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:110>",
+          "line": 110,
+          "end": 110,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "output",
+          "line": 111,
+          "end": 111,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "suite",
+          "line": 113,
+          "end": 121,
+          "cc": 4,
+          "coverage": 0.667,
+          "crap": 4.59,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "runAll",
+          "line": 122,
+          "end": 132,
+          "cc": 6,
+          "coverage": 1,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:129>",
+          "line": 129,
+          "end": 129,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "waitFor",
+          "line": 133,
+          "end": 142,
+          "cc": 4,
+          "coverage": 0.889,
+          "crap": 4.02,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:133>",
+          "line": 133,
+          "end": 133,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:145>",
+          "line": 145,
+          "end": 151,
+          "cc": 1,
+          "coverage": 0.5,
+          "crap": 1.13,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:146>",
+          "line": 146,
+          "end": 149,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:148>",
+          "line": 148,
+          "end": 148,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:150>",
+          "line": 150,
+          "end": 150,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "shutdown",
+          "line": 155,
+          "end": 158,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:169>",
+          "line": 169,
+          "end": 169,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "register",
+          "line": 179,
+          "end": 184,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:189>",
+          "line": 189,
+          "end": 189,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:194>",
+          "line": 194,
+          "end": 194,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "allowedCallback",
+          "line": 216,
+          "end": 222,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:218>",
+          "line": 218,
+          "end": 218,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:218>",
+          "line": 218,
+          "end": 218,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:221>",
+          "line": 221,
+          "end": 221,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/console.mjs",
+      "loc": 111,
+      "imports": [
+        "bin/no-bloat.mjs"
+      ],
+      "functions": [
+        {
+          "name": "consoleCalls",
+          "line": 35,
+          "end": 37,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "measure",
+          "line": 45,
+          "end": 59,
+          "cc": 7,
+          "coverage": 0.071,
+          "crap": 46.29,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "matches",
+          "line": 46,
+          "end": 46,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:46>",
+          "line": 46,
+          "end": 46,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "compare",
+          "line": 66,
+          "end": 79,
+          "cc": 6,
+          "coverage": 1,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:73>",
+          "line": 73,
+          "end": 73,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:73>",
+          "line": 73,
+          "end": 73,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 81,
+          "end": 116,
+          "cc": 13,
+          "coverage": 0,
+          "crap": 182,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "git",
+          "line": 94,
+          "end": 94,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:95>",
+          "line": 95,
+          "end": 95,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:96>",
+          "line": 96,
+          "end": 96,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/family.mjs",
+      "loc": 5,
+      "imports": [
+        "bin/shared.mjs"
+      ],
+      "functions": []
+    },
+    {
+      "path": "bin/live.mjs",
+      "loc": 392,
+      "imports": [],
+      "functions": [
+        {
+          "name": "readJson",
+          "line": 65,
+          "end": 65,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "loadConfig",
+          "line": 68,
+          "end": 77,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:74>",
+          "line": 74,
+          "end": 74,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:74>",
+          "line": 74,
+          "end": 74,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "lintConfig",
+          "line": 80,
+          "end": 125,
+          "cc": 44,
+          "coverage": 0.932,
+          "crap": 44.61,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:91>",
+          "line": 91,
+          "end": 91,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:119>",
+          "line": 119,
+          "end": 119,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "isStrings",
+          "line": 127,
+          "end": 127,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:127>",
+          "line": 127,
+          "end": 127,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "same",
+          "line": 129,
+          "end": 129,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checksFor",
+          "line": 132,
+          "end": 132,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:132>",
+          "line": 132,
+          "end": 132,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "parseFindings",
+          "line": 135,
+          "end": 144,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "resultOf",
+          "line": 147,
+          "end": 153,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:149>",
+          "line": 149,
+          "end": 149,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "reportedResult",
+          "line": 156,
+          "end": 172,
+          "cc": 14,
+          "coverage": 1,
+          "crap": 14,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "error",
+          "line": 157,
+          "end": 157,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:166>",
+          "line": 166,
+          "end": 166,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:167>",
+          "line": 167,
+          "end": 167,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:168>",
+          "line": 168,
+          "end": 168,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "fetchReport",
+          "line": 174,
+          "end": 181,
+          "cc": 3,
+          "coverage": 0,
+          "crap": 12,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "newestTag",
+          "line": 184,
+          "end": 189,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:186>",
+          "line": 186,
+          "end": 186,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:187>",
+          "line": 187,
+          "end": 187,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:187>",
+          "line": 187,
+          "end": 187,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "install",
+          "line": 192,
+          "end": 216,
+          "cc": 9,
+          "coverage": 0,
+          "crap": 90,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "runBin",
+          "line": 218,
+          "end": 228,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:219>",
+          "line": 219,
+          "end": 227,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:223>",
+          "line": 223,
+          "end": 223,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:224>",
+          "line": 224,
+          "end": 224,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:225>",
+          "line": 225,
+          "end": 225,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:226>",
+          "line": 226,
+          "end": 226,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "linesFor",
+          "line": 231,
+          "end": 248,
+          "cc": 5,
+          "coverage": 0,
+          "crap": 30,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "runAll",
+          "line": 251,
+          "end": 292,
+          "cc": 19,
+          "coverage": 0.03,
+          "crap": 348.47,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:277>",
+          "line": 277,
+          "end": 281,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:285>",
+          "line": 285,
+          "end": 287,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:290>",
+          "line": 290,
+          "end": 290,
+          "cc": 3,
+          "coverage": 0,
+          "crap": 12,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "buildBoard",
+          "line": 298,
+          "end": 333,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:299>",
+          "line": 299,
+          "end": 299,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "cellOf",
+          "line": 301,
+          "end": 301,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:301>",
+          "line": 301,
+          "end": 301,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "passed",
+          "line": 302,
+          "end": 302,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:302>",
+          "line": 302,
+          "end": 302,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:302>",
+          "line": 302,
+          "end": 302,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:304>",
+          "line": 304,
+          "end": 331,
+          "cc": 16,
+          "coverage": 0.769,
+          "crap": 19.16,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:305>",
+          "line": 305,
+          "end": 305,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:319>",
+          "line": 319,
+          "end": 319,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:332>",
+          "line": 332,
+          "end": 332,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "siteCell",
+          "line": 335,
+          "end": 351,
+          "cc": 13,
+          "coverage": 1,
+          "crap": 13,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:339>",
+          "line": 339,
+          "end": 339,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:341>",
+          "line": 341,
+          "end": 341,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:342>",
+          "line": 342,
+          "end": 342,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:342>",
+          "line": 342,
+          "end": 342,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:348>",
+          "line": 348,
+          "end": 348,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "boardMarkdown",
+          "line": 356,
+          "end": 382,
+          "cc": 14,
+          "coverage": 0.048,
+          "crap": 183.11,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:361>",
+          "line": 361,
+          "end": 361,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:362>",
+          "line": 362,
+          "end": 362,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:364>",
+          "line": 364,
+          "end": 364,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:364>",
+          "line": 364,
+          "end": 364,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:371>",
+          "line": 371,
+          "end": 371,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:375>",
+          "line": 375,
+          "end": 375,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:377>",
+          "line": 377,
+          "end": 377,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:403>",
+          "line": 403,
+          "end": 403,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:404>",
+          "line": 404,
+          "end": 404,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:406>",
+          "line": 406,
+          "end": 406,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:406>",
+          "line": 406,
+          "end": 406,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/migrations.mjs",
+      "loc": 235,
+      "imports": [],
+      "functions": [
+        {
+          "name": "sha256",
+          "line": 49,
+          "end": 49,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "contractions",
+          "line": 57,
+          "end": 61,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:60>",
+          "line": 60,
+          "end": 60,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:60>",
+          "line": 60,
+          "end": 60,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "handOnly",
+          "line": 69,
+          "end": 74,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "readPending",
+          "line": 82,
+          "end": 88,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "readBookmark",
+          "line": 91,
+          "end": 99,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "check",
+          "line": 105,
+          "end": 125,
+          "cc": 13,
+          "coverage": 1,
+          "crap": 13,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:119>",
+          "line": 119,
+          "end": 119,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "ledgerProblems",
+          "line": 132,
+          "end": 139,
+          "cc": 3,
+          "coverage": 0.167,
+          "crap": 8.2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:134>",
+          "line": 134,
+          "end": 134,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:135>",
+          "line": 135,
+          "end": 135,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "localLedgers",
+          "line": 142,
+          "end": 157,
+          "cc": 4,
+          "coverage": 0,
+          "crap": 20,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:147>",
+          "line": 147,
+          "end": 147,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:151>",
+          "line": 151,
+          "end": 151,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "apply",
+          "line": 160,
+          "end": 201,
+          "cc": 11,
+          "coverage": 0,
+          "crap": 132,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "wrangler",
+          "line": 166,
+          "end": 171,
+          "cc": 7,
+          "coverage": 0,
+          "crap": 56,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "stop",
+          "line": 172,
+          "end": 175,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "list",
+          "line": 177,
+          "end": 177,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:182>",
+          "line": 182,
+          "end": 185,
+          "cc": 3,
+          "coverage": 0,
+          "crap": 12,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 203,
+          "end": 250,
+          "cc": 23,
+          "coverage": 0,
+          "crap": 552,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:224>",
+          "line": 224,
+          "end": 224,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "read",
+          "line": 225,
+          "end": 225,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:230>",
+          "line": 230,
+          "end": 230,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:231>",
+          "line": 231,
+          "end": 231,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:244>",
+          "line": 244,
+          "end": 244,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/mutation-report.mjs",
+      "loc": 90,
+      "imports": [],
+      "functions": [
+        {
+          "name": "option",
+          "line": 16,
+          "end": 16,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:25>",
+          "line": 25,
+          "end": 25,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:26>",
+          "line": 26,
+          "end": 26,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "killed",
+          "line": 61,
+          "end": 61,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "valid",
+          "line": 62,
+          "end": 62,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "pct",
+          "line": 63,
+          "end": 63,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:73>",
+          "line": 73,
+          "end": 73,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:74>",
+          "line": 74,
+          "end": 74,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:80>",
+          "line": 80,
+          "end": 80,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:81>",
+          "line": 81,
+          "end": 81,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:82>",
+          "line": 82,
+          "end": 82,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:82>",
+          "line": 82,
+          "end": 82,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:86>",
+          "line": 86,
+          "end": 86,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/no-bloat.mjs",
+      "loc": 519,
+      "imports": [],
+      "functions": [
+        {
+          "name": "knipCounts",
+          "line": 64,
+          "end": 73,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "scan",
+          "line": 82,
+          "end": 163,
+          "cc": 42,
+          "coverage": 1,
+          "crap": 42,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "put",
+          "line": 89,
+          "end": 98,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "regexHere",
+          "line": 99,
+          "end": 107,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "testCases",
+          "line": 170,
+          "end": 181,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:173>",
+          "line": 173,
+          "end": 173,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:174>",
+          "line": 174,
+          "end": 174,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:177>",
+          "line": 177,
+          "end": 177,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:177>",
+          "line": 177,
+          "end": 177,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "matches",
+          "line": 183,
+          "end": 183,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:183>",
+          "line": 183,
+          "end": 183,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "globs",
+          "line": 186,
+          "end": 193,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "isTest",
+          "line": 190,
+          "end": 190,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "isSource",
+          "line": 191,
+          "end": 191,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "percent",
+          "line": 195,
+          "end": 195,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "countFiles",
+          "line": 203,
+          "end": 226,
+          "cc": 13,
+          "coverage": 1,
+          "crap": 13,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "measure",
+          "line": 237,
+          "end": 276,
+          "cc": 13,
+          "coverage": 1,
+          "crap": 13,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "list",
+          "line": 237,
+          "end": 237,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "read",
+          "line": 237,
+          "end": 237,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "compare",
+          "line": 286,
+          "end": 345,
+          "cc": 30,
+          "coverage": 1,
+          "crap": 30,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "before",
+          "line": 293,
+          "end": 293,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "gate",
+          "line": 295,
+          "end": 302,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:310>",
+          "line": 310,
+          "end": 310,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:339>",
+          "line": 339,
+          "end": 339,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:342>",
+          "line": 342,
+          "end": 342,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:343>",
+          "line": 343,
+          "end": 343,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "render",
+          "line": 354,
+          "end": 365,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "show",
+          "line": 355,
+          "end": 355,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:361>",
+          "line": 361,
+          "end": 361,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:363>",
+          "line": 363,
+          "end": 363,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "lineChanges",
+          "line": 376,
+          "end": 423,
+          "cc": 30,
+          "coverage": 1,
+          "crap": 30,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:377>",
+          "line": 377,
+          "end": 377,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "pathOf",
+          "line": 379,
+          "end": 383,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "renderLines",
+          "line": 426,
+          "end": 435,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "signed",
+          "line": 427,
+          "end": 427,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:433>",
+          "line": 433,
+          "end": 433,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "gitSource",
+          "line": 438,
+          "end": 446,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "list",
+          "line": 440,
+          "end": 443,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:442>",
+          "line": 442,
+          "end": 442,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "read",
+          "line": 444,
+          "end": 444,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "gitLines",
+          "line": 449,
+          "end": 461,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "git",
+          "line": 450,
+          "end": 450,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:453>",
+          "line": 453,
+          "end": 459,
+          "cc": 3,
+          "coverage": 0.714,
+          "crap": 3.21,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "npxArgs",
+          "line": 468,
+          "end": 470,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "runnerIn",
+          "line": 473,
+          "end": 485,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:475>",
+          "line": 475,
+          "end": 484,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "messageOf",
+          "line": 487,
+          "end": 489,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "shortHead",
+          "line": 491,
+          "end": 497,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 499,
+          "end": 555,
+          "cc": 20,
+          "coverage": 1,
+          "crap": 20,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/ops-audit.mjs",
+      "loc": 225,
+      "imports": [],
+      "functions": [
+        {
+          "name": "finding",
+          "line": 31,
+          "end": 31,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "healthFindings",
+          "line": 38,
+          "end": 82,
+          "cc": 42,
+          "coverage": 1,
+          "crap": 42,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:61>",
+          "line": 61,
+          "end": 61,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:79>",
+          "line": 79,
+          "end": 79,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "notFoundFindings",
+          "line": 90,
+          "end": 95,
+          "cc": 8,
+          "coverage": 1,
+          "crap": 8,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "shaFindings",
+          "line": 102,
+          "end": 109,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "drillFindings",
+          "line": 116,
+          "end": 122,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "read",
+          "line": 125,
+          "end": 134,
+          "cc": 4,
+          "coverage": 0,
+          "crap": 20,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "header",
+          "line": 129,
+          "end": 129,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "github",
+          "line": 137,
+          "end": 146,
+          "cc": 5,
+          "coverage": 0,
+          "crap": 30,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "isRead",
+          "line": 148,
+          "end": 148,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 150,
+          "end": 245,
+          "cc": 42,
+          "coverage": 0,
+          "crap": 1806,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "say",
+          "line": 169,
+          "end": 169,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:193>",
+          "line": 193,
+          "end": 193,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:242>",
+          "line": 242,
+          "end": 242,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/route-weight.mjs",
+      "loc": 187,
+      "imports": [],
+      "functions": [
+        {
+          "name": "parseManifest",
+          "line": 54,
+          "end": 56,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "routeWeights",
+          "line": 68,
+          "end": 101,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "file",
+          "line": 71,
+          "end": 77,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "sum",
+          "line": 78,
+          "end": 78,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:78>",
+          "line": 78,
+          "end": 78,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:82>",
+          "line": 82,
+          "end": 82,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:83>",
+          "line": 83,
+          "end": 99,
+          "cc": 18,
+          "coverage": 1,
+          "crap": 18,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:87>",
+          "line": 87,
+          "end": 87,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:96>",
+          "line": 96,
+          "end": 96,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:100>",
+          "line": 100,
+          "end": 100,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "check",
+          "line": 108,
+          "end": 122,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "baselineOf",
+          "line": 121,
+          "end": 121,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "fail",
+          "line": 124,
+          "end": 127,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "shortHead",
+          "line": 129,
+          "end": 135,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 137,
+          "end": 199,
+          "cc": 18,
+          "coverage": 0.938,
+          "crap": 18.08,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "opt",
+          "line": 139,
+          "end": 139,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:155>",
+          "line": 155,
+          "end": 155,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "read",
+          "line": 157,
+          "end": 161,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "gzip",
+          "line": 162,
+          "end": 162,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:167>",
+          "line": 167,
+          "end": 167,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "all",
+          "line": 173,
+          "end": 176,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:174>",
+          "line": 174,
+          "end": 174,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:175>",
+          "line": 175,
+          "end": 175,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:186>",
+          "line": 186,
+          "end": 186,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:188>",
+          "line": 188,
+          "end": 188,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/shared.mjs",
+      "loc": 940,
+      "imports": [],
+      "functions": [
+        {
+          "name": "needed",
+          "line": 104,
+          "end": 104,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 105,
+          "end": 105,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "cachesHashed",
+          "line": 110,
+          "end": 113,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:112>",
+          "line": 112,
+          "end": 112,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "definitionBody",
+          "line": 208,
+          "end": 213,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:211>",
+          "line": 211,
+          "end": 211,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "missing",
+          "line": 225,
+          "end": 225,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:225>",
+          "line": 225,
+          "end": 225,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "missing",
+          "line": 232,
+          "end": 237,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:233>",
+          "line": 233,
+          "end": 233,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:233>",
+          "line": 233,
+          "end": 233,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:234>",
+          "line": 234,
+          "end": 234,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:235>",
+          "line": 235,
+          "end": 235,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:235>",
+          "line": 235,
+          "end": 235,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:236>",
+          "line": 236,
+          "end": 236,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "missing",
+          "line": 243,
+          "end": 247,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "semver",
+          "line": 271,
+          "end": 274,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "compare",
+          "line": 277,
+          "end": 282,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "isWarning",
+          "line": 288,
+          "end": 290,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "validateConfig",
+          "line": 296,
+          "end": 303,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "bad",
+          "line": 297,
+          "end": 299,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "excused",
+          "line": 309,
+          "end": 313,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "used",
+          "line": 315,
+          "end": 318,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "staleExceptions",
+          "line": 321,
+          "end": 332,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:325>",
+          "line": 325,
+          "end": 325,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:325>",
+          "line": 325,
+          "end": 325,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:326>",
+          "line": 326,
+          "end": 326,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:327>",
+          "line": 327,
+          "end": 327,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:330>",
+          "line": 330,
+          "end": 330,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:331>",
+          "line": 331,
+          "end": 331,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:331>",
+          "line": 331,
+          "end": 331,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "newest",
+          "line": 335,
+          "end": 337,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:336>",
+          "line": 336,
+          "end": 336,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "lsRemoteTags",
+          "line": 340,
+          "end": 349,
+          "cc": 5,
+          "coverage": 0.1,
+          "crap": 23.23,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkPins",
+          "line": 356,
+          "end": 389,
+          "cc": 8,
+          "coverage": 1,
+          "crap": 8,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "tagsOf",
+          "line": 361,
+          "end": 361,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "judge",
+          "line": 363,
+          "end": 373,
+          "cc": 6,
+          "coverage": 1,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:367>",
+          "line": 367,
+          "end": 367,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "lineOf",
+          "line": 376,
+          "end": 376,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "exportNames",
+          "line": 392,
+          "end": 402,
+          "cc": 6,
+          "coverage": 1,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "blankComments",
+          "line": 405,
+          "end": 407,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:406>",
+          "line": 406,
+          "end": 406,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "distinctive",
+          "line": 410,
+          "end": 413,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkCopies",
+          "line": 426,
+          "end": 479,
+          "cc": 31,
+          "coverage": 1,
+          "crap": 31,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:430>",
+          "line": 430,
+          "end": 430,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:431>",
+          "line": 431,
+          "end": 431,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:433>",
+          "line": 433,
+          "end": 433,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "lineOf",
+          "line": 438,
+          "end": 438,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:463>",
+          "line": 463,
+          "end": 463,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:468>",
+          "line": 468,
+          "end": 468,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkLibraries",
+          "line": 487,
+          "end": 501,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:490>",
+          "line": 490,
+          "end": 490,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:492>",
+          "line": 492,
+          "end": 492,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:494>",
+          "line": 494,
+          "end": 494,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:496>",
+          "line": 496,
+          "end": 496,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "capsomerTokens",
+          "line": 504,
+          "end": 512,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "rootRule",
+          "line": 515,
+          "end": 520,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkTokens",
+          "line": 529,
+          "end": 553,
+          "cc": 12,
+          "coverage": 1,
+          "crap": 12,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "ownerOf",
+          "line": 556,
+          "end": 559,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:557>",
+          "line": 557,
+          "end": 558,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:558>",
+          "line": 558,
+          "end": 558,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:558>",
+          "line": 558,
+          "end": 558,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:558>",
+          "line": 558,
+          "end": 558,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkFeatures",
+          "line": 566,
+          "end": 617,
+          "cc": 39,
+          "coverage": 1,
+          "crap": 39,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:575>",
+          "line": 575,
+          "end": 575,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:576>",
+          "line": 576,
+          "end": 576,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:584>",
+          "line": 584,
+          "end": 584,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:590>",
+          "line": 590,
+          "end": 590,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:591>",
+          "line": 591,
+          "end": 591,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:598>",
+          "line": 598,
+          "end": 598,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:609>",
+          "line": 609,
+          "end": 609,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 629,
+          "end": 629,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 630,
+          "end": 630,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 631,
+          "end": 631,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 632,
+          "end": 632,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 633,
+          "end": 633,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 634,
+          "end": 634,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 636,
+          "end": 636,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 637,
+          "end": 637,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "needed",
+          "line": 638,
+          "end": 638,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkWorkflows",
+          "line": 647,
+          "end": 684,
+          "cc": 13,
+          "coverage": 1,
+          "crap": 13,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:650>",
+          "line": 650,
+          "end": 650,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:651>",
+          "line": 651,
+          "end": 651,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:652>",
+          "line": 652,
+          "end": 652,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:654>",
+          "line": 654,
+          "end": 654,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:657>",
+          "line": 657,
+          "end": 657,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:657>",
+          "line": 657,
+          "end": 657,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "invokes",
+          "line": 658,
+          "end": 658,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "reaches",
+          "line": 660,
+          "end": 661,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:661>",
+          "line": 661,
+          "end": 661,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:665>",
+          "line": 665,
+          "end": 665,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:665>",
+          "line": 665,
+          "end": 665,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:666>",
+          "line": 666,
+          "end": 666,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:667>",
+          "line": 667,
+          "end": 667,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:672>",
+          "line": 672,
+          "end": 672,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkFakes",
+          "line": 707,
+          "end": 720,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:711>",
+          "line": 711,
+          "end": 711,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:715>",
+          "line": 715,
+          "end": 715,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "respell",
+          "line": 729,
+          "end": 742,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:730>",
+          "line": 730,
+          "end": 730,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:732>",
+          "line": 732,
+          "end": 732,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:736>",
+          "line": 736,
+          "end": 741,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:737>",
+          "line": 737,
+          "end": 737,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "checkSpelling",
+          "line": 749,
+          "end": 803,
+          "cc": 15,
+          "coverage": 1,
+          "crap": 15,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:752>",
+          "line": 752,
+          "end": 752,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:752>",
+          "line": 752,
+          "end": 752,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "read",
+          "line": 759,
+          "end": 772,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:774>",
+          "line": 774,
+          "end": 774,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:777>",
+          "line": 777,
+          "end": 777,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:778>",
+          "line": 778,
+          "end": 778,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:779>",
+          "line": 779,
+          "end": 779,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:786>",
+          "line": 786,
+          "end": 786,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:794>",
+          "line": 794,
+          "end": 794,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "codespell",
+          "line": 806,
+          "end": 814,
+          "cc": 5,
+          "coverage": 0.889,
+          "crap": 5.03,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "readCatalog",
+          "line": 821,
+          "end": 858,
+          "cc": 19,
+          "coverage": 1,
+          "crap": 19,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:836>",
+          "line": 836,
+          "end": 836,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:846>",
+          "line": 846,
+          "end": 846,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "moduleFile",
+          "line": 861,
+          "end": 869,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:868>",
+          "line": 868,
+          "end": 868,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "followReexports",
+          "line": 872,
+          "end": 880,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:876>",
+          "line": 876,
+          "end": 876,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "listMarkdown",
+          "line": 883,
+          "end": 904,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:893>",
+          "line": 893,
+          "end": 893,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:894>",
+          "line": 894,
+          "end": 894,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:900>",
+          "line": 900,
+          "end": 900,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:901>",
+          "line": 901,
+          "end": 901,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "gitTree",
+          "line": 907,
+          "end": 915,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:912>",
+          "line": 912,
+          "end": 912,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "read",
+          "line": 913,
+          "end": 913,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "peersOf",
+          "line": 918,
+          "end": 926,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 928,
+          "end": 984,
+          "cc": 25,
+          "coverage": 1,
+          "crap": 25,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "locate",
+          "line": 932,
+          "end": 935,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:942>",
+          "line": 942,
+          "end": 942,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:949>",
+          "line": 949,
+          "end": 949,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:952>",
+          "line": 952,
+          "end": 952,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:952>",
+          "line": 952,
+          "end": 952,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:954>",
+          "line": 954,
+          "end": 954,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:956>",
+          "line": 956,
+          "end": 956,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:975>",
+          "line": 975,
+          "end": 975,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:980>",
+          "line": 980,
+          "end": 980,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:980>",
+          "line": 980,
+          "end": 980,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "cli",
+          "line": 987,
+          "end": 994,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/warm.mjs",
+      "loc": 77,
+      "imports": [],
+      "functions": [
+        {
+          "name": "locs",
+          "line": 19,
+          "end": 22,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:20>",
+          "line": 20,
+          "end": 20,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:21>",
+          "line": 21,
+          "end": 21,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "sitemapPages",
+          "line": 25,
+          "end": 30,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:27>",
+          "line": 27,
+          "end": 27,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:28>",
+          "line": 28,
+          "end": 28,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:29>",
+          "line": 29,
+          "end": 29,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "warm",
+          "line": 33,
+          "end": 46,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:37>",
+          "line": 37,
+          "end": 43,
+          "cc": 3,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:39>",
+          "line": 39,
+          "end": 39,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:41>",
+          "line": 41,
+          "end": 41,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "waitForSha",
+          "line": 49,
+          "end": 57,
+          "cc": 5,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:51>",
+          "line": 51,
+          "end": 51,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:52>",
+          "line": 52,
+          "end": 52,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:52>",
+          "line": 52,
+          "end": 52,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:54>",
+          "line": 54,
+          "end": 54,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 59,
+          "end": 74,
+          "cc": 5,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:60>",
+          "line": 60,
+          "end": 60,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:79>",
+          "line": 79,
+          "end": 79,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:80>",
+          "line": 80,
+          "end": 83,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "bin/worker-size.mjs",
+      "loc": 79,
+      "imports": [],
+      "functions": [
+        {
+          "name": "totalUpload",
+          "line": 25,
+          "end": 30,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "kib",
+          "line": 28,
+          "end": 28,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "fail",
+          "line": 32,
+          "end": 35,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 37,
+          "end": 86,
+          "cc": 24,
+          "coverage": 1,
+          "crap": 24,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "scripts/check-callers.mjs",
+      "loc": 62,
+      "imports": [],
+      "functions": [
+        {
+          "name": "callerProblems",
+          "line": 22,
+          "end": 42,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:27>",
+          "line": 27,
+          "end": 39,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:61>",
+          "line": 61,
+          "end": 61,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "scripts/code-map.mjs",
+      "loc": 347,
+      "imports": [],
+      "functions": [
+        {
+          "name": "crap",
+          "line": 36,
+          "end": 39,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "loadTypeScript",
+          "line": 46,
+          "end": 56,
+          "cc": 4,
+          "coverage": 0.727,
+          "crap": 4.33,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "functionsOf",
+          "line": 64,
+          "end": 99,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "isFunction",
+          "line": 69,
+          "end": 71,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "lineOf",
+          "line": 72,
+          "end": 72,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "nameOf",
+          "line": 73,
+          "end": 79,
+          "cc": 11,
+          "coverage": 0.857,
+          "crap": 11.35,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "branches",
+          "line": 80,
+          "end": 92,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "walk",
+          "line": 82,
+          "end": 88,
+          "cc": 13,
+          "coverage": 1,
+          "crap": 13,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "visit",
+          "line": 93,
+          "end": 96,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "specifiersOf",
+          "line": 102,
+          "end": 112,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "visit",
+          "line": 105,
+          "end": 109,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "cyclesOf",
+          "line": 115,
+          "end": 146,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "connect",
+          "line": 122,
+          "end": 143,
+          "cc": 10,
+          "coverage": 1,
+          "crap": 10,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:145>",
+          "line": 145,
+          "end": 145,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "innermost",
+          "line": 153,
+          "end": 157,
+          "cc": 6,
+          "coverage": 1,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "sourceOf",
+          "line": 165,
+          "end": 170,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "walk",
+          "line": 173,
+          "end": 179,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:174>",
+          "line": 174,
+          "end": 178,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "lcovCoverage",
+          "line": 185,
+          "end": 203,
+          "cc": 7,
+          "coverage": 1,
+          "crap": 7,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "keptReport",
+          "line": 214,
+          "end": 227,
+          "cc": 8,
+          "coverage": 1,
+          "crap": 8,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:220>",
+          "line": 220,
+          "end": 220,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:221>",
+          "line": 221,
+          "end": 221,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "codeMap",
+          "line": 233,
+          "end": 325,
+          "cc": 8,
+          "coverage": 1,
+          "crap": 8,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "onUnRecoverableConfigFileDiagnostic",
+          "line": 235,
+          "end": 235,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "rel",
+          "line": 237,
+          "end": 237,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:240>",
+          "line": 240,
+          "end": 240,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:240>",
+          "line": 240,
+          "end": 240,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:240>",
+          "line": 240,
+          "end": 240,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:246>",
+          "line": 246,
+          "end": 311,
+          "cc": 21,
+          "coverage": 1,
+          "crap": 21,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:258>",
+          "line": 258,
+          "end": 258,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:273>",
+          "line": 273,
+          "end": 273,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "body",
+          "line": 286,
+          "end": 286,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "keyed",
+          "line": 287,
+          "end": 290,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:289>",
+          "line": 289,
+          "end": 289,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:292>",
+          "line": 292,
+          "end": 292,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:293>",
+          "line": 293,
+          "end": 297,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:303>",
+          "line": 303,
+          "end": 303,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:305>",
+          "line": 305,
+          "end": 309,
+          "cc": 8,
+          "coverage": 1,
+          "crap": 8,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "args",
+          "line": 328,
+          "end": 336,
+          "cc": 5,
+          "coverage": 0,
+          "crap": 30,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "json",
+          "line": 341,
+          "end": 341,
+          "cc": 3,
+          "coverage": 0,
+          "crap": 12,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:362>",
+          "line": 362,
+          "end": 362,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:363>",
+          "line": 363,
+          "end": 363,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:363>",
+          "line": 363,
+          "end": 363,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "scripts/fakes-contract.mjs",
+      "loc": 72,
+      "imports": [],
+      "functions": [
+        {
+          "name": "get",
+          "line": 24,
+          "end": 28,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "deref",
+          "line": 31,
+          "end": 31,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:31>",
+          "line": 31,
+          "end": 31,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "fieldPaths",
+          "line": 34,
+          "end": 45,
+          "cc": 11,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:48>",
+          "line": 48,
+          "end": 53,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:50>",
+          "line": 50,
+          "end": 50,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "example",
+          "line": 57,
+          "end": 62,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "typeOf",
+          "line": 64,
+          "end": 64,
+          "cc": 2,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:72>",
+          "line": 72,
+          "end": 72,
+          "cc": 1,
+          "coverage": null,
+          "crap": null,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "scripts/inline-rollback-guard.mjs",
+      "loc": 44,
+      "imports": [],
+      "functions": [
+        {
+          "name": "bounds",
+          "line": 23,
+          "end": 29,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "inlined",
+          "line": 32,
+          "end": 36,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:35>",
+          "line": 35,
+          "end": 35,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "inline",
+          "line": 39,
+          "end": 43,
+          "cc": 1,
+          "coverage": 0,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:41>",
+          "line": 41,
+          "end": 41,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "scripts/rollback-guard.mjs",
+      "loc": 105,
+      "imports": [],
+      "functions": [
+        {
+          "name": "shouldRollBack",
+          "line": 36,
+          "end": 71,
+          "cc": 11,
+          "coverage": 1,
+          "crap": 11,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "rollbackTookEffect",
+          "line": 79,
+          "end": 92,
+          "cc": 7,
+          "coverage": 0.857,
+          "crap": 7.14,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "scripts/strip-pr-footer.mjs",
+      "loc": 66,
+      "imports": [],
+      "functions": [
+        {
+          "name": "stripFooter",
+          "line": 18,
+          "end": 27,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "gh",
+          "line": 29,
+          "end": 36,
+          "cc": 3,
+          "coverage": 0,
+          "crap": 12,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "fix",
+          "line": 38,
+          "end": 43,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "main",
+          "line": 45,
+          "end": 65,
+          "cc": 9,
+          "coverage": 0,
+          "crap": 90,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:68>",
+          "line": 68,
+          "end": 71,
+          "cc": 2,
+          "coverage": 0,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "testing/access.mjs",
+      "loc": 152,
+      "imports": [
+        "testing/network.mjs"
+      ],
+      "functions": [
+        {
+          "name": "b64",
+          "line": 17,
+          "end": 17,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:17>",
+          "line": 17,
+          "end": 17,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "b64url",
+          "line": 19,
+          "end": 19,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "b64json",
+          "line": 21,
+          "end": 21,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "hex",
+          "line": 22,
+          "end": 22,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:22>",
+          "line": 22,
+          "end": 22,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "der",
+          "line": 25,
+          "end": 30,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:26>",
+          "line": 26,
+          "end": 26,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "certificate",
+          "line": 33,
+          "end": 42,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "utc",
+          "line": 36,
+          "end": 36,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "signingKey",
+          "line": 45,
+          "end": 53,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "pkceMatches",
+          "line": 56,
+          "end": 59,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "stubAccess",
+          "line": 75,
+          "end": 166,
+          "cc": 6,
+          "coverage": 1,
+          "crap": 6,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "sign",
+          "line": 88,
+          "end": 94,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "now",
+          "line": 95,
+          "end": 95,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "token",
+          "line": 103,
+          "end": 107,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "exchange",
+          "line": 113,
+          "end": 127,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "refuse",
+          "line": 114,
+          "end": 115,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "fake",
+          "line": 130,
+          "end": 148,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:140>",
+          "line": 140,
+          "end": 140,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:142>",
+          "line": 142,
+          "end": 142,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:150>",
+          "line": 150,
+          "end": 150,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "jwk",
+          "line": 156,
+          "end": 158,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "rotate",
+          "line": 160,
+          "end": 160,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "testing/d1.mjs",
+      "loc": 39,
+      "imports": [],
+      "functions": [
+        {
+          "name": "resetDb",
+          "line": 21,
+          "end": 38,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:26>",
+          "line": 26,
+          "end": 26,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:26>",
+          "line": 26,
+          "end": 26,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "isShadow",
+          "line": 28,
+          "end": 28,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:28>",
+          "line": 28,
+          "end": 28,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:28>",
+          "line": 28,
+          "end": 28,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:30>",
+          "line": 30,
+          "end": 30,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:30>",
+          "line": 30,
+          "end": 30,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:35>",
+          "line": 35,
+          "end": 35,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "testing/github.mjs",
+      "loc": 251,
+      "imports": [
+        "testing/network.mjs"
+      ],
+      "functions": [
+        {
+          "name": "sha1",
+          "line": 17,
+          "end": 18,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:18>",
+          "line": 18,
+          "end": 18,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "gitBlobSha",
+          "line": 27,
+          "end": 34,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "stubGitHub",
+          "line": 49,
+          "end": 265,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "json",
+          "line": 70,
+          "end": 71,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "refBody",
+          "line": 72,
+          "end": 76,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "commitBody",
+          "line": 77,
+          "end": 83,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:82>",
+          "line": 82,
+          "end": 82,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "handle",
+          "line": 91,
+          "end": 91,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "handle",
+          "line": 96,
+          "end": 100,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "handle",
+          "line": 107,
+          "end": 110,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:110>",
+          "line": 110,
+          "end": 110,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "getContents",
+          "line": 119,
+          "end": 150,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:127>",
+          "line": 127,
+          "end": 127,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:129>",
+          "line": 129,
+          "end": 129,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:132>",
+          "line": 132,
+          "end": 137,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "postBlob",
+          "line": 153,
+          "end": 158,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:154>",
+          "line": 154,
+          "end": 154,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "postTree",
+          "line": 161,
+          "end": 177,
+          "cc": 9,
+          "coverage": 1,
+          "crap": 9,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "postCommit",
+          "line": 180,
+          "end": 186,
+          "cc": 4,
+          "coverage": 1,
+          "crap": 4,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "descends",
+          "line": 189,
+          "end": 198,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "patchRef",
+          "line": 201,
+          "end": 213,
+          "cc": 5,
+          "coverage": 1,
+          "crap": 5,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "stub",
+          "line": 216,
+          "end": 252,
+          "cc": 11,
+          "coverage": 1,
+          "crap": 11,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:246>",
+          "line": 246,
+          "end": 246,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:254>",
+          "line": 254,
+          "end": 254,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "failNext",
+          "line": 261,
+          "end": 261,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "versionOf",
+          "line": 273,
+          "end": 277,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "path": "testing/network.mjs",
+      "loc": 41,
+      "imports": [],
+      "functions": [
+        {
+          "name": "urlOf",
+          "line": 10,
+          "end": 12,
+          "cc": 3,
+          "coverage": 1,
+          "crap": 3,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "installFetch",
+          "line": 21,
+          "end": 28,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:24>",
+          "line": 24,
+          "end": 27,
+          "cc": 2,
+          "coverage": 0.75,
+          "crap": 2.06,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "refuseNetwork",
+          "line": 38,
+          "end": 44,
+          "cc": 1,
+          "coverage": 1,
+          "crap": 1,
+          "mutants": null,
+          "score": null
+        },
+        {
+          "name": "<anonymous:39>",
+          "line": 39,
+          "end": 43,
+          "cc": 2,
+          "coverage": 1,
+          "crap": 2,
+          "mutants": null,
+          "score": null
+        }
+      ]
+    }
+  ],
+  "cycles": []
+}
