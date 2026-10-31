@@ -19,7 +19,7 @@
       "id": 3,
       "name": "Sign-in and access",
       "builder": "Complete shared sign-in and access",
-      "checks": [{ "name": "site-runtime-sign-in", "repo": "site-runtime", "bin": "site-runtime-sign-in", "kinds": ["site", "worker"] }],
+      "checks": [{ "name": "site-runtime-sign-in", "repo": "site-runtime", "bin": "site-runtime-sign-in", "kinds": ["site", "worker", "app"] }],
       "skip": {
         "julieedwards-info": "no sign-in, admin pages or MCP server",
         "bsw": "no sign-in, admin pages or MCP server"

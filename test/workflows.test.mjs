@@ -13,6 +13,7 @@ const shared = readdirSync(dir)
 
 test("the shared workflows are the ones every repository calls", () => {
   assert.deepEqual(shared.map((w) => w.name).sort(), [
+    "access-drift.yml",
     "ai-author.yml",
     "bump-consumers.yml",
     "code-map.yml",

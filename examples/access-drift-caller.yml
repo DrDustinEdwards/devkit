@@ -1,0 +1,26 @@
+name: access-drift
+
+# The caller a site behind Cloudflare Access keeps. Replace the sha with the commit of devkit that holds the reviewed
+# access-drift.yml, and keep it a full sha: scripts/check-callers.mjs fails on anything else. The commit's release tag goes
+# in the comment. The secrets are passed by name, never inherited; until all four are set the job fails, by design.
+
+on:
+  schedule:
+    - cron: "41 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    uses: DrDustinEdwards/devkit/.github/workflows/access-drift.yml@0000000000000000000000000000000000000000 # v0.20.19
+    with:
+      app: sample-login
+      admins-url: https://example.com/admin/access-drift
+      site-runtime-ref: v0.59.0
+    secrets:
+      ACCESS_READ_TOKEN: ${{ secrets.ACCESS_READ_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      ACCESS_CLIENT_ID: ${{ secrets.ACCESS_CLIENT_ID }}
+      ACCESS_CLIENT_SECRET: ${{ secrets.ACCESS_CLIENT_SECRET }}
