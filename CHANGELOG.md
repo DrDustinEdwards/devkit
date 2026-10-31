@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.3 (2026-10-31)
+
+- `dependencies.yml` reads OSV-Scanner's exit code under the runner's `bash -e`: in 0.20.2, exit 1 (vulnerabilities found) stopped the step before the base comparison, so a pull request failed on old advisories it did not add (prelum #128).
+
 ## 0.20.2 (2026-10-31)
 
 - The tool downloads in `workflow-audit.yml` and `dependencies.yml` retry three times, so one dropped connection (a TLS reset fetching zizmor from PyPI) no longer fails the check.
