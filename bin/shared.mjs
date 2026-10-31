@@ -89,8 +89,10 @@ export const FEATURES = {
   schema: { kinds: SITE, find: /site-helpers\/schema["']/, use: "Prelum ./schema (JSON-LD)" },
   indexnow: { kinds: SITE, find: /site-helpers\/indexnow["']|prelum-indexnow/, use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)" },
   securityTxt: { kinds: SITE, find: /site-runtime\/security-txt["']/, use: "site-runtime ./security-txt (/.well-known/security.txt)" },
-  headers: { kinds: [...PUBLIC_OR_PRIVATE, "worker"], find: /site-runtime\/headers["']|\bwithMcpHeaders\b/, use: "site-runtime ./headers buildSecurityHeaders" },
-  csp: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/csp["']/, use: "site-runtime ./csp buildContentSecurityPolicy" },
+  // A registry entry (./sites) counts for both: staticSite({ site }) and site-runtime-headers build a static site's set
+  // and page policy from it with buildSecurityHeaders and buildContentSecurityPolicy.
+  headers: { kinds: [...PUBLIC_OR_PRIVATE, "worker"], find: /site-runtime\/(headers|sites)["']|\bwithMcpHeaders\b/, use: "site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)" },
+  csp: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/(csp|sites)["']/, use: "site-runtime ./csp buildContentSecurityPolicy (or a ./sites entry given to ./static-site staticSite)" },
   cspReport: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/(csp-report|static-site)["']/, use: "site-runtime ./csp-report receiveCspReport (./static-site staticSite receives them for a static site)" },
   health: { kinds: ["site", "private"], find: /site-runtime\/health["']/, use: "site-runtime ./health healthResponse (/health)" },
   // base.css, not just a token file: the element styles every family page shares. A build that copies it out of the
