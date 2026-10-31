@@ -1,0 +1,112 @@
+name: conformance
+
+# devkit-conformance (bin/conformance.mjs) on the caller: the official MCP conformance suite against the Worker's protocol
+# layer and its authorization server under `wrangler dev`, per era, from the caller's .conformance.json, then CIMD, the
+# allowlisted /register and the 401 challenge. Counts, not pass/fail: a scenario holds its recorded pass count exactly.
+# Carrel ran this as a job of its own first (carrel .github/workflows/ci.yml); this is that job, once, for every MCP server.
+#
+# THE BIN, WRANGLER AND THE SUITE COME FROM THE CALLER'S OWN INSTALL: the MCP server's package.json lists
+# "@dustinedwards/devkit" at a tag, "wrangler" and "@modelcontextprotocol/conformance" in its devDependencies, and the
+# directory holds .conformance.json. A server in a subdirectory (mcp/) passes `working-directory`.
+#
+# MINUTES. A full sweep takes a few minutes against wrangler dev. Public repositories call it on pull_request and on push
+# to the default branch; private ones on a weekly schedule, or on the pull requests that touch the server.
+#
+# A CALLER (examples/conformance-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        description: The MCP server's directory, holding its package.json and .conformance.json.
+        required: false
+        type: string
+        default: .
+      node-version-file:
+        description: The file naming the Node version, as actions/setup-node reads it, relative to the repository root.
+        required: false
+        type: string
+        default: .nvmrc
+      package-manager:
+        description: npm or pnpm. pnpm is set up from the caller's packageManager field, and its store is cached.
+        required: false
+        type: string
+        default: npm
+      cache-dependency-path:
+        description: The lockfile setup-node caches by, relative to the repository root. Empty for working-directory's package-lock.json (npm) or pnpm-lock.yaml (pnpm); a pnpm workspace member names the root's.
+        required: false
+        type: string
+        default: ""
+      install:
+        description: The install command, run in working-directory. It must install devkit, wrangler and the suite. Empty for `npm ci` or `pnpm install --frozen-lockfile`.
+        required: false
+        type: string
+        default: ""
+      prepare:
+        description: Run in working-directory after the install, for generated files or config the server needs. Empty for none.
+        required: false
+        type: string
+        default: ""
+      config:
+        description: The conformance config, relative to working-directory (see bin/conformance.mjs).
+        required: false
+        type: string
+        default: .conformance.json
+      timeout-minutes:
+        required: false
+        type: number
+        default: 20
+
+permissions:
+  contents: read
+
+jobs:
+  conformance:
+    name: MCP conformance
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      # pnpm/action-setup v4 is an annotated tag; the sha pinned is the commit it dereferences to (as in worker-size.yml).
+      - if: inputs.package-manager == 'pnpm'
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          cache: ${{ inputs.package-manager }}
+          cache-dependency-path: ${{ inputs.cache-dependency-path || format('{0}/{1}', inputs.working-directory, inputs.package-manager == 'pnpm' && 'pnpm-lock.yaml' || 'package-lock.json') }}
+
+      - name: Install
+        env:
+          INSTALL: ${{ inputs.install || (inputs.package-manager == 'pnpm' && 'pnpm install --frozen-lockfile' || 'npm ci') }}
+        run: bash -euo pipefail -c "$INSTALL"
+
+      - name: Prepare
+        if: inputs.prepare != ''
+        env:
+          PREPARE: ${{ inputs.prepare }}
+        run: bash -euo pipefail -c "$PREPARE"
+
+      - name: Conformance
+        env:
+          CONFIG: ${{ inputs.config }}
+        run: |
+          bin=node_modules/@dustinedwards/devkit/bin/conformance.mjs
+          if [ ! -f "$bin" ]; then
+            echo "::error::@dustinedwards/devkit is not installed here. Add it to devDependencies at a tag (see the devkit README)."
+            exit 1
+          fi
+          if [ ! -f "$CONFIG" ]; then
+            echo "::error::$CONFIG is missing: record the server's scenarios and baselines (see the header of bin/conformance.mjs)."
+            exit 1
+          fi
+          node "$bin" --config "$CONFIG"
