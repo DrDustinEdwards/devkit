@@ -77,12 +77,17 @@
           "kinds": ["site", "worker"],
           "site_args": {
             "foxhound": ["--repo", "DrDustinEdwards/foxhound", "--drill-workflow", "restore-drill.yml"],
-            "foxing": ["--repo", "DrDustinEdwards/foxing", "--drill-workflow", "restore-drill.yml"],
+            "foxing": ["--repo", "DrDustinEdwards/foxing", "--drill-workflow", "restore-drill.yml", "--wrangler", "apps/web/wrangler.jsonc.example"],
             "germomics": ["--repo", "DrDustinEdwards/germomics", "--drill-workflow", "restore-drill.yml"],
             "julieedwards-info": ["--repo", "DrDustinEdwards/julieedwards-info", "--drill-workflow", "restore-drill.yml"],
             "txasm": ["--repo", "DrDustinEdwards/txasm", "--drill-workflow", "restore-drill.yml"],
             "carrel-mcp": ["--repo", "DrDustinEdwards/carrel", "--drill-workflow", "restore-drill.yml"],
-            "dustinedwards-info": ["--repo", "DrDustinEdwards/dustinedwards-info", "--drill-workflow", "restore-drill.yml"]
+            "dustinedwards-info": ["--repo", "DrDustinEdwards/dustinedwards-info", "--drill-workflow", "restore-drill.yml"],
+            "bsw": ["--repo", "DrDustinEdwards/bsw"],
+            "capsid-mcp": ["--repo", "DrDustinEdwards/capsid", "--drill-workflow", "restore-rehearsal.yml"],
+            "foxhound-mcp": ["--repo", "DrDustinEdwards/foxhound", "--wrangler", "mcp/wrangler.jsonc"],
+            "foxing-mcp": ["--repo", "DrDustinEdwards/foxing", "--wrangler", "mcp/wrangler.jsonc.example"],
+            "dustinedwards-mcp": ["--repo", "DrDustinEdwards/dustinedwards-info", "--wrangler", "mcp/wrangler.jsonc.example"]
           }
         }
       ],

@@ -74,7 +74,7 @@ on:
         type: string
         default: ""
       gradual-percent:
-        description: Opt in to a gradual rollout (D4). 0, the default, deploys with `wrangler deploy`. 1 to 99 uploads a version, gives it this share of traffic beside the live one, gates it through a version override, then gives it all traffic. Not for a Worker with a Durable Object migration to apply.
+        description: Opt in to a gradual rollout (D4). 0, the default, deploys with `wrangler deploy`. 1 to 99 uploads a version, gives it this share of traffic beside the live one, gates it through a version override, compares its error rate with the old version's, then gives it all traffic. Not for a Worker with a Durable Object migration to apply. The Cloudflare token also needs Account Analytics Read.
         required: false
         type: number
         default: 0
@@ -140,6 +140,7 @@ jobs:
       d1-bookmark-time: ${{ steps.bookmark.outputs.time }}
       version-id: ${{ steps.deploy.outputs.version-id }}
       previous-version-id: ${{ steps.deploy.outputs.previous-version-id }}
+      split-at: ${{ steps.deploy.outputs.split-at }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
@@ -228,8 +229,11 @@ jobs:
             exit 1
           }
           npx --yes "wrangler@${WRANGLER_VERSION}" versions deploy "${version}@${GRADUAL}%" "${previous}@$((100 - GRADUAL))%" --name "$WORKER" --message "${GITHUB_SHA} at ${GRADUAL}%" --yes
-          echo "version-id=${version}" >> "$GITHUB_OUTPUT"
-          echo "previous-version-id=${previous}" >> "$GITHUB_OUTPUT"
+          {
+            echo "version-id=${version}"
+            echo "previous-version-id=${previous}"
+            echo "split-at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          } >> "$GITHUB_OUTPUT"
           {
             echo "deployed ${GITHUB_SHA} as ${WORKER} version ${version} to ${GRADUAL}% of traffic, beside ${previous}, in attempt ${GITHUB_RUN_ATTEMPT}. To send everything back:"
             echo ""
@@ -445,7 +449,79 @@ jobs:
           fi
           exit "$code"
 
-      # A gradual rollout that passed the gate takes all the traffic.
+      # A GRADUAL ROLLOUT IS JUDGED BY ITS ERRORS TOO (D4). After the gate passed, the two versions' requests and errors since
+      # the split are read from the GraphQL Analytics API (workersInvocationsAdaptive, the dataset behind the dashboard's
+      # per-version metrics, grouped by scriptVersion; Cloudflare Docs, "Querying Workers metrics with GraphQL" and "Gradual
+      # deployments", Observability). Errors are Cloudflare's: an exception, exceeded resources or an internal error.
+      # Fewer than MIN_REQUESTS on the new version is too little to judge, a warning, and it promotes on the gate alone. The
+      # new version is worse, a refusal (exit 1) that rolls it back, when it has at least MIN_ERRORS errors and its rate is
+      # above twice the old one's and above it by more than a point. An analytics read that fails is exit 3: no promotion
+      # and no rollback, the split stays as it is, and the summary says how to finish by hand.
+      - name: Compare the error rates
+        id: errors
+        if: success() && needs.deploy.outputs.version-id != ''
+        env:
+          WORKER: ${{ inputs.worker-name }}
+          VERSION_ID: ${{ needs.deploy.outputs.version-id }}
+          PREVIOUS_VERSION_ID: ${{ needs.deploy.outputs.previous-version-id }}
+          SPLIT_AT: ${{ needs.deploy.outputs.split-at }}
+          MIN_REQUESTS: "20"
+          MIN_ERRORS: "3"
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set +e
+          now=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          # The $ names are GraphQL variables and node's, not the shell's.
+          # shellcheck disable=SC2016
+          query='query($account: string!, $script: string!, $since: Time!, $until: Time!) { viewer { accounts(filter: { accountTag: $account }) { workersInvocationsAdaptive(limit: 100, filter: { scriptName: $script, datetime_geq: $since, datetime_leq: $until }) { sum { requests errors } dimensions { scriptVersion } } } } }'
+          # shellcheck disable=SC2016
+          body=$(node -e 'process.stdout.write(JSON.stringify({ query: process.argv[1], variables: { account: process.env.CLOUDFLARE_ACCOUNT_ID, script: process.env.WORKER, since: process.env.SPLIT_AT, until: process.argv[2] } }))' "$query" "$now")
+          answer=$(curl -sS --max-time 20 -X POST https://api.cloudflare.com/client/v4/graphql -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" --data "$body")
+          # shellcheck disable=SC2016
+          printf '%s' "$answer" | node -e '
+            let s = "";
+            process.stdin.on("data", (d) => (s += d)).on("end", () => {
+              const { VERSION_ID: fresh, PREVIOUS_VERSION_ID: old, MIN_REQUESTS, MIN_ERRORS } = process.env;
+              let rows;
+              try {
+                const j = JSON.parse(s);
+                if (j.errors?.length) throw new Error(j.errors.map((e) => e.message).join("; "));
+                rows = j.data.viewer.accounts[0].workersInvocationsAdaptive;
+                if (!Array.isArray(rows)) throw new Error("no workersInvocationsAdaptive rows");
+              } catch (error) {
+                console.log(`::error::could not read the error rates (${error.message || "no answer"}); the token needs Account Analytics Read. Nothing was promoted or rolled back.`);
+                process.exit(3);
+              }
+              const of = (id) => rows.filter((r) => r.dimensions?.scriptVersion === id).reduce((t, r) => ({ requests: t.requests + r.sum.requests, errors: t.errors + r.sum.errors }), { requests: 0, errors: 0 });
+              const n = of(fresh);
+              const o = of(old);
+              const rate = (v) => (v.requests ? v.errors / v.requests : 0);
+              const pct = (v) => `${v.errors} errors in ${v.requests} requests (${(rate(v) * 100).toFixed(2)}%)`;
+              console.log(`new ${fresh}: ${pct(n)}; old ${old}: ${pct(o)}`);
+              if (n.requests < Number(MIN_REQUESTS)) {
+                console.log(`::warning::version ${fresh} served ${n.requests} requests since the split, under ${MIN_REQUESTS}, too few to compare error rates; promoting on the live gate alone.`);
+                process.exit(0);
+              }
+              if (n.errors >= Number(MIN_ERRORS) && rate(n) > 2 * rate(o) && rate(n) > rate(o) + 0.01) {
+                console.log(`::error::version ${fresh} is worse than ${old}: ${pct(n)} against ${pct(o)}.`);
+                process.exit(1);
+              }
+            });
+          '
+          code=$?
+          echo "exit_code=${code}" >> "$GITHUB_OUTPUT"
+          if [ "$code" = "3" ]; then
+            {
+              echo "The error rates could not be read, so ${VERSION_ID} still shares traffic with ${PREVIOUS_VERSION_ID}. To finish by hand, either:"
+              echo ""
+              echo "    npx wrangler versions deploy ${VERSION_ID}@100% --name ${WORKER} --yes"
+              echo "    npx wrangler versions deploy ${PREVIOUS_VERSION_ID}@100% --name ${WORKER} --yes"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$code"
+
+      # A gradual rollout that passed the gate and the error comparison takes all the traffic.
       - name: Promote the gradual rollout
         if: success() && needs.deploy.outputs.version-id != ''
         env:
@@ -489,10 +565,10 @@ jobs:
           console.log(`warmed ${stored} of ${total} sitemap pages on ${origin}`);
           WARM
 
-      # Only if this run's deploy succeeded, then the gate REFUSED it (exit 1). A gate that could not run (exit 3) has not
-      # refused anything.
+      # Only if this run's deploy succeeded, then the gate or the error comparison REFUSED it (exit 1). A gate that could not
+      # run (exit 3) has not refused anything.
       - name: Roll back the deploy this run shipped
-        if: failure() && needs.deploy.result == 'success' && steps.verify.outputs.exit_code == '1'
+        if: failure() && needs.deploy.result == 'success' && (steps.verify.outputs.exit_code == '1' || steps.errors.outputs.exit_code == '1')
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
