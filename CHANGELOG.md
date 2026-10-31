@@ -4,6 +4,10 @@
 
 - `devkit-live`: an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes through `site_args` (`--start`, `--pages`, from Prelum v0.25.0), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
 
+## 0.20.21 (2026-10-31)
+
+- `worker-deploy.yml`: a gradual rollout runs `wrangler triggers deploy` after the split. A version upload leaves routes, custom domains and cron schedules as they were (Cloudflare Docs, "Deployment management"), so a changed cron would have stayed on the old schedule. The input and README now also say gradual is not for a Worker that declares its Durable Objects in `exports` (area 8, D4).
+
 ## 0.20.20 (2026-10-31)
 
 - `devkit-shared`: a site-runtime registry entry (`@dustinedwards/site-runtime/sites`) counts as the `headers` and `csp` features. A static site's Worker is `staticSite({ site })` and its `_headers` comes from `site-runtime-headers`, both of which build the set and the page policy from the entry, so it no longer imports `./headers` or `./csp` itself (area 2, site-runtime 0.58.0).

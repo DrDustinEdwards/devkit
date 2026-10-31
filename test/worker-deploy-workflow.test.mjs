@@ -91,6 +91,8 @@ test("wrangler is pinned to one exact version, and the bookmark, the deploy and 
   const pinned = /\nenv:\n {2}WRANGLER_VERSION: "(\d+\.\d+\.\d+)"\n/.exec(text);
   assert.ok(pinned, "WRANGLER_VERSION is not an exact version");
   assert.match(step("Deploy"), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" "\$\{args\[@\]\}"/);
+  // A gradual rollout's version upload leaves the triggers alone, so the step applies them itself.
+  assert.match(step("Deploy"), /versions deploy [^\n]+\n(?:\s*#[^\n]*\n)*\s*npx --yes "wrangler@\$\{WRANGLER_VERSION\}" triggers deploy --name "\$WORKER"\n/);
   assert.match(step(ROLLBACK), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" rollback --name "\$WORKER"/);
   assert.match(step(BOOKMARK), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" d1 time-travel info "\$DB" --json/);
   // No other wrangler, floating or pinned elsewhere.
