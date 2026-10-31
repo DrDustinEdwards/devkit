@@ -18,7 +18,7 @@ test("the newest tag is compared as a version, not as text", () => {
   assert.equal(newest(["v0.9.0", "v0.10.0", "v0.2.0", "latest"]), "v0.10.0");
 });
 
-test("a pin behind the newest tag, and a raw commit, are both refused; the newest tag and its commit pass", () => {
+test("a raw commit is refused, a pin behind the newest tag is a warning; the newest tag and its commit pass", () => {
   const found = checkPins(
     tree({
       "package.json": JSON.stringify({ dependencies: { a: "github:DrDustinEdwards/prelum#v0.9.0", b: `github:DrDustinEdwards/site-runtime#${SHA_RAW}`, c: "github:DrDustinEdwards/d1-dump#v0.10.0", d: "git+https://github.com/DrDustinEdwards/capsomer.git#v0.9.0", enarratio: "^0.9.0" } }, null, 1),
@@ -42,11 +42,7 @@ test("a pin behind the newest tag, and a raw commit, are both refused; the newes
     ],
   );
   assert.deepEqual([found[4].line, found[5].line], [2, 2]);
-});
-
-test("on a Renovate branch a stale pin is a warning, so one bump never waits on another", () => {
-  const found = checkPins(tree({ "package.json": '{"dependencies":{"a":"github:DrDustinEdwards/prelum#v0.9.0"}}' }), tags, true);
-  assert.equal(found[0].warn, true);
+  assert.deepEqual(found.map((f) => isWarning(f)), [true, false, true, true, true, true]);
 });
 
 const catalog = { escapeHtml: "site-runtime ./html", slugify: "Prelum ./slug", render: "Prelum ./render", readThemeCookie: "Capsomer ./theme" };

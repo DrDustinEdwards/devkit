@@ -3,8 +3,9 @@ name: dependencies
 # Known vulnerabilities in the caller's dependencies, found by OSV-Scanner in every lockfile in the repository, nested ones
 # such as mcp/package-lock.json included. On a pull request (or a merge queue entry) it scans the base commit too and fails
 # only on a vulnerability the change adds, so a repository with old advisories can still merge; on any other event (a
-# push, a schedule) it fails on every known vulnerability, because an advisory published after the merge reaches nothing a
-# pull request ever checked. This is OSV-Scanner's documented pull request mode (google.github.io/osv-scanner/github-action)
+# push, a schedule) it lists every known vulnerability as a warning and in the job summary without failing, because
+# Renovate and GitHub's own alerts carry those fixes and a red run on every push mailed the owner for advisories no change
+# of theirs added. This is OSV-Scanner's documented pull request mode (google.github.io/osv-scanner/github-action)
 # run with the binary below; GitHub's dependency review does the same job but needs the dependency graph turned on, and paid
 # Code Security in a private repository.
 #
@@ -82,8 +83,10 @@ jobs:
             what="known"
           fi
           count=$(wc -l < "$RUNNER_TEMP/found")
+          level=error
+          [ -n "$BASE_SHA" ] || level=warning
           while IFS=$'\t' read -r eco name id version file severity; do
-            echo "::error file=$file,title=$id::$eco $name $version has $id (severity ${severity:-unknown}): https://osv.dev/$id"
+            echo "::$level file=$file,title=$id::$eco $name $version has $id (severity ${severity:-unknown}): https://osv.dev/$id"
           done < "$RUNNER_TEMP/found"
-          if [ "$count" -gt 0 ]; then echo "Vulnerabilities $what: $count."; exit 1; fi
-          echo "No vulnerabilities $what."
+          echo "Vulnerabilities $what: $count." | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$count" -gt 0 ] && [ "$level" = error ]; then exit 1; fi

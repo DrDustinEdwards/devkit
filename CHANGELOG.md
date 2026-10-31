@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.5 (2026-10-31)
+
+- `devkit-family`: a pin behind its package's newest release is a warning, on every branch. Renovate opens that bump, and failing on it turned every repository's family check red, and mailed the owner, each time a shared package released. A pin to a raw commit still fails.
+- `dependencies.yml` on a push or a schedule lists the known vulnerabilities as warnings and in the job summary, without failing. A pull request still fails on a vulnerability it adds.
+
 ## 0.20.4 (2026-10-31)
 
 - `worker-deploy.yml` reads the D1 Time Travel bookmark outside the checkout, so wrangler finds the database by name through the API. In 0.20.1 to 0.20.3 it read the caller's `wrangler.jsonc`, whose id the pre-deploy guard had not written yet, and Carrel's deploy stopped there.
