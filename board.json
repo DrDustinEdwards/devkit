@@ -749,59 +749,59 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "germomics": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "julieedwards-info": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "nothing to chart: a one-page campaign site with no charts or data SVGs (charts audit, 30 Oct 2026)"
     },
     "txasm": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "nothing to chart: no charts, meters or data SVGs, and no numbers that should be one (charts audit, 30 Oct 2026)"
     },
     "bsw": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
     },
     "foxhound": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "foxing": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "carrel": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "enarratio": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "capsomer": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "prelum": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "capsid": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "not run yet"
     },
     "capsid-mcp": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a worker"
     },
     "foxhound-mcp": {
-     "status": "missing",
-     "reason": "no live check yet"
+     "status": "n/a",
+     "reason": "no check for a worker"
     }
    }
   },

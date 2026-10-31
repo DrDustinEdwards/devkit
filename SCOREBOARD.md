@@ -17,7 +17,7 @@ Newest run 2026-10-30 23:28 UTC. Filled only from the live checks and the verifi
 | 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +0 | −0 |
 | 8. Running and recovery | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
-| 10. Charts | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
+| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +0 | −0 |
 | 11. AI and MCP | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +0 | −0 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +548 | −1 |
 
@@ -200,20 +200,15 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: no live check yet
-- ❌ Germomics: no live check yet
-- ❌ julieedwards.info: no live check yet
-- ❌ TXASM: no live check yet
-- ❌ BSW: no live check yet
-- ❌ Foxhound: no live check yet
-- ❌ Foxing: no live check yet
-- ❌ Carrel: no live check yet
-- ❌ Enarratio: no live check yet
-- ❌ Capsomer: no live check yet
-- ❌ Prelum specimen: no live check yet
-- ❌ Capsid explorer: no live check yet
-- ❌ Capsid MCP: no live check yet
-- ❌ Foxhound admin MCP: no live check yet
+- ❌ dustinedwards.info: not run yet
+- ❌ Germomics: not run yet
+- ❌ Foxhound: not run yet
+- ❌ Foxing: not run yet
+- ❌ Carrel: not run yet
+- ❌ Enarratio: not run yet
+- ❌ Capsomer: not run yet
+- ❌ Prelum specimen: not run yet
+- ❌ Capsid explorer: not run yet
 
 ### 11. AI and MCP
 
