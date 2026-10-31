@@ -14,7 +14,7 @@ Newest run 2026-10-31 13:06 UTC. Filled only from the live checks and the verifi
 | 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6126 | −2805 |
 | 5. Carrel editing contract | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
 | 6. Images and media | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | ❌ | · | +23097 | −2090 |
-| 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6435 | −3179 |
+| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6435 | −3179 |
 | 8. Running and recovery | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +24854 | −1688 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +0 | −0 |
 | 10. Charts | ❌ | ❌ | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | · | · | +15662 | −4962 |
@@ -195,9 +195,9 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 
 ### 7. Speed and caching
 
-Builder: Complete shared speed and caching. Verifier: none yet.
+Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
-- ❌ Package: no verifier has checked the package
+- 🟡 Package: Built and live: route budgets enforced in CI on every React app, warming after every deploy (dei's deploy.yml, germomics and the rest through worker-deploy.yml), the static sites on staticSite. Still wrong in site-runtime-speed 0.65.0, so the board stays red whatever the sites do: (1) its user agent 'Mozilla/5.0 (compatible; site-runtime-speed)' gets no 103 from Cloudflare (curl with that agent: HTTP/2 200 only; with a browser agent: 103 then 200), so D1 fails on every custom domain; (2) B4 reads cf-cache-status HIT on a 404 as stored, but static assets report HIT on a 404 sent private, no-store (repeat fetches show no age), so B4 fails on Carrel, Capsomer, Enarratio, Prelum and the Capsid explorer; (3) hashed() still treats any name with 8 letters after a hyphen as hashed. A1 and G2 have no data without the CrUX key (Dustin's).
 - ❌ dustinedwards.info: site-runtime-speed: 2 errors
   - C1: https://dustinedwards.info/apple-touch-icon.png a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable
   - D1: https://dustinedwards.info/ no 103 Early Hints before the page

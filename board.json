@@ -3755,7 +3755,7 @@
    "id": 7,
    "name": "Speed and caching",
    "builder": "Complete shared speed and caching",
-   "verifier": null,
+   "verifier": "Verify speed and caching",
    "lines": {
     "prs": 45,
     "added": 6435,
@@ -3764,8 +3764,14 @@
    "unchecked": {},
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "partial",
+     "reason": "Built and live: route budgets enforced in CI on every React app, warming after every deploy (dei's deploy.yml, germomics and the rest through worker-deploy.yml), the static sites on staticSite. Still wrong in site-runtime-speed 0.65.0, so the board stays red whatever the sites do: (1) its user agent 'Mozilla/5.0 (compatible; site-runtime-speed)' gets no 103 from Cloudflare (curl with that agent: HTTP/2 200 only; with a browser agent: 103 then 200), so D1 fails on every custom domain; (2) B4 reads cf-cache-status HIT on a 404 as stored, but static assets report HIT on a 404 sent private, no-store (repeat fetches show no age), so B4 fails on Carrel, Capsomer, Enarratio, Prelum and the Capsid explorer; (3) hashed() still treats any name with 8 letters after a hyphen as hashed. A1 and G2 have no data without the CrUX key (Dustin's).",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/site-runtime/blob/3c980b9/bin/speed.mjs#L32",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/3c980b9/speed.mjs#L45",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/3c980b9/speed.mjs#L87",
+      "https://github.com/DrDustinEdwards/devkit/pull/95"
+     ]
     },
     "dustinedwards-info": {
      "status": "missing",
