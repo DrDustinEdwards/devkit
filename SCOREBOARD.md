@@ -325,6 +325,9 @@ Builder: Complete shared charts. Verifier: none yet.
   - B1: https://prelum.dustinedwards.info/ "Two series" (line), light: 2 text under 4.5:1, lowest "Beta" #cc4f0c on #fbfeff at 4.42:1
   - B1: https://prelum.dustinedwards.info/ "Two series" (line), dark: 2 text under 4.5:1, lowest "Alpha" #8c5fd2 on #12181c at 3.99:1
 - 🟡 Capsid explorer: checks pass; no verifier yet
+- Not checked, Capsid Portal (portal.dustinedwards.info): signed-in only; charts covered by Capsid's own browser tests until a public demo route exists
+- Not checked, Foxing /stats, /year and /goals: signed-in only; no live check sees these charts until a public demo route exists
+- Not checked, Carrel desk (desk.dustinedwards.info): signed-in only, behind Access; no live check sees this chart until a public demo route exists
 
 ### 11. AI and MCP
 

@@ -110,6 +110,7 @@
     "added": 15923,
     "removed": 606
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
@@ -1836,6 +1837,7 @@
     "added": 48020,
     "removed": 6230
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "partial",
@@ -2406,6 +2408,7 @@
     "added": 5556,
     "removed": 1273
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "partial",
@@ -2568,6 +2571,7 @@
     "added": 6126,
     "removed": 2805
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
@@ -3014,6 +3018,7 @@
     "added": 37767,
     "removed": 7178
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
@@ -3195,6 +3200,7 @@
     "added": 23097,
     "removed": 2090
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
@@ -3700,6 +3706,7 @@
     "added": 6435,
     "removed": 3179
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
@@ -4567,6 +4574,7 @@
     "added": 24854,
     "removed": 1688
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "partial",
@@ -4765,6 +4773,7 @@
     "added": 0,
     "removed": 0
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
@@ -4857,6 +4866,11 @@
     "prs": 20,
     "added": 15662,
     "removed": 4962
+   },
+   "unchecked": {
+    "Capsid Portal (portal.dustinedwards.info)": "signed-in only; charts covered by Capsid's own browser tests until a public demo route exists",
+    "Foxing /stats, /year and /goals": "signed-in only; no live check sees these charts until a public demo route exists",
+    "Carrel desk (desk.dustinedwards.info)": "signed-in only, behind Access; no live check sees this chart until a public demo route exists"
    },
    "cells": {
     "package": {
@@ -5669,6 +5683,7 @@
     "added": 15354,
     "removed": 5124
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
@@ -5790,6 +5805,7 @@
     "added": 3950,
     "removed": 382
    },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
