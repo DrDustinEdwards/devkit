@@ -1,5 +1,5 @@
 // What every shared workflow keeps, so any repository can call it safely: it runs only when called, every action is
-// pinned to a full commit sha, and no checkout keeps its credentials. Text based; each workflow's own test holds the rest.
+// pinned to a full commit sha, every file it downloads is checked against its sha256, and no checkout keeps its credentials. Text based; each workflow's own test holds the rest.
 
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
@@ -16,12 +16,15 @@ test("the shared workflows are the ones every repository calls", () => {
     "ai-author.yml",
     "bump-consumers.yml",
     "code-map.yml",
+    "dependencies.yml",
     "family.yml",
     "no-bloat.yml",
     "pr-footer.yml",
+    "release.yml",
     "restore-drill.yml",
     "worker-deploy.yml",
     "worker-size.yml",
+    "workflow-audit.yml",
   ]);
 });
 
@@ -41,5 +44,13 @@ test("each pins every action to a full commit sha, and no checkout keeps credent
     for (const ref of uses) assert.match(ref, /@[0-9a-f]{40}$/, `${name}: ${ref}`);
     const checkouts = uses.filter((ref) => ref.startsWith("actions/checkout@")).length;
     assert.equal([...codeOf(text).matchAll(/persist-credentials: false/g)].length, checkouts, name);
+  }
+});
+
+test("each checks every file it downloads against its sha256", () => {
+  for (const { name, text } of shared) {
+    for (const [, file] of codeOf(text).matchAll(/curl -\w*o (\S+) https:/g)) {
+      assert.match(text, new RegExp(`^\\s*(?:echo ")?[0-9a-f]{64}  ${file.replace(/\./g, "\\.")}\\b`, "m"), `${name}: ${file}`);
+    }
   }
 });

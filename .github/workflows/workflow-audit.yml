@@ -1,0 +1,87 @@
+name: workflow-audit
+
+# The caller's GitHub Actions, through actionlint (with shellcheck on every run: script) and zizmor (the security audits, at
+# its default persona). Any finding fails, each one an annotation on its line. Every tool is a release file at an exact
+# version, checked against its sha256 before it runs; to move one, change its version and checksum together.
+#
+# Exceptions are the tools' own config files in the caller, each with its reason in a comment: .github/actionlint.yaml
+# (`paths: <glob>: ignore: [<message regex>]`) and .github/zizmor.yml (`rules: <audit>: ignore: [<file>:<line>]`), or a
+# `# zizmor: ignore[<audit>]` comment on the line.
+#
+# A CALLER (examples/workflow-audit-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+
+on:
+  workflow_call:
+    inputs:
+      min-severity:
+        description: The lowest zizmor severity that fails (informational, low, medium or high).
+        required: false
+        type: string
+        default: medium
+      timeout-minutes:
+        required: false
+        type: number
+        default: 10
+
+permissions:
+  contents: read
+
+jobs:
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      # shellcheck too, so a runner image's newer one never changes what fails.
+      - name: Install actionlint 1.7.12 and shellcheck 0.11.0
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl -fsSLo actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          curl -fsSLo shellcheck.tar.xz https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz
+          sha256sum -c - <<'SUMS'
+          8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  actionlint.tar.gz
+          8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198  shellcheck.tar.xz
+          SUMS
+          tar -xzf actionlint.tar.gz actionlint
+          tar -xJf shellcheck.tar.xz --strip-components=1 shellcheck-v0.11.0/shellcheck
+
+      - name: actionlint
+        env:
+          FORMAT: '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}},title=actionlint {{$err.Kind}}::{{$err.Message}}\n{{end}}'
+        run: '"$RUNNER_TEMP/actionlint" -shellcheck "$RUNNER_TEMP/shellcheck" -format "$FORMAT"'
+
+  zizmor:
+    name: zizmor
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      # The binary from PyPI's manylinux wheel, which holds nothing else that runs.
+      - name: Install zizmor 1.31.1
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl -fsSLo zizmor.whl https://files.pythonhosted.org/packages/py3/z/zizmor/zizmor-1.31.1-py3-none-manylinux_2_28_x86_64.whl
+          echo "58e878eb2dbd2c6183c105e1ac28c14f7dd1eca44a783f1fe2a69647d012c410  zizmor.whl" | sha256sum -c -
+          unzip -p zizmor.whl zizmor-1.31.1.data/scripts/zizmor > zizmor
+          chmod +x zizmor
+
+      # The online audits (impostor commits, known-vulnerable actions, ref confusion) read public repositories, which the
+      # job's read-only token is enough for.
+      - name: zizmor
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MIN_SEVERITY: ${{ inputs.min-severity }}
+        run: '"$RUNNER_TEMP/zizmor" --format github --min-severity "$MIN_SEVERITY" .'

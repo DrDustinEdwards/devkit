@@ -4,7 +4,8 @@ import test from "node:test";
 import { stubAccess } from "@dustinedwards/devkit/access";
 
 const ISSUER = "https://sample.cloudflareaccess.com/cdn-cgi/access/sso/oidc/sample-client";
-const AUTHORIZE = `${ISSUER}/authorization?client_id=sample-client&nonce=n-123&state=s`;
+const CHALLENGE = Buffer.from(await crypto.subtle.digest("SHA-256", new TextEncoder().encode("v"))).toString("base64url");
+const AUTHORIZE = `${ISSUER}/authorization?client_id=sample-client&nonce=n-123&state=s&redirect_uri=https://app.test/cb&code_challenge=${CHALLENGE}&code_challenge_method=S256`;
 
 const decode = (/** @type {string} */ part) => JSON.parse(Buffer.from(part, "base64url").toString("utf8"));
 
@@ -13,6 +14,7 @@ async function verify(/** @type {string} */ jwt, /** @type {string} */ jwksUrl) 
   const [head, body, signature] = jwt.split(".");
   const { keys } = await (await fetch(jwksUrl)).json();
   const jwk = keys.find((/** @type {{ kid: string }} */ k) => k.kid === decode(head).kid);
+  if (!jwk) return { ok: false };
   const key = await crypto.subtle.importKey("jwk", jwk, { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" }, false, ["verify"]);
   const ok = await crypto.subtle.verify("RSASSA-PKCS1-v1_5", key, Buffer.from(signature, "base64url"), new TextEncoder().encode(`${head}.${body}`));
   return { ok, header: decode(head), claims: decode(body) };
@@ -20,10 +22,18 @@ async function verify(/** @type {string} */ jwt, /** @type {string} */ jwksUrl) 
 
 test("the token endpoint answers an ID token the JWKS verifies, with the issuer, audience, email and the flow's nonce", async () => {
   const stub = await stubAccess({ issuer: ISSUER, audience: "sample-client", email: "dustin@example.com", authorizationUrl: AUTHORIZE });
+  const exchange = (/** @type {Record<string, string>} */ form) =>
+    fetch(`${ISSUER}/token`, { method: "POST", body: new URLSearchParams({ grant_type: "authorization_code", code: "c", redirect_uri: "https://app.test/cb", ...form }) });
   try {
-    const res = await fetch(`${ISSUER}/token`, { method: "POST", body: new URLSearchParams({ code: "c", code_verifier: "v", redirect_uri: "https://app.test/cb" }) });
-    const { id_token: idToken, token_type: type } = await res.json();
+    for (const [form, error] of [[{ code_verifier: "w" }, "invalid_grant"], [{ code_verifier: "v", redirect_uri: "https://app.test/other" }, "invalid_grant"], [{ code_verifier: "v", grant_type: "password" }, "unsupported_grant_type"]]) {
+      const refused = await exchange(form);
+      assert.deepEqual([refused.status, (await refused.json()).error], [400, error], JSON.stringify(form));
+    }
+    stub.tokenRequests.length = 0;
+    const res = await exchange({ code_verifier: "v" });
+    const { id_token: idToken, token_type: type, access_token: accessToken } = await res.json();
     assert.equal(type, "bearer");
+    assert.ok(accessToken);
     const { ok, header, claims } = await verify(idToken, `${ISSUER}/jwks`);
     assert.equal(ok, true);
     assert.equal(header.alg, "RS256");
@@ -59,12 +69,20 @@ test("claims sit over the defaults and token(extra) over both; a token from anot
   }
 });
 
-test("the JWKS can be served where Access serves application certs, for the Cf-Access-Jwt-Assertion path", async () => {
+test("the JWKS can be served where Access serves application certs, and keeps the previous key through a rotation", async () => {
   const certs = "https://sample.cloudflareaccess.com/cdn-cgi/access/certs";
   const stub = await stubAccess({ issuer: "https://sample.cloudflareaccess.com", audience: "aud-tag", email: "x@example.com", jwksUrl: certs });
   try {
     assert.equal(stub.jwksUrl, certs);
+    const before = await stub.token();
+    const { ok, claims } = await verify(before, certs);
+    assert.equal(ok, true);
+    assert.deepEqual(claims.aud, ["aud-tag"]);
+    await stub.rotate();
+    assert.equal((await verify(before, certs)).ok, true, "the previous key still verifies");
     assert.equal((await verify(await stub.token(), certs)).ok, true);
+    await stub.rotate();
+    assert.equal((await verify(before, certs)).ok, false, "two rotations later the key is gone");
     await assert.rejects(fetch("https://sample.cloudflareaccess.com/jwks"), /does not answer/);
   } finally {
     stub.restore();

@@ -16,13 +16,15 @@
 //   npx devkit-check-trailers <base> <head>             checks base..head (messages)
 //   npx devkit-check-trailers <base> <head> --authors   also author/committer
 //   npx devkit-check-trailers                           reads the range from the GitHub event: EVENT, PR_BASE, PR_HEAD,
-//     PUSH_BEFORE, PUSH_AFTER (set by .github/workflows/ai-author.yml)
+//     PUSH_BEFORE, PUSH_AFTER (set by .github/workflows/ai-author.yml); a merge_group event's base and head come from the
+//     event payload at GITHUB_EVENT_PATH
 //
-// Exit 0: no commit in the range carries a trailer, or the event adds no commits.
-// Exit 1: at least one does; each is printed. Exit 2: the check could not run, which is a failure, not a pass.
+// Exit 0: no commit in the range carries a trailer, or the event adds no commits (schedule, workflow_dispatch,
+// repository_dispatch). Exit 1: at least one does; each is printed. Exit 2: the check could not run, which is a failure, not
+// a pass, and so is an event it does not know.
 
 import { execFileSync } from "node:child_process";
-import { realpathSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 // The three named forms, matched at the start of any line of the message.
@@ -84,9 +86,10 @@ export function isAgentIdentity(name, email) {
 }
 
 const ZERO = /^0+$/;
+const NO_COMMITS = new Set(["schedule", "workflow_dispatch", "repository_dispatch"]);
 
 /**
- * Which commits to check for a GitHub event. `null` means the event adds no commits.
+ * Which commits to check for a GitHub event. `null` means the event adds no commits; an event not known here throws.
  * @param {Record<string, string | undefined>} env
  * @returns {{ base: string | null, head: string, authors: boolean } | null}
  */
@@ -102,7 +105,14 @@ export function rangeFromEvent(env) {
     const before = env.PUSH_BEFORE && !ZERO.test(env.PUSH_BEFORE) ? env.PUSH_BEFORE : null;
     return { base: before, head: env.PUSH_AFTER, authors: false };
   }
-  return null;
+  if (event === "merge_group") {
+    // A merge queue's group is checked before it lands, like a pull request.
+    const group = env.GITHUB_EVENT_PATH ? JSON.parse(readFileSync(env.GITHUB_EVENT_PATH, "utf8")).merge_group : undefined;
+    if (!group?.base_sha || !group?.head_sha) throw new Error("merge_group event without merge_group.base_sha and head_sha at GITHUB_EVENT_PATH");
+    return { base: group.base_sha, head: group.head_sha, authors: true };
+  }
+  if (NO_COMMITS.has(event)) return null;
+  throw new Error(`event '${event}' is not one this check knows, so it cannot tell which commits it adds`);
 }
 
 /**
