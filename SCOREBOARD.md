@@ -247,19 +247,19 @@ Builder: Complete shared speed and caching. Verifier: none yet.
 
 ### 8. Running and recovery
 
-Builder: Complete shared running and recovery. Verifier: Verify running and recovery across sites.
+Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 
-- 🟡 Package: ok is false on warn; no Images/DO checks; cronCheck waits 2x interval; no per-job timeout; requestFields lacks status; no console ratchet; no shared redirect/410 table; no gradual rollout, preview or expand-only check; no runbook; scoreboard never runs the sha or drill checks
-- 🟡 dustinedwards.info: /api/health answers 503 while /health passes, and UptimeRobot and Capsid's watcher read /api/health; no 404 count; own deploy without rollback or bookmark; shared drill never run
+- 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
+- 🟡 dustinedwards.info: No 404 count (privacy page fix is one PR, a fixable blocker); public /api/health still routed with no noindex; cron check 'backup never ran' pending tonight's 05:00 run; own deploy (ship.mjs) and own check-migrations.mjs; d1-dump v0.8.0; drill passed 12:33
 - ❌ Germomics: ops-audit: 2 errors
   - H4: https://germomics.com/health no sha, so the deployed commit cannot be read
   - R1: https://github.com/DrDustinEdwards/germomics/actions/runs/41199707154 the newest restore drill ended failure
 - ❌ julieedwards.info: ops-audit: 1 errors
   - R1: https://github.com/DrDustinEdwards/julieedwards-info/actions/runs/41199709537 the newest restore drill ended failure
-- 🟡 TXASM: files pass not complete; R2 check at fail level; drill never run
-- 🟡 BSW: health passes; deploy record, gradual rollout, preview and runbooks missing
-- 🟡 Foxhound: migrations without bookmark; 404 rows kept 365 days; local cron ledger records skips as success; oauth hashes dumped; drill never run
-- 🟡 Foxing: COVERS not backed up; files pass not complete; drill never run
+- 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
+- 🟡 BSW: site-runtime v0.50.1; 404 is React Router's default page; no console ratchet; no request log wrapper; no --repo in areas.json; D4/D6 off
+- 🟡 Foxhound: Health and drill pass; TOOL_CALL_LOG and EMAIL unprobed; runCronJob wrapper and own cron-health job remain; 140 raw console calls; first media files pass pending (03:00 cron)
+- 🟡 Foxing: Health and drill pass; EMAIL unprobed; first media and covers files pass pending (03:17 cron); d1-dump v0.8.0
 - ❌ Capsid MCP: ops-audit: 2 errors
   - H1: https://mcp.dustinedwards.info/health Cache-Control is 'none', without no-store; X-Robots-Tag is 'none', without noindex
   - H2: https://mcp.dustinedwards.info/health the body does not carry status (is 'ok', not pass, warn or fail), ok, time, checks
