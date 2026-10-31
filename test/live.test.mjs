@@ -73,4 +73,7 @@ test("finished only when every cell is complete and clean for the full run of da
   const board = buildBoard({ sites, areas, verdicts }, days);
   assert.equal(cell(board).status, "complete");
   assert.equal(board.finished, true);
+  // A page the checks cannot reach is not proven, so it keeps the job open.
+  const unreached = [{ ...areas[0], unchecked: { "a /stats": "signed-in only" } }];
+  assert.equal(buildBoard({ sites, areas: unreached, verdicts }, days).finished, false);
 });

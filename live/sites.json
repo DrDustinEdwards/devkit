@@ -5,7 +5,17 @@
     { "id": "julieedwards-info", "name": "julieedwards.info", "repo": "julieedwards-info", "kind": "site", "origin": "https://julieedwards.info" },
     { "id": "txasm", "name": "TXASM", "repo": "txasm", "kind": "site", "origin": "https://txasm.org", "from": "https://txasm.dustin-edwards.workers.dev" },
     { "id": "bsw", "name": "BSW", "repo": "bsw", "kind": "site", "origin": "https://bsw.dustin-edwards.workers.dev" },
-    { "id": "foxhound", "name": "Foxhound", "repo": "foxhound", "kind": "site", "origin": "https://foxhoundapp.com" },
+    {
+      "id": "foxhound", "name": "Foxhound", "repo": "foxhound", "kind": "site", "origin": "https://foxhoundapp.com",
+      "checkArgs": {
+        "chart-audit": [
+          "--start", "https://foxhoundapp.com/demos/dashboard",
+          "--start", "https://foxhoundapp.com/demos/recovery",
+          "--start", "https://foxhoundapp.com/demos/intelligence",
+          "--pages", "/demos/dashboard,/demos/recovery,/demos/intelligence"
+        ]
+      }
+    },
     { "id": "foxing", "name": "Foxing", "repo": "foxing", "kind": "site", "origin": "https://foxing.app" },
     { "id": "carrel", "name": "Carrel", "repo": "carrel", "kind": "static", "origin": "https://carrel.dustinedwards.info" },
     { "id": "enarratio", "name": "Enarratio", "repo": "enarratio", "kind": "static", "origin": "https://enarratio.dustinedwards.info" },

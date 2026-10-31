@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `devkit-live`: a site's `checkArgs` in `sites.json` (`{ "<check name>": [...] }`) follow the check's own `args` on that site alone, and an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes (`--start`, `--pages`, from the next Prelum release), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
+
 ## 0.20.11 (2026-10-31)
 
 - `code-map.yml` maps a repository on TypeScript 7. The native compiler ships no JavaScript compiler API, so d1-dump's map failed with "ts.getParsedCommandLineOfConfigFile is not a function" after Renovate moved it to 7.0.2. The map job now installs TypeScript 6.0.3 beside the script when the caller's own has no compiler API, and `loadTypeScript` skips a TypeScript without it.
