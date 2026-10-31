@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // The family check: what keeps a repository in step with the shared packages. It fails (exit 1, an ::error:: line each) on
 //
-//   pins       a dependency on one of the shared packages, or a call to devkit's reusable workflows, that is not at that
-//              package's newest release tag (a raw commit counts as behind);
+//   pins       a dependency on one of the shared packages, or a call to devkit's reusable workflows, on a raw commit
+//              rather than a release tag (a pin behind the newest release is a warning: Renovate opens that bump, and
+//              failing on it turned every repository red each time a package released);
 //   copies     a local definition with the name of something a shared package exports (or a known alias), or text only a
 //              shared builder should write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation
 //              rules, a Cloudflare Images resize, an island loader, JSON-LD, a hex or base64url encoder, a pre-paint theme
@@ -48,8 +49,7 @@
 //                                                         paths not checked
 //   }
 //
-// On a Renovate branch (GITHUB_HEAD_REF renovate/...) the pin findings are warnings: a bump of one package must not fail
-// because another is also behind. A line ending in a codespell:ignore comment is a contract the spelling check leaves.
+// A line ending in a codespell:ignore comment is a contract the spelling check leaves.
 //
 // Warnings (::warning::, exit 0) are also how a new rule arrives: a rule's `failsFrom` names the devkit release it fails
 // from, compared with this devkit's own package.json version, so it warns for one release while the sites move and the
@@ -349,11 +349,11 @@ export function lsRemoteTags(/** @type {string} */ repo) {
 }
 
 /**
- * Pins behind the newest tag, or on a raw commit.
- * @param {Tree} tree @param {TagReader} readTags @param {boolean} lenient
+ * Pins on a raw commit (an error), or behind the newest tag (a warning).
+ * @param {Tree} tree @param {TagReader} readTags
  * @returns {Finding[]}
  */
-export function checkPins(tree, readTags, lenient = false) {
+export function checkPins(tree, readTags) {
   /** @type {Finding[]} */
   const found = [];
   /** @type {Record<string, ReturnType<TagReader>>} */
@@ -366,9 +366,9 @@ export function checkPins(tree, readTags, lenient = false) {
     if (!latest) return;
     let at = semver(ref) ? (ref.startsWith("v") ? ref : `v${ref}`) : Object.keys(commits).find((t) => commits[t] === ref && semver(t));
     if (!at) {
-      found.push({ check: "pins", file, line, warn: lenient, failsFrom, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
+      found.push({ check: "pins", file, line, failsFrom, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
     } else if (compare(at, latest) < 0) {
-      found.push({ check: "pins", file, line, warn: lenient, failsFrom, message: `${what} is at ${at}; the newest release is ${latest}` });
+      found.push({ check: "pins", file, line, warn: true, message: `${what} is at ${at}; the newest release is ${latest}` });
     }
   };
   for (const file of tree.files) {
@@ -945,11 +945,10 @@ function main(/** @type {string[]} */ argv) {
   const { catalog } = readCatalog((name, repo) => (repo === self?.repo ? null : locate(name, repo)));
   // A name the package exports itself is its own API, even when another package exports a different thing by that name.
   if (self) for (const name of Object.keys(readCatalog((_, repo) => (repo === self.repo ? root : null)).catalog)) delete catalog[name];
-  const lenient = (process.env.GITHUB_HEAD_REF ?? "").startsWith("renovate/");
   // Whether the repository is private, from the event Actions hands every run; unknown locally.
   const event = process.env.GITHUB_EVENT_PATH && existsSync(process.env.GITHUB_EVENT_PATH) ? JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf8")) : {};
   const findings = [
-    ...checkPins(tree, lsRemoteTags, lenient),
+    ...checkPins(tree, lsRemoteTags),
     ...checkCopies(tree, catalog, config, self?.label),
     ...checkLibraries(tree, config, peersOf(locate)),
     ...checkFeatures(tree, config),
