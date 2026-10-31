@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.9 (2026-10-31)
+
+- `bin/family.mjs` is back as a shim that runs the shared-code check. An old `family.yml` (v0.18.0 on a branch Foxhound had open) checks out devkit's default branch and runs that path, and failed with "Cannot find module" once 0.20.8 renamed it. It stays until 0.21.0.
+
 ## 0.20.8 (2026-10-31)
 
 - The family check is now the shared-code check: `devkit-shared` (bin/shared.mjs), `shared.yml` (job "Uses the shared code") and `.shared.json`. `devkit-family`, `family.yml` and `.family.json` still work, with a warning to rename, and are removed in 0.21.0.
