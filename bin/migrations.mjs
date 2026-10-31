@@ -21,6 +21,17 @@
 //
 // --write refuses to change a recorded hash without --force, which puts the decision in the shell history. Line endings
 // are read as LF, so a checkout with autocrlf hashes the same as the commit.
+//
+// APPLY, IN A DEPLOY. So no site needs migrations run by hand before a merge:
+//
+//   npx devkit-migrations <dir> --apply <database> [--config <wrangler config>]
+//
+// asks the remote database which migrations are pending (`wrangler d1 migrations list --remote`). None: exit 0. Pending
+// ones that only add are applied after the D1 Time Travel bookmark is read, and the restore command goes to the log and
+// the step summary, because a Worker rollback never undoes a migration. A pending migration that drops or renames, deletes
+// rows, or carries a `-- contract:` line is refused (exit 1) with the hand-run command: the person decides that one. An
+// output it cannot read, a bookmark it cannot read, a failed apply, or a database still behind afterwards exits 1, before
+// the caller deploys. It runs the repository's own wrangler (node_modules/.bin), else `npx wrangler`.
 
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, realpathSync, writeFileSync } from "node:fs";
@@ -47,6 +58,44 @@ export function contractions(sql) {
   if (/^\s*--\s*contract:\s*\S/im.test(sql)) return [];
   const code = sql.replace(/'(?:[^']|'')*'|--[^\n]*|\/\*[\s\S]*?\*\//g, " ");
   return DESTRUCTIVE.filter(([pattern]) => pattern.test(code)).map(([, what]) => /** @type {string} */ (what));
+}
+
+/**
+ * Why a pending migration must be applied by a person rather than by the deploy; empty when it only adds. Stricter than
+ * `contractions`: a `-- contract:` line makes a migration reviewable, not safe to run unattended, and a DELETE loses rows.
+ * @param {string} sql
+ * @returns {string[]}
+ */
+export function handOnly(sql) {
+  const marked = /^\s*--\s*contract:\s*\S/im.test(sql);
+  const unmarked = sql.replace(/^\s*--\s*contract:.*$/gim, "");
+  const code = unmarked.replace(/'(?:[^']|'')*'|--[^\n]*|\/\*[\s\S]*?\*\//g, " ").replace(/\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?\bEND\s*;/gi, " ");
+  return [...(marked ? ["says `-- contract:`"] : []), ...contractions(unmarked), ...(/\bDELETE\s+FROM\b/i.test(code) ? ["deletes rows"] : [])];
+}
+
+/**
+ * `wrangler d1 migrations list --remote`, read three ways: pending (with the names), clean, or unreadable. Names win over
+ * the clean line, and output with neither is unreadable rather than clean, so a changed wrangler fails closed.
+ * @param {{ code: number, text: string }} listed
+ * @returns {{ state: "pending" | "clean" | "unreadable", pending: string[] }}
+ */
+export function readPending({ code, text }) {
+  const names = [...new Set(String(text).match(/\b\d{4}_[\w-]+\.sql\b/g) ?? [])];
+  if (code !== 0) return { state: "unreadable", pending: [] };
+  if (names.length && /Migrations to be applied/.test(text)) return { state: "pending", pending: names };
+  if (!names.length && /No migrations to apply/.test(text)) return { state: "clean", pending: [] };
+  return { state: "unreadable", pending: names };
+}
+
+/** The bookmark in `wrangler d1 time-travel info <db> --json` output, after any banner; "" when there is none. */
+export function readBookmark(/** @type {string} */ text) {
+  const raw = String(text ?? "");
+  try {
+    const bookmark = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1)).bookmark;
+    return typeof bookmark === "string" ? bookmark : "";
+  } catch {
+    return "";
+  }
 }
 
 /**
@@ -107,6 +156,50 @@ async function localLedgers(/** @type {string} */ state) {
   return out;
 }
 
+/** --apply: the remote database brought level with the files, or exit 1 before the caller deploys. */
+function apply(/** @type {string} */ dir, /** @type {string} */ database, /** @type {string | undefined} */ config) {
+  const { spawnSync } = /** @type {typeof import("node:child_process")} */ (process.getBuiltinModule("node:child_process"));
+  const extra = config ? ["--config", config] : [];
+  // The repository's own wrangler, by absolute path, so the bookmark read outside the checkout runs the same version.
+  const bin = join(process.cwd(), "node_modules", ".bin", process.platform === "win32" ? "wrangler.cmd" : "wrangler");
+  const local = existsSync(bin) ? bin : undefined;
+  const wrangler = (/** @type {string[]} */ args, /** @type {string | undefined} */ cwd) => {
+    const r = spawnSync(local ?? "npx", local ? args : ["wrangler", ...args], { cwd, encoding: "utf8", shell: process.platform === "win32", env: { ...process.env, CI: "true" }, timeout: 300_000 });
+    const text = `${r.stdout ?? ""}${r.stderr ?? ""}${r.error ? `\n${r.error.message}` : ""}`;
+    process.stdout.write(text);
+    return { code: r.status ?? 1, text };
+  };
+  const stop = (/** @type {string} */ message) => {
+    console.log(`::error title=devkit-migrations::${message}`);
+    process.exit(1);
+  };
+  const handCommand = `npx wrangler d1 migrations apply ${database} --remote`;
+  const list = () => readPending(wrangler(["d1", "migrations", "list", database, "--remote", ...extra]));
+
+  const before = list();
+  if (before.state === "unreadable") stop(`could not tell which migrations ${database} has applied, so nothing was applied or deployed.`);
+  if (before.state === "clean") return console.log(`devkit-migrations: ${database} has every migration.`);
+  const blocked = before.pending.flatMap((file) => {
+    const why = existsSync(join(dir, file)) ? handOnly(readFileSync(join(dir, file), "utf8")) : ["is not in " + dir];
+    return why.length ? [`${file} ${why.join(" and ")}`] : [];
+  });
+  if (blocked.length) stop(`${blocked.join("; ")}. A person applies this one: ${handCommand}, then re-run the deploy. Nothing was applied or deployed.`);
+
+  // Outside the checkout, as worker-deploy's bookmark step: by name through the API, not by a config id.
+  const { tmpdir } = /** @type {typeof import("node:os")} */ (process.getBuiltinModule("node:os"));
+  const bookmark = readBookmark(wrangler(["d1", "time-travel", "info", database, "--json"], tmpdir()).text);
+  if (!bookmark) stop(`could not read the Time Travel bookmark of ${database}, so nothing was applied without an undo point.`);
+  const undo = `npx wrangler d1 time-travel restore ${database} --bookmark=${bookmark}`;
+  const note = `D1 ${database} before applying ${before.pending.join(", ")}: bookmark ${bookmark}. To undo:\n\n    ${undo}\n`;
+  console.log(note);
+  if (process.env.GITHUB_STEP_SUMMARY) writeFileSync(process.env.GITHUB_STEP_SUMMARY, `${note}\n`, { flag: "a" });
+
+  const applied = wrangler(["d1", "migrations", "apply", database, "--remote", ...extra]);
+  const after = list();
+  if (applied.code !== 0 || after.state !== "clean") stop(`applying ${before.pending.join(", ")} did not leave ${database} level (wrangler exited ${applied.code}, then read ${after.state}). Nothing was deployed. To go back: ${undo}`);
+  console.log(`devkit-migrations: applied ${before.pending.join(", ")} to ${database}.`);
+}
+
 async function main() {
   const { positionals, values } = parseArgs({
     allowPositionals: true,
@@ -117,13 +210,16 @@ async function main() {
       "require-ledger": { type: "boolean" },
       write: { type: "boolean" },
       force: { type: "boolean" },
+      apply: { type: "string" },
+      config: { type: "string" },
     },
   });
   const [dir] = positionals;
   if (!dir || !existsSync(dir)) {
-    console.error(`usage: devkit-migrations <migrations dir> [--write [--force]] [--manifest <file>] [--min <n>] [--state <dir>] [--require-ledger]${dir ? `\n${dir} does not exist.` : ""}`);
+    console.error(`usage: devkit-migrations <migrations dir> [--write [--force]] [--manifest <file>] [--min <n>] [--state <dir>] [--require-ledger]\n       devkit-migrations <migrations dir> --apply <database> [--config <wrangler config>]${dir ? `\n${dir} does not exist.` : ""}`);
     process.exit(2);
   }
+  if (values.apply) return apply(dir, values.apply, values.config);
   const manifestPath = values.manifest ?? join(dir, "manifest.json");
   const files = readdirSync(dir).filter((f) => f.endsWith(".sql")).sort();
   const read = (/** @type {string} */ file) => readFileSync(join(dir, file), "utf8");
