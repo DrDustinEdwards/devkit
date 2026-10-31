@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.12 (2026-10-31)
+
+- The shared-code check's `headers` feature accepts site-runtime's `withMcpHeaders` (./mcp-server), which sets an MCP door's whole header set, so a door that adopted it no longer fails "has no headers".
+
 ## 0.20.11 (2026-10-31)
 
 - `code-map.yml` maps a repository on TypeScript 7. The native compiler ships no JavaScript compiler API, so d1-dump's map failed with "ts.getParsedCommandLineOfConfigFile is not a function" after Renovate moved it to 7.0.2. The map job now installs TypeScript 6.0.3 beside the script when the caller's own has no compiler API, and `loadTypeScript` skips a TypeScript without it.
