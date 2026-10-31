@@ -3218,7 +3218,7 @@
    "id": 6,
    "name": "Images and media",
    "builder": "Complete shared images and media",
-   "verifier": null,
+   "verifier": "Verify area 6 images and media",
    "lines": {
     "prs": 12,
     "added": 23097,
@@ -3229,8 +3229,15 @@
    },
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "partial",
+     "reason": "uploads built (HEIC, GPS strip, placeholder); a replace keeps the immutable size URL; pictureProps carries no placeholder; Prelum picture drops source media (GIF never moves) and counts priority per render; unsized diagram img; credit/license never reach the renderer; no 1.91:1 cover crop, no 16:9/4:3/1:1 set, no og:video; respond sets no CORP; AVIF not stripped; images check skips A6 and C9 and never runs on the Portal",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/site-runtime/blob/6a75dab/image.mjs#L140-L150",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/6a75dab/bin/images.mjs",
+      "https://github.com/DrDustinEdwards/site-api/blob/2f3b4b2/src/media-upload.ts#L329-L338",
+      "https://github.com/DrDustinEdwards/prelum/blob/c64508e/render-diagram.mjs#L79-L104",
+      "https://github.com/DrDustinEdwards/prelum/blob/c64508e/render-nomath.mjs#L376"
+     ]
     },
     "dustinedwards-info": {
      "status": "missing",
@@ -3545,7 +3552,10 @@
     },
     "germomics": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper",
+     "evidence": [
+      "https://germomics.com/a-boy-named-flu"
+     ],
      "clean_days": 1
     },
     "julieedwards-info": {
@@ -3566,7 +3576,11 @@
     },
     "txasm": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap",
+     "evidence": [
+      "https://txasm.org/og-card.png",
+      "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
+     ],
      "clean_days": 1
     },
     "bsw": {
@@ -3587,7 +3601,10 @@
     },
     "foxhound": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "cover picture is its own code, not pictureProps; a cover outside the library is unsized; no placeholder, credit, ImageObject or image sitemap; footer SVG has no loading/decoding",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
+     ],
      "clean_days": 1
     },
     "foxing": {
@@ -3653,17 +3670,26 @@
     },
     "carrel": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "images check passes; share card answers CORP same-origin",
+     "evidence": [
+      "https://carrel.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "enarratio": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "images check passes; share card answers CORP same-origin",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "capsomer": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "images check passes; share card answers CORP same-origin",
+     "evidence": [
+      "https://capsomer.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "prelum": {
@@ -3689,7 +3715,10 @@
     },
     "capsid": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "images check passes; share card answers CORP same-origin",
+     "evidence": [
+      "https://capsid.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "capsid-mcp": {

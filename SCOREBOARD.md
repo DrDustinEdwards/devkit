@@ -13,7 +13,7 @@ Newest run 2026-10-31 13:06 UTC. Filled only from the live checks and the verifi
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | ❌ | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | +5556 | −1273 |
 | 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6126 | −2805 |
 | 5. Carrel editing contract | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +37767 | −7178 |
-| 6. Images and media | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | ❌ | · | +23097 | −2090 |
+| 6. Images and media | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | · | · | · | ❌ | · | +23097 | −2090 |
 | 7. Speed and caching | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6435 | −3179 |
 | 8. Running and recovery | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +24854 | −1688 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +0 | −0 |
@@ -159,37 +159,37 @@ Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editin
 
 ### 6. Images and media
 
-Builder: Complete shared images and media. Verifier: none yet.
+Builder: Complete shared images and media. Verifier: Verify area 6 images and media.
 
-- ❌ Package: no verifier has checked the package
+- 🟡 Package: uploads built (HEIC, GPS strip, placeholder); a replace keeps the immutable size URL; pictureProps carries no placeholder; Prelum picture drops source media (GIF never moves) and counts priority per render; unsized diagram img; credit/license never reach the renderer; no 1.91:1 cover crop, no 16:9/4:3/1:1 set, no og:video; respond sets no CORP; AVIF not stripped; images check skips A6 and C9 and never runs on the Portal
 - ❌ dustinedwards.info: site-runtime-images: 59 errors
   - C3: https://dustinedwards.info/ no twitter:image:alt
   - C3: https://dustinedwards.info/ no og:image:width, og:image:height, og:image:alt
   - C3: https://dustinedwards.info/about no twitter:image:alt
   - C3: https://dustinedwards.info/about no og:image:width, og:image:height, og:image:alt
   - C3: https://dustinedwards.info/writing no twitter:image:alt
-- 🟡 Germomics: checks pass; no verifier yet
+- 🟡 Germomics: episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper
 - ❌ julieedwards.info: site-runtime-images: 2 errors
   - A4: https://julieedwards.info/ https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg has no width attribute, so the page shifts as it loads
   - A2: https://julieedwards.info/ https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg is 2048 px wide (the file) with no srcset and sizes, so every screen downloads the whole of it
-- 🟡 TXASM: checks pass; no verifier yet
+- 🟡 TXASM: og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap
 - ❌ BSW: site-runtime-images: 1 errors
   - A2: https://bsw.dustin-edwards.workers.dev/ /services/grant-review.webp is 512 px wide with no srcset and sizes, so every screen downloads the whole of it
-- 🟡 Foxhound: checks pass; no verifier yet
+- 🟡 Foxhound: cover picture is its own code, not pictureProps; a cover outside the library is unsized; no placeholder, credit, ImageObject or image sitemap; footer SVG has no loading/decoding
 - ❌ Foxing: site-runtime-images: 9 errors
   - C3: https://foxing.app/ no og:image:type
   - C3: https://foxing.app/books no og:image:type
   - C3: https://foxing.app/awards no og:image:type
   - C3: https://foxing.app/picks no og:image:type
   - C3: https://foxing.app/book-of-the-month no og:image:type
-- 🟡 Carrel: checks pass; no verifier yet
-- 🟡 Enarratio: checks pass; no verifier yet
-- 🟡 Capsomer: checks pass; no verifier yet
+- 🟡 Carrel: images check passes; share card answers CORP same-origin
+- 🟡 Enarratio: images check passes; share card answers CORP same-origin
+- 🟡 Capsomer: images check passes; share card answers CORP same-origin
 - ❌ Prelum specimen: site-runtime-images: 3 errors
   - A4: https://prelum.dustinedwards.info/ /diagrams/prelum-03318765-light.svg has no width attribute, so the page shifts as it loads
   - A4: https://prelum.dustinedwards.info/ /diagrams/prelum-03318765-dark.svg has no width attribute, so the page shifts as it loads
   - A5: https://prelum.dustinedwards.info/ 3 images are fetchpriority="high"; more than two competes with the one that is the largest paint
-- 🟡 Capsid explorer: checks pass; no verifier yet
+- 🟡 Capsid explorer: images check passes; share card answers CORP same-origin
 - ❌ Capsid Portal: not run yet
 - Not checked, Capsid Portal and Carrel Desk pages behind sign-in: a stranger's crawl sees only the redirect to Access, so the images on the signed-in pages (Desk's media library, the Portal's views) are not checked live
 
