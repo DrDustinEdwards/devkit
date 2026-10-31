@@ -20,9 +20,15 @@
 //   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere, Dustin 2026-10-25);
 //   workflows  a devkit workflow the repository's kinds need and no workflow calls: ai-author, pr-footer, shared,
 //              workflow-audit and dependencies everywhere, worker-size and worker-deploy for an app with a wrangler
-//              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package;
+//              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package,
+//              conformance where an MCP server is (a source file importing site-runtime ./mcp-server or ./mcp-login);
 //   fakes      a test fake of its own where devkit has one: a GitHub API fake, an Access key pair and key set, a fetch
 //              that refuses every URL, a list of DELETE FROMs (./github, ./access, ./network, ./d1);
+//   ai         a model call or AI prompt that skips the shared pieces (area 11): Anthropic called outside site-runtime
+//              ./anthropic (C1, G1), a Workers AI run with no timeout, gateway or max_tokens (C2, G1, C5), an AI Search
+//              call or reranker with no timeout (C2, C13), JSON cut out of a model's free text (C6), a prompt's own dash
+//              rule instead of WRITING_RULES (W5), a routine fired outside fireOnce (R2); and in pins, an MCP server's
+//              site-runtime more than one minor behind the newest release (S7);
 //   config     .shared.json itself: an unknown key or kind stops the check (exit 2), and an exception that excused
 //              nothing in this run is a warning.
 //
@@ -399,14 +405,19 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
   /** @type {Record<string, ReturnType<TagReader>>} */
   const cache = {};
   const tagsOf = (/** @type {string} */ repo) => (cache[repo] ??= readTags(repo));
+  const servers = mcpServerDirs(tree);
   /** @param {string} file @param {number} line @param {string} repo @param {string} ref @param {string} [failsFrom] */
   const judge = (file, line, repo, ref, what = repo, failsFrom = undefined) => {
     const { tags, commits } = tagsOf(repo);
     const latest = newest(tags);
     if (!latest) return;
     let at = semver(ref) ? (ref.startsWith("v") ? ref : `v${ref}`) : Object.keys(commits).find((t) => commits[t] === ref && semver(t));
+    const server = repo === "site-runtime" && servers.has(posix.dirname(file)) ? (posix.dirname(file) === "." ? "the root" : posix.dirname(file)) : null;
     if (!at) {
       found.push({ check: "pins", file, line, failsFrom, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
+    } else if (server && minorsBehind(at, latest) > 1) {
+      // S7: every MCP server runs one door, so each stays within a minor of the newest site-runtime, whatever its age.
+      found.push({ check: "pins", file, line, failsFrom: MCP_PIN_FAILS_FROM, message: `the MCP server in ${server} runs site-runtime ${at}, more than one minor behind ${latest}: every server keeps the same door (S7); bump it` });
     } else if (compare(at, latest) < 0) {
       const days = FRESH[repo];
       const known = dates[repo];
@@ -437,6 +448,31 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
     if (known instanceof Error) found.push({ check: "pins", warn: true, message: `${repo}'s release dates could not be read (${known.message}), so its ${FRESH[repo]}-day rule was not judged` });
   }
   return found;
+}
+
+/** The release an MCP server's site-runtime pin more than one minor behind starts failing (S7); a warning until then. */
+const MCP_PIN_FAILS_FROM = "0.21.0";
+
+/** How many minors `at` is behind `latest`; a major behind counts as many. @param {string} at @param {string} latest */
+export function minorsBehind(at, latest) {
+  const [x, y] = [semver(at), semver(latest)];
+  if (!x || !y) return 0;
+  return x[0] < y[0] ? Infinity : Math.max(0, y[1] - x[1]);
+}
+
+/** A source file that serves MCP through the shared door. */
+const MCP_SERVER = /["']@dustinedwards\/site-runtime\/mcp-(?:server|login)["']/;
+
+/** The directories of the package.json files whose code serves MCP: each server file belongs to its nearest manifest. */
+export function mcpServerDirs(/** @type {Tree} */ tree) {
+  const manifests = tree.files.filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f)).map((f) => posix.dirname(f));
+  const dirs = new Set();
+  for (const file of tree.files) {
+    if (!SOURCE.test(file) || NOT_SOURCE.test(file) || !MCP_SERVER.test(tree.read(file))) continue;
+    const owner = manifests.filter((d) => d === "." || file.startsWith(`${d}/`)).sort((a, b) => b.length - a.length)[0];
+    if (owner) dirs.add(owner);
+  }
+  return dirs;
 }
 
 /** Export names from one module's source or declaration file. */
@@ -673,7 +709,7 @@ const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
 /**
  * The devkit workflows a repository needs, by what it holds: `needed` says why, or null. `runs` names the bin (or, in
  * devkit, the file) a workflow runs, so CI running that itself, directly or through a package script, counts as the call.
- * @typedef {{ workers: string[], script: boolean, private?: boolean, self?: string }} Holds
+ * @typedef {{ workers: string[], servers: string[], script: boolean, private?: boolean, self?: string }} Holds
  * @type {{ name: string, failsFrom?: string, warn?: boolean, runs?: string[], example?: string, needed: (repo: Holds) => string | null }[]}
  */
 export const WORKFLOWS = [
@@ -686,6 +722,7 @@ export const WORKFLOWS = [
   // Many Workers deploy another way today (Workers Builds, a deploy job of their own), so this one stays a warning.
   { name: "worker-deploy", warn: true, needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
   { name: "no-bloat", failsFrom: "0.21.0", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
+  { name: "conformance", failsFrom: "0.21.0", runs: ["devkit-conformance", "bin/conformance.mjs"], needed: ({ servers }) => (servers.length ? `a repository with an MCP server (${servers.join(", ")})` : null) },
   { name: "bump-consumers", failsFrom: "0.21.0", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
 ];
 
@@ -716,10 +753,11 @@ export function checkWorkflows(tree, config, repo = {}) {
     .filter(([dir, kind]) => ["site", "private", "worker"].includes(kind) && tree.files.some((f) => WRANGLER.test(f) && !NOT_SOURCE.test(f) && owner(f) === dir))
     .map(([dir]) => (dir === "." ? "the root" : dir));
   const script = tree.files.some((f) => SOURCE.test(f) && !NOT_SOURCE.test(f));
+  const servers = [...mcpServerDirs(tree)].map((dir) => (dir === "." ? "the root" : dir));
   /** @type {Finding[]} */
   const found = [];
   for (const { name, failsFrom, warn, runs = [], example = `examples/${name}-caller.yml`, needed } of WORKFLOWS) {
-    const why = needed({ workers, script, private: repo.private, self: repo.self });
+    const why = needed({ workers, servers, script, private: repo.private, self: repo.self });
     if (!why || called.has(name) || runs.some((bin) => reaches(text, bin)) || excused(config, "waive", `workflow:${name}`)) continue;
     // Outside Actions the repository's visibility is unknown, so no-bloat can only say what it would need.
     const unsure = name === "no-bloat" && repo.private === undefined;
@@ -766,6 +804,113 @@ export function checkFakes(tree, config, self) {
       if (!m || !find.every((f) => f.test(code)) || excused(config, "copies", file)) continue;
       found.push({ check: "fakes", file, line: code.slice(0, m.index).split("\n").length, failsFrom, message: `${say}: use ${use}, or say why in .shared.json "copies"` });
     }
+  }
+  return found;
+}
+
+/** The release the AI rules start failing; until then each is a warning, so the sites can move first. */
+const AI_FAILS_FROM = "0.21.0";
+
+/** A model call in a file: the markers C6 needs before it reads a regex as cutting JSON out of a model's answer. */
+const MODEL_CALL = /\bAI\s*\.\s*run\s*\(|\.(?:chatCompletions|aiSearch)\s*\(|["'`]@dustinedwards\/site-runtime\/anthropic["'`]|["'`]@anthropic-ai\/sdk["'`]/;
+
+/** A timeout within reach of a call that cannot take one through the shared caller. */
+const TIMEOUT = /AbortSignal\.timeout\(|\bsignal\s*:|\bsetTimeout\(|Promise\.race\(/;
+
+/**
+ * The AI rules: each a pattern over a source file's code (comments blanked), what it means, and the checklist item it
+ * proves. `test`, when given, judges the match (the call's arguments, the code around it) and returns what is missing, or
+ * null when the call is fine. Every rule was run against the family's repositories before it was added; none flags code
+ * that already does it the shared way.
+ * @type {{ id: string, find: RegExp, self?: string, test?: (code: string, m: RegExpExecArray) => string | null, say: (missing: string) => string }[]}
+ */
+export const AI_RULES = [
+  // Anthropic's Messages API called by hand or through the SDK, not through the shared caller (which adds the gateway,
+  // the timeout, the one retry layer and the stop-reason check). The routines URL is the R2 rule's, not this one's.
+  {
+    id: "C1",
+    self: "site-runtime",
+    find: /["'`]@anthropic-ai\/sdk["'`]|\bnew\s+Anthropic\s*\(|api\.anthropic\.com\/v1\/messages|["'`]\/v1\/messages["'`]/,
+    say: () => "calls Anthropic's Messages API outside site-runtime ./anthropic (C1, G1): use messages, structured or stream, which add the gateway, the timeout and the one retry layer",
+  },
+  // A Workers AI run: it needs a deadline (`signal`), the site's gateway and a cap on the answer.
+  {
+    id: "C2",
+    find: /\bAI\s*\.\s*run\s*\(/g,
+    test: (code, m) => {
+      const args = callArguments(code, m.index + m[0].length - 1);
+      const missing = [["signal", "a timeout (signal: AbortSignal.timeout(ms), C2)"], ["gateway", "the gateway (gateway: { id, metadata }, G1)"], ["max_tokens", "max_tokens (C5)"]].filter(([key]) => !new RegExp(`\\b${key}\\b`).test(args)).map(([, what]) => what);
+      return missing.length ? missing.join(", ") : null;
+    },
+    say: (missing) => `runs Workers AI without ${missing}: a person waits on it and the gateway is where its cost shows (C13)`,
+  },
+  // AI Search's model calls, the answer and the reranker: the binding takes no signal, so the deadline is the caller's.
+  {
+    id: "C13",
+    find: /\.(?:chatCompletions|aiSearch)\s*\(|\breranking\s*:\s*\{\s*enabled\s*:\s*true/g,
+    test: (code, m) => (TIMEOUT.test(code.slice(Math.max(0, m.index - 1500), m.index + 800)) ? null : "a timeout"),
+    say: () => "calls an AI Search model (an answer or the reranker) with no timeout near it (C2, C13): race it against a deadline, as dustinedwards.info's askStream does",
+  },
+  // JSON cut out of free text with a greedy regex, in a file that calls a model: ask for structured output instead.
+  {
+    id: "C6",
+    find: /\/\\[{[]\[\\s\\S\]\*\??\\[}\]]\//,
+    test: (code) => (MODEL_CALL.test(code) ? "" : null),
+    say: () => "cuts JSON out of a model's free text with a regex (C6): ask for structured output (site-runtime ./anthropic structured, or Workers AI's response_format) and parse the answer whole",
+  },
+  // A prompt's own rule about dashes: WRITING_RULES already says it, so a second copy drifts from it.
+  {
+    id: "W5",
+    self: "site-runtime",
+    find: /["'`][^"'`\n]*?\b(?:do not use|don['’]t use|never use|avoid|no)\s+(?:any\s+)?(?:em|en|long)(?:\s+or\s+en)?[ -]?dash/i,
+    say: () => "writes its own dash rule into a prompt (W5): site-runtime ./prose WRITING_RULES says it; put WRITING_RULES in the prompt instead of local style text",
+  },
+  // fireRoutine on its own: a retry after an unanswered fire starts a second session.
+  {
+    id: "R2",
+    self: "site-runtime",
+    find: /(?:import|export)\s*(?:type\s*)?\{[^}]*\bfireRoutine\b[^}]*\}\s*from\s*["'`]@dustinedwards\/site-runtime\/routine["'`]/,
+    say: () => "fires a routine with fireRoutine, outside the duplicate guard (R2): use fireOnce from site-runtime ./routine with an atomic store (D1 or a Durable Object), so a retry never starts a second session",
+  },
+];
+
+/** The text between a call's parentheses, from the index of its "(" (at most 4,000 characters). */
+export function callArguments(/** @type {string} */ code, /** @type {number} */ open) {
+  let depth = 0;
+  for (let i = open; i < Math.min(code.length, open + 4000); i++) {
+    if ("([{".includes(code[i])) depth++;
+    else if (")]}".includes(code[i]) && --depth === 0) return code.slice(open + 1, i);
+  }
+  return code.slice(open + 1, open + 4000);
+}
+
+/**
+ * Model calls and prompts that skip the shared pieces (AI_RULES), in source outside tests. A file the repository keeps
+ * on purpose is excused in .shared.json "copies", with the reason.
+ * @param {Tree} tree @param {Config} config @param {string} [self]
+ * @returns {Finding[]}
+ */
+export function checkAi(tree, config, self) {
+  /** @type {Finding[]} */
+  const found = [];
+  for (const file of tree.files) {
+    if (!SOURCE.test(file) || NOT_SOURCE.test(file)) continue;
+    const text = tree.read(file);
+    if (!/\bAI\b|anthropic|chatCompletions|aiSearch|reranking|dash|fireRoutine|\{\[\\s\\S\]|\[\[\\s\\S\]/i.test(text)) continue;
+    const code = blankComments(text);
+    /** @type {Finding[]} */
+    const mine = [];
+    for (const rule of AI_RULES) {
+      if (rule.self && rule.self === self) continue;
+      const find = rule.find.global ? rule.find : new RegExp(rule.find.source, `${rule.find.flags}g`);
+      for (const m of code.matchAll(find)) {
+        const missing = rule.test ? rule.test(code, m) : "";
+        if (missing === null) continue;
+        mine.push({ check: "ai", file, line: code.slice(0, m.index).split("\n").length, failsFrom: AI_FAILS_FROM, message: `[${rule.id}] this ${rule.say(missing)}` });
+        if (!rule.find.global) break;
+      }
+    }
+    if (mine.length && !excused(config, "copies", file)) found.push(...mine);
   }
   return found;
 }
@@ -1022,6 +1167,7 @@ async function main(/** @type {string[]} */ argv) {
     ...checkSpelling(root, config, argv.includes("--fix-spelling"), !self),
     ...checkWorkflows(tree, config, { self: self?.repo, private: event.repository?.private }),
     ...checkFakes(tree, config, self?.label),
+    ...checkAi(tree, config, self?.label),
   ];
   if (missing.length) {
     const tokens = missing.includes("capsomer") && self?.repo !== "capsomer" ? " and Capsomer's tokens" : "";
@@ -1034,7 +1180,7 @@ async function main(/** @type {string[]} */ argv) {
     const where = f.file ? ` file=${f.file}${f.line ? `,line=${f.line}` : ""}` : "";
     console.log(`::${isWarning(f) ? "warning" : "error"}${where}::[${f.check}] ${f.message}`);
   }
-  const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling", "workflows", "fakes", "config"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
+  const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling", "workflows", "fakes", "ai", "config"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
   console.log(errors.length ? `devkit-shared: ${errors.length} to fix (${counts}). What the packages export: npx devkit-shared list` : `devkit-shared: uses the shared code (${counts}).`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Shared-code check\n\n${counts}\n`);
   return errors.length ? 1 : 0;

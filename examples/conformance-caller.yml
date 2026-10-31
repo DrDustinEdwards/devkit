@@ -1,0 +1,31 @@
+name: conformance
+
+# The caller an MCP server's repository keeps. Replace the sha with the commit of devkit that holds the reviewed
+# conformance.yml, and keep it a full sha: scripts/check-callers.mjs fails on anything else. The server's package.json
+# lists "@dustinedwards/devkit" at a tag, "wrangler" and "@modelcontextprotocol/conformance" in its devDependencies, and
+# its directory holds .conformance.json (the header of bin/conformance.mjs; `npx devkit-conformance` runs it locally).
+
+on:
+  # A public repository: every pull request and every push to the default branch.
+  pull_request:
+  push:
+    branches: [main]
+  # A private repository spends minutes: drop the two above and run weekly instead.
+  # schedule:
+  #   - cron: "23 6 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: conformance-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  conformance:
+    uses: DrDustinEdwards/devkit/.github/workflows/conformance.yml@0000000000000000000000000000000000000000
+    with:
+      # The server's directory when it is not the root (Foxing's and dustinedwards.info's mcp/); omit otherwise.
+      working-directory: mcp
+      # The file naming the Node version, from the repository root; omit for .nvmrc.
+      node-version-file: package.json
