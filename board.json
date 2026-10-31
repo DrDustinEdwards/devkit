@@ -3200,7 +3200,9 @@
     "added": 23097,
     "removed": 2090
    },
-   "unchecked": {},
+   "unchecked": {
+    "Capsid Portal and Carrel Desk pages behind sign-in": "a stranger's crawl sees only the redirect to Access, so the images on the signed-in pages (Desk's media library, the Portal's views) are not checked live"
+   },
    "cells": {
     "package": {
      "status": "missing",
@@ -3687,12 +3689,12 @@
      "reason": "no check for a worker"
     },
     "capsid-portal": {
-     "status": "n/a",
-     "reason": "no check for a app"
+     "status": "missing",
+     "reason": "not run yet"
     },
     "carrel-desk": {
      "status": "n/a",
-     "reason": "no check for a app"
+     "reason": "a private writing desk behind Access with nothing public to share, so no share card is wanted; its signed-in pages are listed as unchecked"
     }
    }
   },
