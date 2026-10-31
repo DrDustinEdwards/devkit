@@ -1,152 +1,153 @@
 {
   "area": 2,
-  "verifier": "Verify security headers across sites",
+  "verifier": "Verify security headers",
   "date": "2026-10-31",
   "cells": {
     "package": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/check.mjs",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/csp-report.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.66.0/check.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.66.0/sites.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.66.0/csp-report.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.66.0/signed-in-crawl.mjs",
         "https://github.com/DrDustinEdwards/devkit/blob/main/live/sites.json"
       ],
-      "note": "opt-in-only grading of C3/C7/C9/S2/I3; report sink drops integrity and coep reports; no COEP report-to; applyHeaderSet has no 101 guard; Portal and Desk not on the board; no signed-in crawl; Access 4xx not treated as the gate; zone CAA/DNSSEC/preload open"
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). Checked 31 Oct 23:05 to 23:40 UTC against v0.66.0. Every round-2 package gap is closed: S2, C3, C7, C9, I3 are graded for every registry site (a declared deviation is a warning, a missed one an error); the one deviation left is C3 on Cloudflare's injected beacon, which carries no nonce; the sink keeps integrity-violation and coep reports and COEP has report-to; applyHeaderSet has the 101 guard (headers.mjs:215); logoutResponse is gone; Portal and Desk are on the board; the Access gate reads 4xx as well as redirects; the signed-in crawl is a shared module. Open and accepted: Trusted Types, Integrity-Policy and COEP are Report-Only on the 14 page origins (only the 5 MCP workers enforce), so they report but do not block yet; nothing in the code sets a date or a clean-report rule for moving them to enforce."
+    },
+    "carrel": {
+      "verdict": "complete",
+      "evidence": [
+        "https://carrel.dustinedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0 and v0.65.0; subResourceIntegrity on; admit() split from the gate in carrel #251 with the gate unchanged; preview policy keeps frame-ancestors 'self' for Desk and builds on UPLOAD_HEADERS."
+    },
+    "julieedwards-info": {
+      "verdict": "complete",
+      "evidence": [
+        "https://julieedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0; subResourceIntegrity on; Integrity-Policy, Trusted Types and COEP staged Report-Only."
+    },
+    "bsw": {
+      "verdict": "complete",
+      "evidence": [
+        "https://bsw.dustin-edwards.workers.dev/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0; noindex on workers.dev while the old site lives (oldSite)."
+    },
+    "txasm": {
+      "verdict": "complete",
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0; stays indexed on workers.dev because txasm.org is a suspended host (sites.mjs:339). Dustin's flag 21: txasm.org answers 302 to /cgi-sys/suspendedpage.cgi."
+    },
+    "foxing": {
+      "verdict": "complete",
+      "evidence": [
+        "https://foxing.app/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0. apps/web is on v0.65.0, but packages/api and packages/core are on v0.62.1: bump them with the next foxing change."
+    },
+    "enarratio": {
+      "verdict": "complete",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; static scripts carry integrity. Pin is v0.62.1 (renovate #122 to 0.65.0 is open); the pin check fails it three days after a newer minor, so merge #122."
+    },
+    "capsid": {
+      "verdict": "complete",
+      "evidence": [
+        "https://capsid.dustinedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0 (capsid #695); Portal cookies go through hostCookie (src/auth.ts:28)."
+    },
+    "capsid-mcp": {
+      "verdict": "complete",
+      "evidence": [
+        "https://mcp.dustinedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors, 0 warnings at v0.66.0; live sha 7baa2e1 or newer."
+    },
+    "dustinedwards-mcp": {
+      "verdict": "complete",
+      "evidence": [
+        "https://admin-mcp.dustinedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors, 0 warnings at v0.66.0; pin v0.65.0 in mcp/package.json."
+    },
+    "foxhound-mcp": {
+      "verdict": "complete",
+      "evidence": [
+        "https://admin-mcp.foxhoundapp.com/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors, 0 warnings at v0.66.0."
+    },
+    "carrel-mcp": {
+      "verdict": "complete",
+      "evidence": [
+        "https://carrel-mcp.dustinedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors, 0 warnings at v0.66.0; /health sha 509f1b3."
+    },
+    "capsid-portal": {
+      "verdict": "complete",
+      "evidence": [
+        "https://portal.dustinedwards.info/",
+        "https://mcp.dustinedwards.info/reports/signed-in-security.json"
+      ],
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0. Signed-in report https://mcp.dustinedwards.info/reports/signed-in-security.json at 2026-10-31T23:35:55Z (capsid 051d09f): pass, only the declared C3 warning; the H2 charset error from the 22:30Z report is gone."
+    },
+    "carrel-desk": {
+      "verdict": "complete",
+      "evidence": [
+        "https://desk.dustinedwards.info/",
+        "https://carrel-mcp.dustinedwards.info/reports/signed-in-security.json"
+      ],
+      "note": "Complete apart from Dustin's step 5 (make /.well-known/security.txt public, the one live error, D1) and the steps in dustin-steps.md. Signed-in report https://carrel-mcp.dustinedwards.info/reports/signed-in-security.json at 2026-10-31T23:31:15Z (carrel 509f1b3): pass, only the R4 'not probed' warning. Carrel #251 crawls Desk in-process as the Owner on GET; the Access gate is unchanged."
     },
     "dustinedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+        "https://dustinedwards.info/"
       ],
-      "note": "COOP same-origin-allow-popups reason matches no code (no window.open), so the I3 deviation falls with it; own MEDIA_CSP and pinned media test; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3: COEP is still enforced where an embedding site must keep it Report-Only. It passes v0.65.0 with 0 errors. Pin is v0.65.0 in package.json and mcp/package.json; a bump to v0.66.0 with the site's embeds change and a deploy fixes it. Re-check then."
     },
     "germomics": {
       "verdict": "partial",
       "evidence": [
-        "https://germomics.com/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+        "https://germomics.com/"
       ],
-      "note": "I3 'cannot be staged' cites a fixable shared-code gap; v0.57.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "julieedwards-info": {
-      "verdict": "partial",
-      "evidence": [
-        "https://julieedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "local Referrer-Policy literal (workers/app.ts:94); no requireJson; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "txasm": {
-      "verdict": "partial",
-      "evidence": [
-        "https://txasm.dustin-edwards.workers.dev/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "A6 declared while bsw in the same situation sends noindex; txasm.org alias now a suspended page; v0.57.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "bsw": {
-      "verdict": "partial",
-      "evidence": [
-        "https://bsw.dustin-edwards.workers.dev/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "pinned v0.50.1; registry 0.57.1 opt-ins are not in its code; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. Bump to v0.66.0 and deploy."
     },
     "foxhound": {
       "verdict": "partial",
       "evidence": [
-        "https://foxhoundapp.com/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+        "https://foxhoundapp.com/"
       ],
-      "note": "C9/I3 waived until a signed-in crawl nobody builds; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "foxing": {
-      "verdict": "partial",
-      "evidence": [
-        "https://foxing.app/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "own 101 guard instead of shared; pinned header test; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "carrel": {
-      "verdict": "partial",
-      "evidence": [
-        "https://carrel.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "local preview XFO and policy; pinned csp tests; own 101 guard; Desk security.txt behind Access; v0.54.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "enarratio": {
-      "verdict": "partial",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "/assets/* skips the Worker; not_found_handling none unlike capsomer/prelum; v0.52.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. foxhound #432 (v0.66.0) is open; re-check after it deploys."
     },
     "capsomer": {
       "verdict": "partial",
       "evidence": [
-        "https://capsomer.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+        "https://capsomer.dustinedwards.info/"
       ],
-      "note": "no S2 or I3 met or declared; /fonts/* skips the Worker; v0.52.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. Pin is v0.62.1; bump to v0.66.0 and deploy."
     },
     "prelum": {
       "verdict": "partial",
       "evidence": [
-        "https://prelum.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
+        "https://prelum.dustinedwards.info/"
       ],
-      "note": "no S2 or I3 met or declared; local nosniff/CSP in render-link-icons.mjs; four paths skip the Worker; v0.53.0; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "capsid": {
-      "verdict": "partial",
-      "evidence": [
-        "https://capsid.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "no S2 or I3 met or declared; Portal cookies hand-built without __Host- (no hostCookie); Portal not on the board; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "capsid-mcp": {
-      "verdict": "partial",
-      "evidence": [
-        "https://mcp.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "foxhound-mcp": {
-      "verdict": "partial",
-      "evidence": [
-        "https://admin-mcp.foxhoundapp.com/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "dustinedwards-mcp": {
-      "verdict": "partial",
-      "evidence": [
-        "https://admin-mcp.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
-    },
-    "carrel-mcp": {
-      "verdict": "partial",
-      "evidence": [
-        "https://carrel-mcp.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/v0.57.1/sites.mjs"
-      ],
-      "note": "no S2 or I3 met or declared; S2 deviation rests on false facts (React Router 8.5.1 subResourceIntegrity exists; the injected beacon carries integrity); C3/C7/C9/S2/I3 graded only when opted in; pinned behind v0.57.1"
+      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3 (COEP enforced, not Report-Only). prelum #182 (v0.66.0) merged at 22:49Z but the live sha at 23:10Z was still ffbe359, so the deploy had not landed. It passes v0.65.0 with 0 errors. Re-check after the deploy."
     },
     "foxing-mcp": {
-      "verdict": "missing",
+      "verdict": "partial",
       "evidence": [
         "https://admin-mcp.foxing.app/"
       ],
-      "note": "73 errors live: still Vercel; the foxing-admin-mcp Worker is deployed nowhere (workers.dev answers 1042)"
+      "note": "0 errors, 0 warnings live (on Cloudflare since foxing #165), but mcp/package.json pins site-runtime v0.62.0, four minors behind v0.66.0. devkit's pin check (S7) wants every MCP server within one minor; it is a warning until devkit 0.21.0. Bump to the current release and redeploy."
     }
   }
 }
