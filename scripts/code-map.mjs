@@ -38,16 +38,21 @@ export function crap(/** @type {number} */ cc, /** @type {number | null} */ cove
   return Math.round((cc * cc * (1 - coverage) ** 3 + cc) * 100) / 100;
 }
 
-/** The repository's TypeScript, from its own node_modules, so the map parses what its compiler parses. */
+/**
+ * The repository's TypeScript, from its own node_modules, so the map parses what its compiler parses. TypeScript 7 (the
+ * native compiler) has no JavaScript compiler API, so a repository on it is read through the TypeScript 6 that code-map.yml
+ * installs beside this script instead.
+ */
 export function loadTypeScript(/** @type {string} */ root) {
   for (const base of [join(root, "package.json"), import.meta.url]) {
     try {
-      return createRequire(base)("typescript");
+      const ts = createRequire(base)("typescript");
+      if (typeof ts.createSourceFile === "function") return ts;
     } catch {
       // Try the next place.
     }
   }
-  throw new Error("typescript is not installed in the repository; the code map reads its code through it");
+  throw new Error("no typescript with the compiler API (5 or 6) is installed; the code map reads the code through it");
 }
 
 /**
