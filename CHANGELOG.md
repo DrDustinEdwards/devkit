@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.6 (2026-10-31)
+
+- `devkit-ops-audit` asks for an HTML 404 (N6) only where the home page is HTML, so an API or MCP Worker that serves no pages (Carrel's AI door) answers its 404 in its own type. The plain line says when N6 was not asked.
+
 ## 0.20.5 (2026-10-31)
 
 - `devkit-family`: a pin behind its package's newest release is a warning, on every branch. Renovate opens that bump, and failing on it turned every repository's family check red, and mailed the owner, each time a shared package released. A pin to a raw commit still fails.

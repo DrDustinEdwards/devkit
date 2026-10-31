@@ -82,14 +82,15 @@ export function healthFindings({ url, status, contentType, cacheControl, robots,
 }
 
 /**
- * N1 and N6 from one read of a path that does not exist.
- * @param {{ url: string, status: number, contentType: string, location: string }} read
+ * N1 and N6 from one read of a path that does not exist. N6 holds only where the home page is HTML: an API or MCP Worker
+ * that serves no pages answers its 404 in its own type.
+ * @param {{ url: string, status: number, contentType: string, location: string, pages?: boolean }} read
  * @returns {Finding[]}
  */
-export function notFoundFindings({ url, status, contentType, location }) {
+export function notFoundFindings({ url, status, contentType, location, pages = true }) {
   if (status >= 300 && status < 400) return [finding("error", "N1", url, `a missing page redirects (${status}) to ${location || "nowhere named"} instead of answering 404`)];
   if (status !== 404) return [finding("error", "N1", url, `a missing page answers ${status}, not 404`)];
-  if (!/^text\/html\b/i.test(contentType)) return [finding("error", "N6", url, `the 404 is '${contentType || "no Content-Type"}', not an HTML page`)];
+  if (pages && !/^text\/html\b/i.test(contentType)) return [finding("error", "N6", url, `the 404 is '${contentType || "no Content-Type"}', not an HTML page`)];
   return [];
 }
 
@@ -167,7 +168,11 @@ async function main() {
   const findings = [];
   const say = (/** @type {string} */ line) => console.log(`devkit-ops-audit: ${line}`);
 
-  const [health, missing] = await Promise.all([read(`${base}${healthPath}`, "application/health+json, application/json"), read(`${base}/${randomUUID()}`, "text/html")]);
+  const [health, missing, home] = await Promise.all([
+    read(`${base}${healthPath}`, "application/health+json, application/json"),
+    read(`${base}/${randomUUID()}`, "text/html"),
+    read(`${base}/`, "text/html"),
+  ]);
   if (!isRead(health) && !isRead(missing)) {
     console.error(`devkit-ops-audit: ${base} did not answer: ${health.error ?? health.status}, ${missing.error ?? missing.status}`);
     process.exit(2);
@@ -193,8 +198,9 @@ async function main() {
     findings.push(finding("error", "N1", missing.url, `no answer: ${missing.error}`));
     say(`404: ${missing.url} did not answer (${missing.error})`);
   } else {
-    findings.push(...notFoundFindings(/** @type {any} */ (missing)));
-    say(`404: ${missing.url} answered ${missing.status} ${missing.contentType || "(no Content-Type)"}`);
+    const pages = !!home.error || /^text\/html\b/i.test(home.contentType ?? "");
+    findings.push(...notFoundFindings({ .../** @type {any} */ (missing), pages }));
+    say(`404: ${missing.url} answered ${missing.status} ${missing.contentType || "(no Content-Type)"}${pages ? "" : `; the home page is '${home.contentType || "no Content-Type"}', so no HTML 404 is asked`}`);
   }
 
   if (values.repo) {
