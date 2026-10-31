@@ -14,7 +14,7 @@
     "jscpd": "jscpd@5.4.0"
   },
   "baseline": {
-    "measured_at": "9a18036",
+    "measured_at": "135ede1",
     "knip": {
       "Unlisted dependencies": 3
     },
@@ -25,12 +25,12 @@
     },
     "tests": {
       "files": 31,
-      "cases": 190
+      "cases": 191
     },
     "comments": {
-      "lines": 1655,
-      "code": 7652,
-      "percentage": 17.78
+      "lines": 1696,
+      "code": 7783,
+      "percentage": 17.89
     }
   }
 }
