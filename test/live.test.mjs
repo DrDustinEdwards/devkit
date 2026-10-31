@@ -4,7 +4,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { buildBoard, CLEAN_DAYS, lintConfig, loadConfig, resultOf } from "../bin/live.mjs";
+import { buildBoard, CLEAN_DAYS, lintConfig, loadConfig, reportedResult, resultOf } from "../bin/live.mjs";
 
 const sites = [{ id: "a", name: "A", kind: "site", origin: "https://a.example.com" }];
 const areas = [{ id: 1, name: "Search", builder: "Build search", checks: [{ name: "audit", repo: "prelum", bin: "prelum-audit" }] }];
@@ -30,6 +30,18 @@ test("a check's exit code decides pass, fail or could not run, and its annotatio
   );
   assert.equal(resultOf({ code: 0, output: "", seconds: 1 }).status, "pass");
   assert.equal(resultOf({ code: 2, output: "boom", seconds: 1 }).status, "error");
+});
+
+test("a reported check passes only on a fresh report that names the site and has no error finding", () => {
+  const check = { name: "conformance", report: "https://reporter.example.com/report.json" };
+  const now = new Date("2026-11-01T12:00:00Z");
+  const report = (at, entry) => ({ check: "conformance", at, sites: { "https://a.example.com": entry } });
+  const status = (r) => reportedResult(r, check, sites[0], now).status;
+  assert.equal(status(report("2026-11-01T11:50:00Z", { status: "pass", findings: [] })), "pass");
+  assert.equal(status(report("2026-11-01T10:00:00Z", { status: "pass", findings: [] })), "error");
+  assert.equal(status({ ...report("2026-11-01T11:50:00Z", {}), sites: {} }), "error");
+  assert.equal(status(null), "error");
+  assert.equal(status(report("2026-11-01T11:50:00Z", { status: "pass", findings: [{ severity: "error", check: "C1", detail: "x" }] })), "fail");
 });
 
 test("checks passing without a verdict is partial; a verdict signed by the builder is refused and never complete", () => {

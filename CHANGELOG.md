@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `devkit-live` reported checks: a check that needs a site's secrets runs where they live and publishes its result on its own https origin (`"report"` in `areas.json` in place of `repo` and `bin`); the daily run reads it, and a stale, unreadable or incomplete report is an error, never a pass. No site key goes into GitHub.
+
 ## 0.20.1 (2026-10-31)
 
 - Area 6 (images and media) runs site-runtime's `site-runtime-images` (site-runtime 0.43.0) on sites and static sites: srcset, sizes and dimensions, AVIF and WebP, one priority image, oversized files, `/media` caching, alt text, share-card size and tags, image sitemaps, GPS left in published files, and captions on video and audio (A2 to A5, A7, A12, B1, B2, C1 to C3, C8, D2, E1 to E3).
