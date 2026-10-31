@@ -1,0 +1,101 @@
+{
+  "area": 3,
+  "verifier": "Verify shared sign-in and access",
+  "date": "2026-10-31",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in.mjs#L238",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in.mjs#L465",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in-account.mjs#L21"
+      ],
+      "note": "passkey delete and email change need no fresh sign-in; a new link resets the three tries; Turnstile off when a key is missing; no new-device or recovery notice, no security history, no spike alert"
+    },
+    "dustinedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/workers/app.ts#L212",
+        "https://dustinedwards.info/lab"
+      ],
+      "note": "/lab has no Access app in front (unsigned GET answers 503) and is outside the idle sign-out; admin refusals not logged"
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
+      ],
+      "note": "admin items pass; the admin 403 is not logged and nothing alerts on spikes (F2, F3)"
+    },
+    "txasm": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/txasm/blob/743827a1f9db/app/routes/account.tsx",
+        "https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options"
+      ],
+      "note": "rpId is the workers.dev host until cutover; no email change, delete account or two-ways nudge; package gaps"
+    },
+    "foxhound": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
+        "https://foxhoundapp.com/.well-known/oauth-authorization-server"
+      ],
+      "note": "merchant MCP has no CIMD (fails H4 live), thin consent page, local call log; package gaps"
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
+        "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
+      ],
+      "note": "idle sign-out skips /api/v1/admin and /api/v1/ops; change-email mail goes to the wrong address; raw send error rethrown; package gaps"
+    },
+    "capsid": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
+      ],
+      "note": "Portal session is a 12-hour cookie with no 1-hour idle sign-out and no server-side revoke; Portal sign-ins not logged"
+    },
+    "capsid-mcp": {
+      "verdict": "complete",
+      "evidence": [
+        "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
+        "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
+      ],
+      "note": "H1-H8 pass in code and live (shared consent, CIMD and registration, audit log)"
+    },
+    "foxhound-mcp": {
+      "verdict": "complete",
+      "evidence": [
+        "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
+        "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
+      ],
+      "note": "H1-H8 pass in code and live; the shared live check's list skips this host, so it was run by hand"
+    },
+    "dustinedwards-mcp": {
+      "verdict": "complete",
+      "evidence": [
+        "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
+      ],
+      "note": "H1-H8 pass in code and live"
+    },
+    "carrel-mcp": {
+      "verdict": "complete",
+      "evidence": [
+        "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
+        "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
+      ],
+      "note": "H1-H8 pass in code and live; MCP sign-ins are not in the call log, which H8 does not require"
+    },
+    "foxing-mcp": {
+      "verdict": "partial",
+      "evidence": [
+        "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
+      ],
+      "note": "parked: the Worker has never been deployed, so the old server fails H4 live"
+    }
+  }
+}
