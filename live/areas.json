@@ -141,7 +141,7 @@
       "name": "AI and MCP",
       "builder": "Complete shared AI and MCP code",
       "checks": [
-        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["worker"], "args": ["--kind", "worker"], "grants": true },
+        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["worker"], "args": ["--kind", "worker"], "grants": true, "site_args": { "capsid-mcp": ["--grant-path", "/ops/mcp"] } },
         { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["site", "static"], "args": ["--kind", "site"], "grants": true }
       ]
     },
