@@ -12,6 +12,12 @@ name: live
 # LIVE_GITHUB_TOKEN, when set, is a fine-grained token (resource owner DrDustinEdwards, all repositories, Pull requests
 # read, Metadata read) for counting the lines of each area's pull requests in the private repositories too. PSI_API_KEY, when
 # set, is a PageSpeed Insights API key for area 7's lab and field numbers; Google's keyless quota refuses most days.
+#
+# MCP_TEST_GRANT_<HOST>, one per MCP server (the host upper-cased, every other character an underscore), is a READ-ONLY
+# agent key for that server: area 11's site-runtime-ai-audit reads it for tools/list, the conformance server scenarios
+# and the rate-limit burst. bin/live.mjs hands these only to a check marked "grants": true in live/areas.json, and the
+# audit never prints one. A server without its secret is still checked without a token, and the board says what was
+# skipped. A new MCP server adds its line below and its secret.
 
 on:
   schedule:
@@ -55,6 +61,12 @@ jobs:
           LIVE_GITHUB_TOKEN: ${{ secrets.LIVE_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
           PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
+          MCP_TEST_GRANT_MCP_DUSTINEDWARDS_INFO: ${{ secrets.MCP_TEST_GRANT_MCP_DUSTINEDWARDS_INFO }}
+          MCP_TEST_GRANT_CARREL_MCP_DUSTINEDWARDS_INFO: ${{ secrets.MCP_TEST_GRANT_CARREL_MCP_DUSTINEDWARDS_INFO }}
+          MCP_TEST_GRANT_ADMIN_MCP_DUSTINEDWARDS_INFO: ${{ secrets.MCP_TEST_GRANT_ADMIN_MCP_DUSTINEDWARDS_INFO }}
+          MCP_TEST_GRANT_ADMIN_MCP_FOXING_APP: ${{ secrets.MCP_TEST_GRANT_ADMIN_MCP_FOXING_APP }}
+          MCP_TEST_GRANT_ADMIN_MCP_FOXHOUNDAPP_COM: ${{ secrets.MCP_TEST_GRANT_ADMIN_MCP_FOXHOUNDAPP_COM }}
+          MCP_TEST_GRANT_FOXHOUNDAPP_COM: ${{ secrets.MCP_TEST_GRANT_FOXHOUNDAPP_COM }}
         run: node bin/live.mjs run --out "$RUNNER_TEMP/run.json"
       - name: Add the run to the scoreboard branch and rebuild the board
         run: |
