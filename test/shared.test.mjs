@@ -24,9 +24,6 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
       "package.json": JSON.stringify({ dependencies: { a: "github:DrDustinEdwards/prelum#v0.9.0", b: `github:DrDustinEdwards/site-runtime#${SHA_RAW}`, c: "github:DrDustinEdwards/d1-dump#v0.10.0", d: "git+https://github.com/DrDustinEdwards/capsomer.git#v0.9.0", enarratio: "^0.9.0" } }, null, 1),
       "app/package.json": '{"dependencies":{"enarratio":"0.10.0"}}',
       ".github/workflows/ci.yml": `uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${SHA_V2} # v0.10.0\nuses: DrDustinEdwards/devkit/.github/workflows/shared.yml@${"1".repeat(40)} # v0.9.0`,
-      // The tag ai-author.yml runs its bin from.
-      ".github/workflows/ai-author.yml": "    with:\n      devkit: DrDustinEdwards/devkit#v0.9.0\n",
-      ".github/workflows/other.yml": "      devkit: DrDustinEdwards/devkit#v0.10.0\n",
     }),
     tags,
   );
@@ -38,11 +35,10 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
       "capsomer is at v0.9.0; the newest release is v0.10.0",
       "enarratio is at v0.9.0; the newest release is v0.10.0",
       "devkit is at v0.9.0; the newest release is v0.10.0",
-      "ai-author's devkit: input is at v0.9.0; the newest release is v0.10.0",
     ],
   );
-  assert.deepEqual([found[4].line, found[5].line], [2, 2]);
-  assert.deepEqual(found.map((f) => isWarning(f)), [true, false, true, true, true, true]);
+  assert.equal(found[4].line, 2);
+  assert.deepEqual(found.map((f) => isWarning(f)), [true, false, true, true, true]);
   // A FRESH package: behind a minor out three days fails, behind a younger one warns, unread dates warn.
   const now = Date.parse("2026-11-10T00:00:00Z");
   const dates = { "site-runtime": { "v0.9.0": "2026-11-01T00:00:00Z", "v0.10.0": "2026-11-09T00:00:00Z" }, prelum: new Error("GitHub answered 403") };
@@ -367,10 +363,10 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
   const missing = (/** @type {Record<string, string>} */ more, config = {}) =>
     checkWorkflows(tree({ ...files, ...more }), { apps: { ".": "static", mcp: "worker" }, ...config }, { self: "prelum", private: false }).map((f) => f.message.split("devkit's ")[1].split(".yml")[0]);
   assert.deepEqual(missing({}), WORKFLOWS.map((w) => w.name));
-  const calls = WORKFLOWS.filter((w) => !["shared", "no-bloat", "worker-deploy"].includes(w.name)).map((w) => `      uses: DrDustinEdwards/devkit/.github/workflows/${w.name}.yml@${SHA_V2}`);
+  const calls = WORKFLOWS.filter((w) => !["no-bloat", "worker-deploy"].includes(w.name)).map((w) => `      uses: DrDustinEdwards/devkit/.github/workflows/${w.name}.yml@${SHA_V2}`);
   const ci = {
     // A comment naming a workflow is no call.
-    ".github/workflows/ci.yml": `jobs:\n  a:\n${calls.join("\n")}\n  # uses: DrDustinEdwards/devkit/.github/workflows/worker-deploy.yml@${SHA_V2}\n  b:\n    steps:\n      - run: npm run check\n      - run: npx devkit-shared\n`,
+    ".github/workflows/ci.yml": `jobs:\n  a:\n${calls.join("\n")}\n  # uses: DrDustinEdwards/devkit/.github/workflows/worker-deploy.yml@${SHA_V2}\n  b:\n    steps:\n      - run: npm run check\n`,
     "package.json": JSON.stringify({ scripts: { check: "npm run check:bloat && tsc", "check:bloat": "devkit-no-bloat" } }),
   };
   assert.deepEqual(missing(ci), ["worker-deploy"]);
@@ -378,8 +374,8 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
   // devkit calls its own by path, and a reusable workflow it ships for others is no call; locally no-bloat only warns.
   const devkit = checkWorkflows(
     tree({
-      ".github/workflows/ci.yml": "jobs:\n  a:\n    uses: ./.github/workflows/shared.yml\n",
-      ".github/workflows/pr-footer.yml": `on:\n  workflow_call:\njobs:\n  a:\n    uses: DrDustinEdwards/devkit/.github/workflows/pr-footer.yml@${SHA_V2}\n`,
+      ".github/workflows/ci.yml": "jobs:\n  a:\n    uses: ./.github/workflows/checks.yml\n",
+      ".github/workflows/workflow-audit.yml": `on:\n  workflow_call:\njobs:\n  a:\n    uses: DrDustinEdwards/devkit/.github/workflows/workflow-audit.yml@${SHA_V2}\n`,
       "wrangler.jsonc": "{}",
       "test/fixtures/site/wrangler.jsonc": "{}",
       "src/a.ts": "",
@@ -390,8 +386,6 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
   assert.deepEqual(
     devkit.map((f) => `${f.message.split(" calls")[0]} ${f.message.split("devkit's ")[1].split(".yml")[0]} ${isWarning(f, "0.21.0")}`),
     [
-      "every repository ai-author false",
-      "every repository pr-footer false",
       "every repository workflow-audit false",
       "every repository dependencies false",
       "a repository with a Worker (the root) worker-size false",
@@ -400,7 +394,7 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
       "a shared package other repositories pin bump-consumers false",
     ],
   );
-  assert.match(devkit[6].message, /\(a warning here: only Actions says whether this repository is public\)$/);
+  assert.match(devkit[4].message, /\(a warning here: only Actions says whether this repository is public\)$/);
 });
 
 test("PLANT: a model call or prompt that skips the shared pieces is flagged with its checklist item; the shared way passes", () => {
@@ -451,9 +445,8 @@ test("PLANT: a test with a fake devkit ships warns, naming the helper; using dev
   );
   assert.deepEqual(
     found.map((f) => `${f.file}:${f.line} ${f.message.split("use devkit ")[1].split(",")[0]} ${isWarning(f)}`),
-    ["test/github.test.ts:2 ./github stubGitHub true", "test/access.test.ts:1 ./access stubAccess true", "test/setup.ts:2 ./network refuseNetwork true", "test/db.test.ts:2 ./d1 resetDb true", "test/loop.test.ts:1 ./d1 resetDb true", "test/trees.test.ts:1 ./github stubGitHub true", "test/rsa.test.ts:1 ./access stubAccess true", "test/rsa2.test.ts:1 ./access stubAccess true"],
+    ["test/github.test.ts:2 ./github stubGitHub false", "test/access.test.ts:1 ./access stubAccess false", "test/setup.ts:2 ./network refuseNetwork false", "test/db.test.ts:2 ./d1 resetDb false", "test/loop.test.ts:1 ./d1 resetDb false", "test/trees.test.ts:1 ./github stubGitHub false", "test/rsa.test.ts:1 ./access stubAccess false", "test/rsa2.test.ts:1 ./access stubAccess false"],
   );
-  assert.equal(found.filter((f) => isWarning(f, "0.21.0")).length, 0);
 });
 
 test("PLANT: an exception that excused nothing in the run is named; one that did is not", () => {
@@ -532,12 +525,11 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
 
   const site = run(["--from", from]);
   assert.equal(site.status, 1);
-  assert.deepEqual(site.lines.filter((l) => l.startsWith("::error")), [
-    `::error file=src/app.css,line=2::[tokens] --page-max is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"`,
-  ]);
-  assert.ok(site.lines.includes("::warning file=src/index.ts,line=2::[copies] slugify is a local copy of Prelum ./slug slugify: import it"));
+  const errors = site.lines.filter((l) => l.startsWith("::error"));
+  assert.ok(errors.includes(`::error file=src/app.css,line=2::[tokens] --page-max is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"`));
+  assert.ok(errors.includes("::error file=src/index.ts,line=2::[copies] slugify is a local copy of Prelum ./slug slugify: import it"));
   assert.ok(site.lines.includes('::warning file=.shared.json::[config] "copies" "src/gone.ts" excuses nothing in this run: remove it'));
-  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: 1 to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, ai 0, config 1\)/);
+  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: \d+ to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, ai 0, config 1\)/);
   assert.match(readFileSync(summary, "utf8"), /^### Shared-code check\n\npins 0, copies 1,/);
 
   // Prelum checking itself: its own export is its API, not a copy.

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 0.21.0 (2026-11-01)
+
+- **The rules that were warnings until 0.21.0 now fail**: local copies of shared exports found by name, test fakes devkit ships (`./github`, `./access`, `./network`, `./d1`), the AI code rules (C1, C2, C5, C6, C13, W5, R2), an MCP server more than one minor behind site-runtime, and every devkit workflow a repository's kinds need (`checks`, `workflow-audit`, `dependencies`, `worker-size`, `no-bloat`, `conformance`, `bump-consumers`). Every repository's default branch passed this check before the release.
+- **Removed:** `ai-author.yml`, `pr-footer.yml` and `shared.yml`, which `checks.yml` replaced in 0.20.23, and their example callers; `family.yml` and the `devkit-family` bin, the names before 0.20.8; reading `.family.json` (it is `.shared.json`); and the `devkit:` input pin rule, which only `ai-author.yml` took. The shared-code check now asks for `checks` where it asked for `ai-author`, `pr-footer` and `shared`.
+- Wording: "shared feature" and "the network's faces" where the messages said "family".
+
 ## 0.20.23 (2026-11-01)
 
 - `checks.yml`: the small checks in one job. It runs the footer strip (`pr-footer.yml`), the trailer check (`ai-author.yml`) and the shared-code check (`shared.yml`) on one runner instead of three, from devkit at the caller's pin, with nothing installed. An edit of a pull request description runs only the footer step, and its concurrency group never cancels a run checking the code. The caller is `examples/checks-caller.yml`. `devkit-shared` counts it as calling all three and now names it as the caller to add. The three separate workflows keep working until every repository has moved.

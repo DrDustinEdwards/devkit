@@ -11,14 +11,14 @@
 //              rules, a Cloudflare Images resize, an island loader, JSON-LD, a hex or base64url encoder, a pre-paint theme
 //              script...), in source or in a static _headers file (a security header set);
 //   libraries  a direct dependency on a library a shared package wraps (marked, remark, mermaid, sanitize-html...);
-//   features   a family feature the repository's kind of app should have and does not import (robots.txt, security.txt,
+//   features   a shared feature the repository's kind of app should have and does not import (robots.txt, security.txt,
 //              IndexNow, the CSP report endpoint, /health...), and as warnings an accessibility test, noindex on admin and
 //              login routes, and a feed's alternate link;
 //   tokens     a site setting its own value for one of Capsomer's tokens (--page-max, --measure, --radius-m, --accent...),
-//              or loading its own files for the family's faces (Schibsted Grotesk, Martian Mono) instead of
-//              capsomer/fonts.css: a value the family shares is set once, in Capsomer, never per site;
+//              or loading its own files for the network's faces (Schibsted Grotesk, Martian Mono) instead of
+//              capsomer/fonts.css: a value the network shares is set once, in Capsomer, never per site;
 //   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere, Dustin 2026-10-25);
-//   workflows  a devkit workflow the repository's kinds need and no workflow calls: ai-author, pr-footer, shared,
+//   workflows  a devkit workflow the repository's kinds need and no workflow calls: checks,
 //              workflow-audit and dependencies everywhere, worker-size and worker-deploy for an app with a wrangler
 //              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package,
 //              conformance where an MCP server is (a source file importing site-runtime ./mcp-server or ./mcp-login);
@@ -34,7 +34,7 @@
 //
 //   npx devkit-shared                    the check, against .shared.json (no file: one site at the root)
 //   npx devkit-shared --fix-spelling     rewrite the British spellings in place, then run the check
-//   npx devkit-shared list               the generated list of every shared package's exports and every family feature
+//   npx devkit-shared list               the generated list of every shared package's exports and every shared feature
 //   --from <dir>                         read the packages from checkouts named by repository (dir/prelum, dir/site-runtime...)
 //                                        instead of node_modules; a checkout missing there stops the check (exit 2)
 //
@@ -50,7 +50,7 @@
 //     "copies": { "app/lib/og.ts": "why" },               a file allowed to hold a copy (or a test, a fake), and why
 //     "libraries": { "katex": "why" },                    a direct dependency allowed, and why
 //     "tokens": { "--measure": "why", "fonts": "why" },   a Capsomer token this repository sets itself (or "fonts", its own
-//                                                         files for the family's faces), and why
+//                                                         files for the network's faces), and why
 //     "spelling": { "ignore": ["word"], "contracts": ["regex"], "skip": ["frame/**"] }
 //                                                         words never checked; text a regex matches (a stored value, a
 //                                                         column) left as it is, while the same word in prose is fixed;
@@ -84,7 +84,7 @@ export const PACKAGES = [
 const SITE = ["site", "static"];
 const PUBLIC_OR_PRIVATE = ["site", "static", "private"];
 
-/** Every family feature: which kinds of app need it, how its use is found, and what provides it. */
+/** Every shared feature: which kinds of app need it, how its use is found, and what provides it. */
 export const FEATURES = {
   robots: { kinds: SITE, find: /site-helpers\/robots["']/, use: "Prelum ./robots robotsDocument (/robots.txt)" },
   aiTxt: { kinds: SITE, find: /\baiTxt(Response)?\b/, use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt)" },
@@ -101,7 +101,7 @@ export const FEATURES = {
   csp: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/(csp|sites)["']/, use: "site-runtime ./csp buildContentSecurityPolicy (or a ./sites entry given to ./static-site staticSite)" },
   cspReport: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/(csp-report|static-site)["']/, use: "site-runtime ./csp-report receiveCspReport (./static-site staticSite receives them for a static site)" },
   health: { kinds: ["site", "private"], find: /site-runtime\/health["']/, use: "site-runtime ./health healthResponse (/health)" },
-  // base.css, not just a token file: the element styles every family page shares. A build that copies it out of the
+  // base.css, not just a token file: the element styles every page in the network shares. A build that copies it out of the
   // package (Capsid's explorer: require.resolve("capsomer/package.json"), then "css/base.css") counts.
   capsomer: { kinds: PUBLIC_OR_PRIVATE, find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']/, use: "Capsomer's capsomer/base.css (tokens, element styles, the site layer), then its components" },
 };
@@ -140,7 +140,7 @@ export const FINGERPRINTS = [
   { find: /\bIMAGES\s*\.\s*input\s*\(|\.input\((?:[^()]|\([^()]*\))*\)\s*\.transform\s*\(/, use: "site-runtime ./image" },
   // A Google Fonts stylesheet linked from a page: a render-blocking request to a second origin, then the files from a
   // third. A server fetching a face (site-runtime ./share-card googleFont) names no href and passes.
-  { find: /href\s*[:=]\s*\{?\s*["'`]https:\/\/fonts\.googleapis\.com\/css|@import\s+url\(\s*["']?https:\/\/fonts\.googleapis\.com/, use: "self-hosted fonts (capsomer/fonts.css for the family's faces, Fontsource for a site's own)" },
+  { find: /href\s*[:=]\s*\{?\s*["'`]https:\/\/fonts\.googleapis\.com\/css|@import\s+url\(\s*["']?https:\/\/fonts\.googleapis\.com/, use: "self-hosted fonts (capsomer/fonts.css for the network's faces, Fontsource for a site's own)" },
   // A loader of its own: finding the marked elements, or importing a module from /islands/.
   { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
   // JSON-LD by hand: a script of that type filled by JSON.stringify in the same
@@ -442,8 +442,6 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
       for (const m of text.matchAll(/"enarratio":\s*"\^?~?(\d+\.\d+\.\d+)"/g)) judge(file, lineOf(m.index), "enarratio", m[1]);
     } else if (/^\.github\/workflows\/.+\.ya?ml$/.test(file)) {
       for (const m of text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/[\w.-]+@([0-9a-f]{40})/gi)) judge(file, lineOf(m.index), "devkit", m[1]);
-      // The tag ai-author.yml runs check-trailers from, for a repository whose package.json does not list devkit.
-      for (const m of text.matchAll(/^[ \t]*devkit:[ \t]*["']?DrDustinEdwards\/devkit#([^\s"'#]+)/gim)) judge(file, lineOf(m.index), "devkit", m[1], "ai-author's devkit: input", "0.21.0");
     }
   }
   for (const [repo, known] of Object.entries(dates)) {
@@ -630,12 +628,12 @@ export function checkTokens(tree, tokens, config) {
       const line = code.slice(0, m.index + m[1].length).split("\n").length;
       found.push({ check: "tokens", file, line, message: `${name} is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"` });
     }
-    // The family's faces come from capsomer/fonts.css, every weight in one file each, so a bold is the same bold on every
+    // The network's faces come from capsomer/fonts.css, every weight in one file each, so a bold is the same bold on every
     // site (Dustin, 2026-10-28: sites that picked their own weights drew the footer's name differently).
     for (const m of code.matchAll(/@fontsource(?:-variable)?\/(?:schibsted-grotesk|martian-mono)\b|@font-face\s*\{[^}]*font-family:\s*["']?(?:Schibsted Grotesk|Martian Mono)/g)) {
       if (excused(config, "tokens", "fonts")) break;
       const line = code.slice(0, m.index).split("\n").length;
-      found.push({ check: "tokens", file, line, message: `the family's faces are Capsomer's: load capsomer/fonts.css instead of your own files, or say why in .shared.json "tokens" "fonts"` });
+      found.push({ check: "tokens", file, line, message: `the network's faces are Capsomer's: load capsomer/fonts.css instead of your own files, or say why in .shared.json "tokens" "fonts"` });
     }
   }
   return found;
@@ -705,9 +703,6 @@ export function checkFeatures(tree, config, now = Date.now()) {
   return found;
 }
 
-/** The workflows checks.yml runs in its one job: calling it counts as calling each. */
-const COMBINED = ["ai-author", "pr-footer", "shared"];
-
 /** A wrangler config: the app it sits in is a Worker. */
 const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
 
@@ -718,9 +713,7 @@ const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
  * @type {{ name: string, failsFrom?: string, warn?: boolean, runs?: string[], example?: string, needed: (repo: Holds) => string | null }[]}
  */
 export const WORKFLOWS = [
-  { name: "ai-author", failsFrom: "0.21.0", runs: ["devkit-check-trailers", "bin/check-trailers.mjs"], example: "examples/checks-caller.yml", needed: () => "every repository" },
-  { name: "pr-footer", failsFrom: "0.21.0", example: "examples/checks-caller.yml", needed: () => "every repository" },
-  { name: "shared", failsFrom: "0.21.0", runs: ["devkit-shared", "bin/shared.mjs"], example: "examples/checks-caller.yml", needed: () => "every repository" },
+  { name: "checks", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "workflow-audit", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "dependencies", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "worker-size", failsFrom: "0.21.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
@@ -747,8 +740,6 @@ export function checkWorkflows(tree, config, repo = {}) {
   const called = new Set([...text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/([\w.-]+?)\.ya?ml@/gi)].map((m) => m[1]));
   // devkit calls its own workflows by path.
   if (repo.self === "devkit") for (const m of text.matchAll(/uses:\s*\.\/\.github\/workflows\/([\w.-]+?)\.ya?ml/g)) called.add(m[1]);
-  // checks.yml is ai-author, pr-footer and shared in one job.
-  if (called.has("checks")) for (const name of COMBINED) called.add(name);
   const scripts = tree.files.filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f)).flatMap((f) => Object.entries(JSON.parse(tree.read(f)).scripts ?? {}));
   const invokes = (/** @type {string} */ cmd, /** @type {string} */ name) => new RegExp(`\\b(?:run(?:-script)?|pnpm|yarn|npm)\\s+(?:--?\\S+\\s+)*${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w:.-])`).test(cmd);
   /** @returns {boolean} */
@@ -827,7 +818,7 @@ const TIMEOUT = /AbortSignal\.timeout\(|\bsignal\s*:|\bsetTimeout\(|Promise\.rac
 /**
  * The AI rules: each a pattern over a source file's code (comments blanked), what it means, and the checklist item it
  * proves. `test`, when given, judges the match (the call's arguments, the code around it) and returns what is missing, or
- * null when the call is fine. Every rule was run against the family's repositories before it was added; none flags code
+ * null when the call is fine. Every rule was run against the network's repositories before it was added; none flags code
  * that already does it the shared way.
  * @type {{ id: string, find: RegExp, self?: string, test?: (code: string, m: RegExpExecArray) => string | null, say: (missing: string) => string }[]}
  */
@@ -1087,7 +1078,7 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
   const lines = [
     "# What the shared packages already do",
     "",
-    "Generated by `devkit-shared list`; do not edit by hand. Before writing anything a site might share, look here: if a package exports it, import it. `npx devkit-shared` fails a repository that copies one of these, misses a family feature, or pins an old release.",
+    "Generated by `devkit-shared list`; do not edit by hand. Before writing anything a site might share, look here: if a package exports it, import it. `npx devkit-shared` fails a repository that copies one of these, misses a shared feature, or pins an old release.",
     "",
     "## Family features",
     "",
@@ -1141,10 +1132,8 @@ async function main(/** @type {string[]} */ argv) {
     return 0;
   }
   /** @type {Config} */
-  // .family.json is the config's name before 0.20.8, read until a repository renames it.
-  const configFile = [".shared.json", ".family.json"].find((f) => existsSync(join(root, f)));
+  const configFile = existsSync(join(root, ".shared.json")) ? ".shared.json" : null;
   const config = configFile ? JSON.parse(readFileSync(join(root, configFile), "utf8")) : {};
-  if (configFile === ".family.json") console.log("::warning file=.family.json::[config] .family.json is now .shared.json: rename it");
   validateConfig(config);
   const tree = gitTree(root);
   // A shared package defines its own exports; it is checked against the others, as a package, not a site.

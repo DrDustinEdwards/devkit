@@ -1,7 +1,7 @@
 name: checks
 
-# The caller a repository keeps, in place of ai-author.yml, pr-footer.yml and shared.yml: devkit's checks.yml runs all three
-# in one job. Replace the sha with the commit of devkit that holds the reviewed checks.yml, and keep it a full sha:
+# The caller a repository keeps: devkit's checks.yml runs the footer strip, the trailer check and the shared-code check in
+# one job. Replace the sha with the commit of devkit that holds the reviewed checks.yml, and keep it a full sha:
 # scripts/check-callers.mjs fails on anything else. The default branch here is main; use the repository's own. Run it by
 # hand once to clean the footer from every past pull request. Exceptions to the shared-code check go in .shared.json.
 
