@@ -21,7 +21,8 @@
 //   workflows  a devkit workflow the repository's kinds need and no workflow calls: checks,
 //              workflow-audit and dependencies everywhere, worker-size and worker-deploy for an app with a wrangler
 //              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package,
-//              conformance where an MCP server is (a source file importing site-runtime ./mcp-server or ./mcp-login);
+//              conformance where an MCP server is (a source file importing site-runtime ./mcp-server or ./mcp-login),
+//              scorecard in a public repository;
 //   fakes      a test fake of its own where devkit has one: a GitHub API fake, an Access key pair and key set, a fetch
 //              that refuses every URL, a list of DELETE FROMs (./github, ./access, ./network, ./d1);
 //   ai         a model call or AI prompt that skips the shared pieces (area 11): Anthropic called outside site-runtime
@@ -721,6 +722,7 @@ export const WORKFLOWS = [
   { name: "worker-deploy", warn: true, needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
   { name: "no-bloat", failsFrom: "0.21.0", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
   { name: "conformance", failsFrom: "0.21.0", runs: ["devkit-conformance", "bin/conformance.mjs"], needed: ({ servers }) => (servers.length ? `a repository with an MCP server (${servers.join(", ")})` : null) },
+  { name: "scorecard", failsFrom: "0.22.0", needed: ({ private: closed }) => (closed === false ? "a public repository" : null) },
   { name: "bump-consumers", failsFrom: "0.21.0", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
 ];
 

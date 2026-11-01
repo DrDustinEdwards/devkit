@@ -1,0 +1,10 @@
+// The rollback drill's test Worker, on workers.dev only: no route, no bindings, no ids. The account comes from
+// CLOUDFLARE_ACCOUNT_ID in the drill's environment.
+{
+  "name": "devkit-rollback-drill",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": { "DRILL_MODE": "bad", "DEPLOY_SHA": "unknown" }
+}
