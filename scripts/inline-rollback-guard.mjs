@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 // Writes each script a shared workflow carries into its heredoc, so a caller that pins one devkit sha runs the script of that
 // same commit: scripts/rollback-guard.mjs into the "Write the rollback guard" step of worker-deploy.yml, and
-// scripts/strip-pr-footer.mjs into pr-footer.yml, and scripts/code-map.mjs into code-map.yml. Run it after any edit to one:
+// scripts/code-map.mjs into code-map.yml. Run it after any edit to one:
 //
 //   node scripts/inline-rollback-guard.mjs
 //
 // It replaces what sits between a heredoc's opening `<<'MARKER'` and its closing line, every line indented to the run
-// block. test/worker-deploy-workflow.test.mjs and test/pr-footer-workflow.test.mjs fail when a pair disagrees.
+// block. test/worker-deploy-workflow.test.mjs and test/code-map-workflow.test.mjs fail when a pair disagrees.
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
@@ -15,7 +15,6 @@ const ROOT = new URL("..", import.meta.url);
 const INDENT = " ".repeat(10);
 const PAIRS = [
   { workflow: ".github/workflows/worker-deploy.yml", script: "scripts/rollback-guard.mjs", marker: "ROLLBACK_GUARD" },
-  { workflow: ".github/workflows/pr-footer.yml", script: "scripts/strip-pr-footer.mjs", marker: "PR_FOOTER" },
   { workflow: ".github/workflows/code-map.yml", script: "scripts/code-map.mjs", marker: "CODE_MAP" },
 ];
 
