@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      # Full history, so the trailer check below can read every commit this event adds.
+      # Full history, so the no-bloat line count can diff against the pull request base.
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           fetch-depth: 0
@@ -31,24 +31,12 @@ jobs:
       # The scoreboard's site, area and verdict files, so a verdict signed by its own builder never merges.
       - name: The scoreboard's files are sound
         run: node bin/live.mjs lint
-      # The check every site runs, on devkit itself: pins, copies and American spelling.
-      - name: Uses the shared code
-        run: node bin/shared.mjs
       # The no-bloat ratchet on devkit itself, through the bin it ships: Knip, jscpd, the tests and the comment share against
       # .no-bloat.json, and on a pull request the lines it adds and removes.
       - name: No new bloat
         env:
           LINES_FROM: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || '' }}
         run: node bin/no-bloat.mjs ${LINES_FROM:+--lines-from "$LINES_FROM"}
-      # This repository's own commits, through the bin it ships, as a caller of ai-author.yml would run it.
-      - name: No AI trailer or author on new commits
-        env:
-          EVENT: ${{ github.event_name }}
-          PR_BASE: ${{ github.event.pull_request.base.sha }}
-          PR_HEAD: ${{ github.event.pull_request.head.sha }}
-          PUSH_BEFORE: ${{ github.event.before }}
-          PUSH_AFTER: ${{ github.sha }}
-        run: node bin/check-trailers.mjs
 
   # devkit's own workflows through the shared audits it ships, this commit's copy of each (as code-map-self.yml does).
   workflow-audit:

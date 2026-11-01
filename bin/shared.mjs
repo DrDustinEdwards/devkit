@@ -705,6 +705,9 @@ export function checkFeatures(tree, config, now = Date.now()) {
   return found;
 }
 
+/** The workflows checks.yml runs in its one job: calling it counts as calling each. */
+const COMBINED = ["ai-author", "pr-footer", "shared"];
+
 /** A wrangler config: the app it sits in is a Worker. */
 const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
 
@@ -715,9 +718,9 @@ const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
  * @type {{ name: string, failsFrom?: string, warn?: boolean, runs?: string[], example?: string, needed: (repo: Holds) => string | null }[]}
  */
 export const WORKFLOWS = [
-  { name: "ai-author", failsFrom: "0.21.0", runs: ["devkit-check-trailers", "bin/check-trailers.mjs"], needed: () => "every repository" },
-  { name: "pr-footer", failsFrom: "0.21.0", needed: () => "every repository" },
-  { name: "shared", failsFrom: "0.21.0", runs: ["devkit-shared", "bin/shared.mjs"], needed: () => "every repository" },
+  { name: "ai-author", failsFrom: "0.21.0", runs: ["devkit-check-trailers", "bin/check-trailers.mjs"], example: "examples/checks-caller.yml", needed: () => "every repository" },
+  { name: "pr-footer", failsFrom: "0.21.0", example: "examples/checks-caller.yml", needed: () => "every repository" },
+  { name: "shared", failsFrom: "0.21.0", runs: ["devkit-shared", "bin/shared.mjs"], example: "examples/checks-caller.yml", needed: () => "every repository" },
   { name: "workflow-audit", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "dependencies", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "worker-size", failsFrom: "0.21.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
@@ -744,6 +747,8 @@ export function checkWorkflows(tree, config, repo = {}) {
   const called = new Set([...text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/([\w.-]+?)\.ya?ml@/gi)].map((m) => m[1]));
   // devkit calls its own workflows by path.
   if (repo.self === "devkit") for (const m of text.matchAll(/uses:\s*\.\/\.github\/workflows\/([\w.-]+?)\.ya?ml/g)) called.add(m[1]);
+  // checks.yml is ai-author, pr-footer and shared in one job.
+  if (called.has("checks")) for (const name of COMBINED) called.add(name);
   const scripts = tree.files.filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f)).flatMap((f) => Object.entries(JSON.parse(tree.read(f)).scripts ?? {}));
   const invokes = (/** @type {string} */ cmd, /** @type {string} */ name) => new RegExp(`\\b(?:run(?:-script)?|pnpm|yarn|npm)\\s+(?:--?\\S+\\s+)*${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w:.-])`).test(cmd);
   /** @returns {boolean} */
