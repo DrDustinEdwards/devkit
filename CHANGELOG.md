@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.20.25 (2026-11-01)
+
+- `rollback-drill.yml`: the weekly rollback drill (checklist F2). It deploys a known good version of a test Worker (`drill/worker.mjs`, `devkit-rollback-drill` on workers.dev), plants a bad deploy through this commit's `worker-deploy.yml`, and its `verdict` job passes only when the live gate refused the planted deploy and rolled the Worker back to the known good version, read from `/health` and from Cloudflare's deployment list. Needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in devkit.
+- `worker-deploy.yml`: `drill` input (default false), for the drill only: the live gate's failure does not fail the caller's run. The gate's steps are unchanged.
+
 ## 0.20.24 (2026-11-01)
 
 - `scorecard.yml`: OpenSSF Scorecard for every public repository (checklist C5), weekly and on each push to the default branch. It publishes the score to the OpenSSF API (the public score and badge), uploads the SARIF to code scanning, and its `scorecard gate` job fails when the aggregate score falls below the last published one, naming each check that fell (`tolerance` input, 0 by default). The job that publishes holds only the steps the Scorecard API accepts. The caller is `examples/scorecard-caller.yml`; devkit runs it on itself (`scorecard-self.yml`). `devkit-shared` asks for it in a public repository, as a warning until 0.22.0.

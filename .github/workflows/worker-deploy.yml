@@ -93,6 +93,11 @@ on:
         required: false
         type: string
         default: ""
+      drill:
+        description: The rollback drill (rollback-drill.yml) only. The live gate's failure does not fail the caller's run, since a drill plants a deploy the gate must refuse; the drill's own verdict job judges what happened. Never set it on a real deploy.
+        required: false
+        type: boolean
+        default: false
       egress-policy:
         description: StepSecurity Harden-Runner's egress policy for every job (C8). "audit" records each host a job reaches (the run's insights link is in its log); "block" refuses every host not in allowed-endpoints.
         required: false
@@ -269,6 +274,8 @@ jobs:
     needs: deploy
     # !failure() && !cancelled(), as in capsid: a failed deploy skips the gate rather than failing it a second time.
     if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target' && !failure() && !cancelled()
+    # A drill's refusal is the expected result, so it leaves the run green; the steps run exactly as for a real deploy.
+    continue-on-error: ${{ inputs.drill }}
     runs-on: ubuntu-latest
     # Above the poll budget (40 x 3s) with room for the verify command, the rollback's 20 reads and gradual-minutes (25 at most).
     timeout-minutes: 45

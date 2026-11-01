@@ -1,0 +1,151 @@
+name: rollback-drill
+
+# THE WEEKLY ROLLBACK DRILL (checklist F2): the shared deploy's rollback, proven on a test Worker rather than trusted from
+# unit tests. Three jobs:
+#
+#   known good  deploys drill/worker.mjs as devkit-rollback-drill with DRILL_MODE good and a stand-in commit, and waits for
+#               /health to report it. This is the version a rollback must return to.
+#   planted     this commit's worker-deploy.yml ships the committed config (DRILL_MODE bad: every page answers 500) as this
+#               run's commit. Its live gate must refuse it and roll it back. `drill: true` keeps that refusal from failing
+#               the run; nothing else in the gate changes.
+#   verdict     passes only when /health reports the known good commit again AND Cloudflare's newest deployment is the
+#               rollback the gate wrote for this run's commit ("live gate failed for <sha>"). A gate that let the bad deploy
+#               stand, a rollback that never ran, or a planted deploy that never shipped each fail the run.
+#
+# THE RECORD is the run itself: the verdict's summary names the commits and the deployment ids, and a red run is a failed
+# drill. The Worker lives on workers.dev only, with no bindings, so the drill touches nothing a site uses.
+#
+# NEEDS two repository secrets, CLOUDFLARE_API_TOKEN (Workers Scripts: Edit) and CLOUDFLARE_ACCOUNT_ID. A missing one fails
+# the run loudly, as worker-deploy.yml does.
+
+on:
+  schedule:
+    - cron: "41 7 * * 3"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rollback-drill
+  cancel-in-progress: false
+
+env:
+  WRANGLER_VERSION: "4.149.0"
+  WORKER: devkit-rollback-drill
+  ORIGIN: https://devkit-rollback-drill.dustin-edwards.workers.dev
+  # The known good version's stand-in commit: a sha, so the rollback guard can read it, and never this run's.
+  GOOD_SHA: 5ca1ab1e00000000000000000000000000000000
+
+jobs:
+  good:
+    name: known good
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: drill
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - name: Deploy the known good version
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          npx --yes "wrangler@${WRANGLER_VERSION}" deploy --name "$WORKER" --var "DRILL_MODE:good" --var "DEPLOY_SHA:${GOOD_SHA}"
+          for _ in $(seq 1 40); do
+            if curl -fsS --max-time 10 "$ORIGIN/health" | grep -q "\"sha\":\"${GOOD_SHA}\"" && curl -fsS --max-time 10 -o /dev/null "$ORIGIN/"; then
+              echo "known good ${GOOD_SHA} is live" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::the known good version never came up at ${ORIGIN}, so there is nothing to roll back to and the drill stops."
+          exit 1
+
+  planted:
+    needs: good
+    uses: ./.github/workflows/worker-deploy.yml
+    with:
+      worker-name: devkit-rollback-drill
+      health-url: https://devkit-rollback-drill.dustin-edwards.workers.dev/health
+      verify-command: >-
+        code=$(curl -sS --max-time 10 -o /dev/null -w '%{http_code}' https://devkit-rollback-drill.dustin-edwards.workers.dev/) || exit 3;
+        if [ "$code" = 200 ]; then echo "/ answered 200"; else echo "/ answered $code: refused"; exit 1; fi
+      working-directory: drill
+      install: "echo nothing to install"
+      sha-var: DEPLOY_SHA
+      drill: true
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  verdict:
+    name: verdict
+    needs: [good, planted]
+    if: always() && needs.good.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: drill
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - name: Judge the drill
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          live=$(curl -sS --max-time 10 "$ORIGIN/health" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{process.stdout.write(String(JSON.parse(s).sha))}catch{process.stdout.write("unreadable")}})')
+          npx --yes "wrangler@${WRANGLER_VERSION}" deployments list --name "$WORKER" --json > "$RUNNER_TEMP/deployments.json"
+          # The newest deployment and the one before it, by creation time, with the message each was made with.
+          read -r newest_id newest_msg previous_id < <(node -e '
+            const raw = require("fs").readFileSync(process.argv[1], "utf8");
+            const list = JSON.parse(raw.slice(raw.search(/[[{]/)));
+            const all = (Array.isArray(list) ? list : list.deployments ?? []).sort((a, b) => Date.parse(b.created_on) - Date.parse(a.created_on));
+            const msg = (d) => String(d?.annotations?.["workers/message"] ?? "").replace(/\s+/g, "_") || "-";
+            console.log(all[0]?.id ?? "-", msg(all[0]), all[1]?.id ?? "-");
+          ' "$RUNNER_TEMP/deployments.json")
+          {
+            echo "### Rollback drill"
+            echo
+            echo "- this run's planted commit: ${GITHUB_SHA}"
+            echo "- known good stand-in: ${GOOD_SHA}"
+            echo "- /health now reports: ${live}"
+            echo "- newest deployment: ${newest_id} (${newest_msg//_/ }), after ${previous_id}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$live" != "$GOOD_SHA" ]; then
+            echo "::error title=Rollback drill failed::/health reports ${live}, not the known good ${GOOD_SHA}: the planted deploy was not rolled back."
+            exit 1
+          fi
+          if [ "${newest_msg//_/ }" != "live gate failed for ${GITHUB_SHA}" ]; then
+            echo "::error title=Rollback drill failed::the newest deployment is not the live gate's rollback of ${GITHUB_SHA} (its message is '${newest_msg//_/ }'), so the planted deploy never shipped or the gate never rolled it back."
+            exit 1
+          fi
+          echo "PASSED: the live gate refused ${GITHUB_SHA} and rolled ${WORKER} back to ${GOOD_SHA}." | tee -a "$GITHUB_STEP_SUMMARY"

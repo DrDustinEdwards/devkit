@@ -1,1 +1,1 @@
-{ "entry": ["stryker.config.mjs"] }
+{ "entry": ["stryker.config.mjs", "drill/worker.mjs"] }
