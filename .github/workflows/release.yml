@@ -4,14 +4,26 @@ name: release
 # v<version> tag yet, this tags that commit and publishes a GitHub release whose notes are the version's own CHANGELOG
 # section (a "## 0.19.0 (date)" or "## [0.19.0]" heading down to the next "## "), or GitHub's generated notes when the
 # CHANGELOG has none. Nobody pushes a tag by hand, and a session that cannot push tags can still release by merging.
-# It is site-runtime's and Capsomer's release job, once, for every package repository.
+# It is the release job, once, for every package repository installed by git tag.
+#
+# BUILD. A package that ships built files (Capsomer's dist/) passes `build: true`: the job runs `npm ci` (whose prepare
+# script builds), drops the prepare script, commits the built files on top of the merged commit and tags that commit, which
+# is on no branch. An app installing github:DrDustinEdwards/<package>#vX.Y.Z then gets the package as built, with no build
+# and none of the package's devDependencies at install time.
+#
+# PROVENANCE (checklist C7). Each new release packs the tagged tree with `npm pack --ignore-scripts`, attests the tarball
+# with GitHub's build provenance (actions/attest-build-provenance, a Sigstore-signed SLSA statement naming this workflow
+# run) and attaches it to the release, so anyone can check a release came from this workflow:
+#   gh release download vX.Y.Z -R DrDustinEdwards/<package> -p '*.tgz'
+#   gh attestation verify <package>-X.Y.Z.tgz -R DrDustinEdwards/<package>
 #
 # A tag made with the workflow's own token starts no other workflow (GitHub's rule against loops), so the caller runs
 # bump-consumers.yml after this when `created` is true (examples/release-caller.yml). Run the caller by hand to release a
 # version that merged without a tag.
 #
 # A CALLER pins a full 40-character sha; scripts/check-callers.mjs fails on anything else. The caller's job grants
-# contents: write, which this needs to create the tag and the release.
+# contents: write (the tag, the release and its tarball), id-token: write (the Sigstore certificate) and
+# attestations: write (storing the attestation).
 
 on:
   workflow_call:
@@ -20,6 +32,16 @@ on:
         required: false
         type: number
         default: 5
+      build:
+        description: Build with `npm ci` and tag a release commit that holds the built files (see BUILD above).
+        required: false
+        type: boolean
+        default: false
+      node-version-file:
+        description: The Node.js version file setup-node reads when `build` is true.
+        required: false
+        type: string
+        default: .node-version
     outputs:
       created:
         description: "'true' when this run created the tag and the release."
@@ -37,6 +59,8 @@ jobs:
     timeout-minutes: ${{ inputs.timeout-minutes }}
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     outputs:
       created: ${{ steps.release.outputs.created }}
       tag: ${{ steps.release.outputs.tag }}
@@ -45,10 +69,17 @@ jobs:
         with:
           persist-credentials: false
 
+      - if: inputs.build
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          package-manager-cache: false
+
       - id: release
         env:
           GH_TOKEN: ${{ github.token }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          BUILD: ${{ inputs.build }}
         run: |
           if [ "$GITHUB_REF" != "refs/heads/$DEFAULT_BRANCH" ]; then
             echo "::error::release runs only on the default branch ($DEFAULT_BRANCH), not $GITHUB_REF."
@@ -73,10 +104,42 @@ jobs:
               on { print }
             ' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
           fi
-          gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$tag" -f sha="$GITHUB_SHA" >/dev/null
+          if [ "$BUILD" = "true" ]; then
+            # npm ci runs prepare, which builds; the release commit holds the built files and no prepare script.
+            npm ci
+            node -e 'const fs = require("node:fs"); const p = JSON.parse(fs.readFileSync("package.json", "utf8")); delete p.scripts.prepare; fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n")'
+            git add -f dist package.json
+            git -c user.name="github-actions[bot]" -c user.email="41898341+github-actions[bot]@users.noreply.github.com" commit -q -m "Release $tag: the built package"
+            git tag "$tag"
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/$tag"
+          else
+            gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$tag" -f sha="$GITHUB_SHA" >/dev/null
+          fi
           if [ -s "$RUNNER_TEMP/notes.md" ]; then
             gh release create "$tag" --verify-tag --title "$tag" --notes-file "$RUNNER_TEMP/notes.md"
           else
             gh release create "$tag" --verify-tag --title "$tag" --generate-notes
           fi
           echo "created=true" >> "$GITHUB_OUTPUT"
+
+      - id: pack
+        name: Pack the release
+        if: steps.release.outputs.created == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/pack"
+          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/pack" >/dev/null
+          echo "tarball=$(ls "$RUNNER_TEMP"/pack/*.tgz)" >> "$GITHUB_OUTPUT"
+
+      - name: Attest the release's provenance
+        if: steps.release.outputs.created == 'true'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: ${{ steps.pack.outputs.tarball }}
+
+      - name: Attach the tarball to the release
+        if: steps.release.outputs.created == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+          TARBALL: ${{ steps.pack.outputs.tarball }}
+        run: gh release upload "$TAG" "$TARBALL" -R "$GITHUB_REPOSITORY"

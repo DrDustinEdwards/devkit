@@ -93,6 +93,16 @@ on:
         required: false
         type: string
         default: ""
+      egress-policy:
+        description: StepSecurity Harden-Runner's egress policy for every job (C8). "audit" records each host a job reaches (the run's insights link is in its log); "block" refuses every host not in allowed-endpoints.
+        required: false
+        type: string
+        default: audit
+      allowed-endpoints:
+        description: With egress-policy block, the hosts the jobs may reach beyond the ones every job needs (GitHub, npm, Cloudflare's API), as host:port separated by spaces or new lines (the live gate's health and verify hosts go here).
+        required: false
+        type: string
+        default: ""
     outputs:
       d1-bookmark:
         description: The D1 Time Travel bookmark read before the pre-deploy guard, when `d1-database` is set.
@@ -141,6 +151,20 @@ jobs:
       version-id: ${{ steps.deploy.outputs.version-id }}
       previous-version-id: ${{ steps.deploy.outputs.previous-version-id }}
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+        with:
+          egress-policy: ${{ inputs.egress-policy }}
+          disable-sudo-and-containers: true
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+            codeload.github.com:443
+            objects.githubusercontent.com:443
+            release-assets.githubusercontent.com:443
+            registry.npmjs.org:443
+            api.cloudflare.com:443
+            ${{ inputs.allowed-endpoints }}
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           persist-credentials: false
@@ -254,6 +278,20 @@ jobs:
       run:
         working-directory: ${{ inputs.working-directory }}
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+        with:
+          egress-policy: ${{ inputs.egress-policy }}
+          disable-sudo-and-containers: true
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+            codeload.github.com:443
+            objects.githubusercontent.com:443
+            release-assets.githubusercontent.com:443
+            registry.npmjs.org:443
+            api.cloudflare.com:443
+            ${{ inputs.allowed-endpoints }}
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           persist-credentials: false
@@ -564,6 +602,20 @@ jobs:
     outputs:
       url: ${{ steps.upload.outputs.url }}
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+        with:
+          egress-policy: ${{ inputs.egress-policy }}
+          disable-sudo-and-containers: true
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+            codeload.github.com:443
+            objects.githubusercontent.com:443
+            release-assets.githubusercontent.com:443
+            registry.npmjs.org:443
+            api.cloudflare.com:443
+            ${{ inputs.allowed-endpoints }}
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           persist-credentials: false

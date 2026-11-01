@@ -2,6 +2,7 @@ name: release
 
 # The caller a package repository keeps. Merging a version bump to the default branch is the release: release.yml tags
 # it and publishes the GitHub release, then bump-consumers.yml starts Renovate in every repository that depends on it.
+# A package that ships built files (dist/) adds `with: build: true` to the release job (release.yml, BUILD).
 # Replace both shas with the devkit commit that holds the reviewed files, and keep them full shas.
 
 on:
@@ -20,6 +21,8 @@ jobs:
   release:
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     uses: DrDustinEdwards/devkit/.github/workflows/release.yml@0000000000000000000000000000000000000000
 
   bump:
