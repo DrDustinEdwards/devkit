@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-01T03:17:17.628Z",
+ "as_of": "2026-11-01T14:17:02.605Z",
  "finished": false,
  "public_token": true,
  "sites": [
@@ -106,9 +106,9 @@
    "builder": "Share SEO and other key site code",
    "verifier": null,
    "lines": {
-    "prs": 30,
-    "added": 17142,
-    "removed": 664
+    "prs": 33,
+    "added": 17310,
+    "removed": 719
    },
    "unchecked": {},
    "cells": {
@@ -1458,12 +1458,12 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-d3dc32e6-2750-4847-bb59-57408ec2953e (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-c49abf3e-e235-44f9-a4c8-35acd2fd7f3d (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
        "check": "C16",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-d3dc32e6-2750-4847-bb59-57408ec2953e (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
+       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-c49abf3e-e235-44f9-a4c8-35acd2fd7f3d (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
       },
       {
        "severity": "warning",
@@ -1582,13 +1582,15 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "/lab has no Access app in front (unsigned GET answers 503) and is outside the idle sign-out; admin refusals not logged",
-     "evidence": [
-      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/workers/app.ts#L212",
-      "https://dustinedwards.info/lab"
-     ],
-     "clean_days": 2
+     "status": "missing",
+     "reason": "site-runtime-sign-in: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "G1",
+       "detail": "https://dustinedwards.info/lab a declared admin page answered 404, not a redirect to Access or a 401/403"
+      }
+     ]
     },
     "germomics": {
      "status": "partial",
@@ -1737,350 +1739,9 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "prelum-content: 8 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "writing-heading-order",
-       "detail": "https://dustinedwards.info/research/publications h3 follows h1"
-      },
-      {
-       "severity": "error",
-       "check": "writing-fragment",
-       "detail": "https://dustinedwards.info/research/publications a link to #papers-results lands on nothing"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/retroviruses rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/retroviruses/human rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/retroviruses/avian rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/bacteriophages rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/science-education rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "error",
-       "check": "writing-fragment",
-       "detail": "https://dustinedwards.info/research/phages a link to #phages-results lands on nothing"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/phages rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "error",
-       "check": "writing-fragment",
-       "detail": "https://dustinedwards.info/research/protocols a link to #protocols-results lands on nothing"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/titer rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/dilution rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/webbed-plate rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/moi rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/eop rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/lysate-volume rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/phage-discovery rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/virus-isolation rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/virus-isolation/faq rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/phage-bioinformatics rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/central-dogma rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/study-skills rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/foxhound rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/foxing rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/foxing-edu rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/germomics rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/capsid rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/enarratio rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/carrel rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/capsomer rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/privacy rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/terms rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/accessibility rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/coi-primers rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/pan-avian-gapdh rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/phage-dna-extraction rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/phage-isolation rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/rev-lpdv-primers rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "error",
-       "check": "writing-fragment",
-       "detail": "https://dustinedwards.info/research/lab a link to #lab-results lands on nothing"
-      },
-      {
-       "severity": "error",
-       "check": "writing-fragment",
-       "detail": "https://dustinedwards.info/research/lab/primers a link to #primers-results lands on nothing"
-      },
-      {
-       "severity": "error",
-       "check": "writing-fragment",
-       "detail": "https://dustinedwards.info/research/lab/strains a link to #strains-results lands on nothing"
-      },
-      {
-       "severity": "error",
-       "check": "writing-fragment",
-       "detail": "https://dustinedwards.info/research/lab/reagents a link to #reagents-results lands on nothing"
-      },
-      {
-       "severity": "error",
-       "check": "writing-fragment",
-       "detail": "https://dustinedwards.info/research/lab/equipment a link to #equipment-results lands on nothing"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/carrel-one-api-for-every-site rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/carrel-a-writing-desk-apart-from-the-site rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-img-size",
-       "detail": "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp image /diagrams/dustin-edwards-803ab50b-light.svg has no width and height, so the page shifts as it loads"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-img-size",
-       "detail": "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp image /diagrams/dustin-edwards-803ab50b-dark.svg has no width and height, so the page shifts as it loads"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-img-size",
-       "detail": "https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth image /diagrams/dustin-edwards-e2394abb-light.svg has no width and height, so the page shifts as it loads"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-img-size",
-       "detail": "https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth image /diagrams/dustin-edwards-e2394abb-dark.svg has no width and height, so the page shifts as it loads"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-img-size",
-       "detail": "https://dustinedwards.info/writing/agent-write-access-to-a-live-site image /diagrams/dustin-edwards-b54765cf-light.svg has no width and height, so the page shifts as it loads"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-img-size",
-       "detail": "https://dustinedwards.info/writing/agent-write-access-to-a-live-site image /diagrams/dustin-edwards-b54765cf-dark.svg has no width and height, so the page shifts as it loads"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/agent-write-access-to-a-live-site rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/ten-years-on-cloudflare rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/site-search-on-d1 rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/posts-in-git-served-from-d1 rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/color-palette-the-build-can-check rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/blog-reading-without-javascript rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/where-should-a-blog-store-its-words rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "germomics": {
      "status": "partial",
@@ -2103,255 +1764,9 @@
      "clean_days": 2
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "prelum-content: 43 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "writing-heading-order",
-       "detail": "https://foxhoundapp.com/products h3 follows h1"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-heading-order",
-       "detail": "https://foxhoundapp.com/about h3 follows h1"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-heading-order",
-       "detail": "https://foxhoundapp.com/demos h3 follows h1"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-heading-order",
-       "detail": "https://foxhoundapp.com/docs h3 follows h1"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-heading-order",
-       "detail": "https://foxhoundapp.com/blog/archive h3 follows h1"
-      },
-      {
-       "severity": "warning",
-       "check": "writing-heading-order",
-       "detail": "https://foxhoundapp.com/compare h3 follows h1"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/foxhound-vs-stripe-smart-retries stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/best-dunning-software-2026 stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/foxhound-vs-churn-buster stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/foxhound-vs-churnkey stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/foxhound-vs-paddle-retain stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/payment-failure-as-churn-signal stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/mrr-movement-explained stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/how-to-reduce-saas-churn stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/annual-to-monthly-churn-signal stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/customer-health-score-stripe stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/win-back-churned-customers stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/what-is-friendly-fraud stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-chargeback-reason-codes stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-dispute-evidence stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/chargeback-rebuttal-letter stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/how-to-prevent-chargebacks stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/visa-compelling-evidence-3 stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/involuntary-vs-voluntary-churn stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/how-much-revenue-losing-failed-payments stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-smart-retries-vs-dunning stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/expiring-cards-silent-mrr-killer stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/how-to-reduce-involuntary-churn-stripe stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-account-updater stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/why-dunning-tools-fail stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/dunning-email-sequence stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-transaction-not-allowed stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-revocation-of-authorization stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-do-not-try-again stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-call-issuer stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-fraudulent-decline stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-disputes-guide stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-failed-payment-recovery stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-lost-card stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-processing-error stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-incorrect-cvc stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-stolen-card stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-expired-card stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-do-not-honor stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-card-velocity-exceeded stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-insufficient-funds stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-generic-decline stored HTML from render version 9; the pipeline is at 15"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-decline-codes stored HTML from render version 9; the pipeline is at 15"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 2
     },
     "foxing": {
      "status": "partial",
@@ -2449,7 +1864,7 @@
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-e2e11ba1d88c an unknown route has cache-control private, no-store, expected no-store"
+       "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-036b487f940b an unknown route has cache-control private, no-store, expected no-store"
       }
      ]
     },
@@ -2483,12 +1898,12 @@
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://txasm.org/api/carrel/v1/site-api-live-8536a0b38c7b an unknown route answered 404 without the key, expected 401"
+       "detail": "https://txasm.org/api/carrel/v1/site-api-live-06c8025a13b1 an unknown route answered 404 without the key, expected 401"
       },
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://txasm.org/api/carrel/v1/site-api-live-8536a0b38c7b answers differently from a known route without the key, so it tells which routes exist"
+       "detail": "https://txasm.org/api/carrel/v1/site-api-live-06c8025a13b1 answers differently from a known route without the key, so it tells which routes exist"
       }
      ]
     },
@@ -2591,185 +2006,22 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "site-runtime-images: 3 errors",
+     "reason": "site-runtime-images: 1 errors",
      "findings": [
       {
        "severity": "error",
        "check": "E3",
        "detail": "https://dustinedwards.info/ https://op3.dev/e/media.germomics.com/Podcast_010_Antitoxin_Togo_Please.mp3 has no transcript link on the page"
-      },
-      {
-       "severity": "error",
-       "check": "A12",
-       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?v=6d243f322627&w=1024 Cache-Control is \"public, max-age=31536000\", not immutable"
-      },
-      {
-       "severity": "error",
-       "check": "A12",
-       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.avif?v=6d243f322627&w=704 Cache-Control is \"public, max-age=31536000\", not immutable"
       }
      ]
     },
     "germomics": {
-     "status": "missing",
-     "reason": "site-runtime-images: 31 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/antitoxin-togo-please/seppala-togo-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/antitoxin-togo-please/antitoxin-togo-pls-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/antitoxin-togo-please/corynebacterium-diphtheriae-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/antitoxin-togo-please 3 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/hell-on-weils/brazil-carnival-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/hell-on-weils/leptospira-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/hell-on-weils 2 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/rabies-day-out/edgar-allen-poe-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/rabies-day-out/rabies-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/rabies-day-out 2 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/a-boy-named-flu/christopher-columbus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/a-boy-named-flu/influenza-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/a-boy-named-flu 2 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/theres-something-about-typhoid-mary/salmonella-enterica-typhi-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/theres-something-about-typhoid-mary/theodore-roosevelt-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/theres-something-about-typhoid-mary 2 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/its-on-the-syphilis/treponema-pallidum-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/its-on-the-syphilis/dilophosaurus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/its-on-the-syphilis 2 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/one-flew-over-the-kuru-nest/truckee-river-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/one-flew-over-the-kuru-nest/kuru-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/one-flew-over-the-kuru-nest 2 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/confessions-of-a-cholera-girl/hurricane-matthew-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/confessions-of-a-cholera-girl/vibrio-cholerae-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/confessions-of-a-cholera-girl 2 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/on-the-right-taq/yellowstone-hot-springs-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/on-the-right-taq/thermus-aquaticus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/on-the-right-taq 2 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/a-sky-full-of-sars/civet-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://images.germomics.com/a-sky-full-of-sars/coronavirus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/a-sky-full-of-sars 2 content images on this page, and its sitemap entry has no image:image"
-      }
-     ]
+     "status": "partial",
+     "reason": "episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper",
+     "evidence": [
+      "https://germomics.com/a-boy-named-flu"
+     ],
+     "clean_days": 2
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2848,35 +2100,12 @@
      ]
     },
     "prelum": {
-     "status": "missing",
-     "reason": "site-runtime-images: 5 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://prelum.dustinedwards.info/link-icons/developer.mozilla.org.png is 32 px wide for /link-icons/developer.mozilla.org.png shown about 16 px wide at 1440 (DPR 1) on https://prelum.dustinedwards.info/: 2.0 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A2",
-       "detail": "https://prelum.dustinedwards.info/ /images/loop-still-320x180.png is 320 px wide with no srcset and sizes, so every screen downloads the whole of it"
-      },
-      {
-       "severity": "error",
-       "check": "A2",
-       "detail": "https://prelum.dustinedwards.info/ /images/poster-640x360.png is 640 px wide with no srcset and sizes, so every screen downloads the whole of it"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://prelum.dustinedwards.info/images/poster-640x360.png is 640 px wide for /images/poster-640x360.png shown about 16 px wide at 390 (DPR 3) on https://prelum.dustinedwards.info/: 13.3 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://prelum.dustinedwards.info/images/poster-640x360.png is 640 px wide for /images/poster-640x360.png shown about 16 px wide at 1440 (DPR 1) on https://prelum.dustinedwards.info/: 40.0 times what the screen needs"
-      }
-     ]
+     "status": "partial",
+     "reason": "images check fails: unsized diagram SVGs, 3 fetchpriority=high, 48 px icon shown at 16 px; share card CORP same-origin",
+     "evidence": [
+      "https://prelum.dustinedwards.info/"
+     ],
+     "clean_days": 1
     },
     "capsid": {
      "status": "partial",
@@ -3097,7 +2326,7 @@
       {
        "severity": "warning",
        "check": "F2",
-       "detail": "https://foxhoundapp.com/?speedcheck=xy6kbdmd an uncached render took 609 ms to the first byte (bar 600 ms)"
+       "detail": "https://foxhoundapp.com/?speedcheck=id3wpswi an uncached render took 654 ms to the first byte (bar 600 ms)"
       },
       {
        "severity": "warning",
@@ -3133,13 +2362,25 @@
      ]
     },
     "carrel": {
-     "status": "complete",
-     "reason": "Complete apart from Dustin's step. Public site: 103, Link, Server-Timing, its own speculation rules, a 404 and a cookie request both private, no-store; Lighthouse 100 phone; the desk's route budget is enforced. Open and accepted: A1.",
-     "evidence": [
-      "https://carrel.dustinedwards.info/",
-      "https://github.com/DrDustinEdwards/carrel/blob/main/.route-weight.json"
-     ],
-     "clean_days": 1
+     "status": "missing",
+     "reason": "site-runtime-speed-static: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "C5",
+       "detail": "http://carrel.dustinedwards.info/accessibility/ http page, other slash: 2 redirects (301 http://carrel.dustinedwards.info/accessibility/ > 301 https://carrel.dustinedwards.info/accessibility/ > 200 https://carrel.dustinedwards.info/accessibility)"
+      },
+      {
+       "severity": "warning",
+       "check": "A3",
+       "detail": "https://carrel.dustinedwards.info/ mobile: PageSpeed Insights answered 429"
+      },
+      {
+       "severity": "warning",
+       "check": "A3",
+       "detail": "https://carrel.dustinedwards.info/ desktop: PageSpeed Insights answered 429"
+      }
+     ]
     },
     "enarratio": {
      "status": "missing",
@@ -3184,13 +2425,25 @@
      ]
     },
     "prelum": {
-     "status": "complete",
-     "reason": "Complete apart from Dustin's step. All 24 faces use font-display swap (was 20 block), its own speculation rules, 103, 404 private, no-store; Lighthouse 99 phone and 100 desktop. Open and accepted: A1.",
-     "evidence": [
-      "https://prelum.dustinedwards.info/",
-      "https://prelum.dustinedwards.info/katex/katex.min.css"
-     ],
-     "clean_days": 1
+     "status": "missing",
+     "reason": "site-runtime-speed-static: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "C5",
+       "detail": "http://prelum.dustinedwards.info/accessibility/ http page, other slash: 2 redirects (301 http://prelum.dustinedwards.info/accessibility/ > 301 https://prelum.dustinedwards.info/accessibility/ > 200 https://prelum.dustinedwards.info/accessibility)"
+      },
+      {
+       "severity": "warning",
+       "check": "A3",
+       "detail": "https://prelum.dustinedwards.info/ mobile: PageSpeed Insights answered 429"
+      },
+      {
+       "severity": "warning",
+       "check": "A3",
+       "detail": "https://prelum.dustinedwards.info/ desktop: PageSpeed Insights answered 429"
+      }
+     ]
     },
     "capsid": {
      "status": "missing",
@@ -3304,15 +2557,13 @@
      "clean_days": 2
     },
     "bsw": {
-     "status": "missing",
-     "reason": "ops-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://bsw.dustin-edwards.workers.dev/health the newest complete backup is unknown (no age_hours), not under 26"
-      }
-     ]
+     "status": "partial",
+     "reason": "site-runtime v0.50.1; 404 is React Router's default page; no console ratchet; no request log wrapper; no --repo in areas.json; D4/D6 off",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/health",
+      "https://github.com/DrDustinEdwards/bsw/blob/69daae0/package.json"
+     ],
+     "clean_days": 2
     },
     "foxhound": {
      "status": "partial",
@@ -3422,7 +2673,7 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "devkit-a11y: 7 errors",
+     "reason": "devkit-a11y: 5 errors",
      "findings": [
       {
        "severity": "warning",
@@ -3488,16 +2739,6 @@
        "severity": "warning",
        "check": "L1",
        "detail": "https://dustinedwards.info/research/publications axe region (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.running-head-tracks`"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://dustinedwards.info/research/publications scrolls sideways at 320 px: scrollWidth 1718, widest `main#main > header.list-head > p.list-dek:nth-of-type(1)` reaches 1718 px"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://dustinedwards.info/research/publications 200%25 zoom proxy (a 720 px viewport, not browser zoom): scrolls sideways, scrollWidth 1718"
       },
       {
        "severity": "warning",
@@ -3568,7 +2809,7 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "devkit-a11y: 31 errors",
+     "reason": "devkit-a11y: 28 errors",
      "findings": [
       {
        "severity": "error",
@@ -3592,18 +2833,8 @@
       },
       {
        "severity": "error",
-       "check": "L1",
-       "detail": "https://germomics.com/no-such-page-devkit-a11y axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "error",
        "check": "L2",
-       "detail": "https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop none: nothing takes focus)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://germomics.com/no-such-page-devkit-a11y no <title>"
+       "detail": "https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `main#main > div.cap-empty > div.cap-empty-content:nth-of-type(2) > a.cap-btn` \"Go to the home page\")"
       },
       {
        "severity": "warning",
@@ -3673,12 +2904,12 @@
       {
        "severity": "error",
        "check": "L3",
-       "detail": "https://germomics.com/season/1 scrolls sideways at 320 px: scrollWidth 350, widest `main#main > div > div.grid.gap-3 > article.flex.gap-4:nth-of-type(1)` reaches 350 px"
+       "detail": "https://germomics.com/season/1 scrolls sideways at 320 px: scrollWidth 350, widest `main#main > div > div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(1)` reaches 350 px"
       },
       {
        "severity": "error",
        "check": "L3",
-       "detail": "https://germomics.com/season/1 text clipped with WCAG 1.4.12 text spacing: `div.grid.gap-3 > article.flex.gap-4:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3 > article.flex.gap-4:nth-of-type(6) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3 > article.flex.gap-4:nth-of-type(9) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical)"
+       "detail": "https://germomics.com/season/1 text clipped with WCAG 1.4.12 text spacing: `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(6) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(9) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical)"
       },
       {
        "severity": "error",
@@ -3724,11 +2955,6 @@
        "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/data no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
-      },
-      {
-       "severity": "error",
-       "check": "S6",
-       "detail": "https://germomics.com/accessibility no accessibility statement: it answers 404"
       }
      ]
     },
@@ -3816,7 +3042,7 @@
     },
     "bsw": {
      "status": "missing",
-     "reason": "devkit-a11y: 14 errors",
+     "reason": "devkit-a11y: 12 errors",
      "findings": [
       {
        "severity": "error",
@@ -3835,18 +3061,8 @@
       },
       {
        "severity": "error",
-       "check": "L1",
-       "detail": "https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "error",
        "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop none: nothing takes focus)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no <title>"
+       "detail": "https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `section:nth-of-type(2) > div.page-prose.mx-auto > p.mt-8:nth-of-type(2) > a.btn.btn-blue` \"Go to the home page\")"
       },
       {
        "severity": "warning",
@@ -3937,12 +3153,12 @@
     },
     "foxhound": {
      "status": "missing",
-     "reason": "devkit-a11y: 6 errors",
+     "reason": "devkit-a11y: 5 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L1",
-       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
+       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
       },
       {
        "severity": "warning",
@@ -4003,27 +3219,17 @@
        "severity": "error",
        "check": "L2",
        "detail": "https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what `section.mb-10:nth-of-type(4) > ul.m-0.flex > li.overflow-hidden.rounded-lg:nth-of-type(1) > button.flex.w-full` opened"
-      },
-      {
-       "severity": "error",
-       "check": "S6",
-       "detail": "https://foxhoundapp.com/accessibility no accessibility statement: it answers 404"
       }
      ]
     },
     "foxing": {
      "status": "missing",
-     "reason": "devkit-a11y: 16 errors",
+     "reason": "devkit-a11y: 5 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L2",
        "detail": "https://foxing.app/ no visible focus on 1 of 40 stops: `input#q`"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/ text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
       },
       {
        "severity": "error",
@@ -4037,28 +3243,13 @@
       },
       {
        "severity": "error",
-       "check": "L1",
-       "detail": "https://foxing.app/about axe link-in-text-block (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.link`"
+       "check": "L3",
+       "detail": "https://foxing.app/journal/archive scrolls sideways at 320 px: scrollWidth 1558, widest `ul.fx-journal-archive-stack > li:nth-of-type(26) > a.group.items-start > span.shrink-0.fx-journal-archive-label` reaches 1558 px"
       },
       {
        "severity": "error",
        "check": "L3",
-       "detail": "https://foxing.app/about text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/journal/archive scrolls sideways at 320 px: scrollWidth 1524, widest `ul.fx-journal-archive-stack > li:nth-of-type(26) > a.group.items-start > span.shrink-0.fx-journal-archive-label` reaches 1524 px"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/journal/archive text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/journal/archive 200%25 zoom proxy (a 720 px viewport, not browser zoom): scrolls sideways, scrollWidth 1536"
+       "detail": "https://foxing.app/journal/archive 200%25 zoom proxy (a 720 px viewport, not browser zoom): scrolls sideways, scrollWidth 1570"
       },
       {
        "severity": "warning",
@@ -4071,24 +3262,9 @@
        "detail": "https://foxing.app/books scrolls sideways at 320 px: scrollWidth 406, widest `div.mb-10.fx-books-card:nth-of-type(1) > div:nth-of-type(1) > div.row-2.wrap > a.cap-chip:nth-of-type(16)` reaches 406 px"
       },
       {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/books text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
-      },
-      {
        "severity": "warning",
        "check": "S2",
        "detail": "https://foxing.app/books heading levels skipped: h1 to h3 at `div.fx-book-grid:nth-of-type(2) > a.fx-book-card:nth-of-type(1) > div.fx-book-card-body:nth-of-type(2) > h3.fx-book-card-title`"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/books/813-leblanc text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/awards text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
       },
       {
        "severity": "warning",
@@ -4096,19 +3272,9 @@
        "detail": "https://foxing.app/authors/a-a-milne axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.fx-book-card[data-discover=\"true\"]:nth-child(1) > .fx-book-card-body > h3`"
       },
       {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/authors/a-a-milne text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
-      },
-      {
        "severity": "warning",
        "check": "S2",
        "detail": "https://foxing.app/authors/a-a-milne heading levels skipped: h1 to h3 at `div.fx-book-grid > a.fx-book-card:nth-of-type(1) > div.fx-book-card-body:nth-of-type(2) > h3.fx-book-card-title`"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/picks text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
       },
       {
        "severity": "warning",
@@ -4116,25 +3282,15 @@
        "detail": "https://foxing.app/awards/nobel-literature axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `div:nth-child(1) > .fx-book-card[data-discover=\"true\"] > .fx-book-card-body > h3`"
       },
       {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/awards/nobel-literature text clipped with WCAG 1.4.12 text spacing: `html > body > header.cap-site-header > a.cap-site-header-logo:nth-of-type(2)` (vertical)"
-      },
-      {
        "severity": "warning",
        "check": "S2",
        "detail": "https://foxing.app/awards/nobel-literature heading levels skipped: h1 to h3 at `div:nth-of-type(1) > a.fx-book-card > div.fx-book-card-body:nth-of-type(2) > h3.fx-book-card-title`"
-      },
-      {
-       "severity": "error",
-       "check": "S6",
-       "detail": "https://foxing.app/accessibility no accessibility statement: it answers 404"
       }
      ]
     },
     "carrel": {
      "status": "missing",
-     "reason": "devkit-a11y: 7 errors",
+     "reason": "devkit-a11y: 6 errors",
      "findings": [
       {
        "severity": "error",
@@ -4190,11 +3346,6 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://carrel.dustinedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
-      },
-      {
-       "severity": "error",
-       "check": "S6",
-       "detail": "https://carrel.dustinedwards.info/accessibility no accessibility statement: it answers 404"
       }
      ]
     },
@@ -4210,7 +3361,7 @@
       {
        "severity": "error",
        "check": "L3",
-       "detail": "https://enarratio.dustinedwards.info/no-such-page-devkit-a11y scrolls sideways at 320 px: scrollWidth 343, widest `main#main > header.gallery-head > p.gallery-intro` reaches 343 px"
+       "detail": "https://enarratio.dustinedwards.info/no-such-page-devkit-a11y scrolls sideways at 320 px: scrollWidth 360, widest `main#main > header.gallery-head > p.gallery-intro` reaches 360 px"
       },
       {
        "severity": "error",
@@ -4224,14 +3375,14 @@
       },
       {
        "severity": "error",
-       "check": "S6",
-       "detail": "https://enarratio.dustinedwards.info/accessibility no accessibility statement: it answers 404"
+       "check": "L3",
+       "detail": "https://enarratio.dustinedwards.info/astro scrolls sideways at 320 px: scrollWidth 327, widest `html > body > header.cap-site-header > nav.cap-site-header-sections` reaches 571 px"
       }
      ]
     },
     "capsomer": {
      "status": "missing",
-     "reason": "devkit-a11y: 12 errors",
+     "reason": "devkit-a11y: 10 errors",
      "findings": [
       {
        "severity": "error",
@@ -4327,21 +3478,6 @@
        "severity": "error",
        "check": "L1",
        "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=\"\"] > pre[aria-label=\"Install\"]`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/avatar/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 5 elements, first `#main`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/avatar/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=\"\"] > pre[aria-label=\"Install\"]`"
-      },
-      {
-       "severity": "error",
-       "check": "S6",
-       "detail": "https://capsomer.dustinedwards.info/accessibility no accessibility statement: it answers 404"
       }
      ]
     },
@@ -4357,12 +3493,12 @@
       {
        "severity": "error",
        "check": "L3",
-       "detail": "https://prelum.dustinedwards.info/ scrolls sideways at 320 px: scrollWidth 333, widest `li#user-content-fn-source > p > a:nth-of-type(1) > span.cap-sr-only` reaches 365 px"
+       "detail": "https://prelum.dustinedwards.info/no-such-page-devkit-a11y scrolls sideways at 320 px: scrollWidth 325, widest `main#main > p` reaches 325 px"
       },
       {
        "severity": "error",
        "check": "L3",
-       "detail": "https://prelum.dustinedwards.info/ text clipped with WCAG 1.4.12 text spacing: `div.pair:nth-of-type(1) > div:nth-of-type(2) > div.output.prose > span.katex-display` (vertical)"
+       "detail": "https://prelum.dustinedwards.info/writing/other scrolls sideways at 320 px: scrollWidth 325, widest `main#main > p` reaches 325 px"
       },
       {
        "severity": "error",
@@ -4420,20 +3556,20 @@
        "detail": "https://prelum.dustinedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
       },
       {
+       "severity": "error",
+       "check": "L3",
+       "detail": "https://prelum.dustinedwards.info/writing/next scrolls sideways at 320 px: scrollWidth 325, widest `main#main > p` reaches 325 px"
+      },
+      {
        "severity": "warning",
        "check": "S2",
        "detail": "https://prelum.dustinedwards.info/writing/next the title \"Not found: Prelum specimen\" is also https://prelum.dustinedwards.info/writing/other's"
-      },
-      {
-       "severity": "error",
-       "check": "S6",
-       "detail": "https://prelum.dustinedwards.info/accessibility no accessibility statement: it answers 404"
       }
      ]
     },
     "capsid": {
      "status": "missing",
-     "reason": "devkit-a11y: 4 errors",
+     "reason": "devkit-a11y: 3 errors",
      "findings": [
       {
        "severity": "warning",
@@ -4468,17 +3604,12 @@
       {
        "severity": "warning",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 3 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(8) > rect:nth-of-type(3)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(9) > circle:nth-of-type(1)`, `figure#waits-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(11) > line`"
+       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 2 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(8) > rect:nth-of-type(3)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(9) > circle:nth-of-type(1)`"
       },
       {
        "severity": "warning",
        "check": "L1",
        "detail": "https://capsid.dustinedwards.info/code/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `section[aria-labelledby=\"repos-title\"]`"
-      },
-      {
-       "severity": "error",
-       "check": "S6",
-       "detail": "https://capsid.dustinedwards.info/accessibility no accessibility statement: it answers 404"
       }
      ]
     },
@@ -4839,9 +3970,9 @@
    "builder": "Complete shared charts",
    "verifier": null,
    "lines": {
-    "prs": 35,
-    "added": 20661,
-    "removed": 6314
+    "prs": 42,
+    "added": 24917,
+    "removed": 6804
    },
    "unchecked": {
     "Capsid Portal (portal.dustinedwards.info)": "signed-in only; charts covered by Capsid's own browser tests until a public demo route exists",
@@ -4854,56 +3985,14 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "chart-audit: 4 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search \"Requests refused by the built-in rate-limiting binding, limi\" (bar), 320 px: the drawing is 480 px wide in a 273 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker \"Worker bundle size by charting configuration\" (bar), 320 px: the drawing is 480 px wide in a 273 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://dustinedwards.info/writing/posts-in-git-served-from-d1 \"Worker bundle size by highlighter configuration\" (bar), 320 px: the drawing is 480 px wide in a 273 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://dustinedwards.info/writing/site-search-on-d1 \"RRF contribution by rank position, k = 60\" (line), 320 px: the drawing is 480 px wide in a 273 px frame, so it scrolls sideways"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "germomics": {
-     "status": "missing",
-     "reason": "chart-audit: 4 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://germomics.com/data/cholera-soho-1854 #cholera-soho-1854-timeline (line), 320 px: the drawing is 480 px wide in a 262 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/data/cholera-soho-1854 #cholera-soho-1854-timeline (line): not in Capsomer's chart frame (.cap-chart)"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://germomics.com/data/influenza-1918 #influenza-1918-timeline (line), 320 px: the drawing is 480 px wide in a 262 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/data/influenza-1918 #influenza-1918-timeline (line): not in Capsomer's chart frame (.cap-chart)"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 2
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -4918,20 +4007,9 @@
      "reason": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "chart-audit: 2 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://foxhoundapp.com/product/intelligence \"MRR by plan\" (bar), 320 px: the drawing is 480 px wide in a 196 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "B3",
-       "detail": "https://foxhoundapp.com/recovery/dashboard \"Recovered revenue · 30d\" (bar): 9 text under 12 px, smallest \"0\" at 10.6 px"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 2
     },
     "foxing": {
      "status": "partial",
@@ -4955,70 +4033,9 @@
      ]
     },
     "capsomer": {
-     "status": "missing",
-     "reason": "chart-audit: 12 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Jobs run per day\" (bar), 320 px: the drawing is 480 px wide in a 254 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Jobs run per day\" (bar), 320 px: 14 text under 12 px, smallest \"0\" at 10.6 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the purple family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the fox family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the teal family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the amber family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the navy family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the forest family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the magenta family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the cerulean family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the olive family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?theme=light \"Eight series in the rose family\" (bar), 320 px: 11 text under 12 px, smallest \"0\" at 9.5 px"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "prelum": {
      "status": "partial",
@@ -5026,25 +4043,9 @@
      "clean_days": 1
     },
     "capsid": {
-     "status": "missing",
-     "reason": "chart-audit: 3 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsid.dustinedwards.info/numbers/ \"Jobs finished per week\" (bar), 320 px: 20 text under 12 px, smallest \"0\" at 11.4 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsid.dustinedwards.info/numbers/ \"Claims matching GitHub, per week\" (line), 320 px: 20 text under 12 px, smallest \"0\" at 11.4 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://capsid.dustinedwards.info/numbers/ \"Approval waits per week\" (area), 320 px: 19 text under 12 px, smallest \"0\" at 11.4 px"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 2
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -5082,9 +4083,9 @@
    "builder": "Complete shared AI and MCP code",
    "verifier": "Verify area 11 AI and MCP",
    "lines": {
-    "prs": 51,
-    "added": 35282,
-    "removed": 6295
+    "prs": 74,
+    "added": 51846,
+    "removed": 7035
    },
    "unchecked": {},
    "cells": {
@@ -5141,23 +4142,8 @@
     },
     "foxhound": {
      "status": "missing",
-     "reason": "site-runtime-ai-audit: 23 errors",
+     "reason": "site-runtime-ai-audit: 2 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_overview: inputSchema does not set additionalProperties: false"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_overview: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_list_payments: inputSchema does not set additionalProperties: false"
-      },
       {
        "severity": "warning",
        "check": "T4",
@@ -5174,29 +4160,9 @@
        "detail": "https://foxhoundapp.com/mcp foxhound_list_payments: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_list_payments: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_payment: inputSchema does not set additionalProperties: false"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://foxhoundapp.com/mcp foxhound_get_payment: inputSchema.payment_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_payment: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_list_customers: inputSchema does not set additionalProperties: false"
       },
       {
        "severity": "warning",
@@ -5209,54 +4175,14 @@
        "detail": "https://foxhoundapp.com/mcp foxhound_list_customers: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_list_customers: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_customer: inputSchema does not set additionalProperties: false"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://foxhoundapp.com/mcp foxhound_get_customer: inputSchema.stripe_customer_id is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_customer: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_intelligence: inputSchema does not set additionalProperties: false"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_intelligence: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_list_disputes: inputSchema does not set additionalProperties: false"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://foxhoundapp.com/mcp foxhound_list_disputes: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_list_disputes: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_review_audits: inputSchema does not set additionalProperties: false"
       },
       {
        "severity": "warning",
@@ -5269,49 +4195,24 @@
        "detail": "https://foxhoundapp.com/mcp foxhound_review_audits: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_review_audits: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_billing: inputSchema does not set additionalProperties: false"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_billing: has no icon"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_settings: inputSchema does not set additionalProperties: false"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://foxhoundapp.com/mcp foxhound_get_settings: has no icon"
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to 900ae219a5caa47d02be73f4234a4cb35e84d6ac5dfe7795f08bddbc63c2a96a"
       },
       {
        "severity": "warning",
-       "check": "T12",
-       "detail": "https://foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to 5156e11a32ce56c2847e9500e147e885a6428993671c0b38290c16f29c565a6b"
+       "check": "P3",
+       "detail": "https://foxhoundapp.com/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
       },
       {
        "severity": "error",
        "check": "P3",
-       "detail": "https://foxhoundapp.com/mcp conformance server-stateless passed 18/28 (failing: sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-method-not-found-404-logging-setlevel, sep-2575-http-server-method-not-found-404-resources-subscribe, sep-2575-http-server-method-not-found-404-resources-unsubscribe)"
+       "detail": "https://foxhoundapp.com/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
       },
       {
        "severity": "error",
-       "check": "P4",
-       "detail": "https://foxhoundapp.com/mcp conformance http-header-validation passed 8/11 (failing: sep-2243-server-reject-invalid-headers, sep-2243-server-accepts-whitespace-header-value)"
-      },
-      {
-       "severity": "error",
-       "check": "P7",
-       "detail": "https://foxhoundapp.com/mcp conformance caching passed 3/6 (failing: sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+       "check": "audit",
+       "detail": "https://foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -5369,28 +4270,369 @@
     },
     "capsid-mcp": {
      "status": "missing",
-     "reason": "site-runtime-ai-audit: 0 errors",
-     "findings": []
-    },
-    "foxhound-mcp": {
-     "status": "missing",
-     "reason": "site-runtime-ai-audit: 11 errors",
+     "reason": "site-runtime-ai-audit: 13 errors",
      "findings": [
       {
        "severity": "error",
        "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_whats_next: inputSchema does not set additionalProperties: false"
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_start_session: inputSchema does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_start_session: inputSchema.namespace is a string with no pattern, enum, const or format"
       },
       {
        "severity": "error",
        "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_get_platform: inputSchema does not set additionalProperties: false"
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.namespace is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.type is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.status is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.glob is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.query is a string with no pattern, enum, const or format"
       },
       {
        "severity": "error",
        "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema does not set additionalProperties: false"
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema does not set additionalProperties: false"
       },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema.namespace is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_lint_namespace: inputSchema does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_lint_namespace: inputSchema.namespace is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_lint_namespace: inputSchema.consumed[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.namespace is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.repo is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.paths[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.query is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path_prefix is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.namespace is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.repo is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.base is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.head is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.sha is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.job is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.step is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.probe is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.start_date is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.end_date is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.query_contains is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page_contains is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.url is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.namespace is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.title is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.body is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.min_record does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.status is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.since is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.id is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.result_summary is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.result_ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.reason is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.note is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.replaced_by is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.command is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.approved_by_policy is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.evidence.anyOf[0] does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.evidence.anyOf[0].prs[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.evidence.anyOf[1] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.claim.anyOf[0].prs_opened[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.claim.anyOf[0].prs_merged[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.claim.anyOf[0].files_touched[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.claim.anyOf[0].versions.model_id is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.claim.anyOf[0].versions.client_name is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.claim.anyOf[0].versions.client_version is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.claim.anyOf[0].versions.permission_mode is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.claim.anyOf[1] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_run_improve: inputSchema does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_run_improve: inputSchema.namespace is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T7",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp the read-only test grant lists tools that are not read-only: capsid_lint_namespace, capsid_work_jobs"
+      },
+      {
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp no --tools-hash pinned; the test grant's list hashes to c11b5256d927a9b0bf60c43909d7fbe399582a37d4c4d7a563ff9f815b9599e1"
+      },
+      {
+       "severity": "warning",
+       "check": "P3",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+      },
+      {
+       "severity": "error",
+       "check": "P3",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
+      },
+      {
+       "severity": "error",
+       "check": "audit",
+       "detail": "https://mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+      }
+     ]
+    },
+    "foxhound-mcp": {
+     "status": "missing",
+     "reason": "site-runtime-ai-audit: 2 errors",
+     "findings": [
       {
        "severity": "warning",
        "check": "T4",
@@ -5407,24 +4649,9 @@
        "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_read_merchant_data: inputSchema does not set additionalProperties: false"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_read_merchant_data: inputSchema.account_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_check_health: inputSchema does not set additionalProperties: false"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_read_audit_log: inputSchema does not set additionalProperties: false"
       },
       {
        "severity": "warning",
@@ -5432,19 +4659,9 @@
        "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_read_audit_log: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_list_staged: inputSchema does not set additionalProperties: false"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_list_staged: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema does not set additionalProperties: false"
       },
       {
        "severity": "warning",
@@ -5464,53 +4681,33 @@
       {
        "severity": "warning",
        "check": "T12",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to 8b2f8d39731388856730a0f118bbe16e2c38d81ba7e0f17fa4d25f195c1c9423"
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to f6426056f66378fe4979f4443d8c84f86acd8dd15b75bef0ee600981e7203f08"
+      },
+      {
+       "severity": "warning",
+       "check": "P3",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
       },
       {
        "severity": "error",
        "check": "P3",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless passed 18/28 (failing: sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-method-not-found-404-logging-setlevel, sep-2575-http-server-method-not-found-404-resources-subscribe, sep-2575-http-server-method-not-found-404-resources-unsubscribe)"
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
       },
       {
        "severity": "error",
-       "check": "P4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance http-header-validation passed 8/11 (failing: sep-2243-server-reject-invalid-headers, sep-2243-server-accepts-whitespace-header-value)"
-      },
-      {
-       "severity": "error",
-       "check": "P7",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance caching passed 3/6 (failing: sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+       "check": "audit",
+       "detail": "https://admin-mcp.foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
     "dustinedwards-mcp": {
      "status": "missing",
-     "reason": "site-runtime-ai-audit: 10 errors",
+     "reason": "site-runtime-ai-audit: 2 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L8",
-       "detail": "https://admin-mcp.dustinedwards.info/health tool-call-log is warn: 108 row(s) not copied for over 2 days"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_check_site: inputSchema does not set additionalProperties: false"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_review_mentions: inputSchema does not set additionalProperties: false"
-      },
       {
        "severity": "warning",
        "check": "T4",
        "detail": "https://admin-mcp.dustinedwards.info/mcp dei_review_mentions: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_registry: inputSchema does not set additionalProperties: false"
       },
       {
        "severity": "warning",
@@ -5528,61 +4725,36 @@
        "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_registry: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_check_publications: inputSchema does not set additionalProperties: false"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_manage_procedure: inputSchema does not set additionalProperties: false"
-      },
-      {
        "severity": "warning",
        "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_manage_procedure: inputSchema.raw is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_manage_procedure: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T7",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp the read-only test grant lists tools that are not read-only: dei_manage_procedure"
+       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_procedure: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
        "severity": "warning",
        "check": "T12",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to dc99e3f36843c1746a378ff954b5180a5a9483624e7970528231b91b69b00660"
+       "detail": "https://admin-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to d7e6492656b7ad2a006b47a285fd4fb09331090f13c99f69aa9d91e4b7273f3d"
+      },
+      {
+       "severity": "warning",
+       "check": "P3",
+       "detail": "https://admin-mcp.dustinedwards.info/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
       },
       {
        "severity": "error",
        "check": "P3",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp conformance server-stateless passed 18/28 (failing: sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-method-not-found-404-logging-setlevel, sep-2575-http-server-method-not-found-404-resources-subscribe, sep-2575-http-server-method-not-found-404-resources-unsubscribe)"
+       "detail": "https://admin-mcp.dustinedwards.info/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
       },
       {
        "severity": "error",
-       "check": "P4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp conformance http-header-validation passed 8/11 (failing: sep-2243-server-reject-invalid-headers, sep-2243-server-accepts-whitespace-header-value)"
-      },
-      {
-       "severity": "error",
-       "check": "P7",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp conformance caching passed 3/6 (failing: sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+       "check": "audit",
+       "detail": "https://admin-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
     "carrel-mcp": {
      "status": "missing",
-     "reason": "site-runtime-ai-audit: 13 errors",
+     "reason": "site-runtime-ai-audit: 2 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_projects: has no icon"
-      },
       {
        "severity": "warning",
        "check": "T4",
@@ -5604,11 +4776,6 @@
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: has no icon"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.project is a string with no pattern, enum, const or format"
@@ -5619,19 +4786,9 @@
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.item is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: has no icon"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_voice_brief: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_voice_brief: has no icon"
       },
       {
        "severity": "warning",
@@ -5654,11 +4811,6 @@
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.item is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: has no icon"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.project is a string with no pattern, enum, const or format"
@@ -5674,11 +4826,6 @@
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.source is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: has no icon"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.project is a string with no pattern, enum, const or format"
@@ -5689,19 +4836,9 @@
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.item is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: has no icon"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_book_files: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_book_files: has no icon"
       },
       {
        "severity": "warning",
@@ -5712,11 +4849,6 @@
        "severity": "warning",
        "check": "T4",
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.path is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: has no icon"
       },
       {
        "severity": "warning",
@@ -5734,46 +4866,31 @@
        "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.source is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T9",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: has no icon"
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to 0879f71b1263f8bb28091f638f792e5e920b8b04aeb5f8cfadd66b4a8f54d2f5"
       },
       {
        "severity": "warning",
-       "check": "T12",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to 8ebc66242340ccf7fed8a9df63448f6b7f667a0ba57dd396b3c08fdf203b7e2f"
+       "check": "P3",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
       },
       {
        "severity": "error",
        "check": "P3",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless passed 18/28 (failing: sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-method-not-found-404-logging-setlevel, sep-2575-http-server-method-not-found-404-resources-subscribe, sep-2575-http-server-method-not-found-404-resources-unsubscribe)"
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
       },
       {
        "severity": "error",
-       "check": "P4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance http-header-validation passed 8/11 (failing: sep-2243-server-reject-invalid-headers, sep-2243-server-accepts-whitespace-header-value)"
-      },
-      {
-       "severity": "error",
-       "check": "P7",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching passed 3/6 (failing: sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+       "check": "audit",
+       "detail": "https://carrel-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
     "foxing-mcp": {
      "status": "missing",
-     "reason": "site-runtime-ai-audit: 11 errors",
+     "reason": "site-runtime-ai-audit: 2 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_get_health: inputSchema does not set additionalProperties: false"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_find_user: inputSchema does not set additionalProperties: false"
-      },
       {
        "severity": "warning",
        "check": "T4",
@@ -5785,19 +4902,9 @@
        "detail": "https://admin-mcp.foxing.app/mcp foxing_find_user: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_get_user_state: inputSchema does not set additionalProperties: false"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://admin-mcp.foxing.app/mcp foxing_get_user_state: inputSchema.user_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_inspect_book: inputSchema does not set additionalProperties: false"
       },
       {
        "severity": "warning",
@@ -5810,44 +4917,14 @@
        "detail": "https://admin-mcp.foxing.app/mcp foxing_inspect_book: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
+       "severity": "warning",
        "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_set_book_of_month: inputSchema does not set additionalProperties: false"
+       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_book_of_month: inputSchema.botm_id is a string with no pattern, enum, const or format"
       },
       {
        "severity": "warning",
        "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_set_book_of_month: inputSchema.botm_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_set_book_of_month: inputSchema.book_id.anyOf[0] is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_set_book_of_month: inputSchema.category.anyOf[0] is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_set_book_of_month: inputSchema.curator_note.anyOf[0] is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_set_book_of_month: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_set_book_of_month: inputSchema.confirm is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_review_club_picks: inputSchema does not set additionalProperties: false"
+       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_book_of_month: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
        "severity": "warning",
@@ -5860,39 +4937,29 @@
        "detail": "https://admin-mcp.foxing.app/mcp foxing_review_club_picks: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_audit_log: inputSchema does not set additionalProperties: false"
-      },
-      {
        "severity": "warning",
        "check": "T4",
        "detail": "https://admin-mcp.foxing.app/mcp foxing_read_audit_log: inputSchema.cursor is a string with no pattern, enum, const or format"
       },
       {
-       "severity": "error",
-       "check": "T7",
-       "detail": "https://admin-mcp.foxing.app/mcp the read-only test grant lists tools that are not read-only: foxing_set_book_of_month"
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://admin-mcp.foxing.app/mcp no --tools-hash pinned; the test grant's list hashes to ebddff77505c706b535b5ad4e6e5677b0598b7389402dfc79652dfe89cfd0cf7"
       },
       {
        "severity": "warning",
-       "check": "T12",
-       "detail": "https://admin-mcp.foxing.app/mcp no --tools-hash pinned; the test grant's list hashes to c8667402fbd61115de57f5b5be2369f3c31117da6980c3f4869d817a7328a834"
+       "check": "P3",
+       "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
       },
       {
        "severity": "error",
        "check": "P3",
-       "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless passed 18/28 (failing: sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-method-not-found-404-logging-setlevel, sep-2575-http-server-method-not-found-404-resources-subscribe, sep-2575-http-server-method-not-found-404-resources-unsubscribe)"
+       "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
       },
       {
        "severity": "error",
-       "check": "P4",
-       "detail": "https://admin-mcp.foxing.app/mcp conformance http-header-validation passed 8/11 (failing: sep-2243-server-reject-invalid-headers, sep-2243-server-accepts-whitespace-header-value)"
-      },
-      {
-       "severity": "error",
-       "check": "P7",
-       "detail": "https://admin-mcp.foxing.app/mcp conformance caching passed 3/6 (failing: sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+       "check": "audit",
+       "detail": "https://admin-mcp.foxing.app the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
