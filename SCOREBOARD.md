@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-01 00:10 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-01 01:03 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,17 +8,17 @@ Newest run 2026-11-01 00:10 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | · | · | +15923 | −606 |
-| 2. Security headers and CSP | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | +52000 | −8463 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | · | · | +15999 | −619 |
+| 2. Security headers and CSP | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | +67457 | −2968 |
-| 4. Writing and rendering | ❌ | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6639 | −3038 |
+| 4. Writing and rendering | ❌ | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6669 | −3059 |
 | 5. Carrel editing contract | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
-| 6. Images and media | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | · | +29940 | −3447 |
-| 7. Speed and caching | 🟡 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ❌ | · | · | · | · | · | · | · | +6469 | −3193 |
-| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | · | +27951 | −2785 |
+| 6. Images and media | 🟡 | ❌ | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | · | +30007 | −3470 |
+| 7. Speed and caching | 🟡 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ | 🟡 | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +6469 | −3193 |
+| 8. Running and recovery | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | · | +27951 | −2785 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | · | · | · | · | · | · | · | +19667 | −6020 |
-| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +33257 | −5861 |
+| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +34224 | −5974 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 Lines count public repositories only until the LIVE_GITHUB_TOKEN secret is set.
@@ -70,33 +70,29 @@ Builder: Complete shared security headers and CSP. Verifier: Verify security hea
   - C16: https://dustinedwards.info/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - I3: https://dustinedwards.info/about (200) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT
   - C16: https://dustinedwards.info/about (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
-  - I3: https://dustinedwards.info/site-runtime-security-ad028f46-194a-408d-b11b-951fcb0fb3a6 (404) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT
+  - I3: https://dustinedwards.info/site-runtime-security-dc69a512-f2cd-4630-bc68-2beadd27101f (404) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT
 - ❌ Germomics: site-runtime-security: 4 errors
   - C16: https://germomics.com/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://germomics.com/episodes (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
-  - C16: https://germomics.com/site-runtime-security-d1c94400-6264-424d-a0a4-03255781e930 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
+  - C16: https://germomics.com/site-runtime-security-2e297c88-5553-48df-a9d3-0561e3ed911b (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://germomics.com/ (405) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
 - ❌ Foxhound: site-runtime-security: 4 errors
   - C16: https://foxhoundapp.com/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://foxhoundapp.com/pricing (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
-  - C16: https://foxhoundapp.com/site-runtime-security-38fdcb2a-6d95-44b6-beef-7183680984f8 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
+  - C16: https://foxhoundapp.com/site-runtime-security-828dfed5-14af-409d-8544-a217d8458a9d (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://foxhoundapp.com/ (405) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
 - ❌ Capsomer: site-runtime-security: 4 errors
   - C16: https://capsomer.dustinedwards.info/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://capsomer.dustinedwards.info/make/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
-  - C16: https://capsomer.dustinedwards.info/site-runtime-security-2a1b52f2-5714-4d5e-9f8e-17247d6d8f34 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
+  - C16: https://capsomer.dustinedwards.info/site-runtime-security-12d3e6a7-37e9-4b3e-bab6-45fbd79a7f8c (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://capsomer.dustinedwards.info/ (405) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
 - ❌ Prelum specimen: site-runtime-security: 6 errors
   - I3: https://prelum.dustinedwards.info/ (200) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT
   - C16: https://prelum.dustinedwards.info/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
-  - I3: https://prelum.dustinedwards.info/site-runtime-security-e01c129c-ba50-4a0a-9cb4-c52dfb625a0e (404) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT
-  - C16: https://prelum.dustinedwards.info/site-runtime-security-e01c129c-ba50-4a0a-9cb4-c52dfb625a0e (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
+  - I3: https://prelum.dustinedwards.info/site-runtime-security-f10978b7-1afc-4dff-b187-f013978fab60 (404) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT
+  - C16: https://prelum.dustinedwards.info/site-runtime-security-f10978b7-1afc-4dff-b187-f013978fab60 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - I3: https://prelum.dustinedwards.info/ (405) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT
 - 🟡 Foxing admin MCP: 0 errors, 0 warnings live (on Cloudflare since foxing #165), but mcp/package.json pins site-runtime v0.62.0, four minors behind v0.66.0. devkit's pin check (S7) wants every MCP server within one minor; it is a warning until devkit 0.21.0. Bump to the current release and redeploy.
-- ❌ Capsid Portal: signed-in-security: 3 errors
-  - H2: https://portal.dustinedwards.info/ (200) a text or XML Content-Type names its charset: got "text/html"
-  - H2: https://portal.dustinedwards.info/signed-in-crawl-404 (200) a text or XML Content-Type names its charset: got "text/html"
-  - H2: https://portal.dustinedwards.info/portal/assets/index-BgNNVtMO.js (200) a text or XML Content-Type names its charset: got "text/javascript"
 - ❌ Carrel Desk: site-runtime-security: 1 errors
   - D1: https://desk.dustinedwards.info/.well-known/security.txt is behind Cloudflare Access; it must be public (RFC 9116)
 
@@ -156,13 +152,13 @@ Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editin
 - 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
 - ❌ dustinedwards.info: site-api-live: 2 errors
   - K4: https://dustinedwards.info/api/carrel/v1/meta meta has cache-control private, no-store, expected no-store
-  - K4: https://dustinedwards.info/api/carrel/v1/site-api-live-36b018701e7f an unknown route has cache-control private, no-store, expected no-store
+  - K4: https://dustinedwards.info/api/carrel/v1/site-api-live-e55c98f64ba7 an unknown route has cache-control private, no-store, expected no-store
 - 🟡 Germomics: author filter 501 though show.author is the byline; deleted post 404 not 410; preview is a hand-written shell; no series; no setTags; revisions author 'germomics', pages no history; admin.content.$key still writes pages outside Carrel
 - 🟡 julieedwards.info: pins v0.17.0 so webmentions can read the stale edge copy, sent on publish only; live section with a draft reads as draft; revisions capped at 50; no delete or unpublish (needs ruling); preview without page chrome
 - ❌ TXASM: site-api-live: 3 errors
   - K4: https://txasm.org/api/carrel/v1/meta meta answered 404 without the key, expected 401
-  - K4: https://txasm.org/api/carrel/v1/site-api-live-5d34709297d2 an unknown route answered 404 without the key, expected 401
-  - K4: https://txasm.org/api/carrel/v1/site-api-live-5d34709297d2 answers differently from a known route without the key, so it tells which routes exist
+  - K4: https://txasm.org/api/carrel/v1/site-api-live-cbe33d3708f3 an unknown route answered 404 without the key, expected 401
+  - K4: https://txasm.org/api/carrel/v1/site-api-live-cbe33d3708f3 answers differently from a known route without the key, so it tells which routes exist
 - 🟡 Foxhound: a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently
 - 🟡 Foxing: author filter 501 though author_id exists and JSON-LD credits Foxing; pins v0.17.0 so webmentions can read the stale edge copy; deleted post 404 not 410; preview hand-written shell; no series; redirects not removed on delete (301 to 404); revision author raw id
 
@@ -174,9 +170,9 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 - ❌ dustinedwards.info: site-runtime-images: 9 errors
   - E3: https://dustinedwards.info/ https://op3.dev/e/media.germomics.com/Podcast_010_Antitoxin_Togo_Please.mp3 has no transcript link on the page
   - C8: https://dustinedwards.info/about 1 content image on this page, and its sitemap entry has no image:image
-  - A12: https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=704 Cache-Control is "public, max-age=31536000", not immutable
-  - A12: https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=640 Cache-Control is "public, max-age=31536000", not immutable
-  - A12: https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=1024 Cache-Control is "public, max-age=31536000", not immutable
+  - A12: https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=704 Cache-Control is "public, max-age=86400", not immutable
+  - A12: https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=640 Cache-Control is "public, max-age=86400", not immutable
+  - A12: https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=1024 Cache-Control is "public, max-age=86400", not immutable
 - ❌ Germomics: site-runtime-images: 66 errors
   - C11: https://germomics.com/brand/germomics-card.jpg the share card's Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview on another site may not load it
   - E3: https://germomics.com/ an <audio> has preload="metadata"
@@ -189,21 +185,15 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
   - A2: https://julieedwards.info/ https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg is 2048 px wide (the file) with no srcset and sizes, so every screen downloads the whole of it
   - A7: https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg is 2048 px wide for https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg shown about 358 px wide at 390 (DPR 3) on https://julieedwards.info/: 1.9 times what the screen needs
   - A7: https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg is 2048 px wide for https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg shown about 1200 px wide at 1440 (DPR 1) on https://julieedwards.info/: 1.7 times what the screen needs
-- ❌ TXASM: site-runtime-images: 1 errors
-  - C11: https://txasm.dustin-edwards.workers.dev/og-card.png the share card's Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview on another site may not load it
+- 🟡 TXASM: og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap
 - ❌ BSW: no image pipeline, /media, uploads or library; not a Carrel site; static files with a hand srcset; images check fails A2; logo 2.2x; only the logo card
-- ❌ Foxhound: site-runtime-images: 51 errors
-  - A6: https://foxhoundapp.com/ /favicon.svg is below the fold (y≈30135 at 390, y≈30790 at 1440) and not lazy (no loading attribute), no decoding="async"
-  - A6: https://foxhoundapp.com/ preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈30135 at 390, y≈30790 at 1440), ahead of what the screen shows
-  - A6: https://foxhoundapp.com/pricing /favicon.svg is below the fold (y≈14851 at 390, y≈15311 at 1440) and not lazy (no loading attribute), no decoding="async"
-  - A6: https://foxhoundapp.com/pricing preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈14851 at 390, y≈15311 at 1440), ahead of what the screen shows
-  - A6: https://foxhoundapp.com/products /favicon.svg is below the fold (y≈2233 at 390, y≈2399 at 1440) and not lazy (no loading attribute), no decoding="async"
-- ❌ Foxing: site-runtime-images: 37 errors
-  - C3: https://foxing.app/ no og:image:type
-  - C8: https://foxing.app/ 10 content images on this page, and its sitemap entry has no image:image
-  - A6: https://foxing.app/books /media/covers/813-leblanc.jpg.webp?w=240 is loading="lazy" above the fold (y≈667 at 390, y≈566 at 1440), so it waits for layout
-  - A6: https://foxing.app/books /media/covers/a-bid-for-fortune-boothby.jpg.webp?w=240 is loading="lazy" above the fold (y≈667 at 390, y≈566 at 1440), so it waits for layout
-  - A6: https://foxing.app/books /media/covers/a-bride-of-a-summers-day-pirkis.jpg.webp?w=240 is loading="lazy" above the fold (y≈1083 at 390, y≈566 at 1440), so it waits for layout
+- 🟡 Foxhound: cover picture is its own code, not pictureProps; a cover outside the library is unsized; no placeholder, credit, ImageObject or image sitemap; footer SVG has no loading/decoding
+- ❌ Foxing: site-runtime-images: 6 errors
+  - A6: https://foxing.app/books /media/covers/a-connecticut-yankee-in-king-arthurs-court-twain.jpg.webp?w=240 is loading="lazy" above the fold (y≈1524 at 390, y≈566 at 1440), so it waits for layout
+  - A3: https://foxing.app/media/covers/a-bid-for-fortune-boothby.jpg.avif?w=480 answers 200 image/webp, not image/avif
+  - A3: https://foxing.app/media/covers/a-bride-of-a-summers-day-pirkis.jpg.avif?w=260 answers 200 image/webp, not image/avif
+  - A3: https://foxing.app/media/covers/a-christmas-carol-dickens.jpg.avif?w=260 answers 200 image/webp, not image/avif
+  - A3: https://foxing.app/media/covers/a-confession-tolstoy.jpg.avif?w=260 answers 200 image/webp, not image/avif
 - ❌ Carrel: site-runtime-images: 1 errors
   - C11: https://carrel.dustinedwards.info/og-card.png the share card's Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview on another site may not load it
 - ❌ Enarratio: site-runtime-images: 1 errors
@@ -212,9 +202,9 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
   - C11: https://capsomer.dustinedwards.info/og-card.png the share card's Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview on another site may not load it
 - ❌ Prelum specimen: site-runtime-images: 12 errors
   - C11: https://prelum.dustinedwards.info/images/loop-320x180.gif Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview elsewhere may not load it
-  - C11: https://prelum.dustinedwards.info/images/loop-still-320x180.png Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview elsewhere may not load it
-  - C11: https://prelum.dustinedwards.info/images/poster-640x360.png Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview elsewhere may not load it
   - C11: https://prelum.dustinedwards.info/link-icons/developer.mozilla.org.png Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview elsewhere may not load it
+  - C11: https://prelum.dustinedwards.info/images/poster-640x360.png Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview elsewhere may not load it
+  - C11: https://prelum.dustinedwards.info/images/loop-still-320x180.png Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview elsewhere may not load it
   - A6: https://prelum.dustinedwards.info/ /link-icons/developer.mozilla.org.png is below the fold (y≈35252 at 390, y≈37035 at 1440) and not lazy (no loading attribute), no decoding="async"
 - ❌ Capsid explorer: site-runtime-images: 1 errors
   - C11: https://capsid.dustinedwards.info/assets/og-card.png the share card's Cross-Origin-Resource-Policy is "same-origin", not cross-origin, so a preview on another site may not load it
@@ -231,13 +221,13 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
   - D1: https://txasm.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain
 - ❌ BSW: site-runtime-speed: 1 errors
   - D1: https://bsw.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain
+- ❌ Foxing: site-runtime-speed: 24 errors
+  - B1: https://foxing.app/ not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0
+  - B1: https://foxing.app/books not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0
+  - B1: https://foxing.app/awards not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0
+  - B1: https://foxing.app/picks not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0
+  - B1: https://foxing.app/book-of-the-month not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0
 - 🟡 Enarratio: A3: Lighthouse phone on the home page scored 75, 94 and 97 (median 94; the builder's own median is 92), under the bar of 95; desktop 99, 100, 100. The long tasks are still enhance.js and style/layout work (TBT 1,173 ms on the worst run). Fixed and verified: 103 and Link preload, Server-Timing, its own speculation rules, a private, no-store 404. Only the home page was measured; the other 3 sitemap pages were not.
-- ❌ Capsid explorer: site-runtime-speed: 5 errors
-  - C1: https://capsid.dustinedwards.info/assets/capsomer.css a hashed file sent cache-control public, max-age=3600, not a year immutable
-  - C1: https://capsid.dustinedwards.info/assets/enarratio.css a hashed file sent cache-control public, max-age=3600, not a year immutable
-  - C1: https://capsid.dustinedwards.info/assets/explorer.css a hashed file sent cache-control public, max-age=3600, not a year immutable
-  - C1: https://capsid.dustinedwards.info/assets/theme.js a hashed file sent cache-control public, max-age=3600, not a year immutable
-  - C1: https://capsid.dustinedwards.info/assets/explorer.js a hashed file sent cache-control public, max-age=3600, not a year immutable
 
 ### 8. Running and recovery
 
@@ -245,7 +235,8 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
 - 🟡 dustinedwards.info: No 404 count (privacy page fix is one PR, a fixable blocker); public /api/health still routed with no noindex; cron check 'backup never ran' pending tonight's 05:00 run; own deploy (ship.mjs) and own check-migrations.mjs; d1-dump v0.8.0; drill passed 12:33
-- 🟡 Germomics: Deploys from GitHub at head f86a616 and drill passed; 404 is React Router's default page, not the shared error page; first audio/images files pass pending (03:17 cron, may take several nights); counted tables only
+- ❌ Germomics: ops-audit: 1 errors
+  - H4: https://germomics.com/health serves ef016470c0f60da7eb74d4e7b202a33edee98e9e, not the branch head 9e2625fcf962c50dcf6eb9a24f6196f49e0018b1 (https://github.com/DrDustinEdwards/germomics/commit/9e2625fcf962c50dcf6eb9a24f6196f49e0018b1), committed 42 minutes ago
 - 🟡 julieedwards.info: Health passes at head, drill passed, excludes set; D4/D6 off; d1-dump v0.8.0
 - 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
 - ❌ BSW: ops-audit: 1 errors
@@ -294,7 +285,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L1: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop none: nothing takes focus)
 - ❌ Foxhound: devkit-a11y: 6 errors
-  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
+  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
   - L3: https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical), `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical)
   - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body.min-h-full > div.fh-cap.fh-error-page > header.fh-error-bar.flex > a.no-underline` "foxhound")
   - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: `div.flex.flex-col:nth-of-type(2) > a.group.-mx-2:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(2) > a.group.-mx-2:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(2) > a.group.-mx-2:nth-of-type(3) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical) and 33 more

@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-01T00:10:48.917Z",
+ "as_of": "2026-11-01T01:03:06.234Z",
  "finished": false,
  "public_token": true,
  "sites": [
@@ -106,9 +106,9 @@
    "builder": "Share SEO and other key site code",
    "verifier": null,
    "lines": {
-    "prs": 26,
-    "added": 15923,
-    "removed": 606
+    "prs": 27,
+    "added": 15999,
+    "removed": 619
    },
    "unchecked": {},
    "cells": {
@@ -1391,17 +1391,17 @@
       {
        "severity": "error",
        "check": "I3",
-       "detail": "https://dustinedwards.info/site-runtime-security-ad028f46-194a-408d-b11b-951fcb0fb3a6 (404) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT"
+       "detail": "https://dustinedwards.info/site-runtime-security-dc69a512-f2cd-4630-bc68-2beadd27101f (404) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT"
       },
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://dustinedwards.info/site-runtime-security-ad028f46-194a-408d-b11b-951fcb0fb3a6 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://dustinedwards.info/site-runtime-security-dc69a512-f2cd-4630-bc68-2beadd27101f (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
        "check": "C16",
-       "detail": "https://dustinedwards.info/site-runtime-security-ad028f46-194a-408d-b11b-951fcb0fb3a6 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
+       "detail": "https://dustinedwards.info/site-runtime-security-dc69a512-f2cd-4630-bc68-2beadd27101f (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
       },
       {
        "severity": "error",
@@ -1427,7 +1427,7 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-EzTROFBcSFvuaDA9USTK0g==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-GPh4PESt3cbC/DHqnkSSJQ==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
@@ -1437,7 +1437,7 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-nrwsm27FcH3u7KyUME5JVA==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-zyPXb3jYNfxkBiW54R36EQ==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
@@ -1447,22 +1447,22 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://germomics.com/site-runtime-security-d1c94400-6264-424d-a0a4-03255781e930 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-uwmHrymqH7iqp9aqTDmnNA==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://germomics.com/site-runtime-security-2e297c88-5553-48df-a9d3-0561e3ed911b (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Mn4MU5/ZB2B+g0J0NPHOzA==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
        "check": "C16",
-       "detail": "https://germomics.com/site-runtime-security-d1c94400-6264-424d-a0a4-03255781e930 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
+       "detail": "https://germomics.com/site-runtime-security-2e297c88-5553-48df-a9d3-0561e3ed911b (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
       },
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-n/Yx+vaH/jk3hJuaKO4DHQ==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-rM75otD1q6LabxNNFgaMhQ==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-i7TvmefszwBkElUCUNwfGg==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-rh+FikPhd7b/xLky6sLTjw==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
@@ -1502,7 +1502,7 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-H3EEvL8Qs2oyB0W4e3+6PA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-PZY31Tu+4Qgx0ETapX3sLw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
@@ -1512,7 +1512,7 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-8eey2BfGTONW5nZ/enkcmg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-xUVMe0ldwOxSb8pOaPH3LA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
@@ -1522,22 +1522,22 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://foxhoundapp.com/site-runtime-security-38fdcb2a-6d95-44b6-beef-7183680984f8 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-IlJ0J5pm7o7fcHsbBNXrUw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://foxhoundapp.com/site-runtime-security-828dfed5-14af-409d-8544-a217d8458a9d (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-m77ei6CDeZ4K58iYONia+w==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
        "check": "C16",
-       "detail": "https://foxhoundapp.com/site-runtime-security-38fdcb2a-6d95-44b6-beef-7183680984f8 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
+       "detail": "https://foxhoundapp.com/site-runtime-security-828dfed5-14af-409d-8544-a217d8458a9d (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
       },
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-jbysuCj+WbVfmpI/y8ewnA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-j96DDq1f2+luE8WWWuEReA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-tMV4CYDDKT02r6CtzU/QLw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-g92pCopIqq4zXOWRqWyv4Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
@@ -1597,12 +1597,12 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-2a1b52f2-5714-4d5e-9f8e-17247d6d8f34 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-12d3e6a7-37e9-4b3e-bab6-45fbd79a7f8c (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
        "check": "C16",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-2a1b52f2-5714-4d5e-9f8e-17247d6d8f34 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
+       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-12d3e6a7-37e9-4b3e-bab6-45fbd79a7f8c (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
       },
       {
        "severity": "warning",
@@ -1638,17 +1638,17 @@
       {
        "severity": "error",
        "check": "I3",
-       "detail": "https://prelum.dustinedwards.info/site-runtime-security-e01c129c-ba50-4a0a-9cb4-c52dfb625a0e (404) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT"
+       "detail": "https://prelum.dustinedwards.info/site-runtime-security-f10978b7-1afc-4dff-b187-f013978fab60 (404) Cross-Origin-Embedder-Policy-Report-Only is present: ABSENT"
       },
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://prelum.dustinedwards.info/site-runtime-security-e01c129c-ba50-4a0a-9cb4-c52dfb625a0e (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://prelum.dustinedwards.info/site-runtime-security-f10978b7-1afc-4dff-b187-f013978fab60 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
        "check": "C16",
-       "detail": "https://prelum.dustinedwards.info/site-runtime-security-e01c129c-ba50-4a0a-9cb4-c52dfb625a0e (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
+       "detail": "https://prelum.dustinedwards.info/site-runtime-security-f10978b7-1afc-4dff-b187-f013978fab60 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://music.amazon.ca https://music.amazon.com.mx https://music.amazon.com.br https://music.amazon.co.uk https://music.amazon.de https://music.amazon.fr https://music.amazon.es https://music.amazon.it https://music.amazon.in https://music.amazon.co.jp https://music.amazon.com.au https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
       },
       {
        "severity": "error",
@@ -1716,35 +1716,13 @@
      "clean_days": 1
     },
     "capsid-portal": {
-     "status": "missing",
-     "reason": "signed-in-security: 3 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "H2",
-       "detail": "https://portal.dustinedwards.info/ (200) a text or XML Content-Type names its charset: got \"text/html\""
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://portal.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'self')"
-      },
-      {
-       "severity": "error",
-       "check": "H2",
-       "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (200) a text or XML Content-Type names its charset: got \"text/html\""
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'self')"
-      },
-      {
-       "severity": "error",
-       "check": "H2",
-       "detail": "https://portal.dustinedwards.info/portal/assets/index-BgNNVtMO.js (200) a text or XML Content-Type names its charset: got \"text/javascript\""
-      }
-     ]
+     "status": "complete",
+     "reason": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0. Signed-in report https://mcp.dustinedwards.info/reports/signed-in-security.json at 2026-10-31T23:35:55Z (capsid 051d09f): pass, only the declared C3 warning; the H2 charset error from the 22:30Z report is gone.",
+     "evidence": [
+      "https://portal.dustinedwards.info/",
+      "https://mcp.dustinedwards.info/reports/signed-in-security.json"
+     ],
+     "clean_days": 1
     },
     "carrel-desk": {
      "status": "missing",
@@ -1930,9 +1908,9 @@
    "builder": "Complete shared writing and rendering",
    "verifier": null,
    "lines": {
-    "prs": 26,
-    "added": 6639,
-    "removed": 3038
+    "prs": 29,
+    "added": 6669,
+    "removed": 3059
    },
    "unchecked": {},
    "cells": {
@@ -2739,7 +2717,7 @@
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-36b018701e7f an unknown route has cache-control private, no-store, expected no-store"
+       "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-e55c98f64ba7 an unknown route has cache-control private, no-store, expected no-store"
       }
      ]
     },
@@ -2773,12 +2751,12 @@
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://txasm.org/api/carrel/v1/site-api-live-5d34709297d2 an unknown route answered 404 without the key, expected 401"
+       "detail": "https://txasm.org/api/carrel/v1/site-api-live-cbe33d3708f3 an unknown route answered 404 without the key, expected 401"
       },
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://txasm.org/api/carrel/v1/site-api-live-5d34709297d2 answers differently from a known route without the key, so it tells which routes exist"
+       "detail": "https://txasm.org/api/carrel/v1/site-api-live-cbe33d3708f3 answers differently from a known route without the key, so it tells which routes exist"
       }
      ]
     },
@@ -2860,9 +2838,9 @@
    "builder": "Complete shared images and media",
    "verifier": "Verify area 6 images and media",
    "lines": {
-    "prs": 29,
-    "added": 29940,
-    "removed": 3447
+    "prs": 32,
+    "added": 30007,
+    "removed": 3470
    },
    "unchecked": {
     "Capsid Portal and Carrel Desk pages behind sign-in": "a stranger's crawl sees only the redirect to Access, so the images on the signed-in pages (Desk's media library, the Portal's views) are not checked live"
@@ -2896,32 +2874,32 @@
       {
        "severity": "error",
        "check": "A12",
-       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=704 Cache-Control is \"public, max-age=31536000\", not immutable"
+       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=704 Cache-Control is \"public, max-age=86400\", not immutable"
       },
       {
        "severity": "error",
        "check": "A12",
-       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=640 Cache-Control is \"public, max-age=31536000\", not immutable"
+       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=640 Cache-Control is \"public, max-age=86400\", not immutable"
       },
       {
        "severity": "error",
        "check": "A12",
-       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=1024 Cache-Control is \"public, max-age=31536000\", not immutable"
+       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.webp?w=1024 Cache-Control is \"public, max-age=86400\", not immutable"
       },
       {
        "severity": "error",
        "check": "A12",
-       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.avif?w=640 Cache-Control is \"public, max-age=31536000\", not immutable"
+       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.avif?w=640 Cache-Control is \"public, max-age=86400\", not immutable"
       },
       {
        "severity": "error",
        "check": "A12",
-       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.avif?w=704 Cache-Control is \"public, max-age=86400\", not immutable"
+       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.avif?w=704 Cache-Control is \"public, max-age=31536000\", not immutable"
       },
       {
        "severity": "error",
        "check": "A12",
-       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.avif?w=1024 Cache-Control is \"public, max-age=31536000\", not immutable"
+       "detail": "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp.avif?w=1024 Cache-Control is \"public, max-age=86400\", not immutable"
       },
       {
        "severity": "error",
@@ -3012,17 +2990,17 @@
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/antitoxin-togo-please/corynebacterium-diphtheriae-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
-      },
-      {
-       "severity": "error",
-       "check": "C11",
        "detail": "https://images.germomics.com/antitoxin-togo-please/seppala-togo-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
        "check": "C11",
        "detail": "https://images.germomics.com/antitoxin-togo-please/antitoxin-togo-pls-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+      },
+      {
+       "severity": "error",
+       "check": "C11",
+       "detail": "https://images.germomics.com/antitoxin-togo-please/corynebacterium-diphtheriae-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
@@ -3117,12 +3095,12 @@
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/theres-something-about-typhoid-mary/theodore-roosevelt-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/theres-something-about-typhoid-mary/salmonella-enterica-typhi-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/theres-something-about-typhoid-mary/salmonella-enterica-typhi-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/theres-something-about-typhoid-mary/theodore-roosevelt-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
@@ -3142,12 +3120,12 @@
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/its-on-the-syphilis/dilophosaurus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/its-on-the-syphilis/treponema-pallidum-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/its-on-the-syphilis/treponema-pallidum-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/its-on-the-syphilis/dilophosaurus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
@@ -3192,12 +3170,12 @@
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/confessions-of-a-cholera-girl/vibrio-cholerae-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/confessions-of-a-cholera-girl/hurricane-matthew-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/confessions-of-a-cholera-girl/hurricane-matthew-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/confessions-of-a-cholera-girl/vibrio-cholerae-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
@@ -3217,12 +3195,12 @@
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/on-the-right-taq/yellowstone-hot-springs-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/on-the-right-taq/thermus-aquaticus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/on-the-right-taq/thermus-aquaticus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/on-the-right-taq/yellowstone-hot-springs-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
@@ -3242,12 +3220,12 @@
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/a-sky-full-of-sars/civet-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/a-sky-full-of-sars/coronavirus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://images.germomics.com/a-sky-full-of-sars/coronavirus-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://images.germomics.com/a-sky-full-of-sars/civet-795.webp Cross-Origin-Resource-Policy is \"unset\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
@@ -3298,15 +3276,13 @@
      ]
     },
     "txasm": {
-     "status": "missing",
-     "reason": "site-runtime-images: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://txasm.dustin-edwards.workers.dev/og-card.png the share card's Cross-Origin-Resource-Policy is \"same-origin\", not cross-origin, so a preview on another site may not load it"
-      }
-     ]
+     "status": "partial",
+     "reason": "og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap",
+     "evidence": [
+      "https://txasm.org/og-card.png",
+      "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
+     ],
+     "clean_days": 2
     },
     "bsw": {
      "status": "missing",
@@ -3318,305 +3294,17 @@
      "clean_days": 1
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "site-runtime-images: 51 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/ /favicon.svg is below the fold (y≈30135 at 390, y≈30790 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/ preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈30135 at 390, y≈30790 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/pricing /favicon.svg is below the fold (y≈14851 at 390, y≈15311 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/pricing preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈14851 at 390, y≈15311 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/products /favicon.svg is below the fold (y≈2233 at 390, y≈2399 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/products preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈2233 at 390, y≈2399 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/audit /favicon.svg is below the fold (y≈4615 at 390, y≈3944 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/audit preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈4615 at 390, y≈3944 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/recovery /favicon.svg is below the fold (y≈11970 at 390, y≈11708 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/recovery preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈11970 at 390, y≈11708 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/disputes /favicon.svg is below the fold (y≈9261 at 390, y≈8947 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/disputes preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈9261 at 390, y≈8947 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/intelligence /favicon.svg is below the fold (y≈7613 at 390, y≈7243 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/intelligence preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈7613 at 390, y≈7243 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/features /favicon.svg is below the fold (y≈15512 at 390, y≈12448 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/features preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈15512 at 390, y≈12448 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/about /favicon.svg is below the fold (y≈1738 at 390, y≈1488 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/about preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈1738 at 390, y≈1488 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/demos /favicon.svg is below the fold (y≈2597 at 390, y≈2716 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/demos preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈2597 at 390, y≈2716 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs /favicon.svg is below the fold (y≈4511 at 390, y≈4782 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈4511 at 390, y≈4782 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/audit /favicon.svg is below the fold (y≈2307 at 390, y≈2101 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/audit preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈2307 at 390, y≈2101 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/privacy /favicon.svg is below the fold (y≈8013 at 390, y≈5936 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/privacy preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈8013 at 390, y≈5936 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/terms /favicon.svg is below the fold (y≈16594 at 390, y≈12291 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/terms preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈16594 at 390, y≈12291 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/security /favicon.svg is below the fold (y≈5504 at 390, y≈4314 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/security preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈5504 at 390, y≈4314 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/blog /favicon.svg is below the fold (y≈36673 at 390, y≈39730 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/blog preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈36673 at 390, y≈39730 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/blog/archive /favicon.svg is below the fold (y≈10872 at 390, y≈8120 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/blog/archive preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈10872 at 390, y≈8120 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/decline-codes /favicon.svg is below the fold (y≈12845 at 390, y≈13632 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/decline-codes preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈12845 at 390, y≈13632 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/compare /favicon.svg is below the fold (y≈5955 at 390, y≈6311 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/compare preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈5955 at 390, y≈6311 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/platform /favicon.svg is below the fold (y≈15782 at 390, y≈11325 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/platform preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈15782 at 390, y≈11325 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/audit /favicon.svg is below the fold (y≈18717 at 390, y≈20257 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/audit preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈18717 at 390, y≈20257 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/recovery /favicon.svg is below the fold (y≈101090 at 390, y≈108151 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/recovery preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈101090 at 390, y≈108151 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/disputes /favicon.svg is below the fold (y≈7284 at 390, y≈5893 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/disputes preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈7284 at 390, y≈5893 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/intelligence /favicon.svg is below the fold (y≈34735 at 390, y≈37142 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs/intelligence preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈34735 at 390, y≈37142 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor /favicon.svg is below the fold (y≈6491 at 390, y≈5203 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor /favicon.svg is below the fold (y≈7654 at 390, y≈6368 at 1440) and not lazy (no loading attribute), no decoding=\"async\""
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈6491 at 390, y≈5203 at 1440), ahead of what the screen shows"
-      }
-     ]
+     "status": "partial",
+     "reason": "cover picture is its own code, not pictureProps; a cover outside the library is unsized; no placeholder, credit, ImageObject or image sitemap; footer SVG has no loading/decoding",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
+     ],
+     "clean_days": 2
     },
     "foxing": {
      "status": "missing",
-     "reason": "site-runtime-images: 37 errors",
+     "reason": "site-runtime-images: 6 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/ no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://foxing.app/ 10 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxing.app/books /media/covers/813-leblanc.jpg.webp?w=240 is loading=\"lazy\" above the fold (y≈667 at 390, y≈566 at 1440), so it waits for layout"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxing.app/books /media/covers/a-bid-for-fortune-boothby.jpg.webp?w=240 is loading=\"lazy\" above the fold (y≈667 at 390, y≈566 at 1440), so it waits for layout"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxing.app/books /media/covers/a-bride-of-a-summers-day-pirkis.jpg.webp?w=240 is loading=\"lazy\" above the fold (y≈1083 at 390, y≈566 at 1440), so it waits for layout"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxing.app/books /media/covers/a-christmas-carol-dickens.jpg.webp?w=240 is loading=\"lazy\" above the fold (y≈1083 at 390, y≈566 at 1440), so it waits for layout"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxing.app/books /media/covers/a-confession-tolstoy.jpg.webp?w=240 is loading=\"lazy\" above the fold (y≈1524 at 390, y≈566 at 1440), so it waits for layout"
-      },
       {
        "severity": "error",
        "check": "A6",
@@ -3624,148 +3312,28 @@
       },
       {
        "severity": "error",
-       "check": "A5",
-       "detail": "https://foxing.app/books /media/covers/813-leblanc.jpg.webp?w=240 is the largest image above the fold at 390 px, likely the largest paint, and it is loading=\"lazy\""
+       "check": "A3",
+       "detail": "https://foxing.app/media/covers/a-bid-for-fortune-boothby.jpg.avif?w=480 answers 200 image/webp, not image/avif"
       },
       {
        "severity": "error",
-       "check": "A5",
-       "detail": "https://foxing.app/books /media/covers/813-leblanc.jpg.webp?w=240 is the largest image above the fold at 390 px, likely the largest paint, with no fetchpriority=\"high\""
+       "check": "A3",
+       "detail": "https://foxing.app/media/covers/a-bride-of-a-summers-day-pirkis.jpg.avif?w=260 answers 200 image/webp, not image/avif"
       },
       {
        "severity": "error",
-       "check": "A5",
-       "detail": "https://foxing.app/books /media/covers/813-leblanc.jpg.webp?w=240 is the largest image above the fold at 1440 px, likely the largest paint, and it is loading=\"lazy\""
+       "check": "A3",
+       "detail": "https://foxing.app/media/covers/a-christmas-carol-dickens.jpg.avif?w=260 answers 200 image/webp, not image/avif"
       },
       {
        "severity": "error",
-       "check": "A5",
-       "detail": "https://foxing.app/books /media/covers/813-leblanc.jpg.webp?w=240 is the largest image above the fold at 1440 px, likely the largest paint, with no fetchpriority=\"high\""
+       "check": "A3",
+       "detail": "https://foxing.app/media/covers/a-confession-tolstoy.jpg.avif?w=260 answers 200 image/webp, not image/avif"
       },
       {
        "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/books no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://foxing.app/books 24 content images on this page, and its sitemap entry has no image:image"
-      },
-      {
-       "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/awards no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/picks no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/book-of-the-month no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/journal no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/journal/archive no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/about no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "C3",
-       "detail": "https://foxing.app/features no og:image:type"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/813-leblanc.jpg.avif?w=480 is 480 px wide for /media/covers/813-leblanc.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/813-leblanc: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-bid-for-fortune-boothby.jpg.avif?w=480 is 480 px wide for /media/covers/a-bid-for-fortune-boothby.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-bid-for-fortune-boothby: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-bride-of-a-summers-day-pirkis.jpg.avif?w=480 is 480 px wide for /media/covers/a-bride-of-a-summers-day-pirkis.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-bride-of-a-summers-day-pirkis: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-christmas-carol-dickens.jpg.avif?w=480 is 480 px wide for /media/covers/a-christmas-carol-dickens.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-christmas-carol-dickens: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-confession-tolstoy.jpg.avif?w=480 is 480 px wide for /media/covers/a-confession-tolstoy.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-confession-tolstoy: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-connecticut-yankee-in-king-arthurs-court-twain.jpg.avif?w=480 is 480 px wide for /media/covers/a-connecticut-yankee-in-king-arthurs-court-twain.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-country-gentleman-and-his-family-oliphant.jpg.avif?w=480 is 480 px wide for /media/covers/a-country-gentleman-and-his-family-oliphant.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-country-gentleman-and-his-family-oliphant: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-cycle-of-the-west-neihardt.jpg.avif?w=480 is 480 px wide for /media/covers/a-cycle-of-the-west-neihardt.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-cycle-of-the-west-neihardt: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-damsel-in-distress-wodehouse.jpg.avif?w=480 is 480 px wide for /media/covers/a-damsel-in-distress-wodehouse.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-damsel-in-distress-wodehouse: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-daughter-of-eve-balzac.jpg.avif?w=480 is 480 px wide for /media/covers/a-daughter-of-eve-balzac.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-daughter-of-eve-balzac: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-daughter-of-the-samurai-sugimoto.jpg.avif?w=480 is 480 px wide for /media/covers/a-daughter-of-the-samurai-sugimoto.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-daughter-of-the-samurai-sugimoto: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-day-at-a-time-alexander.jpg.avif?w=480 is 480 px wide for /media/covers/a-day-at-a-time-alexander.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-day-at-a-time-alexander: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-dolls-house-ibsen.jpg.avif?w=480 is 480 px wide for /media/covers/a-dolls-house-ibsen.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-dolls-house-ibsen: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-farewell-to-arms-hemingway.jpg.avif?w=480 is 480 px wide for /media/covers/a-farewell-to-arms-hemingway.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-farewell-to-arms-hemingway: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-general-history-of-the-pirates-johnson.jpg.avif?w=480 is 480 px wide for /media/covers/a-general-history-of-the-pirates-johnson.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-general-history-of-the-pirates-johnson: 1.8 times what the screen needs"
-      },
-      {
-       "severity": "error",
-       "check": "A7",
-       "detail": "https://foxing.app/media/covers/a-general-view-of-positivism-comte.jpg.avif?w=480 is 480 px wide for /media/covers/a-general-view-of-positivism-comte.jpg.webp?w=240 shown about 260 px wide at 1440 (DPR 1) on https://foxing.app/books/a-general-view-of-positivism-comte: 1.8 times what the screen needs"
+       "check": "A3",
+       "detail": "https://foxing.app/media/covers/a-confession-tolstoy.jpg.avif?w=480 answers 200 image/webp, not image/avif"
       }
      ]
     },
@@ -3814,7 +3382,7 @@
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://prelum.dustinedwards.info/images/loop-still-320x180.png Cross-Origin-Resource-Policy is \"same-origin\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://prelum.dustinedwards.info/link-icons/developer.mozilla.org.png Cross-Origin-Resource-Policy is \"same-origin\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
@@ -3824,7 +3392,7 @@
       {
        "severity": "error",
        "check": "C11",
-       "detail": "https://prelum.dustinedwards.info/link-icons/developer.mozilla.org.png Cross-Origin-Resource-Policy is \"same-origin\", not cross-origin, so a preview elsewhere may not load it"
+       "detail": "https://prelum.dustinedwards.info/images/loop-still-320x180.png Cross-Origin-Resource-Policy is \"same-origin\", not cross-origin, so a preview elsewhere may not load it"
       },
       {
        "severity": "error",
@@ -4018,13 +3586,150 @@
      "clean_days": 1
     },
     "foxing": {
-     "status": "complete",
-     "reason": "Complete apart from Dustin's steps. Public pages send no React (#163): home Lighthouse 100 phone and 100 desktop, book page 99 phone and 100 desktop (LCP is the cover image), 0 KiB unused JS; route budget enforced; 103 with Link and Server-Timing. The cover fix that waits for his yes on screenshots is not needed to pass the bar. Open and accepted: C5 (http plus trailing slash takes 2 hops), A1.",
-     "evidence": [
-      "https://foxing.app/books/813-leblanc",
-      "https://github.com/DrDustinEdwards/foxing/blob/main/.route-weight.json"
-     ],
-     "clean_days": 1
+     "status": "missing",
+     "reason": "site-runtime-speed: 24 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/ not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/books not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/awards not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/picks not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/book-of-the-month not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/journal not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/about not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/features not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/authors/a-a-milne not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/books/813-leblanc not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/awards/nobel-literature not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/picks/oprah not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/journal/archive not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/authors/a-e-w-mason not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/books/a-bid-for-fortune-boothby not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/awards/pulitzer-fiction not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/picks/reese not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/journal/frankenstein-monster-meaning not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/authors/a-merritt not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/awards/james-tait-black not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/picks/jenna not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/journal/great-gatsby-green-light-meaning not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/authors/a-n-afanasyev not from the edge on the second request: cf-cache-status MISS, cache-control public, max-age=0"
+      },
+      {
+       "severity": "warning",
+       "check": "C2",
+       "detail": "https://foxing.app/assets/app-g-GHYwjA.css an unhashed file is immutable: a change in place reaches no returning reader"
+      },
+      {
+       "severity": "warning",
+       "check": "F2",
+       "detail": "https://foxing.app/?speedcheck=uedqtrrr an uncached render took 713 ms to the first byte (bar 600 ms)"
+      },
+      {
+       "severity": "warning",
+       "check": "A3",
+       "detail": "https://foxing.app/ mobile: PageSpeed Insights answered 429"
+      },
+      {
+       "severity": "warning",
+       "check": "A3",
+       "detail": "https://foxing.app/ desktop: PageSpeed Insights answered 429"
+      }
+     ]
     },
     "carrel": {
      "status": "complete",
@@ -4061,45 +3766,12 @@
      "clean_days": 1
     },
     "capsid": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 5 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C1",
-       "detail": "https://capsid.dustinedwards.info/assets/capsomer.css a hashed file sent cache-control public, max-age=3600, not a year immutable"
-      },
-      {
-       "severity": "error",
-       "check": "C1",
-       "detail": "https://capsid.dustinedwards.info/assets/enarratio.css a hashed file sent cache-control public, max-age=3600, not a year immutable"
-      },
-      {
-       "severity": "error",
-       "check": "C1",
-       "detail": "https://capsid.dustinedwards.info/assets/explorer.css a hashed file sent cache-control public, max-age=3600, not a year immutable"
-      },
-      {
-       "severity": "error",
-       "check": "C1",
-       "detail": "https://capsid.dustinedwards.info/assets/theme.js a hashed file sent cache-control public, max-age=3600, not a year immutable"
-      },
-      {
-       "severity": "error",
-       "check": "C1",
-       "detail": "https://capsid.dustinedwards.info/assets/explorer.js a hashed file sent cache-control public, max-age=3600, not a year immutable"
-      },
-      {
-       "severity": "warning",
-       "check": "A3",
-       "detail": "https://capsid.dustinedwards.info/ mobile: PageSpeed Insights answered 429"
-      },
-      {
-       "severity": "warning",
-       "check": "A3",
-       "detail": "https://capsid.dustinedwards.info/ desktop: PageSpeed Insights answered 429"
-      }
-     ]
+     "status": "complete",
+     "reason": "Complete apart from Dustin's step. The explorer now sends Link preload, a 103, Server-Timing, its own speculation rules, private, no-store on a cookie request and on a 404 (#662); Lighthouse 100 phone and 100 desktop. Not part of this cell: the MCP Worker (mcp.dustinedwards.info) is rolled back because the live gate gets 429 from POST /register; another thread owns it. Open and accepted: A1.",
+     "evidence": [
+      "https://capsid.dustinedwards.info/"
+     ],
+     "clean_days": 1
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -4164,14 +3836,20 @@
      "clean_days": 2
     },
     "germomics": {
-     "status": "partial",
-     "reason": "Deploys from GitHub at head f86a616 and drill passed; 404 is React Router's default page, not the shared error page; first audio/images files pass pending (03:17 cron, may take several nights); counted tables only",
-     "evidence": [
-      "https://germomics.com/health",
-      "https://github.com/DrDustinEdwards/germomics/actions/runs/41218962831",
-      "https://github.com/DrDustinEdwards/germomics/actions/runs/41218270512"
-     ],
-     "clean_days": 1
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "B1",
+       "detail": "https://germomics.com/health backup warning: no complete files pass of audio found"
+      },
+      {
+       "severity": "error",
+       "check": "H4",
+       "detail": "https://germomics.com/health serves ef016470c0f60da7eb74d4e7b202a33edee98e9e, not the branch head 9e2625fcf962c50dcf6eb9a24f6196f49e0018b1 (https://github.com/DrDustinEdwards/germomics/commit/9e2625fcf962c50dcf6eb9a24f6196f49e0018b1), committed 42 minutes ago"
+      }
+     ]
     },
     "julieedwards-info": {
      "status": "partial",
@@ -4851,7 +4529,7 @@
       {
        "severity": "error",
        "check": "L1",
-       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
+       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
       },
       {
        "severity": "warning",
@@ -6496,9 +6174,9 @@
    "builder": "Complete shared AI and MCP code",
    "verifier": "Verify area 11 AI and MCP",
    "lines": {
-    "prs": 29,
-    "added": 33257,
-    "removed": 5861
+    "prs": 38,
+    "added": 34224,
+    "removed": 5974
    },
    "unchecked": {},
    "cells": {
