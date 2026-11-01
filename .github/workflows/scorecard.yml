@@ -1,0 +1,141 @@
+name: scorecard
+
+# OPENSSF SCORECARD, PUBLISHED, AND A GATE ON ITS SCORE (checklist C5). Every public repository calls this weekly and on
+# each push to its default branch (examples/scorecard-caller.yml). Three jobs:
+#
+#   before    reads the repository's last published score from api.securityscorecards.dev, before this run publishes.
+#   analysis  runs ossf/scorecard-action twice: once for JSON (the score this run gates on, kept as an artifact) and once
+#             for SARIF, which it publishes to the OpenSSF API (the public score and badge) and uploads to code scanning.
+#   gate      fails when this run's aggregate score is lower than the published one, and names each check that fell.
+#
+# THE ANALYSIS JOB IS KEPT TO WHAT THE SCORECARD API ACCEPTS. With publish_results the API checks the job that ran the action
+# and refuses results from one with job-level env or defaults, a container, a non-Ubuntu runner, or a step outside its list
+# (checkout, upload-artifact, codeql-action/upload-sarif, scorecard-action, harden-runner), and from a workflow with
+# top-level env, defaults or write permissions (scorecard-action README, "Workflow Restrictions"). Every run: step is in the
+# other two jobs, and only the analysis job asks for id-token: write. fail_on_publish_error makes a refusal fail the run.
+#
+# A CALLER pins a full 40-character sha; scripts/check-callers.mjs fails on anything else. Its job grants contents: read,
+# actions: read, security-events: write and id-token: write.
+
+on:
+  workflow_call:
+    inputs:
+      tolerance:
+        description: How far the aggregate score may fall below the published one before the gate fails (0 fails on any fall).
+        required: false
+        type: number
+        default: 0
+
+permissions: {}
+
+jobs:
+  before:
+    name: published score
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    outputs:
+      score: ${{ steps.read.outputs.score }}
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+        with:
+          egress-policy: audit
+      - id: read
+        name: Read the published score
+        run: |
+          # A repository that has never published answers 404: the gate then only records this run's score.
+          if curl -fsS --retry 3 --max-time 30 -o "$RUNNER_TEMP/published.json" "https://api.securityscorecards.dev/projects/github.com/$GITHUB_REPOSITORY"; then
+            echo "score=$(jq -c '{score, date, commit: .repo.commit, checks: [.checks[] | {name, score}]}' "$RUNNER_TEMP/published.json")" >> "$GITHUB_OUTPUT"
+          else
+            echo "No published score for $GITHUB_REPOSITORY yet."
+            echo "score=" >> "$GITHUB_OUTPUT"
+          fi
+
+  analysis:
+    name: scorecard
+    needs: before
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+      id-token: write
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - name: Score (JSON, for the gate)
+        uses: ossf/scorecard-action@fa7117db83c52d787ae5a89f350999701505d78e # v2.5.0
+        with:
+          results_file: results.json
+          results_format: json
+          publish_results: false
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: scorecard-json
+          path: results.json
+          retention-days: 90
+      - name: Score and publish (SARIF)
+        uses: ossf/scorecard-action@fa7117db83c52d787ae5a89f350999701505d78e # v2.5.0
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+          fail_on_publish_error: true
+      - uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          sarif_file: results.sarif
+
+  gate:
+    name: scorecard gate
+    needs: [before, analysis]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
+        with:
+          egress-policy: audit
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: scorecard-json
+      - name: Compare with the published score
+        env:
+          PUBLISHED: ${{ needs.before.outputs.score }}
+          TOLERANCE: ${{ inputs.tolerance }}
+        run: |
+          now="$(jq '.score' results.json)"
+          {
+            echo "### OpenSSF Scorecard: $now / 10"
+            echo
+            echo "| Check | Score | Published |"
+            echo "| --- | --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -z "$PUBLISHED" ]; then
+            jq -r '.checks[] | "| \(.name) | \(.score) | none |"' results.json >> "$GITHUB_STEP_SUMMARY"
+            echo "Scorecard $now / 10; nothing published before to compare with."
+            exit 0
+          fi
+          was="$(printf '%s' "$PUBLISHED" | jq '.score')"
+          # Each check now beside its published score; -1 is Scorecard's "could not tell".
+          jq -r --argjson pub "$PUBLISHED" '
+            ($pub.checks | map({(.name): .score}) | add) as $old
+            | .checks[] | "| \(.name) | \(.score) | \($old[.name] // "none") |"
+          ' results.json >> "$GITHUB_STEP_SUMMARY"
+          fell="$(jq -r --argjson pub "$PUBLISHED" '
+            ($pub.checks | map({(.name): .score}) | add) as $old
+            | .checks[] | select(($old[.name] // -1) > .score) | "\(.name) \($old[.name]) -> \(.score)"
+          ' results.json)"
+          if awk -v now="$now" -v was="$was" -v tol="$TOLERANCE" 'BEGIN { exit !(now + tol < was) }'; then
+            echo "::error title=Scorecard fell::$was -> $now (published $(printf '%s' "$PUBLISHED" | jq -r '.date') at $(printf '%s' "$PUBLISHED" | jq -r '.commit' | cut -c1-7)). Checks that fell: ${fell//$'\n'/; }"
+            exit 1
+          fi
+          echo "Scorecard $now / 10 (published $was)."
+          [ -z "$fell" ] || echo "::warning title=Scorecard checks fell::${fell//$'\n'/; }"

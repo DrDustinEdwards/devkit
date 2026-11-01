@@ -1,0 +1,25 @@
+name: scorecard-self
+
+# devkit's own OpenSSF Scorecard through its own scorecard.yml (this commit's copy), as every public repository's is
+# (examples/scorecard-caller.yml).
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 6 * * 1"
+
+permissions: {}
+
+concurrency:
+  group: scorecard
+  cancel-in-progress: false
+
+jobs:
+  scorecard:
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+      id-token: write
+    uses: ./.github/workflows/scorecard.yml

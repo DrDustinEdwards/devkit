@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 0.20.24 (2026-11-01)
+
+- `scorecard.yml`: OpenSSF Scorecard for every public repository (checklist C5), weekly and on each push to the default branch. It publishes the score to the OpenSSF API (the public score and badge), uploads the SARIF to code scanning, and its `scorecard gate` job fails when the aggregate score falls below the last published one, naming each check that fell (`tolerance` input, 0 by default). The job that publishes holds only the steps the Scorecard API accepts. The caller is `examples/scorecard-caller.yml`; devkit runs it on itself (`scorecard-self.yml`). `devkit-shared` asks for it in a public repository, as a warning until 0.22.0.
+- `release.yml`: build provenance (C7). Each new release packs the tagged tree with `npm pack --ignore-scripts`, attests the tarball with `actions/attest-build-provenance` and attaches it to the release, so `gh attestation verify` can check a release came from this workflow. The caller's job now grants `id-token: write` and `attestations: write` beside `contents: write`; a caller that does not fails to start, so update the permissions with the pin. `build: true` (with `node-version-file`, `.node-version` by default) is Capsomer's release: it runs `npm ci`, drops the prepare script and tags a release commit holding the built files, so Capsomer and site-runtime release through this file instead of copies of it.
+- `worker-deploy.yml`: StepSecurity Harden-Runner first in every job (C8), in `audit` mode, recording each host a job reaches and refusing sudo and containers. `egress-policy: block` with `allowed-endpoints` turns the record into a rule once each site's hosts are known.
+
 ## 0.20.23 (2026-11-01)
 
 - `checks.yml`: the small checks in one job. It runs the footer strip (`pr-footer.yml`), the trailer check (`ai-author.yml`) and the shared-code check (`shared.yml`) on one runner instead of three, from devkit at the caller's pin, with nothing installed. An edit of a pull request description runs only the footer step, and its concurrency group never cancels a run checking the code. The caller is `examples/checks-caller.yml`. `devkit-shared` counts it as calling all three and now names it as the caller to add. The three separate workflows keep working until every repository has moved.
