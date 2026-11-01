@@ -149,8 +149,9 @@ test("the guard the workflow runs is scripts/rollback-guard.mjs byte for byte (r
   assert.equal(inlined(text), guard);
 });
 
-test("a gate: nothing continues on error", () => {
-  assert.doesNotMatch(code, /continue-on-error/);
+test("a gate: nothing continues on error, except the live gate of a drill (inputs.drill), whose refusal is the expected result", () => {
+  assert.deepEqual([...code.matchAll(/continue-on-error: (.+)/g)].map((m) => m[1]), ["${{ inputs.drill }}"]);
+  assert.match(code, /drill:\n {8}description:[^\n]*\n {8}required: false\n {8}type: boolean\n {8}default: false/);
 });
 
 test("the example caller passes the pin check and names its secrets", () => {
