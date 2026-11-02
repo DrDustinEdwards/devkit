@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-01 14:17 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-02 16:56 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,17 +8,17 @@ Newest run 2026-11-01 14:17 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | · | · | · | · | · | +17310 | −719 |
-| 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ❌ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | ❌ | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 2. Security headers and CSP | ✅ | 🟡 | ❌ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ❌ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | ❌ | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | +67457 | −2968 |
-| 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
+| 4. Writing and rendering | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +27951 | −2785 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +7063 | −801 |
-| 10. Charts | ❌ | 🟡 | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +24917 | −6804 |
-| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +51846 | −7035 |
+| 10. Charts | ❌ | 🟡 | 🟡 | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30132 | −7740 |
+| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 Lines count public repositories only until the LIVE_GITHUB_TOKEN secret is set.
@@ -46,7 +46,7 @@ Builder: Share SEO and other key site code. Verifier: none yet.
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
 - 🟡 Foxhound: checks pass; no verifier yet
-- 🟡 Foxing: checks pass; no verifier yet
+- ❌ Foxing: prelum-audit: 0 errors
 - 🟡 Carrel: checks pass; no verifier yet
 - ❌ Enarratio: prelum-audit: 1 errors
   - icon-missing: https://enarratio.dustinedwards.info/favicon.ico answers 404 text/html; charset=utf-8
@@ -56,9 +56,7 @@ Builder: Share SEO and other key site code. Verifier: none yet.
   - link-broken: https://capsomer.dustinedwards.info/components/catalog/ links to https://capsomer.dustinedwards.info/components/empty/empty.md, which answers 404
   - link-broken: https://capsomer.dustinedwards.info/components/empty/ links to https://capsomer.dustinedwards.info/components/skeleton/skeleton.md, which answers 404
   - link-broken: https://capsomer.dustinedwards.info/components/empty/ links to https://capsomer.dustinedwards.info/components/error-page/error-page.md, which answers 404
-- ❌ Prelum specimen: prelum-audit: 2 errors
-  - link-broken: https://prelum.dustinedwards.info/ links to https://prelum.dustinedwards.info/writing/other, which answers 404
-  - link-broken: https://prelum.dustinedwards.info/ links to https://prelum.dustinedwards.info/writing/next, which answers 404
+- 🟡 Prelum specimen: checks pass; no verifier yet
 - 🟡 Capsid explorer: checks pass; no verifier yet
 
 ### 2. Security headers and CSP
@@ -66,12 +64,12 @@ Builder: Share SEO and other key site code. Verifier: none yet.
 Builder: Complete shared security headers and CSP. Verifier: Verify security headers.
 
 - 🟡 dustinedwards.info: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3: COEP is still enforced where an embedding site must keep it Report-Only. It passes v0.65.0 with 0 errors. Pin is v0.65.0 in package.json and mcp/package.json; a bump to v0.66.0 with the site's embeds change and a deploy fixes it. Re-check then.
-- 🟡 Germomics: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. Bump to v0.66.0 and deploy.
+- ❌ Germomics: site-runtime-security: 0 errors
 - 🟡 Foxhound: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. foxhound #432 (v0.66.0) is open; re-check after it deploys.
 - ❌ Capsomer: site-runtime-security: 4 errors
   - C16: https://capsomer.dustinedwards.info/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://capsomer.dustinedwards.info/make/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
-  - C16: https://capsomer.dustinedwards.info/site-runtime-security-c49abf3e-e235-44f9-a4c8-35acd2fd7f3d (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
+  - C16: https://capsomer.dustinedwards.info/site-runtime-security-733eee10-6028-4d74-8bfe-512b651405cc (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://capsomer.dustinedwards.info/ (405) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
 - 🟡 Prelum specimen: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3 (COEP enforced, not Report-Only). prelum #182 (v0.66.0) merged at 22:49Z but the live sha at 23:10Z was still ffbe359, so the deploy had not landed. It passes v0.65.0 with 0 errors. Re-check after the deploy.
 - 🟡 Foxing admin MCP: 0 errors, 0 warnings live (on Cloudflare since foxing #165), but mcp/package.json pins site-runtime v0.62.0, four minors behind v0.66.0. devkit's pin check (S7) wants every MCP server within one minor; it is a warning until devkit 0.21.0. Bump to the current release and redeploy.
@@ -101,7 +99,12 @@ Builder: Complete shared writing and rendering. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
 - 🟡 dustinedwards.info: checks pass; no verifier yet
-- 🟡 Germomics: checks pass; no verifier yet
+- ❌ Germomics: prelum-content: 17 errors
+  - writing-render-version: https://germomics.com/about stored HTML from render version 16; the pipeline is at 17
+  - writing-render-version: https://germomics.com/about stored HTML from render version 16; the pipeline is at 17
+  - writing-render-version: https://germomics.com/about/dustin-edwards stored HTML from render version 16; the pipeline is at 17
+  - writing-render-version: https://germomics.com/privacy stored HTML from render version 16; the pipeline is at 17
+  - writing-render-version: https://germomics.com/terms stored HTML from render version 16; the pipeline is at 17
 - 🟡 julieedwards.info: checks pass; no verifier yet
 - 🟡 TXASM: checks pass; no verifier yet
 - 🟡 BSW: checks pass; no verifier yet
@@ -120,13 +123,13 @@ Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editin
 - 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
 - ❌ dustinedwards.info: site-api-live: 2 errors
   - K4: https://dustinedwards.info/api/carrel/v1/meta meta has cache-control private, no-store, expected no-store
-  - K4: https://dustinedwards.info/api/carrel/v1/site-api-live-036b487f940b an unknown route has cache-control private, no-store, expected no-store
+  - K4: https://dustinedwards.info/api/carrel/v1/site-api-live-dd1a833256db an unknown route has cache-control private, no-store, expected no-store
 - 🟡 Germomics: author filter 501 though show.author is the byline; deleted post 404 not 410; preview is a hand-written shell; no series; no setTags; revisions author 'germomics', pages no history; admin.content.$key still writes pages outside Carrel
 - 🟡 julieedwards.info: pins v0.17.0 so webmentions can read the stale edge copy, sent on publish only; live section with a draft reads as draft; revisions capped at 50; no delete or unpublish (needs ruling); preview without page chrome
 - ❌ TXASM: site-api-live: 3 errors
   - K4: https://txasm.org/api/carrel/v1/meta meta answered 404 without the key, expected 401
-  - K4: https://txasm.org/api/carrel/v1/site-api-live-06c8025a13b1 an unknown route answered 404 without the key, expected 401
-  - K4: https://txasm.org/api/carrel/v1/site-api-live-06c8025a13b1 answers differently from a known route without the key, so it tells which routes exist
+  - K4: https://txasm.org/api/carrel/v1/site-api-live-869b4f1d2c8f an unknown route answered 404 without the key, expected 401
+  - K4: https://txasm.org/api/carrel/v1/site-api-live-869b4f1d2c8f answers differently from a known route without the key, so it tells which routes exist
 - 🟡 Foxhound: a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently
 - 🟡 Foxing: author filter 501 though author_id exists and JSON-LD credits Foxing; pins v0.17.0 so webmentions can read the stale edge copy; deleted post 404 not 410; preview hand-written shell; no series; redirects not removed on delete (301 to 404); revision author raw id
 
@@ -215,12 +218,9 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: devkit-a11y: 5 errors
+- ❌ dustinedwards.info: devkit-a11y: 2 errors
   - L3: https://dustinedwards.info/ text clipped with WCAG 1.4.12 text spacing: `ol.home-rows > li.home-row.h-entry:nth-of-type(1) > span.home-row-body:nth-of-type(2) > span.home-row-summary.home-row-clamp:nth-of-type(2)` (vertical), `ol.home-rows > li.home-row.h-entry:nth-of-type(2) > span.home-row-body:nth-of-type(2) > span.home-row-summary.home-row-clamp:nth-of-type(2)` (vertical), `ol.home-rows > li.home-row.h-entry:nth-of-type(3) > span.home-row-body:nth-of-type(2) > span.home-row-summary.home-row-clamp:nth-of-type(2)` (vertical)
   - L1: https://dustinedwards.info/no-such-page-devkit-a11y axe color-contrast (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.cap-btn`
-  - L3: https://dustinedwards.info/no-such-page-devkit-a11y scrolls sideways at 320 px: scrollWidth 328, widest `main#main > form.search-form > div.search-input-row > button.search-submit` reaches 328 px
-  - L1: https://dustinedwards.info/teaching/phage-discovery axe color-contrast (serious, WCAG) at 1440-dark, 390-dark: 1 element, first `ol > li:nth-child(1) > a[href$="teaching"][data-discover="true"]`
-  - L1: https://dustinedwards.info/software/foxhound axe color-contrast (serious, WCAG) at 1440-dark, 390-dark: 1 element, first `ol > li:nth-child(1) > a[href$="software"][data-discover="true"]`
 - ❌ Germomics: devkit-a11y: 28 errors
   - L1: https://germomics.com/ axe color-contrast (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `.ml-auto`
   - L2: https://germomics.com/ no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` "germomics")
@@ -243,10 +243,10 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `section:nth-of-type(2) > div.page-prose.mx-auto > p.mt-8:nth-of-type(2) > a.btn.btn-blue` "Go to the home page")
   - L2: https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
 - ❌ Foxhound: devkit-a11y: 5 errors
-  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
+  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
   - L3: https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical), `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical)
   - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body.min-h-full > div.fh-cap.fh-error-page > header.fh-error-bar.flex > a.no-underline` "foxhound")
-  - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: `div.flex.flex-col:nth-of-type(2) > a.group.-mx-2:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(2) > a.group.-mx-2:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(2) > a.group.-mx-2:nth-of-type(3) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical) and 33 more
+  - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(3) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical) and 33 more
   - L2: https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what `section.mb-10:nth-of-type(4) > ul.m-0.flex > li.overflow-hidden.rounded-lg:nth-of-type(1) > button.flex.w-full` opened
 - ❌ Foxing: devkit-a11y: 5 errors
   - L2: https://foxing.app/ no visible focus on 1 of 40 stops: `input#q`
@@ -260,27 +260,23 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L2: https://carrel.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` "")
   - L2: https://carrel.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more
   - S2: https://carrel.dustinedwards.info/site.webmanifest no lang on <html>
-- ❌ Enarratio: devkit-a11y: 4 errors
+- ❌ Enarratio: devkit-a11y: 2 errors
   - L1: https://enarratio.dustinedwards.info/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `.enarratio-table-chart > table`
-  - L3: https://enarratio.dustinedwards.info/no-such-page-devkit-a11y scrolls sideways at 320 px: scrollWidth 360, widest `main#main > header.gallery-head > p.gallery-intro` reaches 360 px
   - L1: https://enarratio.dustinedwards.info/capsomer axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `.enarratio-table-chart > table`
-  - L3: https://enarratio.dustinedwards.info/astro scrolls sideways at 320 px: scrollWidth 327, widest `html > body > header.cap-site-header > nav.cap-site-header-sections` reaches 571 px
 - ❌ Capsomer: devkit-a11y: 10 errors
   - L1: https://capsomer.dustinedwards.info/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#home-install`
   - L2: https://capsomer.dustinedwards.info/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body > main > p > a` "Go to Capsomer's front page")
   - L1: https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first `section[aria-labelledby="ex-tip"] > .comp-ex-box > iframe[data-height="360"] a[aria-describedby="cap-popover-11"]`
   - L1: https://capsomer.dustinedwards.info/components/admin-shell/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=""] > pre[aria-label="Install"]`
   - L2: https://capsomer.dustinedwards.info/make/ no visible focus on 1 of 40 stops: `input#mk-radius`
-- ❌ Prelum specimen: devkit-a11y: 9 errors
-  - L3: https://prelum.dustinedwards.info/no-such-page-devkit-a11y scrolls sideways at 320 px: scrollWidth 325, widest `main#main > p` reaches 325 px
-  - L3: https://prelum.dustinedwards.info/writing/other scrolls sideways at 320 px: scrollWidth 325, widest `main#main > p` reaches 325 px
+- ❌ Prelum specimen: devkit-a11y: 6 errors
   - L1: https://prelum.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
   - L1: https://prelum.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
   - L2: https://prelum.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` "")
-- ❌ Capsid explorer: devkit-a11y: 3 errors
-  - L3: https://capsid.dustinedwards.info/s/capsid/ scrolls sideways at 320 px: scrollWidth 344, widest `figure#family > div.cap-system-map-stage:nth-of-type(1)` reaches 384 px
+  - L2: https://prelum.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more
+  - S2: https://prelum.dustinedwards.info/site.webmanifest no lang on <html>
+- ❌ Capsid explorer: devkit-a11y: 1 errors
   - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 1 of 40 stops: `figure#family > div.cap-system-map-stage:nth-of-type(1) > svg.cap-system-map-layer:nth-of-type(2) > g.cap-system-map-tile`
-  - L3: https://capsid.dustinedwards.info/flows/job-life/ scrolls sideways at 320 px: scrollWidth 344, widest `figure#flow-map > div.cap-system-map-stage:nth-of-type(1)` reaches 384 px
 - ❌ Dustin Edwards admin MCP: devkit-a11y: 11 errors
   - L1: https://admin-mcp.dustinedwards.info/ axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
   - L1: https://admin-mcp.dustinedwards.info/ axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
@@ -307,11 +303,11 @@ Builder: Complete shared charts. Verifier: none yet.
 - ❌ Package: no verifier has checked the package
 - 🟡 dustinedwards.info: checks pass; no verifier yet
 - 🟡 Germomics: checks pass; no verifier yet
-- 🟡 Foxhound: checks pass; no verifier yet
+- ❌ Foxhound: chart-audit: 1 errors
+  - B3: https://foxhoundapp.com/recovery/dashboard "Recovered revenue · 30d" (bar): 9 text under 12 px, smallest "0" at 10.6 px
 - 🟡 Foxing: checks pass; no verifier yet
 - 🟡 Carrel: checks pass; no verifier yet
-- ❌ Enarratio: chart-audit: 1 errors
-  - C12: https://enarratio.dustinedwards.info/astro "Tickets by team" (bar), 320 px: the drawing is 480 px wide in a 231 px frame, so it scrolls sideways
+- 🟡 Enarratio: checks pass; no verifier yet
 - 🟡 Capsomer: checks pass; no verifier yet
 - 🟡 Prelum specimen: checks pass; no verifier yet
 - 🟡 Capsid explorer: checks pass; no verifier yet
@@ -330,7 +326,7 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 - 🟡 TXASM: suggester inherits the package gaps (feature metadata, Llama list)
 - ❌ Foxhound: site-runtime-ai-audit: 2 errors
   - P3: https://foxhoundapp.com/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
+  - audit: https://foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
 - 🟡 Foxing: Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0
 - 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
 - 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
@@ -342,16 +338,16 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
   - T4: https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema does not set additionalProperties: false
 - ❌ Foxhound admin MCP: site-runtime-ai-audit: 2 errors
   - P3: https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://admin-mcp.foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
+  - audit: https://admin-mcp.foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
 - ❌ Dustin Edwards admin MCP: site-runtime-ai-audit: 2 errors
   - P3: https://admin-mcp.dustinedwards.info/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://admin-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
+  - audit: https://admin-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
 - ❌ Carrel MCP: site-runtime-ai-audit: 2 errors
   - P3: https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://carrel-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
+  - audit: https://carrel-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
 - ❌ Foxing admin MCP: site-runtime-ai-audit: 2 errors
   - P3: https://admin-mcp.foxing.app/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://admin-mcp.foxing.app the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-9jzNQB/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
+  - audit: https://admin-mcp.foxing.app the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
 
 ### 12. Checks and tooling
 
