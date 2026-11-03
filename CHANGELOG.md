@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.21.1 (2026-11-03)
+
 - `review.yml`: the automatic PR reviewer (D5), an advisory four-week trial from 2026-11-03. On each same-repository pull request that is not a draft or Renovate's, it sends the job's OIDC token to Capsid (`POST /review/run`), which reads the pull request through its GitHub App, reviews it with DeepSeek V4.1 Flash on Workers AI through the account's AI Gateway and records the verdict; `scripts/review-check.mjs` writes it to a `review verdict` check (neutral, or skipped) and the job summary, never a comment. No secret. The caller is `examples/review-caller.yml`; its job grants `id-token: write` and `checks: write`. `devkit-shared` asks for it in every repository, as a warning until 0.22.0.
 
 ## 0.21.0 (2026-11-01)
