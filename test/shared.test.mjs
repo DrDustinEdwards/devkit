@@ -51,11 +51,11 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
   assert.equal(isWarning(fresh[0]), true);
   assert.equal(isWarning(fresh[1]), true);
   assert.match(fresh[1].message, /prelum's release dates could not be read/);
-  // An MCP server (S7): more than one minor behind the newest fails from 0.21.0 whatever the release's age; one behind is the usual warning.
+  // An MCP server (S7): more than one minor behind the newest fails whatever the release's age; one behind is the usual warning.
   const server = (ref) =>
     checkPins(tree({ "mcp/package.json": `{"dependencies":{"s":"github:DrDustinEdwards/site-runtime#${ref}"}}`, "mcp/src/door.ts": 'import { x } from "@dustinedwards/site-runtime/mcp-login";' }), tags, {}, now)[0];
   assert.match(server("v0.2.0").message, /^the MCP server in mcp runs site-runtime v0\.2\.0, more than one minor behind v0\.10\.0/);
-  assert.equal(isWarning(server("v0.2.0"), "0.21.0"), false);
+  assert.equal(isWarning(server("v0.2.0")), false);
   assert.equal(server("v0.9.0").message, "site-runtime is at v0.9.0; the newest release is v0.10.0");
 });
 
@@ -263,7 +263,7 @@ test("a site's own value for a Capsomer token, or its own files for the family's
   assert.match(found[2].message, /capsomer\/fonts\.css/);
 });
 
-test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.21.0 and fail from it, and their look-alikes pass", () => {
+test("PLANT: the fingerprints fail on a copy, and their look-alikes pass", () => {
   const files = tree({
     "app/ld.tsx": '<script\n  type="application/ld+json"\n  dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}\n/>\n',
     "app/meta.ts": 'export const meta = () => [{ tagName: "link", rel: "canonical", href }];\n',
@@ -285,22 +285,22 @@ test("PLANT: the fingerprints new in 0.18.0 warn on a copy below 0.21.0 and fail
     "public/_headers": "# Strict-Transport-Security: is set by the Worker\n/*\n  Strict-Transport-Security: max-age=63072000\n",
   });
   assert.deepEqual(
-    checkCopies(files, {}, {}).map((f) => `${f.file}:${f.line} ${isWarning(f, "0.18.0")} ${isWarning(f, "0.21.0")}`),
+    checkCopies(files, {}, {}).map((f) => `${f.file}:${f.line} ${isWarning(f)}`),
     [
-      "app/ld.tsx:2 true false",
-      "app/meta.ts:1 true false",
-      "app/card.tsx:1 true false",
-      "app/token.ts:2 true false",
-      "app/b64.ts:1 true false",
-      "app/cmp.ts:1 true false",
-      "app/cmp2.ts:1 true false",
-      "app/cmp3.ts:1 true false",
-      "app/ld2.ts:1 true false",
-      "app/human.ts:1 true false",
-      "app/access.ts:1 true false",
-      "app/theme.ts:1 true false",
-      "app/root.tsx:2 true false",
-      "public/_headers:3 true false",
+      "app/ld.tsx:2 false",
+      "app/meta.ts:1 false",
+      "app/card.tsx:1 false",
+      "app/token.ts:2 false",
+      "app/b64.ts:1 false",
+      "app/cmp.ts:1 false",
+      "app/cmp2.ts:1 false",
+      "app/cmp3.ts:1 false",
+      "app/ld2.ts:1 false",
+      "app/human.ts:1 false",
+      "app/access.ts:1 false",
+      "app/theme.ts:1 false",
+      "app/root.tsx:2 false",
+      "public/_headers:3 false",
     ],
   );
   // site-runtime writes its own encoders, Turnstile, Access and security headers.
@@ -319,7 +319,7 @@ test("an alias that is also an ordinary name counts only when its body does the 
     { escapeHtml: "site-runtime ./html", slugify: "Prelum ./slug", toHex: "site-runtime ./encoding" },
     {},
   );
-  assert.deepEqual(found.map((f) => `${f.file}:${f.line} ${isWarning(f, "0.18.0")}`), ["app/html.ts:2 true", "app/key.ts:1 true"]);
+  assert.deepEqual(found.map((f) => `${f.file}:${f.line} ${isWarning(f)}`), ["app/html.ts:2 false", "app/key.ts:1 false"]);
 });
 
 test("an admin or login route warns without noindex in a file that names it, a site warns with no accessibility test or a feed with no alternate link, and a Carrel site needs indexNowHook", () => {
@@ -422,7 +422,7 @@ test("PLANT: a model call or prompt that skips the shared pieces is flagged with
   );
   // The Workers AI run names what it lacks: here the timeout and the gateway, not max_tokens.
   assert.match(found[1].message, /without a timeout \(signal: AbortSignal\.timeout\(ms\), C2\), the gateway \(gateway: \{ id, metadata \}, G1\): /);
-  assert.ok(found.every((f) => isWarning(f, "0.20.20") && !isWarning(f, "0.21.0")));
+  assert.ok(found.every((f) => !isWarning(f)));
   assert.deepEqual(checkAi(tree(good), {}), []);
   assert.deepEqual(checkAi(tree({ "app/fire.ts": bad["app/fire.ts"] }), { copies: { "app/fire.ts": "its own guard, moving in R3" } }), []);
 });
