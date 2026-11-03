@@ -17,7 +17,7 @@ Newest run 2026-11-02 16:56 UTC. Filled only from the live checks and the verifi
 | 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +27951 | −2785 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +7063 | −801 |
-| 10. Charts | ❌ | 🟡 | 🟡 | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30132 | −7740 |
+| 10. Charts | ❌ | 🟡 | 🟡 | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | +30132 | −7740 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
@@ -311,9 +311,8 @@ Builder: Complete shared charts. Verifier: none yet.
 - 🟡 Capsomer: checks pass; no verifier yet
 - 🟡 Prelum specimen: checks pass; no verifier yet
 - 🟡 Capsid explorer: checks pass; no verifier yet
-- Not checked, Capsid Portal (portal.dustinedwards.info): signed-in only; charts covered by Capsid's own browser tests until a public demo route exists
-- Not checked, Foxing /stats, /year and /goals: signed-in only; no live check sees these charts until a public demo route exists
-- Not checked, Carrel desk (desk.dustinedwards.info): signed-in only, behind Access; no live check sees this chart until a public demo route exists
+- ❌ Capsid Portal: not run yet
+- ❌ Carrel Desk: not run yet
 
 ### 11. AI and MCP
 

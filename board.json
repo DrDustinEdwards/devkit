@@ -4498,11 +4498,7 @@
     "added": 30132,
     "removed": 7740
    },
-   "unchecked": {
-    "Capsid Portal (portal.dustinedwards.info)": "signed-in only; charts covered by Capsid's own browser tests until a public demo route exists",
-    "Foxing /stats, /year and /goals": "signed-in only; no live check sees these charts until a public demo route exists",
-    "Carrel desk (desk.dustinedwards.info)": "signed-in only, behind Access; no live check sees this chart until a public demo route exists"
-   },
+   "unchecked": {},
    "cells": {
     "package": {
      "status": "missing",
@@ -4592,12 +4588,12 @@
      "reason": "no check for a worker"
     },
     "capsid-portal": {
-     "status": "n/a",
-     "reason": "no check for a app"
+     "status": "missing",
+     "reason": "not run yet"
     },
     "carrel-desk": {
-     "status": "n/a",
-     "reason": "no check for a app"
+     "status": "missing",
+     "reason": "not run yet"
     }
    }
   },
