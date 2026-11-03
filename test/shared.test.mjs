@@ -388,13 +388,14 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
     [
       "every repository workflow-audit false",
       "every repository dependencies false",
+      "every repository review true",
       "a repository with a Worker (the root) worker-size false",
       "a repository with a Worker (the root) worker-deploy true",
       "a public repository with JavaScript or TypeScript no-bloat true",
       "a shared package other repositories pin bump-consumers false",
     ],
   );
-  assert.match(devkit[4].message, /\(a warning here: only Actions says whether this repository is public\)$/);
+  assert.match(devkit[5].message, /\(a warning here: only Actions says whether this repository is public\)$/);
 });
 
 test("PLANT: a model call or prompt that skips the shared pieces is flagged with its checklist item; the shared way passes", () => {
