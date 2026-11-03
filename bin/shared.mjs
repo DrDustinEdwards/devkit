@@ -146,27 +146,27 @@ export const FINGERPRINTS = [
   { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
   // JSON-LD by hand: a script of that type filled by JSON.stringify in the same
   // expression, or a node naming the context itself (Prelum's thing and graph add it).
-  { failsFrom: "0.21.0", find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
+  { find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
   // Head tags by hand: a Twitter card, or a canonical link (not a Link header's `>; rel="canonical"`).
-  { failsFrom: "0.21.0", find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
+  { find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
   // Bytes to hex: the toString(16).padStart(2, "0") ... join("") loop over bytes (a digest, random bytes), not a color's
   // three channels, so only in a file that holds bytes.
-  { failsFrom: "0.21.0", also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
+  { also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
   // base64url: btoa(...) and then the + to - swap, in one statement.
-  { failsFrom: "0.21.0", find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
+  { find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
   // A constant-time compare of its own: OR-ing the XOR of two strings' or arrays' items.
-  { failsFrom: "0.21.0", find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
+  { find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
   // Server-side Turnstile and the Access localhost bypass: each belongs once, in site-runtime, beside the client and
   // the verifier it goes with.
-  { failsFrom: "0.21.0", find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
-  { failsFrom: "0.21.0", find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
+  { find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
+  { find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
   // The pre-paint theme script: the stored choice read and set on the root before the page paints.
-  { failsFrom: "0.21.0", find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
+  { find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
   // React Router's template error boundary, never replaced.
-  { failsFrom: "0.21.0", find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
+  { find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
 ];
 /** A security header set written into Cloudflare's static `_headers` (bsw's copy). */
-export const HEADERS_COPY = { failsFrom: "0.21.0", find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
+export const HEADERS_COPY = { find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
 export const LIBRARIES = [
@@ -200,19 +200,19 @@ export const ALIASES = {
 /**
  * Aliases that are also ordinary names (a Markdown `esc`, a KB path's `slugOf`, a color's `hex`), so a definition counts
  * only when its body does the shared export's job.
- * @type {Record<string, { target: string, failsFrom: string, body: RegExp }>}
+ * @type {Record<string, { target: string, body: RegExp }>}
  */
 export const BODY_ALIASES = {
-  sha256Of: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(/ },
-  hashToken: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  hashMcpToken: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  hashRecipient: { target: "sha256Hex", failsFrom: "0.21.0", body: /subtle\.digest\(\s*["'`]SHA-256/ },
-  generateSlug: { target: "slugify", failsFrom: "0.21.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
-  slugOf: { target: "slugify", failsFrom: "0.21.0", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
-  esc: { target: "escapeHtml", failsFrom: "0.21.0", body: /&(?:amp|lt|quot);|&#/ },
-  attr: { target: "escapeHtml", failsFrom: "0.21.0", body: /&(?:amp|lt|quot);|&#/ },
-  hex: { target: "toHex", failsFrom: "0.21.0", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
-  b64: { target: "toBase64", failsFrom: "0.21.0", body: /\bbtoa\(/ },
+  sha256Of: { target: "sha256Hex", body: /subtle\.digest\(/ },
+  hashToken: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashMcpToken: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashRecipient: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  generateSlug: { target: "slugify", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  slugOf: { target: "slugify", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  esc: { target: "escapeHtml", body: /&(?:amp|lt|quot);|&#/ },
+  attr: { target: "escapeHtml", body: /&(?:amp|lt|quot);|&#/ },
+  hex: { target: "toHex", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
+  b64: { target: "toBase64", body: /\bbtoa\(/ },
 };
 
 /** A definition's text: its first line and every line after it indented deeper, so a function's body or one arrow. */
@@ -409,18 +409,18 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
   const cache = {};
   const tagsOf = (/** @type {string} */ repo) => (cache[repo] ??= readTags(repo));
   const servers = mcpServerDirs(tree);
-  /** @param {string} file @param {number} line @param {string} repo @param {string} ref @param {string} [failsFrom] */
-  const judge = (file, line, repo, ref, what = repo, failsFrom = undefined) => {
+  /** @param {string} file @param {number} line @param {string} repo @param {string} ref */
+  const judge = (file, line, repo, ref, what = repo) => {
     const { tags, commits } = tagsOf(repo);
     const latest = newest(tags);
     if (!latest) return;
     let at = semver(ref) ? (ref.startsWith("v") ? ref : `v${ref}`) : Object.keys(commits).find((t) => commits[t] === ref && semver(t));
     const server = repo === "site-runtime" && servers.has(posix.dirname(file)) ? (posix.dirname(file) === "." ? "the root" : posix.dirname(file)) : null;
     if (!at) {
-      found.push({ check: "pins", file, line, failsFrom, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
+      found.push({ check: "pins", file, line, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
     } else if (server && minorsBehind(at, latest) > 1) {
       // S7: every MCP server runs one door, so each stays within a minor of the newest site-runtime, whatever its age.
-      found.push({ check: "pins", file, line, failsFrom: MCP_PIN_FAILS_FROM, message: `the MCP server in ${server} runs site-runtime ${at}, more than one minor behind ${latest}: every server keeps the same door (S7); bump it` });
+      found.push({ check: "pins", file, line, message: `the MCP server in ${server} runs site-runtime ${at}, more than one minor behind ${latest}: every server keeps the same door (S7); bump it` });
     } else if (compare(at, latest) < 0) {
       const days = FRESH[repo];
       const known = dates[repo];
@@ -450,9 +450,6 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
   }
   return found;
 }
-
-/** The release an MCP server's site-runtime pin more than one minor behind starts failing (S7); a warning until then. */
-const MCP_PIN_FAILS_FROM = "0.21.0";
 
 /** How many minors `at` is behind `latest`; a major behind counts as many. @param {string} at @param {string} latest */
 export function minorsBehind(at, latest) {
@@ -501,12 +498,6 @@ export function distinctive(/** @type {string} */ name) {
 }
 
 /**
- * A copy found by name is judged against each package's newest release, so a new shared export would turn every
- * repository with a same-named function red on its next push, before any of them could move. It warns until this release.
- */
-const NAMED_COPY_FAILS_FROM = "0.21.0";
-
-/**
  * Local copies: definitions named like a shared export (or a known alias of one), and builder fingerprints.
  * @param {Tree} tree @param {Catalog} catalog @param {Config} config @param {string} [self] the package this repository is, if any
  * @returns {Finding[]}
@@ -538,17 +529,17 @@ export function checkCopies(tree, catalog, config, self) {
         const target = guarded?.target ?? ALIASES[m[1]] ?? m[1];
         if (imported.has(target)) continue;
         if (guarded && !guarded.body.test(definitionBody(text, m.index))) continue;
-        mine.push({ check: "copies", file, line: lineOf(m.index), failsFrom: guarded?.failsFrom ?? NAMED_COPY_FAILS_FROM, message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
+        mine.push({ check: "copies", file, line: lineOf(m.index), message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
       }
     }
     // Comments may name what a builder writes; only code counts.
     const code = blankComments(text);
-    for (const { find, also, use, say, failsFrom } of FINGERPRINTS) {
+    for (const { find, also, use, say } of FINGERPRINTS) {
       if (self && use.startsWith(`${self} `)) continue;
       const m = find.exec(code);
       if (m && also && !also.test(code)) continue;
       // One finding a line: a named copy already reported there (germomics' one-line hex) says it.
-      if (m && !mine.some((f) => f.line === lineOf(m.index))) mine.push({ check: "copies", file, line: lineOf(m.index), failsFrom, message: say ?? `this builds what ${use} builds: use it` });
+      if (m && !mine.some((f) => f.line === lineOf(m.index))) mine.push({ check: "copies", file, line: lineOf(m.index), message: say ?? `this builds what ${use} builds: use it` });
     }
     if (mine.length && !excused(config, "copies", file)) found.push(...mine);
   }
@@ -559,7 +550,7 @@ export function checkCopies(tree, catalog, config, self) {
       const m = HEADERS_COPY.find.exec(text);
       if (m && !excused(config, "copies", file)) {
         const line = text.slice(0, m.index).split("\n").length;
-        found.push({ check: "copies", file, line, failsFrom: HEADERS_COPY.failsFrom, message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .shared.json "copies"` });
+        found.push({ check: "copies", file, line, message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .shared.json "copies"` });
       }
     }
   }
@@ -714,18 +705,18 @@ const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;
  * @type {{ name: string, failsFrom?: string, warn?: boolean, runs?: string[], example?: string, needed: (repo: Holds) => string | null }[]}
  */
 export const WORKFLOWS = [
-  { name: "checks", failsFrom: "0.21.0", needed: () => "every repository" },
-  { name: "workflow-audit", failsFrom: "0.21.0", needed: () => "every repository" },
-  { name: "dependencies", failsFrom: "0.21.0", needed: () => "every repository" },
+  { name: "checks", needed: () => "every repository" },
+  { name: "workflow-audit", needed: () => "every repository" },
+  { name: "dependencies", needed: () => "every repository" },
   // The automatic PR reviewer (D5, 2026-11-03): advisory, so it costs a repository nothing to call it.
   { name: "review", failsFrom: "0.22.0", needed: () => "every repository" },
-  { name: "worker-size", failsFrom: "0.21.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
+  { name: "worker-size", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
   // Many Workers deploy another way today (Workers Builds, a deploy job of their own), so this one stays a warning.
   { name: "worker-deploy", warn: true, needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
-  { name: "no-bloat", failsFrom: "0.21.0", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
-  { name: "conformance", failsFrom: "0.21.0", runs: ["devkit-conformance", "bin/conformance.mjs"], needed: ({ servers }) => (servers.length ? `a repository with an MCP server (${servers.join(", ")})` : null) },
+  { name: "no-bloat", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
+  { name: "conformance", runs: ["devkit-conformance", "bin/conformance.mjs"], needed: ({ servers }) => (servers.length ? `a repository with an MCP server (${servers.join(", ")})` : null) },
   { name: "scorecard", failsFrom: "0.22.0", needed: ({ private: closed }) => (closed === false ? "a public repository" : null) },
-  { name: "bump-consumers", failsFrom: "0.21.0", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
+  { name: "bump-consumers", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
 ];
 
 /**
@@ -781,13 +772,13 @@ const DELETE_ALL = String.raw`DELETE FROM\s+["'\x60]?[\w$]+["'\x60]?(?=\s*(?:["'
 /** Test fakes of a repository's own where devkit has one: every pattern in `find` matches the test file. */
 export const FAKES = [
   // GitHub's contents or git data routes answered behind a fetch stub.
-  { failsFrom: "0.21.0", find: [/\/repos\/[^\s"'`]*\/(?:git\/(?:refs?|trees|commits|blobs)|contents)\b/, new RegExp(FETCH_SWAP)], use: "devkit ./github stubGitHub", say: "a GitHub API fake of its own" },
+  { find: [/\/repos\/[^\s"'`]*\/(?:git\/(?:refs?|trees|commits|blobs)|contents)\b/, new RegExp(FETCH_SWAP)], use: "devkit ./github stubGitHub", say: "a GitHub API fake of its own" },
   // An RSA key pair made here and a key set served from it: an Access issuer of its own.
-  { failsFrom: "0.21.0", find: [/generateKey\(\s*\{\s*name\s*:\s*["'`]RSASSA-PKCS1-v1_5|generateKeyPair(?:Sync)?\(\s*["'`](?:RS256|rsa)["'`]/, /cdn-cgi\/access\/certs|\bjwks\b|["']?keys["']?\s*:\s*\[\s*(?:\{\s*\.\.\.)?\s*\w*[jJ]wk\b/], use: "devkit ./access stubAccess", say: "an Access fake of its own (a key pair it signs with and the key set it serves)" },
+  { find: [/generateKey\(\s*\{\s*name\s*:\s*["'`]RSASSA-PKCS1-v1_5|generateKeyPair(?:Sync)?\(\s*["'`](?:RS256|rsa)["'`]/, /cdn-cgi\/access\/certs|\bjwks\b|["']?keys["']?\s*:\s*\[\s*(?:\{\s*\.\.\.)?\s*\w*[jJ]wk\b/], use: "devkit ./access stubAccess", say: "an Access fake of its own (a key pair it signs with and the key set it serves)" },
   // A fetch whose whole body throws an error naming the URL.
-  { failsFrom: "0.21.0", find: [new RegExp(`${FETCH_SWAP}\\s*(?:vi\\.fn\\(\\s*)?(?:async\\s*)?(?:function\\s*)?\\(?[^)]*\\)?\\s*(?::\\s*[\\w<>]+\\s*)?(?:=>)?\\s*\\{?\\s*(?:throw\\s+new\\s+\\w*Error\\(\\s*|(?:return\\s+)?Promise\\.reject\\(\\s*(?:new\\s+\\w*Error\\(\\s*)?)\\x60[^\\x60]*\\$\\{`)], use: "devkit ./network refuseNetwork", say: "a fetch that refuses the network, written here" },
+  { find: [new RegExp(`${FETCH_SWAP}\\s*(?:vi\\.fn\\(\\s*)?(?:async\\s*)?(?:function\\s*)?\\(?[^)]*\\)?\\s*(?::\\s*[\\w<>]+\\s*)?(?:=>)?\\s*\\{?\\s*(?:throw\\s+new\\s+\\w*Error\\(\\s*|(?:return\\s+)?Promise\\.reject\\(\\s*(?:new\\s+\\w*Error\\(\\s*)?)\\x60[^\\x60]*\\$\\{`)], use: "devkit ./network refuseNetwork", say: "a fetch that refuses the network, written here" },
   // Tables cleared by hand: three DELETE FROMs with no WHERE close together, or one in a loop.
-  { failsFrom: "0.21.0", find: [new RegExp(`${DELETE_ALL}[^]{0,400}?${DELETE_ALL}[^]{0,400}?${DELETE_ALL}|\\bfor\\s*\\(\\s*(?:const|let)\\s+\\w+\\s+of\\s+[^)]+\\)[^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{|\\]\\s*\\.(?:map|forEach)\\([^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{`, "im")], use: "devkit ./d1 resetDb", say: "a hand list of tables to clear, which drifts the day a migration adds one" },
+  { find: [new RegExp(`${DELETE_ALL}[^]{0,400}?${DELETE_ALL}[^]{0,400}?${DELETE_ALL}|\\bfor\\s*\\(\\s*(?:const|let)\\s+\\w+\\s+of\\s+[^)]+\\)[^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{|\\]\\s*\\.(?:map|forEach)\\([^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{`, "im")], use: "devkit ./d1 resetDb", say: "a hand list of tables to clear, which drifts the day a migration adds one" },
 ];
 
 /**
@@ -801,17 +792,14 @@ export function checkFakes(tree, config, self) {
   if (self === "devkit") return found;
   for (const file of tree.files.filter((f) => SOURCE.test(f) && TEST.test(f) && !/(^|\/)(node_modules|dist|build|coverage|fixtures)\//.test(f))) {
     const code = blankComments(tree.read(file));
-    for (const { find, use, say, failsFrom } of FAKES) {
+    for (const { find, use, say } of FAKES) {
       const m = find[0].exec(code);
       if (!m || !find.every((f) => f.test(code)) || excused(config, "copies", file)) continue;
-      found.push({ check: "fakes", file, line: code.slice(0, m.index).split("\n").length, failsFrom, message: `${say}: use ${use}, or say why in .shared.json "copies"` });
+      found.push({ check: "fakes", file, line: code.slice(0, m.index).split("\n").length, message: `${say}: use ${use}, or say why in .shared.json "copies"` });
     }
   }
   return found;
 }
-
-/** The release the AI rules start failing; until then each is a warning, so the sites can move first. */
-const AI_FAILS_FROM = "0.21.0";
 
 /** A model call in a file: the markers C6 needs before it reads a regex as cutting JSON out of a model's answer. */
 const MODEL_CALL = /\bAI\s*\.\s*run\s*\(|\.(?:chatCompletions|aiSearch)\s*\(|["'`]@dustinedwards\/site-runtime\/anthropic["'`]|["'`]@anthropic-ai\/sdk["'`]/;
@@ -908,7 +896,7 @@ export function checkAi(tree, config, self) {
       for (const m of code.matchAll(find)) {
         const missing = rule.test ? rule.test(code, m) : "";
         if (missing === null) continue;
-        mine.push({ check: "ai", file, line: code.slice(0, m.index).split("\n").length, failsFrom: AI_FAILS_FROM, message: `[${rule.id}] this ${rule.say(missing)}` });
+        mine.push({ check: "ai", file, line: code.slice(0, m.index).split("\n").length, message: `[${rule.id}] this ${rule.say(missing)}` });
         if (!rule.find.global) break;
       }
     }
