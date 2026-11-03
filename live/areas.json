@@ -123,7 +123,7 @@
               "--pages", "/demos/dashboard,/demos/recovery,/demos/intelligence"
             ],
             "foxing": ["--pages", "/demos/stats,/demos/year,/demos/goals"],
-            "capsid-portal": ["--pages", "/demos/,/demos/health,/demos/queue,/demos/agents,/demos/packages"],
+            "capsid-portal": ["--pages", "/demos/,/demos/health,/demos/health?tab=deploys,/demos/health?tab=backups,/demos/health?tab=ci,/demos/queue,/demos/prs,/demos/agents,/demos/agents?tab=claims,/demos/packages"],
             "carrel-desk": ["--pages", "/demos/progress"]
           }
         }
