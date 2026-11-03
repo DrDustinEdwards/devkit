@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-02T16:56:48.510Z",
+ "as_of": "2026-11-03T15:11:47.631Z",
  "finished": false,
  "public_token": true,
  "sites": [
@@ -117,19 +117,65 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "status": "missing",
+     "reason": "prelum-audit: 5 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://dustinedwards.info/colophon links to https://dustinedwards.info/theme, which redirects to /"
+      },
+      {
+       "severity": "warning",
+       "check": "title-long",
+       "detail": "https://dustinedwards.info/research/lab/equipment 62 characters; results clip at about 60"
+      },
+      {
+       "severity": "warning",
+       "check": "title-long",
+       "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-rt-in-forward 61 characters; results clip at about 60"
+      },
+      {
+       "severity": "warning",
+       "check": "title-long",
+       "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-rt-in-reverse 61 characters; results clip at about 60"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/writing/tags/agents links to https://dustinedwards.info/writing/tags/agents/feed.json, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/writing/tags/carrel links to https://dustinedwards.info/writing/tags/carrel/feed.json, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/writing/tags/cloudflare-workers links to https://dustinedwards.info/writing/tags/cloudflare-workers/feed.json, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/writing/tags/security links to https://dustinedwards.info/writing/tags/security/feed.json, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/writing/tags/workers links to https://dustinedwards.info/writing/tags/workers/rss.xml, which answers 500"
+      }
+     ]
     },
     "germomics": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "missing",
@@ -746,518 +792,16 @@
     "foxhound": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "missing",
-     "reason": "prelum-audit: 0 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/ links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/ links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/awards links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/awards links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/awards links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/picks links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/picks links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/picks links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/book-of-the-month links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/book-of-the-month links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/book-of-the-month links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal/archive links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal/archive links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal/archive links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/about links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/about links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/about links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/accessibility links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/accessibility links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/accessibility links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/features links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/features links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/features links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bid-for-fortune-boothby links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bid-for-fortune-boothby links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bid-for-fortune-boothby links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-christmas-carol-dickens links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-christmas-carol-dickens links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-christmas-carol-dickens links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-eve-balzac links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-eve-balzac links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-eve-balzac links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-day-at-a-time-alexander links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-day-at-a-time-alexander links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-day-at-a-time-alexander links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-man-could-stand-up--ford links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-man-could-stand-up--ford links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-man-could-stand-up--ford links to https://foxing.app/lists, which redirects to /login"
-      },
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-marriage-settlement-balzac links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      }
-     ]
+     "reason": "prelum-audit could not run: no output"
     },
     "carrel": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "missing",
@@ -1789,12 +1333,12 @@
     "prelum": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1855,18 +1399,12 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
-     "status": "missing",
-     "reason": "site-runtime-security: 0 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-kssi3xR/Fjm//7BzdyM9gw==' 'self' https://maps.googleapis.com/maps/api/js https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent https://maps.googleapis.com/maps/api/js/ApplicationService.GetEntityDetails https://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage https://maps.googleapis.com/maps-api-v3/ https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1874,7 +1412,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "complete",
@@ -1882,7 +1420,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "complete",
@@ -1890,7 +1428,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "partial",
@@ -1898,7 +1436,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "complete",
@@ -1906,7 +1444,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "complete",
@@ -1914,7 +1452,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "complete",
@@ -1922,7 +1460,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "missing",
@@ -1951,12 +1489,12 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-733eee10-6028-4d74-8bfe-512b651405cc (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-7fd9dac3-93e2-4052-822b-6c3739657572 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
        "check": "C16",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-733eee10-6028-4d74-8bfe-512b651405cc (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
+       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-7fd9dac3-93e2-4052-822b-6c3739657572 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
       },
       {
        "severity": "warning",
@@ -1976,7 +1514,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
      "status": "complete",
@@ -1984,7 +1522,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1992,7 +1530,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -2000,7 +1538,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -2008,7 +1546,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel-mcp": {
      "status": "complete",
@@ -2016,7 +1554,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing-mcp": {
      "status": "partial",
@@ -2024,7 +1562,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsid-portal": {
      "status": "complete",
@@ -2033,7 +1571,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "carrel-desk": {
      "status": "missing",
@@ -2091,7 +1629,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -2124,7 +1662,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
       "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "partial",
@@ -2133,7 +1671,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "carrel": {
      "status": "n/a",
@@ -2157,7 +1695,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "complete",
@@ -2166,7 +1704,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -2175,7 +1713,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -2184,7 +1722,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel-mcp": {
      "status": "complete",
@@ -2193,7 +1731,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing-mcp": {
      "status": "partial",
@@ -2201,17 +1739,17 @@
      "evidence": [
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsid-portal": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     },
     "carrel-desk": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     }
    }
   },
@@ -2234,148 +1772,62 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     },
     "germomics": {
-     "status": "missing",
-     "reason": "prelum-content: 17 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/about stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/about stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/about/dustin-edwards stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/privacy stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/terms stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/contact stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/txasm stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/antitoxin-togo-please stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/hell-on-weils stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/rabies-day-out stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/a-boy-named-flu stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/theres-something-about-typhoid-mary stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/its-on-the-syphilis stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/one-flew-over-the-kuru-nest stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/confessions-of-a-cholera-girl stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/on-the-right-taq stored HTML from render version 16; the pipeline is at 17"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/a-sky-full-of-sars stored HTML from render version 16; the pipeline is at 17"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "julieedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "prelum": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2443,7 +1895,7 @@
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-dd1a833256db an unknown route has cache-control private, no-store, expected no-store"
+       "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-5d49ca7c3732 an unknown route has cache-control private, no-store, expected no-store"
       }
      ]
     },
@@ -2454,7 +1906,7 @@
       "https://germomics.com/api/carrel/v1/meta",
       "https://github.com/DrDustinEdwards/germomics/blob/f86a616/app/lib/carrel/adapter.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2463,7 +1915,7 @@
       "https://julieedwards.info/api/carrel/v1/meta",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/lib/carrel/sections.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "missing",
@@ -2477,12 +1929,12 @@
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://txasm.org/api/carrel/v1/site-api-live-869b4f1d2c8f an unknown route answered 404 without the key, expected 401"
+       "detail": "https://txasm.org/api/carrel/v1/site-api-live-812988e146e9 an unknown route answered 404 without the key, expected 401"
       },
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://txasm.org/api/carrel/v1/site-api-live-869b4f1d2c8f answers differently from a known route without the key, so it tells which routes exist"
+       "detail": "https://txasm.org/api/carrel/v1/site-api-live-812988e146e9 answers differently from a known route without the key, so it tells which routes exist"
       }
      ]
     },
@@ -2497,7 +1949,7 @@
       "https://foxhoundapp.com/api/carrel/v1/meta",
       "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/lib/carrel/adapter.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "partial",
@@ -2506,7 +1958,7 @@
       "https://foxing.app/api/carrel/v1/meta",
       "https://github.com/DrDustinEdwards/foxing/blob/6a2a21d/apps/web/app/lib/carrel/journal-adapter.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "n/a",
@@ -2600,7 +2052,7 @@
      "evidence": [
       "https://germomics.com/a-boy-named-flu"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2609,7 +2061,7 @@
       "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "txasm": {
      "status": "partial",
@@ -2618,16 +2070,18 @@
       "https://txasm.org/og-card.png",
       "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "missing",
-     "reason": "no image pipeline, /media, uploads or library; not a Carrel site; static files with a hand srcset; images check fails A2; logo 2.2x; only the logo card",
-     "evidence": [
-      "https://bsw.dustin-edwards.workers.dev/services/grant-review.webp",
-      "https://github.com/DrDustinEdwards/bsw/blob/69daae0/app/routes/home.tsx#L108-L115"
-     ],
-     "clean_days": 2
+     "reason": "site-runtime-images: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "A12",
+       "detail": "https://bsw.dustin-edwards.workers.dev/media/brand/bsw-logo-web.2a9980c8.webp.webp?w=112 asked a second time it is not marked by the edge cache (no cf-cache-status), not a HIT"
+      }
+     ]
     },
     "foxhound": {
      "status": "partial",
@@ -2635,7 +2089,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "missing",
@@ -2654,7 +2108,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "missing",
@@ -2684,7 +2138,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsid": {
      "status": "partial",
@@ -2692,7 +2146,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2904,11 +2358,6 @@
       },
       {
        "severity": "warning",
-       "check": "F2",
-       "detail": "https://foxhoundapp.com/?speedcheck=2xbnyfwh an uncached render took 712 ms to the first byte (bar 600 ms)"
-      },
-      {
-       "severity": "warning",
        "check": "A3",
        "detail": "https://foxhoundapp.com/ mobile: PageSpeed Insights answered 429"
       },
@@ -3105,7 +2554,7 @@
       "https://dustinedwards.info/api/health",
       "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/41201621515"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "partial",
@@ -3115,7 +2564,7 @@
       "https://github.com/DrDustinEdwards/germomics/actions/runs/41218962831",
       "https://github.com/DrDustinEdwards/germomics/actions/runs/41218270512"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "julieedwards-info": {
      "status": "partial",
@@ -3124,7 +2573,7 @@
       "https://julieedwards.info/health",
       "https://github.com/DrDustinEdwards/julieedwards-info/actions/runs/41219125249"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "txasm": {
      "status": "partial",
@@ -3133,7 +2582,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "partial",
@@ -3142,7 +2591,7 @@
       "https://bsw.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/bsw/blob/69daae0/package.json"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "partial",
@@ -3151,7 +2600,7 @@
       "https://foxhoundapp.com/health",
       "https://github.com/DrDustinEdwards/foxhound/actions/runs/41201511209"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "partial",
@@ -3160,7 +2609,7 @@
       "https://foxing.app/health",
       "https://github.com/DrDustinEdwards/foxing/actions/runs/41199704778"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "n/a",
@@ -3189,7 +2638,7 @@
       "https://mcp.dustinedwards.info/health",
       "https://github.com/DrDustinEdwards/capsid/actions/runs/41200976069"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxhound-mcp": {
      "status": "partial",
@@ -3197,7 +2646,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/health"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "dustinedwards-mcp": {
      "status": "partial",
@@ -3205,7 +2654,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/health"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "carrel-mcp": {
      "status": "partial",
@@ -3214,7 +2663,7 @@
       "https://carrel-mcp.dustinedwards.info/health",
       "https://github.com/DrDustinEdwards/carrel/actions/runs/41219136277"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxing-mcp": {
      "status": "partial",
@@ -3222,7 +2671,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/health"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsid-portal": {
      "status": "n/a",
@@ -3722,7 +3171,7 @@
       {
        "severity": "error",
        "check": "L1",
-       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
+       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
       },
       {
        "severity": "warning",
@@ -3936,13 +3385,8 @@
     },
     "capsomer": {
      "status": "missing",
-     "reason": "devkit-a11y: 10 errors",
+     "reason": "devkit-a11y: 3 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#home-install`"
-      },
       {
        "severity": "error",
        "check": "L2",
@@ -3969,11 +3413,6 @@
        "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `header`"
       },
       {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=\"\"] > pre[aria-label=\"Install\"]`"
-      },
-      {
        "severity": "warning",
        "check": "L1",
        "detail": "https://capsomer.dustinedwards.info/make/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.cap-panel[aria-labelledby=\"mk-l-tbl\"]`"
@@ -3989,16 +3428,6 @@
        "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `#main`"
       },
       {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=\"\"] > pre[aria-label=\"Install\"]`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/approval-sheet/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=\"\"] > pre[aria-label=\"Install\"]`"
-      },
-      {
        "severity": "warning",
        "check": "L1",
        "detail": "https://capsomer.dustinedwards.info/components/attention-list/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#main > .comp-ex > .comp-ex-box > iframe[data-kind=\"example\"][data-height=\"0\"] #att-mixed-h`"
@@ -4006,12 +3435,7 @@
       {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 7 elements, first `#main`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=\"\"] > pre[aria-label=\"Install\"]`"
+       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 8 elements, first `#main`"
       },
       {
        "severity": "warning",
@@ -4019,19 +3443,9 @@
        "detail": "https://capsomer.dustinedwards.info/components/authorship/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `#main`"
       },
       {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/authorship/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=\"\"] > pre[aria-label=\"Install\"]`"
-      },
-      {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 8 elements, first `#main`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `#inst-p-html > .comp-ex-code[data-open=\"\"] > pre[aria-label=\"Install\"]`"
+       "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 9 elements, first `#main`"
       }
      ]
     },
@@ -4108,7 +3522,7 @@
       {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsid.dustinedwards.info/s/capsid/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `section[aria-labelledby=\"risk-title\"]`"
+       "detail": "https://capsid.dustinedwards.info/s/capsid/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `.cap-system-map-flows`"
       },
       {
        "severity": "warning",
@@ -4118,7 +3532,7 @@
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/systems/ no visible focus on 1 of 40 stops: `figure#family > div.cap-system-map-stage:nth-of-type(1) > svg.cap-system-map-layer:nth-of-type(2) > g.cap-system-map-tile`"
+       "detail": "https://capsid.dustinedwards.info/systems/ no visible focus on 23 of 40 stops: `ul.cap-system-map-cards > li.cap-system-map-card:nth-of-type(1) > h3.cap-system-map-card-name > a.cap-system-map-link`, `ul.cap-system-map-cards > li.cap-system-map-card:nth-of-type(2) > h3.cap-system-map-card-name > a.cap-system-map-link`, `ul.cap-system-map-cards > li.cap-system-map-card:nth-of-type(3) > h3.cap-system-map-card-name > a.cap-system-map-link` and 20 more"
       },
       {
        "severity": "warning",
@@ -4494,9 +3908,9 @@
    "builder": "Complete shared charts",
    "verifier": null,
    "lines": {
-    "prs": 53,
-    "added": 30132,
-    "removed": 7740
+    "prs": 65,
+    "added": 31778,
+    "removed": 9091
    },
    "unchecked": {},
    "cells": {
@@ -4507,12 +3921,12 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     },
     "germomics": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -4538,34 +3952,39 @@
      ]
     },
     "foxing": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "status": "missing",
+     "reason": "chart-audit could not run: no output"
     },
     "carrel": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsomer": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "status": "missing",
+     "reason": "chart-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "G",
+       "detail": "https://capsomer.dustinedwards.info/components/field/states?theme=light the browser could not open it: redirected to sign-in at https://capsomer.dustinedwards.info/components/field/states, so its charts were never read"
+      }
+     ]
     },
     "prelum": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsid": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -4589,11 +4008,50 @@
     },
     "capsid-portal": {
      "status": "missing",
-     "reason": "not run yet"
+     "reason": "chart-audit: 4 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "B18",
+       "detail": "https://portal.dustinedwards.info/demos/ \"How much of your time does Capsid take?\" (line): the finding sentence is hidden from sight"
+      },
+      {
+       "severity": "warning",
+       "check": "B18",
+       "detail": "https://portal.dustinedwards.info/demos/ \"Where does waiting go?\" (bar): the finding sentence is hidden from sight"
+      },
+      {
+       "severity": "error",
+       "check": "C12",
+       "detail": "https://portal.dustinedwards.info/demos/ \"How much of your time does Capsid take?\" (line), 320 px: the drawing is 480 px wide in a 239 px frame, so it scrolls sideways"
+      },
+      {
+       "severity": "error",
+       "check": "C12",
+       "detail": "https://portal.dustinedwards.info/demos/ \"Where does waiting go?\" (bar), 320 px: the drawing is 480 px wide in a 239 px frame, so it scrolls sideways"
+      },
+      {
+       "severity": "error",
+       "check": "C12",
+       "detail": "https://portal.dustinedwards.info/demos/agents?tab=claims \"Does each agent's claim match what was verified?\" (bar), 320 px: the drawing is 480 px wide in a 239 px frame, so it scrolls sideways"
+      },
+      {
+       "severity": "error",
+       "check": "D6",
+       "detail": "https://portal.dustinedwards.info/demos/packages \"Daily downloads of sample-pkg\" (area): 194.1 kB of inline SVG, over the 100 kB budget"
+      }
+     ]
     },
     "carrel-desk": {
      "status": "missing",
-     "reason": "not run yet"
+     "reason": "chart-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "G",
+       "detail": "https://desk.dustinedwards.info/demos/progress the browser could not open it: redirected to sign-in at https://dustinedwards.cloudflareaccess.com/cdn-cgi/access/login/desk.dustinedwards.info, so its charts were never read"
+      }
+     ]
     }
    }
   },
@@ -4625,7 +4083,7 @@
       "https://dustinedwards.info/",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/app/routes/search.ask.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "partial",
@@ -4633,7 +4091,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "partial",
@@ -4641,7 +4099,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "partial",
@@ -4649,7 +4107,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "complete",
@@ -4658,7 +4116,7 @@
       "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
       "https://github.com/DrDustinEdwards/bsw"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "missing",
@@ -4732,7 +4190,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -4743,7 +4201,7 @@
       "https://foxing.app/",
       "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "partial",
@@ -4751,7 +4209,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "complete",
@@ -4760,7 +4218,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/enarratio"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "complete",
@@ -4769,7 +4227,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsomer"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "prelum": {
      "status": "complete",
@@ -4778,7 +4236,7 @@
       "https://prelum.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/prelum"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
      "status": "partial",
@@ -4786,7 +4244,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "missing",
@@ -5145,7 +4603,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -5216,7 +4674,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://admin-mcp.foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://admin-mcp.foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -5267,7 +4725,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://admin-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://admin-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -5403,7 +4861,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://carrel-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://carrel-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -5479,7 +4937,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://admin-mcp.foxing.app the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-asv4rG/site-runtime_v0.72.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://admin-mcp.foxing.app the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
