@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `review.yml`: the automatic PR reviewer (D5), an advisory four-week trial from 2026-11-03. On each same-repository pull request that is not a draft or Renovate's, it sends the job's OIDC token to Capsid (`POST /review/run`), which reads the pull request through its GitHub App, reviews it with DeepSeek V4.1 Flash on Workers AI through the account's AI Gateway and records the verdict; `scripts/review-check.mjs` writes it to a `review verdict` check (neutral, or skipped) and the job summary, never a comment. No secret. The caller is `examples/review-caller.yml`; its job grants `id-token: write` and `checks: write`. `devkit-shared` asks for it in every repository, as a warning until 0.22.0.
+
 ## 0.21.0 (2026-11-01)
 
 - **The rules that were warnings until 0.21.0 now fail**: local copies of shared exports found by name, test fakes devkit ships (`./github`, `./access`, `./network`, `./d1`), the AI code rules (C1, C2, C5, C6, C13, W5, R2), an MCP server more than one minor behind site-runtime, and every devkit workflow a repository's kinds need (`checks`, `workflow-audit`, `dependencies`, `worker-size`, `no-bloat`, `conformance`, `bump-consumers`). Every repository's default branch passed this check before the release.

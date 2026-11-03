@@ -717,6 +717,8 @@ export const WORKFLOWS = [
   { name: "checks", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "workflow-audit", failsFrom: "0.21.0", needed: () => "every repository" },
   { name: "dependencies", failsFrom: "0.21.0", needed: () => "every repository" },
+  // The automatic PR reviewer (D5, 2026-11-03): advisory, so it costs a repository nothing to call it.
+  { name: "review", failsFrom: "0.22.0", needed: () => "every repository" },
   { name: "worker-size", failsFrom: "0.21.0", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
   // Many Workers deploy another way today (Workers Builds, a deploy job of their own), so this one stays a warning.
   { name: "worker-deploy", warn: true, needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
