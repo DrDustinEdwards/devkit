@@ -52,7 +52,7 @@ permissions:
   contents: read
 
 env:
-  D1_DUMP_FILES_REF: v0.10.0
+  D1_DUMP_FILES_REF: v0.11.0
 
 jobs:
   drill:
