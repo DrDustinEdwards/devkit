@@ -1,0 +1,27 @@
+name: scorecard
+
+# The caller a public repository keeps (checklist C5). Replace the sha with the devkit commit that holds the reviewed
+# scorecard.yml, and keep it a full sha: scripts/check-callers.mjs fails on anything else. Scorecard publishes only from
+# the default branch, on a push or the schedule (scorecard-action README), so this has no pull_request trigger. The file
+# keeps no top-level env, defaults or write permissions, which the Scorecard API would refuse.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 6 * * 1"
+
+permissions: {}
+
+concurrency:
+  group: scorecard
+  cancel-in-progress: false
+
+jobs:
+  scorecard:
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+      id-token: write
+    uses: DrDustinEdwards/devkit/.github/workflows/scorecard.yml@0000000000000000000000000000000000000000

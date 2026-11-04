@@ -1,0 +1,61 @@
+name: review
+
+# THE AUTOMATIC PR REVIEWER (D5; Dustin 2026-11-03). A reviewer that did not build the work reads each pull request and
+# says whether it does what it claims: a misread job, a skipped requirement, a weak test, a bug or a security problem.
+# It catches what CI cannot, work that passes and is still wrong.
+#
+# HOW. Capsid does the review (capsid src/review.ts, POST /review/run): this job sends only its GitHub Actions OIDC
+# token, and Capsid reads the pull request through its GitHub App (the diff, the description, the Capsid job it names and
+# CLAUDE.md at the base, never the session that wrote it), skips one of only documents, tests or lockfiles and Renovate's,
+# asks DeepSeek V4.1 Flash on Workers AI through the account's AI Gateway, and records the verdict in its audit log.
+# scripts/review-check.mjs then writes it to a check run named "review verdict" on the head commit and to the job
+# summary. Never a comment: comments notify. No secret is stored in any repository.
+#
+# ADVISORY for the four-week trial from 2026-11-03: the check is neutral or skipped, never failed, and this job always
+# succeeds. After the trial Dustin decides: a required check, another model, or removal.
+#
+# NOTHING TO INSTALL: the job checks out devkit at the commit the caller pinned (job.workflow_sha) and runs one file with
+# Node. Same-repository pull requests only: a fork's run gets no OIDC token.
+#
+# THE CALLER (examples/review-caller.yml) grants `id-token: write` and `checks: write` to its calling job, because a
+# called workflow holds no more than its caller gives it. It pins a full 40-character sha; scripts/check-callers.mjs
+# fails on anything else.
+
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  review:
+    name: Reviewer
+    if: github.event_name == 'pull_request' && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'renovate[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      id-token: write
+      checks: write
+    steps:
+      # An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+
+      - name: Review the pull request
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node .devkit/scripts/review-check.mjs
