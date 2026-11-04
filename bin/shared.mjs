@@ -679,7 +679,7 @@ export function checkFeatures(tree, config, now = Date.now()) {
       found.push({ check: "features", file: dir, message: `${dir} has a D1 database and no nightly dump: ${BACKUP.use}` });
     }
     // A Carrel site (it calls createSiteApi) tells IndexNow about each publish and schedule through site-api's hook. A
-    // createSiteApi without it either tells nobody, or hands its own submitIndexNow to onPageChange (site-api v0.9.0's way).
+    // createSiteApi without it either tells nobody, or hands its own submitIndexNow to onPageChange (site-api v0.9.0's way, gone after v0.21.0).
     const indexnow = FEATURES.indexnow;
     if (indexnow.kinds.includes(kind) && indexnow.find.test(text) && /\bcreateSiteApi\s*\(/.test(text) && !/\bindexNowHook\b|prelum-indexnow/.test(text) && !excused(config, "waive", `${prefix}indexnow`)) {
       const how = /\bonPageChange\s*[:(]/.test(text) ? "with its own onPageChange submission" : "without IndexNow, so a publish from Carrel reaches no search engine";
