@@ -114,7 +114,6 @@
           "repo": "prelum",
           "bin": "prelum-chart-audit",
           "kinds": ["site", "static", "app"],
-          "args": ["--strict-frame"],
           "site_args": {
             "foxhound": [
               "--start", "https://foxhoundapp.com/demos/dashboard",

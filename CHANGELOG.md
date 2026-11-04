@@ -3,6 +3,7 @@
 ## Unreleased
 
 - `devkit-shared`: the expired `failsFrom: "0.21.0"` markers are gone; those rules fail as they have since 0.21.0. `review` and `scorecard` still warn until 0.22.0.
+- `devkit-live`: area 10 runs `prelum-chart-audit` without `--strict-frame`, which has changed nothing since the frame became an error by default; Prelum drops the flag next.
 
 ## 0.21.1 (2026-11-03)
 
