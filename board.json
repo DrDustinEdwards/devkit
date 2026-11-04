@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-03T15:11:47.631Z",
+ "as_of": "2026-11-04T15:26:16.287Z",
  "finished": false,
  "public_token": true,
  "sites": [
@@ -117,65 +117,19 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "prelum-audit: 5 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "link-redirect",
-       "detail": "https://dustinedwards.info/colophon links to https://dustinedwards.info/theme, which redirects to /"
-      },
-      {
-       "severity": "warning",
-       "check": "title-long",
-       "detail": "https://dustinedwards.info/research/lab/equipment 62 characters; results clip at about 60"
-      },
-      {
-       "severity": "warning",
-       "check": "title-long",
-       "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-rt-in-forward 61 characters; results clip at about 60"
-      },
-      {
-       "severity": "warning",
-       "check": "title-long",
-       "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-rt-in-reverse 61 characters; results clip at about 60"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://dustinedwards.info/writing/tags/agents links to https://dustinedwards.info/writing/tags/agents/feed.json, which answers 500"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://dustinedwards.info/writing/tags/carrel links to https://dustinedwards.info/writing/tags/carrel/feed.json, which answers 500"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://dustinedwards.info/writing/tags/cloudflare-workers links to https://dustinedwards.info/writing/tags/cloudflare-workers/feed.json, which answers 500"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://dustinedwards.info/writing/tags/security links to https://dustinedwards.info/writing/tags/security/feed.json, which answers 500"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://dustinedwards.info/writing/tags/workers links to https://dustinedwards.info/writing/tags/workers/rss.xml, which answers 500"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "germomics": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "julieedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "txasm": {
      "status": "missing",
@@ -792,16 +746,17 @@
     "foxhound": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
-     "status": "missing",
-     "reason": "prelum-audit could not run: no output"
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "carrel": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "enarratio": {
      "status": "missing",
@@ -1333,12 +1288,12 @@
     "prelum": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsid": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1399,12 +1354,12 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1412,7 +1367,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "txasm": {
      "status": "complete",
@@ -1420,7 +1375,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "bsw": {
      "status": "complete",
@@ -1428,7 +1383,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxhound": {
      "status": "partial",
@@ -1436,7 +1391,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "complete",
@@ -1444,7 +1399,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel": {
      "status": "complete",
@@ -1452,7 +1407,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "enarratio": {
      "status": "complete",
@@ -1460,7 +1415,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsomer": {
      "status": "missing",
@@ -1489,12 +1444,12 @@
       {
        "severity": "warning",
        "check": "C3",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-7fd9dac3-93e2-4052-822b-6c3739657572 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-9cea7e04-2c11-40cf-8bff-3cc068e9d316 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
       },
       {
        "severity": "error",
        "check": "C16",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-7fd9dac3-93e2-4052-822b-6c3739657572 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
+       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-9cea7e04-2c11-40cf-8bff-3cc068e9d316 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
       },
       {
        "severity": "warning",
@@ -1514,7 +1469,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid": {
      "status": "complete",
@@ -1522,7 +1477,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1530,7 +1485,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1538,7 +1493,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1546,7 +1501,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1554,7 +1509,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing-mcp": {
      "status": "partial",
@@ -1562,7 +1517,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-portal": {
      "status": "complete",
@@ -1571,7 +1526,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel-desk": {
      "status": "missing",
@@ -1629,7 +1584,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -1662,7 +1617,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
       "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "partial",
@@ -1671,7 +1626,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "n/a",
@@ -1695,7 +1650,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1704,7 +1659,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1713,7 +1668,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1722,7 +1677,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1731,7 +1686,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing-mcp": {
      "status": "partial",
@@ -1739,17 +1694,17 @@
      "evidence": [
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-portal": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel-desk": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     }
    }
   },
@@ -1772,62 +1727,148 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "prelum-content: 17 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/about stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/about stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/about/dustin-edwards stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/privacy stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/terms stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/contact stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/txasm stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/antitoxin-togo-please stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/hell-on-weils stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/rabies-day-out stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/a-boy-named-flu stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/theres-something-about-typhoid-mary stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/its-on-the-syphilis stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/one-flew-over-the-kuru-nest stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/confessions-of-a-cholera-girl stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/on-the-right-taq stored HTML from render version 17; the pipeline is at 18"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://germomics.com/a-sky-full-of-sars stored HTML from render version 17; the pipeline is at 18"
+      }
+     ]
     },
     "julieedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "txasm": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "bsw": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxhound": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsomer": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "prelum": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1895,7 +1936,7 @@
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-5d49ca7c3732 an unknown route has cache-control private, no-store, expected no-store"
+       "detail": "https://dustinedwards.info/api/carrel/v1/site-api-live-544fe4bd3950 an unknown route has cache-control private, no-store, expected no-store"
       }
      ]
     },
@@ -1906,7 +1947,7 @@
       "https://germomics.com/api/carrel/v1/meta",
       "https://github.com/DrDustinEdwards/germomics/blob/f86a616/app/lib/carrel/adapter.server.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1915,7 +1956,7 @@
       "https://julieedwards.info/api/carrel/v1/meta",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/lib/carrel/sections.server.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "txasm": {
      "status": "missing",
@@ -1929,12 +1970,12 @@
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://txasm.org/api/carrel/v1/site-api-live-812988e146e9 an unknown route answered 404 without the key, expected 401"
+       "detail": "https://txasm.org/api/carrel/v1/site-api-live-d6d02ce4315c an unknown route answered 404 without the key, expected 401"
       },
       {
        "severity": "error",
        "check": "K4",
-       "detail": "https://txasm.org/api/carrel/v1/site-api-live-812988e146e9 answers differently from a known route without the key, so it tells which routes exist"
+       "detail": "https://txasm.org/api/carrel/v1/site-api-live-d6d02ce4315c answers differently from a known route without the key, so it tells which routes exist"
       }
      ]
     },
@@ -1949,7 +1990,7 @@
       "https://foxhoundapp.com/api/carrel/v1/meta",
       "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/lib/carrel/adapter.server.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "partial",
@@ -1958,7 +1999,7 @@
       "https://foxing.app/api/carrel/v1/meta",
       "https://github.com/DrDustinEdwards/foxing/blob/6a2a21d/apps/web/app/lib/carrel/journal-adapter.server.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel": {
      "status": "n/a",
@@ -2052,7 +2093,7 @@
      "evidence": [
       "https://germomics.com/a-boy-named-flu"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2061,7 +2102,7 @@
       "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "partial",
@@ -2070,18 +2111,12 @@
       "https://txasm.org/og-card.png",
       "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "bsw": {
-     "status": "missing",
-     "reason": "site-runtime-images: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "A12",
-       "detail": "https://bsw.dustin-edwards.workers.dev/media/brand/bsw-logo-web.2a9980c8.webp.webp?w=112 asked a second time it is not marked by the edge cache (no cf-cache-status), not a HIT"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-03, after Verify area 6 images and media signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "foxhound": {
      "status": "partial",
@@ -2089,7 +2124,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "missing",
@@ -2108,18 +2143,12 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "enarratio": {
-     "status": "missing",
-     "reason": "site-runtime-images: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://enarratio.dustinedwards.info/og-card.png the share card's Cross-Origin-Resource-Policy is \"same-origin\", not cross-origin, so a preview on another site may not load it"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "capsomer": {
      "status": "missing",
@@ -2138,7 +2167,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
      "status": "partial",
@@ -2146,7 +2175,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2240,12 +2269,17 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "site-runtime-speed: 4 errors",
+     "reason": "site-runtime-speed: 5 errors",
      "findings": [
       {
        "severity": "error",
        "check": "C2",
-       "detail": "https://germomics.com/fonts/space-grotesk-600-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate"
+       "detail": "https://germomics.com/fonts/space-grotesk-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate"
+      },
+      {
+       "severity": "error",
+       "check": "C2",
+       "detail": "https://germomics.com/fonts/fraunces-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate"
       },
       {
        "severity": "error",
@@ -2554,7 +2588,7 @@
       "https://dustinedwards.info/api/health",
       "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/41201621515"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "germomics": {
      "status": "partial",
@@ -2564,7 +2598,7 @@
       "https://github.com/DrDustinEdwards/germomics/actions/runs/41218962831",
       "https://github.com/DrDustinEdwards/germomics/actions/runs/41218270512"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2573,7 +2607,7 @@
       "https://julieedwards.info/health",
       "https://github.com/DrDustinEdwards/julieedwards-info/actions/runs/41219125249"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "partial",
@@ -2582,7 +2616,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "bsw": {
      "status": "partial",
@@ -2591,7 +2625,7 @@
       "https://bsw.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/bsw/blob/69daae0/package.json"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxhound": {
      "status": "partial",
@@ -2600,16 +2634,23 @@
       "https://foxhoundapp.com/health",
       "https://github.com/DrDustinEdwards/foxhound/actions/runs/41201511209"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
-     "status": "partial",
-     "reason": "Health and drill pass; EMAIL unprobed; first media and covers files pass pending (03:17 cron); d1-dump v0.8.0",
-     "evidence": [
-      "https://foxing.app/health",
-      "https://github.com/DrDustinEdwards/foxing/actions/runs/41199704778"
-     ],
-     "clean_days": 4
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "B1",
+       "detail": "https://foxing.app/health backup warning: media files: no complete files pass of media found"
+      },
+      {
+       "severity": "error",
+       "check": "H4",
+       "detail": "https://foxing.app/health serves d124624ec0ca5ab1cdf564cc8b76e1139b789e2e, not the branch head 72fe235be6bcf4ebcf93cfb4ac58bb3f9da1850c (https://github.com/DrDustinEdwards/foxing/commit/72fe235be6bcf4ebcf93cfb4ac58bb3f9da1850c), committed 446 minutes ago"
+      }
+     ]
     },
     "carrel": {
      "status": "n/a",
@@ -2638,7 +2679,7 @@
       "https://mcp.dustinedwards.info/health",
       "https://github.com/DrDustinEdwards/capsid/actions/runs/41200976069"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound-mcp": {
      "status": "partial",
@@ -2646,7 +2687,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/health"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "dustinedwards-mcp": {
      "status": "partial",
@@ -2654,7 +2695,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/health"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel-mcp": {
      "status": "partial",
@@ -2663,7 +2704,7 @@
       "https://carrel-mcp.dustinedwards.info/health",
       "https://github.com/DrDustinEdwards/carrel/actions/runs/41219136277"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing-mcp": {
      "status": "partial",
@@ -2671,7 +2712,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/health"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-portal": {
      "status": "n/a",
@@ -2701,7 +2742,7 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "devkit-a11y: 2 errors",
+     "reason": "devkit-a11y: 1 errors",
      "findings": [
       {
        "severity": "warning",
@@ -2712,11 +2753,6 @@
        "severity": "error",
        "check": "L3",
        "detail": "https://dustinedwards.info/ text clipped with WCAG 1.4.12 text spacing: `ol.home-rows > li.home-row.h-entry:nth-of-type(1) > span.home-row-body:nth-of-type(2) > span.home-row-summary.home-row-clamp:nth-of-type(2)` (vertical), `ol.home-rows > li.home-row.h-entry:nth-of-type(2) > span.home-row-body:nth-of-type(2) > span.home-row-summary.home-row-clamp:nth-of-type(2)` (vertical), `ol.home-rows > li.home-row.h-entry:nth-of-type(3) > span.home-row-body:nth-of-type(2) > span.home-row-summary.home-row-clamp:nth-of-type(2)` (vertical)"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://dustinedwards.info/no-such-page-devkit-a11y axe color-contrast (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.cap-btn`"
       },
       {
        "severity": "warning",
@@ -3237,7 +3273,7 @@
     },
     "foxing": {
      "status": "missing",
-     "reason": "devkit-a11y: 5 errors",
+     "reason": "devkit-a11y: 3 errors",
      "findings": [
       {
        "severity": "error",
@@ -3253,16 +3289,6 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://foxing.app/no-such-page-devkit-a11y landmarks: main 1, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/journal/archive scrolls sideways at 320 px: scrollWidth 1558, widest `ul.fx-journal-archive-stack > li:nth-of-type(26) > a.group.items-start > span.shrink-0.fx-journal-archive-label` reaches 1558 px"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxing.app/journal/archive 200%25 zoom proxy (a 720 px viewport, not browser zoom): scrolls sideways, scrollWidth 1570"
       },
       {
        "severity": "warning",
@@ -3517,7 +3543,7 @@
     },
     "capsid": {
      "status": "missing",
-     "reason": "devkit-a11y: 1 errors",
+     "reason": "devkit-a11y: 2 errors",
      "findings": [
       {
        "severity": "warning",
@@ -3532,7 +3558,12 @@
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/systems/ no visible focus on 23 of 40 stops: `ul.cap-system-map-cards > li.cap-system-map-card:nth-of-type(1) > h3.cap-system-map-card-name > a.cap-system-map-link`, `ul.cap-system-map-cards > li.cap-system-map-card:nth-of-type(2) > h3.cap-system-map-card-name > a.cap-system-map-link`, `ul.cap-system-map-cards > li.cap-system-map-card:nth-of-type(3) > h3.cap-system-map-card-name > a.cap-system-map-link` and 20 more"
+       "detail": "https://capsid.dustinedwards.info/systems/ no skip link to main as the first Tab stop (first stop `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)` \"Capsid\")"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://capsid.dustinedwards.info/systems/ no visible focus on 22 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 19 more"
       },
       {
        "severity": "warning",
@@ -3908,9 +3939,9 @@
    "builder": "Complete shared charts",
    "verifier": null,
    "lines": {
-    "prs": 65,
-    "added": 31778,
-    "removed": 9091
+    "prs": 92,
+    "added": 33215,
+    "removed": 9539
    },
    "unchecked": {},
    "cells": {
@@ -3919,14 +3950,115 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "status": "missing",
+     "reason": "chart-audit: 20 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/capsid an SVG chart drawn outside Enarratio: \"How Capsid connects\" (56 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/capsid-backups an SVG chart drawn outside Enarratio: \"How Capsid backups connects\" (6 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/capsid-bench an SVG chart drawn outside Enarratio: \"How capsid-bench connects\" (10 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/capsomer an SVG chart drawn outside Enarratio: \"How Capsomer connects\" (26 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/carrel an SVG chart drawn outside Enarratio: \"How Carrel connects\" (62 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/d1-dump an SVG chart drawn outside Enarratio: \"How d1-dump connects\" (20 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/devkit an SVG chart drawn outside Enarratio: \"How devkit connects\" (42 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/dustinedwards-info an SVG chart drawn outside Enarratio: \"How dustinedwards.info connects\" (68 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/dustinedwards-mcp an SVG chart drawn outside Enarratio: \"How Dustin Edwards Admin connects\" (16 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/enarratio an SVG chart drawn outside Enarratio: \"How Enarratio connects\" (18 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/foxhound an SVG chart drawn outside Enarratio: \"How Foxhound connects\" (48 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/foxing an SVG chart drawn outside Enarratio: \"How Foxing connects\" (38 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/foxing-mcp an SVG chart drawn outside Enarratio: \"How Foxing Admin connects\" (8 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/germomics an SVG chart drawn outside Enarratio: \"How Germomics connects\" (34 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/julieedwards-info an SVG chart drawn outside Enarratio: \"How julieedwards.info connects\" (22 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/prelum an SVG chart drawn outside Enarratio: \"How Prelum connects\" (18 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/site-api an SVG chart drawn outside Enarratio: \"How site-api connects\" (18 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/site-runtime an SVG chart drawn outside Enarratio: \"How site-runtime connects\" (24 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/systems/txasm an SVG chart drawn outside Enarratio: \"How TXASM connects\" (28 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "D5",
+       "detail": "https://dustinedwards.info/writing/site-search-on-d1 at 1280 px, charts shift the page by 0.017 (layout shift); largest 0.017, div.cap-chart +40 px"
+      }
+     ]
     },
     "germomics": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -3941,50 +4073,682 @@
      "reason": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "B3",
-       "detail": "https://foxhoundapp.com/recovery/dashboard \"Recovered revenue · 30d\" (bar): 9 text under 12 px, smallest \"0\" at 10.6 px"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "foxing": {
      "status": "missing",
-     "reason": "chart-audit could not run: no output"
+     "reason": "chart-audit: 2 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/a-a-milne the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/a-e-w-mason the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/a-merritt the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/a-n-afanasyev the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/a-p-herbert the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/a-w-tozer the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/abu-al-ala-al-maarri the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/ada-elizabeth-chesterton the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/adam-mickiewicz the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/adam-smith the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/aeschylus the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/aesop the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/agatha-christie the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/akutagawa-ryunosuke the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/alain-rene-lesage the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/alan-sullivan the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/aldous-huxley the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/aleksandr-kuprin the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/alexander-berkman the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/alexander-hamilton the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/alexander-mackenzie the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/alexander-pushkin the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/alexandre-dumas the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/alfred-lord-tennyson the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/algernon-blackwood the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/algis-budrys the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/ambrose-bierce the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/ameen-rihani the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anatole-france the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/andre-gide the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/andre-norton the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/angela-brazil the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anita-loos the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/ann-radcliffe the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anna-julia-cooper the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anna-katharine-green the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anna-sewell the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anne-bronte the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anne-parrish the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anthony-berkeley the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anthony-hope the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anthony-trollope the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/anton-chekhov the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/apollonius-of-rhodes the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/apsley-cherry-garrard the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/apuleius the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/archibald-alexander the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/aristotle the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/arnold-bennett the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/arthur-conan-doyle the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/arthur-machen the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/arthur-quiller-couch the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/arthur-ransome the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/arthur-w-pinero the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/authors/august-strindberg the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/gallions-reach-tomlinson the browser could not open it: page.evaluate: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/gentlemen-prefer-blondes-loos the browser could not open it: page.evaluate: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/germinal-zola the browser could not open it: page.goto: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/germinie-lacerteux-goncourt the browser could not open it: page.goto: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/geronimos-story-of-his-life-geronimo the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/getting-married-shaw the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/ghost-stories-benson the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/ghosts-ibsen the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/giants-bread-christie the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/gil-blas-lesage the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/gitanjali-tagore the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/gladiator-wylie the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/golf-stories-wodehouse the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/great-expectations-dickens the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/green-forest-stories-burgess the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/green-meadow-stories-burgess the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/greene-ferne-farm-jefferies the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/greenmantle-buchan the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/growth-of-the-soil-hamsun the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/gullibles-travels-lardner the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/gullivers-travels-swift the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hadji-murad-tolstoy the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hadrian-the-seventh-rolfe the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hamilton-hamlin the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hamlet-shakespeare the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hard-times-dickens the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hardings-luck-nesbit the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/harry-heathcote-of-gangoil-trollope the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/he-knew-he-was-right-trollope the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/he-who-gets-slapped-andreyev the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/heart-of-darkness-conrad the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/heartbreak-house-shaw the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hedda-gabler-ibsen the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/heidi-spyri the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/henry-iv-part-i-shakespeare the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/henry-iv-part-ii-shakespeare the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/henry-v-shakespeare the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/henry-vi-part-i-shakespeare the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/henry-vi-part-ii-shakespeare the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/henry-vi-part-iii-shakespeare the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/henry-viii-shakespeare the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/heretics-chesterton the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/herland-gilman the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hester-oliphant the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      },
+      {
+       "severity": "warning",
+       "check": "G",
+       "detail": "https://foxing.app/books/hindu-tales-from-the-sanskrit-mitra the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+      }
+     ]
     },
     "carrel": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsomer": {
      "status": "missing",
-     "reason": "chart-audit: 1 errors",
+     "reason": "chart-audit: 4 errors",
      "findings": [
       {
        "severity": "error",
-       "check": "G",
-       "detail": "https://capsomer.dustinedwards.info/components/field/states?theme=light the browser could not open it: redirected to sign-in at https://capsomer.dustinedwards.info/components/field/states, so its charts were never read"
+       "check": "F",
+       "detail": "https://capsomer.dustinedwards.info/ an SVG chart drawn outside Enarratio: \"One design system for every site and app\" (168 rects)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsomer.dustinedwards.info/components/system-map/states?theme=light an SVG chart drawn outside Enarratio: \"The network, Carrel lit\" (36 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsomer.dustinedwards.info/components/system-map/states?theme=light an SVG chart drawn outside Enarratio: \"Capsid\" (30 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsomer.dustinedwards.info/components/system-map/states?theme=light an SVG chart drawn outside Enarratio: \"Capsid: a job's life\" (16 dots)"
       }
      ]
     },
     "prelum": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "status": "missing",
+     "reason": "chart-audit: 24 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/flows/carrel-publish/ an SVG chart drawn outside Enarratio: \"Publishing a post, over the parts of Carrel\" (30 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/flows/doc-search/ an SVG chart drawn outside Enarratio: \"A search, over the parts of Capsid\" (24 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/ an SVG chart drawn outside Enarratio: \"A job's life, over the parts of Capsid\" (24 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/flows/nightly-backup/ an SVG chart drawn outside Enarratio: \"The nightly backup, over the parts of Capsid\" (24 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/flows/session-start/ an SVG chart drawn outside Enarratio: \"A session starts, over the parts of Capsid\" (24 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/capsid-backups/ an SVG chart drawn outside Enarratio: \"Capsid backups in the network\" (6 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/capsid-bench/ an SVG chart drawn outside Enarratio: \"capsid-bench in the network\" (10 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/capsid/ an SVG chart drawn outside Enarratio: \"Capsid in the network\" (58 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/capsomer/ an SVG chart drawn outside Enarratio: \"Capsomer in the network\" (26 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/carrel/ an SVG chart drawn outside Enarratio: \"Carrel in the network\" (62 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/d1-dump/ an SVG chart drawn outside Enarratio: \"d1-dump in the network\" (20 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/devkit/ an SVG chart drawn outside Enarratio: \"devkit in the network\" (42 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/dustinedwards-info/ an SVG chart drawn outside Enarratio: \"dustinedwards.info in the network\" (68 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/dustinedwards-mcp/ an SVG chart drawn outside Enarratio: \"Dustin Edwards Admin in the network\" (16 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/enarratio/ an SVG chart drawn outside Enarratio: \"Enarratio in the network\" (18 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/foxhound/ an SVG chart drawn outside Enarratio: \"Foxhound in the network\" (48 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/foxing-mcp/ an SVG chart drawn outside Enarratio: \"Foxing Admin in the network\" (8 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/foxing/ an SVG chart drawn outside Enarratio: \"Foxing in the network\" (38 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/germomics/ an SVG chart drawn outside Enarratio: \"Germomics in the network\" (34 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/julieedwards-info/ an SVG chart drawn outside Enarratio: \"julieedwards.info in the network\" (22 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/prelum/ an SVG chart drawn outside Enarratio: \"Prelum in the network\" (18 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/site-api/ an SVG chart drawn outside Enarratio: \"site-api in the network\" (18 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/site-runtime/ an SVG chart drawn outside Enarratio: \"site-runtime in the network\" (24 dots)"
+      },
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://capsid.dustinedwards.info/s/txasm/ an SVG chart drawn outside Enarratio: \"TXASM in the network\" (28 dots)"
+      }
+     ]
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -4007,51 +4771,14 @@
      "reason": "no check for a worker"
     },
     "capsid-portal": {
-     "status": "missing",
-     "reason": "chart-audit: 4 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "B18",
-       "detail": "https://portal.dustinedwards.info/demos/ \"How much of your time does Capsid take?\" (line): the finding sentence is hidden from sight"
-      },
-      {
-       "severity": "warning",
-       "check": "B18",
-       "detail": "https://portal.dustinedwards.info/demos/ \"Where does waiting go?\" (bar): the finding sentence is hidden from sight"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://portal.dustinedwards.info/demos/ \"How much of your time does Capsid take?\" (line), 320 px: the drawing is 480 px wide in a 239 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://portal.dustinedwards.info/demos/ \"Where does waiting go?\" (bar), 320 px: the drawing is 480 px wide in a 239 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://portal.dustinedwards.info/demos/agents?tab=claims \"Does each agent's claim match what was verified?\" (bar), 320 px: the drawing is 480 px wide in a 239 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "D6",
-       "detail": "https://portal.dustinedwards.info/demos/packages \"Daily downloads of sample-pkg\" (area): 194.1 kB of inline SVG, over the 100 kB budget"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "carrel-desk": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "G",
-       "detail": "https://desk.dustinedwards.info/demos/progress the browser could not open it: redirected to sign-in at https://dustinedwards.cloudflareaccess.com/cdn-cgi/access/login/desk.dustinedwards.info, so its charts were never read"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     }
    }
   },
@@ -4083,7 +4810,7 @@
       "https://dustinedwards.info/",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/app/routes/search.ask.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "germomics": {
      "status": "partial",
@@ -4091,7 +4818,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "julieedwards-info": {
      "status": "partial",
@@ -4099,7 +4826,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "txasm": {
      "status": "partial",
@@ -4107,7 +4834,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "bsw": {
      "status": "complete",
@@ -4116,7 +4843,7 @@
       "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
       "https://github.com/DrDustinEdwards/bsw"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxhound": {
      "status": "missing",
@@ -4190,7 +4917,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-suIL14/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -4201,7 +4928,7 @@
       "https://foxing.app/",
       "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel": {
      "status": "partial",
@@ -4209,7 +4936,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "enarratio": {
      "status": "complete",
@@ -4218,7 +4945,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/enarratio"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsomer": {
      "status": "complete",
@@ -4227,7 +4954,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsomer"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "prelum": {
      "status": "complete",
@@ -4236,7 +4963,7 @@
       "https://prelum.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/prelum"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid": {
      "status": "partial",
@@ -4244,7 +4971,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid-mcp": {
      "status": "missing",
@@ -4581,6 +5308,16 @@
        "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_run_improve: inputSchema.namespace is a string with no pattern, enum, const or format"
       },
       {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_run_improve: inputSchema.system is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_run_improve: inputSchema.package is a string with no pattern, enum, const or format"
+      },
+      {
        "severity": "error",
        "check": "T7",
        "detail": "https://mcp.dustinedwards.info/ops/mcp the read-only test grant lists tools that are not read-only: capsid_lint_namespace, capsid_work_jobs"
@@ -4588,7 +5325,7 @@
       {
        "severity": "warning",
        "check": "T12",
-       "detail": "https://mcp.dustinedwards.info/ops/mcp no --tools-hash pinned; the test grant's list hashes to c11b5256d927a9b0bf60c43909d7fbe399582a37d4c4d7a563ff9f815b9599e1"
+       "detail": "https://mcp.dustinedwards.info/ops/mcp no --tools-hash pinned; the test grant's list hashes to 29f38345ba05ed463828048c21e0ae1be077c4dcada6893a4ff69739b5e6810b"
       },
       {
        "severity": "warning",
@@ -4603,7 +5340,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-suIL14/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -4674,7 +5411,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://admin-mcp.foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://admin-mcp.foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-suIL14/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -4710,7 +5447,7 @@
       {
        "severity": "warning",
        "check": "T12",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to d7e6492656b7ad2a006b47a285fd4fb09331090f13c99f69aa9d91e4b7273f3d"
+       "detail": "https://admin-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to 9bfcf0723b32e868bb7c0263922c2554a5978440d39563a8558ac2c56d919fe7"
       },
       {
        "severity": "warning",
@@ -4725,7 +5462,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://admin-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://admin-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-suIL14/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -4861,7 +5598,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://carrel-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://carrel-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-suIL14/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
@@ -4922,7 +5659,7 @@
       {
        "severity": "warning",
        "check": "T12",
-       "detail": "https://admin-mcp.foxing.app/mcp no --tools-hash pinned; the test grant's list hashes to ebddff77505c706b535b5ad4e6e5677b0598b7389402dfc79652dfe89cfd0cf7"
+       "detail": "https://admin-mcp.foxing.app/mcp no --tools-hash pinned; the test grant's list hashes to 4324cf032b46ce6b3b5fa887d75caf9723ef3a7a285b59b13dbe0663ca40c661"
       },
       {
        "severity": "warning",
@@ -4937,7 +5674,7 @@
       {
        "severity": "error",
        "check": "audit",
-       "detail": "https://admin-mcp.foxing.app the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jJujH0/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
+       "detail": "https://admin-mcp.foxing.app the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-suIL14/site-runtime_v0.73.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)"
       }
      ]
     },
