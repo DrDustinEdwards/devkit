@@ -1,0 +1,110 @@
+{
+  "area": 7,
+  "verifier": "Verify speed and caching",
+  "date": "2026-10-31",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/site-runtime/blob/3c980b9/bin/speed.mjs#L32",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/3c980b9/speed.mjs#L45",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/3c980b9/speed.mjs#L87",
+        "https://github.com/DrDustinEdwards/devkit/pull/95"
+      ],
+      "note": "Built and live: route budgets enforced in CI on every React app, warming after every deploy (dei's deploy.yml, germomics and the rest through worker-deploy.yml), the static sites on staticSite. Still wrong in site-runtime-speed 0.65.0, so the board stays red whatever the sites do: (1) its user agent 'Mozilla/5.0 (compatible; site-runtime-speed)' gets no 103 from Cloudflare (curl with that agent: HTTP/2 200 only; with a browser agent: 103 then 200), so D1 fails on every custom domain; (2) B4 reads cf-cache-status HIT on a 404 as stored, but static assets report HIT on a 404 sent private, no-store (repeat fetches show no age), so B4 fails on Carrel, Capsomer, Enarratio, Prelum and the Capsid explorer; (3) hashed() still treats any name with 8 letters after a hyphen as hashed. A1 and G2 have no data without the CrUX key (Dustin's)."
+    },
+    "dustinedwards-info": {
+      "verdict": "complete",
+      "evidence": [
+        "https://dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/56340d5/.github/workflows/deploy.yml#L432-L436",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/56340d5/.route-weight.json"
+      ],
+      "note": "Complete apart from Dustin's steps. Checked 31 Oct 22:40 to 23:30 UTC: 103 with Link and Server-Timing (curl), the live check passes every item but its own D1 bug, warming after deploy, route budget enforced, Lighthouse 100 phone and 100 desktop, 0 KiB unused JS. Open and accepted: C5 (http://www and http plus a trailing slash take 2 hops: zone dashboard), A1 (no CrUX key)."
+    },
+    "germomics": {
+      "verdict": "complete",
+      "evidence": [
+        "https://germomics.com/",
+        "https://github.com/DrDustinEdwards/germomics/blob/6d90b57/.github/workflows/ci.yml#L134-L140",
+        "https://github.com/DrDustinEdwards/germomics/blob/6d90b57/.route-weight.json"
+      ],
+      "note": "Complete apart from Dustin's steps. Deploys through worker-deploy.yml (warming; /health names the main commit 6d90b57), route budget enforced, 103 with Link and Server-Timing, Lighthouse home 100/100 and /about 100 phone, 0 KiB unused JS. Open and accepted: C5 (http://www takes 2 hops), A1."
+    },
+    "julieedwards-info": {
+      "verdict": "complete",
+      "evidence": [
+        "https://julieedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's steps. 103 with Link and Server-Timing, no-JS site, Lighthouse 100 phone and 100 desktop. Open and accepted: C5 (2 hops from http), A1."
+    },
+    "txasm": {
+      "verdict": "complete",
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/meetings",
+        "https://github.com/DrDustinEdwards/txasm/blob/main/.github/workflows/no-bloat.yml"
+      ],
+      "note": "Complete apart from accepted exceptions. B7 fixed: all 40 sitemap pages answer 304 to their own Last-Modified (was 500, error 1101). Route budget enforced in CI, Lighthouse home and /meetings 100 phone, home 100 desktop, 0 KiB unused JS. Open and accepted: D1 (workers.dev sends no 103 until the txasm.org cutover), A1."
+    },
+    "bsw": {
+      "verdict": "complete",
+      "evidence": [
+        "https://bsw.dustin-edwards.workers.dev/sitemap.xml"
+      ],
+      "note": "Complete apart from accepted exceptions. B1 fixed: all 19 sitemap URLs answer 200 with no redirect, are edge HITs and answer 304. Lighthouse 100 phone and 100 desktop. Open and accepted: D1 (stays on workers.dev for good), A1."
+    },
+    "foxhound": {
+      "verdict": "complete",
+      "evidence": [
+        "https://foxhoundapp.com/",
+        "https://github.com/DrDustinEdwards/foxhound/blob/main/.route-weight.json"
+      ],
+      "note": "Complete apart from Dustin's steps. Route budget enforced (enforce true, in ci.yml), 103 with Link and Server-Timing, Lighthouse 98 phone and 100 desktop, 0 KiB unused JS. Open and accepted: C5, A1."
+    },
+    "foxing": {
+      "verdict": "complete",
+      "evidence": [
+        "https://foxing.app/books/813-leblanc",
+        "https://github.com/DrDustinEdwards/foxing/blob/main/.route-weight.json"
+      ],
+      "note": "Complete apart from Dustin's steps. Public pages send no React (#163): home Lighthouse 100 phone and 100 desktop, book page 99 phone and 100 desktop (LCP is the cover image), 0 KiB unused JS; route budget enforced; 103 with Link and Server-Timing. The cover fix that waits for his yes on screenshots is not needed to pass the bar. Open and accepted: C5 (http plus trailing slash takes 2 hops), A1."
+    },
+    "carrel": {
+      "verdict": "complete",
+      "evidence": [
+        "https://carrel.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/carrel/blob/main/.route-weight.json"
+      ],
+      "note": "Complete apart from Dustin's step. Public site: 103, Link, Server-Timing, its own speculation rules, a 404 and a cookie request both private, no-store; Lighthouse 100 phone; the desk's route budget is enforced. Open and accepted: A1."
+    },
+    "enarratio": {
+      "verdict": "partial",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/"
+      ],
+      "note": "A3: Lighthouse phone on the home page scored 75, 94 and 97 (median 94; the builder's own median is 92), under the bar of 95; desktop 99, 100, 100. The long tasks are still enhance.js and style/layout work (TBT 1,173 ms on the worst run). Fixed and verified: 103 and Link preload, Server-Timing, its own speculation rules, a private, no-store 404. Only the home page was measured; the other 3 sitemap pages were not."
+    },
+    "capsomer": {
+      "verdict": "complete",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's step. 103 and Link preload (was none), Server-Timing, its own speculation rules, 404 private, no-store; Lighthouse 100 phone. Open and accepted: A1."
+    },
+    "prelum": {
+      "verdict": "complete",
+      "evidence": [
+        "https://prelum.dustinedwards.info/",
+        "https://prelum.dustinedwards.info/katex/katex.min.css"
+      ],
+      "note": "Complete apart from Dustin's step. All 24 faces use font-display swap (was 20 block), its own speculation rules, 103, 404 private, no-store; Lighthouse 99 phone and 100 desktop. Open and accepted: A1."
+    },
+    "capsid": {
+      "verdict": "complete",
+      "evidence": [
+        "https://capsid.dustinedwards.info/"
+      ],
+      "note": "Complete apart from Dustin's step. The explorer now sends Link preload, a 103, Server-Timing, its own speculation rules, private, no-store on a cookie request and on a 404 (#662); Lighthouse 100 phone and 100 desktop. Not part of this cell: the MCP Worker (mcp.dustinedwards.info) is rolled back because the live gate gets 429 from POST /register; another thread owns it. Open and accepted: A1."
+    }
+  }
+}

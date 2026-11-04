@@ -1,0 +1,21 @@
+name: review-self
+
+# devkit's own pull requests through its own review.yml (this commit's copy), as every caller's are: Capsid reviews the
+# pull request and the verdict lands in an advisory "review verdict" check.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions: {}
+
+concurrency:
+  group: review-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    permissions:
+      id-token: write
+      checks: write
+    uses: ./.github/workflows/review.yml

@@ -14,17 +14,16 @@ const shared = readdirSync(dir)
 test("the shared workflows are the ones every repository calls", () => {
   assert.deepEqual(shared.map((w) => w.name).sort(), [
     "access-drift.yml",
-    "ai-author.yml",
     "bump-consumers.yml",
+    "checks.yml",
     "code-map.yml",
     "conformance.yml",
     "dependencies.yml",
-    "family.yml",
     "no-bloat.yml",
-    "pr-footer.yml",
     "release.yml",
     "restore-drill.yml",
-    "shared.yml",
+    "review.yml",
+    "scorecard.yml",
     "worker-deploy.yml",
     "worker-size.yml",
     "workflow-audit.yml",
@@ -56,4 +55,21 @@ test("each checks every file it downloads against its sha256", () => {
       assert.match(text, new RegExp(`^\\s*(?:echo ")?[0-9a-f]{64}  ${file.replace(/\./g, "\\.")}\\b`, "m"), `${name}: ${file}`);
     }
   }
+});
+
+test("checks.yml writes only pull requests, only on the repository's own, checks the code on every event that adds commits, and counts as the checks workflow", async () => {
+  const { checkWorkflows } = await import("../bin/shared.mjs");
+  const { callerProblems } = await import("../scripts/check-callers.mjs");
+  const code = codeOf(readFileSync(new URL("checks.yml", dir), "utf8"));
+  assert.deepEqual([...code.matchAll(/(\S+): write\b/g)].map((m) => m[1]), ["pull-requests"]);
+  assert.doesNotMatch(code, /secrets|continue-on-error/);
+  assert.match(code, /FOOTER: .*github\.event\.pull_request\.head\.repo\.full_name == github\.repository/);
+  assert.match(code, /CODE: \$\{\{ github\.event_name == 'push' \|\| github\.event_name == 'merge_group' \|\| \(github\.event_name == 'pull_request' && github\.event\.action != 'edited'\) \}\}/);
+  for (const run of ["node ../.devkit/bin/check-trailers.mjs", "node ../.devkit/bin/shared.mjs --from", "node .devkit/scripts/strip-pr-footer.mjs"]) assert.ok(code.includes(`run: ${run}`), run);
+  const caller = readFileSync(new URL("../examples/checks-caller.yml", import.meta.url), "utf8");
+  assert.deepEqual(callerProblems(caller), []);
+  assert.match(caller, /permissions:\n {6}contents: read\n {6}pull-requests: write\n/);
+  const files = { ".github/workflows/checks.yml": caller.replace(/0{40}/, "a".repeat(40)) };
+  const missing = checkWorkflows({ files: Object.keys(files), read: (f) => files[f] }, { apps: { ".": "package" } }, { self: "prelum", private: false }).map((f) => f.message);
+  assert.ok(!missing.some((m) => m.includes("devkit's checks.yml")));
 });

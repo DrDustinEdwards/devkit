@@ -4,7 +4,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { buildBoard, CLEAN_DAYS, lintConfig, loadConfig, reportedResult, resultOf } from "../bin/live.mjs";
+import { buildBoard, checkEnv, CLEAN_DAYS, lintConfig, loadConfig, reportedResult, resultOf } from "../bin/live.mjs";
 
 const sites = [{ id: "a", name: "A", kind: "site", origin: "https://a.example.com" }];
 const areas = [{ id: 1, name: "Search", builder: "Build search", checks: [{ name: "audit", repo: "prelum", bin: "prelum-audit" }] }];
@@ -20,6 +20,14 @@ const cell = (board) => board.areas[0].cells.a;
 
 test("the repository's own site, area and verdict files are sound", () => {
   assert.deepEqual(lintConfig(loadConfig()), []);
+});
+
+test("an MCP test grant reaches only a check marked grants, never any other check's code", () => {
+  const env = { PATH: "/bin", GITHUB_TOKEN: "t", MCP_TEST_GRANT_MCP_EXAMPLE_COM: "k" };
+  assert.deepEqual(checkEnv(env, { name: "audit" }), { PATH: "/bin", GITHUB_TOKEN: "t" });
+  assert.deepEqual(checkEnv(env, { name: "ai", grants: true }), env);
+  const bad = { id: 1, name: "AI", builder: "b", checks: [{ name: "ai", repo: "site-runtime", bin: "x", grants: "yes" }] };
+  assert.match(lintConfig({ sites, areas: [bad], verdicts: [] }).join("\n"), /"grants" other than true/);
 });
 
 test("a check's exit code, or its fresh report, decides pass, fail or could not run, and its annotations are the findings", () => {

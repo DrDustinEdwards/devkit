@@ -16,7 +16,7 @@
 //   npx devkit-check-trailers <base> <head>             checks base..head (messages)
 //   npx devkit-check-trailers <base> <head> --authors   also author/committer
 //   npx devkit-check-trailers                           reads the range from the GitHub event: EVENT, PR_BASE, PR_HEAD,
-//     PUSH_BEFORE, PUSH_AFTER (set by .github/workflows/ai-author.yml); a merge_group event's base and head come from the
+//     PUSH_BEFORE, PUSH_AFTER (set by .github/workflows/checks.yml); a merge_group event's base and head come from the
 //     event payload at GITHUB_EVENT_PATH
 //
 // Exit 0: no commit in the range carries a trailer, or the event adds no commits (schedule, workflow_dispatch,

@@ -2,14 +2,45 @@
 
 ## Unreleased
 
-## 0.20.22 (2026-10-31)
+## 0.21.2 (2026-11-04)
 
 - `devkit-ops-audit` (area 8, round 2): with `--repo`, a GitHub read that fails (401, 403, 429, a 5xx, no answer) is "could not run", exit 2, never a warning and exit 0, so a broken token cannot show green. New H5: `/health`'s `checks` against the bindings the repository's wrangler config declares (`--wrangler <path>`, else the root config), each binding without a check an error unless `.ops-audit.json` beside the config names it under `unprobed` with a reason (or maps it to its check under `checks`). N6 now asks for the shared error page: the 404 is HTML with a `<title>` and Capsomer's ErrorPage region (class `cap-error-page`, `ERROR_PAGE_MARKER`), not any `text/html`.
 - `live/areas.json`: area 8 gives `--repo` to bsw, Capsid's MCP (with `--drill-workflow restore-rehearsal.yml`, Capsid's drill) and the three admin MCPs (each with its `--wrangler`), and Foxing its `apps/web` config.
 - `restore-drill.yml` (R3): after the D1 drill, "Restore a sample of files and check the bytes" runs d1-dump v0.10.0's `drill-files` on the same bucket: a sample of each files backup (`files-sample`, default 5) restored with `restoreFiles` into scratch and checked against the copies' bytes and etags. Needs d1-dump v0.10.0 released first.
 - `worker-deploy.yml` (D4): a gradual rollout that passed the live gate is judged by its errors too. "Compare the error rates" reads both versions' requests and errors since the split from the GraphQL Analytics API and refuses the new version (rolled back) when it has 3 or more errors at more than twice the old rate and a point above it; under 20 requests it promotes on the gate with a warning; an unreadable read leaves the split (exit 3). The token needs Account Analytics Read. `gradual-percent` and `preview` stay opt-in: README, "Why both stay opt-in".
+
+## 0.21.1 (2026-11-03)
+
+- `review.yml`: the automatic PR reviewer (D5), an advisory four-week trial from 2026-11-03. On each same-repository pull request that is not a draft or Renovate's, it sends the job's OIDC token to Capsid (`POST /review/run`), which reads the pull request through its GitHub App, reviews it with DeepSeek V4.1 Flash on Workers AI through the account's AI Gateway and records the verdict; `scripts/review-check.mjs` writes it to a `review verdict` check (neutral, or skipped) and the job summary, never a comment. No secret. The caller is `examples/review-caller.yml`; its job grants `id-token: write` and `checks: write`. `devkit-shared` asks for it in every repository, as a warning until 0.22.0.
+
+## 0.21.0 (2026-11-01)
+
+- **The rules that were warnings until 0.21.0 now fail**: local copies of shared exports found by name, test fakes devkit ships (`./github`, `./access`, `./network`, `./d1`), the AI code rules (C1, C2, C5, C6, C13, W5, R2), an MCP server more than one minor behind site-runtime, and every devkit workflow a repository's kinds need (`checks`, `workflow-audit`, `dependencies`, `worker-size`, `no-bloat`, `conformance`, `bump-consumers`). Every repository's default branch passed this check before the release.
+- **Removed:** `ai-author.yml`, `pr-footer.yml` and `shared.yml`, which `checks.yml` replaced in 0.20.23, and their example callers; `family.yml` and the `devkit-family` bin, the names before 0.20.8; reading `.family.json` (it is `.shared.json`); and the `devkit:` input pin rule, which only `ai-author.yml` took. The shared-code check now asks for `checks` where it asked for `ai-author`, `pr-footer` and `shared`.
+- Wording: "shared feature" and "the network's faces" where the messages said "family".
+
+## 0.20.25 (2026-11-01)
+
+- `rollback-drill.yml`: the weekly rollback drill (checklist F2). It deploys a known good version of a test Worker (`drill/worker.mjs`, `devkit-rollback-drill` on workers.dev), plants a bad deploy through this commit's `worker-deploy.yml`, and its `verdict` job passes only when the live gate refused the planted deploy and rolled the Worker back to the known good version, read from `/health` and from Cloudflare's deployment list. Needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in devkit.
+- `worker-deploy.yml`: `drill` input (default false), for the drill only: the live gate's failure does not fail the caller's run. The gate's steps are unchanged.
+
+## 0.20.24 (2026-11-01)
+
+- `scorecard.yml`: OpenSSF Scorecard for every public repository (checklist C5), weekly and on each push to the default branch. It publishes the score to the OpenSSF API (the public score and badge), uploads the SARIF to code scanning, and its `scorecard gate` job fails when the aggregate score falls below the last published one, naming each check that fell (`tolerance` input, 0 by default). The job that publishes holds only the steps the Scorecard API accepts. The caller is `examples/scorecard-caller.yml`; devkit runs it on itself (`scorecard-self.yml`). `devkit-shared` asks for it in a public repository, as a warning until 0.22.0.
+- `release.yml`: build provenance (C7). Each new release packs the tagged tree with `npm pack --ignore-scripts`, attests the tarball with `actions/attest-build-provenance` and attaches it to the release, so `gh attestation verify` can check a release came from this workflow. The caller's job now grants `id-token: write` and `attestations: write` beside `contents: write`; a caller that does not fails to start, so update the permissions with the pin. `build: true` (with `node-version-file`, `.node-version` by default) is Capsomer's release: it runs `npm ci`, drops the prepare script and tags a release commit holding the built files, so Capsomer and site-runtime release through this file instead of copies of it.
+- `worker-deploy.yml`: StepSecurity Harden-Runner first in every job (C8), in `audit` mode, recording each host a job reaches and refusing sudo and containers. `egress-policy: block` with `allowed-endpoints` turns the record into a rule once each site's hosts are known.
+
+## 0.20.23 (2026-11-01)
+
+- `checks.yml`: the small checks in one job. It runs the footer strip (`pr-footer.yml`), the trailer check (`ai-author.yml`) and the shared-code check (`shared.yml`) on one runner instead of three, from devkit at the caller's pin, with nothing installed. An edit of a pull request description runs only the footer step, and its concurrency group never cancels a run checking the code. The caller is `examples/checks-caller.yml`. `devkit-shared` counts it as calling all three and now names it as the caller to add. The three separate workflows keep working until every repository has moved.
+- `devkit-live` and `live.yml`: the MCP test grants (area 11). `live.yml` passes one `MCP_TEST_GRANT_<HOST>` secret per MCP server (Capsid, Carrel, the Dustin Edwards, Foxing and Foxhound admin servers, and Foxhound's merchant server), and `devkit-live` hands them only to a check marked `"grants": true` in `live/areas.json` (area 11's `site-runtime-ai-audit`), so no other check's code holds a server's key. Capsid's grant goes to `/ops/mcp` (`--grant-path`, site-runtime 0.67.2), where its agent keys are taken. With a grant the audit also runs tools/list (T1-T4, T7, T9, T12), the conformance server scenarios (P3, P4, P7) and the rate-limit burst (S1); a server without its secret is still checked without a token.
+- `devkit-live`: a reported check's `site_reports` reads one site's result from another reporter, keyed by site id. Area 2's `signed-in-security` reads Carrel Desk from Carrel's own report (`carrel-mcp.dustinedwards.info/reports/signed-in-security.json`, Desk graded in-process as the Owner) and the Portal from Capsid's, so no Access service token is needed for Desk.
 - Area 6 on the scoreboard checks kind `app` too (`live/areas.json`), so the daily run grades the Capsid Portal with `site-runtime-images` (0.61.0 or later reports a home page that sends a stranger to a sign-in as one C1 error: a shared link shows the sign-in's card). Carrel Desk is skipped for area 6, having nothing public to share, and the signed-in pages of both are listed as unchecked.
 - `devkit-live`: an area's `unchecked` names what its checks cannot reach; the board lists each one and the job is not finished while any remain. Area 10 runs `prelum-chart-audit --strict-frame`, gives Foxhound its three demo routes through `site_args` (`--start`, `--pages`, from Prelum v0.25.0), and lists the Capsid Portal, Foxing's /stats, /year and /goals and Carrel desk as unchecked (signed-in only).
+
+## 0.20.22 (2026-10-31)
+
+- `worker-deploy.yml`: a gradual rollout runs `wrangler triggers deploy` after the split. A version upload leaves routes, custom domains and cron schedules as they were (Cloudflare Docs, "Deployment management"), so a changed cron would have stayed on the old schedule. The input and README now also say gradual is not for a Worker that declares its Durable Objects in `exports` (area 8, D4).
 
 ## 0.20.21 (2026-10-31)
 
