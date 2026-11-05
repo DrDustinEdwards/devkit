@@ -104,7 +104,7 @@
    "id": 1,
    "name": "Search, sharing and AI answers",
    "builder": "Share SEO and other key site code",
-   "verifier": null,
+   "verifier": "Verify scoreboard cells awaiting sign-off",
    "lines": {
     "prs": 37,
     "added": 18963,
@@ -118,17 +118,26 @@
     },
     "dustinedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "llms.txt says every page has a .md twin, but /about.md and /writing.md are 404 and Accept: text/markdown returns HTML; 1 internal link goes through a redirect; 3 titles over 60 characters",
+     "evidence": [
+      "https://dustinedwards.info/llms.txt"
+     ],
      "clean_days": 1
     },
     "germomics": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod",
+     "evidence": [
+      "https://germomics.com/sitemap.xml"
+     ],
      "clean_days": 5
     },
     "julieedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404",
+     "evidence": [
+      "https://julieedwards.info/llms.txt"
+     ],
      "clean_days": 5
     },
     "txasm": {
@@ -745,17 +754,26 @@
     },
     "foxhound": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects",
+     "evidence": [
+      "https://foxhoundapp.com/sitemap.xml"
+     ],
      "clean_days": 5
     },
     "foxing": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); about 700 of 2,200 sitemap URLs have no lastmod; llms-full.txt is 404",
+     "evidence": [
+      "https://foxing.app/sitemap.xml"
+     ],
      "clean_days": 1
     },
     "carrel": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404",
+     "evidence": [
+      "https://carrel.dustinedwards.info/sitemap.xml"
+     ],
      "clean_days": 5
     },
     "enarratio": {
@@ -1286,13 +1304,21 @@
      ]
     },
     "prelum": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "prelum-audit clean on 7 pages; Accept: text/markdown and .md answer text/markdown; canonical, Open Graph with image size and alt, max-image-preview, Content-Signal, llms.txt, favicon and manifest all present. Minor: /accessibility has no lastmod.",
+     "evidence": [
+      "https://prelum.dustinedwards.info/",
+      "https://prelum.dustinedwards.info/sitemap.xml",
+      "https://prelum.dustinedwards.info/index.md"
+     ],
      "clean_days": 3
     },
     "capsid": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404",
+     "evidence": [
+      "https://capsid.dustinedwards.info/sitemap.xml"
+     ],
      "clean_days": 5
     },
     "capsid-mcp": {
@@ -1697,13 +1723,20 @@
      "clean_days": 4
     },
     "capsid-portal": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Portal sign-in is Access for SaaS (live 302 to Access, no-store, HSTS); portal-auth.ts now has a 24-hour session, an idle-hour sign-out, a server-side end list (portal_session_ends) and logged sign-in and expiry events, which closes the 31 Oct gap; live /health sha dc21c04 is master head. A signed-in session was not exercised.",
+     "evidence": [
+      "https://portal.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/capsid/blob/master/src/portal-auth.ts"
+     ],
      "clean_days": 4
     },
     "carrel-desk": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "Signed-out redirect to Access is correct, but the Carrel repository and a signed-in session were not available to this verifier, so session lifetime, idle sign-out and revoke are unchecked",
+     "evidence": [
+      "https://desk.dustinedwards.info/"
+     ],
      "clean_days": 4
     }
    }
@@ -1712,7 +1745,7 @@
    "id": 4,
    "name": "Writing and rendering",
    "builder": "Complete shared writing and rendering",
-   "verifier": null,
+   "verifier": "Verify scoreboard cells awaiting sign-off",
    "lines": {
     "prs": 35,
     "added": 6996,
@@ -1726,7 +1759,10 @@
     },
     "dustinedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "53 pages render writing with no data-render-version wrapper, 6 images without width and height, h3 after h1 on /research/publications",
+     "evidence": [
+      "https://dustinedwards.info/research"
+     ],
      "clean_days": 4
     },
     "germomics": {
@@ -1822,52 +1858,83 @@
     },
     "julieedwards-info": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "live check clean on 1 page; the repository was not available, and earlier notes say it has its own section grammar rather than Prelum",
+     "evidence": [
+      "https://julieedwards.info/"
+     ],
      "clean_days": 5
     },
     "txasm": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "checked on the workers.dev address: 41 pages, 0 errors; /award-nominations has no data-render-version wrapper",
+     "evidence": [
+      "https://txasm.org/award-nominations"
+     ],
      "clean_days": 5
     },
     "bsw": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "11 pages with h3 after h1 (heading order)",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/cookie-policy"
+     ],
      "clean_days": 5
     },
     "foxhound": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "6 pages with h3 after h1",
+     "evidence": [
+      "https://foxhoundapp.com/compare"
+     ],
      "clean_days": 5
     },
     "foxing": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "/books has h3 after h1",
+     "evidence": [
+      "https://foxing.app/books"
+     ],
      "clean_days": 5
     },
     "carrel": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "live check clean on 2 pages; the Carrel repository was not available to this verifier, and earlier notes say Carrel books still use a regex renderer",
+     "evidence": [
+      "https://carrel.dustinedwards.info/"
+     ],
      "clean_days": 5
     },
     "enarratio": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "live check clean on 5 pages; its source was not available to this verifier, so use of Prelum and absence of a second renderer is not proven",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/"
+     ],
      "clean_days": 5
     },
     "capsomer": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "the live check is clean, but the showcase still renders Markdown with its own regex renderer (site/markdown.ts, used by home, views and main), so there is more than one renderer",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts"
+     ],
      "clean_days": 5
     },
     "prelum": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "specimen renders writing with no data-render-version wrapper",
+     "evidence": [
+      "https://prelum.dustinedwards.info/"
+     ],
      "clean_days": 5
     },
     "capsid": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "prelum-content: 117 pages, 0 errors, 0 warnings; one h1, no skipped level; the explorer pins Prelum and carries no second Markdown renderer",
+     "evidence": [
+      "https://capsid.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/capsid/blob/master/explorer/package.json"
+     ],
      "clean_days": 5
     },
     "capsid-mcp": {
@@ -3938,7 +4005,7 @@
    "id": 10,
    "name": "Charts",
    "builder": "Complete shared charts",
-   "verifier": null,
+   "verifier": "Verify scoreboard cells awaiting sign-off",
    "lines": {
     "prs": 92,
     "added": 33215,
@@ -4057,8 +4124,12 @@
      ]
     },
     "germomics": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "chart-audit 5 Nov: 3 charts on 2 pages, no findings, including both data pages that shifted at 320 px on 4 Nov",
+     "evidence": [
+      "https://germomics.com/data/cholera-soho-1854",
+      "https://germomics.com/data/influenza-1918"
+     ],
      "clean_days": 5
     },
     "julieedwards-info": {
@@ -4074,8 +4145,13 @@
      "reason": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "chart-audit 5 Nov: 37 charts on 7 pages, no findings",
+     "evidence": [
+      "https://foxhoundapp.com/demos/dashboard",
+      "https://foxhoundapp.com/demos/recovery",
+      "https://foxhoundapp.com/demos/intelligence"
+     ],
      "clean_days": 1
     },
     "foxing": {
@@ -4586,12 +4662,18 @@
     },
     "carrel": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json",
+     "evidence": [
+      "https://carrel.dustinedwards.info/"
+     ],
      "clean_days": 5
     },
     "enarratio": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "chart-audit 5 Nov: 127 charts on 4 pages, no findings",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/"
+     ],
      "clean_days": 3
     },
     "capsomer": {
@@ -4621,8 +4703,11 @@
      ]
     },
     "prelum": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "chart-audit 5 Nov: 4 charts, no findings",
+     "evidence": [
+      "https://prelum.dustinedwards.info/"
+     ],
      "clean_days": 4
     },
     "capsid": {
@@ -4772,13 +4857,20 @@
      "reason": "no check for a worker"
     },
     "capsid-portal": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "chart-audit 5 Nov: 28 charts on 10 demo pages, no findings, rerun 3 times on packages, prs and queue; signed-in pages are not checked",
+     "evidence": [
+      "https://portal.dustinedwards.info/demos/packages",
+      "https://portal.dustinedwards.info/demos/queue"
+     ],
      "clean_days": 1
     },
     "carrel-desk": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov",
+     "evidence": [
+      "https://desk.dustinedwards.info/demos/progress"
+     ],
      "clean_days": 1
     }
    }

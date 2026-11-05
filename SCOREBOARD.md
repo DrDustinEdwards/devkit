@@ -8,16 +8,16 @@ Newest run 2026-11-04 15:26 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ❌ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
-| 3. Sign-in and access | 🟡 | ❌ | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | +67457 | −2968 |
-| 4. Writing and rendering | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
+| 3. Sign-in and access | 🟡 | ❌ | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
+| 4. Writing and rendering | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +27951 | −2785 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ❌ | 🟡 | · | · | · | 🟡 | ❌ | 🟡 | 🟡 | ❌ | 🟡 | ❌ | · | · | · | · | · | 🟡 | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | ❌ | ✅ | · | · | · | ✅ | ❌ | 🟡 | ✅ | ❌ | ✅ | ❌ | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
@@ -27,12 +27,12 @@ Lines count public repositories only until the LIVE_GITHUB_TOKEN secret is set.
 
 ### 1. Search, sharing and AI answers
 
-Builder: Share SEO and other key site code. Verifier: none yet.
+Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: checks pass; no verifier yet
-- 🟡 Germomics: checks pass; no verifier yet
-- 🟡 julieedwards.info: checks pass; no verifier yet
+- 🟡 dustinedwards.info: llms.txt says every page has a .md twin, but /about.md and /writing.md are 404 and Accept: text/markdown returns HTML; 1 internal link goes through a redirect; 3 titles over 60 characters
+- 🟡 Germomics: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod
+- 🟡 julieedwards.info: no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
 - ❌ TXASM: prelum-audit: 41 errors
   - link-broken: https://txasm.org/ links to https://txasm.org/register, which answers 404
   - link-broken: https://txasm.org/meetings links to https://txasm.org/register, which answers 404
@@ -45,9 +45,9 @@ Builder: Share SEO and other key site code. Verifier: none yet.
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
-- 🟡 Foxhound: checks pass; no verifier yet
-- 🟡 Foxing: checks pass; no verifier yet
-- 🟡 Carrel: checks pass; no verifier yet
+- 🟡 Foxhound: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
+- 🟡 Foxing: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); about 700 of 2,200 sitemap URLs have no lastmod; llms-full.txt is 404
+- 🟡 Carrel: no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404
 - ❌ Enarratio: prelum-audit: 1 errors
   - icon-missing: https://enarratio.dustinedwards.info/favicon.ico answers 404 text/html; charset=utf-8
 - ❌ Capsomer: prelum-audit: 8 errors
@@ -56,8 +56,7 @@ Builder: Share SEO and other key site code. Verifier: none yet.
   - link-broken: https://capsomer.dustinedwards.info/components/catalog/ links to https://capsomer.dustinedwards.info/components/empty/empty.md, which answers 404
   - link-broken: https://capsomer.dustinedwards.info/components/empty/ links to https://capsomer.dustinedwards.info/components/skeleton/skeleton.md, which answers 404
   - link-broken: https://capsomer.dustinedwards.info/components/empty/ links to https://capsomer.dustinedwards.info/components/error-page/error-page.md, which answers 404
-- 🟡 Prelum specimen: checks pass; no verifier yet
-- 🟡 Capsid explorer: checks pass; no verifier yet
+- 🟡 Capsid explorer: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
 
 ### 2. Security headers and CSP
 
@@ -90,31 +89,29 @@ Builder: Complete shared sign-in and access. Verifier: Verify shared sign-in and
 - 🟡 Foxing: idle sign-out skips /api/v1/admin and /api/v1/ops; change-email mail goes to the wrong address; raw send error rethrown; package gaps
 - 🟡 Capsid explorer: Portal session is a 12-hour cookie with no 1-hour idle sign-out and no server-side revoke; Portal sign-ins not logged
 - 🟡 Foxing admin MCP: parked: the Worker has never been deployed, so the old server fails H4 live
-- 🟡 Capsid Portal: checks pass; no verifier yet
-- 🟡 Carrel Desk: checks pass; no verifier yet
+- 🟡 Carrel Desk: Signed-out redirect to Access is correct, but the Carrel repository and a signed-in session were not available to this verifier, so session lifetime, idle sign-out and revoke are unchecked
 
 ### 4. Writing and rendering
 
-Builder: Complete shared writing and rendering. Verifier: none yet.
+Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: checks pass; no verifier yet
+- 🟡 dustinedwards.info: 53 pages render writing with no data-render-version wrapper, 6 images without width and height, h3 after h1 on /research/publications
 - ❌ Germomics: prelum-content: 17 errors
   - writing-render-version: https://germomics.com/about stored HTML from render version 17; the pipeline is at 18
   - writing-render-version: https://germomics.com/about stored HTML from render version 17; the pipeline is at 18
   - writing-render-version: https://germomics.com/about/dustin-edwards stored HTML from render version 17; the pipeline is at 18
   - writing-render-version: https://germomics.com/privacy stored HTML from render version 17; the pipeline is at 18
   - writing-render-version: https://germomics.com/terms stored HTML from render version 17; the pipeline is at 18
-- 🟡 julieedwards.info: checks pass; no verifier yet
-- 🟡 TXASM: checks pass; no verifier yet
-- 🟡 BSW: checks pass; no verifier yet
-- 🟡 Foxhound: checks pass; no verifier yet
-- 🟡 Foxing: checks pass; no verifier yet
-- 🟡 Carrel: checks pass; no verifier yet
-- 🟡 Enarratio: checks pass; no verifier yet
-- 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Prelum specimen: checks pass; no verifier yet
-- 🟡 Capsid explorer: checks pass; no verifier yet
+- 🟡 julieedwards.info: live check clean on 1 page; the repository was not available, and earlier notes say it has its own section grammar rather than Prelum
+- 🟡 TXASM: checked on the workers.dev address: 41 pages, 0 errors; /award-nominations has no data-render-version wrapper
+- 🟡 BSW: 11 pages with h3 after h1 (heading order)
+- 🟡 Foxhound: 6 pages with h3 after h1
+- 🟡 Foxing: /books has h3 after h1
+- 🟡 Carrel: live check clean on 2 pages; the Carrel repository was not available to this verifier, and earlier notes say Carrel books still use a regex renderer
+- 🟡 Enarratio: live check clean on 5 pages; its source was not available to this verifier, so use of Prelum and absence of a second renderer is not proven
+- 🟡 Capsomer: the live check is clean, but the showcase still renders Markdown with its own regex renderer (site/markdown.ts, used by home, views and main), so there is more than one renderer
+- 🟡 Prelum specimen: specimen renders writing with no data-render-version wrapper
 
 ### 5. Carrel editing contract
 
@@ -295,7 +292,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 
 ### 10. Charts
 
-Builder: Complete shared charts. Verifier: none yet.
+Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
 - ❌ dustinedwards.info: chart-audit: 20 errors
@@ -304,25 +301,20 @@ Builder: Complete shared charts. Verifier: none yet.
   - F: https://dustinedwards.info/systems/capsid-bench an SVG chart drawn outside Enarratio: "How capsid-bench connects" (10 dots)
   - F: https://dustinedwards.info/systems/capsomer an SVG chart drawn outside Enarratio: "How Capsomer connects" (26 dots)
   - F: https://dustinedwards.info/systems/carrel an SVG chart drawn outside Enarratio: "How Carrel connects" (62 dots)
-- 🟡 Germomics: checks pass; no verifier yet
-- 🟡 Foxhound: checks pass; no verifier yet
 - ❌ Foxing: chart-audit: 2 errors
-- 🟡 Carrel: checks pass; no verifier yet
-- 🟡 Enarratio: checks pass; no verifier yet
+- 🟡 Carrel: no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json
 - ❌ Capsomer: chart-audit: 4 errors
   - F: https://capsomer.dustinedwards.info/ an SVG chart drawn outside Enarratio: "One design system for every site and app" (168 rects)
   - F: https://capsomer.dustinedwards.info/components/system-map/states?theme=light an SVG chart drawn outside Enarratio: "The network, Carrel lit" (36 dots)
   - F: https://capsomer.dustinedwards.info/components/system-map/states?theme=light an SVG chart drawn outside Enarratio: "Capsid" (30 dots)
   - F: https://capsomer.dustinedwards.info/components/system-map/states?theme=light an SVG chart drawn outside Enarratio: "Capsid: a job's life" (16 dots)
-- 🟡 Prelum specimen: checks pass; no verifier yet
 - ❌ Capsid explorer: chart-audit: 24 errors
   - F: https://capsid.dustinedwards.info/flows/carrel-publish/ an SVG chart drawn outside Enarratio: "Publishing a post, over the parts of Carrel" (30 dots)
   - F: https://capsid.dustinedwards.info/flows/doc-search/ an SVG chart drawn outside Enarratio: "A search, over the parts of Capsid" (24 dots)
   - F: https://capsid.dustinedwards.info/flows/job-life/ an SVG chart drawn outside Enarratio: "A job's life, over the parts of Capsid" (24 dots)
   - F: https://capsid.dustinedwards.info/flows/nightly-backup/ an SVG chart drawn outside Enarratio: "The nightly backup, over the parts of Capsid" (24 dots)
   - F: https://capsid.dustinedwards.info/flows/session-start/ an SVG chart drawn outside Enarratio: "A session starts, over the parts of Capsid" (24 dots)
-- 🟡 Capsid Portal: checks pass; no verifier yet
-- 🟡 Carrel Desk: checks pass; no verifier yet
+- 🟡 Carrel Desk: chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov
 
 ### 11. AI and MCP
 
