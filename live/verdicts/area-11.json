@@ -15,10 +15,9 @@
     "dustinedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/app/routes/search.ask.ts"
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/lib/search/ask.server.ts"
       ],
-      "note": "Ask caches answers cut at max_tokens; Ask bypasses the gateway and untrusted(); suggester pins site-api v0.14.0"
+      "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. site-runtime-ai-audit: 0 errors, 0 warnings. Fixed and checked in code: a cut answer is never cached (finish_reason read), Ask's gateway tags use site-runtime's {app, feature}, suggester on site-api 0.21.0. Still open: the question is not wrapped in untrusted() (C10; the builder's note says wrapping breaks AI Search retrieval, which is a known limit, not a pass); site-api 0.22.0 is out and dei pins 0.21.0; that Ask's calls reach the gateway is configured on the AI Search instance and was not checked live."
     },
     "germomics": {
       "verdict": "partial",
@@ -122,10 +121,9 @@
     "dustinedwards-mcp": {
       "verdict": "partial",
       "evidence": [
-        "https://admin-mcp.dustinedwards.info/health",
         "https://admin-mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp"
       ],
-      "note": "PRM lists read only; no shared audience check; raw error text; no rate-limit row; site-runtime v0.54.0; /health has no sha; conformance not in CI; KV titled OAUTH_KV"
+      "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Live: site-runtime-ai-audit 0 errors; metadata names dei.read and dei.write; /health has a sha and a passing tool-call-log check; site-runtime v0.75.0; conformance runs in CI (baseline server-stateless 24 of 28). Not verified: the tools/list checks (T1 to T12, including the earlier T4 and T7 findings), the conformance scenarios and the rate-limit burst, because this sandbox has no test grant for the server."
     },
     "carrel-mcp": {
       "verdict": "partial",
