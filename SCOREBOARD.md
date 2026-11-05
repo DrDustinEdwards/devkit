@@ -16,7 +16,7 @@ Newest run 2026-11-04 15:26 UTC. Filled only from the live checks and the verifi
 | 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | · | · | · | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | · | +27951 | −2785 |
-| 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +7063 | −801 |
+| 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❌ | ✅ | · | · | · | ✅ | ❌ | 🟡 | ✅ | ❌ | ✅ | ❌ | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
@@ -270,24 +270,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 - ❌ Capsid explorer: devkit-a11y: 2 errors
   - L2: https://capsid.dustinedwards.info/systems/ no skip link to main as the first Tab stop (first stop `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)` "Capsid")
   - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 22 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 19 more
-- ❌ Dustin Edwards admin MCP: devkit-a11y: 11 errors
-  - L1: https://admin-mcp.dustinedwards.info/ axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L1: https://admin-mcp.dustinedwards.info/ axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L2: https://admin-mcp.dustinedwards.info/ no skip link to main as the first Tab stop (first stop none: nothing takes focus)
-  - S2: https://admin-mcp.dustinedwards.info/ no lang on <html>
-  - S2: https://admin-mcp.dustinedwards.info/ no <title>
-- ❌ Carrel MCP: devkit-a11y: 11 errors
-  - L1: https://carrel-mcp.dustinedwards.info/ axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L1: https://carrel-mcp.dustinedwards.info/ axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L2: https://carrel-mcp.dustinedwards.info/ no skip link to main as the first Tab stop (first stop none: nothing takes focus)
-  - S2: https://carrel-mcp.dustinedwards.info/ no lang on <html>
-  - S2: https://carrel-mcp.dustinedwards.info/ no <title>
-- ❌ Foxing admin MCP: devkit-a11y: 11 errors
-  - L1: https://admin-mcp.foxing.app/ axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L1: https://admin-mcp.foxing.app/ axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L2: https://admin-mcp.foxing.app/ no skip link to main as the first Tab stop (first stop none: nothing takes focus)
-  - S2: https://admin-mcp.foxing.app/ no lang on <html>
-  - S2: https://admin-mcp.foxing.app/ no <title>
+- Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
 ### 10. Charts
 
