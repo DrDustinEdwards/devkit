@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `default.json` (Renovate): `prConcurrentLimit` is 10 (Renovate's default), not 3. Pull requests that wait on a human held all three slots, so a release of d1-dump, devkit or site-runtime stayed under Rate-Limited on the Dependency Dashboard of carrel, germomics and others and opened no PR. `prHourlyLimit` 2 still paces creation.
 - `devkit-shared`: the expired `failsFrom: "0.21.0"` markers are gone; those rules fail as they have since 0.21.0. `review` and `scorecard` still warn until 0.22.0.
 - `devkit-live`: area 10 runs `prelum-chart-audit` without `--strict-frame`, which has changed nothing since the frame became an error by default; Prelum drops the flag next.
 
