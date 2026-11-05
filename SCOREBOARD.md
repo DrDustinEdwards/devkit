@@ -4,11 +4,11 @@ Newest run 2026-11-05 15:30 UTC. Filled only from the live checks and the verifi
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
-✅ complete · 🟡 partial · ❌ missing · `·` does not apply
+✅ complete · 🟡 partial · ❌ missing · ❔ could not measure · `·` does not apply
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | ❌ | ❌ | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❔ | 🟡 | ❌ | ❌ | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ❌ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
@@ -17,7 +17,7 @@ Newest run 2026-11-05 15:30 UTC. Filled only from the live checks and the verifi
 | 7. Speed and caching | 🟡 | 🟡 | ❌ | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | ✅ | ❌ | ❌ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❌ | 🟡 | ✅ | ❌ | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❔ | 🟡 | ✅ | ❌ | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
@@ -46,7 +46,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
 - 🟡 Foxhound: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
-- ❌ Foxing: prelum-audit could not run: no output
+- ❔ Foxing: prelum-audit could not measure: no reason given
 - 🟡 Carrel: no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404
 - ❌ Enarratio: prelum-audit: 1 errors
   - icon-missing: https://enarratio.dustinedwards.info/favicon.ico answers 404 text/html; charset=utf-8
@@ -261,7 +261,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❌ Foxing: chart-audit could not run: no output
+- ❔ Foxing: chart-audit could not measure: no reason given
 - 🟡 Carrel: no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json
 - ❌ Capsomer: chart-audit: 1 errors
   - F: https://capsomer.dustinedwards.info/ an SVG chart drawn outside Enarratio: "One design system for every site and app" (168 rects)

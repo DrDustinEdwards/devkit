@@ -761,8 +761,9 @@
      "clean_days": 6
     },
     "foxing": {
-     "status": "missing",
-     "reason": "prelum-audit could not run: no output"
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: no reason given",
+     "findings": []
     },
     "carrel": {
      "status": "partial",
@@ -3428,8 +3429,9 @@
      "clean_days": 2
     },
     "foxing": {
-     "status": "missing",
-     "reason": "chart-audit could not run: no output"
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: no reason given",
+     "findings": []
     },
     "carrel": {
      "status": "partial",
