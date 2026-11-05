@@ -15,7 +15,7 @@ Newest run 2026-11-04 15:26 UTC. Filled only from the live checks and the verifi
 | 5. Carrel editing contract | 🟡 | ❌ | 🟡 | 🟡 | ❌ | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +27951 | −2785 |
+| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | · | · | · | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | · | +27951 | −2785 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | ❌ | ❌ | ❌ | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❌ | ✅ | · | · | · | ✅ | ❌ | 🟡 | ✅ | ❌ | ✅ | ❌ | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +52017 | −7048 |
@@ -197,7 +197,7 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
-- 🟡 dustinedwards.info: No 404 count (privacy page fix is one PR, a fixable blocker); public /api/health still routed with no noindex; cron check 'backup never ran' pending tonight's 05:00 run; own deploy (ship.mjs) and own check-migrations.mjs; d1-dump v0.8.0; drill passed 12:33
+- 🟡 dustinedwards.info: Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Fixed since 31 Oct and checked: /health shared shape, sha d3e0303e = main head, 27 checks pass, backup 4 h old, cron passes; /api/health is now a 404; deploy goes through devkit worker-deploy v0.21.2 (ship.mjs gone, devkit-migrations); every binding has a check; console ratchet baseline present; 404 is the shared page. Still open: no 404 count (N1, N4, N7; waits on the privacy wording). Not verified here: the restore drill's newest run (R1), since GitHub reads were refused to this sandbox.
 - 🟡 Germomics: Deploys from GitHub at head f86a616 and drill passed; 404 is React Router's default page, not the shared error page; first audio/images files pass pending (03:17 cron, may take several nights); counted tables only
 - 🟡 julieedwards.info: Health passes at head, drill passed, excludes set; D4/D6 off; d1-dump v0.8.0
 - 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
@@ -207,7 +207,6 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
   - H4: https://foxing.app/health serves d124624ec0ca5ab1cdf564cc8b76e1139b789e2e, not the branch head 72fe235be6bcf4ebcf93cfb4ac58bb3f9da1850c (https://github.com/DrDustinEdwards/foxing/commit/72fe235be6bcf4ebcf93cfb4ac58bb3f9da1850c), committed 446 minutes ago
 - 🟡 Capsid MCP: Shared health; cron warn 'skills-refresh failing, site-repair failing' at 16:34 (fix deployed, unproven until runs); 528-line backup wrapper; own runTask ledger; own deploy (ci.yml); watcher's analytics read could-not-run on all 16 sites, so 5xx alerts cannot fire; U1 inside Cloudflare only; TLS at 14 days not 21; rehearsal passed 12:24 but not in areas.json
 - 🟡 Foxhound admin MCP: Old shape {ok, sha} from local door.ts:60 (ops-audit H2 error); no binding probed; no sampling rate
-- 🟡 Dustin Edwards admin MCP: Shared shape but no sha and checks [] (ops-audit H4 error); deployed by ship:mcp, not worker-deploy
 - 🟡 Carrel MCP: Health passes, all bindings probed; drill passed; head 9189bb3 deploy in flight at 16:38 (673402c live)
 - 🟡 Foxing admin MCP: Old shape {ok, sha} from local login-handler.ts:33 (ops-audit H2 error); site-runtime v0.50.1; worker-deploy v0.20.8; no binding probed
 
@@ -321,7 +320,7 @@ Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign
 Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 
 - 🟡 Package: live check covers 7 of 89 items; conformance off Actions except Carrel; no static AI rules or pin comparison in devkit; toolsForGrant and fireOnce unused; no tool icons, tool-list pin, cancel on close; log has no export, retention, alert or Portal view; no shared agent keys; suggester metadata and Llama list
-- 🟡 dustinedwards.info: Ask caches answers cut at max_tokens; Ask bypasses the gateway and untrusted(); suggester pins site-api v0.14.0
+- 🟡 dustinedwards.info: Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. site-runtime-ai-audit: 0 errors, 0 warnings. Fixed and checked in code: a cut answer is never cached (finish_reason read), Ask's gateway tags use site-runtime's {app, feature}, suggester on site-api 0.21.0. Still open: the question is not wrapped in untrusted() (C10; the builder's note says wrapping breaks AI Search retrieval, which is a known limit, not a pass); site-api 0.22.0 is out and dei pins 0.21.0; that Ask's calls reach the gateway is configured on the AI Search instance and was not checked live.
 - 🟡 Germomics: local style text instead of WRITING_RULES; suggester gaps from the package
 - 🟡 julieedwards.info: suggester on site-api v0.17.0: no timeout, JSON mode or prose check
 - 🟡 TXASM: suggester inherits the package gaps (feature metadata, Llama list)
