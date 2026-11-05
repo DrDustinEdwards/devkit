@@ -1,0 +1,65 @@
+{
+  "area": 1,
+  "verifier": "Verify scoreboard cells awaiting sign-off",
+  "date": "2026-11-05",
+  "cells": {
+    "prelum": {
+      "verdict": "complete",
+      "evidence": [
+        "https://prelum.dustinedwards.info/",
+        "https://prelum.dustinedwards.info/sitemap.xml",
+        "https://prelum.dustinedwards.info/index.md"
+      ],
+      "note": "prelum-audit clean on 7 pages; Accept: text/markdown and .md answer text/markdown; canonical, Open Graph with image size and alt, max-image-preview, Content-Signal, llms.txt, favicon and manifest all present. Minor: /accessibility has no lastmod."
+    },
+    "dustinedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://dustinedwards.info/llms.txt"
+      ],
+      "note": "llms.txt says every page has a .md twin, but /about.md and /writing.md are 404 and Accept: text/markdown returns HTML; 1 internal link goes through a redirect; 3 titles over 60 characters"
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": [
+        "https://germomics.com/sitemap.xml"
+      ],
+      "note": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod"
+    },
+    "julieedwards-info": {
+      "verdict": "partial",
+      "evidence": [
+        "https://julieedwards.info/llms.txt"
+      ],
+      "note": "no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404"
+    },
+    "foxhound": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxhoundapp.com/sitemap.xml"
+      ],
+      "note": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects"
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": [
+        "https://foxing.app/sitemap.xml"
+      ],
+      "note": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); about 700 of 2,200 sitemap URLs have no lastmod; llms-full.txt is 404"
+    },
+    "carrel": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel.dustinedwards.info/sitemap.xml"
+      ],
+      "note": "no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404"
+    },
+    "capsid": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsid.dustinedwards.info/sitemap.xml"
+      ],
+      "note": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404"
+    }
+  }
+}

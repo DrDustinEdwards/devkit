@@ -96,6 +96,21 @@
         "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
       ],
       "note": "parked: the Worker has never been deployed, so the old server fails H4 live"
+    },
+    "capsid-portal": {
+      "verdict": "complete",
+      "evidence": [
+        "https://portal.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/capsid/blob/master/src/portal-auth.ts"
+      ],
+      "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Portal sign-in is Access for SaaS (live 302 to Access, no-store, HSTS); portal-auth.ts now has a 24-hour session, an idle-hour sign-out, a server-side end list (portal_session_ends) and logged sign-in and expiry events, which closes the 31 Oct gap; live /health sha dc21c04 is master head. A signed-in session was not exercised."
+    },
+    "carrel-desk": {
+      "verdict": "partial",
+      "evidence": [
+        "https://desk.dustinedwards.info/"
+      ],
+      "note": "Signed-out redirect to Access is correct, but the Carrel repository and a signed-in session were not available to this verifier, so session lifetime, idle sign-out and revoke are unchecked"
     }
   }
 }

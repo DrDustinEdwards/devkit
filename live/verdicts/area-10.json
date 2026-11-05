@@ -1,0 +1,60 @@
+{
+  "area": 10,
+  "verifier": "Verify scoreboard cells awaiting sign-off",
+  "date": "2026-11-05",
+  "cells": {
+    "germomics": {
+      "verdict": "complete",
+      "evidence": [
+        "https://germomics.com/data/cholera-soho-1854",
+        "https://germomics.com/data/influenza-1918"
+      ],
+      "note": "chart-audit 5 Nov: 3 charts on 2 pages, no findings, including both data pages that shifted at 320 px on 4 Nov"
+    },
+    "foxhound": {
+      "verdict": "complete",
+      "evidence": [
+        "https://foxhoundapp.com/demos/dashboard",
+        "https://foxhoundapp.com/demos/recovery",
+        "https://foxhoundapp.com/demos/intelligence"
+      ],
+      "note": "chart-audit 5 Nov: 37 charts on 7 pages, no findings"
+    },
+    "enarratio": {
+      "verdict": "complete",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/"
+      ],
+      "note": "chart-audit 5 Nov: 127 charts on 4 pages, no findings"
+    },
+    "prelum": {
+      "verdict": "complete",
+      "evidence": [
+        "https://prelum.dustinedwards.info/"
+      ],
+      "note": "chart-audit 5 Nov: 4 charts, no findings"
+    },
+    "capsid-portal": {
+      "verdict": "complete",
+      "evidence": [
+        "https://portal.dustinedwards.info/demos/packages",
+        "https://portal.dustinedwards.info/demos/queue"
+      ],
+      "note": "chart-audit 5 Nov: 28 charts on 10 demo pages, no findings, rerun 3 times on packages, prs and queue; signed-in pages are not checked"
+    },
+    "carrel": {
+      "verdict": "partial",
+      "evidence": [
+        "https://carrel.dustinedwards.info/"
+      ],
+      "note": "no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json"
+    },
+    "carrel-desk": {
+      "verdict": "partial",
+      "evidence": [
+        "https://desk.dustinedwards.info/demos/progress"
+      ],
+      "note": "chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov"
+    }
+  }
+}
