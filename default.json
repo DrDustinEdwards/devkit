@@ -187,10 +187,10 @@
       "automergeStrategy": "squash"
     },
     {
-      "description": "Minor and patch of Dustin's own packages merge themselves, squashed, once CI is green (Dustin, 2026-10-09). The two rules above are the floor: every update of these opens at once and never automerges, so majors and digest moves (a sha pin such as dustinedwards-info's capsomer can jump a major) wait for Dustin. This grant is the only automerge, the same floor-then-grant shape as the load-bearing set.",
+      "description": "Minor, patch and pin of Dustin's own packages merge themselves, squashed, once CI is green (Dustin, 2026-10-09; pin added 2026-11-05: the floor above refuses automerge at every type, so Carrel's enarratio pin #221 sat open for five days holding a slot, though a pin changes no bytes). The two rules above are the floor: every update of these opens at once and never automerges, so majors and digest moves (a sha pin such as dustinedwards-info's capsomer can jump a major) wait for Dustin. This grant is the only automerge, the same floor-then-grant shape as the load-bearing set.",
       "matchDatasources": ["github-tags", "npm"],
       "matchPackageNames": ["DrDustinEdwards/**", "@dustinedwards/**", "enarratio"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["minor", "patch", "pin"],
       "automerge": true
     },
     {
