@@ -16,11 +16,9 @@
     "dustinedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://dustinedwards.info/health",
-        "https://dustinedwards.info/api/health",
-        "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/41201621515"
+        "https://dustinedwards.info/health"
       ],
-      "note": "No 404 count (privacy page fix is one PR, a fixable blocker); public /api/health still routed with no noindex; cron check 'backup never ran' pending tonight's 05:00 run; own deploy (ship.mjs) and own check-migrations.mjs; d1-dump v0.8.0; drill passed 12:33"
+      "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Fixed since 31 Oct and checked: /health shared shape, sha d3e0303e = main head, 27 checks pass, backup 4 h old, cron passes; /api/health is now a 404; deploy goes through devkit worker-deploy v0.21.2 (ship.mjs gone, devkit-migrations); every binding has a check; console ratchet baseline present; 404 is the shared page. Still open: no 404 count (N1, N4, N7; waits on the privacy wording). Not verified here: the restore drill's newest run (R1), since GitHub reads were refused to this sandbox."
     },
     "germomics": {
       "verdict": "partial",
@@ -101,11 +99,13 @@
       "note": "Old shape {ok, sha} from local door.ts:60 (ops-audit H2 error); no binding probed; no sampling rate"
     },
     "dustinedwards-mcp": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://admin-mcp.dustinedwards.info/health"
+        "https://admin-mcp.dustinedwards.info/health",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/.github/workflows/deploy.yml",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/mcp/.ops-audit.json"
       ],
-      "note": "Shared shape but no sha and checks [] (ops-audit H4 error); deployed by ship:mcp, not worker-deploy"
+      "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Live /health: application/health+json, no-store, noindex, shared shape, sha d3e0303e (main head), five checks. Every binding in mcp/wrangler.jsonc.example has a check (SITE, OAUTH_KV, PROBE_KV, OPERATOR_RATE_LIMIT, TOOL_CALL_LOG); AUDIT_BUCKET is named unprobed with a reason, as the audit allows. Deployed through devkit worker-deploy v0.21.2. ops-audit ran clean (0 errors, 0 warnings) on the live reads; its GitHub reads got 401 from this sandbox, so H5 and the sha were compared by hand."
     },
     "carrel-mcp": {
       "verdict": "partial",

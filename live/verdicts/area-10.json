@@ -55,6 +55,15 @@
         "https://desk.dustinedwards.info/demos/progress"
       ],
       "note": "chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov"
+    },
+    "dustinedwards-info": {
+      "verdict": "complete",
+      "evidence": [
+        "https://dustinedwards.info/writing/site-search-on-d1",
+        "https://dustinedwards.info/cv",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/styles/post-enhancements.css"
+      ],
+      "note": "chart-audit 5 Nov on prelum main: 203 pages, 8 charts on 5 pages, no findings. Layout shift measured in Chromium, 3 runs per page at 1280 and 320 px, scrolled through: the four writing posts with charts and /cv all under 0.01 (worst 0.0096 once); the code-block room is reserved on pre[data-lang]. Fonts are font-display: optional."
     }
   }
 }
