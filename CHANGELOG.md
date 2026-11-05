@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- `devkit-shared`: the expired `failsFrom: "0.21.0"` markers are gone; those rules fail as they have since 0.21.0. `review` and `scorecard` still warn until 0.22.0.
+- `devkit-live`: area 10 runs `prelum-chart-audit` without `--strict-frame`, which has changed nothing since the frame became an error by default; Prelum drops the flag next.
+
 ## 0.21.2 (2026-11-04)
 
 - `devkit-ops-audit` (area 8, round 2): with `--repo`, a GitHub read that fails (401, 403, 429, a 5xx, no answer) is "could not run", exit 2, never a warning and exit 0, so a broken token cannot show green. New H5: `/health`'s `checks` against the bindings the repository's wrangler config declares (`--wrangler <path>`, else the root config), each binding without a check an error unless `.ops-audit.json` beside the config names it under `unprobed` with a reason (or maps it to its check under `checks`). N6 now asks for the shared error page: the 404 is HTML with a `<title>` and Capsomer's ErrorPage region (class `cap-error-page`, `ERROR_PAGE_MARKER`), not any `text/html`.
