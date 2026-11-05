@@ -30,7 +30,7 @@ test("an MCP test grant reaches only a check marked grants, never any other chec
   assert.match(lintConfig({ sites, areas: [bad], verdicts: [] }).join("\n"), /"grants" other than true/);
 });
 
-test("a check's exit code, or its fresh report, decides pass, fail or could not measure, and its annotations are the findings", () => {
+test("a check's exit code, or its fresh report, decides pass, fail or could not measure, on the run and the board, and its annotations are the findings", () => {
   const output = "::error title=canonical-missing::https://a.example.com/ no canonical link\n::warning title=og::x\nsummary";
   assert.deepEqual(
     { ...resultOf({ code: 1, output, seconds: 2 }), findings: undefined },
@@ -58,9 +58,7 @@ test("a check's exit code, or its fresh report, decides pass, fail or could not 
   const viaFrom = { check: "conformance", at: "2026-11-01T11:50:00Z", sites: { [served.from]: { status: "pass", findings: [] } } };
   assert.equal(reportedResult(viaFrom, check, served, now).status, "pass");
   assert.equal(status(report("2026-11-01T11:50:00Z", { status: "pass", findings: [{ severity: "error", check: "C1", detail: "x" }] })), "fail");
-});
-
-test("a cell a check could not measure says so, and a measured failure beside it still makes the cell missing", () => {
+  // On the board, an unmeasured cell says so and why; a measured failure beside it still makes the cell missing.
   const unmeasured = { ...run(2, "unmeasured"), results: [{ ...run(2, "unmeasured").results[0], detail: "PSI: answered 429" }] };
   const got = cell(buildBoard({ sites, areas, verdicts: [verdict("Verify search")] }, [run(1, "pass"), unmeasured]));
   assert.deepEqual([got.status, got.reason], ["unmeasured", "audit could not measure: PSI: answered 429"]);
