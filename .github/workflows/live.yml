@@ -7,7 +7,8 @@ name: live
 #   https://github.com/DrDustinEdwards/devkit/blob/scoreboard/SCOREBOARD.md
 #
 # A push to main that changes live/ rebuilds the board without running the checks, so a merged verdict shows at once.
-# The run fails when any check fails or could not run, so a gap on a live site turns this red on its own.
+# The run fails when any check fails, so a gap on a live site turns this red on its own; a check that could not measure
+# is a warning with its reason, and its cell says "could not measure" on the board.
 #
 # LIVE_GITHUB_TOKEN, when set, is a fine-grained token (resource owner DrDustinEdwards, all repositories, Pull requests
 # read, Metadata read) for counting the lines of each area's pull requests in the private repositories too. PSI_API_KEY, when
@@ -84,7 +85,8 @@ jobs:
           if git diff --cached --quiet; then echo "The board is current."; exit 0; fi
           git commit --quiet -m "Scoreboard $(date -u +%F)"
           git push --quiet origin scoreboard
-      - name: Red when any check failed or could not run
+      # Red only for a measured failure; a check that could not measure is a warning with its reason, never red or green.
+      - name: Red when any check failed
         if: github.event_name != 'push'
         run: |
-          node -e 'const { results } = require(process.argv[1]); const bad = results.filter((r) => r.status !== "pass"); for (const r of bad) console.log(`::error title=area ${r.area} ${r.site}::${r.check} ${r.status}${r.detail ? `: ${r.detail}` : ` (${r.errors} errors)`}`); process.exit(bad.length ? 1 : 0)' "$RUNNER_TEMP/run.json"
+          node -e 'const { results } = require(process.argv[1]); const bad = results.filter((r) => r.status !== "pass"); for (const r of bad) console.log(`::${r.status === "fail" ? "error" : "warning"} title=area ${r.area} ${r.site}::${r.check} ${r.status}${r.detail ? `: ${r.detail}` : ` (${r.errors} errors)`}`); process.exit(bad.some((r) => r.status === "fail") ? 1 : 0)' "$RUNNER_TEMP/run.json"

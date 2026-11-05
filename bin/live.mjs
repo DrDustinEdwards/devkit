@@ -9,7 +9,13 @@
 // A CHECK is a bin in a shared package, installed at that package's newest release tag (or the check's "ref"). It is run as
 // `<bin> --origin <site origin> [--from <where the site is served now>]` and keeps the contract prelum-audit and every
 // devkit check keep: each finding an ::error or ::warning annotation line (`::error title=<check>::<url> <detail>`), and
-// exit 0 for no errors, 1 for errors, anything else for could not run. An area adds a check with one entry in areas.json:
+// exit 0 for no errors, 1 for errors, anything else for could not run. An item the check could not measure (a service
+// refused, a proxy hid the answer, a GitHub read failed) is never a pass or a failure: the check prints
+// `::notice title=<item>::<url> could not measure: <reason>` (UNMEASURED_PREFIX) and exits 3 when nothing failed, the
+// Monitoring Plugins guidelines' UNKNOWN. The result is then "unmeasured" with the reasons, on the board too, so a cell
+// never reads as passing on an item nobody measured, nor as failing on a measurement that never happened. An exit that is
+// not 0, 1 or 3 (a crash, an outage) is "unmeasured" as well, with its last lines as the reason. An area adds a check with
+// one entry in areas.json:
 //
 //   { "name": "prelum-audit", "repo": "prelum", "bin": "prelum-audit", "kinds": ["site", "static"], "ref": "v0.19.0" }
 //
@@ -28,10 +34,11 @@
 //
 //   { "name": "carrel-conformance", "report": "https://carrel.example.com/reports/conformance.json", "max_age_minutes": 60 }
 //
-// The report is { "check", "at", "ref", "sites": { "<site origin or from>": { "status": "pass" | "fail" | "error", "findings":
-// [{ "severity": "error" | "warning", "check", "detail" }] } } }, findings as a bin's annotations would give them and never
-// a secret. TLS on the reporter's own origin is what makes it the reporter's. A report that cannot be read, is older than
-// max_age_minutes (default 60), names another check or leaves a site out is "error" for that site, never a pass.
+// The report is { "check", "at", "ref", "sites": { "<site origin or from>": { "status": "pass" | "fail" | "unmeasured", "findings":
+// [{ "severity": "error" | "warning" | "unmeasured", "check", "detail" }] } } }, findings as a bin's annotations would give
+// them and never a secret ("error" is still read as "unmeasured", the status's older name). TLS on the reporter's own origin
+// is what makes it the reporter's. A report that cannot be read, is older than max_age_minutes (default 60), names another
+// check or leaves a site out is "unmeasured" for that site, with the reason, never a pass.
 // "site_reports" reads one site's result from another reporter, keyed by site id: each app grades its own signed-in
 // pages where its credential lives, so Desk's signed-in-security comes from Carrel and the Portal's from Capsid.
 //
@@ -43,7 +50,8 @@
 //
 // A CELL is complete only when its checks pass in the newest run, a verifier who is not the builder said complete with
 // evidence, and no run after the verdict failed (a failure after a verdict voids it until a fresh verifier signs again).
-// Checks passing with no verdict is partial; no check, a failing check or one that could not run is missing. The package
+// Checks passing with no verdict is partial; no check or a failing check is missing; a check that could not measure (and
+// none failing) is "unmeasured", with why, which is neither, and not complete. The package
 // column has no live check, so it is the verdict alone. The job is finished when every cell is complete and every site
 // cell has passed CLEAN_DAYS daily runs in a row.
 //
@@ -65,7 +73,11 @@ const MAX_FINDINGS = 100;
 const CHECK_TIMEOUT_MS = 20 * 60_000;
 const PARALLEL = 4;
 const REPORT_MAX_AGE_MINUTES = 60;
-const STATUSES = ["pass", "fail", "error"];
+const STATUSES = ["pass", "fail", "unmeasured"];
+/** The detail an unmeasured item's ::notice line starts with. */
+export const UNMEASURED_PREFIX = "could not measure: ";
+/** A check's exit when nothing failed but something could not be measured (Monitoring Plugins' UNKNOWN). */
+export const EXIT_UNMEASURED = 3;
 
 const live = new URL("../live/", import.meta.url);
 const readJson = (/** @type {string | URL} */ path) => JSON.parse(readFileSync(path, "utf8"));
@@ -146,44 +158,60 @@ const checksFor = (area, site) =>
     .filter((check) => (check.kinds ?? ["site", "static"]).includes(site.kind))
     .map((check) => (check.site_reports?.[site.id] ? { ...check, report: check.site_reports[site.id] } : check));
 
-/** The annotation lines of a check's output, as findings. */
+/** The annotation lines of a check's output, as findings; a ::notice is a finding only when it says what was not measured. */
 export function parseFindings(/** @type {string} */ output) {
   const findings = [];
   for (const line of output.split("\n")) {
-    const match = /^::(error|warning)(?: ([^:]*))?::(.*)$/.exec(line.trim());
+    const match = /^::(error|warning|notice)(?: ([^:]*))?::(.*)$/.exec(line.trim());
     if (!match) continue;
     const title = /(?:^|,)title=([^,]*)/.exec(match[2] ?? "")?.[1] ?? "";
-    findings.push({ severity: match[1], check: title, detail: match[3] });
+    if (match[1] !== "notice") findings.push({ severity: match[1], check: title, detail: match[3] });
+    else if (match[3].includes(UNMEASURED_PREFIX)) findings.push({ severity: "unmeasured", check: title, detail: match[3] });
   }
   return findings;
 }
 
-/** One check's result on one site, from its exit code and output. */
+/** The counts and the reason of a result, from its findings. */
+function tally(/** @type {{ severity: string, check: string, detail: string }[]} */ findings) {
+  const errors = findings.filter((f) => f.severity === "error").length;
+  const unmeasured = findings.filter((f) => f.severity === "unmeasured");
+  const warnings = findings.filter((f) => f.severity === "warning").length;
+  const reason = unmeasured.map((f) => `${f.check}: ${f.detail}`).join("; ").slice(0, 600);
+  return { errors, warnings, unmeasured: unmeasured.length, reason };
+}
+
+/**
+ * One check's result on one site, from its exit code and output. A failure stands even beside an unmeasured item (what
+ * was measured failed); a pass with an unmeasured item is not a pass.
+ */
 export function resultOf({ code, output, seconds }) {
   const findings = parseFindings(output);
-  const errors = findings.filter((f) => f.severity === "error").length;
-  const status = code === 0 ? "pass" : code === 1 ? "fail" : "error";
-  const tail = status === "error" ? output.trim().split("\n").slice(-3).join(" ").slice(0, 300) : undefined;
-  return { status, errors, warnings: findings.length - errors, findings: findings.slice(0, MAX_FINDINGS), seconds, ...(tail ? { detail: tail } : {}) };
+  const { errors, warnings, unmeasured, reason } = tally(findings);
+  const status = code === 1 ? "fail" : code === 0 && !unmeasured ? "pass" : "unmeasured";
+  const tail = code !== 0 && code !== 1 && code !== EXIT_UNMEASURED ? `could not run: ${output.trim().split("\n").slice(-3).join(" ").slice(0, 300) || `exit ${code}`}` : undefined;
+  const detail = status === "unmeasured" ? [reason, tail].filter(Boolean).join("; ") || `exit ${code} with nothing said` : undefined;
+  return { status, errors, warnings, unmeasured, findings: findings.slice(0, MAX_FINDINGS), seconds, ...(detail ? { detail } : {}) };
 }
 
 /** One site's result from a reported check's report (null when it could not be read), checked for name and age. Pure. */
 export function reportedResult(report, check, site, now = new Date()) {
-  const error = (detail) => ({ status: "error", errors: 0, warnings: 0, findings: [], detail });
+  const error = (detail) => ({ status: "unmeasured", errors: 0, warnings: 0, unmeasured: 0, findings: [], detail });
   if (!report || typeof report !== "object") return error(`could not read ${check.report}`);
   if (report.check !== check.name) return error(`${check.report} reports ${report.check}, not ${check.name}`);
   const age = (now.getTime() - Date.parse(report.at)) / 60_000;
   const maxAge = check.max_age_minutes ?? REPORT_MAX_AGE_MINUTES;
   if (!(age >= -5 && age <= maxAge)) return error(`${check.report} is from ${report.at}, more than ${maxAge} minutes ago`);
   const entry = report.sites?.[site.origin] ?? (site.from ? report.sites?.[site.from] : undefined);
-  if (!entry || !STATUSES.includes(entry.status)) return error(`${check.report} has no result for ${site.origin}`);
+  const given = entry?.status === "error" ? "unmeasured" : entry?.status;
+  if (!entry || !STATUSES.includes(given)) return error(`${check.report} has no result for ${site.origin}`);
   const findings = (Array.isArray(entry.findings) ? entry.findings : [])
-    .filter((f) => ["error", "warning"].includes(f?.severity))
+    .filter((f) => ["error", "warning", "unmeasured"].includes(f?.severity))
     .map((f) => ({ severity: f.severity, check: String(f.check ?? "").slice(0, 200), detail: String(f.detail ?? "").slice(0, 600) }));
-  const errors = findings.filter((f) => f.severity === "error").length;
-  // A pass with an error finding is not a pass.
-  const status = entry.status === "pass" && errors ? "fail" : entry.status;
-  return { status, errors, warnings: findings.length - errors, findings: findings.slice(0, MAX_FINDINGS), seconds: 0 };
+  const { errors, warnings, unmeasured, reason } = tally(findings);
+  // A pass with an error finding is a failure, and one with an unmeasured item is unmeasured.
+  const status = given === "fail" || errors ? "fail" : given === "unmeasured" || unmeasured ? "unmeasured" : "pass";
+  const detail = status === "unmeasured" ? reason || `${check.report} says it could not measure ${site.origin}` : undefined;
+  return { status, errors, warnings, unmeasured, findings: findings.slice(0, MAX_FINDINGS), seconds: 0, ...(detail ? { detail } : {}) };
 }
 
 async function fetchReport(/** @type {string} */ url) {
@@ -293,7 +321,7 @@ export async function runAll({ sites, areas }, { onlyAreas, onlySites, token, lo
         const { ref, bin, error } = install(check, cache, root);
         const record = { area: area.id, site: site.id, check: check.name, ref };
         if (error) {
-          results.push({ ...record, status: "error", errors: 0, warnings: 0, findings: [], detail: error });
+          results.push({ ...record, status: "unmeasured", errors: 0, warnings: 0, unmeasured: 0, findings: [], detail: `could not run: ${error}` });
           continue;
         }
         const args = ["--origin", site.origin, ...(site.from ? ["--from", site.from] : []), ...(check.args ?? []), ...(check.site_args?.[site.id] ?? [])];
@@ -361,10 +389,12 @@ function siteCell({ area, site, names, verdict, signedByBuilder, ordered, newest
   if (!names.length) return { status: "missing", reason: "no live check yet" };
   const records = newest ? cellOf(newest, area.id, site.id) : [];
   if (!records.length) return { status: "missing", reason: "not run yet" };
-  const broken = records.find((r) => r.status === "error");
-  if (broken) return { status: "missing", reason: `${broken.check} could not run: ${broken.detail ?? "no output"}` };
+  // A measured failure is the cell's answer even when another check could not measure; with no failure, an unmeasured
+  // check makes the cell unmeasured, never missing (nothing was shown to be wrong) nor partial or complete.
   const failing = records.filter((r) => r.status === "fail");
   if (failing.length) return { status: "missing", reason: failing.map((r) => `${r.check}: ${r.errors} errors`).join("; "), findings: failing.flatMap((r) => r.findings) };
+  const unmeasured = records.filter((r) => r.status !== "pass");
+  if (unmeasured.length) return { status: "unmeasured", reason: unmeasured.map((r) => `${r.check} could not measure: ${r.detail ?? "no reason given"}`).join("; "), findings: unmeasured.flatMap((r) => r.findings) };
   let clean_days = 0;
   for (let i = ordered.length - 1; i >= 0 && passed(cellOf(ordered[i], area.id, site.id), names); i--) clean_days++;
   const entry = verdict?.cells?.[site.id];
@@ -375,14 +405,14 @@ function siteCell({ area, site, names, verdict, signedByBuilder, ordered, newest
   return { status: entry.verdict, reason: entry.note ?? `${verdict.verifier}, ${verdict.date}`, evidence: entry.evidence, clean_days };
 }
 
-const MARK = { complete: "✅", partial: "🟡", missing: "❌", "n/a": "·" };
+const MARK = { complete: "✅", partial: "🟡", missing: "❌", unmeasured: "❔", "n/a": "·" };
 
 /** The board as Markdown, for GitHub to show. */
 export function boardMarkdown(board) {
   const out = ["# Shared-code completeness", ""];
   out.push(board.as_of ? `Newest run ${board.as_of.slice(0, 16).replace("T", " ")} UTC. Filled only from the live checks and the verifiers' verdicts.` : "No run yet.");
   out.push("", board.finished ? `**Finished:** every cell complete and clean for ${CLEAN_DAYS} daily runs.` : `**Not finished.** Finished means every cell complete and clean for ${CLEAN_DAYS} daily runs.`, "");
-  out.push("✅ complete · 🟡 partial · ❌ missing · `·` does not apply", "");
+  out.push("✅ complete · 🟡 partial · ❌ missing · ❔ could not measure · `·` does not apply", "");
   out.push(`| Area | Package | ${board.sites.map((s) => s.name).join(" | ")} | Lines added | Lines removed |`);
   out.push(`|---|---|${board.sites.map(() => "---").join("|")}|---:|---:|`);
   for (const area of board.areas) {

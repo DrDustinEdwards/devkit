@@ -9,14 +9,21 @@
 //   devkit-a11y --origin https://example.com [--from https://preview.example.workers.dev] [--max-pages 8]
 //
 // --from loads the pages from where the site is served now; the sitemap's URLs on --origin are read there too. Each
-// finding is a GitHub annotation; exit 0 with no errors, 1 with errors, 2 when it could not run (no browser, or the site
-// did not answer). Read-only: it never signs in and never submits a form.
+// finding is a GitHub annotation; exit 0 with no errors, 1 with errors, 3 when nothing failed but something could not be
+// measured (no browser, a page or a view axe could not scan), each such item a `::notice title=<item>::<url> could not
+// measure: <reason>` in devkit-live's form, and 2 when the site did not answer. Read-only: it never signs in and never
+// submits a form.
 //
 // It needs `playwright` and `@axe-core/playwright`, which this package does not install (it has no dependencies): they
 // are found from the working directory's package first, then beside devkit, then NODE_PATH. Chromium comes from
-// `npx playwright install --with-deps chromium`, as live.yml does.
+// `npx playwright install --with-deps chromium`, as live.yml does. When the installed Playwright's own Chromium build is
+// missing (a Playwright version other than the one whose browser was installed), it launches the newest Chromium build
+// Playwright installed (PLAYWRIGHT_BROWSERS_PATH, else ~/.cache/ms-playwright), or DEVKIT_A11Y_CHROMIUM when set, and
+// says which; with none, every item is reported not measured, with the reason.
 
+import { existsSync, readdirSync } from "node:fs";
 import { createRequire } from "node:module";
+import { homedir } from "node:os";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 
@@ -345,6 +352,43 @@ async function scanPage(browser, AxeBuilder, { url, why }) {
   return scan;
 }
 
+/** The checklist items a run measures, each reported not measured when no page could be scanned at all. */
+const ITEMS = ["L1", "L2", "L3", "L4", "S2", "S3", "S6"];
+
+/**
+ * Chromium for this Playwright: its own build, else the newest build Playwright installed (a Playwright release other than
+ * the one whose browser is installed looks for a build number that is not there), else DEVKIT_A11Y_CHROMIUM. The browser,
+ * or why none started.
+ */
+async function launch(/** @type {any} */ chromium) {
+  const paths = [process.env.DEVKIT_A11Y_CHROMIUM, ...installedBuilds()].filter(Boolean);
+  let why = "";
+  for (const executablePath of [undefined, ...paths]) {
+    try {
+      const browser = await chromium.launch(executablePath ? { executablePath } : {});
+      if (executablePath) console.error(`devkit-a11y: this Playwright's own Chromium is not installed; using ${executablePath} (${browser.version()})`);
+      return browser;
+    } catch (error) {
+      why ||= String(error).split("\n")[0];
+    }
+  }
+  return why || "no Chromium";
+}
+
+/** The Chromium executables Playwright installed, newest build first. */
+function installedBuilds() {
+  const root = process.env.PLAYWRIGHT_BROWSERS_PATH || join(homedir(), ".cache", "ms-playwright");
+  let names = [];
+  try {
+    names = readdirSync(root).filter((name) => /^chromium-\d+$/.test(name));
+  } catch {
+    return [];
+  }
+  names.sort((a, b) => Number(b.slice(9)) - Number(a.slice(9)));
+  const candidates = names.flatMap((name) => ["chrome-linux64/chrome", "chrome-linux/chrome", "chrome-mac/Chromium.app/Contents/MacOS/Chromium", "chrome-win/chrome.exe"].map((exe) => join(root, name, exe)));
+  return candidates.filter((path) => existsSync(path));
+}
+
 async function main() {
   const { values } = parseArgs({ options: { origin: { type: "string" }, from: { type: "string" }, "max-pages": { type: "string", default: "8" } } });
   if (!values.origin) {
@@ -372,12 +416,10 @@ async function main() {
     const links = [...home.text.matchAll(/href="([^"#]+)"/g)].map((m) => m[1]);
     picks = pickPages(base, [...picks.map((p) => p.url), ...links], max);
   }
-  let browser;
-  try {
-    browser = await playwright.chromium.launch();
-  } catch (error) {
-    console.error(`devkit-a11y: Chromium did not start (npx playwright install --with-deps chromium): ${String(error).split("\n")[0]}`);
-    return 2;
+  const browser = await launch(playwright.chromium);
+  if (typeof browser === "string") {
+    for (const item of ITEMS) console.log(annotation({ severity: "unmeasured", item, url: `${base}/`, detail: `Chromium did not start (npx playwright install --with-deps chromium): ${browser}` }));
+    return 3;
   }
   const pages = [];
   try {
@@ -389,16 +431,17 @@ async function main() {
     await browser.close();
   }
   if (pages[0].error) {
-    console.error(`devkit-a11y: the home page could not be scanned: ${pages[0].error}`);
-    return 2;
+    for (const item of ITEMS) console.log(annotation({ severity: "unmeasured", item, url: pages[0].url, detail: `the home page could not be scanned: ${pages[0].error}` }));
+    return 3;
   }
   const statement = { url: `${base}/accessibility`, status: (await fetchText(`${base}/accessibility`)).status };
   const findings = judgeSite({ statement, pages });
   for (const finding of findings) console.log(annotation(finding));
   const errors = findings.filter((f) => f.severity === "error").length;
+  const unmeasured = findings.filter((f) => f.severity === "unmeasured").length;
   const items = Object.entries(Object.groupBy(findings, (f) => f.item)).map(([item, list]) => `${item} ${list.length}`).join(", ");
-  console.log(`devkit-a11y: ${pages.length} pages on ${base}; ${errors} errors, ${findings.length - errors} warnings${items ? ` (${items})` : ""}.`);
-  return errors > 0 ? 1 : 0;
+  console.log(`devkit-a11y: ${pages.length} pages on ${base}; ${errors} errors, ${findings.length - errors - unmeasured} warnings, ${unmeasured} not measured${items ? ` (${items})` : ""}.`);
+  return errors > 0 ? 1 : unmeasured > 0 ? 3 : 0;
 }
 
 process.exitCode = await main().catch((error) => {

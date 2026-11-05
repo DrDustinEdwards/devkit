@@ -1,7 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.21.3 (2026-11-05)
 
+- No false passes or failures on the scoreboard (Dustin, 2026-11-05). A check that could not measure an item says so: `::notice title=<item>::<url> could not measure: <reason>`, exit 3 when nothing failed (Monitoring Plugins' UNKNOWN). `devkit-live` records such a result, a crash or an install failure as `unmeasured` with the reasons, never `error`; the board shows ❔ "could not measure" with why (Capsid's Completeness tab reads it from capsid #780), a measured failure in the same cell still makes it missing, and `live.yml` is red only for a measured failure. A reported check's `error` reads as `unmeasured`.
+- `devkit-ops-audit`: a failed GitHub read, or no `--repo`, leaves H4's sha, H5 and R1 not measured, each named with its reason, instead of exit 2 hiding the health findings (or, without `--repo`, nothing said at all). Exit 3 when nothing failed.
+- `devkit-a11y`: a Playwright whose own Chromium build is not installed launches the newest build Playwright installed (or `DEVKIT_A11Y_CHROMIUM`) and says which, instead of "could not run"; no browser at all, an unscannable home page, and a page or view axe could not scan are not measured, never a warning that passes.
 - `default.json` (Renovate): `prConcurrentLimit` is 10 (Renovate's default), not 3. Pull requests that wait on a human held all three slots, so a release of d1-dump, devkit or site-runtime stayed under Rate-Limited on the Dependency Dashboard of carrel, germomics and others and opened no PR. `prHourlyLimit` 2 still paces creation. A pin of one of Dustin's own packages automerges on green like its minor and patch, so it no longer waits for a human.
 - `devkit-shared`: the expired `failsFrom: "0.21.0"` markers are gone; those rules fail as they have since 0.21.0. `review` and `scorecard` still warn until 0.22.0.
 - `devkit-live`: area 10 runs `prelum-chart-audit` without `--strict-frame`, which has changed nothing since the frame became an error by default; Prelum drops the flag next.
