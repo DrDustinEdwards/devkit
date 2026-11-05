@@ -30,27 +30,43 @@ test("an MCP test grant reaches only a check marked grants, never any other chec
   assert.match(lintConfig({ sites, areas: [bad], verdicts: [] }).join("\n"), /"grants" other than true/);
 });
 
-test("a check's exit code, or its fresh report, decides pass, fail or could not run, and its annotations are the findings", () => {
+test("a check's exit code, or its fresh report, decides pass, fail or could not measure, and its annotations are the findings", () => {
   const output = "::error title=canonical-missing::https://a.example.com/ no canonical link\n::warning title=og::x\nsummary";
   assert.deepEqual(
     { ...resultOf({ code: 1, output, seconds: 2 }), findings: undefined },
-    { status: "fail", errors: 1, warnings: 1, findings: undefined, seconds: 2 }
+    { status: "fail", errors: 1, warnings: 1, unmeasured: 0, findings: undefined, seconds: 2 }
   );
   assert.equal(resultOf({ code: 0, output: "", seconds: 1 }).status, "pass");
-  assert.equal(resultOf({ code: 2, output: "boom", seconds: 1 }).status, "error");
+  // What could not be measured is never a pass or a failure, and says why: a crash, exit 3, or a notice on a clean exit.
+  assert.deepEqual([resultOf({ code: 2, output: "boom", seconds: 1 }).status, resultOf({ code: 2, output: "boom", seconds: 1 }).detail], ["unmeasured", "could not run: boom"]);
+  const notice = "::notice title=D1::https://a.example.com/ could not measure: a proxy hid the HTTP/2 answer\n::notice title=x::an ordinary note";
+  assert.deepEqual([resultOf({ code: 3, output: notice, seconds: 1 }).status, resultOf({ code: 3, output: notice, seconds: 1 }).unmeasured], ["unmeasured", 1]);
+  assert.match(resultOf({ code: 0, output: notice, seconds: 1 }).detail, /^D1: .*proxy hid/);
+  assert.equal(resultOf({ code: 1, output: `${notice}\n${output}`, seconds: 1 }).status, "fail");
   // A reported check passes only on a fresh report that names the site and has no error finding.
   const check = { name: "conformance", report: "https://reporter.example.com/report.json" };
   const now = new Date("2026-11-01T12:00:00Z");
   const report = (at, entry) => ({ check: "conformance", at, sites: { "https://a.example.com": entry } });
   const status = (r) => reportedResult(r, check, sites[0], now).status;
   assert.equal(status(report("2026-11-01T11:50:00Z", { status: "pass", findings: [] })), "pass");
-  assert.equal(status(report("2026-11-01T10:00:00Z", { status: "pass", findings: [] })), "error");
-  assert.equal(status({ ...report("2026-11-01T11:50:00Z", {}), sites: {} }), "error");
-  assert.equal(status(null), "error");
+  assert.equal(status(report("2026-11-01T10:00:00Z", { status: "pass", findings: [] })), "unmeasured");
+  assert.equal(status({ ...report("2026-11-01T11:50:00Z", {}), sites: {} }), "unmeasured");
+  assert.equal(status(null), "unmeasured");
+  assert.equal(status(report("2026-11-01T11:50:00Z", { status: "error", findings: [] })), "unmeasured");
+  assert.equal(status(report("2026-11-01T11:50:00Z", { status: "pass", findings: [{ severity: "unmeasured", check: "C2", detail: "no grant" }] })), "unmeasured");
   const served = { ...sites[0], from: "https://a.workers.example.com" };
   const viaFrom = { check: "conformance", at: "2026-11-01T11:50:00Z", sites: { [served.from]: { status: "pass", findings: [] } } };
   assert.equal(reportedResult(viaFrom, check, served, now).status, "pass");
   assert.equal(status(report("2026-11-01T11:50:00Z", { status: "pass", findings: [{ severity: "error", check: "C1", detail: "x" }] })), "fail");
+});
+
+test("a cell a check could not measure says so, and a measured failure beside it still makes the cell missing", () => {
+  const unmeasured = { ...run(2, "unmeasured"), results: [{ ...run(2, "unmeasured").results[0], detail: "PSI: answered 429" }] };
+  const got = cell(buildBoard({ sites, areas, verdicts: [verdict("Verify search")] }, [run(1, "pass"), unmeasured]));
+  assert.deepEqual([got.status, got.reason], ["unmeasured", "audit could not measure: PSI: answered 429"]);
+  const two = [{ name: "audit", repo: "prelum", bin: "prelum-audit" }, { name: "speed", repo: "site-runtime", bin: "speed" }];
+  const both = { at: `${day(3)}T06:00:00Z`, results: [unmeasured.results[0], { area: 1, site: "a", check: "speed", status: "fail", errors: 1, findings: [] }] };
+  assert.equal(cell(buildBoard({ sites, areas: [{ ...areas[0], checks: two }], verdicts: [] }, [both])).status, "missing");
 });
 
 test("checks passing without a verdict is partial; a verdict signed by the builder is refused and never complete", () => {

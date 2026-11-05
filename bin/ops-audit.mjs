@@ -10,7 +10,9 @@
 // /health's `checks` with the bindings the repository's wrangler config declares (H5; --wrangler names the file, else the
 // first of wrangler.jsonc, wrangler.json, wrangler.jsonc.example, wrangler.json.example at the root), and with
 // --drill-workflow reads that workflow's newest completed run. GitHub is read without a token, or with GITHUB_TOKEN when
-// set; with --repo, a GitHub read that fails (401, 403, 429, a 5xx, no answer) means the check could not run.
+// set. A GitHub read that fails (401, 403, 429, a 5xx, no answer), or no --repo at all, leaves the items it would have
+// proved (H4's sha, H5, R1) not measured: each is a `::notice title=<item>::<url> could not measure: <reason>`, never a
+// silent pass, and the exit is 3 when nothing failed (devkit-live's contract).
 //
 // H5's exceptions live in the repository, in `.ops-audit.json` beside the wrangler config:
 //   { "unprobed": { "EMAIL": "why it is not probed" }, "checks": { "BLOG_IMAGES": "images" } }
@@ -21,8 +23,8 @@
 //
 // Each finding is an annotation, `::error title=<item>::<proof URL> <detail>` (or ::warning), the item one of area 8's
 // checklist ids: H1-H5 health, B1 backup, C2 cron, N1/N6 the 404, R1 the drill. One plain line per check says what it read,
-// so a clean run never means nothing was read. Exit 0 with no errors, 1 with any, 2 when it could not run: the site
-// answered nothing, or a GitHub read it was asked for failed. N6 asks for the shared error page: the 404 is HTML with a
+// so a clean run never means nothing was read. Exit 0 with no errors, 1 with any, 3 with none but an item not measured,
+// 2 when it could not run at all: the site answered nothing. N6 asks for the shared error page: the 404 is HTML with a
 // <title> and Capsomer's ErrorPage region (class `cap-error-page`, ERROR_PAGE_MARKER).
 
 import { randomUUID } from "node:crypto";
@@ -44,6 +46,7 @@ export const ERROR_PAGE_MARKER = "cap-error-page";
 const WRANGLER_FILES = ["wrangler.jsonc", "wrangler.json", "wrangler.jsonc.example", "wrangler.json.example"];
 
 /** @typedef {{ severity: "error" | "warning", item: string, url: string, detail: string }} Finding */
+/** @typedef {{ item: string, url: string, reason: string }} Unread */
 
 const finding = (/** @type {Finding["severity"]} */ severity, /** @type {string} */ item, /** @type {string} */ url, /** @type {string} */ detail) => ({ severity, item, url, detail });
 
@@ -296,7 +299,7 @@ async function main() {
   /** @type {Finding[]} */
   const findings = [];
   const say = (/** @type {string} */ line) => console.log(`devkit-ops-audit: ${line}`);
-  /** @type {string[]} A GitHub read asked for that failed: the check could not run. */
+  /** @type {Unread[]} An item a failed GitHub read left unmeasured: never a pass or a failure. */
   const unread = [];
 
   const [health, missing, home] = await Promise.all([
@@ -334,16 +337,21 @@ async function main() {
     say(`404: ${missing.url} answered ${missing.status} ${missing.contentType || "(no Content-Type)"}${pages ? "" : `; the home page is '${home.contentType || "no Content-Type"}', so no HTML 404 is asked`}`);
   }
 
-  if (values.repo) {
+  const repoItems = ["H4", "H5", ...(values["drill-workflow"] ? ["R1"] : [])];
+  if (!values.repo) {
+    // Without the repository the deployed commit, the bindings and the drill are not measured, and the run says so.
+    for (const item of ["H4", "H5", "R1"]) unread.push({ item, url: health.url, reason: "no --repo, so the repository was not read" });
+  } else {
     const repo = await github(`/repos/${values.repo}`);
     if (repo.error) {
-      unread.push(repo.status === 404 ? `${repo.error}; a private repository needs GITHUB_TOKEN` : repo.error);
+      const reason = repo.status === 404 ? `${repo.error}; a private repository needs GITHUB_TOKEN` : repo.error;
+      for (const item of repoItems) unread.push({ item, url: `https://github.com/${values.repo}`, reason });
       say(`github: ${repo.error}`);
     } else {
       const branch = values.branch ?? repo.body.default_branch;
       const head = await github(`/repos/${values.repo}/commits/${encodeURIComponent(branch)}`);
       if (head.error) {
-        unread.push(head.error);
+        unread.push({ item: "H4", url: health.url, reason: head.error });
         say(`branch head: ${head.error}`);
       } else {
         const date = head.body.commit.committer?.date ?? head.body.commit.author?.date;
@@ -358,7 +366,7 @@ async function main() {
           findings.push(finding("error", "R1", page, `${values.repo} has no workflow ${file}`));
           say(`drill: ${values.repo} has no workflow ${file}`);
         } else if (runs.error) {
-          unread.push(runs.error);
+          unread.push({ item: "R1", url: page, reason: runs.error });
           say(`drill: ${runs.error}`);
         } else {
           const run = runs.body.workflow_runs[0];
@@ -371,21 +379,20 @@ async function main() {
   }
 
   for (const f of findings) console.log(`::${f.severity} title=${f.item}::${f.url} ${f.detail}`);
+  // devkit-live's contract: an item that could not be measured is a notice that says so, and exit 3 when nothing failed.
+  for (const u of unread) console.log(`::notice title=${u.item}::${u.url} could not measure: ${u.reason}`);
   const errors = findings.filter((f) => f.severity === "error").length;
-  say(`${errors} errors, ${findings.length - errors} warnings on ${base}.`);
-  if (unread.length) {
-    for (const reason of unread) console.error(`devkit-ops-audit: could not run: ${reason}`);
-    process.exit(2);
-  }
-  process.exit(errors ? 1 : 0);
+  say(`${errors} errors, ${findings.length - errors} warnings, ${unread.length} not measured on ${base}.`);
+  process.exit(errors ? 1 : unread.length ? 3 : 0);
 }
 
 /**
  * H5 against the repository: reads the wrangler config (the named one, else the first root config that exists) and the
  * `.ops-audit.json` beside it, and compares the bindings with /health's checks.
- * @param {{ repo: string, branch: string, path?: string, health: any, healthUrl: string, findings: Finding[], unread: string[], say: (line: string) => void }} run
+ * @param {{ repo: string, branch: string, path?: string, health: any, healthUrl: string, findings: Finding[], unread: Unread[], say: (line: string) => void }} run
  */
-async function bindingCheck({ repo, branch, path, health, healthUrl, findings, unread, say }) {
+async function bindingCheck({ repo, branch, path, health, healthUrl, findings, unread: all, say }) {
+  const unread = { push: (/** @type {string} */ reason) => all.push({ item: "H5", url: `https://github.com/${repo}`, reason }) };
   let file = path;
   let text = null;
   for (const candidate of path ? [path] : WRANGLER_FILES) {

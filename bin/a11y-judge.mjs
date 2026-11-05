@@ -63,7 +63,7 @@ function focusVisible(/** @type {Record<string, string>} */ focused, /** @type {
 }
 
 /**
- * @typedef {{ severity: "error" | "warning", item: string, url: string, detail: string }} Finding
+ * @typedef {{ severity: "error" | "warning" | "unmeasured", item: string, url: string, detail: string }} Finding
  * @typedef {{ id: string, impact?: string, tags: string[], nodes: number, target: string }} AxeViolation
  * @typedef {object} PageScan
  * @property {string} url as loaded
@@ -99,7 +99,7 @@ export function judgeSite({ statement, pages }) {
   for (const page of pages) {
     const { url } = page;
     if (page.error) {
-      add("warning", "L1", url, `could not be scanned: ${page.error}`);
+      add("unmeasured", "L1", url, `the page could not be scanned: ${page.error}`);
       continue;
     }
     judgeAxe(page, add);
@@ -140,7 +140,7 @@ function judgeAxe(/** @type {PageScan} */ page, add) {
   const rules = new Map();
   for (const [view, result] of Object.entries(page.axe ?? {})) {
     if (!Array.isArray(result)) {
-      add("warning", "L1", page.url, `axe could not run at ${view}: ${result.error}`);
+      add("unmeasured", "L1", page.url, `axe could not run at ${view}: ${result.error}`);
       continue;
     }
     for (const v of result) {
@@ -203,7 +203,7 @@ function unseenStops(/** @type {object[]} */ presses) {
 function judgeForced(/** @type {PageScan} */ page, add) {
   const forced = page.forced;
   if (!forced) return;
-  if (!Array.isArray(forced.axe)) add("warning", "L4", page.url, `axe could not run in forced colors: ${forced.axe.error}`);
+  if (!Array.isArray(forced.axe)) add("unmeasured", "L4", page.url, `axe could not run in forced colors: ${forced.axe.error}`);
   else {
     const seen = new Set(Object.values(page.axe ?? {}).flatMap((result) => (Array.isArray(result) ? result.map((v) => v.id) : [])));
     // Forced colors paints the reader's own palette, so contrast is theirs to choose: the color rules say nothing there.
@@ -230,5 +230,7 @@ const list = (/** @type {string[]} */ items) => items.slice(0, 3).join(", ") + (
 
 /** A finding as a GitHub annotation line, its detail on one line. */
 export function annotation(/** @type {Finding} */ { severity, item, url, detail }) {
-  return `::${severity} title=${item}::${url} ${detail.replace(/%/g, "%25").replace(/\s+/g, " ")}`;
+  const text = detail.replace(/%/g, "%25").replace(/\s+/g, " ");
+  // What could not be measured is a notice in devkit-live's form, never a pass or a failure.
+  return severity === "unmeasured" ? `::notice title=${item}::${url} could not measure: ${text}` : `::${severity} title=${item}::${url} ${text}`;
 }
