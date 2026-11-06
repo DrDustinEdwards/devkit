@@ -34,7 +34,12 @@ test("caller input reaches a shell only through the environment, never spliced i
 });
 
 test("it runs the package's bin, which the package ships", () => {
-  assert.match(text, /node_modules\/@dustinedwards\/devkit\/bin\/no-bloat\.mjs/);
+  assert.match(text, /uses: \.\/\.devkit\/\.github\/actions\/no-bloat\n/);
+  const action = readFileSync(
+    new URL("../.github/actions/no-bloat/action.yml", import.meta.url),
+    "utf8",
+  );
+  assert.match(action, /node_modules\/@dustinedwards\/devkit\/bin\/no-bloat\.mjs/);
   const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
   assert.equal(pkg.bin["devkit-no-bloat"], "./bin/no-bloat.mjs");
   assert.ok(pkg.files.includes("bin"));

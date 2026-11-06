@@ -1,0 +1,27 @@
+name: trailers
+description: >-
+  Refuses an AI trailer on the commits a push, pull request or merge group adds, and on a pull request a commit authored or
+  committed as Claude (bin/check-trailers.mjs). The caller's checkout needs its full history. One copy for checks.yml
+  and pr.yml.
+
+inputs:
+  path:
+    description: The caller's checkout, with its full history, relative to the workspace.
+    required: false
+    default: repo
+
+runs:
+  using: composite
+  steps:
+    - name: No AI trailer or author on new commits
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      env:
+        EVENT: ${{ github.event_name }}
+        PR_BASE: ${{ github.event.pull_request.base.sha }}
+        PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        PUSH_BEFORE: ${{ github.event.before }}
+        PUSH_AFTER: ${{ github.sha }}
+      run: |
+        echo "## Trailers" >> "$GITHUB_STEP_SUMMARY"
+        node "$GITHUB_ACTION_PATH/../../../bin/check-trailers.mjs"

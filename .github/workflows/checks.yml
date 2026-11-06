@@ -10,6 +10,9 @@ name: checks
 #      pull request a commit authored or committed as Claude (bin/check-trailers.mjs).
 #   3. The same events: the shared-code check (bin/shared.mjs), against each shared package at its newest tag.
 #
+# Each step is a composite action in .github/actions/ (footer, trailers, shared), the one copy pr.yml runs too. pr.yml is
+# the successor: these three and every other pull request check in one job (README, "One job per pull request").
+#
 # An edit of the description or a dispatch adds no commits, so it runs step 1 alone and checks out nothing of the caller's.
 #
 # NOTHING TO INSTALL: the job checks out devkit at the very commit the caller pinned (job.workflow_sha) and runs its files
@@ -64,10 +67,7 @@ jobs:
 
       - name: No Claude Code footer on the description
         if: env.FOOTER == 'true'
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: node .devkit/scripts/strip-pr-footer.mjs
+        uses: ./.devkit/.github/actions/footer
 
       # Full history, so the trailer check can read every commit in the range a push or pull request adds. The caller's
       # files sit beside .devkit, which the shared-code check skips as it skips every dot directory.
@@ -80,26 +80,8 @@ jobs:
 
       - name: No AI trailer or author on new commits
         if: env.CODE == 'true'
-        working-directory: repo
-        env:
-          EVENT: ${{ github.event_name }}
-          PR_BASE: ${{ github.event.pull_request.base.sha }}
-          PR_HEAD: ${{ github.event.pull_request.head.sha }}
-          PUSH_BEFORE: ${{ github.event.before }}
-          PUSH_AFTER: ${{ github.sha }}
-        run: node ../.devkit/bin/check-trailers.mjs
-
-      # Each shared package at its newest release, so a copy is judged against what a bump would give the site.
-      - name: Read each package at its newest release tag
-        if: env.CODE == 'true'
-        run: |
-          for repo in prelum site-runtime site-api d1-dump devkit capsomer enarratio; do
-            url="https://github.com/DrDustinEdwards/${repo}"
-            tag=$(git ls-remote --tags --refs "$url" | sed 's#.*refs/tags/##' | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
-            git clone --quiet --depth 1 --branch "$tag" "$url" "$RUNNER_TEMP/packages/$repo"
-          done
+        uses: ./.devkit/.github/actions/trailers
 
       - name: Uses the shared code
         if: env.CODE == 'true'
-        working-directory: repo
-        run: node ../.devkit/bin/shared.mjs --from "$RUNNER_TEMP/packages"
+        uses: ./.devkit/.github/actions/shared

@@ -34,28 +34,28 @@ jobs:
     permissions:
       contents: read
     steps:
+      # An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
+      # The steps are composite actions in devkit at that commit (.github/actions/), the one copy pr.yml runs too.
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
           persist-credentials: false
 
-      # shellcheck too, so a runner image's newer one never changes what fails.
-      - name: Install actionlint 1.7.12 and shellcheck 0.11.0
-        run: |
-          set -euo pipefail
-          cd "$RUNNER_TEMP"
-          curl -fsSL --retry 3 --retry-all-errors --connect-timeout 20 -o actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
-          curl -fsSL --retry 3 --retry-all-errors --connect-timeout 20 -o shellcheck.tar.xz https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz
-          sha256sum -c - <<'SUMS'
-          8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  actionlint.tar.gz
-          8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198  shellcheck.tar.xz
-          SUMS
-          tar -xzf actionlint.tar.gz actionlint
-          tar -xJf shellcheck.tar.xz --strip-components=1 shellcheck-v0.11.0/shellcheck
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          path: repo
+          persist-credentials: false
 
-      - name: actionlint
-        env:
-          FORMAT: '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}},title=actionlint {{$err.Kind}}::{{$err.Message}}\n{{end}}'
-        run: '"$RUNNER_TEMP/actionlint" -shellcheck "$RUNNER_TEMP/shellcheck" -format "$FORMAT"'
+      - uses: ./.devkit/.github/actions/workflow-audit
+        with:
+          zizmor: "false"
 
   zizmor:
     name: zizmor
@@ -64,24 +64,26 @@ jobs:
     permissions:
       contents: read
     steps:
+      # An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
+      # The steps are composite actions in devkit at that commit (.github/actions/), the one copy pr.yml runs too.
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
           persist-credentials: false
 
-      # The binary from PyPI's manylinux wheel, which holds nothing else that runs.
-      - name: Install zizmor 1.31.1
-        run: |
-          set -euo pipefail
-          cd "$RUNNER_TEMP"
-          curl -fsSL --retry 3 --retry-all-errors --connect-timeout 20 -o zizmor.whl https://files.pythonhosted.org/packages/py3/z/zizmor/zizmor-1.31.1-py3-none-manylinux_2_28_x86_64.whl
-          echo "58e878eb2dbd2c6183c105e1ac28c14f7dd1eca44a783f1fe2a69647d012c410  zizmor.whl" | sha256sum -c -
-          unzip -p zizmor.whl zizmor-1.31.1.data/scripts/zizmor > zizmor
-          chmod +x zizmor
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          path: repo
+          persist-credentials: false
 
-      # The online audits (impostor commits, known-vulnerable actions, ref confusion) read public repositories, which the
-      # job's read-only token is enough for.
-      - name: zizmor
-        env:
-          GH_TOKEN: ${{ github.token }}
-          MIN_SEVERITY: ${{ inputs.min-severity }}
-        run: '"$RUNNER_TEMP/zizmor" --format github --min-severity "$MIN_SEVERITY" .'
+      - uses: ./.devkit/.github/actions/workflow-audit
+        with:
+          actionlint: "false"
+          min-severity: ${{ inputs.min-severity }}

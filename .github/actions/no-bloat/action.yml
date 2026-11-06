@@ -1,0 +1,50 @@
+name: no-bloat
+description: >-
+  Knip, jscpd and the test count against the caller's committed baseline (bin/no-bloat.mjs, from the caller's own install
+  of @dustinedwards/devkit), and on a pull request the lines it adds and removes in the job summary. A pull request's
+  checkout is its merge commit, whose first parent is the base. One copy for no-bloat.yml and pr.yml.
+
+inputs:
+  path:
+    description: The caller's checkout, installed, relative to the workspace.
+    required: false
+    default: repo
+  prepare:
+    description: Run from the caller's root after the install and before the check, for generated files the code imports. Empty for none.
+    required: false
+    default: ""
+  config:
+    description: The no-bloat config, with the runs and the baseline (see bin/no-bloat.mjs).
+    required: false
+    default: .no-bloat.json
+  warn-only:
+    description: "'true' to report only: growth and a tool that cannot run are warnings and the step passes."
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare
+      if: inputs.prepare != ''
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      env:
+        PREPARE: ${{ inputs.prepare }}
+      run: bash -euo pipefail -c "$PREPARE"
+
+    - name: Check
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      env:
+        CONFIG: ${{ inputs.config }}
+        WARN_ONLY: ${{ inputs.warn-only == 'true' && '--warn-only' || '' }}
+        LINES_FROM: ${{ github.event_name == 'pull_request' && 'HEAD^1' || '' }}
+      run: |
+        echo "## No-bloat ratchet" >> "$GITHUB_STEP_SUMMARY"
+        bin=node_modules/@dustinedwards/devkit/bin/no-bloat.mjs
+        if [ ! -f "$bin" ]; then
+          echo "::error::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README)."
+          exit 1
+        fi
+        node "$bin" --config "$CONFIG" ${WARN_ONLY:+"$WARN_ONLY"} ${LINES_FROM:+--lines-from "$LINES_FROM"}

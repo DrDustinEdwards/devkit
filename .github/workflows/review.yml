@@ -54,8 +54,6 @@ jobs:
           node-version: 24.22.2
           package-manager-cache: false
 
+      # The step is the composite action .github/actions/review, the one copy pr.yml runs too.
       - name: Review the pull request
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: node .devkit/scripts/review-check.mjs
+        uses: ./.devkit/.github/actions/review

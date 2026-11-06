@@ -6,11 +6,10 @@ name: conformance
 # its directory holds .conformance.json (the header of bin/conformance.mjs; `npx devkit-conformance` runs it locally).
 
 on:
-  # A public repository: every pull request and every push to the default branch.
+  # A public repository: every pull request. No push to the default branch: the merge was checked as a pull request
+  # (README, "No second run on main").
   pull_request:
-  push:
-    branches: [main]
-  # A private repository spends minutes: drop the two above and run weekly instead.
+  # A private repository spends minutes: drop the one above and run weekly instead.
   # schedule:
   #   - cron: "23 6 * * 1"
 

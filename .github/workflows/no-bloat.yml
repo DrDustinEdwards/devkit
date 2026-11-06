@@ -62,41 +62,36 @@ jobs:
     permissions:
       contents: read
     steps:
-      # A pull request checks out its merge commit; its first parent is the base the lines are counted against.
+      # An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
+      # The steps are composite actions in devkit at that commit (.github/actions/), the one copy pr.yml runs too.
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
+      # A pull request checks out its merge commit; its first parent is the base the lines are counted against. The
+      # caller's files sit in repo/, beside .devkit, so no tool reads devkit's.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          path: repo
           fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 1 }}
           persist-credentials: false
 
-      # pnpm/action-setup v4 is an annotated tag; the sha pinned is the commit it dereferences to (as in worker-size.yml).
-      - if: inputs.package-manager == 'pnpm'
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
-
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+      - uses: ./.devkit/.github/actions/setup
         with:
           node-version-file: ${{ inputs.node-version-file }}
-          cache: ${{ inputs.package-manager }}
+          package-manager: ${{ inputs.package-manager }}
+          install: ${{ inputs.install }}
 
-      - name: Install
-        env:
-          INSTALL: ${{ inputs.install || (inputs.package-manager == 'pnpm' && 'pnpm install --frozen-lockfile' || 'npm ci') }}
-        run: bash -euo pipefail -c "$INSTALL"
-
-      - name: Prepare
-        if: inputs.prepare != ''
-        env:
-          PREPARE: ${{ inputs.prepare }}
-        run: bash -euo pipefail -c "$PREPARE"
-
-      - name: Check
-        env:
-          CONFIG: ${{ inputs.config }}
-          WARN_ONLY: ${{ inputs.warn-only && '--warn-only' || '' }}
-          LINES_FROM: ${{ github.event_name == 'pull_request' && 'HEAD^1' || '' }}
-        run: |
-          bin=node_modules/@dustinedwards/devkit/bin/no-bloat.mjs
-          if [ ! -f "$bin" ]; then
-            echo "::error::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README)."
-            exit 1
-          fi
-          node "$bin" --config "$CONFIG" ${WARN_ONLY:+"$WARN_ONLY"} ${LINES_FROM:+--lines-from "$LINES_FROM"}
+      - uses: ./.devkit/.github/actions/no-bloat
+        with:
+          prepare: ${{ inputs.prepare }}
+          config: ${{ inputs.config }}
+          warn-only: ${{ inputs.warn-only }}

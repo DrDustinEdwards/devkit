@@ -4,12 +4,15 @@ name: scorecard
 # scorecard.yml, and keep it a full sha: scripts/check-callers.mjs fails on anything else. Scorecard publishes only from
 # the default branch, on a push or the schedule (scorecard-action README), so this has no pull_request trigger. The file
 # keeps no top-level env, defaults or write permissions, which the Scorecard API would refuse.
+#
+# NIGHTLY, NOT ON EVERY PUSH (2026-11-06): the score reads the repository's settings and history, which a single merge
+# rarely moves, and a run per merge took a runner while the account's 20 were the bottleneck (README, "No second run on
+# main"). A manual run scores at once when a change should show.
 
 on:
-  push:
-    branches: [main]
   schedule:
-    - cron: "17 6 * * 1"
+    - cron: "17 6 * * *"
+  workflow_dispatch:
 
 permissions: {}
 

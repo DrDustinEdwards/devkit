@@ -1,0 +1,305 @@
+name: pr
+
+# ONE JOB PER PULL REQUEST. Measured 2026-11-06 over 18 repositories and 2,454 jobs: CI was slow because of the runner
+# queue, not slow steps. The account runs 20 jobs at once and sat at 20 with 30 to 98 queued (queue p90 6.5 minutes, the
+# worst 16), 74% of jobs ran under a minute, and each pull request started six to eight tiny workflows from devkit
+# callers, each taking a runner of its own. This workflow runs all of them in one job, with one checkout and one install:
+#
+#   1. The footer strip (pull request opened, reopened or edited; a dispatch fixes every pull request).
+#   2. The trailer check and 3. the shared-code check (checks.yml).
+#   4. OSV-Scanner in pull request mode: only a vulnerability the change adds fails (dependencies.yml).
+#   5. actionlint and zizmor, only when the change touches .github/ (workflow-audit.yml).
+#   6. The no-bloat ratchet (no-bloat.yml) and 7. the Worker bundle size, one Worker or several (worker-size.yml), from
+#      the caller's own install.
+#   8. The automatic reviewer (review.yml), started in the background first and collected last, so the other checks run
+#      during the minutes the model takes. Advisory: it never fails the job.
+#
+# EVERY CHECK RUNS AND REPORTS even when another failed: each step runs unless the run was canceled or what it needs
+# (a checkout, the install) failed, keeps its own annotations and its own section of the job summary, and the last step
+# lists each check's outcome and fails the job if any failed. The steps are composite actions in .github/actions/, the one
+# copy the standalone workflows above run too, read from devkit at the commit the caller pinned (job.workflow_sha).
+#
+# INPUTS TURN OFF WHAT A REPOSITORY DOES NOT HAVE: `node: false` for one with nothing to install (no no-bloat, no Worker
+# size), `worker-size: false` for one with no Worker, `no-bloat: false` for a private one (it runs no-bloat weekly).
+# devkit-shared reads those inputs: a call of this workflow counts as each check it leaves on.
+#
+# THE CHECK NAME. The job is named "Repo checks", so a caller whose job id is `checks` (examples/pr-caller.yml) reports
+# "checks / Repo checks", the name every repository's "Protect main" ruleset already requires. An edit of the description
+# runs every check again under that name: GitHub judges a required check by the newest run of the workflow on the commit,
+# so a footer-only run under another name left the required check "expected" and blocked the merge (devkit #156), and a
+# footer-only run under the same name would put a green over a red. A dispatch (no pull request) runs only the footer
+# strip, under the name "Description footer". The rulesets also require the old workflows' names by name
+# ("no-bloat / No-bloat ratchet", "worker-size / Worker bundle size" and the like): a repository that moves here has them
+# removed from its ruleset in the same change, since this job's one check now covers them.
+#
+# THE CALLER (examples/pr-caller.yml) runs on pull_request and merge_group, never on a push to the default branch: the
+# merge was checked as a pull request, and the rulesets allow no other way onto it. Its concurrency group is the pull
+# request, so a newer push (a Renovate branch moved by the next release) cancels the older run. It grants contents read,
+# pull-requests write (the footer), id-token write and checks write (the reviewer), because a called workflow holds no more
+# than its caller gives it, and pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
+
+on:
+  workflow_call:
+    inputs:
+      node:
+        description: Set up the caller's Node and install. False for a repository with nothing to install, which turns off no-bloat and worker-size.
+        required: false
+        type: boolean
+        default: true
+      node-version-file:
+        description: The file naming the Node version, as actions/setup-node reads it.
+        required: false
+        type: string
+        default: .nvmrc
+      package-manager:
+        description: npm or pnpm. pnpm is set up from the caller's packageManager field, and its store is cached.
+        required: false
+        type: string
+        default: npm
+      install:
+        description: The install command. It must install @dustinedwards/devkit. Empty for `npm ci` or `pnpm install --frozen-lockfile`.
+        required: false
+        type: string
+        default: ""
+      no-bloat:
+        description: The no-bloat ratchet. False for a private repository, which runs no-bloat.yml weekly instead.
+        required: false
+        type: boolean
+        default: true
+      no-bloat-prepare:
+        description: Run after the install and before no-bloat, for generated files the code imports. Empty for none.
+        required: false
+        type: string
+        default: ""
+      no-bloat-config:
+        description: The no-bloat config (see bin/no-bloat.mjs).
+        required: false
+        type: string
+        default: .no-bloat.json
+      no-bloat-warn-only:
+        description: Report only (devkit-no-bloat --warn-only).
+        required: false
+        type: boolean
+        default: false
+      worker-size:
+        description: The Worker bundle size budget. False for a repository with no Worker.
+        required: false
+        type: boolean
+        default: true
+      worker-size-prepare:
+        description: Run before the one Worker's dry run, e.g. a build, or copying wrangler.jsonc.example to wrangler.jsonc. Empty for none.
+        required: false
+        type: string
+        default: ""
+      working-directory:
+        description: Where the one Worker's wrangler config lives, relative to the repository root.
+        required: false
+        type: string
+        default: .
+      worker-size-config:
+        description: The one Worker's budget file, relative to working-directory (see bin/worker-size.mjs).
+        required: false
+        type: string
+        default: .worker-size.json
+      workers:
+        description: 'Several Workers, as a JSON array of { "name", "working-directory", "config", "prepare" }, as worker-size.yml takes them. Empty for the one Worker above.'
+        required: false
+        type: string
+        default: ""
+      dependencies:
+        description: OSV-Scanner in pull request mode.
+        required: false
+        type: boolean
+        default: true
+      workflow-audit:
+        description: actionlint and zizmor, when the change touches .github/.
+        required: false
+        type: boolean
+        default: true
+      min-severity:
+        description: The lowest zizmor severity that fails (informational, low, medium or high).
+        required: false
+        type: string
+        default: medium
+      review:
+        description: The automatic reviewer (advisory).
+        required: false
+        type: boolean
+        default: true
+      timeout-minutes:
+        required: false
+        type: number
+        default: 20
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: ${{ github.event_name == 'workflow_dispatch' && 'Description footer' || 'Repo checks' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+      checks: write
+    env:
+      CODE: ${{ github.event_name == 'push' || github.event_name == 'merge_group' || github.event_name == 'pull_request' }}
+      FOOTER: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'synchronize' && github.event.pull_request.head.repo.full_name == github.repository) }}
+      # Same-repository pull requests only (a fork's run gets no OIDC token), never a draft or Renovate's.
+      REVIEW: ${{ inputs.review && github.event_name == 'pull_request' && github.event.action != 'edited' && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'renovate[bot]' }}
+      NODE: ${{ inputs.node && (inputs.no-bloat || inputs.worker-size) }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+    steps:
+      # An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
+      # devkit's own files run on this Node; the caller's Node comes with its install, below.
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+
+      - name: Review, started
+        id: review-start
+        if: env.REVIEW == 'true'
+        uses: ./.devkit/.github/actions/review
+        with:
+          mode: start
+
+      - name: Footer
+        id: footer
+        if: ${{ !cancelled() && env.FOOTER == 'true' }}
+        uses: ./.devkit/.github/actions/footer
+
+      # One checkout for every check, with the full history the trailer check reads. A pull request's is its merge commit,
+      # whose first parent is the base no-bloat counts lines against. The caller's files sit in repo/, beside .devkit.
+      - name: Check out the repository
+        id: repo
+        if: ${{ !cancelled() && env.CODE == 'true' }}
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          path: repo
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Trailers
+        id: trailers
+        if: ${{ !cancelled() && steps.repo.outcome == 'success' }}
+        uses: ./.devkit/.github/actions/trailers
+
+      - name: Shared code
+        id: shared
+        if: ${{ !cancelled() && steps.repo.outcome == 'success' }}
+        uses: ./.devkit/.github/actions/shared
+
+      - name: Dependencies
+        id: dependencies
+        if: ${{ !cancelled() && steps.repo.outcome == 'success' && inputs.dependencies }}
+        uses: ./.devkit/.github/actions/osv-scanner
+        with:
+          base-sha: ${{ env.BASE_SHA }}
+
+      # Only a change that touches .github/ can change what actionlint and zizmor read. A run with no base (a push) audits.
+      - name: Does the change touch .github/
+        id: touched
+        if: ${{ !cancelled() && steps.repo.outcome == 'success' && inputs.workflow-audit }}
+        working-directory: repo
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+        run: |
+          set -euo pipefail
+          if [ -z "$BASE_SHA" ] || [ -z "$HEAD_SHA" ]; then echo "github=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          changed=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- .github)
+          if [ -n "$changed" ]; then
+            echo "github=true" >> "$GITHUB_OUTPUT"
+            printf 'The change touches .github/:\n%s\n' "$changed"
+          else
+            echo "github=false" >> "$GITHUB_OUTPUT"
+            echo "## Workflow audit" >> "$GITHUB_STEP_SUMMARY"
+            echo "The change touches nothing in .github/, so actionlint and zizmor did not run." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Workflow audit
+        id: workflow-audit
+        if: ${{ !cancelled() && steps.touched.outputs.github == 'true' }}
+        uses: ./.devkit/.github/actions/workflow-audit
+        with:
+          min-severity: ${{ inputs.min-severity }}
+
+      - name: Install
+        id: install
+        if: ${{ !cancelled() && steps.repo.outcome == 'success' && env.NODE == 'true' }}
+        uses: ./.devkit/.github/actions/setup
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          package-manager: ${{ inputs.package-manager }}
+          install: ${{ inputs.install }}
+
+      - name: No-bloat
+        id: no-bloat
+        if: ${{ !cancelled() && steps.install.outcome == 'success' && inputs.no-bloat }}
+        uses: ./.devkit/.github/actions/no-bloat
+        with:
+          prepare: ${{ inputs.no-bloat-prepare }}
+          config: ${{ inputs.no-bloat-config }}
+          warn-only: ${{ inputs.no-bloat-warn-only }}
+
+      - name: Worker size
+        id: worker-size
+        if: ${{ !cancelled() && steps.install.outcome == 'success' && inputs.worker-size }}
+        uses: ./.devkit/.github/actions/worker-size
+        with:
+          prepare: ${{ inputs.worker-size-prepare }}
+          working-directory: ${{ inputs.working-directory }}
+          config: ${{ inputs.worker-size-config }}
+          workers: ${{ inputs.workers }}
+
+      - name: Review verdict
+        if: ${{ !cancelled() && steps.review-start.outcome == 'success' }}
+        uses: ./.devkit/.github/actions/review
+        with:
+          mode: wait
+
+      # Each check's outcome in one table, and the job fails if any failed. A check that could not start because what it
+      # needs failed (the checkout, the install) is a failure too, never a pass. The reviewer is advisory and not listed.
+      - name: Result
+        if: ${{ !cancelled() }}
+        env:
+          OUTCOMES: >-
+            Footer=${{ steps.footer.outcome }}
+            Checkout=${{ steps.repo.outcome }}
+            Trailers=${{ steps.trailers.outcome }}
+            Shared-code=${{ steps.shared.outcome }}
+            Dependencies=${{ steps.dependencies.outcome }}
+            Workflow-audit=${{ steps.touched.outcome == 'failure' && 'failure' || steps.workflow-audit.outcome }}
+            Install=${{ steps.install.outcome }}
+            No-bloat=${{ steps.no-bloat.outcome }}
+            Worker-size=${{ steps.worker-size.outcome }}
+        run: |
+          set -euo pipefail
+          failed=()
+          { echo "## Result"; echo; echo "| Check | Outcome |"; echo "| --- | --- |"; } >> "$GITHUB_STEP_SUMMARY"
+          for pair in $OUTCOMES; do
+            name=${pair%%=*}
+            outcome=${pair#*=}
+            [ -n "$outcome" ] || outcome=skipped
+            echo "| ${name} | ${outcome} |" >> "$GITHUB_STEP_SUMMARY"
+            if [ "$outcome" = failure ]; then failed+=("$name"); fi
+          done
+          if [ "${#failed[@]}" -gt 0 ]; then
+            echo "::error::failed: ${failed[*]}"
+            exit 1
+          fi
+          echo "Every check that ran passed."

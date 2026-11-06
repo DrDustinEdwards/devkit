@@ -7,7 +7,7 @@
     "Automerge, decided 2026-09-07: ON for security fixes, the weekly minor and patch group, pins, and lockfile maintenance, gated on CI. Majors stay human-merged from the dashboard. A repo with no CI never automerges, because ignoreTests is false and Renovate refuses to automerge without a passing check.",
     "The load-bearing set, decided 2026-09-08: the load-bearing six stopped being one refusal and became a floor plus four grants, because 'this package is load-bearing' and 'this UPDATE is risky' are different claims and the six were being judged on the first. The framework and the Cloudflare tooling now automerge on patch and minor, better-auth and wrangler on patch alone, and katex on nothing. All of them stay ungrouped at every type, which is the half of the old rule that was always right.",
     "Rebasing, decided 2026-09-15: rebaseWhen is \"conflicted\" and prHourlyLimit is stated. Renovate was 613 of the September cycle 1,800 Actions minutes, 602 of them in dustinedwards-info, and the cause is rebasing rather than opening: single branches re-ran CI 20 to 37 times each (renovate/react-router-8.x 33 runs and 124 minutes, renovate/react-router-dev-8.x 37 runs, renovate/remark 22 runs and 76 minutes). config:recommended leaves rebaseWhen at \"auto\", which rebases every open branch each time the base moves, and each rebase costs a push run and a pull_request run. \"conflicted\" rebases only when a branch will not merge. The rulesets added 2026-10-22 require a pull request but no status check, so no required check is strict and a stale branch cannot stall automerge, which is the one condition that would make this setting cost more than it saves.",
-    "platformAutomerge is false, 2026-10-22: the public repos now carry a \"Protect main\" ruleset (pull request required, no required status check). GitHub's native auto-merge merges once the required checks pass, and with none required it would merge a Renovate pull request before CI ran. Renovate's own automerge waits for every check to pass (ignoreTests is false), so it merges on a later run, after CI is green.",
+    "platformAutomerge is false, 2026-10-22: the public repos now carry a \"Protect main\" ruleset (pull request required, no required status check). GitHub's native auto-merge merges once the required checks pass, and with none required it would merge a Renovate pull request before CI ran. Renovate's own automerge waits for every check to pass (ignoreTests is false), so it merges on a later run, after CI is green. Corrected 2026-11-06: the rulesets do require named checks now (checks / Repo checks in every one, read with gh api repos/DrDustinEdwards/<repo>/rulesets), none of them strict; native auto-merge would wait only for those, not for every check, so this stays false.",
     "The supply-chain cooldown, ruling 154 in dustinedwards/decisions.md, 2026-09-29 (Dustin: adopt the current supply-chain best practice across the portfolio; job_93460f5c4318): extends config:best-practices, and an npm release must be three days old before Renovate raises it. Before this there was no cooldown at all while the weekly group, pins and lockfile maintenance automerged, so a compromised version could merge the Monday it was published. A 3 to 5 day wait blocks most npm supply-chain attacks (nesbitt.io, 2026-03-04: 8 of 10 examined attacks had windows under a week), and npm can unpublish a version for 72 hours. best-practices already carries the npm cooldown (security:minimumReleaseAgeNpm); the rule below restates it so the policy does not hang on an upstream default. Security fixes still bypass minimumReleaseAge, which Renovate documents and vulnerabilityAlerts states.",
     "Open-PR limit, 2026-11-05: prConcurrentLimit is 10, Renovate's own default, not 3. The limit counts every open PR, including ones that wait on a human (a wrangler or better-auth minor, a major, a pin that needs a lockfile), and prPriority only orders creation, it never frees a slot (Renovate docs, configuration-options, prConcurrentLimit and prHourlyLimit). With 3, carrel held wrangler #279, enarratio #221 and site-api #299 for days, so d1-dump 0.12.1, devkit, site-runtime and site-helpers sat under Rate-Limited on its Dependency Dashboard (germomics the same), and the family release never opened a PR in any consumer. The limit is per repository and cannot be set inside a packageRule, so the rate stays bounded by prHourlyLimit (2, which only limits creation) and rebaseWhen conflicted, which is where the Actions minutes went.",
     "npmrc and npmrcMerge, 2026-10-10 (job_3b09752450c1): Renovate's npm may fetch the git dependencies a repository names in its own package.json, which is how every repo pins Dustin's own packages (github:DrDustinEdwards/*), and nothing deeper. The cause, from Renovate's artifact report on capsid PR 309: npm error code EALLOWGIT, Fetching packages of type git have been disabled. It was never credentials. The Mend app installs the npm a repo's engines.npm names (Renovate docs/usage/node.md, Configuring which version of npm Renovate uses), capsid names 12.2.0, and npm 12 changed allow-git's default to none (npm/cli workspaces/config/lib/definitions/definitions.js: As of npm 12 the default is none; opt in per project in .npmrc). allow-git=root admits only git dependencies listed in the project's package.json, so a transitive git dependency is still refused (measured: one a level down fails with Fetching non-root packages of type git have been disabled); its early bug, root refusing root-level git deps, was fixed before npm 12 (npm/cli issue 9189, PR 9206). npmrc is a repository-level option, and npmrcMerge true prepends it to the repo's own .npmrc instead of replacing it (Renovate docs/usage/configuration-options.md, npmrc and npmrcMerge; docs/usage/getting-started/private-packages.md, Add npmrc string to Renovate config). Measured 2026-10-10: npm 12.2.0 running Renovate's lockfile command (install --package-lock-only --ignore-scripts) on capsid at PR 309's base with the bump applied fails with that EALLOWGIT, and with this line writes a package-lock.json identical to the one PR 309 merged by hand. It reaches only Renovate's runs. A repo's own CI reads the repo's .npmrc instead: capsid's runs the npm that Node 24 bundles (11), which still allows git dependencies, and a repo whose CI or developers move to npm 12 needs allow-git=root in its own .npmrc as well."
@@ -166,26 +166,32 @@
         "OWN PACKAGES ARRIVE AT ONCE (Dustin, 2026-10-09, standing rule; job_3b09752450c1): a release of one of Dustin's own packages opens its pull request in every consuming repository right away, not after the cooldown and not on Monday's schedule. Minor and patch merge themselves on green CI (the rule after the next); majors and digest moves open at once and wait for Dustin.",
         "What counts as his own is decided by who can publish it, never by what a package says about itself. A github: or git+https dependency on DrDustinEdwards/* resolves to the github-tags datasource with packageName owner/repo (Renovate lib/modules/manager/npm/extract/common/dependency.ts), and only Dustin can tag a release there. On npm, only the @dustinedwards scope and the unscoped enarratio, which the npm account dustinedwards publishes. matchSourceUrls is deliberately NOT used: an npm package's repository field is whatever its publisher typed, so any stranger could claim DrDustinEdwards and skip the cooldown.",
         "Option names are from Renovate's configuration-options docs (docs/usage/configuration-options.md, read 2026-10-09): minimumReleaseAge null is the documented 'no waiting period', and 0 days is treated the same since 42.19.5; a schedule of the cron wildcard is 'at any time'; automergeStrategy squash flattens the PR into one commit and also applies to platform-native automerge; prPriority orders PR creation, so these go first when prConcurrentLimit or prHourlyLimit is the bottleneck.",
-        "Ungrouped at every update type, so each release gets its own PR and the consumer's CI judges it alone. CI is still the gate: ignoreTests stays false, so a red run never merges. These rules sit after the cooldown, the weekly group and the load-bearing set so they win over all three; none of the load-bearing names is one of these packages.",
-        "Renovate only reacts when it runs. The release side is the bump-consumers workflow in this repository, which each package repository calls when it tags a release, to start a Renovate run in every repository that depends on it."
+        "ONE GROUP PER REPOSITORY, \"network packages\" (Dustin, 2026-11-06): every one of these, the github-tags ones (devkit as a workflow pin and as the npm package, site-runtime, site-api, capsomer, site-helpers from prelum, d1-dump) and the npm ones (enarratio, enarratio-astro, enarratio-emdash), opens one branch, renovate/network-packages, in place of one per package. Measured 2026-11-06 over 18 repositories: these bumps were 23% of all jobs, about 21 releases in 24 hours (site-runtime 9, devkit 4, site-api 4, capsomer 3) each starting Renovate in about 13 consumers, and eight per-package branches (renovate/dustinedwards-site-runtime-0.x, renovate/drdustinedwards-devkit-0.x, renovate/dustinedwards-devkit-0.x, renovate/dustinedwards-site-api-0.x, renovate/capsomer-0.x, renovate/enarratio-0.x, renovate/drdustinedwards-site-helpers-0.x, renovate/dustinedwards-d1-dump-0.x) let one repository run CI on up to seven bump PRs at once. A group is one branch for every upgrade whose rule names the same groupName, whatever its manager or datasource (Renovate docs, configuration-options, groupName), so the github-actions pin and the npm git dependency of devkit share it. A release while the branch is open moves that branch, and the caller's pull request concurrency (devkit examples/pr-caller.yml, cancel-in-progress on the pull request) cancels the older run, so a burst of releases costs one run at the end, not one per release per package. separateMajorMinor (default true) keeps a major in its own branch, renovate/major-network-packages, and digest moves are taken out of the group by the rule after the grant, so neither holds the group's automerge.",
+        "CI is still the gate: ignoreTests stays false, so a red run never merges, and a red group holds every package in it until it is fixed, which is the price of one run in place of seven. These rules sit after the cooldown, the weekly group and the load-bearing set so they win over all three; none of the load-bearing names is one of these packages.",
+        "Renovate only reacts when it runs. The release side is the bump-consumers workflow in this repository, which each package repository calls when it tags a release, to start a Renovate run in every repository that depends on it. It has no debounce (2026-11-06): with one group branch per repository, the run a release starts moves the same branch the last one opened and cancels its CI, so a wait would save one cheap Renovate run per release and hold every release back by its length; a debounce would also need state across package repositories, which a personal account's Actions cannot share without a new token."
       ],
       "matchDatasources": ["github-tags"],
       "matchPackageNames": ["DrDustinEdwards/**"],
       "minimumReleaseAge": null,
       "schedule": ["* * * * *"],
-      "groupName": null,
+      "groupName": "network packages",
       "prPriority": 10,
       "automerge": false,
       "automergeType": "pr",
       "automergeStrategy": "squash"
     },
     {
-      "description": "The npm half of the rule above: the @dustinedwards scope and enarratio, the packages the npm account dustinedwards publishes. Same settings, same reasons.",
+      "description": "The npm half of the rule above: the @dustinedwards scope, enarratio, and enarratio-astro and enarratio-emdash (the astro repository's packages), the packages the npm account dustinedwards publishes. Named one by one, never enarratio-*, which anyone could publish under. Same settings, same group, same reasons.",
       "matchDatasources": ["npm"],
-      "matchPackageNames": ["@dustinedwards/**", "enarratio"],
+      "matchPackageNames": [
+        "@dustinedwards/**",
+        "enarratio",
+        "enarratio-astro",
+        "enarratio-emdash"
+      ],
       "minimumReleaseAge": null,
       "schedule": ["* * * * *"],
-      "groupName": null,
+      "groupName": "network packages",
       "prPriority": 10,
       "automerge": false,
       "automergeType": "pr",
@@ -194,9 +200,28 @@
     {
       "description": "Minor, patch and pin of Dustin's own packages merge themselves, squashed, once CI is green (Dustin, 2026-10-09; pin added 2026-11-05: the floor above refuses automerge at every type, so Carrel's enarratio pin #221 sat open for five days holding a slot, though a pin changes no bytes). The two rules above are the floor: every update of these opens at once and never automerges, so majors and digest moves (a sha pin such as dustinedwards-info's capsomer can jump a major) wait for Dustin. This grant is the only automerge, the same floor-then-grant shape as the load-bearing set.",
       "matchDatasources": ["github-tags", "npm"],
-      "matchPackageNames": ["DrDustinEdwards/**", "@dustinedwards/**", "enarratio"],
+      "matchPackageNames": [
+        "DrDustinEdwards/**",
+        "@dustinedwards/**",
+        "enarratio",
+        "enarratio-astro",
+        "enarratio-emdash"
+      ],
       "matchUpdateTypes": ["minor", "patch", "pin"],
       "automerge": true
+    },
+    {
+      "description": "A digest move of Dustin's own packages (a github: dependency pinned to a commit, which can jump a major) leaves the network packages group for a PR of its own (2026-11-06). It never automerges, and in the group it would hold the group's minor and patch automerge with it, since a branch automerges only when every upgrade in it may.",
+      "matchDatasources": ["github-tags", "npm"],
+      "matchPackageNames": [
+        "DrDustinEdwards/**",
+        "@dustinedwards/**",
+        "enarratio",
+        "enarratio-astro",
+        "enarratio-emdash"
+      ],
+      "matchUpdateTypes": ["digest"],
+      "groupName": null
     },
     {
       "matchPackageNames": ["node"],

@@ -1,0 +1,55 @@
+name: checks
+
+# The caller a repository keeps: devkit's pr.yml runs every pull request check in one job, with one checkout and one
+# install (the footer strip, the trailer check, the shared-code check, OSV-Scanner, actionlint and zizmor when .github/
+# changes, no-bloat, the Worker bundle size and the reviewer). It replaces the pull request triggers of the separate
+# callers: checks, review, no-bloat, worker-size, dependencies and workflow-audit (README, "One job per pull request").
+# Replace the sha with the commit of devkit that holds the reviewed pr.yml, and keep it a full sha:
+# scripts/check-callers.mjs fails on anything else.
+#
+# NO PUSH TO THE DEFAULT BRANCH. A merge was checked as a pull request, and the rulesets let nothing else onto main, so a
+# second run on the merge commit only repeats it. What a merge must still start (the deploy and the tests it needs, a
+# release) stays in the repository's own workflows; dependencies' daily schedule stays in examples/dependencies-caller.yml.
+#
+# THE JOB ID IS `checks`, so the check is "checks / Repo checks", the name the "Protect main" ruleset already requires.
+# Remove the names this job now covers ("no-bloat / No-bloat ratchet", "worker-size / Worker bundle size" and the like)
+# from the ruleset in the same change, or the pull request that moves here waits on checks that never run again.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+  merge_group:
+  # Run by hand once to clean the footer from every past pull request.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# The pull request is the group, so a newer push (a Renovate branch moved by the next release) cancels the older run. An
+# edit of the description runs every check too, on the same head, so it may replace a run in progress.
+concurrency:
+  group: checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  checks:
+    # A called workflow holds no more than this job grants: the footer writes the description, the reviewer signs in to
+    # Capsid with the job's OIDC token and writes its check.
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+      checks: write
+    uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@0000000000000000000000000000000000000000
+    with:
+      # Until Capsid admits pr.yml's token for a review (capsid src/review.ts, REVIEW_WORKFLOW), keep the review.yml caller
+      # and pass review: false; pr.yml's reviewer otherwise reports that it could not run.
+      review: false
+      # A repository with no Worker: worker-size: false. A private one, which runs no-bloat weekly: no-bloat: false. One
+      # with nothing to install: node: false. Each prepare runs after the install; omit the ones not needed.
+      no-bloat-prepare: npm run build:content
+      worker-size-prepare: cp wrangler.jsonc.example wrangler.jsonc
+      # Several Workers, in place of worker-size-prepare and working-directory:
+      # workers: >-
+      #   [{ "name": "site", "prepare": "cp wrangler.jsonc.example wrangler.jsonc && npm run build" },
+      #    { "name": "mcp", "working-directory": "mcp", "prepare": "npm ci --prefix mcp" }]
