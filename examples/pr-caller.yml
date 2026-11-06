@@ -26,9 +26,9 @@ permissions:
   contents: read
 
 # The pull request is the group, so a newer push (a Renovate branch moved by the next release) cancels the older run. An
-# edit of the description has a group of its own, so it never cancels a run that is checking the code.
+# edit of the description runs every check too, on the same head, so it may replace a run in progress.
 concurrency:
-  group: checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event.action == 'edited' }}
+  group: checks-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:

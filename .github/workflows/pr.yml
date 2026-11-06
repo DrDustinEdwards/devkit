@@ -25,8 +25,10 @@ name: pr
 #
 # THE CHECK NAME. The job is named "Repo checks", so a caller whose job id is `checks` (examples/pr-caller.yml) reports
 # "checks / Repo checks", the name every repository's "Protect main" ruleset already requires. An edit of the description
-# or a dispatch runs only the footer strip, under the name "Description footer", so it never reports a green
-# "Repo checks" over a red one on the same commit. The rulesets also require the old workflows' names by name
+# runs every check again under that name: GitHub judges a required check by the newest run of the workflow on the commit,
+# so a footer-only run under another name left the required check "expected" and blocked the merge (devkit #156), and a
+# footer-only run under the same name would put a green over a red. A dispatch (no pull request) runs only the footer
+# strip, under the name "Description footer". The rulesets also require the old workflows' names by name
 # ("no-bloat / No-bloat ratchet", "worker-size / Worker bundle size" and the like): a repository that moves here has them
 # removed from its ruleset in the same change, since this job's one check now covers them.
 #
@@ -134,7 +136,7 @@ permissions:
 
 jobs:
   checks:
-    name: ${{ (github.event_name == 'workflow_dispatch' || github.event.action == 'edited') && 'Description footer' || 'Repo checks' }}
+    name: ${{ github.event_name == 'workflow_dispatch' && 'Description footer' || 'Repo checks' }}
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.timeout-minutes }}
     permissions:
@@ -143,7 +145,7 @@ jobs:
       id-token: write
       checks: write
     env:
-      CODE: ${{ github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'pull_request' && github.event.action != 'edited') }}
+      CODE: ${{ github.event_name == 'push' || github.event_name == 'merge_group' || github.event_name == 'pull_request' }}
       FOOTER: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'synchronize' && github.event.pull_request.head.repo.full_name == github.repository) }}
       # Same-repository pull requests only (a fork's run gets no OIDC token), never a draft or Renovate's.
       REVIEW: ${{ inputs.review && github.event_name == 'pull_request' && github.event.action != 'edited' && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'renovate[bot]' }}
