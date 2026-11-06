@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-06T08:00:22.455Z",
+ "as_of": "2026-11-06T15:12:08.830Z",
  "finished": false,
  "public_token": true,
  "sites": [
@@ -761,12 +761,9 @@
      "clean_days": 7
     },
     "foxing": {
-     "status": "partial",
-     "reason": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); about 700 of 2,200 sitemap URLs have no lastmod; llms-full.txt is 404",
-     "evidence": [
-      "https://foxing.app/sitemap.xml"
-     ],
-     "clean_days": 1
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: exit 3 with nothing said",
+     "findings": []
     },
     "carrel": {
      "status": "partial",
@@ -2463,9 +2460,15 @@
      "reason": "static: the explorer is prerendered pages on an assets Worker whose script only sends the 404 page, with no database, binding, cron or backup to report; Capsid's health is capsid-mcp's /health"
     },
     "capsid-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://mcp.dustinedwards.info/health the newest complete backup is 29.6 hours old, not under 26"
+      }
+     ]
     },
     "foxhound-mcp": {
      "status": "partial",
@@ -2488,9 +2491,15 @@
      "clean_days": 1
     },
     "foxing-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "H4",
+       "detail": "https://admin-mcp.foxing.app/health serves a43207b828276c613a73e87d697fee14c112b567, not the branch head 701b1c523b416862271b4324d908c1268e8fe477 (https://github.com/DrDustinEdwards/foxing/commit/701b1c523b416862271b4324d908c1268e8fe477), committed 344 minutes ago"
+      }
+     ]
     },
     "capsid-portal": {
      "status": "n/a",
@@ -2876,7 +2885,7 @@
       {
        "severity": "error",
        "check": "L1",
-       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
+       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
       },
       {
        "severity": "warning",
@@ -3334,20 +3343,9 @@
      "clean_days": 3
     },
     "foxing": {
-     "status": "missing",
-     "reason": "chart-audit: 2 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://foxing.app/demos/stats at 320 px, charts shift the page by 0.013 (layout shift); largest 0.013, button.enarratio-export -28 px"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://foxing.app/demos/year at 320 px, charts shift the page by 0.013 (layout shift); largest 0.013, button.enarratio-export -28 px"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: exit 3 with nothing said",
+     "findings": []
     },
     "carrel": {
      "status": "partial",

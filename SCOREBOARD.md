@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-06 08:00 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-06 15:12 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,16 +8,16 @@ Newest run 2026-11-06 08:00 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❔ | 🟡 | ❌ | ❌ | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | · | +28958 | −2924 |
+| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | ✅ | 🟡 | ❌ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❌ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❔ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
@@ -46,7 +46,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
 - 🟡 Foxhound: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
-- 🟡 Foxing: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); about 700 of 2,200 sitemap URLs have no lastmod; llms-full.txt is 404
+- ❔ Foxing: prelum-audit could not measure: exit 3 with nothing said
 - 🟡 Carrel: no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404
 - ❌ Enarratio: prelum-audit: 1 errors
   - icon-missing: https://enarratio.dustinedwards.info/favicon.ico answers 404 text/html; charset=utf-8
@@ -171,10 +171,12 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 BSW: site-runtime v0.50.1; 404 is React Router's default page; no console ratchet; no request log wrapper; no --repo in areas.json; D4/D6 off
 - 🟡 Foxhound: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+- ❌ Capsid MCP: ops-audit: 1 errors
+  - B1: https://mcp.dustinedwards.info/health the newest complete backup is 29.6 hours old, not under 26
 - 🟡 Foxhound admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+- ❌ Foxing admin MCP: ops-audit: 1 errors
+  - H4: https://admin-mcp.foxing.app/health serves a43207b828276c613a73e87d697fee14c112b567, not the branch head 701b1c523b416862271b4324d908c1268e8fe477 (https://github.com/DrDustinEdwards/foxing/commit/701b1c523b416862271b4324d908c1268e8fe477), committed 344 minutes ago
 
 ### 9. Accessibility and components
 
@@ -204,7 +206,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `section:nth-of-type(2) > div.page-prose.mx-auto > p.mt-8:nth-of-type(2) > a.btn.btn-blue` "Go to the home page")
   - L2: https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
 - ❌ Foxhound: devkit-a11y: 5 errors
-  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
+  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
   - L3: https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical), `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical)
   - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body.min-h-full > div.fh-cap.fh-error-page > header.fh-error-bar.flex > a.no-underline` "foxhound")
   - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(3) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical) and 33 more
@@ -241,9 +243,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❌ Foxing: chart-audit: 2 errors
-  - D5: https://foxing.app/demos/stats at 320 px, charts shift the page by 0.013 (layout shift); largest 0.013, button.enarratio-export -28 px
-  - D5: https://foxing.app/demos/year at 320 px, charts shift the page by 0.013 (layout shift); largest 0.013, button.enarratio-export -28 px
+- ❔ Foxing: chart-audit could not measure: exit 3 with nothing said
 - 🟡 Carrel: no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json
 - 🟡 Capsomer: checks pass; no verifier yet
 - 🟡 Capsid explorer: checks pass; no verifier yet
