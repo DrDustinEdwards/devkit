@@ -89,6 +89,11 @@
    "origin": "https://admin-mcp.foxing.app"
   },
   {
+   "id": "germomics-mcp",
+   "name": "Germomics admin MCP",
+   "origin": "https://admin-mcp.germomics.com"
+  },
+  {
    "id": "capsid-portal",
    "name": "Capsid Portal",
    "origin": "https://portal.dustinedwards.info"
@@ -1341,6 +1346,10 @@
      "status": "n/a",
      "reason": "no check for a worker"
     },
+    "germomics-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
     "capsid-portal": {
      "status": "n/a",
      "reason": "no check for a app"
@@ -1503,6 +1512,10 @@
       "https://admin-mcp.foxing.app/"
      ],
      "clean_days": 6
+    },
+    "germomics-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
     },
     "capsid-portal": {
      "status": "complete",
@@ -1675,6 +1688,10 @@
      ],
      "clean_days": 6
     },
+    "germomics-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
     "capsid-portal": {
      "status": "complete",
      "reason": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Portal sign-in is Access for SaaS (live 302 to Access, no-store, HSTS); portal-auth.ts now has a 24-hour session, an idle-hour sign-out, a server-side end list (portal_session_ends) and logged sign-in and expiry events, which closes the 31 Oct gap; live /health sha dc21c04 is master head. A signed-in session was not exercised.",
@@ -1824,6 +1841,10 @@
      "status": "n/a",
      "reason": "no check for a worker"
     },
+    "germomics-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
     "capsid-portal": {
      "status": "n/a",
      "reason": "no check for a app"
@@ -1941,6 +1962,10 @@
      "reason": "no check for a worker"
     },
     "foxing-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "germomics-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
     },
@@ -2085,6 +2110,10 @@
      "reason": "no check for a worker"
     },
     "foxing-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
+    "germomics-mcp": {
      "status": "n/a",
      "reason": "no check for a worker"
     },
@@ -2415,6 +2444,10 @@
      "status": "n/a",
      "reason": "no check for a worker"
     },
+    "germomics-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
     "capsid-portal": {
      "status": "n/a",
      "reason": "no check for a app"
@@ -2564,6 +2597,10 @@
        "detail": "https://admin-mcp.foxing.app/health serves a43207b828276c613a73e87d697fee14c112b567, not the branch head 701b1c523b416862271b4324d908c1268e8fe477 (https://github.com/DrDustinEdwards/foxing/commit/701b1c523b416862271b4324d908c1268e8fe477), committed 389 minutes ago"
       }
      ]
+    },
+    "germomics-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
     },
     "capsid-portal": {
      "status": "n/a",
@@ -3344,6 +3381,10 @@
      "status": "n/a",
      "reason": "an MCP endpoint with no public pages to scan: / and every unknown path answer a text/plain 404, and /authorize answers 400 without a registered client"
     },
+    "germomics-mcp": {
+     "status": "n/a",
+     "reason": "an MCP endpoint with no public pages to scan: / and every unknown path answer a text/plain 404, and /authorize answers 400 without a registered client"
+    },
     "capsid-portal": {
      "status": "n/a",
      "reason": "no check for a app"
@@ -3977,6 +4018,10 @@
      "status": "n/a",
      "reason": "no check for a worker"
     },
+    "germomics-mcp": {
+     "status": "n/a",
+     "reason": "no check for a worker"
+    },
     "capsid-portal": {
      "status": "complete",
      "reason": "chart-audit 5 Nov: 28 charts on 10 demo pages, no findings, rerun 3 times on packages, prs and queue; signed-in pages are not checked",
@@ -4140,6 +4185,10 @@
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
      "clean_days": 1
     },
+    "germomics-mcp": {
+     "status": "missing",
+     "reason": "not run yet"
+    },
     "capsid-portal": {
      "status": "n/a",
      "reason": "no check for a app"
@@ -4231,6 +4280,10 @@
      "reason": "no live check yet"
     },
     "foxing-mcp": {
+     "status": "missing",
+     "reason": "no live check yet"
+    },
+    "germomics-mcp": {
      "status": "missing",
      "reason": "no live check yet"
     },
