@@ -14,7 +14,7 @@ name: pr
 #   8. The automatic reviewer (review.yml), started in the background first and collected last, so the other checks run
 #      during the minutes the model takes. Advisory: it never fails the job.
 #
-# EVERY CHECK RUNS AND REPORTS even when another failed: each step runs unless the run was cancelled or what it needs
+# EVERY CHECK RUNS AND REPORTS even when another failed: each step runs unless the run was canceled or what it needs
 # (a checkout, the install) failed, keeps its own annotations and its own section of the job summary, and the last step
 # lists each check's outcome and fails the job if any failed. The steps are composite actions in .github/actions/, the one
 # copy the standalone workflows above run too, read from devkit at the commit the caller pinned (job.workflow_sha).

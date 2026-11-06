@@ -42,6 +42,9 @@ jobs:
       checks: write
     uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@0000000000000000000000000000000000000000
     with:
+      # Until Capsid admits pr.yml's token for a review (capsid src/review.ts, REVIEW_WORKFLOW), keep the review.yml caller
+      # and pass review: false; pr.yml's reviewer otherwise reports that it could not run.
+      review: false
       # A repository with no Worker: worker-size: false. A private one, which runs no-bloat weekly: no-bloat: false. One
       # with nothing to install: node: false. Each prepare runs after the install; omit the ones not needed.
       no-bloat-prepare: npm run build:content

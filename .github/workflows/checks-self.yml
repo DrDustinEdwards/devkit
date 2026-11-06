@@ -1,7 +1,7 @@
 name: checks-self
 
 # devkit's own pull requests through its own pr.yml (this commit's copy), as a caller's are (examples/pr-caller.yml): the
-# footer strip, the trailer check, the shared-code check, the no-bloat ratchet and the reviewer in one job, reported as
+# footer strip, the trailer check, the shared-code check and the no-bloat ratchet in one job, reported as
 # "checks / Repo checks", the name devkit's ruleset requires. devkit is not its own dependency, so the install links it
 # into node_modules where no-bloat looks for the bin. It has no Worker of its own (drill/ is the rollback drill's).
 #
@@ -34,3 +34,6 @@ jobs:
       worker-size: false
       dependencies: false
       workflow-audit: false
+      # Capsid admits a review only from devkit's review.yml (capsid src/review.ts, REVIEW_WORKFLOW), so review-self.yml
+      # keeps reviewing devkit until Capsid also admits pr.yml; then this line and review-self.yml go.
+      review: false
