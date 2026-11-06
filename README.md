@@ -77,19 +77,19 @@ capsid's watcher reads the job name `live gate`, the step name, and the step's t
 
 Inputs:
 
-| Input | Required | Default | What it is |
-|---|---|---|---|
-| `worker-name` | yes | | The Worker's name, for `wrangler deploy --name` and `wrangler rollback --name`. |
-| `health-url` | yes | | The live health route. It must answer JSON whose `sha` is the deployed commit (abbreviated to 7 or more hex characters is fine). |
-| `verify-command` | yes | | The live checks, run in the working directory with `EXPECT_SHA` and `HEALTH_URL` set and no install. 0 passes, 1 refuses, 3 could not run. It gets no Cloudflare secret. |
-| `node-version-file` | no | `.nvmrc` | As `actions/setup-node` reads it, from the repository root. |
-| `working-directory` | no | `.` | Where the Worker and its `wrangler` config live. |
-| `install` | no | `npm ci` | The deploy job's install. |
-| `pre-deploy` | no | none | The caller's guards before the deploy (a migration check, a config rebuild, a build), run with the Cloudflare secrets. A failure stops the deploy. |
-| `sha-var` | no | none | When set, the deploy passes `--var <name>:<this run's commit>`, so the Worker can report it on /health. |
-| `warm` | no | `true` | Warm the stored pages in the live gate once it passes. `false` ends the gate sooner (above). |
-| `generated-secrets` | no | none | Names of secrets nobody needs to know, such as site-runtime's `ADMIN_IDLE_SECRET`, separated by spaces. A name the Worker does not hold (`wrangler secret list`, names only) is minted, 32 random bytes as base64url, masked in the log, and uploaded with this deploy (`--secrets-file`, which keeps every other secret; Cloudflare Docs, "Secrets", "Upload secrets alongside code"), on a gradual upload too. A name it holds is never read or changed, so the value is set once and stays. To rotate one, delete it (`wrangler secret delete`) and the next deploy mints a new one. |
-| `d1-database` | no | none | The D1 database's name. When set, the deploy job reads its Time Travel bookmark (`wrangler d1 time-travel info <db> --json`) before the pre-deploy guard, and writes it, the time and the undo command to the step summary and to the outputs `d1-bookmark` and `d1-bookmark-time`. A bookmark it cannot read stops the deploy. The token then also needs D1: Read. |
+| Input               | Required | Default  | What it is                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ------------------- | -------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `worker-name`       | yes      |          | The Worker's name, for `wrangler deploy --name` and `wrangler rollback --name`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `health-url`        | yes      |          | The live health route. It must answer JSON whose `sha` is the deployed commit (abbreviated to 7 or more hex characters is fine).                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `verify-command`    | yes      |          | The live checks, run in the working directory with `EXPECT_SHA` and `HEALTH_URL` set and no install. 0 passes, 1 refuses, 3 could not run. It gets no Cloudflare secret.                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `node-version-file` | no       | `.nvmrc` | As `actions/setup-node` reads it, from the repository root.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `working-directory` | no       | `.`      | Where the Worker and its `wrangler` config live.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `install`           | no       | `npm ci` | The deploy job's install.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `pre-deploy`        | no       | none     | The caller's guards before the deploy (a migration check, a config rebuild, a build), run with the Cloudflare secrets. A failure stops the deploy.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `sha-var`           | no       | none     | When set, the deploy passes `--var <name>:<this run's commit>`, so the Worker can report it on /health.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `warm`              | no       | `true`   | Warm the stored pages in the live gate once it passes. `false` ends the gate sooner (above).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `generated-secrets` | no       | none     | Names of secrets nobody needs to know, such as site-runtime's `ADMIN_IDLE_SECRET`, separated by spaces. A name the Worker does not hold (`wrangler secret list`, names only) is minted, 32 random bytes as base64url, masked in the log, and uploaded with this deploy (`--secrets-file`, which keeps every other secret; Cloudflare Docs, "Secrets", "Upload secrets alongside code"), on a gradual upload too. A name it holds is never read or changed, so the value is set once and stays. To rotate one, delete it (`wrangler secret delete`) and the next deploy mints a new one. |
+| `d1-database`       | no       | none     | The D1 database's name. When set, the deploy job reads its Time Travel bookmark (`wrangler d1 time-travel info <db> --json`) before the pre-deploy guard, and writes it, the time and the undo command to the step summary and to the outputs `d1-bookmark` and `d1-bookmark-time`. A bookmark it cannot read stops the deploy. The token then also needs D1: Read.                                                                                                                                                                                                                     |
 
 Secrets, passed by name (`secrets: inherit` is refused by `check-callers.mjs`): `CLOUDFLARE_API_TOKEN`, a token that can deploy and roll back the Worker (Workers Scripts: Edit), and `CLOUDFLARE_ACCOUNT_ID`. Both are required, and a missing one fails the deploy loudly rather than skipping it.
 
@@ -101,12 +101,12 @@ The limits. Cloudflare's rollback swaps the Worker's code and bindings only. It 
 
 **Why both stay opt-in.** Turning either on by default would break callers that work today: a gradual rollout refuses a Durable Object migration (Foxhound, Foxing, Carrel and Capsid have Durable Objects, and a new class or rename needs `wrangler deploy`), cannot run on a Worker's first deploy, needs Account Analytics Read on a token that today has only the deploy permissions, and adds `gradual-minutes` to every deploy; a preview fails on every pull request for a Worker with a Durable Object (Cloudflare gives it no preview URL) or with Version URLs off. Each site turns them on in its caller once its token and config allow, in a reviewed change.
 
-| Input | Default | What it is |
-|---|---|---|
-| `gradual-percent` | `0` | 0 deploys at once. 1 to 99 is the new version's share of traffic before the gate promotes it. |
-| `gradual-minutes` | `10` | How long that share runs before the verify command, 0 to 25. |
-| `preview` | `false` | Upload a preview version for each pull request from this repository. |
-| `preview-build` | none | Run before the preview upload, with the Cloudflare secrets (a config rebuild, a build). |
+| Input             | Default | What it is                                                                                    |
+| ----------------- | ------- | --------------------------------------------------------------------------------------------- |
+| `gradual-percent` | `0`     | 0 deploys at once. 1 to 99 is the new version's share of traffic before the gate promotes it. |
+| `gradual-minutes` | `10`    | How long that share runs before the verify command, 0 to 25.                                  |
+| `preview`         | `false` | Upload a preview version for each pull request from this repository.                          |
+| `preview-build`   | none    | Run before the preview upload, with the Cloudflare secrets (a config rebuild, a build).       |
 
 When something breaks after a deploy, or anywhere else, the steps are in [docs/runbook.md](docs/runbook.md): site down, database down, bad deploy, stale backup and lost data, each site's RPO and RTO, and the incident record.
 
@@ -142,17 +142,22 @@ devkit maps itself the same way (`code-map-self.yml`), and once a week mutation-
 
 `@dustinedwards/devkit/oxlint` (`lint/oxlint.mjs`, typed by `lint/oxlint.d.mts`) is one Oxlint config for every repository: Oxlint, type-aware through oxlint-tsgolint, in place of ESLint and Biome's linter. It exports three plain config objects, which a repository's `oxlint.config.ts` extends. Oxlint's docs name this as the way to share a config from a package: "Use `oxlint.config.ts` when extending config objects imported from a shared package. Package imports are not supported in the `.oxlintrc.json` format." ([Configuration, Extend shared configs](https://oxc.rs/docs/guide/usage/linter/config.html#extend-shared-configs)). Configs merge first to last, so the repository's own `rules` and `overrides` after `extends` win.
 
-- `base`, every repository: the correctness category with the typescript, unicorn, oxc and import plugins; `typescript/no-floating-promises` (node:test's `test`, `describe`, `it` and `suite` allowed, since the runner awaits them), `typescript/no-misused-promises`, `typescript/no-explicit-any`, `typescript/no-non-null-assertion` and `eslint/prefer-const` at error; `build/`, `dist/`, `.react-router/`, `.wrangler/`, `worker-configuration.d.ts` and `**/*.gen.ts` ignored. Four type-aware correctness rules are off for everyone (`no-base-to-string`, `restrict-template-expressions`, `unbound-method`, `require-array-sort-compare`): each finding they made in dustinedwards-info and site-api was a value the checker could not narrow, not a bug. The counts are in the file.
-- `react`, a repository with React: base's plugins plus `react` and `jsx-a11y`; `react/rules-of-hooks`, `react/exhaustive-deps` and the native React Compiler rules at error; `react/only-export-components` allowing React Router's route module exports that are not components (`loader`, `action`, `meta`, `links`, `headers`, `handle`, `shouldRevalidate`, the client and middleware ones).
+- `base`, every repository: the correctness category with the typescript, unicorn, oxc and import plugins; `typescript/no-floating-promises` (node:test's `test`, `describe`, `it` and `suite` allowed, since the runner awaits them), `typescript/no-misused-promises`, `typescript/no-explicit-any` and `eslint/prefer-const` at error. `no-non-null-assertion` is not on: typescript-eslint keeps it in `strict`, not `recommended`, and its 1,600 findings in capsid and site-api were churn, not bugs. Four type-aware correctness rules are off for everyone (`no-base-to-string`, `restrict-template-expressions`, `unbound-method`, `require-array-sort-compare`): each finding they made in dustinedwards-info and site-api was a value the checker could not narrow, not a bug. The counts are in the file.
+- `react`, a repository with React: base's plugins plus `react` and `jsx-a11y`; `react/rules-of-hooks`, `react/exhaustive-deps` and the native React Compiler rules at error. `only-export-components` is not on: it guards only Fast Refresh in development.
+- `ignorePatterns`, what no repository lints (`build/`, `dist/`, `.react-router/`, `.wrangler/`, `worker-configuration.d.ts`, `**/*.gen.ts`). The repository's config sets it itself, since Oxlint does not carry `ignorePatterns` through `extends`.
+
+Two Oxlint behaviors to know: an override that sets a plugin's rules lists the plugin in its own `plugins` (`plugins: react.plugins`), or the rules do nothing; and a suppression comment goes on the line the finding is reported on (for `exhaustive-deps`, the dependency array), naming the rule as `react-hooks/exhaustive-deps` or `react/exhaustive-deps`.
+
 - `node`, Node's globals, spread into an override.
 
 ```ts
 // oxlint.config.ts
 import { defineConfig } from "oxlint";
-import { base, react, node } from "@dustinedwards/devkit/oxlint";
+import { base, react, node, ignorePatterns } from "@dustinedwards/devkit/oxlint";
 
 export default defineConfig({
   extends: [base, react],
+  ignorePatterns,
   overrides: [{ files: ["scripts/**", "bin/**", "test/**"], ...node }],
 });
 ```
@@ -162,6 +167,25 @@ export default defineConfig({
 ```
 
 The repository adds `oxlint` and `oxlint-tsgolint` to its devDependencies at the versions devkit's `peerDependencies` name (1.92.0 and 7.0.2006; optional peers, so a repository that does not lint yet installs neither), and one CI step, `npm run lint`, after the typecheck where the typecheck generates types (`wrangler types`, `react-router typegen`), since the type-aware rules read them. `oxlint.config.ts` needs Node 22.18 or later. No `--tsconfig`: type-aware mode finds each file's tsconfig itself. `test/oxlint.test.mjs` runs Oxlint on a fixture that extends the export by its package name and must be flagged for exactly a dropped promise, a conditional hook and a restricted import (`eslint/no-restricted-imports` with `patterns`, as txasm's boundary will use it).
+
+`@dustinedwards/devkit/oxfmt` (`lint/oxfmt.mjs`) is the formatter's half: Oxfmt, Oxlint's formatter, which prints what Prettier prints and is tested against Prettier's own suite ([Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)), for every repository (Dustin, 2026-11-06). `format` is Oxfmt's defaults (2 spaces, double quotes, semicolons, trailing commas, width 100) with build output, generated types and lockfiles ignored; a repository adds only what its files need (astro: `astro: true` and `@astrojs/compiler-rs`).
+
+```ts
+// oxfmt.config.ts
+import { defineConfig } from "oxfmt";
+import { format } from "@dustinedwards/devkit/oxfmt";
+
+export default defineConfig({ ...format });
+```
+
+```json
+"format": "oxfmt",
+"format:check": "oxfmt --check"
+```
+
+`oxfmt` goes in devDependencies at devkit's peer version (0.77.0; pre-1.0, so pinned exactly), CI runs `npm run format:check`, and the commit that first formats a repository is listed in its `.git-blame-ignore-revs`, which GitHub's blame reads.
+
+`devkit-shared`'s `lint` check keeps every repository on both: a repository with JavaScript or TypeScript fails without a root `oxlint.config.ts` importing `@dustinedwards/devkit/oxlint`, with a linter config of its own (`eslint.config.*`, `.eslintrc*`, `biome.json`, `.oxlintrc.json`), with a root `lint` script other than the one above, or with no workflow running `npm run lint`, and the same for Oxfmt (`oxfmt.config.ts` with `@dustinedwards/devkit/oxfmt`, no Prettier or `.oxfmtrc.json` config, `format:check`, `npm run format:check` in CI). It warns in 0.24.0 and fails from 0.25.0. A nested `oxlint.config.ts` for one part (foxing's `apps/mobile`, with its local dash rule) is allowed. Renovate's shared policy (`default.json`) moves `oxlint`, `oxlint-tsgolint` and `oxfmt` as one "Oxc" update.
 
 ## The shared Claude Code hooks
 
@@ -221,6 +245,7 @@ Only `testing/`, `lint/`, `vite/`, `bin/`, `claude/` and this README are in the 
   ```
 
   A TypeScript site declares it in an ambient `.d.ts` naming its islands: `declare module "virtual:islands" { export const ISLAND_URLS: Readonly<Record<"gallery", string>>; export const ISLAND_GZIP_BYTES: Readonly<Record<"gallery", number>>; }`. In `vite dev`, `/site.js` also loads the dev toolbar unless `toolbar: false`. Vite comes from the site; this package still has no dependencies.
+
 - `@dustinedwards/devkit/islands`: `startIslands({ root, load })`, Astro's client directives for those islands. An element names its island and when it starts, and the page's HTML works before it does:
 
   ```html
@@ -228,6 +253,7 @@ Only `testing/`, `lint/`, `vite/`, `bin/`, `claude/` and this README are in the 
   ```
 
   `data-client` is `load` (default), `idle` (`data-client-timeout`), `visible` (`data-client-root-margin`) or `media` (`data-client-media`). The island's default export gets the element and the parsed props, once; then the element gets `data-island-ready`.
+
 - `@dustinedwards/devkit/vite/dev-toolbar`: `devToolbar()`, Astro's dev toolbar, in `vite dev` only. Inspect outlines the page's islands with their directive, props and whether they started. Audit runs axe-core (the site's own, served at `/@devkit/axe.js`; without it only performance is checked) and Astro's performance rules: a large image with no srcset, lazy above the fold, eager below it, a GIF over 100 KB, an island slow to start. Settings places the bar and hides it. siteScript already includes it; a React Router site adds `{import.meta.env.DEV && <script type="module" src="/@devkit/toolbar.js" />}` to its root.
 
 An entry point is added when a repository adopts it. A release is the merge of a version bump in `package.json` and `CHANGELOG.md` (`release-self.yml` tags it); a consumer moves to it in its own pull request.

@@ -16,79 +16,57 @@
     },
     "carrel": {
       "verdict": "complete",
-      "evidence": [
-        "https://carrel.dustinedwards.info/"
-      ],
+      "evidence": ["https://carrel.dustinedwards.info/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0 and v0.65.0; subResourceIntegrity on; admit() split from the gate in carrel #251 with the gate unchanged; preview policy keeps frame-ancestors 'self' for Desk and builds on UPLOAD_HEADERS."
     },
     "julieedwards-info": {
       "verdict": "complete",
-      "evidence": [
-        "https://julieedwards.info/"
-      ],
+      "evidence": ["https://julieedwards.info/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0; subResourceIntegrity on; Integrity-Policy, Trusted Types and COEP staged Report-Only."
     },
     "bsw": {
       "verdict": "complete",
-      "evidence": [
-        "https://bsw.dustin-edwards.workers.dev/"
-      ],
+      "evidence": ["https://bsw.dustin-edwards.workers.dev/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0; noindex on workers.dev while the old site lives (oldSite)."
     },
     "txasm": {
       "verdict": "complete",
-      "evidence": [
-        "https://txasm.dustin-edwards.workers.dev/"
-      ],
+      "evidence": ["https://txasm.dustin-edwards.workers.dev/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0; stays indexed on workers.dev because txasm.org is a suspended host (sites.mjs:339). Dustin's flag 21: txasm.org answers 302 to /cgi-sys/suspendedpage.cgi."
     },
     "foxing": {
       "verdict": "complete",
-      "evidence": [
-        "https://foxing.app/"
-      ],
+      "evidence": ["https://foxing.app/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0. apps/web is on v0.65.0, but packages/api and packages/core are on v0.62.1: bump them with the next foxing change."
     },
     "enarratio": {
       "verdict": "complete",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/"
-      ],
+      "evidence": ["https://enarratio.dustinedwards.info/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; static scripts carry integrity. Pin is v0.62.1 (renovate #122 to 0.65.0 is open); the pin check fails it three days after a newer minor, so merge #122."
     },
     "capsid": {
       "verdict": "complete",
-      "evidence": [
-        "https://capsid.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsid.dustinedwards.info/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0 (capsid #695); Portal cookies go through hostCookie (src/auth.ts:28)."
     },
     "capsid-mcp": {
       "verdict": "complete",
-      "evidence": [
-        "https://mcp.dustinedwards.info/"
-      ],
+      "evidence": ["https://mcp.dustinedwards.info/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors, 0 warnings at v0.66.0; live sha 7baa2e1 or newer."
     },
     "dustinedwards-mcp": {
       "verdict": "complete",
-      "evidence": [
-        "https://admin-mcp.dustinedwards.info/"
-      ],
+      "evidence": ["https://admin-mcp.dustinedwards.info/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors, 0 warnings at v0.66.0; pin v0.65.0 in mcp/package.json."
     },
     "foxhound-mcp": {
       "verdict": "complete",
-      "evidence": [
-        "https://admin-mcp.foxhoundapp.com/"
-      ],
+      "evidence": ["https://admin-mcp.foxhoundapp.com/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors, 0 warnings at v0.66.0."
     },
     "carrel-mcp": {
       "verdict": "complete",
-      "evidence": [
-        "https://carrel-mcp.dustinedwards.info/"
-      ],
+      "evidence": ["https://carrel-mcp.dustinedwards.info/"],
       "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors, 0 warnings at v0.66.0; /health sha 509f1b3."
     },
     "capsid-portal": {
@@ -109,44 +87,32 @@
     },
     "dustinedwards-info": {
       "verdict": "partial",
-      "evidence": [
-        "https://dustinedwards.info/"
-      ],
+      "evidence": ["https://dustinedwards.info/"],
       "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3: COEP is still enforced where an embedding site must keep it Report-Only. It passes v0.65.0 with 0 errors. Pin is v0.65.0 in package.json and mcp/package.json; a bump to v0.66.0 with the site's embeds change and a deploy fixes it. Re-check then."
     },
     "germomics": {
       "verdict": "partial",
-      "evidence": [
-        "https://germomics.com/"
-      ],
+      "evidence": ["https://germomics.com/"],
       "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. Bump to v0.66.0 and deploy."
     },
     "foxhound": {
       "verdict": "partial",
-      "evidence": [
-        "https://foxhoundapp.com/"
-      ],
+      "evidence": ["https://foxhoundapp.com/"],
       "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. foxhound #432 (v0.66.0) is open; re-check after it deploys."
     },
     "capsomer": {
       "verdict": "partial",
-      "evidence": [
-        "https://capsomer.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsomer.dustinedwards.info/"],
       "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. Pin is v0.62.1; bump to v0.66.0 and deploy."
     },
     "prelum": {
       "verdict": "partial",
-      "evidence": [
-        "https://prelum.dustinedwards.info/"
-      ],
+      "evidence": ["https://prelum.dustinedwards.info/"],
       "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3 (COEP enforced, not Report-Only). prelum #182 (v0.66.0) merged at 22:49Z but the live sha at 23:10Z was still ffbe359, so the deploy had not landed. It passes v0.65.0 with 0 errors. Re-check after the deploy."
     },
     "foxing-mcp": {
       "verdict": "partial",
-      "evidence": [
-        "https://admin-mcp.foxing.app/"
-      ],
+      "evidence": ["https://admin-mcp.foxing.app/"],
       "note": "0 errors, 0 warnings live (on Cloudflare since foxing #165), but mcp/package.json pins site-runtime v0.62.0, four minors behind v0.66.0. devkit's pin check (S7) wants every MCP server within one minor; it is a warning until devkit 0.21.0. Bump to the current release and redeploy."
     }
   }

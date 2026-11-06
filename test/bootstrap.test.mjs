@@ -16,11 +16,18 @@ test("copies a missing example once, passes the arguments to wrangler types, and
   const dir = mkdtempSync(join(tmpdir(), "bootstrap-"));
   try {
     const stub = join(dir, "stub.js");
-    writeFileSync(stub, 'require("fs").writeFileSync("args.json", JSON.stringify(process.argv.slice(2)));\nprocess.stdin.on("end", () => process.exit(0));\nprocess.stdin.resume();\n');
+    writeFileSync(
+      stub,
+      'require("fs").writeFileSync("args.json", JSON.stringify(process.argv.slice(2)));\nprocess.stdin.on("end", () => process.exit(0));\nprocess.stdin.resume();\n',
+    );
     writeFileSync(join(dir, "wrangler.jsonc.example"), "example");
     writeFileSync(join(dir, "wrangler.watchdog.jsonc.example"), "example");
     writeFileSync(join(dir, "wrangler.watchdog.jsonc"), "real");
-    const child = spawn(process.execPath, [BIN, "--", "--strict-vars=false"], { cwd: dir, env: { ...process.env, WRANGLER_ENTRY: stub }, stdio: ["pipe", "ignore", "inherit"] });
+    const child = spawn(process.execPath, [BIN, "--", "--strict-vars=false"], {
+      cwd: dir,
+      env: { ...process.env, WRANGLER_ENTRY: stub },
+      stdio: ["pipe", "ignore", "inherit"],
+    });
     const code = await new Promise((done) => {
       const timer = setTimeout(() => (child.kill("SIGKILL"), done("waited on stdin")), 10_000);
       child.on("exit", (c) => (clearTimeout(timer), done(c)));
@@ -28,9 +35,17 @@ test("copies a missing example once, passes the arguments to wrangler types, and
     assert.equal(code, 0);
     assert.equal(readFileSync(join(dir, "wrangler.jsonc"), "utf8"), "example");
     assert.equal(readFileSync(join(dir, "wrangler.watchdog.jsonc"), "utf8"), "real");
-    assert.deepEqual(JSON.parse(readFileSync(join(dir, "args.json"), "utf8")), ["types", "--strict-vars=false"]);
+    assert.deepEqual(JSON.parse(readFileSync(join(dir, "args.json"), "utf8")), [
+      "types",
+      "--strict-vars=false",
+    ]);
 
-    writeFileSync(join(dir, "package.json"), JSON.stringify({ scripts: { typecheck: "wrangler types && tsc", postinstall: "devkit-bootstrap" } }));
+    writeFileSync(
+      join(dir, "package.json"),
+      JSON.stringify({
+        scripts: { typecheck: "wrangler types && tsc", postinstall: "devkit-bootstrap" },
+      }),
+    );
     const check = spawnSync(process.execPath, [BIN, "--check"], { cwd: dir, encoding: "utf8" });
     assert.equal(check.status, 1);
     assert.match(check.stderr, /typecheck runs a bare `wrangler types`/);

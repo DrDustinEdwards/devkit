@@ -8,7 +8,10 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-const text = readFileSync(new URL("../.github/workflows/release.yml", import.meta.url), "utf8").replace(/\r\n/g, "\n");
+const text = readFileSync(
+  new URL("../.github/workflows/release.yml", import.meta.url),
+  "utf8",
+).replace(/\r\n/g, "\n");
 
 /** The `run: |` block of the release step, dedented. */
 const script = (() => {
@@ -23,7 +26,12 @@ const script = (() => {
   return body.join("\n");
 })();
 
-function run({ version = "0.19.0", changelog = "", tagExists = false, ref = "refs/heads/main" } = {}) {
+function run({
+  version = "0.19.0",
+  changelog = "",
+  tagExists = false,
+  ref = "refs/heads/main",
+} = {}) {
   const dir = mkdtempSync(join(tmpdir(), "release-"));
   writeFileSync(join(dir, "package.json"), JSON.stringify({ version }));
   if (changelog) writeFileSync(join(dir, "CHANGELOG.md"), changelog);
@@ -35,13 +43,24 @@ function run({ version = "0.19.0", changelog = "", tagExists = false, ref = "ref
   const result = spawnSync("bash", ["-e", "-c", script], {
     cwd: dir,
     encoding: "utf8",
-    env: { ...process.env, PATH: `${dir}:${process.env.PATH}`, GITHUB_REF: ref, DEFAULT_BRANCH: "main", GITHUB_REPOSITORY: "o/r", GITHUB_SHA: "abc", GITHUB_OUTPUT: join(dir, "out"), RUNNER_TEMP: dir },
+    env: {
+      ...process.env,
+      PATH: `${dir}:${process.env.PATH}`,
+      GITHUB_REF: ref,
+      DEFAULT_BRANCH: "main",
+      GITHUB_REPOSITORY: "o/r",
+      GITHUB_SHA: "abc",
+      GITHUB_OUTPUT: join(dir, "out"),
+      RUNNER_TEMP: dir,
+    },
   });
-  const read = (/** @type {string} */ f) => spawnSync("cat", [join(dir, f)], { encoding: "utf8" }).stdout;
+  const read = (/** @type {string} */ f) =>
+    spawnSync("cat", [join(dir, f)], { encoding: "utf8" }).stdout;
   return { status: result.status, calls: read("calls"), notes: read("notes"), out: read("out") };
 }
 
-const CHANGELOG = "# Changelog\n\n## 0.19.0 (2026-10-31)\n\n- New.\n\n## 0.18.0 (2026-10-30)\n\n- Old.\n";
+const CHANGELOG =
+  "# Changelog\n\n## 0.19.0 (2026-10-31)\n\n- New.\n\n## 0.18.0 (2026-10-30)\n\n- Old.\n";
 
 test("a new version is tagged and released with its own CHANGELOG section", () => {
   const r = run({ changelog: CHANGELOG });
@@ -53,7 +72,10 @@ test("a new version is tagged and released with its own CHANGELOG section", () =
 });
 
 test("a bracketed heading is found, and no section falls back to generated notes", () => {
-  assert.equal(run({ changelog: "## [0.19.0] - 2026-10-31\n\n- Bracketed.\n\n## [0.18.0]\n" }).notes.trim(), "- Bracketed.");
+  assert.equal(
+    run({ changelog: "## [0.19.0] - 2026-10-31\n\n- Bracketed.\n\n## [0.18.0]\n" }).notes.trim(),
+    "- Bracketed.",
+  );
   assert.match(run({ changelog: "## 0.18.0\n\n- Old.\n" }).calls, /--generate-notes/);
 });
 

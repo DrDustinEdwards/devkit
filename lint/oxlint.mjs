@@ -1,12 +1,18 @@
-// The shared Oxlint config: three plain config objects a repository's oxlint.config.ts extends.
+// The shared Oxlint config: three plain config objects a repository's oxlint.config.ts extends, and the ignore list.
 //
 //   import { defineConfig } from "oxlint";
-//   import { base, react, node } from "@dustinedwards/devkit/oxlint";
+//   import { base, react, node, ignorePatterns } from "@dustinedwards/devkit/oxlint";
 //
 //   export default defineConfig({
 //     extends: [base, react],
+//     ignorePatterns,
 //     overrides: [{ files: ["scripts/**", "bin/**", "test/**"], ...node }],
 //   });
+//
+// Two Oxlint behaviors to know (oxlint 1.92, measured 2026-11-06): `ignorePatterns` in an extended config does not
+// carry over (`--print-config` shows it empty and dist/ is linted), so it is its own export the repository's config
+// sets itself; and an override that sets a plugin's rules lists that plugin in its own `plugins`
+// (`plugins: react.plugins`), or the rules do nothing.
 //
 // Oxlint's docs name this as the way to share a config from a package: "Use `oxlint.config.ts` when extending config
 // objects imported from a shared package. Package imports are not supported in the `.oxlintrc.json` format."
@@ -19,8 +25,11 @@
  * Every repository. Oxlint's correctness category, plus the rules the network's linters were set up for: a dropped
  * promise loses its rejection and in a Worker can outlive the request, so `no-floating-promises` and
  * `no-misused-promises` (Cloudflare's Workers best practices,
- * https://developers.cloudflare.com/workers/best-practices/workers-best-practices/), and the three Biome rules astro
- * and foxing hold (`noExplicitAny`, `noNonNullAssertion`, `useConst`).
+ * https://developers.cloudflare.com/workers/best-practices/workers-best-practices/), and two of the three Biome rules astro
+ * and foxing held (`noExplicitAny`, `useConst`). The third, `noNonNullAssertion`, is not here: typescript-eslint keeps
+ * `no-non-null-assertion` out of `recommended` and in `strict` (https://typescript-eslint.io/rules/no-non-null-assertion/),
+ * and on 2026-11-06 it made about 1,600 findings in capsid and site-api, mostly tests, every one rewritten into a
+ * helper that throws, which is churn and a copied helper, not a better app.
  *
  * The type-aware correctness rules stay on, with four exceptions decided once here for every repository. They were
  * eight local offs in dustinedwards-info's .oxlintrc.json, with no reason recorded; a run of all eight over
@@ -41,26 +50,42 @@ export const base = {
     // top-level calls are not dropped promises (`allowForKnownSafeCalls`, the rule's option for such calls).
     "typescript/no-floating-promises": [
       "error",
-      { allowForKnownSafeCalls: [{ from: "package", package: "node:test", name: ["test", "describe", "it", "suite"] }] },
+      {
+        allowForKnownSafeCalls: [
+          { from: "package", package: "node:test", name: ["test", "describe", "it", "suite"] },
+        ],
+      },
     ],
     "typescript/no-misused-promises": "error",
     "typescript/no-explicit-any": "error",
-    "typescript/no-non-null-assertion": "error",
     "eslint/prefer-const": "error",
     "typescript/no-base-to-string": "off",
     "typescript/restrict-template-expressions": "off",
     "typescript/unbound-method": "off",
     "typescript/require-array-sort-compare": "off",
   },
-  ignorePatterns: ["build/", "dist/", ".react-router/", ".wrangler/", "worker-configuration.d.ts", "**/*.gen.ts"],
 };
+
+/**
+ * What no repository lints: build output, React Router's and Wrangler's generated files, generated types. Set it as the
+ * repository config's own `ignorePatterns` (spread it to add more): Oxlint does not carry it through `extends`.
+ * @type {string[]}
+ */
+export const ignorePatterns = [
+  "build/",
+  "dist/",
+  ".react-router/",
+  ".wrangler/",
+  "worker-configuration.d.ts",
+  "**/*.gen.ts",
+];
 
 /**
  * A repository with React (React Router 8, Expo). The rules of hooks, exhaustive deps and Oxlint's native React
  * Compiler rules (react-hooks `recommended-latest` less `gating`, `config` and `component-hook-factories`, which check
- * the React Compiler's own options and no repository sets), at error. `only-export-components` keeps Fast Refresh
- * working and allows React Router's route module exports that are not components
- * (https://reactrouter.com/start/framework/route-module). `plugins` lists base's too, since a config that sets
+ * the React Compiler's own options and no repository sets), at error. `only-export-components` is not here: it guards
+ * only Fast Refresh in development, and capsid's first run put 21 helpers beside components under it, so it would move
+ * code for a dev-server nicety. `plugins` lists base's too, since a config that sets
  * `plugins` replaces the set it extends.
  * @type {import("oxlint").OxlintConfig}
  */
@@ -81,24 +106,14 @@ export const react = {
     "react/error-boundaries": "error",
     "react/incompatible-library": "error",
     "react/unsupported-syntax": "error",
-    "react/only-export-components": [
-      "error",
-      {
-        allowExportNames: [
-          "loader",
-          "clientLoader",
-          "action",
-          "clientAction",
-          "middleware",
-          "clientMiddleware",
-          "meta",
-          "links",
-          "headers",
-          "handle",
-          "shouldRevalidate",
-        ],
-      },
-    ],
+    // jsx-a11y's correctness rules stay on (Capsomer's axe checks are the runtime half), less three that flag correct
+    // markup, measured on dustinedwards-info's first run (2026-11-06): `prefer-tag-over-role` (22) asks for a tag where
+    // the ARIA role is right, and no tag replaces `role="img"` on an SVG; `control-has-associated-label` (6) flagged a
+    // table cell filled by dangerouslySetInnerHTML and a datalist option; `media-has-caption` flags audio, whose
+    // accessible alternative is a transcript (WCAG 1.2.1), which the rule cannot see.
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/media-has-caption": "off",
   },
 };
 

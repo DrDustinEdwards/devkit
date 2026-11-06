@@ -30,6 +30,9 @@ jobs:
       # The shared Oxlint config (lint/oxlint.mjs) on devkit itself, type-aware, as every repository will run it.
       - name: Lint with the shared Oxlint config
         run: npm run lint
+      # The shared Oxfmt config (lint/oxfmt.mjs) on devkit itself, as every repository runs it.
+      - name: Format check with the shared Oxfmt config
+        run: npm run format:check
       - name: Hold the shared workflows to their properties, the caller check to its pin rule, and the package to its behavior
         run: node --test "test/*.test.mjs"
       - name: The example callers are themselves pinned

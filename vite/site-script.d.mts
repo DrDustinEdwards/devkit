@@ -9,4 +9,8 @@ import type { Plugin } from "vite";
  * island and the chunks it imports) for a server-rendered app. In `vite dev`, /site.js also loads the dev toolbar
  * unless `toolbar` is false.
  */
-export function siteScript(options?: { entry?: string | false; islands?: string; toolbar?: boolean }): Plugin;
+export function siteScript(options?: {
+  entry?: string | false;
+  islands?: string;
+  toolbar?: boolean;
+}): Plugin;

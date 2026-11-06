@@ -20,10 +20,15 @@ export function urlOf(input) {
  */
 export function installFetch(impl) {
   const previous = Object.getOwnPropertyDescriptor(globalThis, "fetch");
-  Object.defineProperty(globalThis, "fetch", { value: impl, writable: true, configurable: true, enumerable: true });
+  Object.defineProperty(globalThis, "fetch", {
+    value: impl,
+    writable: true,
+    configurable: true,
+    enumerable: true,
+  });
   return () => {
     if (previous) Object.defineProperty(globalThis, "fetch", previous);
-    else delete (/** @type {{ fetch?: unknown }} */ (globalThis)).fetch;
+    else delete (/** @type {{ fetch?: unknown }} */ (globalThis).fetch);
   };
 }
 
@@ -38,7 +43,8 @@ export function installFetch(impl) {
 export function refuseNetwork({ hint } = {}) {
   return installFetch(async (input) => {
     throw new Error(
-      `this layer does not reach the network, and something asked for ${urlOf(input)}.` + (hint ? ` ${hint}` : ""),
+      `this layer does not reach the network, and something asked for ${urlOf(input)}.` +
+        (hint ? ` ${hint}` : ""),
     );
   });
 }

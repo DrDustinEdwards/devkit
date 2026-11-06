@@ -29,7 +29,16 @@
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { appendFileSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import {
+  appendFileSync,
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -61,7 +70,10 @@ export const isSource = (/** @type {string} */ path) => SOURCE.test(path) && !SK
  * README has every repository paste, so the same bytes there are the shared way, not a copy.
  */
 export const isWholeFile = (/** @type {string} */ path) =>
-  /(?:^|\/)\.claude\//.test(path) && !SOURCE.test(path) && !SKIP.test(path) && !/(?:^|\/)settings(?:\.local)?\.json$/.test(path);
+  /(?:^|\/)\.claude\//.test(path) &&
+  !SOURCE.test(path) &&
+  !SKIP.test(path) &&
+  !/(?:^|\/)settings(?:\.local)?\.json$/.test(path);
 
 /**
  * Files with the same bytes in more than one repository: each group of places that hold one content. Pure.
@@ -70,10 +82,13 @@ export const isWholeFile = (/** @type {string} */ path) =>
 export function sameFiles(files) {
   /** @type {Map<string, { repo: string, path: string }[]>} */
   const byHash = new Map();
-  for (const { repo, path, hash } of files) byHash.set(hash, [...(byHash.get(hash) ?? []), { repo, path }]);
+  for (const { repo, path, hash } of files)
+    byHash.set(hash, [...(byHash.get(hash) ?? []), { repo, path }]);
   return [...byHash.values()]
     .filter((places) => new Set(places.map((p) => p.repo)).size > 1)
-    .map((places) => places.sort((a, b) => `${a.repo}/${a.path}`.localeCompare(`${b.repo}/${b.path}`)))
+    .map((places) =>
+      places.sort((a, b) => `${a.repo}/${a.path}`.localeCompare(`${b.repo}/${b.path}`)),
+    )
     .sort((a, b) => `${a[0].repo}/${a[0].path}`.localeCompare(`${b[0].repo}/${b[0].path}`));
 }
 
@@ -81,14 +96,21 @@ export function sameFiles(files) {
 const PACKAGE_REPOS = new Set(PACKAGES.map((p) => p.repo));
 
 /** The exports React Router reads from a route module by name: every app has them, by design. */
-const ROUTE_EXPORTS = new Set(["clientLoader", "clientAction", "shouldRevalidate", "HydrateFallback", "ErrorBoundary"]);
+const ROUTE_EXPORTS = new Set([
+  "clientLoader",
+  "clientAction",
+  "shouldRevalidate",
+  "HydrateFallback",
+  "ErrorBoundary",
+]);
 
 /**
  * What defines nothing of its own: a re-export (`export { x } from "..."`), and a Drizzle table, which mirrors in each
  * app's schema the SQL a shared package ships (site-api's media and store tables), so the same table name in two apps
  * is the shared schema, not a second job.
  */
-const NOT_OWN = /export\s*(?:type\s*)?\{[^}]*\}\s*from\s*["'][^"']+["']|export\s+const\s+[A-Za-z_$][\w$]*\s*=\s*(?:sqliteTable|pgTable|mysqlTable)\s*\(/g;
+const NOT_OWN =
+  /export\s*(?:type\s*)?\{[^}]*\}\s*from\s*["'][^"']+["']|export\s+const\s+[A-Za-z_$][\w$]*\s*=\s*(?:sqliteTable|pgTable|mysqlTable)\s*\(/g;
 
 /**
  * Distinctive names (devkit-shared's rule) that two or more repositories each define and export, none of them a shared
@@ -109,7 +131,12 @@ export function sharedNames(files) {
   }
   return [...defined]
     .filter(([, repos]) => repos.size > 1)
-    .map(([name, repos]) => ({ name, places: [...repos].map(([repo, path]) => ({ repo, path })).sort((a, b) => a.repo.localeCompare(b.repo)) }))
+    .map(([name, repos]) => ({
+      name,
+      places: [...repos]
+        .map(([repo, path]) => ({ repo, path }))
+        .sort((a, b) => a.repo.localeCompare(b.repo)),
+    }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
@@ -127,8 +154,12 @@ export function crossRepo(report) {
   return report.duplicates
     .map((d) => ({ a: place(d.firstFile), b: place(d.secondFile), lines: d.lines }))
     .filter(({ a, b }) => a.repo !== b.repo)
-    .map(({ a, b, lines }) => (`${a.repo}/${a.path}` <= `${b.repo}/${b.path}` ? { a, b, lines } : { a: b, b: a, lines }))
-    .sort((x, y) => `${x.a.repo}/${x.a.path}:${x.a.start}`.localeCompare(`${y.a.repo}/${y.a.path}:${y.a.start}`));
+    .map(({ a, b, lines }) =>
+      `${a.repo}/${a.path}` <= `${b.repo}/${b.path}` ? { a, b, lines } : { a: b, b: a, lines },
+    )
+    .sort((x, y) =>
+      `${x.a.repo}/${x.a.path}:${x.a.start}`.localeCompare(`${y.a.repo}/${y.a.path}:${y.a.start}`),
+    );
 }
 
 /**
@@ -136,14 +167,21 @@ export function crossRepo(report) {
  * token for the owner (a fine-grained token lists its repositories at /user/repos), the public ones otherwise.
  */
 async function ownerRepos(/** @type {string | undefined} */ token) {
-  const headers = { Accept: "application/vnd.github+json", "User-Agent": "devkit-copies", ...(token ? { Authorization: `Bearer ${token}` } : {}) };
-  const list = token ? "https://api.github.com/user/repos?affiliation=owner&visibility=all" : `https://api.github.com/users/${OWNER}/repos?type=owner`;
+  const headers = {
+    Accept: "application/vnd.github+json",
+    "User-Agent": "devkit-copies",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+  const list = token
+    ? "https://api.github.com/user/repos?affiliation=owner&visibility=all"
+    : `https://api.github.com/users/${OWNER}/repos?type=owner`;
   const names = [];
   for (let page = 1; ; page++) {
     const resp = await fetch(`${list}&per_page=100&page=${page}`, { headers });
     if (!resp.ok) throw new Error(`GitHub answered ${resp.status} for the repository list`);
     const repos = await resp.json();
-    for (const repo of repos) if (repo.owner?.login === OWNER && !repo.fork && !repo.archived) names.push(repo.name);
+    for (const repo of repos)
+      if (repo.owner?.login === OWNER && !repo.fork && !repo.archived) names.push(repo.name);
     if (repos.length < 100) return names.sort();
   }
 }
@@ -152,7 +190,13 @@ async function ownerRepos(/** @type {string | undefined} */ token) {
 function gitAuthEnv(/** @type {string | undefined} */ token) {
   if (!token) return { ...process.env, GIT_TERMINAL_PROMPT: "0" };
   const basic = Buffer.from(`x-access-token:${token}`).toString("base64");
-  return { ...process.env, GIT_TERMINAL_PROMPT: "0", GIT_CONFIG_COUNT: "1", GIT_CONFIG_KEY_0: "http.https://github.com/.extraheader", GIT_CONFIG_VALUE_0: `AUTHORIZATION: basic ${basic}` };
+  return {
+    ...process.env,
+    GIT_TERMINAL_PROMPT: "0",
+    GIT_CONFIG_COUNT: "1",
+    GIT_CONFIG_KEY_0: "http.https://github.com/.extraheader",
+    GIT_CONFIG_VALUE_0: `AUTHORIZATION: basic ${basic}`,
+  };
 }
 
 /** The source files that can export a name. */
@@ -162,8 +206,16 @@ const CODE = /\.[cm]?[jt]sx?$/;
  * Copies one checkout's tracked source into dest/<repo>, and returns how many files that was, the hashes of its whole
  * .claude files and the text of its code files, for the name pass.
  */
-function gather(/** @type {string} */ checkout, /** @type {string} */ repo, /** @type {string} */ dest) {
-  const tracked = execFileSync("git", ["ls-files", "-z"], { cwd: checkout, encoding: "utf8", maxBuffer: BUFFER }).split("\0");
+function gather(
+  /** @type {string} */ checkout,
+  /** @type {string} */ repo,
+  /** @type {string} */ dest,
+) {
+  const tracked = execFileSync("git", ["ls-files", "-z"], {
+    cwd: checkout,
+    encoding: "utf8",
+    maxBuffer: BUFFER,
+  }).split("\0");
   const files = tracked.filter(isSource);
   /** @type {{ repo: string, path: string, text: string }[]} */
   const code = [];
@@ -177,24 +229,60 @@ function gather(/** @type {string} */ checkout, /** @type {string} */ repo, /** 
   }
   const whole = tracked
     .filter((file) => isWholeFile(file) && existsSync(join(checkout, file)))
-    .map((file) => ({ repo, path: file, hash: createHash("sha256").update(readFileSync(join(checkout, file))).digest("hex") }));
+    .map((file) => ({
+      repo,
+      path: file,
+      hash: createHash("sha256")
+        .update(readFileSync(join(checkout, file)))
+        .digest("hex"),
+    }));
   return { count: files.length, whole, code };
 }
 
 /** Runs jscpd over the gathered folder and returns its JSON report. */
-function jscpd(/** @type {string} */ dir, /** @type {string} */ tool, /** @type {string[]} */ args) {
+function jscpd(
+  /** @type {string} */ dir,
+  /** @type {string} */ tool,
+  /** @type {string[]} */ args,
+) {
   const out = mkdtempSync(join(tmpdir(), "devkit-copies-report-"));
-  const r = spawnSync("npx", ["--yes", "--package", tool, "--", "jscpd", ".", ...args, "--reporters", "json", "--output", out, "--silent"], {
-    cwd: dir,
-    encoding: "utf8",
-    maxBuffer: BUFFER,
-  });
-  if (r.error || r.status !== 0) throw new Error(`jscpd exited ${r.status}: ${(r.error?.message ?? r.stderr ?? r.stdout).trim().slice(0, 400)}`);
+  const r = spawnSync(
+    "npx",
+    [
+      "--yes",
+      "--package",
+      tool,
+      "--",
+      "jscpd",
+      ".",
+      ...args,
+      "--reporters",
+      "json",
+      "--output",
+      out,
+      "--silent",
+    ],
+    {
+      cwd: dir,
+      encoding: "utf8",
+      maxBuffer: BUFFER,
+    },
+  );
+  if (r.error || r.status !== 0)
+    throw new Error(
+      `jscpd exited ${r.status}: ${(r.error?.message ?? r.stderr ?? r.stdout).trim().slice(0, 400)}`,
+    );
   return JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8"));
 }
 
 async function main() {
-  const { values } = parseArgs({ options: { config: { type: "string" }, from: { type: "string" }, "write-baseline": { type: "boolean" } } });
+  const { values } = parseArgs({
+    options: {
+      config: { type: "string" },
+      from: { type: "string" },
+      "write-baseline": { type: "boolean" },
+    },
+  });
   const file = resolve(values.config ?? new URL("../live/copies.json", import.meta.url).pathname);
   const config = JSON.parse(readFileSync(file, "utf8"));
   const work = mkdtempSync(join(tmpdir(), "devkit-copies-"));
@@ -205,12 +293,16 @@ async function main() {
   let repos;
   const { from } = values;
   if (from) {
-    repos = readdirSync(from).filter((name) => existsSync(join(from, name, ".git"))).sort();
+    repos = readdirSync(from)
+      .filter((name) => existsSync(join(from, name, ".git")))
+      .sort();
   } else {
     try {
       repos = await ownerRepos(token);
     } catch (error) {
-      console.log(`::error title=devkit-copies::could not list the repositories: ${error instanceof Error ? error.message : String(error)}`);
+      console.log(
+        `::error title=devkit-copies::could not list the repositories: ${error instanceof Error ? error.message : String(error)}`,
+      );
       process.exit(2);
     }
   }
@@ -223,11 +315,20 @@ async function main() {
     const checkout = values.from ? join(values.from, repo) : join(work, "clones", repo);
     if (!values.from) {
       try {
-        execFileSync("git", ["clone", "--quiet", "--depth", "1", `https://github.com/${OWNER}/${repo}`, checkout], { stdio: "pipe", env: gitAuthEnv(token) });
+        execFileSync(
+          "git",
+          ["clone", "--quiet", "--depth", "1", `https://github.com/${OWNER}/${repo}`, checkout],
+          { stdio: "pipe", env: gitAuthEnv(token) },
+        );
       } catch (error) {
         const failure = /** @type {{ stderr?: Buffer, message?: string }} */ (error);
-        const why = String(failure.stderr ?? failure.message).trim().split("\n").at(-1);
-        console.log(`::error title=devkit-copies::could not clone ${repo}: ${why}${token ? " (LIVE_GITHUB_TOKEN needs Contents read on every repository)" : ""}`);
+        const why = String(failure.stderr ?? failure.message)
+          .trim()
+          .split("\n")
+          .at(-1);
+        console.log(
+          `::error title=devkit-copies::could not clone ${repo}: ${why}${token ? " (LIVE_GITHUB_TOKEN needs Contents read on every repository)" : ""}`,
+        );
         process.exit(2);
       }
     }
@@ -238,17 +339,25 @@ async function main() {
   }
 
   if (!values.from && !token) {
-    console.log("::warning title=devkit-copies::LIVE_GITHUB_TOKEN is not set, so only public repositories were read; a private one is left out of the count.");
+    console.log(
+      "::warning title=devkit-copies::LIVE_GITHUB_TOKEN is not set, so only public repositories were read; a private one is left out of the count.",
+    );
   }
   const pairs = crossRepo(jscpd(all, config.tool, config.args));
   const same = sameFiles(whole);
   // A file held by n repositories is n - 1 copies of it.
-  const count = pairs.length + same.reduce((n, places) => n + new Set(places.map((p) => p.repo)).size - 1, 0);
+  const count =
+    pairs.length + same.reduce((n, places) => n + new Set(places.map((p) => p.repo)).size - 1, 0);
   const names = sharedNames(code);
   const namesBaseline = config.names ?? 0;
   if (values["write-baseline"]) {
-    writeFileSync(file, `${JSON.stringify({ ...config, baseline: count, names: names.length, measured_at: new Date().toISOString().slice(0, 10) }, null, 2)}\n`);
-    console.log(`devkit-copies: wrote the baselines, ${count} copies and ${names.length} names, to ${file}`);
+    writeFileSync(
+      file,
+      `${JSON.stringify({ ...config, baseline: count, names: names.length, measured_at: new Date().toISOString().slice(0, 10) }, null, 2)}\n`,
+    );
+    console.log(
+      `devkit-copies: wrote the baselines, ${count} copies and ${names.length} names, to ${file}`,
+    );
     return;
   }
 
@@ -257,18 +366,35 @@ async function main() {
     "",
     `${repos.length} repositories, source files each: ${counts.join(", ")}.`,
     "",
-    ...pairs.map(({ a, b, lines: n }) => `- ${n} lines: ${a.repo}/${a.path}:${a.start}-${a.end} and ${b.repo}/${b.path}:${b.start}-${b.end}`),
-    ...same.map((places) => `- the same file: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`),
+    ...pairs.map(
+      ({ a, b, lines: n }) =>
+        `- ${n} lines: ${a.repo}/${a.path}:${a.start}-${a.end} and ${b.repo}/${b.path}:${b.start}-${b.end}`,
+    ),
+    ...same.map(
+      (places) => `- the same file: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`,
+    ),
     "",
     `## Names defined in more than one repository: ${names.length} (baseline ${namesBaseline})`,
     "",
-    ...names.map(({ name, places }) => `- ${name}: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`),
+    ...names.map(
+      ({ name, places }) => `- ${name}: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`,
+    ),
   ];
   console.log(lines.join("\n"));
-  for (const { a, b, lines: n } of pairs) console.log(`::warning title=devkit-copies::${n} lines copied: ${a.repo}/${a.path}:${a.start} and ${b.repo}/${b.path}:${b.start}`);
-  for (const places of same) console.log(`::warning title=devkit-copies::the same file: ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`);
-  for (const { name, places } of names) console.log(`::warning title=devkit-copies::${name} is defined in ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`);
-  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
+  for (const { a, b, lines: n } of pairs)
+    console.log(
+      `::warning title=devkit-copies::${n} lines copied: ${a.repo}/${a.path}:${a.start} and ${b.repo}/${b.path}:${b.start}`,
+    );
+  for (const places of same)
+    console.log(
+      `::warning title=devkit-copies::the same file: ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`,
+    );
+  for (const { name, places } of names)
+    console.log(
+      `::warning title=devkit-copies::${name} is defined in ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`,
+    );
+  if (process.env.GITHUB_STEP_SUMMARY)
+    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
   let failed = false;
   if (count > config.baseline) {
     console.log(
@@ -278,7 +404,9 @@ async function main() {
   }
   // No names baseline yet is a count never measured over every repository: said, not failed, until --write-baseline sets it.
   if (config.names === undefined) {
-    console.log(`::warning title=devkit-copies::live/copies.json has no "names" baseline yet: run \`node bin/copies.mjs --write-baseline\` with LIVE_GITHUB_TOKEN set and commit it (${names.length} today).`);
+    console.log(
+      `::warning title=devkit-copies::live/copies.json has no "names" baseline yet: run \`node bin/copies.mjs --write-baseline\` with LIVE_GITHUB_TOKEN set and commit it (${names.length} today).`,
+    );
   } else if (names.length > namesBaseline) {
     console.log(
       `::error title=devkit-copies::${names.length} names are defined in more than one repository, more than the baseline of ${namesBaseline}. The same job written twice belongs once, in a shared package or with its one owner (SHARED.md): move it there and import it, or rename one when the two do different jobs.`,

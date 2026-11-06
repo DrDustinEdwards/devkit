@@ -9,8 +9,14 @@ import test from "node:test";
 import { callerProblems } from "../scripts/check-callers.mjs";
 import { inlined } from "../scripts/inline-rollback-guard.mjs";
 
-const text = readFileSync(new URL("../.github/workflows/code-map.yml", import.meta.url), "utf8").replace(/\r\n/g, "\n");
-const code = text.split("\n").filter((line) => !/^\s*#/.test(line)).join("\n");
+const text = readFileSync(
+  new URL("../.github/workflows/code-map.yml", import.meta.url),
+  "utf8",
+).replace(/\r\n/g, "\n");
+const code = text
+  .split("\n")
+  .filter((line) => !/^\s*#/.test(line))
+  .join("\n");
 const jobs = Object.fromEntries(
   code
     .slice(code.indexOf("\njobs:\n") + "\njobs:\n".length)
@@ -25,23 +31,33 @@ const stepsOf = (/** @type {string} */ job) =>
 const steps = [...stepsOf("map"), ...stepsOf("publish")];
 
 test("it carries scripts/code-map.mjs byte for byte", () => {
-  assert.equal(inlined(text, "CODE_MAP"), readFileSync(new URL("../scripts/code-map.mjs", import.meta.url), "utf8"));
+  assert.equal(
+    inlined(text, "CODE_MAP"),
+    readFileSync(new URL("../scripts/code-map.mjs", import.meta.url), "utf8"),
+  );
 });
 
 test("the token writes contents only, and only the publish step holds it", () => {
   assert.match(text, /\npermissions:\n {2}contents: read\n/);
-  assert.deepEqual([...code.matchAll(/(\S+): write\b/g)].map((m) => m[1]), ["contents"]);
+  assert.deepEqual(
+    [...code.matchAll(/(\S+): write\b/g)].map((m) => m[1]),
+    ["contents"],
+  );
   assert.match(jobs.map ?? "", /permissions:\n {6}contents: read\n/);
   assert.match(jobs.publish ?? "", /permissions:\n {6}contents: write\n/);
   // The job with the write runs none of the caller's code: no checkout, no install, no input run as a command.
   assert.doesNotMatch(jobs.publish ?? "", /checkout|setup-node|inputs\./);
-  const holders = steps.filter((s) => /github\.token|secrets\./.test(s)).map((s) => /name: (.*)/.exec(s)?.[1]);
+  const holders = steps
+    .filter((s) => /github\.token|secrets\./.test(s))
+    .map((s) => /name: (.*)/.exec(s)?.[1]);
   assert.deepEqual(holders, ["Publish to the code-map branch"]);
 });
 
 test("the publish step pushes to the code-map branch and no other ref", () => {
   const publish = steps.find((s) => s.includes("name: Publish to the code-map branch")) ?? "";
-  const pushes = [...publish.matchAll(/git[^\n]*\bpush\b[^\n\\]*(?:\\\n[^\n\\]*)*/g)].map((m) => m[0]);
+  const pushes = [...publish.matchAll(/git[^\n]*\bpush\b[^\n\\]*(?:\\\n[^\n\\]*)*/g)].map(
+    (m) => m[0],
+  );
   assert.equal(pushes.length, 1);
   assert.match(pushes[0], /code-map:refs\/heads\/code-map\s*$/);
 });

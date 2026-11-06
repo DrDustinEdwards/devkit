@@ -114,13 +114,17 @@ jobs:
                 const dashboard = issues.find((issue) => !issue.pull_request && issue.title === "Dependency Dashboard");
                 let outcome;
                 if (!dashboard) {
-                  outcome = "no Dependency Dashboard: Renovate is not active here (merge its onboarding PR)";
-                  core.warning(`${repo.name}: ${outcome}`);
+                  // A failure, not a warning: a consumer Renovate cannot reach never gets the release,
+                  // and a warning on a green run went unread while capsomer sat on site-runtime 0.77.1.
+                  failed += 1;
+                  outcome = "no Dependency Dashboard: Renovate is not active here (add the repository to the Renovate app's access, or merge its onboarding PR)";
+                  core.error(`${repo.name}: ${outcome}`);
                 } else if (dashboard.body?.includes(TICKED)) {
                   outcome = `run already requested (#${dashboard.number})`;
                 } else if (!dashboard.body?.includes(UNTICKED)) {
+                  failed += 1;
                   outcome = `dashboard #${dashboard.number} has no manual-run checkbox`;
-                  core.warning(`${repo.name}: ${outcome}`);
+                  core.error(`${repo.name}: ${outcome}`);
                 } else if (dryRun) {
                   outcome = `would tick #${dashboard.number}`;
                 } else {
@@ -141,4 +145,4 @@ jobs:
               .write();
             for (const [name, hits, outcome] of rows) core.info(`${name} [${hits}]: ${outcome}`);
             if (rows.length === 0) core.warning(`No repository the token can see depends on ${owner}/${self}.`);
-            if (failed > 0) core.setFailed(`${failed} consumer(s) could not be read or triggered.`);
+            if (failed > 0) core.setFailed(`${failed} consumer(s) could not be read or triggered; each is named above.`);

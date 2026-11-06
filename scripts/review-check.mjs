@@ -27,25 +27,45 @@ const CAPSID_TIMEOUT_MS = 8 * 60_000;
  * @returns {{ conclusion: "neutral" | "skipped", title: string, summary: string }}
  */
 function checkOutput(result) {
-  const advisory = "\n\n_Advisory: this check never fails during the four-week trial. Read it before asking to merge._";
+  const advisory =
+    "\n\n_Advisory: this check never fails during the four-week trial. Read it before asking to merge._";
   if (result?.status === "skipped") {
-    return { conclusion: "skipped", title: "Not reviewed", summary: `Skipped: ${(result.reasons ?? []).join("; ") || "no reason given"}.` };
+    return {
+      conclusion: "skipped",
+      title: "Not reviewed",
+      summary: `Skipped: ${(result.reasons ?? []).join("; ") || "no reason given"}.`,
+    };
   }
   if (result?.status === "reviewed") {
     const findings = Array.isArray(result.findings) ? result.findings : [];
-    const title = findings.length ? `${result.verdict}: ${findings.length} finding${findings.length === 1 ? "" : "s"}` : result.verdict;
-    const lines = findings.map((/** @type {{ kind: string, file: string, line?: number, note: string }} */ f) => `- **${f.kind}**, \`${f.file}${f.line ? `:${f.line}` : ""}\`: ${f.note}`);
-    const body = [`**${result.verdict}**. ${result.summary ?? ""}`.trim(), lines.length ? lines.join("\n") : "No findings.", `Model: \`${result.model}\`, head \`${String(result.head_sha).slice(0, 7)}\`.`];
+    const title = findings.length
+      ? `${result.verdict}: ${findings.length} finding${findings.length === 1 ? "" : "s"}`
+      : result.verdict;
+    const lines = findings.map(
+      (/** @type {{ kind: string, file: string, line?: number, note: string }} */ f) =>
+        `- **${f.kind}**, \`${f.file}${f.line ? `:${f.line}` : ""}\`: ${f.note}`,
+    );
+    const body = [
+      `**${result.verdict}**. ${result.summary ?? ""}`.trim(),
+      lines.length ? lines.join("\n") : "No findings.",
+      `Model: \`${result.model}\`, head \`${String(result.head_sha).slice(0, 7)}\`.`,
+    ];
     return { conclusion: "neutral", title, summary: body.join("\n\n") + advisory };
   }
-  return { conclusion: "neutral", title: "Reviewer could not run", summary: `The reviewer could not run: ${result?.error ?? "no answer"}.${advisory}` };
+  return {
+    conclusion: "neutral",
+    title: "Reviewer could not run",
+    summary: `The reviewer could not run: ${result?.error ?? "no answer"}.${advisory}`,
+  };
 }
 
 async function oidcToken() {
   const url = process.env.ACTIONS_ID_TOKEN_REQUEST_URL;
   const bearer = process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN;
   if (!url || !bearer) throw new Error("no OIDC token: the calling job must grant id-token: write");
-  const resp = await fetch(`${url}&audience=${AUDIENCE}`, { headers: { Authorization: `Bearer ${bearer}` } });
+  const resp = await fetch(`${url}&audience=${AUDIENCE}`, {
+    headers: { Authorization: `Bearer ${bearer}` },
+  });
   if (!resp.ok) throw new Error(`the OIDC token request answered ${resp.status}`);
   return /** @type {{ value: string }} */ (await resp.json()).value;
 }
@@ -58,7 +78,11 @@ async function askCapsid() {
       headers: { Authorization: `Bearer ${token}` },
       signal: AbortSignal.timeout(CAPSID_TIMEOUT_MS),
     });
-    if (!resp.ok) return { status: "error", error: `Capsid answered ${resp.status}: ${(await resp.text()).slice(0, 300)}` };
+    if (!resp.ok)
+      return {
+        status: "error",
+        error: `Capsid answered ${resp.status}: ${(await resp.text()).slice(0, 300)}`,
+      };
     return await resp.json();
   } catch (error) {
     return { status: "error", error: error instanceof Error ? error.message : String(error) };
@@ -84,10 +108,17 @@ async function writeCheck(output) {
       output: { title: output.title, summary: output.summary },
     }),
   });
-  if (!resp.ok) console.log(`::warning::could not write the ${CHECK_NAME} check: GitHub answered ${resp.status}`);
+  if (!resp.ok)
+    console.log(
+      `::warning::could not write the ${CHECK_NAME} check: GitHub answered ${resp.status}`,
+    );
 }
 
 const output = checkOutput(await askCapsid());
 console.log(`${output.title}\n\n${output.summary}`);
-if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## Review verdict: ${output.title}\n\n${output.summary}\n`);
+if (process.env.GITHUB_STEP_SUMMARY)
+  appendFileSync(
+    process.env.GITHUB_STEP_SUMMARY,
+    `## Review verdict: ${output.title}\n\n${output.summary}\n`,
+  );
 await writeCheck(output);

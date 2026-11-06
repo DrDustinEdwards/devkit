@@ -39,7 +39,8 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
-const NOTE = "sha256 of each migration. devkit-migrations compares against this. Adding a migration means adding its hash in the same commit.";
+const NOTE =
+  "sha256 of each migration. devkit-migrations compares against this. Adding a migration means adding its hash in the same commit.";
 /** @type {[RegExp, string][]} */
 const DESTRUCTIVE = [
   [/\bDROP\s+TABLE\b/i, "drops a table"],
@@ -47,7 +48,8 @@ const DESTRUCTIVE = [
   [/\bALTER\s+TABLE\s+[^;]*?\bRENAME\b/i, "renames a table or column"],
 ];
 
-export const sha256 = (/** @type {string} */ text) => createHash("sha256").update(text.replace(/\r\n/g, "\n"), "utf8").digest("hex");
+export const sha256 = (/** @type {string} */ text) =>
+  createHash("sha256").update(text.replace(/\r\n/g, "\n"), "utf8").digest("hex");
 
 /**
  * What a migration does beyond adding, read with its comments and string literals blanked; empty when it only adds or
@@ -70,8 +72,17 @@ export function contractions(sql) {
 export function handOnly(sql) {
   const marked = /^\s*--\s*contract:\s*\S/im.test(sql);
   const unmarked = sql.replace(/^\s*--\s*contract:.*$/gim, "");
-  const code = unmarked.replace(/'(?:[^']|'')*'|--[^\n]*|\/\*[\s\S]*?\*\//g, " ").replace(/\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?\bEND\s*;/gi, " ");
-  return [...(marked ? ["says `-- contract:`"] : []), ...contractions(unmarked), ...(/\bDELETE\s+FROM\b/i.test(code) ? ["deletes rows"] : [])];
+  const code = unmarked
+    .replace(/'(?:[^']|'')*'|--[^\n]*|\/\*[\s\S]*?\*\//g, " ")
+    .replace(
+      /\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?\bEND\s*;/gi,
+      " ",
+    );
+  return [
+    ...(marked ? ["says `-- contract:`"] : []),
+    ...contractions(unmarked),
+    ...(/\bDELETE\s+FROM\b/i.test(code) ? ["deletes rows"] : []),
+  ];
 }
 
 /**
@@ -83,7 +94,8 @@ export function handOnly(sql) {
 export function readPending({ code, text }) {
   const names = [...new Set(String(text).match(/\b\d{4}_[\w-]+\.sql\b/g) ?? [])];
   if (code !== 0) return { state: "unreadable", pending: [] };
-  if (names.length && /Migrations to be applied/.test(text)) return { state: "pending", pending: names };
+  if (names.length && /Migrations to be applied/.test(text))
+    return { state: "pending", pending: names };
   if (!names.length && /No migrations to apply/.test(text)) return { state: "clean", pending: [] };
   return { state: "unreadable", pending: names };
 }
@@ -105,21 +117,47 @@ export function readBookmark(/** @type {string} */ text) {
  */
 export function check({ files, read, manifest, min = 1 }) {
   const problems = [];
-  if (files.length < min) problems.push(`${files.length} migrations on disk, fewer than ${min}: the directory is wrong or migrations were deleted`);
-  if (!manifest) return [...problems, "no manifest: record the hashes with `npx devkit-migrations <dir> --write` and commit it"];
+  if (files.length < min)
+    problems.push(
+      `${files.length} migrations on disk, fewer than ${min}: the directory is wrong or migrations were deleted`,
+    );
+  if (!manifest)
+    return [
+      ...problems,
+      "no manifest: record the hashes with `npx devkit-migrations <dir> --write` and commit it",
+    ];
   const recorded = manifest.sha256 ?? {};
-  if (!Object.keys(recorded).length) problems.push("the manifest records no hashes, so every comparison would pass over nothing");
+  if (!Object.keys(recorded).length)
+    problems.push("the manifest records no hashes, so every comparison would pass over nothing");
   for (const file of files) {
     const expected = recorded[file];
-    if (!expected) problems.push(`${file} is not in the manifest: a new migration adds its hash in the same commit (--write)`);
-    else if (sha256(read(file)) !== expected) problems.push(`${file} differs from its recorded hash: an applied migration was edited. The repair is a new migration, never an edit`);
+    if (!expected)
+      problems.push(
+        `${file} is not in the manifest: a new migration adds its hash in the same commit (--write)`,
+      );
+    else if (sha256(read(file)) !== expected)
+      problems.push(
+        `${file} differs from its recorded hash: an applied migration was edited. The repair is a new migration, never an edit`,
+      );
   }
-  for (const file of Object.keys(recorded)) if (!files.includes(file)) problems.push(`${file} is in the manifest but not on disk: an applied migration was renamed or deleted`);
-  if (typeof manifest.expand_only_after !== "string") problems.push("the manifest has no expand_only_after: run --write once to mark where the expand-only rule starts");
+  for (const file of Object.keys(recorded))
+    if (!files.includes(file))
+      problems.push(
+        `${file} is in the manifest but not on disk: an applied migration was renamed or deleted`,
+      );
+  if (typeof manifest.expand_only_after !== "string")
+    problems.push(
+      "the manifest has no expand_only_after: run --write once to mark where the expand-only rule starts",
+    );
   else {
-    for (const file of files.filter((f) => f > /** @type {string} */ (manifest.expand_only_after))) {
+    for (const file of files.filter(
+      (f) => f > /** @type {string} */ (manifest.expand_only_after),
+    )) {
       const what = contractions(read(file));
-      if (what.length) problems.push(`${file} ${what.join(" and ")}: expand only, or add a line \`-- contract: <reason>\` saying why it must`);
+      if (what.length)
+        problems.push(
+          `${file} ${what.join(" and ")}: expand only, or add a line \`-- contract: <reason>\` saying why it must`,
+        );
     }
   }
   return problems;
@@ -134,8 +172,14 @@ export function ledgerProblems(files, applied) {
   const problems = [];
   const behind = files.filter((f) => !applied.includes(f));
   const unknown = applied.filter((f) => !files.includes(f));
-  if (behind.length) problems.push(`the local database has not applied ${behind.join(", ")}: run \`wrangler d1 migrations apply <db> --local\``);
-  if (unknown.length) problems.push(`the local database applied ${unknown.join(", ")}, which is not on disk: a migration was renamed or deleted after it ran`);
+  if (behind.length)
+    problems.push(
+      `the local database has not applied ${behind.join(", ")}: run \`wrangler d1 migrations apply <db> --local\``,
+    );
+  if (unknown.length)
+    problems.push(
+      `the local database applied ${unknown.join(", ")}, which is not on disk: a migration was renamed or deleted after it ran`,
+    );
   return problems;
 }
 
@@ -145,11 +189,24 @@ async function localLedgers(/** @type {string} */ state) {
   if (!existsSync(dir)) return [];
   const { DatabaseSync } = await import("node:sqlite");
   const out = [];
-  for (const name of readdirSync(dir).filter((n) => n.endsWith(".sqlite") && n !== "metadata.sqlite")) {
+  for (const name of readdirSync(dir).filter(
+    (n) => n.endsWith(".sqlite") && n !== "metadata.sqlite",
+  )) {
     const db = new DatabaseSync(join(dir, name), { readOnly: true });
     try {
-      if (!db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'd1_migrations'").get()) continue;
-      out.push({ file: name, names: db.prepare("SELECT name FROM d1_migrations ORDER BY name").all().map((row) => String(row.name)) });
+      if (
+        !db
+          .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'd1_migrations'")
+          .get()
+      )
+        continue;
+      out.push({
+        file: name,
+        names: db
+          .prepare("SELECT name FROM d1_migrations ORDER BY name")
+          .all()
+          .map((row) => String(row.name)),
+      });
     } finally {
       db.close();
     }
@@ -158,15 +215,32 @@ async function localLedgers(/** @type {string} */ state) {
 }
 
 /** --apply: the remote database brought level with the files, or exit 1 before the caller deploys. */
-function apply(/** @type {string} */ dir, /** @type {string} */ database, /** @type {string | undefined} */ config) {
-  const { spawnSync } = /** @type {typeof import("node:child_process")} */ (process.getBuiltinModule("node:child_process"));
+function apply(
+  /** @type {string} */ dir,
+  /** @type {string} */ database,
+  /** @type {string | undefined} */ config,
+) {
+  const { spawnSync } = /** @type {typeof import("node:child_process")} */ (
+    process.getBuiltinModule("node:child_process")
+  );
   const extra = config ? ["--config", config] : [];
   // The repository's own wrangler, by absolute path, so the bookmark read outside the checkout runs the same version.
-  const bin = join(process.cwd(), "node_modules", ".bin", process.platform === "win32" ? "wrangler.cmd" : "wrangler");
+  const bin = join(
+    process.cwd(),
+    "node_modules",
+    ".bin",
+    process.platform === "win32" ? "wrangler.cmd" : "wrangler",
+  );
   const local = existsSync(bin) ? bin : undefined;
   /** @param {string[]} args @param {string} [cwd] */
   const wrangler = (args, cwd) => {
-    const r = spawnSync(local ?? "npx", local ? args : ["wrangler", ...args], { cwd, encoding: "utf8", shell: process.platform === "win32", env: { ...process.env, CI: "true" }, timeout: 300_000 });
+    const r = spawnSync(local ?? "npx", local ? args : ["wrangler", ...args], {
+      cwd,
+      encoding: "utf8",
+      shell: process.platform === "win32",
+      env: { ...process.env, CI: "true" },
+      timeout: 300_000,
+    });
     const text = `${r.stdout ?? ""}${r.stderr ?? ""}${r.error ? `\n${r.error.message}` : ""}`;
     process.stdout.write(text);
     return { code: r.status ?? 1, text };
@@ -176,29 +250,48 @@ function apply(/** @type {string} */ dir, /** @type {string} */ database, /** @t
     process.exit(1);
   };
   const handCommand = `npx wrangler d1 migrations apply ${database} --remote`;
-  const list = () => readPending(wrangler(["d1", "migrations", "list", database, "--remote", ...extra]));
+  const list = () =>
+    readPending(wrangler(["d1", "migrations", "list", database, "--remote", ...extra]));
 
   const before = list();
-  if (before.state === "unreadable") stop(`could not tell which migrations ${database} has applied, so nothing was applied or deployed.`);
-  if (before.state === "clean") return console.log(`devkit-migrations: ${database} has every migration.`);
+  if (before.state === "unreadable")
+    stop(
+      `could not tell which migrations ${database} has applied, so nothing was applied or deployed.`,
+    );
+  if (before.state === "clean")
+    return console.log(`devkit-migrations: ${database} has every migration.`);
   const blocked = before.pending.flatMap((file) => {
-    const why = existsSync(join(dir, file)) ? handOnly(readFileSync(join(dir, file), "utf8")) : ["is not in " + dir];
+    const why = existsSync(join(dir, file))
+      ? handOnly(readFileSync(join(dir, file), "utf8"))
+      : ["is not in " + dir];
     return why.length ? [`${file} ${why.join(" and ")}`] : [];
   });
-  if (blocked.length) stop(`${blocked.join("; ")}. A person applies this one: ${handCommand}, then re-run the deploy. Nothing was applied or deployed.`);
+  if (blocked.length)
+    stop(
+      `${blocked.join("; ")}. A person applies this one: ${handCommand}, then re-run the deploy. Nothing was applied or deployed.`,
+    );
 
   // Outside the checkout, as worker-deploy's bookmark step: by name through the API, not by a config id.
   const { tmpdir } = /** @type {typeof import("node:os")} */ (process.getBuiltinModule("node:os"));
-  const bookmark = readBookmark(wrangler(["d1", "time-travel", "info", database, "--json"], tmpdir()).text);
-  if (!bookmark) stop(`could not read the Time Travel bookmark of ${database}, so nothing was applied without an undo point.`);
+  const bookmark = readBookmark(
+    wrangler(["d1", "time-travel", "info", database, "--json"], tmpdir()).text,
+  );
+  if (!bookmark)
+    stop(
+      `could not read the Time Travel bookmark of ${database}, so nothing was applied without an undo point.`,
+    );
   const undo = `npx wrangler d1 time-travel restore ${database} --bookmark=${bookmark}`;
   const note = `D1 ${database} before applying ${before.pending.join(", ")}: bookmark ${bookmark}. To undo:\n\n    ${undo}\n`;
   console.log(note);
-  if (process.env.GITHUB_STEP_SUMMARY) writeFileSync(process.env.GITHUB_STEP_SUMMARY, `${note}\n`, { flag: "a" });
+  if (process.env.GITHUB_STEP_SUMMARY)
+    writeFileSync(process.env.GITHUB_STEP_SUMMARY, `${note}\n`, { flag: "a" });
 
   const applied = wrangler(["d1", "migrations", "apply", database, "--remote", ...extra]);
   const after = list();
-  if (applied.code !== 0 || after.state !== "clean") stop(`applying ${before.pending.join(", ")} did not leave ${database} level (wrangler exited ${applied.code}, then read ${after.state}). Nothing was deployed. To go back: ${undo}`);
+  if (applied.code !== 0 || after.state !== "clean")
+    stop(
+      `applying ${before.pending.join(", ")} did not leave ${database} level (wrangler exited ${applied.code}, then read ${after.state}). Nothing was deployed. To go back: ${undo}`,
+    );
   console.log(`devkit-migrations: applied ${before.pending.join(", ")} to ${database}.`);
 }
 
@@ -218,12 +311,16 @@ async function main() {
   });
   const [dir] = positionals;
   if (!dir || !existsSync(dir)) {
-    console.error(`usage: devkit-migrations <migrations dir> [--write [--force]] [--manifest <file>] [--min <n>] [--state <dir>] [--require-ledger]\n       devkit-migrations <migrations dir> --apply <database> [--config <wrangler config>]${dir ? `\n${dir} does not exist.` : ""}`);
+    console.error(
+      `usage: devkit-migrations <migrations dir> [--write [--force]] [--manifest <file>] [--min <n>] [--state <dir>] [--require-ledger]\n       devkit-migrations <migrations dir> --apply <database> [--config <wrangler config>]${dir ? `\n${dir} does not exist.` : ""}`,
+    );
     process.exit(2);
   }
   if (values.apply) return apply(dir, values.apply, values.config);
   const manifestPath = values.manifest ?? join(dir, "manifest.json");
-  const files = readdirSync(dir).filter((f) => f.endsWith(".sql")).sort();
+  const files = readdirSync(dir)
+    .filter((f) => f.endsWith(".sql"))
+    .sort();
   const read = (/** @type {string} */ file) => readFileSync(join(dir, file), "utf8");
   const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : null;
 
@@ -232,24 +329,40 @@ async function main() {
     const sha = Object.fromEntries(files.map((f) => [f, sha256(read(f))]));
     const changed = files.filter((f) => previous[f] && previous[f] !== sha[f]);
     if (changed.length && !values.force) {
-      console.log(`::error title=devkit-migrations::Refused: ${changed.join(", ")} would change hash, so an applied migration was edited. If the edit is right, run again with --force and say why in the commit.`);
+      console.log(
+        `::error title=devkit-migrations::Refused: ${changed.join(", ")} would change hash, so an applied migration was edited. If the edit is right, run again with --force and say why in the commit.`,
+      );
       process.exit(1);
     }
     const expand_only_after = manifest?.expand_only_after ?? files.at(-1) ?? "";
-    writeFileSync(manifestPath, `${JSON.stringify({ note: manifest?.note ?? NOTE, expand_only_after, sha256: sha }, null, 2)}\n`);
-    console.log(`devkit-migrations: recorded ${files.length} hashes in ${manifestPath}${values.force ? " (--force)" : ""}; expand only after ${expand_only_after || "the start"}.`);
+    writeFileSync(
+      manifestPath,
+      `${JSON.stringify({ note: manifest?.note ?? NOTE, expand_only_after, sha256: sha }, null, 2)}\n`,
+    );
+    console.log(
+      `devkit-migrations: recorded ${files.length} hashes in ${manifestPath}${values.force ? " (--force)" : ""}; expand only after ${expand_only_after || "the start"}.`,
+    );
     return;
   }
 
   const problems = check({ files, read, manifest, min: Number(values.min) });
   const ledgers = await localLedgers(values.state);
-  if (ledgers.length > 1) problems.push(`${ledgers.length} local databases carry a migration ledger (${ledgers.map((l) => l.file).join(", ")}); remove the stale one under ${values.state}`);
+  if (ledgers.length > 1)
+    problems.push(
+      `${ledgers.length} local databases carry a migration ledger (${ledgers.map((l) => l.file).join(", ")}); remove the stale one under ${values.state}`,
+    );
   else if (ledgers.length === 1) problems.push(...ledgerProblems(files, ledgers[0].names));
-  else if (values["require-ledger"]) problems.push(`no local database under ${values.state} carries a migration ledger; apply the migrations locally first`);
-  console.log(`devkit-migrations: ${files.length} migrations in ${dir}, ${Object.keys(manifest?.sha256 ?? {}).length} recorded, local ledger ${ledgers.length === 1 ? "compared" : "not found"}.`);
+  else if (values["require-ledger"])
+    problems.push(
+      `no local database under ${values.state} carries a migration ledger; apply the migrations locally first`,
+    );
+  console.log(
+    `devkit-migrations: ${files.length} migrations in ${dir}, ${Object.keys(manifest?.sha256 ?? {}).length} recorded, local ledger ${ledgers.length === 1 ? "compared" : "not found"}.`,
+  );
   for (const problem of problems) console.log(`::error title=devkit-migrations::${problem}`);
   if (problems.length) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) await main();
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
+  await main();

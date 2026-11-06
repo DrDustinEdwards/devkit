@@ -29,7 +29,12 @@ test("a call pinned to a tag is refused, because a tag can be moved", () => {
 
 test("a short sha is refused, quoted or not", () => {
   assert.equal(callerProblems(call(SHA.slice(0, 7))).length, 1);
-  assert.equal(callerProblems(`jobs:\n  a:\n    uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${SHA}\n  b:\n    uses: "DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@main"\n`).length, 1);
+  assert.equal(
+    callerProblems(
+      `jobs:\n  a:\n    uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${SHA}\n  b:\n    uses: "DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@main"\n`,
+    ).length,
+    1,
+  );
 });
 
 test("an uppercase or 41-character ref is not a sha", () => {
@@ -45,7 +50,9 @@ test("secrets: inherit is refused", () => {
 });
 
 test("a file that calls nothing is a problem, not a pass", () => {
-  assert.deepEqual(callerProblems("name: x\n"), [{ line: 0, problem: "no call to a devkit reusable workflow" }]);
+  assert.deepEqual(callerProblems("name: x\n"), [
+    { line: 0, problem: "no call to a devkit reusable workflow" },
+  ]);
 });
 
 test("CRLF line endings are read the same as LF", () => {
