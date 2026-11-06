@@ -142,17 +142,22 @@ devkit maps itself the same way (`code-map-self.yml`), and once a week mutation-
 
 `@dustinedwards/devkit/oxlint` (`lint/oxlint.mjs`, typed by `lint/oxlint.d.mts`) is one Oxlint config for every repository: Oxlint, type-aware through oxlint-tsgolint, in place of ESLint and Biome's linter. It exports three plain config objects, which a repository's `oxlint.config.ts` extends. Oxlint's docs name this as the way to share a config from a package: "Use `oxlint.config.ts` when extending config objects imported from a shared package. Package imports are not supported in the `.oxlintrc.json` format." ([Configuration, Extend shared configs](https://oxc.rs/docs/guide/usage/linter/config.html#extend-shared-configs)). Configs merge first to last, so the repository's own `rules` and `overrides` after `extends` win.
 
-- `base`, every repository: the correctness category with the typescript, unicorn, oxc and import plugins; `typescript/no-floating-promises` (node:test's `test`, `describe`, `it` and `suite` allowed, since the runner awaits them), `typescript/no-misused-promises`, `typescript/no-explicit-any`, `typescript/no-non-null-assertion` and `eslint/prefer-const` at error; `build/`, `dist/`, `.react-router/`, `.wrangler/`, `worker-configuration.d.ts` and `**/*.gen.ts` ignored. Four type-aware correctness rules are off for everyone (`no-base-to-string`, `restrict-template-expressions`, `unbound-method`, `require-array-sort-compare`): each finding they made in dustinedwards-info and site-api was a value the checker could not narrow, not a bug. The counts are in the file.
-- `react`, a repository with React: base's plugins plus `react` and `jsx-a11y`; `react/rules-of-hooks`, `react/exhaustive-deps` and the native React Compiler rules at error; `react/only-export-components` allowing React Router's route module exports that are not components (`loader`, `action`, `meta`, `links`, `headers`, `handle`, `shouldRevalidate`, the client and middleware ones).
+- `base`, every repository: the correctness category with the typescript, unicorn, oxc and import plugins; `typescript/no-floating-promises` (node:test's `test`, `describe`, `it` and `suite` allowed, since the runner awaits them), `typescript/no-misused-promises`, `typescript/no-explicit-any` and `eslint/prefer-const` at error. `no-non-null-assertion` is not on: typescript-eslint keeps it in `strict`, not `recommended`, and its 1,600 findings in capsid and site-api were churn, not bugs. Four type-aware correctness rules are off for everyone (`no-base-to-string`, `restrict-template-expressions`, `unbound-method`, `require-array-sort-compare`): each finding they made in dustinedwards-info and site-api was a value the checker could not narrow, not a bug. The counts are in the file.
+- `react`, a repository with React: base's plugins plus `react` and `jsx-a11y`; `react/rules-of-hooks`, `react/exhaustive-deps` and the native React Compiler rules at error. `only-export-components` is not on: it guards only Fast Refresh in development.
+- `ignorePatterns`, what no repository lints (`build/`, `dist/`, `.react-router/`, `.wrangler/`, `worker-configuration.d.ts`, `**/*.gen.ts`). The repository's config sets it itself, since Oxlint does not carry `ignorePatterns` through `extends`.
+
+Two Oxlint behaviors to know: an override that sets a plugin's rules lists the plugin in its own `plugins` (`plugins: react.plugins`), or the rules do nothing; and a suppression comment goes on the line the finding is reported on (for `exhaustive-deps`, the dependency array), naming the rule as `react-hooks/exhaustive-deps` or `react/exhaustive-deps`.
+
 - `node`, Node's globals, spread into an override.
 
 ```ts
 // oxlint.config.ts
 import { defineConfig } from "oxlint";
-import { base, react, node } from "@dustinedwards/devkit/oxlint";
+import { base, react, node, ignorePatterns } from "@dustinedwards/devkit/oxlint";
 
 export default defineConfig({
   extends: [base, react],
+  ignorePatterns,
   overrides: [{ files: ["scripts/**", "bin/**", "test/**"], ...node }],
 });
 ```
