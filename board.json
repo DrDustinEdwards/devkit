@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-06T00:24:47.206Z",
+ "as_of": "2026-11-06T04:03:06.785Z",
  "finished": false,
  "public_token": true,
  "sites": [
@@ -460,11 +460,6 @@
        "detail": "https://txasm.org/awards/thomas-s-matney-award links to https://txasm.org/awards, which redirects to /awardees"
       },
       {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://txasm.org/awards/s-e-sulkin-award 937 px wide in Google's 14 px Arial (148 characters); a desktop result clips the snippet past 920 px"
-      },
-      {
        "severity": "error",
        "check": "link-broken",
        "detail": "https://txasm.org/awards/s-e-sulkin-award links to https://txasm.org/register, which answers 404"
@@ -508,11 +503,6 @@
        "severity": "warning",
        "check": "link-redirect",
        "detail": "https://txasm.org/awards/samuel-kaplan-award links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://txasm.org/awards/o-b-williams-award 951 px wide in Google's 14 px Arial (150 characters); a desktop result clips the snippet past 920 px"
       },
       {
        "severity": "error",
@@ -620,11 +610,6 @@
        "detail": "https://txasm.org/awards/faculty-mentor-award links to https://txasm.org/awards, which redirects to /awardees"
       },
       {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://txasm.org/awards/distinguished-service-award 957 px wide in Google's 14 px Arial (150 characters); a desktop result clips the snippet past 920 px"
-      },
-      {
        "severity": "error",
        "check": "link-broken",
        "detail": "https://txasm.org/awards/distinguished-service-award links to https://txasm.org/register, which answers 404"
@@ -640,9 +625,24 @@
        "detail": "https://txasm.org/awards/distinguished-service-award links to https://txasm.org/awards, which redirects to /awardees"
       },
       {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://txasm.org/awards/lifetime-achievement-award links to https://txasm.org/register, which answers 404"
+      },
+      {
        "severity": "warning",
-       "check": "description-long",
-       "detail": "https://txasm.org/awards/lifetime-achievement-award 923 px wide in Google's 14 px Arial (144 characters); a desktop result clips the snippet past 920 px"
+       "check": "link-redirect",
+       "detail": "https://txasm.org/awards/lifetime-achievement-award links to https://txasm.org/my/abstracts, which redirects to /signin"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://txasm.org/awards/lifetime-achievement-award links to https://txasm.org/awards, which redirects to /awardees"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://txasm.org/newsletters/fall-1991-newsletter links to https://txasm.org/register, which answers 404"
       }
      ]
     },
@@ -801,21 +801,6 @@
      "status": "missing",
      "reason": "prelum-audit: 8 errors",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/ 939 px wide in Google's 14 px Arial (150 characters); a desktop result clips the snippet past 920 px"
-      },
-      {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/make/ 947 px wide in Google's 14 px Arial (151 characters); a desktop result clips the snippet past 920 px"
-      },
-      {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ 924 px wide in Google's 14 px Arial (148 characters); a desktop result clips the snippet past 920 px"
-      },
       {
        "severity": "warning",
        "check": "link-redirect",
@@ -1033,11 +1018,6 @@
       },
       {
        "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/components/draft-compare/ 938 px wide in Google's 14 px Arial (152 characters); a desktop result clips the snippet past 920 px"
-      },
-      {
-       "severity": "warning",
        "check": "link-redirect",
        "detail": "https://capsomer.dustinedwards.info/components/draft-compare/ links to https://capsomer.dustinedwards.info/components/draft-compare/states.html?theme=light, which redirects to /components/draft-compare/states?theme=light"
       },
@@ -1153,11 +1133,6 @@
       },
       {
        "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/components/flag-list/ 930 px wide in Google's 14 px Arial (150 characters); a desktop result clips the snippet past 920 px"
-      },
-      {
-       "severity": "warning",
        "check": "link-redirect",
        "detail": "https://capsomer.dustinedwards.info/components/flag-list/ links to https://capsomer.dustinedwards.info/components/flag-list/states.html?theme=light, which redirects to /components/flag-list/states?theme=light"
       },
@@ -1165,11 +1140,6 @@
        "severity": "warning",
        "check": "link-redirect",
        "detail": "https://capsomer.dustinedwards.info/components/flag-list/ links to https://capsomer.dustinedwards.info/components/flag-list/states.html?theme=dark, which redirects to /components/flag-list/states?theme=dark"
-      },
-      {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/components/history-list/ 934 px wide in Google's 14 px Arial (149 characters); a desktop result clips the snippet past 920 px"
       },
       {
        "severity": "warning",
@@ -1203,11 +1173,6 @@
       },
       {
        "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/components/manual/ 944 px wide in Google's 14 px Arial (153 characters); a desktop result clips the snippet past 920 px"
-      },
-      {
-       "severity": "warning",
        "check": "link-redirect",
        "detail": "https://capsomer.dustinedwards.info/components/manual/ links to https://capsomer.dustinedwards.info/components/manual/states.html?theme=light, which redirects to /components/manual/states?theme=light"
       },
@@ -1215,11 +1180,6 @@
        "severity": "warning",
        "check": "link-redirect",
        "detail": "https://capsomer.dustinedwards.info/components/manual/ links to https://capsomer.dustinedwards.info/components/manual/states.html?theme=dark, which redirects to /components/manual/states?theme=dark"
-      },
-      {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/components/markdown-editor/ 937 px wide in Google's 14 px Arial (154 characters); a desktop result clips the snippet past 920 px"
       },
       {
        "severity": "warning",
@@ -1250,11 +1210,6 @@
        "severity": "warning",
        "check": "link-redirect",
        "detail": "https://capsomer.dustinedwards.info/components/media-library/ links to https://capsomer.dustinedwards.info/components/media-library/states.html?theme=dark, which redirects to /components/media-library/states?theme=dark"
-      },
-      {
-       "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/components/mentions-list/ 950 px wide in Google's 14 px Arial (153 characters); a desktop result clips the snippet past 920 px"
       },
       {
        "severity": "warning",
@@ -1298,8 +1253,53 @@
       },
       {
        "severity": "warning",
-       "check": "description-long",
-       "detail": "https://capsomer.dustinedwards.info/components/moderation-queue/ 922 px wide in Google's 14 px Arial (152 characters); a desktop result clips the snippet past 920 px"
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/moderation-queue/ links to https://capsomer.dustinedwards.info/components/moderation-queue/states.html?theme=light, which redirects to /components/moderation-queue/states?theme=light"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/moderation-queue/ links to https://capsomer.dustinedwards.info/components/moderation-queue/states.html?theme=dark, which redirects to /components/moderation-queue/states?theme=dark"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://capsomer.dustinedwards.info/components/page-head/ links to https://capsomer.dustinedwards.info/components/breadcrumb/breadcrumb.md, which answers 404"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/page-head/ links to https://capsomer.dustinedwards.info/components/page-head/states.html?theme=light, which redirects to /components/page-head/states?theme=light"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/page-head/ links to https://capsomer.dustinedwards.info/components/page-head/states.html?theme=dark, which redirects to /components/page-head/states?theme=dark"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/pagination/ links to https://capsomer.dustinedwards.info/components/pagination/states.html?theme=light, which redirects to /components/pagination/states?theme=light"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/pagination/ links to https://capsomer.dustinedwards.info/components/pagination/states.html?theme=dark, which redirects to /components/pagination/states?theme=dark"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/panel/ links to https://capsomer.dustinedwards.info/components/panel/states.html?theme=light, which redirects to /components/panel/states?theme=light"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/panel/ links to https://capsomer.dustinedwards.info/components/panel/states.html?theme=dark, which redirects to /components/panel/states?theme=dark"
+      },
+      {
+       "severity": "warning",
+       "check": "link-redirect",
+       "detail": "https://capsomer.dustinedwards.info/components/people-roles/ links to https://capsomer.dustinedwards.info/components/people-roles/states.html?theme=light, which redirects to /components/people-roles/states?theme=light"
       }
      ]
     },
@@ -1444,50 +1444,9 @@
      "clean_days": 7
     },
     "capsomer": {
-     "status": "missing",
-     "reason": "site-runtime-security: 4 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://capsomer.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "C16",
-       "detail": "https://capsomer.dustinedwards.info/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://capsomer.dustinedwards.info/make/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "C16",
-       "detail": "https://capsomer.dustinedwards.info/make/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-1bdc342a-776a-4a08-ac38-823b48ea0e00 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "C16",
-       "detail": "https://capsomer.dustinedwards.info/site-runtime-security-1bdc342a-776a-4a08-ac38-823b48ea0e00 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://capsomer.dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "C16",
-       "detail": "https://capsomer.dustinedwards.info/ (405) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify security headers signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "prelum": {
      "status": "partial",
@@ -1760,95 +1719,9 @@
      "clean_days": 6
     },
     "germomics": {
-     "status": "missing",
-     "reason": "prelum-content: 17 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/about stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/about stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/about/dustin-edwards stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/privacy stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/terms stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/contact stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/txasm stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/antitoxin-togo-please stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/hell-on-weils stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/rabies-day-out stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/a-boy-named-flu stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/theres-something-about-typhoid-mary stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/its-on-the-syphilis stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/one-flew-over-the-kuru-nest stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/confessions-of-a-cholera-girl stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/on-the-right-taq stored HTML from render version 17; the pipeline is at 18"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://germomics.com/a-sky-full-of-sars stored HTML from render version 17; the pipeline is at 18"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1986,15 +1859,9 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "carrel-conformance: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://dustinedwards.info/api/carrel/v1 meta: answers with this contract's schema hash failed"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
+     "clean_days": 2
     },
     "germomics": {
      "status": "partial",
@@ -2024,26 +1891,18 @@
      "reason": "no Carrel site API: its content is not edited through Carrel"
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "carrel-conformance: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://foxhoundapp.com/api/carrel/v1 meta: answers with this contract's schema hash failed"
-      }
-     ]
+     "status": "partial",
+     "reason": "a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently",
+     "evidence": [
+      "https://foxhoundapp.com/api/carrel/v1/meta",
+      "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/lib/carrel/adapter.server.ts"
+     ],
+     "clean_days": 7
     },
     "foxing": {
-     "status": "missing",
-     "reason": "carrel-conformance: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://foxing.app/api/carrel/v1 meta: answers with this contract's schema hash failed"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-05, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "carrel": {
      "status": "n/a",
@@ -2189,15 +2048,9 @@
      "clean_days": 3
     },
     "capsomer": {
-     "status": "missing",
-     "reason": "site-runtime-images: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C11",
-       "detail": "https://capsomer.dustinedwards.info/og-card.png the share card's Cross-Origin-Resource-Policy is \"same-origin\", not cross-origin, so a preview on another site may not load it"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "prelum": {
      "status": "partial",
@@ -2552,11 +2405,6 @@
      "reason": "ops-audit: 1 errors",
      "findings": [
       {
-       "severity": "warning",
-       "check": "B1",
-       "detail": "https://germomics.com/health backup warning: no complete files pass of game-assets found"
-      },
-      {
        "severity": "error",
        "check": "H5",
        "detail": "https://germomics.com/health no check on /health probes MEDIA (r2), declared in https://github.com/DrDustinEdwards/germomics/blob/main/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason"
@@ -2595,11 +2443,6 @@
      "reason": "ops-audit: 1 errors",
      "findings": [
       {
-       "severity": "warning",
-       "check": "B1",
-       "detail": "https://foxhoundapp.com/health backup warning: no complete files pass of evidence found"
-      },
-      {
        "severity": "error",
        "check": "H5",
        "detail": "https://foxhoundapp.com/health no check on /health probes AUDIT_BUCKET (r2), EMAIL (send_email), declared in https://github.com/DrDustinEdwards/foxhound/blob/main/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason"
@@ -2610,11 +2453,6 @@
      "status": "missing",
      "reason": "ops-audit: 1 errors",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "B1",
-       "detail": "https://foxing.app/health backup warning: journal files: no complete files pass of journal found"
-      },
       {
        "severity": "error",
        "check": "H5",
@@ -3416,7 +3254,7 @@
     },
     "capsid": {
      "status": "missing",
-     "reason": "devkit-a11y: 2 errors",
+     "reason": "devkit-a11y: 1 errors",
      "findings": [
       {
        "severity": "warning",
@@ -3431,11 +3269,6 @@
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/systems/ no skip link to main as the first Tab stop (first stop `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)` \"Capsid\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
        "detail": "https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 18 more"
       },
       {
@@ -3446,7 +3279,7 @@
       {
        "severity": "warning",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 2 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(8) > rect:nth-of-type(2)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(9) > circle:nth-of-type(1)`"
+       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 2 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(8) > rect:nth-of-type(4)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(9) > circle:nth-of-type(1)`"
       },
       {
        "severity": "warning",
@@ -3544,7 +3377,7 @@
     },
     "foxing": {
      "status": "missing",
-     "reason": "chart-audit: 1 errors",
+     "reason": "chart-audit: 2 errors",
      "findings": [
       {
        "severity": "unmeasured",
@@ -3824,227 +3657,227 @@
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/conan-stories-howard could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/salammbo-flaubert could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/confessions-of-an-english-opium-eater-quincey could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/salem-chapel-oliphant could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/continental-op-stories-hammett could not measure: the browser could not open it: page.goto: net::ERR_ABORTED at https://foxing.app/books/continental-op-stories-hammett"
+       "detail": "https://foxing.app/books/sanine-artsybashev could not measure: the browser could not open it: page.goto: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/coriolanus-shakespeare could not measure: the browser could not open it: page.goto: net::ERR_ABORTED at https://foxing.app/books/coriolanus-shakespeare"
+       "detail": "https://foxing.app/books/sartor-resartus-carlyle could not measure: the browser could not open it: page.goto: net::ERR_ABORTED at https://foxing.app/books/sartor-resartus-carlyle"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/cornelli-spyri could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/satans-diary-andreyev could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/cousin-henry-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/savrola-churchill could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/cranford-gaskell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/scaramouche-sabatini could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/crime-and-punishment-dostoevsky could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/scarhaven-keep-fletcher could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/crome-yellow-huxley could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/scarlet-sister-mary-peterkin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/culture-and-anarchy-arnold could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/school-stories-wodehouse could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/cup-of-gold-steinbeck could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/search-the-sky-pohl could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/cymbeline-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/sense-and-sensibility-austen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dangerous-ages-macaulay could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/she-haggard could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dangerous-liaisons-laclos could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/she-stoops-to-conquer-goldsmith could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/daniel-deronda-eliot could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/shepherds-of-the-wild-marshall could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/darby-ogill-and-the-good-people-kavanagh could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/shirley-bronte could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dark-princess-bois could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-anderson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/darkwater-bois could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-andreyev could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/david-copperfield-dickens could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-beaumont could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/david-harum-westcott could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-bradbury could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dead-souls-gogol could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-budrys could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/death-comes-for-the-archbishop-cather could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-bunin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/decline-and-fall-waugh could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-chekhov could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/demian-hesse could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-chopin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/democracy-adams could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-cleyre could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/democracy-and-education-dewey could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-cordwainer-smith could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/democracy-and-social-ethics-addams could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-dick could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/demons-dostoevsky could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-fanu could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dialogues-plato could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-fitzgerald could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dialogues-seneca could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-flaubert could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dick-sands-the-boy-captain-verne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-forster could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/discourses-epictetus could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-garshin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/discourses-on-livy-machiavelli could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-gogol could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/disenchantment-montague could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-hardy could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/diverging-roads-lane could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-hemingway could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/doctor-syn-thorndike could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-henry could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/doctor-thorne-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-howard could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dodsworth-lewis could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-james could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dombey-and-son-dickens could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-jr could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/domnei-cabell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-junichiro could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/don-juan-byron could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-korolenko could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/don-quixote-saavedra could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-kuprin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dorothy-and-the-wizard-in-oz-baum could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-kuttner could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/downstream-siwertz could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-lafferty could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/dr-mabuse-the-gambler-jacques could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/short-fiction-lagerlof could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       }
      ]
     },
@@ -4255,13 +4088,13 @@
       },
       {
        "severity": "error",
-       "check": "P3",
-       "detail": "https://foxhoundapp.com/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
+       "check": "P4",
+       "detail": "https://foxhoundapp.com/mcp conformance http-header-validation passed 12/13 (failing: sep-2243-server-accepts-whitespace-header-value)"
       },
       {
-       "severity": "unmeasured",
-       "check": "audit",
-       "detail": "https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jdF9FK/site-runtime_v0.76.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:465:11)"
+       "severity": "warning",
+       "check": "P7",
+       "detail": "https://foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
       }
      ]
     },
@@ -4319,7 +4152,7 @@
     },
     "capsid-mcp": {
      "status": "missing",
-     "reason": "site-runtime-ai-audit: 12 errors",
+     "reason": "site-runtime-ai-audit: 11 errors",
      "findings": [
       {
        "severity": "error",
@@ -4677,350 +4510,31 @@
        "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
       },
       {
-       "severity": "error",
-       "check": "P3",
-       "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
-      },
-      {
        "severity": "unmeasured",
-       "check": "audit",
-       "detail": "https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jdF9FK/site-runtime_v0.76.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:465:11)"
+       "check": "P4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp could not measure: conformance http-header-validation could not run:                     \"exclusiveMini"
       }
      ]
     },
     "foxhound-mcp": {
-     "status": "missing",
-     "reason": "site-runtime-ai-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.query is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.account_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_read_merchant_data: inputSchema.account_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_read_audit_log: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_list_staged: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.type is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.account_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.to is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T12",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to f6426056f66378fe4979f4443d8c84f86acd8dd15b75bef0ee600981e7203f08"
-      },
-      {
-       "severity": "warning",
-       "check": "P3",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
-      },
-      {
-       "severity": "error",
-       "check": "P3",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "audit",
-       "detail": "https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jdF9FK/site-runtime_v0.76.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:465:11)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "dustinedwards-mcp": {
-     "status": "missing",
-     "reason": "site-runtime-ai-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_review_mentions: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_registry: inputSchema.record_key is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_registry: inputSchema.registry_kind is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_registry: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_procedure: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T12",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to 9bfcf0723b32e868bb7c0263922c2554a5978440d39563a8558ac2c56d919fe7"
-      },
-      {
-       "severity": "warning",
-       "check": "P3",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
-      },
-      {
-       "severity": "error",
-       "check": "P3",
-       "detail": "https://admin-mcp.dustinedwards.info/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "audit",
-       "detail": "https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jdF9FK/site-runtime_v0.76.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:465:11)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "carrel-mcp": {
-     "status": "missing",
-     "reason": "site-runtime-ai-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.q is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.kind is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_voice_brief: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.source is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.sources[] is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.source is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_book_files: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.path is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.path is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.source is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T12",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to 0879f71b1263f8bb28091f638f792e5e920b8b04aeb5f8cfadd66b4a8f54d2f5"
-      },
-      {
-       "severity": "warning",
-       "check": "P3",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
-      },
-      {
-       "severity": "error",
-       "check": "P3",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "audit",
-       "detail": "https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jdF9FK/site-runtime_v0.76.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:465:11)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "foxing-mcp": {
-     "status": "missing",
-     "reason": "site-runtime-ai-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_find_user: inputSchema.query is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_find_user: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_get_user_state: inputSchema.user_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_inspect_book: inputSchema.query is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_inspect_book: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_book_of_month: inputSchema.botm_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_book_of_month: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_review_club_picks: inputSchema.club_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_review_club_picks: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_audit_log: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T12",
-       "detail": "https://admin-mcp.foxing.app/mcp no --tools-hash pinned; the test grant's list hashes to 4324cf032b46ce6b3b5fa887d75caf9723ef3a7a285b59b13dbe0663ca40c661"
-      },
-      {
-       "severity": "warning",
-       "check": "P3",
-       "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
-      },
-      {
-       "severity": "error",
-       "check": "P3",
-       "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "audit",
-       "detail": "https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-jdF9FK/site-runtime_v0.76.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:465:11)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "capsid-portal": {
      "status": "n/a",
