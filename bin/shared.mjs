@@ -439,6 +439,7 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
     if (posix.basename(file) === "package.json") {
       for (const m of text.matchAll(/"([^"]+)":\s*"(?:github:|git\+https:\/\/github\.com\/)DrDustinEdwards\/([\w.-]+?)(?:\.git)?#([^"]+)"/gi)) {
         judge(file, lineOf(m.index), m[2], m[3]);
+        found.push(...lockDisagrees(tree, file, lineOf(m.index), m[1], m[2], m[3]));
       }
       for (const m of text.matchAll(/"enarratio":\s*"\^?~?(\d+\.\d+\.\d+)"/g)) judge(file, lineOf(m.index), "enarratio", m[1]);
     } else if (/^\.github\/workflows\/.+\.ya?ml$/.test(file)) {
@@ -449,6 +450,33 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
     if (known instanceof Error) found.push({ check: "pins", warn: true, message: `${repo}'s release dates could not be read (${known.message}), so its ${FRESH[repo]}-day rule was not judged` });
   }
   return found;
+}
+
+/**
+ * A pin of a shared package whose lockfile resolves another release (an error): npm keeps a lock entry for a git
+ * dependency when the tag in package.json moves, so a bump that only edits package.json ships the old code (capsid #785
+ * pinned site-runtime v0.76.0 over a lock that resolved 0.74.0). npm: the lock's version for the package must equal the
+ * tag. pnpm: the lock must record the same specifier.
+ * @param {Tree} tree @param {string} file @param {number} line @param {string} name @param {string} repo @param {string} ref
+ * @returns {Finding[]}
+ */
+export function lockDisagrees(tree, file, line, name, repo, ref) {
+  const want = semver(ref) ? ref.replace(/^v/, "") : null;
+  if (!want) return [];
+  const dir = posix.dirname(file);
+  const npmLock = posix.join(dir, "package-lock.json");
+  if (tree.files.includes(npmLock)) {
+    let lock;
+    try { lock = JSON.parse(tree.read(npmLock)); } catch { return [{ check: "pins", file: npmLock, message: "package-lock.json is not valid JSON" }]; }
+    const got = lock?.packages?.[`node_modules/${name}`]?.version;
+    if (got !== want) return [{ check: "pins", file, line, message: `${name} is pinned to v${want} but ${npmLock} resolves ${got ?? "nothing"}: regenerate the lock (delete its node_modules/${name} entry, then npm install --package-lock-only)` }];
+    return [];
+  }
+  const pnpmLock = tree.files.find((f) => posix.basename(f) === "pnpm-lock.yaml");
+  if (pnpmLock && !tree.read(pnpmLock).includes(`DrDustinEdwards/${repo}#${ref}`)) {
+    return [{ check: "pins", file, line, message: `${name} is pinned to ${ref} but ${pnpmLock} does not record that specifier: run pnpm install and commit the lock` }];
+  }
+  return [];
 }
 
 /** How many minors `at` is behind `latest`; a major behind counts as many. @param {string} at @param {string} latest */

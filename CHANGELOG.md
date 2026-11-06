@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.21.4 (2026-11-06)
+
+- `devkit-shared` (pins): a pin of a shared package whose lockfile resolves another release is an error. npm keeps a lock entry for a git dependency when its tag in `package.json` moves, so a bump that edits only `package.json` ships the old code: Capsid pinned site-runtime v0.76.0 over a lock that resolved 0.74.0 (capsid #785), and Capsomer's lock resolved 0.62.1 under a v0.73.0 pin. The check reads the `package-lock.json` beside each `package.json` (the `node_modules/<name>` version must equal the tag) and, in a pnpm repository, `pnpm-lock.yaml` (it must record the pin's specifier). The fix is in the message: delete the lock's `node_modules/<name>` entry, then `npm install --package-lock-only`.
+
 ## 0.21.3 (2026-11-05)
 
 - No false passes or failures on the scoreboard (Dustin, 2026-11-05). A check that could not measure an item says so: `::notice title=<item>::<url> could not measure: <reason>`, exit 3 when nothing failed (Monitoring Plugins' UNKNOWN). `devkit-live` records such a result, a crash or an install failure as `unmeasured` with the reasons, never `error`; the board shows ❔ "could not measure" with why (Capsid's Completeness tab reads it from capsid #780), a measured failure in the same cell still makes it missing, and `live.yml` is red only for a measured failure. A reported check's `error` reads as `unmeasured`.

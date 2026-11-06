@@ -6,7 +6,7 @@ import { delimiter, dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
+import { WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, lockDisagrees, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -540,4 +540,17 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
 
   const local = run([]);
   assert.ok(local.lines.includes("::warning::[config] not installed here: site-runtime, site-api, d1-dump, devkit, capsomer, enarratio, so copies of their exports and Capsomer's tokens were not checked and no exception was judged stale; npm install, or --from <dir> of checkouts (CI reads them all)"));
+});
+
+test("a pin whose lockfile resolves another release fails (capsid #785), npm and pnpm", () => {
+  const pkg = '{"dependencies":{"@dustinedwards/site-runtime":"github:DrDustinEdwards/site-runtime#v0.10.0"}}';
+  const npm = (v) => tree({ "package.json": pkg, "package-lock.json": JSON.stringify({ packages: { "node_modules/@dustinedwards/site-runtime": { version: v } } }) });
+  const run = (t) => checkPins(t, tags).filter((f) => f.message.includes("lock"));
+  assert.equal(run(npm("0.10.0")).length, 0);
+  const stale = run(npm("0.9.0"));
+  assert.equal(stale.length, 1);
+  assert.equal(isWarning(stale[0]), false);
+  assert.match(stale[0].message, /pinned to v0\.10\.0 but package-lock\.json resolves 0\.9\.0/);
+  assert.equal(lockDisagrees(tree({ "package.json": pkg, "pnpm-lock.yaml": "specifier: github:DrDustinEdwards/site-runtime#v0.10.0" }), "package.json", 1, "x", "site-runtime", "v0.10.0").length, 0);
+  assert.equal(lockDisagrees(tree({ "package.json": pkg, "pnpm-lock.yaml": "specifier: github:DrDustinEdwards/site-runtime#v0.9.0" }), "package.json", 1, "x", "site-runtime", "v0.10.0").length, 1);
 });
