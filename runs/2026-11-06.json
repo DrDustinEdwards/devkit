@@ -1,6 +1,6 @@
 {
- "at": "2026-11-06T15:12:08.830Z",
- "public_token": true,
+ "at": "2026-11-06T15:54:49.724Z",
+ "public_token": false,
  "results": [
   {
    "area": 1,
@@ -113,7 +113,7 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/accessibility the sitemap lists a noindex page"
     }
    ],
-   "seconds": 3
+   "seconds": 5
   },
   {
    "area": 1,
@@ -125,7 +125,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 12
+   "seconds": 7
   },
   {
    "area": 1,
@@ -638,7 +638,7 @@
      "detail": "https://capsomer.dustinedwards.info/components/people-roles/ links to https://capsomer.dustinedwards.info/components/people-roles/states.html?theme=light, which redirects to /components/people-roles/states?theme=light"
     }
    ],
-   "seconds": 17
+   "seconds": 7
   },
   {
    "area": 1,
@@ -650,7 +650,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 2
   },
   {
    "area": 1,
@@ -662,7 +662,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 114
+   "seconds": 102
   },
   {
    "area": 1,
@@ -763,20 +763,520 @@
      "detail": "https://foxhoundapp.com/docs/recovery links to https://foxhoundapp.com/recovery/sequence, which redirects to /login"
     }
    ],
-   "seconds": 45
+   "seconds": 51
   },
   {
    "area": 1,
    "site": "foxing",
    "check": "prelum-audit",
    "ref": "v0.33.0",
-   "status": "unmeasured",
+   "status": "pass",
    "errors": 0,
-   "warnings": 0,
+   "warnings": 6600,
    "unmeasured": 0,
-   "findings": [],
-   "seconds": 1200,
-   "detail": "exit 3 with nothing said"
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/ links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/ links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/awards links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/awards links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/awards links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/picks links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/picks links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/picks links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/book-of-the-month links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/book-of-the-month links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/book-of-the-month links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/journal links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/journal links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/journal links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/journal/archive links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/journal/archive links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/journal/archive links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/about links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/about links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/about links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/accessibility links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/accessibility links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/accessibility links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/features links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/features links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/features links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-christmas-carol-dickens links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-christmas-carol-dickens links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-christmas-carol-dickens links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-daughter-of-eve-balzac links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-daughter-of-eve-balzac links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-daughter-of-eve-balzac links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-day-at-a-time-alexander links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-day-at-a-time-alexander links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-day-at-a-time-alexander links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-man-could-stand-up--ford links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-man-could-stand-up--ford links to https://foxing.app/people, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-man-could-stand-up--ford links to https://foxing.app/lists, which redirects to /login"
+    },
+    {
+     "severity": "warning",
+     "check": "link-redirect",
+     "detail": "https://foxing.app/books/a-marriage-settlement-balzac links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+    }
+   ],
+   "seconds": 813
   },
   {
    "area": 1,
@@ -788,7 +1288,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 22
+   "seconds": 17
   },
   {
    "area": 1,
@@ -1325,7 +1825,7 @@
      "detail": "https://txasm.org/newsletters/fall-1991-newsletter links to https://txasm.org/register, which answers 404"
     }
    ],
-   "seconds": 300
+   "seconds": 251
   },
   {
    "area": 2,
@@ -1350,7 +1850,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/site-runtime-security-44f244fc-1f8c-4ac6-9b29-3778b1eab4a8 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/site-runtime-security-388f7f9a-bd06-479e-a276-4a149c558a68 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
    "seconds": 3
@@ -1378,7 +1878,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://capsid.dustinedwards.info/site-runtime-security-1675a90d-ef31-4bb9-bcb1-0c4455aeed2f (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://capsid.dustinedwards.info/site-runtime-security-00b275fa-7c5e-404e-865d-6c6220e516e1 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1413,12 +1913,12 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://portal.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-f8Sz57YEPU8xm97ljRVBPQ==' 'self')"
+     "detail": "https://portal.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-NzxPXa5JgT8bKK88WKV/4g==' 'self')"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-utnjwrLQn032/7TkMhkcYw==' 'self')"
+     "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-VAlQUrU+gVqA4cyvTRKMBg==' 'self')"
     }
    ],
    "seconds": 0
@@ -1439,7 +1939,7 @@
      "detail": "https://portal.dustinedwards.info/ is behind Cloudflare Access (dustinedwards.cloudflareaccess.com): the pages behind it were not graded"
     }
    ],
-   "seconds": 4
+   "seconds": 3
   },
   {
    "area": 2,
@@ -1464,7 +1964,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://capsomer.dustinedwards.info/site-runtime-security-30092132-abdd-40fa-8d1a-61682ba8718f (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://capsomer.dustinedwards.info/site-runtime-security-a7d8fc44-4714-45fb-9a59-3ef843787810 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1472,7 +1972,7 @@
      "detail": "https://capsomer.dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 2,
@@ -1497,7 +1997,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://carrel.dustinedwards.info/site-runtime-security-c71ab609-6bcc-48ab-a596-f659d2eef765 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://carrel.dustinedwards.info/site-runtime-security-fbfcbbb7-9cac-4a1e-bf45-93b8bbabcbdc (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1546,7 +2046,7 @@
      "detail": "https://desk.dustinedwards.info/.well-known/security.txt is behind Cloudflare Access; it must be public (RFC 9116)"
     }
    ],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 2,
@@ -1583,7 +2083,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/site-runtime-security-525b9790-5220-48b8-976b-8335d7d60a68 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/site-runtime-security-fe5d6315-b75b-4dfe-84c9-3752a6a377d1 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1628,7 +2128,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://enarratio.dustinedwards.info/site-runtime-security-06e68031-056d-4088-a458-a464998eb81c (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://enarratio.dustinedwards.info/site-runtime-security-1025f68e-c45a-4d40-9413-152429a40684 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1651,27 +2151,27 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-d23m/drLVc4HDYOiiMPPAA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-nLulXNl0OoFC6pb6x8g0Og==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-qGEA2HxNgucsn7Yu7cDmJA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-P7f1ui1pgO2pWP31NnTYpA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/site-runtime-security-67c1dc6f-dcd3-4b9a-b3f1-8762cc97514e (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Qh+jDL11SQ338g/5dEXk8g==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/site-runtime-security-8cb9c033-1d6b-4c66-ba67-973db64262cd (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-e4GIfZzLVraKuK6lVv9UWg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-XNYHycCwFz+XeKp7XIf4FQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-NdUU+PKsM9hHZ+YaR/dwXg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-UnG8OxmM/4NuRBRudNfVWw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-lAcpgo6D2hL1TiuPQbLwzw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
    "seconds": 2
@@ -1701,30 +2201,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-2vZjtg8GROw2FxWsPOQO5Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-71E9EqHoX/DXtMPWxRAKBQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/books (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-gZP/qE5eF5HY6lgZWLBUIA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/books (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Z+mExHaToySo8DaSZaNeYw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/site-runtime-security-0a4c6f9c-d583-49d6-90ef-95f57e14bbc0 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-e0KpvyarNeAogS2BC6n+pg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/site-runtime-security-c69e6047-b004-4ad0-9424-4e1d7ffd8f43 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-y6vDYqBnA2NL8Xo/BamlgQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-AZYqHt0AQVMtu5dNUmeaHQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-VAthG0rN5zezWAocRTdzEg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-AcOv3SAKjjQkdgwlQduYCA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-QDDg5ui1/92Mcnl33cGFcA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 3
+   "seconds": 1
   },
   {
    "area": 2,
@@ -1751,30 +2251,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-9ZzVz0E3XL78sR8/T+VmgQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-hwOvdX5pWNkKfO8oSOeQOg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-pID/UNXciynHXXhU4s30LA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-wJ4CsxZ1k4GbE7NyWEDgOA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/site-runtime-security-0af67967-ea23-4479-a044-bf5da6378c2e (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-jPrHChJYFbfrv1LgC0hzwg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/site-runtime-security-bcdb4cbe-8224-4ead-b234-2deb2865a47b (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Dii0f6w1lSsPkq+IsbXEVw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-2e9RCSwt+r+Y27ZbbGpM2g==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-eiTQ/y6G1fFYtL07IUde0g==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-OH18lPoJ6VUsqcPZB6wZIw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-5LrjBnf3AswaRJ7g4YKlEQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 6
+   "seconds": 4
   },
   {
    "area": 2,
@@ -1794,7 +2294,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://julieedwards.info/site-runtime-security-3bf2c935-7bbb-43cf-9bab-506853bc7e8d (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://julieedwards.info/site-runtime-security-bf4c4462-33ef-498b-b2b2-aaa81d27b0bc (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1827,7 +2327,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://prelum.dustinedwards.info/site-runtime-security-85b90302-4650-4606-a4ce-602b6bfe0d83 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://prelum.dustinedwards.info/site-runtime-security-a195338c-0947-4442-9182-79a1f06b0f80 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1850,30 +2350,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-hcn5JV/2h39u+0yEJs8ZxQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-ltc/4rQYL8/ILTd9xpWSIg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-wiDmceEQuW4Z/kqMn5/dUg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/meetings (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-mjge8AVVOFsISPeptx8KFA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-941ef7cc-110c-47d6-a700-75c7500efe2a (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-G2E4/hVl0bJ5XCAK3lFKuw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-9914129f-6ccc-4038-a4c7-7ce38e71ce6d (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-29DJoemAo+j1jhfE3PfURQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-SEvrKA++bvU3I0Ufh4B34g==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-fvmTArQhf5KA31M0wHDq2Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-aO5qrYMQ7Wgz8jnynSqwWQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Ev690OqpP9cdzIUyQeaHEw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 3,
@@ -1909,7 +2409,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 2
   },
   {
    "area": 3,
@@ -1933,7 +2433,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 3,
@@ -1945,7 +2445,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 2
   },
   {
    "area": 3,
@@ -1969,7 +2469,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 5
+   "seconds": 3
   },
   {
    "area": 3,
@@ -1981,7 +2481,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 3,
@@ -1993,7 +2493,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 4
+   "seconds": 2
   },
   {
    "area": 3,
@@ -2040,7 +2540,7 @@
      "detail": "https://txasm.dustin-edwards.workers.dev/admin redirects to https://txasm.dustin-edwards.workers.dev/signin, not Cloudflare Access"
     }
    ],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 4,
@@ -2120,7 +2620,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 4
+   "seconds": 3
   },
   {
    "area": 4,
@@ -2132,7 +2632,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 7
+   "seconds": 5
   },
   {
    "area": 4,
@@ -2156,7 +2656,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 7
+   "seconds": 4
   },
   {
    "area": 4,
@@ -2168,7 +2668,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 2
   },
   {
    "area": 4,
@@ -2211,7 +2711,7 @@
      "detail": "https://foxhoundapp.com/compare h3 follows h1"
     }
    ],
-   "seconds": 5
+   "seconds": 2
   },
   {
    "area": 4,
@@ -2229,7 +2729,7 @@
      "detail": "https://foxing.app/books h3 follows h1"
     }
    ],
-   "seconds": 50
+   "seconds": 4
   },
   {
    "area": 4,
@@ -2241,7 +2741,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 12
+   "seconds": 7
   },
   {
    "area": 4,
@@ -2289,7 +2789,7 @@
      "detail": "https://txasm.org/award-nominations rendered writing with no data-render-version on its wrapper, so an upgrade cannot be seen"
     }
    ],
-   "seconds": 7
+   "seconds": 4
   },
   {
    "area": 5,
@@ -2313,7 +2813,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 5,
@@ -2361,7 +2861,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 5,
@@ -2487,7 +2987,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 6,
@@ -2535,7 +3035,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 6,
@@ -2565,7 +3065,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 12
+   "seconds": 7
   },
   {
    "area": 6,
@@ -2577,7 +3077,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 5
+   "seconds": 6
   },
   {
    "area": 6,
@@ -2589,7 +3089,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 6,
@@ -2601,7 +3101,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 7,
@@ -2629,7 +3129,7 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 37
+   "seconds": 36
   },
   {
    "area": 7,
@@ -2652,7 +3152,7 @@
      "detail": "https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 37,
+   "seconds": 36,
    "detail": "A3: https://capsid.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -2676,7 +3176,7 @@
      "detail": "https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 37,
+   "seconds": 34,
    "detail": "A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -2700,7 +3200,7 @@
      "detail": "https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 35,
+   "seconds": 32,
    "detail": "A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -2724,7 +3224,7 @@
      "detail": "https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 39,
+   "seconds": 36,
    "detail": "A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -2732,11 +3232,16 @@
    "site": "enarratio",
    "check": "site-runtime-speed-static",
    "ref": "v0.79.0",
-   "status": "unmeasured",
-   "errors": 0,
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
    "unmeasured": 2,
    "findings": [
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://enarratio.dustinedwards.info/example not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=300, must-revalidate, colo ATL then ATL"
+    },
     {
      "severity": "unmeasured",
      "check": "A3",
@@ -2748,8 +3253,7 @@
      "detail": "https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 34,
-   "detail": "A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
+   "seconds": 33
   },
   {
    "area": 7,
@@ -2772,7 +3276,7 @@
      "detail": "https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 47,
+   "seconds": 50,
    "detail": "A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -2796,7 +3300,7 @@
      "detail": "https://foxing.app/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 63,
+   "seconds": 43,
    "detail": "A3: https://foxing.app/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxing.app/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -2805,10 +3309,60 @@
    "check": "site-runtime-speed",
    "ref": "v0.79.0",
    "status": "fail",
-   "errors": 2,
+   "errors": 12,
    "warnings": 0,
    "unmeasured": 2,
    "findings": [
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/episodes not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/writing not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/archive not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/data not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/games not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/subscribe not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/about not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/privacy not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/terms not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ATL then ATL"
+    },
     {
      "severity": "error",
      "check": "C2",
@@ -2830,7 +3384,7 @@
      "detail": "https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 53
+   "seconds": 48
   },
   {
    "area": 7,
@@ -2853,7 +3407,7 @@
      "detail": "https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 34,
+   "seconds": 33,
    "detail": "A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -2877,7 +3431,7 @@
      "detail": "https://prelum.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 33,
+   "seconds": 34,
    "detail": "A3: https://prelum.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://prelum.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -2906,7 +3460,7 @@
      "detail": "https://txasm.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 49
+   "seconds": 45
   },
   {
    "area": 8,
@@ -2933,10 +3487,10 @@
     {
      "severity": "error",
      "check": "B1",
-     "detail": "https://mcp.dustinedwards.info/health the newest complete backup is 29.6 hours old, not under 26"
+     "detail": "https://mcp.dustinedwards.info/health the newest complete backup is 30.3 hours old, not under 26"
     }
    ],
-   "seconds": 3
+   "seconds": 2
   },
   {
    "area": 8,
@@ -2960,7 +3514,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 7
+   "seconds": 4
   },
   {
    "area": 8,
@@ -2972,7 +3526,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 8,
@@ -3008,7 +3562,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 2
   },
   {
    "area": 8,
@@ -3023,21 +3577,27 @@
     {
      "severity": "error",
      "check": "H4",
-     "detail": "https://admin-mcp.foxing.app/health serves a43207b828276c613a73e87d697fee14c112b567, not the branch head 701b1c523b416862271b4324d908c1268e8fe477 (https://github.com/DrDustinEdwards/foxing/commit/701b1c523b416862271b4324d908c1268e8fe477), committed 344 minutes ago"
+     "detail": "https://admin-mcp.foxing.app/health serves a43207b828276c613a73e87d697fee14c112b567, not the branch head 701b1c523b416862271b4324d908c1268e8fe477 (https://github.com/DrDustinEdwards/foxing/commit/701b1c523b416862271b4324d908c1268e8fe477), committed 389 minutes ago"
     }
    ],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 8,
    "site": "germomics",
    "check": "ops-audit",
    "ref": "v0.21.5",
-   "status": "pass",
-   "errors": 0,
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [],
+   "findings": [
+    {
+     "severity": "error",
+     "check": "H5",
+     "detail": "https://germomics.com/health no check on /health probes SEND_EMAIL (send_email), declared in https://github.com/DrDustinEdwards/germomics/blob/main/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason"
+    }
+   ],
    "seconds": 2
   },
   {
@@ -3050,7 +3610,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 2
   },
   {
    "area": 8,
@@ -3180,7 +3740,7 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/editing-process heading levels skipped: h1 to h3 at `main#main > section:nth-of-type(2) > div.page-prose.mx-auto > h3:nth-of-type(1)`"
     }
    ],
-   "seconds": 232
+   "seconds": 236
   },
   {
    "area": 9,
@@ -3188,7 +3748,7 @@
    "check": "devkit-a11y",
    "ref": "v0.21.5",
    "status": "fail",
-   "errors": 1,
+   "errors": 2,
    "warnings": 5,
    "unmeasured": 0,
    "findings": [
@@ -3201,6 +3761,11 @@
      "severity": "warning",
      "check": "L1",
      "detail": "https://capsid.dustinedwards.info/systems/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `section[aria-labelledby=\"table-title\"]`"
+    },
+    {
+     "severity": "error",
+     "check": "L2",
+     "detail": "https://capsid.dustinedwards.info/systems/ no skip link to main as the first Tab stop (first stop `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)` \"Capsid\")"
     },
     {
      "severity": "error",
@@ -3223,7 +3788,7 @@
      "detail": "https://capsid.dustinedwards.info/code/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `section[aria-labelledby=\"repos-title\"]`"
     }
    ],
-   "seconds": 247
+   "seconds": 284
   },
   {
    "area": 9,
@@ -3296,7 +3861,7 @@
      "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 9 elements, first `#main`"
     }
    ],
-   "seconds": 308
+   "seconds": 386
   },
   {
    "area": 9,
@@ -3364,7 +3929,7 @@
      "detail": "https://carrel.dustinedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
     }
    ],
-   "seconds": 83
+   "seconds": 88
   },
   {
    "area": 9,
@@ -3472,7 +4037,7 @@
      "detail": "https://dustinedwards.info/colophon axe region (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.tracks`"
     }
    ],
-   "seconds": 261
+   "seconds": 276
   },
   {
    "area": 9,
@@ -3500,7 +4065,7 @@
      "detail": "https://enarratio.dustinedwards.info/astro focused element covered by another on 1 stops: `figure#tickets-by-team > div.enarratio-frame.enarratio-frame-wide:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `svg > g:nth-of-type(7) > g:nth-of-type(1) > rect:nth-of-type(1)`"
     }
    ],
-   "seconds": 216
+   "seconds": 276
   },
   {
    "area": 9,
@@ -3515,7 +4080,7 @@
     {
      "severity": "error",
      "check": "L1",
-     "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
+     "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
     },
     {
      "severity": "warning",
@@ -3578,7 +4143,7 @@
      "detail": "https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what `section.mb-10:nth-of-type(4) > ul.m-0.flex > li.overflow-hidden.rounded-lg:nth-of-type(1) > button.flex.w-full` opened"
     }
    ],
-   "seconds": 213
+   "seconds": 222
   },
   {
    "area": 9,
@@ -3641,7 +4206,7 @@
      "detail": "https://foxing.app/awards/nobel-literature heading levels skipped: h1 to h3 at `div:nth-of-type(1) > a.fx-book-card > div.fx-book-card-body:nth-of-type(2) > h3.fx-book-card-title`"
     }
    ],
-   "seconds": 234
+   "seconds": 246
   },
   {
    "area": 9,
@@ -3799,7 +4364,7 @@
      "detail": "https://germomics.com/data no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
     }
    ],
-   "seconds": 224
+   "seconds": 227
   },
   {
    "area": 9,
@@ -3867,7 +4432,7 @@
      "detail": "https://julieedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
     }
    ],
-   "seconds": 81
+   "seconds": 82
   },
   {
    "area": 9,
@@ -3940,7 +4505,7 @@
      "detail": "https://prelum.dustinedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
     }
    ],
-   "seconds": 99
+   "seconds": 114
   },
   {
    "area": 9,
@@ -3968,19 +4533,25 @@
      "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter axe aria-prohibited-attr (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.pdf-viewer-page`"
     }
    ],
-   "seconds": 218
+   "seconds": 223
   },
   {
    "area": 10,
    "site": "capsid",
    "check": "chart-audit",
    "ref": "v0.33.0",
-   "status": "pass",
-   "errors": 0,
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [],
-   "seconds": 62
+   "findings": [
+    {
+     "severity": "error",
+     "check": "D5",
+     "detail": "https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.012 (layout shift); largest 0.012, div.cap-chart +0 px"
+    }
+   ],
+   "seconds": 72
   },
   {
    "area": 10,
@@ -3992,7 +4563,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 37
+   "seconds": 45
   },
   {
    "area": 10,
@@ -4004,7 +4575,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 137
+   "seconds": 156
   },
   {
    "area": 10,
@@ -4016,7 +4587,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 10,
@@ -4028,7 +4599,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 14
+   "seconds": 18
   },
   {
    "area": 10,
@@ -4040,7 +4611,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 97
+   "seconds": 109
   },
   {
    "area": 10,
@@ -4052,7 +4623,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 101
+   "seconds": 111
   },
   {
    "area": 10,
@@ -4064,7 +4635,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 136
+   "seconds": 157
   },
   {
    "area": 10,
@@ -4074,10 +4645,511 @@
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
-   "unmeasured": 0,
-   "findings": [],
+   "unmeasured": 913,
+   "findings": [
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/a-p-herbert could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/a-w-tozer could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/abu-al-ala-al-maarri could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/ada-elizabeth-chesterton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/adam-mickiewicz could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/adam-smith could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/aeschylus could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/aesop could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/agatha-christie could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/akutagawa-ryunosuke could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/alain-rene-lesage could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/alan-sullivan could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/aldous-huxley could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/aleksandr-kuprin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/alexander-berkman could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/alexander-hamilton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/alexander-mackenzie could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/alexander-pushkin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/alexandre-dumas could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/alfred-lord-tennyson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/algernon-blackwood could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/algis-budrys could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/ambrose-bierce could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/ameen-rihani could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anatole-france could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/andre-gide could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/andre-norton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/angela-brazil could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anita-loos could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/ann-radcliffe could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anna-julia-cooper could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anna-katharine-green could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anna-sewell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anne-bronte could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anne-parrish could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anthony-berkeley could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anthony-hope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anthony-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/anton-chekhov could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/apollonius-of-rhodes could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/apsley-cherry-garrard could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/apuleius could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/archibald-alexander could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/aristotle could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/arnold-bennett could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/arthur-conan-doyle could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/arthur-machen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/arthur-quiller-couch could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/arthur-ransome could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/arthur-w-pinero could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/authors/august-strindberg could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/poetry-yeats could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/point-counter-point-huxley could not measure: the browser could not open it: page.goto: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/pointed-roofs-richardson could not measure: the browser could not open it: page.goto: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/poirot-investigates-christie could not measure: the browser could not open it: page.goto: net::ERR_ABORTED at https://foxing.app/books/poirot-investigates-christie"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/pollyanna-grows-up-porter could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/pollyanna-porter could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/polynesian-mythology-grey could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/poor-folk-dostoevsky could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/practical-mysticism-underhill could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/pragmatism-james could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/pride-and-prejudice-austen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/prince-otto-stevenson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/principia-ethica-moore could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/privy-seal-ford could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/progress-and-poverty-george could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/psmith-in-the-city-wodehouse could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/psmith-journalist-wodehouse could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/puddnhead-wilson-twain could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/pygmalion-shaw could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/queen-victoria-strachey could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/quicksand-larsen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/quo-vadis-sienkiewicz could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/rachel-ray-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/ragged-dick-jr could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/ralestone-luck-norton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/recollections-of-full-years-taft could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/red-dusk-and-the-morrow-dukes could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/red-harvest-hammett could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/religion-and-the-rise-of-capitalism-tawney could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/representative-men-emerson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/resurrection-tolstoy could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/riceyman-steps-bennett could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/richard-ii-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/richard-iii-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/riders-of-the-purple-sage-grey could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/right-ho-jeeves-wodehouse could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/roads-to-freedom-russell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/robbery-under-arms-boldrewood could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/romance-conrad could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/romeo-and-juliet-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/room-13-wallace could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/roughing-it-twain could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/round-the-moon-verne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/running-a-thousand-miles-for-freedom-craft could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    },
+    {
+     "severity": "unmeasured",
+     "check": "G",
+     "detail": "https://foxing.app/books/rur-capek could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+    }
+   ],
    "seconds": 1200,
-   "detail": "exit 3 with nothing said"
+   "detail": "G: https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext."
   },
   {
    "area": 10,
@@ -4089,7 +5161,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 43
+   "seconds": 46
   },
   {
    "area": 10,
@@ -4101,7 +5173,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 32
+   "seconds": 35
   },
   {
    "area": 11,
@@ -4248,7 +5320,7 @@
      "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
     }
    ],
-   "seconds": 262
+   "seconds": 264
   },
   {
    "area": 11,
@@ -4410,7 +5482,7 @@
      "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 258
+   "seconds": 263
   },
   {
    "area": 11,
@@ -4475,7 +5547,7 @@
      "detail": "https://admin-mcp.dustinedwards.info/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 256
+   "seconds": 257
   },
   {
    "area": 11,
@@ -4565,7 +5637,7 @@
      "detail": "https://foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 261
+   "seconds": 264
   },
   {
    "area": 11,
@@ -4638,7 +5710,7 @@
      "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 257
+   "seconds": 258
   },
   {
    "area": 11,
@@ -4650,7 +5722,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 11,
