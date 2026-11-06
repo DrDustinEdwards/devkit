@@ -475,7 +475,7 @@ test(
         'export const color = "red";\nconst License = 1;\n',
       );
       // oxfmt-ignore
-    assert.equal(readFileSync(join(root, "app/b.ts"), "utf8"), 'if (status === "cancelled" && job.cancelled()) favour();\n'); // codespell:ignore
+      assert.equal(readFileSync(join(root, "app/b.ts"), "utf8"), 'if (status === "cancelled" && job.cancelled()) favour();\n'); // codespell:ignore
       process.env.CODESPELL_BROKEN = "1";
       assert.throws(() => checkSpelling(root, {}), /codespell failed: broken/);
     } finally {

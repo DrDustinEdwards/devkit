@@ -28,7 +28,7 @@ export function installFetch(impl) {
   });
   return () => {
     if (previous) Object.defineProperty(globalThis, "fetch", previous);
-    else delete /** @type {{ fetch?: unknown }} */ (globalThis).fetch;
+    else delete (/** @type {{ fetch?: unknown }} */ (globalThis).fetch);
   };
 }
 
