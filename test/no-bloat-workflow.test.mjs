@@ -7,8 +7,14 @@ import test from "node:test";
 
 import { callerProblems } from "../scripts/check-callers.mjs";
 
-const text = readFileSync(new URL("../.github/workflows/no-bloat.yml", import.meta.url), "utf8").replace(/\r\n/g, "\n");
-const code = text.split("\n").filter((line) => !/^\s*#/.test(line)).join("\n");
+const text = readFileSync(
+  new URL("../.github/workflows/no-bloat.yml", import.meta.url),
+  "utf8",
+).replace(/\r\n/g, "\n");
+const code = text
+  .split("\n")
+  .filter((line) => !/^\s*#/.test(line))
+  .join("\n");
 const steps = text
   .slice(text.indexOf("    steps:\n") + "    steps:\n".length)
   .split(/\n(?=      - )/)
@@ -35,5 +41,10 @@ test("it runs the package's bin, which the package ships", () => {
 });
 
 test("the example caller passes the pin check", () => {
-  assert.deepEqual(callerProblems(readFileSync(new URL("../examples/no-bloat-caller.yml", import.meta.url), "utf8")), []);
+  assert.deepEqual(
+    callerProblems(
+      readFileSync(new URL("../examples/no-bloat-caller.yml", import.meta.url), "utf8"),
+    ),
+    [],
+  );
 });

@@ -85,7 +85,8 @@ test("the rollback took effect only when a readable, different sha is live", () 
 
 // The workflow calls the guard as a command, so its exits are the contract: 0 roll back, 1 do not.
 test("run as a command, the guard's exit code is its verdict", () => {
-  const run = (/** @type {string[]} */ ...args) => spawnSync(process.execPath, [GUARD, ...args], { encoding: "utf8" }).status;
+  const run = (/** @type {string[]} */ ...args) =>
+    spawnSync(process.execPath, [GUARD, ...args], { encoding: "utf8" }).status;
   assert.equal(run(LIVE_SHA, LIVE_SHA, "1", "1"), 0);
   assert.equal(run(PREVIOUS_SHA, LIVE_SHA, "1", "2"), 1);
   assert.equal(run("unreadable", LIVE_SHA, "1", "2"), 1);

@@ -15,9 +15,7 @@
     },
     "dustinedwards-info": {
       "verdict": "partial",
-      "evidence": [
-        "https://dustinedwards.info/health"
-      ],
+      "evidence": ["https://dustinedwards.info/health"],
       "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Fixed since 31 Oct and checked: /health shared shape, sha d3e0303e = main head, 27 checks pass, backup 4 h old, cron passes; /api/health is now a 404; deploy goes through devkit worker-deploy v0.21.2 (ship.mjs gone, devkit-migrations); every binding has a check; console ratchet baseline present; 404 is the shared page. Still open: no 404 count (N1, N4, N7; waits on the privacy wording). Not verified here: the restore drill's newest run (R1), since GitHub reads were refused to this sandbox."
     },
     "germomics": {
@@ -71,16 +69,12 @@
     },
     "carrel": {
       "verdict": "partial",
-      "evidence": [
-        "https://carrel.dustinedwards.info/"
-      ],
+      "evidence": ["https://carrel.dustinedwards.info/"],
       "note": "Static public page, skip stated; Desk's health is a separate gap (carrel-desk)"
     },
     "capsid": {
       "verdict": "partial",
-      "evidence": [
-        "https://capsid.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsid.dustinedwards.info/"],
       "note": "Static explorer, skip stated; not in Capsid's watcher; explorer deploys locally (explorer.yml) with no sampling rate stated"
     },
     "capsid-mcp": {
@@ -93,9 +87,7 @@
     },
     "foxhound-mcp": {
       "verdict": "partial",
-      "evidence": [
-        "https://admin-mcp.foxhoundapp.com/health"
-      ],
+      "evidence": ["https://admin-mcp.foxhoundapp.com/health"],
       "note": "Old shape {ok, sha} from local door.ts:60 (ops-audit H2 error); no binding probed; no sampling rate"
     },
     "dustinedwards-mcp": {
@@ -117,37 +109,27 @@
     },
     "foxing-mcp": {
       "verdict": "partial",
-      "evidence": [
-        "https://admin-mcp.foxing.app/health"
-      ],
+      "evidence": ["https://admin-mcp.foxing.app/health"],
       "note": "Old shape {ok, sha} from local login-handler.ts:33 (ops-audit H2 error); site-runtime v0.50.1; worker-deploy v0.20.8; no binding probed"
     },
     "capsomer": {
       "verdict": "partial",
-      "evidence": [
-        "https://capsomer.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsomer.dustinedwards.info/"],
       "note": "Static, skip stated; Workers Builds deploy, not worker-deploy; records no deploy"
     },
     "prelum": {
       "verdict": "partial",
-      "evidence": [
-        "https://prelum.dustinedwards.info/"
-      ],
+      "evidence": ["https://prelum.dustinedwards.info/"],
       "note": "Static, skip stated; local deploy (specimen.yml:52); records no deploy"
     },
     "capsid-portal": {
       "verdict": "partial",
-      "evidence": [
-        "https://portal.dustinedwards.info/health"
-      ],
+      "evidence": ["https://portal.dustinedwards.info/health"],
       "note": "/health redirects to Access; an Access Bypass app on /health plus a Worker exemption fixes it"
     },
     "carrel-desk": {
       "verdict": "partial",
-      "evidence": [
-        "https://desk.dustinedwards.info/health"
-      ],
+      "evidence": ["https://desk.dustinedwards.info/health"],
       "note": "/health stopped by Access at the edge; fixable with an Access Bypass app on desk.dustinedwards.info/health plus a gate.ts exemption; not watched by Capsid"
     }
   }

@@ -18,7 +18,9 @@ const WORKERS = 4;
 /** The <loc> values of a sitemap, or none when it does not answer 200. */
 async function locs(/** @type {string} */ url) {
   const res = await fetch(url).catch(() => null);
-  return res?.ok ? [...(await res.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]) : [];
+  return res?.ok
+    ? [...(await res.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1])
+    : [];
 }
 
 /** Every page the sitemap names on this origin, an index followed one level, at most MAX_PAGES. */
@@ -26,7 +28,9 @@ export async function sitemapPages(/** @type {string} */ origin) {
   const top = await locs(`${origin}/sitemap.xml`);
   const pages = top.filter((u) => !/\.xml(\?|$)/.test(u));
   for (const index of top.filter((u) => /\.xml(\?|$)/.test(u))) pages.push(...(await locs(index)));
-  return [...new Set(pages)].filter((u) => u.startsWith(`${origin}/`) || u === origin).slice(0, MAX_PAGES);
+  return [...new Set(pages)]
+    .filter((u) => u.startsWith(`${origin}/`) || u === origin)
+    .slice(0, MAX_PAGES);
 }
 
 /** Fetch each page once, WORKERS at a time; the count that answered 200. */
@@ -49,7 +53,12 @@ export async function warm(/** @type {string[]} */ pages) {
 async function waitForSha(/** @type {string} */ origin, /** @type {string} */ sha) {
   for (let i = 0; i < 60; i++) {
     const res = await fetch(`${origin}/health`).catch(() => null);
-    const live = res?.ok ? await res.json().then((b) => b?.sha, () => null) : null;
+    const live = res?.ok
+      ? await res.json().then(
+          (b) => b?.sha,
+          () => null,
+        )
+      : null;
     if (typeof live === "string" && live.startsWith(sha.slice(0, 7))) return true;
     await new Promise((r) => setTimeout(r, 10_000));
   }
@@ -65,7 +74,9 @@ async function main(/** @type {string[]} */ argv) {
     return 1;
   }
   if (sha && !(await waitForSha(origin, sha))) {
-    console.log(`::warning::${origin}/health never named ${sha.slice(0, 12)}; warming what is live`);
+    console.log(
+      `::warning::${origin}/health never named ${sha.slice(0, 12)}; warming what is live`,
+    );
   }
   const pages = await sitemapPages(origin);
   const stored = await warm(pages);

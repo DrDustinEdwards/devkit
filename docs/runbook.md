@@ -6,13 +6,13 @@ Every command runs from the site's repository root with a token that can do it (
 
 ## Which incident is it?
 
-| What you see | Incident | Go to |
-| --- | --- | --- |
-| The home page or `/health` does not answer, or answers 5xx, and no deploy went out in the last hour | Site down | [Site down](#site-down) |
-| `/health` names the `d1` check `fail`, or pages log `D1_ERROR` | Database down | [Database down](#database-down) |
-| It broke right after a merge to the default branch | Bad deploy | [Bad deploy](#bad-deploy) |
-| `/health` warns `backup` or `files` past 26 hours, or the weekly restore drill failed | Stale backup | [Stale backup](#stale-backup) |
-| Rows or files are missing or wrong, whatever the cause | Lost data | [Lost data](#lost-data) |
+| What you see                                                                                        | Incident      | Go to                           |
+| --------------------------------------------------------------------------------------------------- | ------------- | ------------------------------- |
+| The home page or `/health` does not answer, or answers 5xx, and no deploy went out in the last hour | Site down     | [Site down](#site-down)         |
+| `/health` names the `d1` check `fail`, or pages log `D1_ERROR`                                      | Database down | [Database down](#database-down) |
+| It broke right after a merge to the default branch                                                  | Bad deploy    | [Bad deploy](#bad-deploy)       |
+| `/health` warns `backup` or `files` past 26 hours, or the weekly restore drill failed               | Stale backup  | [Stale backup](#stale-backup)   |
+| Rows or files are missing or wrong, whatever the cause                                              | Lost data     | [Lost data](#lost-data)         |
 
 Open an incident record (below) first, with the start time, and keep it as you go.
 
@@ -96,7 +96,7 @@ The nightly files pass copies each media and upload bucket into the backups buck
 
 ```ts
 const plan = await restoreFiles(env.BACKUPS, env.MEDIA, { name: "media", prefix: "img/" }); // what would be restored
-await restoreFiles(env.BACKUPS, env.MEDIA, { name: "media", prefix: "img/", apply: true });  // only what is missing
+await restoreFiles(env.BACKUPS, env.MEDIA, { name: "media", prefix: "img/", apply: true }); // only what is missing
 ```
 
 A file that exists but differs is left unless `overwrite: true`. For one file by hand:
@@ -117,17 +117,17 @@ RTO, measured and not:
 - **Restore from a dump**: the restore itself measured against a local D1 (Miniflare's workerd, the engine `wrangler d1 --local` runs), d1-dump README, "Measured against a local D1": a 35-table, 1,422-row, 8.3 MB dump restored and checked in 19 seconds, and a 20,000-row, 38 MB one with an FTS5 index in 2 minutes 55 seconds. Remote D1 adds a round trip per batch. Allow 1 hour, most of it creating the database and binding it.
 - **Files**: one write per file, streamed; the run budget is 1,000 files or 5 minutes per call.
 
-| Site | Worker | D1 database | Backups bucket | Nightly dump (UTC) | Files backed up | D1 RPO | Files RPO | RTO (rollback / Time Travel / dump) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Foxhound | `foxhound` | `foxhound` | `foxhound-backups` | 03:00 | media | 1 min (30 days), else 24 h | 24 h after the first complete pass | 2 min / untimed, allow 15 min / 1 h |
-| Foxing | `foxing` | `foxing` | `foxing-backups` | 03:17 | media, covers | 1 min (30 days), else 24 h | 24 h after the first complete pass | 2 min / untimed, allow 15 min / 1 h |
-| germomics | `germomics` | `germomics` | `germomics-backups` | 03:17 | audio, images | 1 min (30 days), else 24 h | 24 h after the first complete pass | 2 min / untimed, allow 15 min / 1 h |
-| julieedwards.info | `julieedwards` | `julieedwards` | `julieedwards-backups` | 03:37 | media | 1 min (30 days), else 24 h | 24 h | 2 min / untimed, allow 15 min / 1 h |
-| TXASM | `txasm` | `txasm` | `txasm-books` (dumps share the books bucket) | 13:00 | uploads | 1 min (30 days), else 24 h | 24 h after the first complete pass | 2 min / untimed, allow 15 min / 1 h |
-| Carrel | `carrel-desk` | `carrel` | `carrel-backups` | 03:17 | none (holds no files of its own) | 1 min (30 days), else 24 h | none | 2 min / untimed, allow 15 min / 1 h |
-| dustinedwards.info | `dustinedwards` | `dustinedwards` | `dustinedwards-backups` | 05:00 | media (its own mirror) | 1 min (30 days), else 24 h | 24 h | 2 min / untimed, allow 15 min / 1 h |
-| Capsid | `capsid-mcp` | `capsid` | its own (`src/backup.ts`) | 09:00 | its own | 1 min (30 days), else 24 h | its own | 2 min / untimed, allow 15 min / 1 h |
-| BioScience Writers | `bsw` | none | none | none | none | nothing stored | nothing stored | 2 min / none / none |
+| Site               | Worker          | D1 database     | Backups bucket                               | Nightly dump (UTC) | Files backed up                  | D1 RPO                     | Files RPO                          | RTO (rollback / Time Travel / dump) |
+| ------------------ | --------------- | --------------- | -------------------------------------------- | ------------------ | -------------------------------- | -------------------------- | ---------------------------------- | ----------------------------------- |
+| Foxhound           | `foxhound`      | `foxhound`      | `foxhound-backups`                           | 03:00              | media                            | 1 min (30 days), else 24 h | 24 h after the first complete pass | 2 min / untimed, allow 15 min / 1 h |
+| Foxing             | `foxing`        | `foxing`        | `foxing-backups`                             | 03:17              | media, covers                    | 1 min (30 days), else 24 h | 24 h after the first complete pass | 2 min / untimed, allow 15 min / 1 h |
+| germomics          | `germomics`     | `germomics`     | `germomics-backups`                          | 03:17              | audio, images                    | 1 min (30 days), else 24 h | 24 h after the first complete pass | 2 min / untimed, allow 15 min / 1 h |
+| julieedwards.info  | `julieedwards`  | `julieedwards`  | `julieedwards-backups`                       | 03:37              | media                            | 1 min (30 days), else 24 h | 24 h                               | 2 min / untimed, allow 15 min / 1 h |
+| TXASM              | `txasm`         | `txasm`         | `txasm-books` (dumps share the books bucket) | 13:00              | uploads                          | 1 min (30 days), else 24 h | 24 h after the first complete pass | 2 min / untimed, allow 15 min / 1 h |
+| Carrel             | `carrel-desk`   | `carrel`        | `carrel-backups`                             | 03:17              | none (holds no files of its own) | 1 min (30 days), else 24 h | none                               | 2 min / untimed, allow 15 min / 1 h |
+| dustinedwards.info | `dustinedwards` | `dustinedwards` | `dustinedwards-backups`                      | 05:00              | media (its own mirror)           | 1 min (30 days), else 24 h | 24 h                               | 2 min / untimed, allow 15 min / 1 h |
+| Capsid             | `capsid-mcp`    | `capsid`        | its own (`src/backup.ts`)                    | 09:00              | its own                          | 1 min (30 days), else 24 h | its own                            | 2 min / untimed, allow 15 min / 1 h |
+| BioScience Writers | `bsw`           | none            | none                                         | none               | none                             | nothing stored             | nothing stored                     | 2 min / none / none                 |
 
 The static sites (Capsomer, Prelum, Enarratio) hold no data: their source is the repository, and a redeploy is the recovery.
 

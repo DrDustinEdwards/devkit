@@ -13,10 +13,13 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 const argv = process.argv.slice(2);
-const option = (/** @type {string} */ name) => (argv.includes(name) ? argv[argv.indexOf(name) + 1] : undefined);
+const option = (/** @type {string} */ name) =>
+  argv.includes(name) ? argv[argv.indexOf(name) + 1] : undefined;
 const keep = option("--protected");
 if (!keep) {
-  console.error("devkit-mutation-report: --protected <regex> is required (the repository's keep rule).");
+  console.error(
+    "devkit-mutation-report: --protected <regex> is required (the repository's keep rule).",
+  );
   process.exit(1);
 }
 const PROTECTED = new RegExp(keep, "i");
@@ -59,8 +62,10 @@ for (const report of reports) {
 }
 
 const killed = (/** @type {Record<string, number>} */ c) => (c.Killed ?? 0) + (c.Timeout ?? 0);
-const valid = (/** @type {Record<string, number>} */ c) => killed(c) + (c.Survived ?? 0) + (c.NoCoverage ?? 0);
-const pct = (/** @type {number} */ n, /** @type {number} */ d) => (d ? `${((100 * n) / d).toFixed(2)}%` : "n/a");
+const valid = (/** @type {Record<string, number>} */ c) =>
+  killed(c) + (c.Survived ?? 0) + (c.NoCoverage ?? 0);
+const pct = (/** @type {number} */ n, /** @type {number} */ d) =>
+  d ? `${((100 * n) / d).toFixed(2)}%` : "n/a";
 
 const rows = [];
 for (const t of tests.values()) {
@@ -68,23 +73,42 @@ for (const t of tests.values()) {
   for (const key of t.kills) if (killers.get(key) === 1) unique += 1;
   const isProtected = PROTECTED.test(t.file) || PROTECTED.test(t.name);
   const kind = t.kills.size === 0 ? "zero-kill" : unique === 0 ? "covered" : "";
-  rows.push({ file: t.file, name: t.name, kills: t.kills.size, unique, kind, protected: isProtected });
+  rows.push({
+    file: t.file,
+    name: t.name,
+    kills: t.kills.size,
+    unique,
+    kind,
+    protected: isProtected,
+  });
 }
 const zero = rows.filter((r) => r.kind === "zero-kill");
 const covered = rows.filter((r) => r.kind === "covered");
 console.log(`Reports merged: ${reports.length}`);
 console.log("Mutant status counts:", counts);
-console.log(`Mutation score: ${pct(killed(counts), valid(counts))} (${killed(counts)} of ${valid(counts)})`);
-console.log(`Score over covered code: ${pct(killed(counts), killed(counts) + (counts.Survived ?? 0))}`);
+console.log(
+  `Mutation score: ${pct(killed(counts), valid(counts))} (${killed(counts)} of ${valid(counts)})`,
+);
+console.log(
+  `Score over covered code: ${pct(killed(counts), killed(counts) + (counts.Survived ?? 0))}`,
+);
 console.log(`Tests in the kill matrix: ${rows.length}`);
 console.log(`Zero-kill: ${zero.length} (${zero.filter((r) => r.protected).length} protected)`);
-console.log(`Covered by others: ${covered.length} (${covered.filter((r) => r.protected).length} protected)`);
-console.log(`Unprotected candidates: ${zero.filter((r) => !r.protected).length} zero-kill, ${covered.filter((r) => !r.protected).length} covered`);
+console.log(
+  `Covered by others: ${covered.length} (${covered.filter((r) => r.protected).length} protected)`,
+);
+console.log(
+  `Unprotected candidates: ${zero.filter((r) => !r.protected).length} zero-kill, ${covered.filter((r) => !r.protected).length} covered`,
+);
 
 if (argv.includes("--table")) {
-  console.log("\n| File | Mutants | Killed | Survived | No coverage | Score |\n|---|---|---|---|---|---|");
+  console.log(
+    "\n| File | Mutants | Killed | Survived | No coverage | Score |\n|---|---|---|---|---|---|",
+  );
   for (const [file, c] of [...perFile].sort((a, b) => a[0].localeCompare(b[0]))) {
-    console.log(`| ${file} | ${valid(c)} | ${killed(c)} | ${c.Survived ?? 0} | ${c.NoCoverage ?? 0} | ${pct(killed(c), valid(c))} |`);
+    console.log(
+      `| ${file} | ${valid(c)} | ${killed(c)} | ${c.Survived ?? 0} | ${c.NoCoverage ?? 0} | ${pct(killed(c), valid(c))} |`,
+    );
   }
 }
 const out = option("--json");

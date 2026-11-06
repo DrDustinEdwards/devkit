@@ -6,19 +6,52 @@ import test from "node:test";
 
 import { judgeSite, pickPages } from "../bin/a11y-judge.mjs";
 
-const style = (outline = "none 0px rgb(0, 0, 0)", bg = "rgba(0, 0, 0, 0)") => ({ outline, shadow: "none", bg, border: "", decoration: "", color: "" });
-const stop = (key, sel, extra = {}) => ({ key, sel, text: sel, same: false, focused: style("solid 2px rgb(0, 0, 255)"), unfocused: style(), covered: null, offscreen: false, skipTargetsMain: false, ...extra });
+const style = (outline = "none 0px rgb(0, 0, 0)", bg = "rgba(0, 0, 0, 0)") => ({
+  outline,
+  shadow: "none",
+  bg,
+  border: "",
+  decoration: "",
+  color: "",
+});
+const stop = (key, sel, extra = {}) => ({
+  key,
+  sel,
+  text: sel,
+  same: false,
+  focused: style("solid 2px rgb(0, 0, 255)"),
+  unfocused: style(),
+  covered: null,
+  offscreen: false,
+  skipTargetsMain: false,
+  ...extra,
+});
 const basics = (extra = {}) => ({
   lang: "en",
   title: "Home",
   h1: 1,
-  headings: [{ level: 1, sel: "h1" }, { level: 2, sel: "h2" }],
+  headings: [
+    { level: 1, sel: "h1" },
+    { level: 2, sel: "h2" },
+  ],
   landmarks: { main: 1, banner: 1, nav: 1, contentinfo: 1 },
   imgNoAlt: [],
   ...extra,
 });
-const contrast = { id: "color-contrast", impact: "serious", tags: ["wcag2aa", "wcag143"], nodes: 2, target: ".btn" };
-const region = { id: "region", impact: "moderate", tags: ["best-practice"], nodes: 1, target: ".tracks" };
+const contrast = {
+  id: "color-contrast",
+  impact: "serious",
+  tags: ["wcag2aa", "wcag143"],
+  nodes: 2,
+  target: ".btn",
+};
+const region = {
+  id: "region",
+  impact: "moderate",
+  tags: ["best-practice"],
+  nodes: 1,
+  target: ".tracks",
+};
 
 test("each measurement is judged under its checklist item, WCAG as errors and best practice as warnings", () => {
   const clean = {
@@ -32,12 +65,24 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
     motion: [{ name: "fade", target: "p", duration: 0, iterations: 1 }],
     forced: { axe: [], keyboard: [stop(0, "a.skip", { skipTargetsMain: true })] },
     zoom: { scrollWidth: 720, clientWidth: 720, navLinks: 0, toggle: "button.menu" },
-    escape: [{ sel: "button.menu", opened: true, closed: true, focusBack: true }, { sel: "button.share", opened: false }],
+    escape: [
+      { sel: "button.menu", opened: true, closed: true, focusBack: true },
+      { sel: "button.share", opened: false },
+    ],
   };
   const broken = {
     url: "https://a.example.com/about",
     why: "about",
-    basics: basics({ lang: null, h1: 2, headings: [{ level: 1, sel: "h1" }, { level: 3, sel: "h3.card" }], landmarks: { main: 1, banner: 0, nav: 1, contentinfo: 1 }, imgNoAlt: ["img.logo"] }),
+    basics: basics({
+      lang: null,
+      h1: 2,
+      headings: [
+        { level: 1, sel: "h1" },
+        { level: 3, sel: "h3.card" },
+      ],
+      landmarks: { main: 1, banner: 0, nav: 1, contentinfo: 1 },
+      imgNoAlt: ["img.logo"],
+    }),
     axe: { "1440-light": [contrast, region], "390-dark": [{ ...contrast, nodes: 5 }] },
     keyboard: [
       { body: true },
@@ -47,7 +92,9 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
       stop(3, "input#q", { focused: style() }),
       // Focus inside an iframe: the walk sees the same host element press after press, so it is not judged for focus,
       // and ten presses on it are a trap.
-      ...Array.from({ length: 10 }, (_, i) => stop(4 + i, "iframe.turnstile", { focused: style(), same: i > 0 })),
+      ...Array.from({ length: 10 }, (_, i) =>
+        stop(4 + i, "iframe.turnstile", { focused: style(), same: i > 0 }),
+      ),
     ],
     reflow: { scrollWidth: 402, clientWidth: 320, widest: { sel: "a.chip", right: 402 } },
     clipped: [{ sel: "p.clamp", dir: "vertical" }],
@@ -56,8 +103,21 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
     // nothing (the palette is the reader's); a ring drawn with a background goes, and a stop that already showed nothing
     // is not counted twice.
     forced: {
-      axe: [region, { ...contrast, id: "link-in-text-block" }, { id: "button-name", impact: "critical", tags: ["wcag2a"], nodes: 1, target: "button.icon" }],
-      keyboard: [stop(0, "button.menu", { focused: style() }), stop(1, "input#q", { focused: style() })],
+      axe: [
+        region,
+        { ...contrast, id: "link-in-text-block" },
+        {
+          id: "button-name",
+          impact: "critical",
+          tags: ["wcag2a"],
+          nodes: 1,
+          target: "button.icon",
+        },
+      ],
+      keyboard: [
+        stop(0, "button.menu", { focused: style() }),
+        stop(1, "input#q", { focused: style() }),
+      ],
     },
     zoom: { scrollWidth: 800, clientWidth: 720, navLinks: 0, toggle: null },
     escape: [
@@ -65,8 +125,14 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
       { sel: "button.share", opened: true, closed: true, focusBack: false },
     ],
   };
-  const findings = judgeSite({ statement: { url: "https://a.example.com/accessibility", status: 404 }, pages: [clean, { ...broken, basics: { ...broken.basics, title: "Home" } }] });
-  assert.deepEqual(findings.filter((f) => f.url === clean.url), []);
+  const findings = judgeSite({
+    statement: { url: "https://a.example.com/accessibility", status: 404 },
+    pages: [clean, { ...broken, basics: { ...broken.basics, title: "Home" } }],
+  });
+  assert.deepEqual(
+    findings.filter((f) => f.url === clean.url),
+    [],
+  );
   const got = findings.map((f) => `${f.severity} ${f.item} ${f.detail.split(/[:(]/)[0].trim()}`);
   assert.deepEqual(got, [
     "error L1 axe color-contrast",
@@ -98,9 +164,18 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
 });
 
 test("pages are picked by type from the sitemap, never an asset", () => {
-  const urls = ["/", "/assets/entry-Bx3k.js", "/feed.xml", "/about", "/writing", "/writing/one", "/writing/two", "/books", "/books/a", "/old.html"].map(
-    (path) => `https://www.a.example.com${path}`,
-  );
+  const urls = [
+    "/",
+    "/assets/entry-Bx3k.js",
+    "/feed.xml",
+    "/about",
+    "/writing",
+    "/writing/one",
+    "/writing/two",
+    "/books",
+    "/books/a",
+    "/old.html",
+  ].map((path) => `https://www.a.example.com${path}`);
   assert.deepEqual(pickPages("https://a.example.com", urls, 5), [
     { url: "https://a.example.com/about", why: "about" },
     { url: "https://a.example.com/writing/one", why: "detail" },

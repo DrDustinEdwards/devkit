@@ -45,7 +45,9 @@ const NAMES_AGENT = /\b(claude(?!\.md)|anthropic)\b/i;
  * @returns {string[]} one entry per trailer found; empty when the message is clean
  */
 export function trailerViolations(message) {
-  const text = String(message ?? "").replace(/\r\n/g, "\n").trim();
+  const text = String(message ?? "")
+    .replace(/\r\n/g, "\n")
+    .trim();
   /** @type {string[]} */
   const found = [];
   /** @type {Set<string>} */
@@ -61,7 +63,8 @@ export function trailerViolations(message) {
   const last = paragraphs.length > 1 ? paragraphs[paragraphs.length - 1].split("\n") : [];
   if (last.length > 0 && last.every((line) => TRAILER_LINE.test(line))) {
     for (const line of last) {
-      if (NAMES_AGENT.test(line) && !seen.has(line)) found.push(`trailer naming Claude: ${line.trim()}`);
+      if (NAMES_AGENT.test(line) && !seen.has(line))
+        found.push(`trailer naming Claude: ${line.trim()}`);
     }
   }
   return found;
@@ -72,7 +75,8 @@ export function trailerViolations(message) {
 // merely begins with Claude ("Claude Dupont") or whose address contains it is not flagged; a person named exactly "Claude"
 // is, and can re-author.
 const AGENT_NAME = /^claude(?:\[bot\]|\s+(?:code|opus|sonnet|haiku|fable)\b.*)?$/i;
-const AGENT_EMAIL = /(?:@(?:[\w-]+\.)*anthropic\.com|\+claude\[bot\]@users\.noreply\.github\.com)$/i;
+const AGENT_EMAIL =
+  /(?:@(?:[\w-]+\.)*anthropic\.com|\+claude\[bot\]@users\.noreply\.github\.com)$/i;
 
 /**
  * @param {string} name
@@ -107,12 +111,19 @@ export function rangeFromEvent(env) {
   }
   if (event === "merge_group") {
     // A merge queue's group is checked before it lands, like a pull request.
-    const group = env.GITHUB_EVENT_PATH ? JSON.parse(readFileSync(env.GITHUB_EVENT_PATH, "utf8")).merge_group : undefined;
-    if (!group?.base_sha || !group?.head_sha) throw new Error("merge_group event without merge_group.base_sha and head_sha at GITHUB_EVENT_PATH");
+    const group = env.GITHUB_EVENT_PATH
+      ? JSON.parse(readFileSync(env.GITHUB_EVENT_PATH, "utf8")).merge_group
+      : undefined;
+    if (!group?.base_sha || !group?.head_sha)
+      throw new Error(
+        "merge_group event without merge_group.base_sha and head_sha at GITHUB_EVENT_PATH",
+      );
     return { base: group.base_sha, head: group.head_sha, authors: true };
   }
   if (NO_COMMITS.has(event)) return null;
-  throw new Error(`event '${event}' is not one this check knows, so it cannot tell which commits it adds`);
+  throw new Error(
+    `event '${event}' is not one this check knows, so it cannot tell which commits it adds`,
+  );
 }
 
 /**
@@ -123,7 +134,8 @@ export function rangeFromEvent(env) {
  * @returns {Array<{ sha: string, found: string[], identities: string[] }>}
  */
 export function checkRange(base, head, cwd, authors = false) {
-  const git = (/** @type {string[]} */ args) => execFileSync("git", args, { cwd, encoding: "utf8" });
+  const git = (/** @type {string[]} */ args) =>
+    execFileSync("git", args, { cwd, encoding: "utf8" });
   // Fails closed: an unknown sha (a shallow clone, a force-pushed-over base) throws.
   for (const sha of base ? [base, head] : [head]) git(["cat-file", "-e", `${sha}^{commit}`]);
   const range = base ? [`${base}..${head}`] : ["-1", head];
@@ -153,22 +165,30 @@ function main() {
     const [base, head] = args.filter((a) => a !== "--authors");
     range = head ? { base, head, authors } : rangeFromEvent(process.env);
   } catch (err) {
-    console.error(`check-trailers: could not work out the range: ${/** @type {Error} */ (err).message}`);
+    console.error(
+      `check-trailers: could not work out the range: ${/** @type {Error} */ (err).message}`,
+    );
     process.exit(2);
   }
   if (!range) {
-    console.log(`check-trailers: event '${process.env.EVENT ?? ""}' adds no commits; nothing to check`);
+    console.log(
+      `check-trailers: event '${process.env.EVENT ?? ""}' adds no commits; nothing to check`,
+    );
     return;
   }
   let bad;
   try {
     bad = checkRange(range.base, range.head, undefined, range.authors);
   } catch (err) {
-    console.error(`check-trailers: could not read commits ${range.base ?? "(none)"}..${range.head}: ${/** @type {Error} */ (err).message}`);
+    console.error(
+      `check-trailers: could not read commits ${range.base ?? "(none)"}..${range.head}: ${/** @type {Error} */ (err).message}`,
+    );
     process.exit(2);
   }
   if (bad.length === 0) {
-    console.log(`check-trailers: no AI trailer${range.authors ? " and no AI author" : ""} in ${range.base ? `${range.base}..${range.head}` : range.head}`);
+    console.log(
+      `check-trailers: no AI trailer${range.authors ? " and no AI author" : ""} in ${range.base ? `${range.base}..${range.head}` : range.head}`,
+    );
     return;
   }
   for (const { sha, found, identities } of bad) {
@@ -179,7 +199,8 @@ function main() {
       );
     }
   }
-  if (bad.some((b) => b.found.length)) console.error("Rewrite those commit messages without the trailer (the no AI trailer rule).");
+  if (bad.some((b) => b.found.length))
+    console.error("Rewrite those commit messages without the trailer (the no AI trailer rule).");
   if (bad.some((b) => b.identities.length)) {
     console.error(
       "Re-author those commits as yourself: `git config user.name` and `user.email`, then `git rebase -r <base> --exec 'git commit --amend --no-edit --reset-author'`, or `git commit --amend --reset-author` for the last one, and force-push the branch.",
@@ -189,4 +210,5 @@ function main() {
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
+  main();

@@ -30,9 +30,12 @@ export const BARS = {
   "scripts/rollback-guard": 70,
 };
 
-const module = process.env.MODULE?.includes("/") ? process.env.MODULE : `bin/${process.env.MODULE ?? "shared"}`;
+const module = process.env.MODULE?.includes("/")
+  ? process.env.MODULE
+  : `bin/${process.env.MODULE ?? "shared"}`;
 const name = module.split("/")[1];
-if (!(module in BARS)) throw new Error(`MODULE=${process.env.MODULE} is none of ${Object.keys(BARS).join(", ")}`);
+if (!(module in BARS))
+  throw new Error(`MODULE=${process.env.MODULE} is none of ${Object.keys(BARS).join(", ")}`);
 
 export default {
   testRunner: "command",
@@ -46,7 +49,11 @@ export default {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   for (const each of Object.keys(BARS)) {
-    const run = spawnSync("npx", ["--yes", "--package", "@stryker-mutator/core@10.1.1", "stryker", "run"], { stdio: "inherit", env: { ...process.env, MODULE: each } });
+    const run = spawnSync(
+      "npx",
+      ["--yes", "--package", "@stryker-mutator/core@10.1.1", "stryker", "run"],
+      { stdio: "inherit", env: { ...process.env, MODULE: each } },
+    );
     if (run.status !== 0) process.exitCode = 1;
   }
 }

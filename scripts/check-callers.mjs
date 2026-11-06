@@ -13,7 +13,8 @@ import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 // A quoted value is the same value to YAML, so a quote around it is read through.
-const SHARED = /^\s*uses:\s*["']?(?<repo>[\w.-]+)\/devkit\/\.github\/workflows\/(?<file>[\w.-]+)@(?<ref>[^\s"']+)/;
+const SHARED =
+  /^\s*uses:\s*["']?(?<repo>[\w.-]+)\/devkit\/\.github\/workflows\/(?<file>[\w.-]+)@(?<ref>[^\s"']+)/;
 
 /**
  * @param {string} text
@@ -30,11 +31,18 @@ export function callerProblems(text) {
     if (call?.groups) {
       calls += 1;
       if (!/^[0-9a-f]{40}$/.test(call.groups.ref)) {
-        problems.push({ line: index + 1, problem: `pinned to "${call.groups.ref}", not a full 40-character commit sha` });
+        problems.push({
+          line: index + 1,
+          problem: `pinned to "${call.groups.ref}", not a full 40-character commit sha`,
+        });
       }
     }
     if (/^\s*secrets:\s*(["']?)inherit\1\s*$/.test(line)) {
-      problems.push({ line: index + 1, problem: "secrets: inherit hides what the shared workflow receives; pass each secret by name" });
+      problems.push({
+        line: index + 1,
+        problem:
+          "secrets: inherit hides what the shared workflow receives; pass each secret by name",
+      });
     }
   });
   if (calls === 0) problems.push({ line: 0, problem: "no call to a devkit reusable workflow" });
@@ -57,7 +65,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       process.exit(2);
     }
     const problems = callerProblems(text);
-    for (const { line, problem } of problems) console.error(`${file}${line ? `:${line}` : ""}: ${problem}`);
+    for (const { line, problem } of problems)
+      console.error(`${file}${line ? `:${line}` : ""}: ${problem}`);
     if (problems.some((p) => p.line === 0)) status = Math.max(status, 2);
     else if (problems.length > 0) status = Math.max(status, 1);
     else console.log(`${file}: ok`);

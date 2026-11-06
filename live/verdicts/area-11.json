@@ -97,9 +97,7 @@
     },
     "capsid": {
       "verdict": "partial",
-      "evidence": [
-        "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
-      ],
+      "evidence": ["https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"],
       "note": "AI Search reranker has no timeout or gateway and returns raw upstream errors"
     },
     "capsid-mcp": {
@@ -120,9 +118,7 @@
     },
     "dustinedwards-mcp": {
       "verdict": "partial",
-      "evidence": [
-        "https://admin-mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp"
-      ],
+      "evidence": ["https://admin-mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp"],
       "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Live: site-runtime-ai-audit 0 errors; metadata names dei.read and dei.write; /health has a sha and a passing tool-call-log check; site-runtime v0.75.0; conformance runs in CI (baseline server-stateless 24 of 28). Not verified: the tools/list checks (T1 to T12, including the earlier T4 and T7 findings), the conformance scenarios and the rate-limit burst, because this sandbox has no test grant for the server."
     },
     "carrel-mcp": {

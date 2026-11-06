@@ -34,9 +34,7 @@
     },
     "julieedwards-info": {
       "verdict": "complete",
-      "evidence": [
-        "https://julieedwards.info/"
-      ],
+      "evidence": ["https://julieedwards.info/"],
       "note": "Complete apart from Dustin's steps. 103 with Link and Server-Timing, no-JS site, Lighthouse 100 phone and 100 desktop. Open and accepted: C5 (2 hops from http), A1."
     },
     "txasm": {
@@ -49,9 +47,7 @@
     },
     "bsw": {
       "verdict": "complete",
-      "evidence": [
-        "https://bsw.dustin-edwards.workers.dev/sitemap.xml"
-      ],
+      "evidence": ["https://bsw.dustin-edwards.workers.dev/sitemap.xml"],
       "note": "Complete apart from accepted exceptions. B1 fixed: all 19 sitemap URLs answer 200 with no redirect, are edge HITs and answer 304. Lighthouse 100 phone and 100 desktop. Open and accepted: D1 (stays on workers.dev for good), A1."
     },
     "foxhound": {
@@ -89,9 +85,7 @@
     },
     "capsomer": {
       "verdict": "complete",
-      "evidence": [
-        "https://capsomer.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsomer.dustinedwards.info/"],
       "note": "Complete apart from Dustin's step. 103 and Link preload (was none), Server-Timing, its own speculation rules, 404 private, no-store; Lighthouse 100 phone. Open and accepted: A1."
     },
     "prelum": {

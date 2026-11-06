@@ -23,13 +23,19 @@ import { pathToFileURL } from "node:url";
 export function missingConfigs(/** @type {string} */ root) {
   const names = readdirSync(root);
   return names
-    .filter((n) => /^wrangler[\w.-]*\.jsonc\.example$/.test(n) && !names.includes(n.slice(0, -".example".length)))
+    .filter(
+      (n) =>
+        /^wrangler[\w.-]*\.jsonc\.example$/.test(n) &&
+        !names.includes(n.slice(0, -".example".length)),
+    )
     .map((n) => [n, n.slice(0, -".example".length)]);
 }
 
 /** The package.json scripts that run a bare `wrangler types`, as [name, command]. */
 export function bareTypes(/** @type {Record<string, string>} */ scripts) {
-  return Object.entries(scripts ?? {}).filter(([, command]) => /(^|[\s&|;])wrangler types\b/.test(String(command)));
+  return Object.entries(scripts ?? {}).filter(([, command]) =>
+    /(^|[\s&|;])wrangler types\b/.test(String(command)),
+  );
 }
 
 function wranglerEntry(/** @type {string} */ root) {
@@ -48,7 +54,10 @@ function main() {
 
   if (own.includes("--check")) {
     const bare = bareTypes(JSON.parse(readFileSync(join(root, "package.json"), "utf8")).scripts);
-    for (const [name, command] of bare) console.error(`devkit-bootstrap: ${name} runs a bare \`wrangler types\` (${command}), which waits on a hidden prompt. Use devkit-bootstrap --types-only.`);
+    for (const [name, command] of bare)
+      console.error(
+        `devkit-bootstrap: ${name} runs a bare \`wrangler types\` (${command}), which waits on a hidden prompt. Use devkit-bootstrap --types-only.`,
+      );
     process.exit(bare.length ? 1 : 0);
   }
 
@@ -56,17 +65,24 @@ function main() {
     for (const [example, target] of missingConfigs(root)) {
       try {
         copyFileSync(join(root, example), join(root, target), constants.COPYFILE_EXCL);
-        console.log(`devkit-bootstrap: created ${target} from ${example}. Fill in its placeholders before deploying or running against real resources.`);
+        console.log(
+          `devkit-bootstrap: created ${target} from ${example}. Fill in its placeholders before deploying or running against real resources.`,
+        );
       } catch (error) {
         if (/** @type {NodeJS.ErrnoException} */ (error).code !== "EEXIST") throw error;
       }
     }
   }
 
-  const result = spawnSync(process.execPath, [wranglerEntry(root), "types", ...(dash >= 0 ? argv.slice(dash + 1) : [])], { cwd: root, stdio: ["ignore", "inherit", "inherit"] });
+  const result = spawnSync(
+    process.execPath,
+    [wranglerEntry(root), "types", ...(dash >= 0 ? argv.slice(dash + 1) : [])],
+    { cwd: root, stdio: ["ignore", "inherit", "inherit"] },
+  );
   if (result.error) throw result.error;
   process.exit(result.status ?? 1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
+  main();

@@ -23,4 +23,3 @@ jobs:
       id-token: write
       attestations: write
     uses: ./.github/workflows/release.yml
-

@@ -31,6 +31,12 @@
 //              call or reranker with no timeout (C2, C13), JSON cut out of a model's free text (C6), a prompt's own dash
 //              rule instead of WRITING_RULES (W5), a routine fired outside fireOnce (R2); and in pins, an MCP server's
 //              site-runtime more than one minor behind the newest release (S7);
+//   lint       a repository with JavaScript or TypeScript off the shared Oxlint config: no root oxlint.config.ts that
+//              extends @dustinedwards/devkit/oxlint, a linter config of its own (eslint.config.*, .eslintrc*, biome.json,
+//              .oxlintrc.json), a root `lint` script other than LINT_SCRIPT, or no workflow running `npm run lint`
+//              and the same for the shared Oxfmt config (a root oxfmt.config.ts with @dustinedwards/devkit/oxfmt, no
+//              Prettier config, the `format:check` script FORMAT_CHECK_SCRIPT, a workflow running `npm run format:check`)
+//              (a warning until 0.25.0, while the repositories move);
 //   config     .shared.json itself: an unknown key or kind stops the check (exit 2), and an exception that excused
 //              nothing in this run is a warning.
 //
@@ -68,7 +74,14 @@
 // file, "waive" for a feature or workflow.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { appendFileSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import {
+  appendFileSync,
+  existsSync,
+  readFileSync,
+  readdirSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -88,24 +101,76 @@ const PUBLIC_OR_PRIVATE = ["site", "static", "private"];
 
 /** Every shared feature: which kinds of app need it, how its use is found, and what provides it. */
 export const FEATURES = {
-  robots: { kinds: SITE, find: /site-helpers\/robots["']/, use: "Prelum ./robots robotsDocument (/robots.txt)" },
-  aiTxt: { kinds: SITE, find: /\baiTxt(Response)?\b/, use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt)" },
-  tdm: { kinds: SITE, find: /\bTDM_RESERVATION_HEADERS\b/, use: "Prelum ./robots TDM_RESERVATION_HEADERS" },
-  sitemap: { kinds: SITE, find: /site-helpers\/sitemap["']/, use: "Prelum ./sitemap sitemapDocument (/sitemap.xml)" },
-  llms: { kinds: SITE, find: /site-helpers\/llms["']/, use: "Prelum ./llms llmsDocument (/llms.txt)" },
-  head: { kinds: SITE, find: /site-helpers\/head["']/, use: "Prelum ./head headTags (canonical, Open Graph, Twitter)" },
+  robots: {
+    kinds: SITE,
+    find: /site-helpers\/robots["']/,
+    use: "Prelum ./robots robotsDocument (/robots.txt)",
+  },
+  aiTxt: {
+    kinds: SITE,
+    find: /\baiTxt(Response)?\b/,
+    use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt)",
+  },
+  tdm: {
+    kinds: SITE,
+    find: /\bTDM_RESERVATION_HEADERS\b/,
+    use: "Prelum ./robots TDM_RESERVATION_HEADERS",
+  },
+  sitemap: {
+    kinds: SITE,
+    find: /site-helpers\/sitemap["']/,
+    use: "Prelum ./sitemap sitemapDocument (/sitemap.xml)",
+  },
+  llms: {
+    kinds: SITE,
+    find: /site-helpers\/llms["']/,
+    use: "Prelum ./llms llmsDocument (/llms.txt)",
+  },
+  head: {
+    kinds: SITE,
+    find: /site-helpers\/head["']/,
+    use: "Prelum ./head headTags (canonical, Open Graph, Twitter)",
+  },
   schema: { kinds: SITE, find: /site-helpers\/schema["']/, use: "Prelum ./schema (JSON-LD)" },
-  indexnow: { kinds: SITE, find: /site-helpers\/indexnow["']|prelum-indexnow/, use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)" },
-  securityTxt: { kinds: SITE, find: /site-runtime\/security-txt["']/, use: "site-runtime ./security-txt (/.well-known/security.txt)" },
+  indexnow: {
+    kinds: SITE,
+    find: /site-helpers\/indexnow["']|prelum-indexnow/,
+    use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)",
+  },
+  securityTxt: {
+    kinds: SITE,
+    find: /site-runtime\/security-txt["']/,
+    use: "site-runtime ./security-txt (/.well-known/security.txt)",
+  },
   // A registry entry (./sites) counts for both: staticSite({ site }) and site-runtime-headers build a static site's set
   // and page policy from it with buildSecurityHeaders and buildContentSecurityPolicy.
-  headers: { kinds: [...PUBLIC_OR_PRIVATE, "worker"], find: /site-runtime\/(headers|sites)["']|\bwithMcpHeaders\b/, use: "site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)" },
-  csp: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/(csp|sites)["']/, use: "site-runtime ./csp buildContentSecurityPolicy (or a ./sites entry given to ./static-site staticSite)" },
-  cspReport: { kinds: PUBLIC_OR_PRIVATE, find: /site-runtime\/(csp-report|static-site)["']/, use: "site-runtime ./csp-report receiveCspReport (./static-site staticSite receives them for a static site)" },
-  health: { kinds: ["site", "private"], find: /site-runtime\/health["']/, use: "site-runtime ./health healthResponse (/health)" },
+  headers: {
+    kinds: [...PUBLIC_OR_PRIVATE, "worker"],
+    find: /site-runtime\/(headers|sites)["']|\bwithMcpHeaders\b/,
+    use: "site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)",
+  },
+  csp: {
+    kinds: PUBLIC_OR_PRIVATE,
+    find: /site-runtime\/(csp|sites)["']/,
+    use: "site-runtime ./csp buildContentSecurityPolicy (or a ./sites entry given to ./static-site staticSite)",
+  },
+  cspReport: {
+    kinds: PUBLIC_OR_PRIVATE,
+    find: /site-runtime\/(csp-report|static-site)["']/,
+    use: "site-runtime ./csp-report receiveCspReport (./static-site staticSite receives them for a static site)",
+  },
+  health: {
+    kinds: ["site", "private"],
+    find: /site-runtime\/health["']/,
+    use: "site-runtime ./health healthResponse (/health)",
+  },
   // base.css, not just a token file: the element styles every page in the network shares. A build that copies it out of the
   // package (Capsid's explorer: require.resolve("capsomer/package.json"), then "css/base.css") counts.
-  capsomer: { kinds: PUBLIC_OR_PRIVATE, find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']/, use: "Capsomer's capsomer/base.css (tokens, element styles, the site layer), then its components" },
+  capsomer: {
+    kinds: PUBLIC_OR_PRIVATE,
+    find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']/,
+    use: "Capsomer's capsomer/base.css (tokens, element styles, the site layer), then its components",
+  },
 };
 /**
  * A React Router app on Workers Assets serves its built files from the assets layer, which sends them with
@@ -116,16 +181,23 @@ const HASHED_DIRS = [
   { dir: "/assets/*", needed: () => true },
   { dir: "/islands/*", needed: (/** @type {string} */ text) => /devkit\/islands["']/.test(text) },
 ];
-export const ASSET_CACHE = { use: "public/_headers: Cache-Control: public, max-age=31536000, immutable" };
+export const ASSET_CACHE = {
+  use: "public/_headers: Cache-Control: public, max-age=31536000, immutable",
+};
 
 /** Whether a `_headers` text gives `dir` a Cache-Control with immutable. */
 export function cachesHashed(/** @type {string} */ headers, /** @type {string} */ dir) {
   const blocks = headers.split(/\r?\n(?=\S)/);
-  return blocks.some((b) => b.split(/\r?\n/)[0].trim() === dir && /^\s+Cache-Control:[^\n]*\bimmutable\b/im.test(b));
+  return blocks.some(
+    (b) => b.split(/\r?\n/)[0].trim() === dir && /^\s+Cache-Control:[^\n]*\bimmutable\b/im.test(b),
+  );
 }
 
 /** A D1 database needs the nightly dump, whatever the kind. */
-const BACKUP = { find: /@dustinedwards\/d1-dump["']/, use: "d1-dump runCheckedBackup and backupHealth" };
+const BACKUP = {
+  find: /@dustinedwards\/d1-dump["']/,
+  use: "d1-dump runCheckedBackup and backupHealth",
+};
 
 /** Text only a shared builder should write. */
 export const FINGERPRINTS = [
@@ -135,46 +207,95 @@ export const FINGERPRINTS = [
   { find: /api\.indexnow\.org/, use: "Prelum ./indexnow submitIndexNow" },
   { find: /Contact: mailto:/, use: "site-runtime ./security-txt securityTxt" },
   { find: /property[=:]\s*["']og:/, use: "Prelum ./head headTags" },
-  { find: /["']Strict-Transport-Security["']\s*[:,]/, use: "site-runtime ./headers buildSecurityHeaders" },
+  {
+    find: /["']Strict-Transport-Security["']\s*[:,]/,
+    use: "site-runtime ./headers buildSecurityHeaders",
+  },
   // An inline rule set (it needs its own CSP allowance) or a site's own rules file or header.
-  { find: /speculationrules|["']Speculation-Rules["']/, use: "site-runtime ./prefetch speculationRules" },
+  {
+    find: /speculationrules|["']Speculation-Rules["']/,
+    use: "site-runtime ./prefetch speculationRules",
+  },
   // Cloudflare Images called directly: the binding, or any .input(...).transform( chain.
-  { find: /\bIMAGES\s*\.\s*input\s*\(|\.input\((?:[^()]|\([^()]*\))*\)\s*\.transform\s*\(/, use: "site-runtime ./image" },
+  {
+    find: /\bIMAGES\s*\.\s*input\s*\(|\.input\((?:[^()]|\([^()]*\))*\)\s*\.transform\s*\(/,
+    use: "site-runtime ./image",
+  },
   // A Google Fonts stylesheet linked from a page: a render-blocking request to a second origin, then the files from a
   // third. A server fetching a face (site-runtime ./share-card googleFont) names no href and passes.
-  { find: /href\s*[:=]\s*\{?\s*["'`]https:\/\/fonts\.googleapis\.com\/css|@import\s+url\(\s*["']?https:\/\/fonts\.googleapis\.com/, use: "self-hosted fonts (capsomer/fonts.css for the network's faces, Fontsource for a site's own)" },
+  {
+    find: /href\s*[:=]\s*\{?\s*["'`]https:\/\/fonts\.googleapis\.com\/css|@import\s+url\(\s*["']?https:\/\/fonts\.googleapis\.com/,
+    use: "self-hosted fonts (capsomer/fonts.css for the network's faces, Fontsource for a site's own)",
+  },
   // A loader of its own: finding the marked elements, or importing a module from /islands/.
-  { find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//, use: "devkit ./islands startIslands" },
+  {
+    find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//,
+    use: "devkit ./islands startIslands",
+  },
   // JSON-LD by hand: a script of that type filled by JSON.stringify in the same
   // expression, or a node naming the context itself (Prelum's thing and graph add it).
-  { find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/, use: "Prelum ./schema (thing, graph, jsonLd)" },
+  {
+    find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/,
+    use: "Prelum ./schema (thing, graph, jsonLd)",
+  },
   // Head tags by hand: a Twitter card, or a canonical link (not a Link header's `>; rel="canonical"`).
-  { find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/, use: "Prelum ./head headTags" },
+  {
+    find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/,
+    use: "Prelum ./head headTags",
+  },
   // Bytes to hex: the toString(16).padStart(2, "0") ... join("") loop over bytes (a digest, random bytes), not a color's
   // three channels, so only in a file that holds bytes.
-  { also: /\bUint8Array\b|\bcrypto\.subtle\./, find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/, use: "site-runtime ./encoding toHex (sha256Hex for a digest)" },
+  {
+    also: /\bUint8Array\b|\bcrypto\.subtle\./,
+    find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/,
+    use: "site-runtime ./encoding toHex (sha256Hex for a digest)",
+  },
   // base64url: btoa(...) and then the + to - swap, in one statement.
   { find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
   // A constant-time compare of its own: OR-ing the XOR of two strings' or arrays' items.
-  { find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/, use: "site-runtime ./compare safeEqual" },
+  {
+    find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/,
+    use: "site-runtime ./compare safeEqual",
+  },
   // Server-side Turnstile and the Access localhost bypass: each belongs once, in site-runtime, beside the client and
   // the verifier it goes with.
-  { find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/, use: "site-runtime ./turnstile", say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile" },
-  { find: /\bACCESS_DEV_BYPASS\b/, use: "site-runtime ./access", say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest" },
+  {
+    find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/,
+    use: "site-runtime ./turnstile",
+    say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile",
+  },
+  {
+    find: /\bACCESS_DEV_BYPASS\b/,
+    use: "site-runtime ./access",
+    say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest",
+  },
   // The pre-paint theme script: the stored choice read and set on the root before the page paints.
-  { find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/, use: "Capsomer ./theme-server themeScript" },
+  {
+    find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/,
+    use: "Capsomer ./theme-server themeScript",
+  },
   // React Router's template error boundary, never replaced.
-  { find: /["'`]Oops!["'`]/, use: "Capsomer", say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state" },
+  {
+    find: /["'`]Oops!["'`]/,
+    use: "Capsomer",
+    say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state",
+  },
 ];
 /** A security header set written into Cloudflare's static `_headers` (bsw's copy). */
-export const HEADERS_COPY = { find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
+export const HEADERS_COPY = {
+  find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m,
+  use: "site-runtime ./headers buildSecurityHeaders",
+};
 
 /** The Claude Code hooks in devkit's claude/hooks, one copy for every repository. */
 export const CLAUDE_HOOKS = ["no-em-dash.sh", "scoped-git-add.sh"];
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
 export const LIBRARIES = [
-  { find: /^(marked|markdown-it|micromark.*|remark.*|rehype.*|unified|mdast-util-.*|hast-util-.*)$/, use: "Prelum ./render" },
+  {
+    find: /^(marked|markdown-it|micromark.*|remark.*|rehype.*|unified|mdast-util-.*|hast-util-.*)$/,
+    use: "Prelum ./render",
+  },
   { find: /^mermaid$/, use: "Prelum ./render/diagram" },
   { find: /^katex$/, use: "Prelum ./render/math" },
   { find: /^(shiki|highlight\.js|prismjs)$/, use: "Prelum ./render/highlight" },
@@ -226,7 +347,9 @@ export const BODY_ALIASES = {
 export function definitionBody(/** @type {string} */ text, /** @type {number} */ start) {
   const lines = text.slice(start, start + 2000).split("\n");
   const indent = /^[ \t]*/.exec(lines[0])?.[0].length ?? 0;
-  const end = lines.findIndex((l, i) => i > 0 && l.trim() !== "" && (/^[ \t]*/.exec(l)?.[0].length ?? 0) <= indent);
+  const end = lines.findIndex(
+    (l, i) => i > 0 && l.trim() !== "" && (/^[ \t]*/.exec(l)?.[0].length ?? 0) <= indent,
+  );
   return lines.slice(0, end < 0 ? undefined : end).join("\n");
 }
 
@@ -240,7 +363,14 @@ export const ADVISORIES = {
   a11y: {
     kinds: PUBLIC_OR_PRIVATE,
     use: "capsomer/testing expectNoAxeViolations (or @axe-core) in a browser test",
-    missing: ({ files, read }) => (files.some((f) => SOURCE.test(f) && /["'](?:capsomer\/testing|@axe-core\/[^"']+|axe-core(?:\/[^"']*)?)["']/.test(read(f))) ? null : "no accessibility test"),
+    missing: ({ files, read }) =>
+      files.some(
+        (f) =>
+          SOURCE.test(f) &&
+          /["'](?:capsomer\/testing|@axe-core\/[^"']+|axe-core(?:\/[^"']*)?)["']/.test(read(f)),
+      )
+        ? null
+        : "no accessibility test",
   },
   // An admin, login or console page kept out of search: some file that names the route also says noindex (the route,
   // its layout, a Worker rule or a _headers block).
@@ -248,9 +378,22 @@ export const ADVISORIES = {
     kinds: SITE,
     use: "a robots noindex meta or X-Robots-Tag: noindex on each admin, login, signin or console route",
     missing: ({ files, read }) => {
-      const names = new Set(files.map((f) => ADMIN_ROUTE.exec(f)?.[1]).filter((n) => n !== undefined));
-      const sayers = files.filter((f) => ((SOURCE.test(f) && !NOT_SOURCE.test(f)) || posix.basename(f) === "_headers") && /noindex/i.test(read(f)));
-      const bare = [...names].filter((n) => !sayers.some((f) => ADMIN_ROUTE.exec(f)?.[1] === n || new RegExp(`(?:^|["'\`])/${n}\\b`, "m").test(read(f))));
+      const names = new Set(
+        files.map((f) => ADMIN_ROUTE.exec(f)?.[1]).filter((n) => n !== undefined),
+      );
+      const sayers = files.filter(
+        (f) =>
+          ((SOURCE.test(f) && !NOT_SOURCE.test(f)) || posix.basename(f) === "_headers") &&
+          /noindex/i.test(read(f)),
+      );
+      const bare = [...names].filter(
+        (n) =>
+          !sayers.some(
+            (f) =>
+              ADMIN_ROUTE.exec(f)?.[1] === n ||
+              new RegExp(`(?:^|["'\`])/${n}\\b`, "m").test(read(f)),
+          ),
+      );
       return bare.length ? `${bare.map((n) => `/${n}`).join(", ")} without noindex` : null;
     },
   },
@@ -259,20 +402,26 @@ export const ADVISORIES = {
     kinds: SITE,
     use: '`<link rel="alternate" type="application/rss+xml">` (or atom, or feed+json) in the head',
     missing: ({ text }) =>
-      /\b(?:rssDocument|atomDocument|jsonFeedDocument)\b|["'`]Content-Type["'`]\s*:\s*["'`]application\/(?:rss|atom)\+xml/.test(text) &&
-      !/\brel\s*[=:]\s*["'`]alternate["'`][^>{}]{0,200}?application\/(?:rss\+xml|atom\+xml|feed\+json)|application\/(?:rss\+xml|atom\+xml|feed\+json)["'`][^>{}]{0,200}?\brel\s*[=:]\s*["'`]alternate/.test(blankComments(text))
+      /\b(?:rssDocument|atomDocument|jsonFeedDocument)\b|["'`]Content-Type["'`]\s*:\s*["'`]application\/(?:rss|atom)\+xml/.test(
+        text,
+      ) &&
+      !/\brel\s*[=:]\s*["'`]alternate["'`][^>{}]{0,200}?application\/(?:rss\+xml|atom\+xml|feed\+json)|application\/(?:rss\+xml|atom\+xml|feed\+json)["'`][^>{}]{0,200}?\brel\s*[=:]\s*["'`]alternate/.test(
+        blankComments(text),
+      )
         ? "a feed and no alternate link to it"
         : null,
   },
 };
 /** A route file for a page search should not list, and which one (admin, login, signin, sign-in or console). */
-const ADMIN_ROUTE = /(?:^|\/)routes\/(?:[^/]*\/)*(?:[^/]*\.)?(admin|login|signin|sign-in|console)(?=[./_$-])/;
+const ADMIN_ROUTE =
+  /(?:^|\/)routes\/(?:[^/]*\/)*(?:[^/]*\.)?(admin|login|signin|sign-in|console)(?=[./_$-])/;
 
 // Single words too common to flag on name alone; compound names (escapeHtml, jsonLd) are distinctive, except these.
 const DISTINCT_SINGLE = new Set(["slugify"]);
 const COMMON_COMPOUND = new Set(["accessToken", "cacheKey"]);
 const SOURCE = /\.(m?[jt]sx?|mts|cts)$/;
-const NOT_SOURCE = /(^|\/)(node_modules|dist|build|coverage|test|tests|e2e|__tests__|fixtures)\/|\.(test|spec)\.[mc]?[jt]sx?$|\.d\.m?ts$|worker-configuration\.d\.ts$/;
+const NOT_SOURCE =
+  /(^|\/)(node_modules|dist|build|coverage|test|tests|e2e|__tests__|fixtures)\/|\.(test|spec)\.[mc]?[jt]sx?$|\.d\.m?ts$|worker-configuration\.d\.ts$/;
 
 /**
  * @typedef {"site" | "static" | "private" | "worker" | "package"} Kind
@@ -300,7 +449,9 @@ function compare(a, b) {
 }
 
 /** This devkit's own version, which each rule's failsFrom is compared with. */
-export const VERSION = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version;
+export const VERSION = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+).version;
 
 /** Whether a finding is a warning: one always, or a rule's that fails only from a later devkit release. */
 export function isWarning(/** @type {Finding} */ f, version = VERSION) {
@@ -308,29 +459,48 @@ export function isWarning(/** @type {Finding} */ f, version = VERSION) {
 }
 
 export const KINDS = ["site", "static", "private", "worker", "package"];
-const CONFIG_KEYS = { apps: 0, waive: 0, copies: 0, libraries: 0, tokens: 0, spelling: ["ignore", "contracts", "skip"] };
+const CONFIG_KEYS = {
+  apps: 0,
+  waive: 0,
+  copies: 0,
+  libraries: 0,
+  tokens: 0,
+  spelling: ["ignore", "contracts", "skip"],
+};
 
 /** Refuses a .shared.json the check would misread: an unknown key (a typo'd "wave" waives nothing) or kind. */
 export function validateConfig(/** @type {Record<string, any>} */ config) {
   const bad = (/** @type {string} */ what, /** @type {string[]} */ valid) => {
     throw new Error(`.shared.json: ${what}; the valid ones are ${valid.join(", ")}`);
   };
-  for (const key of Object.keys(config)) if (!(key in CONFIG_KEYS)) bad(`"${key}" is no key`, Object.keys(CONFIG_KEYS));
-  for (const key of Object.keys(config.spelling ?? {})) if (!CONFIG_KEYS.spelling.includes(key)) bad(`"spelling" has no "${key}"`, CONFIG_KEYS.spelling);
-  for (const [dir, kind] of Object.entries(config.apps ?? {})) if (!KINDS.includes(kind)) bad(`"apps" "${dir}" is "${kind}", which is no kind`, KINDS);
+  for (const key of Object.keys(config))
+    if (!(key in CONFIG_KEYS)) bad(`"${key}" is no key`, Object.keys(CONFIG_KEYS));
+  for (const key of Object.keys(config.spelling ?? {}))
+    if (!CONFIG_KEYS.spelling.includes(key))
+      bad(`"spelling" has no "${key}"`, CONFIG_KEYS.spelling);
+  for (const [dir, kind] of Object.entries(config.apps ?? {}))
+    if (!KINDS.includes(kind)) bad(`"apps" "${dir}" is "${kind}", which is no kind`, KINDS);
 }
 
 /** The exceptions each config excused something with, so the ones that excused nothing can be named. */
 const EXCUSED = new WeakMap();
 
 /** Whether .shared.json excuses `key` in `section` ("copies", "waive", "libraries", "tokens"), remembered when it does. */
-export function excused(/** @type {Config} */ config, /** @type {string} */ section, /** @type {string} */ key) {
+export function excused(
+  /** @type {Config} */ config,
+  /** @type {string} */ section,
+  /** @type {string} */ key,
+) {
   if (!(/** @type {Record<string, any>} */ (config)[section]?.[key])) return false;
   used(config, section, key);
   return true;
 }
 
-function used(/** @type {Config} */ config, /** @type {string} */ section, /** @type {string} */ key) {
+function used(
+  /** @type {Config} */ config,
+  /** @type {string} */ section,
+  /** @type {string} */ key,
+) {
   if (!EXCUSED.has(config)) EXCUSED.set(config, new Set());
   EXCUSED.get(config).add(`${section}\0${key}`);
 }
@@ -340,23 +510,48 @@ export function staleExceptions(/** @type {Config} */ config) {
   const seen = EXCUSED.get(config) ?? new Set();
   /** @type {[string, string][]} */
   const all = [
-    ...["copies", "waive", "libraries", "tokens"].flatMap((s) => Object.keys(/** @type {Record<string, any>} */ (config)[s] ?? {}).map((k) => /** @type {[string, string]} */ ([s, k]))),
-    ...(config.spelling?.ignore ?? []).map((k) => /** @type {[string, string]} */ (["spelling.ignore", k])),
-    ...(config.spelling?.contracts ?? []).map((k) => /** @type {[string, string]} */ (["spelling.contracts", k])),
+    ...["copies", "waive", "libraries", "tokens"].flatMap((s) =>
+      Object.keys(/** @type {Record<string, any>} */ (config)[s] ?? {}).map(
+        (k) => /** @type {[string, string]} */ ([s, k]),
+      ),
+    ),
+    ...(config.spelling?.ignore ?? []).map(
+      (k) => /** @type {[string, string]} */ (["spelling.ignore", k]),
+    ),
+    ...(config.spelling?.contracts ?? []).map(
+      (k) => /** @type {[string, string]} */ (["spelling.contracts", k]),
+    ),
   ];
   return all
     .filter(([s, k]) => !seen.has(`${s}\0${k}`))
-    .map(([s, k]) => ({ check: "config", file: ".shared.json", warn: true, message: `${s.split(".").map((p) => `"${p}"`).join(" ")} "${k}" excuses nothing in this run: remove it` }));
+    .map(([s, k]) => ({
+      check: "config",
+      file: ".shared.json",
+      warn: true,
+      message: `${s
+        .split(".")
+        .map((p) => `"${p}"`)
+        .join(" ")} "${k}" excuses nothing in this run: remove it`,
+    }));
 }
 
 /** The newest release tag of a repository. */
 export function newest(/** @type {string[]} */ tags) {
-  return tags.filter((t) => semver(t)).sort(compare).at(-1) ?? null;
+  return (
+    tags
+      .filter((t) => semver(t))
+      .sort(compare)
+      .at(-1) ?? null
+  );
 }
 
 /** Tags and the commit each points at, from git ls-remote (peeled for annotated tags). */
 export function lsRemoteTags(/** @type {string} */ repo) {
-  const out = execFileSync("git", ["ls-remote", "--tags", `https://github.com/DrDustinEdwards/${repo}`], { encoding: "utf8" });
+  const out = execFileSync(
+    "git",
+    ["ls-remote", "--tags", `https://github.com/DrDustinEdwards/${repo}`],
+    { encoding: "utf8" },
+  );
   /** @type {Record<string, string>} */
   const commits = {};
   for (const line of out.split("\n")) {
@@ -379,7 +574,9 @@ const DAY_MS = 86_400_000;
  * @param {Record<string, string>} dates @param {number} cutoff
  */
 export function settledMinor(dates, cutoff) {
-  const settled = Object.entries(dates).filter(([tag, at]) => semver(tag) && Date.parse(at) <= cutoff).map(([tag]) => tag);
+  const settled = Object.entries(dates)
+    .filter(([tag, at]) => semver(tag) && Date.parse(at) <= cutoff)
+    .map(([tag]) => tag);
   const top = newest(settled);
   return top ? /** @type {number[]} */ (semver(top)).slice(0, 2) : null;
 }
@@ -392,13 +589,24 @@ export function settledMinor(dates, cutoff) {
 export async function releaseDates(repo, since) {
   /** @type {Record<string, string>} */
   const dates = {};
-  const headers = { Accept: "application/vnd.github+json", "User-Agent": "devkit-shared", ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}) };
+  const headers = {
+    Accept: "application/vnd.github+json",
+    "User-Agent": "devkit-shared",
+    ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
+  };
   for (let page = 1; page <= 3; page++) {
-    const res = await fetch(`https://api.github.com/repos/DrDustinEdwards/${repo}/releases?per_page=100&page=${page}`, { headers, signal: AbortSignal.timeout(20_000) });
+    const res = await fetch(
+      `https://api.github.com/repos/DrDustinEdwards/${repo}/releases?per_page=100&page=${page}`,
+      { headers, signal: AbortSignal.timeout(20_000) },
+    );
     if (!res.ok) throw new Error(`GitHub answered ${res.status} for ${repo}'s releases`);
-    const list = /** @type {{ tag_name: string, published_at: string | null, draft: boolean }[]} */ (await res.json());
+    const list =
+      /** @type {{ tag_name: string, published_at: string | null, draft: boolean }[]} */ (
+        await res.json()
+      );
     for (const r of list) if (!r.draft && r.published_at) dates[r.tag_name] = r.published_at;
-    if (list.length < 100 || list.some((r) => r.published_at && Date.parse(r.published_at) < since)) break;
+    if (list.length < 100 || list.some((r) => r.published_at && Date.parse(r.published_at) < since))
+      break;
   }
   return dates;
 }
@@ -421,22 +629,55 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
     const { tags, commits } = tagsOf(repo);
     const latest = newest(tags);
     if (!latest) return;
-    const at = semver(ref) ? (ref.startsWith("v") ? ref : `v${ref}`) : Object.keys(commits).find((t) => commits[t] === ref && semver(t));
-    const server = repo === "site-runtime" && servers.has(posix.dirname(file)) ? (posix.dirname(file) === "." ? "the root" : posix.dirname(file)) : null;
+    const at = semver(ref)
+      ? ref.startsWith("v")
+        ? ref
+        : `v${ref}`
+      : Object.keys(commits).find((t) => commits[t] === ref && semver(t));
+    const server =
+      repo === "site-runtime" && servers.has(posix.dirname(file))
+        ? posix.dirname(file) === "."
+          ? "the root"
+          : posix.dirname(file)
+        : null;
     if (!at) {
-      found.push({ check: "pins", file, line, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
+      found.push({
+        check: "pins",
+        file,
+        line,
+        message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}`,
+      });
     } else if (server && minorsBehind(at, latest) > 1) {
       // S7: every MCP server runs one door, so each stays within a minor of the newest site-runtime, whatever its age.
-      found.push({ check: "pins", file, line, message: `the MCP server in ${server} runs site-runtime ${at}, more than one minor behind ${latest}: every server keeps the same door (S7); bump it` });
+      found.push({
+        check: "pins",
+        file,
+        line,
+        message: `the MCP server in ${server} runs site-runtime ${at}, more than one minor behind ${latest}: every server keeps the same door (S7); bump it`,
+      });
     } else if (compare(at, latest) < 0) {
       const days = FRESH[repo];
       const known = dates[repo];
-      const settled = days && known && !(known instanceof Error) ? settledMinor(known, now - days * DAY_MS) : null;
+      const settled =
+        days && known && !(known instanceof Error)
+          ? settledMinor(known, now - days * DAY_MS)
+          : null;
       const [major, minor] = /** @type {number[]} */ (semver(at));
       if (settled && (major < settled[0] || (major === settled[0] && minor < settled[1]))) {
-        found.push({ check: "pins", file, line, message: `${what} is at ${at}, behind v${settled.join(".")}, a minor out more than ${days} days; bump to ${latest}` });
+        found.push({
+          check: "pins",
+          file,
+          line,
+          message: `${what} is at ${at}, behind v${settled.join(".")}, a minor out more than ${days} days; bump to ${latest}`,
+        });
       } else {
-        found.push({ check: "pins", file, line, warn: true, message: `${what} is at ${at}; the newest release is ${latest}` });
+        found.push({
+          check: "pins",
+          file,
+          line,
+          warn: true,
+          message: `${what} is at ${at}; the newest release is ${latest}`,
+        });
       }
     }
   };
@@ -444,17 +685,28 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
     const text = tree.read(file);
     const lineOf = (/** @type {number} */ index) => text.slice(0, index).split("\n").length;
     if (posix.basename(file) === "package.json") {
-      for (const m of text.matchAll(/"([^"]+)":\s*"(?:github:|git\+https:\/\/github\.com\/)DrDustinEdwards\/([\w.-]+?)(?:\.git)?#([^"]+)"/gi)) {
+      for (const m of text.matchAll(
+        /"([^"]+)":\s*"(?:github:|git\+https:\/\/github\.com\/)DrDustinEdwards\/([\w.-]+?)(?:\.git)?#([^"]+)"/gi,
+      )) {
         judge(file, lineOf(m.index), m[2], m[3]);
         found.push(...lockDisagrees(tree, file, lineOf(m.index), m[1], m[2], m[3]));
       }
-      for (const m of text.matchAll(/"enarratio":\s*"\^?~?(\d+\.\d+\.\d+)"/g)) judge(file, lineOf(m.index), "enarratio", m[1]);
+      for (const m of text.matchAll(/"enarratio":\s*"\^?~?(\d+\.\d+\.\d+)"/g))
+        judge(file, lineOf(m.index), "enarratio", m[1]);
     } else if (/^\.github\/workflows\/.+\.ya?ml$/.test(file)) {
-      for (const m of text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/[\w.-]+@([0-9a-f]{40})/gi)) judge(file, lineOf(m.index), "devkit", m[1]);
+      for (const m of text.matchAll(
+        /DrDustinEdwards\/devkit\/\.github\/workflows\/[\w.-]+@([0-9a-f]{40})/gi,
+      ))
+        judge(file, lineOf(m.index), "devkit", m[1]);
     }
   }
   for (const [repo, known] of Object.entries(dates)) {
-    if (known instanceof Error) found.push({ check: "pins", warn: true, message: `${repo}'s release dates could not be read (${known.message}), so its ${FRESH[repo]}-day rule was not judged` });
+    if (known instanceof Error)
+      found.push({
+        check: "pins",
+        warn: true,
+        message: `${repo}'s release dates could not be read (${known.message}), so its ${FRESH[repo]}-day rule was not judged`,
+      });
   }
   return found;
 }
@@ -474,14 +726,33 @@ export function lockDisagrees(tree, file, line, name, repo, ref) {
   const npmLock = posix.join(dir, "package-lock.json");
   if (tree.files.includes(npmLock)) {
     let lock;
-    try { lock = JSON.parse(tree.read(npmLock)); } catch { return [{ check: "pins", file: npmLock, message: "package-lock.json is not valid JSON" }]; }
+    try {
+      lock = JSON.parse(tree.read(npmLock));
+    } catch {
+      return [{ check: "pins", file: npmLock, message: "package-lock.json is not valid JSON" }];
+    }
     const got = lock?.packages?.[`node_modules/${name}`]?.version;
-    if (got !== want) return [{ check: "pins", file, line, message: `${name} is pinned to v${want} but ${npmLock} resolves ${got ?? "nothing"}: regenerate the lock (delete its node_modules/${name} entry, then npm install --package-lock-only)` }];
+    if (got !== want)
+      return [
+        {
+          check: "pins",
+          file,
+          line,
+          message: `${name} is pinned to v${want} but ${npmLock} resolves ${got ?? "nothing"}: regenerate the lock (delete its node_modules/${name} entry, then npm install --package-lock-only)`,
+        },
+      ];
     return [];
   }
   const pnpmLock = tree.files.find((f) => posix.basename(f) === "pnpm-lock.yaml");
   if (pnpmLock && !tree.read(pnpmLock).includes(`DrDustinEdwards/${repo}#${ref}`)) {
-    return [{ check: "pins", file, line, message: `${name} is pinned to ${ref} but ${pnpmLock} does not record that specifier: run pnpm install and commit the lock` }];
+    return [
+      {
+        check: "pins",
+        file,
+        line,
+        message: `${name} is pinned to ${ref} but ${pnpmLock} does not record that specifier: run pnpm install and commit the lock`,
+      },
+    ];
   }
   return [];
 }
@@ -498,11 +769,15 @@ const MCP_SERVER = /["']@dustinedwards\/site-runtime\/mcp-(?:server|login)["']/;
 
 /** The directories of the package.json files whose code serves MCP: each server file belongs to its nearest manifest. */
 export function mcpServerDirs(/** @type {Tree} */ tree) {
-  const manifests = tree.files.filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f)).map((f) => posix.dirname(f));
+  const manifests = tree.files
+    .filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f))
+    .map((f) => posix.dirname(f));
   const dirs = new Set();
   for (const file of tree.files) {
     if (!SOURCE.test(file) || NOT_SOURCE.test(file) || !MCP_SERVER.test(tree.read(file))) continue;
-    const owner = manifests.filter((d) => d === "." || file.startsWith(`${d}/`)).sort((a, b) => b.length - a.length)[0];
+    const owner = manifests
+      .filter((d) => d === "." || file.startsWith(`${d}/`))
+      .sort((a, b) => b.length - a.length)[0];
     if (owner) dirs.add(owner);
   }
   return dirs;
@@ -511,10 +786,17 @@ export function mcpServerDirs(/** @type {Tree} */ tree) {
 /** Export names from one module's source or declaration file. */
 export function exportNames(/** @type {string} */ src) {
   const names = new Set();
-  for (const m of src.matchAll(/export\s+(?:declare\s+)?(?:async\s+)?(?:function\*?|const|let|class)\s+([A-Za-z_$][\w$]*)/g)) names.add(m[1]);
+  for (const m of src.matchAll(
+    /export\s+(?:declare\s+)?(?:async\s+)?(?:function\*?|const|let|class)\s+([A-Za-z_$][\w$]*)/g,
+  ))
+    names.add(m[1]);
   for (const m of src.matchAll(/export\s*\{([^}]*)\}/g)) {
     for (const part of m[1].split(",")) {
-      const name = part.trim().replace(/^type\s+/, "").split(/\s+as\s+/).pop();
+      const name = part
+        .trim()
+        .replace(/^type\s+/, "")
+        .split(/\s+as\s+/)
+        .pop();
       if (name && !/^type\b/.test(part.trim())) names.add(name);
     }
   }
@@ -529,7 +811,10 @@ function blankComments(/** @type {string} */ text) {
 /** Whether a name is distinctive enough to flag a local definition of it. */
 export function distinctive(/** @type {string} */ name) {
   if (COMMON_COMPOUND.has(name)) return false;
-  return DISTINCT_SINGLE.has(name) || (/^[a-z]/.test(name) && /[a-z][A-Z0-9]/.test(name) && name.length >= 6);
+  return (
+    DISTINCT_SINGLE.has(name) ||
+    (/^[a-z]/.test(name) && /[a-z][A-Z0-9]/.test(name) && name.length >= 6)
+  );
 }
 
 /**
@@ -544,8 +829,15 @@ export function checkCopies(tree, catalog, config, self) {
   const aliases = Object.keys(ALIASES).filter((a) => catalog[ALIASES[a]]);
   const bodyAliases = Object.keys(BODY_ALIASES).filter((a) => catalog[BODY_ALIASES[a].target]);
   const all = [...names, ...aliases, ...bodyAliases];
-  const shared = new RegExp(`from\\s+["'](${PACKAGES.map((p) => p.name.replace(/[/.]/g, "\\$&")).join("|")})(/[^"']*)?["']`);
-  const define = all.length ? new RegExp(`^[ \\t]*(?:export\\s+)?(?:async\\s+)?(?:function\\*?\\s+|(?:const|let|var)\\s+)(${all.join("|")})\\b\\s*[=(<:]`, "gm") : null;
+  const shared = new RegExp(
+    `from\\s+["'](${PACKAGES.map((p) => p.name.replace(/[/.]/g, "\\$&")).join("|")})(/[^"']*)?["']`,
+  );
+  const define = all.length
+    ? new RegExp(
+        `^[ \\t]*(?:export\\s+)?(?:async\\s+)?(?:function\\*?\\s+|(?:const|let|var)\\s+)(${all.join("|")})\\b\\s*[=(<:]`,
+        "gm",
+      )
+    : null;
   for (const file of tree.files) {
     if (!SOURCE.test(file) || NOT_SOURCE.test(file)) continue;
     const text = tree.read(file);
@@ -564,7 +856,12 @@ export function checkCopies(tree, catalog, config, self) {
         const target = guarded?.target ?? ALIASES[m[1]] ?? m[1];
         if (imported.has(target)) continue;
         if (guarded && !guarded.body.test(definitionBody(text, m.index))) continue;
-        mine.push({ check: "copies", file, line: lineOf(m.index), message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it` });
+        mine.push({
+          check: "copies",
+          file,
+          line: lineOf(m.index),
+          message: `${m[1]} is a local copy of ${catalog[target]} ${target}: import it`,
+        });
       }
     }
     // Comments may name what a builder writes; only code counts.
@@ -574,24 +871,45 @@ export function checkCopies(tree, catalog, config, self) {
       const m = find.exec(code);
       if (m && also && !also.test(code)) continue;
       // One finding a line: a named copy already reported there (germomics' one-line hex) says it.
-      if (m && !mine.some((f) => f.line === lineOf(m.index))) mine.push({ check: "copies", file, line: lineOf(m.index), message: say ?? `this builds what ${use} builds: use it` });
+      if (m && !mine.some((f) => f.line === lineOf(m.index)))
+        mine.push({
+          check: "copies",
+          file,
+          line: lineOf(m.index),
+          message: say ?? `this builds what ${use} builds: use it`,
+        });
     }
     if (mine.length && !excused(config, "copies", file)) found.push(...mine);
   }
   // The Claude Code hooks devkit ships (claude/hooks): a repository runs them from node_modules, never a copy of its own.
   if (self !== "devkit") {
-    for (const file of tree.files.filter((f) => CLAUDE_HOOKS.includes(posix.basename(f)) && posix.dirname(f).endsWith(".claude/hooks"))) {
-      if (!excused(config, "copies", file)) found.push({ check: "copies", file, line: 1, message: `a copy of devkit's Claude Code hook: run node_modules/@dustinedwards/devkit/claude/hooks/${posix.basename(file)} from .claude/settings.json (devkit README, "The shared Claude Code hooks") and delete this file` });
+    for (const file of tree.files.filter(
+      (f) => CLAUDE_HOOKS.includes(posix.basename(f)) && posix.dirname(f).endsWith(".claude/hooks"),
+    )) {
+      if (!excused(config, "copies", file))
+        found.push({
+          check: "copies",
+          file,
+          line: 1,
+          message: `a copy of devkit's Claude Code hook: run node_modules/@dustinedwards/devkit/claude/hooks/${posix.basename(file)} from .claude/settings.json (devkit README, "The shared Claude Code hooks") and delete this file`,
+        });
     }
   }
   if (self !== "site-runtime") {
-    for (const file of tree.files.filter((f) => posix.basename(f) === "_headers" && !NOT_SOURCE.test(f))) {
+    for (const file of tree.files.filter(
+      (f) => posix.basename(f) === "_headers" && !NOT_SOURCE.test(f),
+    )) {
       const text = tree.read(file);
       // A comment line starts with #, so only a header line, indented under its path, matches.
       const m = HEADERS_COPY.find.exec(text);
       if (m && !excused(config, "copies", file)) {
         const line = text.slice(0, m.index).split("\n").length;
-        found.push({ check: "copies", file, line, message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .shared.json "copies"` });
+        found.push({
+          check: "copies",
+          file,
+          line,
+          message: `a security header set written by hand for the static files: ${HEADERS_COPY.use} is the set; generate this block from it, or say why in .shared.json "copies"`,
+        });
       }
     }
   }
@@ -614,7 +932,12 @@ export function checkLibraries(tree, config, peers = {}) {
     const asked = new Set(Object.keys(deps).flatMap((d) => peers[d] ?? []));
     for (const dep of Object.keys(deps)) {
       const lib = LIBRARIES.find((l) => l.find.test(dep));
-      if (lib && !asked.has(dep) && !excused(config, "libraries", dep)) found.push({ check: "libraries", file, message: `${dep} is ${lib.use}'s job: use it, or say why in .shared.json "libraries"` });
+      if (lib && !asked.has(dep) && !excused(config, "libraries", dep))
+        found.push({
+          check: "libraries",
+          file,
+          message: `${dep} is ${lib.use}'s job: use it, or say why in .shared.json "libraries"`,
+        });
     }
   }
   return found;
@@ -626,7 +949,9 @@ export function capsomerTokens(/** @type {string | null} */ dir) {
   if (!dir) return names;
   for (const f of ["scale.css", "color.css", "themes.css"]) {
     const file = join(dir, "tokens", f);
-    if (existsSync(file)) for (const m of readFileSync(file, "utf8").matchAll(/(?:^|[\s{;])(--[a-z0-9-]+)\s*:/g)) names.add(m[1]);
+    if (existsSync(file))
+      for (const m of readFileSync(file, "utf8").matchAll(/(?:^|[\s{;])(--[a-z0-9-]+)\s*:/g))
+        names.add(m[1]);
   }
   return names;
 }
@@ -635,7 +960,12 @@ export function capsomerTokens(/** @type {string | null} */ dir) {
 function rootRule(/** @type {string} */ code, /** @type {number} */ index) {
   const open = code.lastIndexOf("{", index);
   if (open < 0) return false;
-  const start = Math.max(code.lastIndexOf("}", open), code.lastIndexOf(";", open), code.lastIndexOf("{", open - 1)) + 1;
+  const start =
+    Math.max(
+      code.lastIndexOf("}", open),
+      code.lastIndexOf(";", open),
+      code.lastIndexOf("{", open - 1),
+    ) + 1;
   return /(^|[\s,("'`])(:root|html|body)(?![\w-])/.test(code.slice(start, open));
 }
 
@@ -657,16 +987,29 @@ export function checkTokens(tree, tokens, config) {
     const code = blankComments(text);
     for (const m of code.matchAll(/(^|[\s{;"'`])(--[a-z0-9-]+)\s*:(?!:)/g)) {
       const name = m[2];
-      if (!tokens.has(name) || !rootRule(code, m.index) || excused(config, "tokens", name)) continue;
+      if (!tokens.has(name) || !rootRule(code, m.index) || excused(config, "tokens", name))
+        continue;
       const line = code.slice(0, m.index + m[1].length).split("\n").length;
-      found.push({ check: "tokens", file, line, message: `${name} is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"` });
+      found.push({
+        check: "tokens",
+        file,
+        line,
+        message: `${name} is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"`,
+      });
     }
     // The network's faces come from capsomer/fonts.css, every weight in one file each, so a bold is the same bold on every
     // site (Dustin, 2026-10-28: sites that picked their own weights drew the footer's name differently).
-    for (const m of code.matchAll(/@fontsource(?:-variable)?\/(?:schibsted-grotesk|martian-mono)\b|@font-face\s*\{[^}]*font-family:\s*["']?(?:Schibsted Grotesk|Martian Mono)/g)) {
+    for (const m of code.matchAll(
+      /@fontsource(?:-variable)?\/(?:schibsted-grotesk|martian-mono)\b|@font-face\s*\{[^}]*font-family:\s*["']?(?:Schibsted Grotesk|Martian Mono)/g,
+    )) {
       if (excused(config, "tokens", "fonts")) break;
       const line = code.slice(0, m.index).split("\n").length;
-      found.push({ check: "tokens", file, line, message: `the network's faces are Capsomer's: load capsomer/fonts.css instead of your own files, or say why in .shared.json "tokens" "fonts"` });
+      found.push({
+        check: "tokens",
+        file,
+        line,
+        message: `the network's faces are Capsomer's: load capsomer/fonts.css instead of your own files, or say why in .shared.json "tokens" "fonts"`,
+      });
     }
   }
   return found;
@@ -675,7 +1018,10 @@ export function checkTokens(tree, tokens, config) {
 /** Which app a file belongs to: the deepest app directory that holds it. @param {[string, string][]} apps */
 function ownerOf(apps) {
   return (/** @type {string} */ file) =>
-    apps.map(([dir]) => dir).filter((dir) => dir === "." || file === dir || file.startsWith(`${dir}/`)).sort((a, b) => b.length - a.length)[0];
+    apps
+      .map(([dir]) => dir)
+      .filter((dir) => dir === "." || file === dir || file.startsWith(`${dir}/`))
+      .sort((a, b) => b.length - a.length)[0];
 }
 
 /**
@@ -690,47 +1036,111 @@ export function checkFeatures(tree, config, now = Date.now()) {
   const owner = ownerOf(apps);
   // A library with no kind is judged as the default site; the finding says how to say otherwise.
   const manifest = JSON.parse(tree.read("package.json") || "{}");
-  const library = !config.apps && (manifest.exports || manifest.bin) ? ` (package.json has ${manifest.exports ? "exports" : "a bin"}: a library says .shared.json "apps": { ".": "package" })` : "";
+  const library =
+    !config.apps && (manifest.exports || manifest.bin)
+      ? ` (package.json has ${manifest.exports ? "exports" : "a bin"}: a library says .shared.json "apps": { ".": "package" })`
+      : "";
   for (const [dir, kind] of apps) {
     const mine = tree.files.filter((f) => owner(f) === dir && !NOT_SOURCE.test(f));
-    const text = mine.filter((f) => SOURCE.test(f) || /\.(css|ya?ml)$/.test(f) || posix.basename(f) === "package.json").map(tree.read).join("\n");
+    const text = mine
+      .filter(
+        (f) => SOURCE.test(f) || /\.(css|ya?ml)$/.test(f) || posix.basename(f) === "package.json",
+      )
+      .map(tree.read)
+      .join("\n");
     const prefix = dir === "." ? "" : `${dir}:`;
     for (const [feature, { kinds, find, use }] of Object.entries(FEATURES)) {
-      if (!kinds.includes(kind) || find.test(text) || excused(config, "waive", `${prefix}${feature}`)) continue;
-      found.push({ check: "features", file: dir, message: `${kind} ${dir === "." ? "" : `${dir} `}has no ${feature}: ${use}${library}` });
+      if (
+        !kinds.includes(kind) ||
+        find.test(text) ||
+        excused(config, "waive", `${prefix}${feature}`)
+      )
+        continue;
+      found.push({
+        check: "features",
+        file: dir,
+        message: `${kind} ${dir === "." ? "" : `${dir} `}has no ${feature}: ${use}${library}`,
+      });
     }
     // security.txt's Expires is a fixed date, so somebody confirms the address still works before it lapses; this is the
     // reminder, a month ahead.
     for (const f of mine.filter((file) => SOURCE.test(file))) {
       const m = /\bSECURITY_TXT_EXPIRES\s*=\s*["'`]([^"'`]+)["'`]/.exec(tree.read(f));
       if (m && Date.parse(m[1]) - now < 30 * 86_400_000) {
-        found.push({ check: "features", file: f, message: `security.txt expires ${m[1]}: confirm its contact still delivers, then move SECURITY_TXT_EXPIRES on (under a year)` });
+        found.push({
+          check: "features",
+          file: f,
+          message: `security.txt expires ${m[1]}: confirm its contact still delivers, then move SECURITY_TXT_EXPIRES on (under a year)`,
+        });
       }
     }
     if (kind !== "package" && mine.some((f) => /(^|\/)react-router\.config\.[mc]?[jt]s$/.test(f))) {
-      const headers = mine.filter((f) => posix.basename(f) === "_headers").map(tree.read).join("\n");
+      const headers = mine
+        .filter((f) => posix.basename(f) === "_headers")
+        .map(tree.read)
+        .join("\n");
       for (const { dir: hashed, needed } of HASHED_DIRS) {
-        if (needed(text) && !cachesHashed(headers, hashed) && !excused(config, "waive", `${prefix}assetCache`)) {
-          found.push({ check: "features", file: dir, message: `${dir} serves ${hashed} with the assets layer's revalidate-every-load default: ${hashed} needs ${ASSET_CACHE.use}` });
+        if (
+          needed(text) &&
+          !cachesHashed(headers, hashed) &&
+          !excused(config, "waive", `${prefix}assetCache`)
+        ) {
+          found.push({
+            check: "features",
+            file: dir,
+            message: `${dir} serves ${hashed} with the assets layer's revalidate-every-load default: ${hashed} needs ${ASSET_CACHE.use}`,
+          });
         }
       }
     }
-    const d1 = mine.some((f) => /(^|\/)wrangler[^/]*\.jsonc?(\.example)?$/.test(f) && /"d1_databases"/.test(tree.read(f)));
-    if (d1 && kind !== "package" && !BACKUP.find.test(text) && !excused(config, "waive", `${prefix}backup`)) {
-      found.push({ check: "features", file: dir, message: `${dir} has a D1 database and no nightly dump: ${BACKUP.use}` });
+    const d1 = mine.some(
+      (f) =>
+        /(^|\/)wrangler[^/]*\.jsonc?(\.example)?$/.test(f) && /"d1_databases"/.test(tree.read(f)),
+    );
+    if (
+      d1 &&
+      kind !== "package" &&
+      !BACKUP.find.test(text) &&
+      !excused(config, "waive", `${prefix}backup`)
+    ) {
+      found.push({
+        check: "features",
+        file: dir,
+        message: `${dir} has a D1 database and no nightly dump: ${BACKUP.use}`,
+      });
     }
     // A Carrel site (it calls createSiteApi) tells IndexNow about each publish and schedule through site-api's hook. A
     // createSiteApi without it either tells nobody, or hands its own submitIndexNow to onPageChange (site-api v0.9.0's way, gone after v0.21.0).
     const indexnow = FEATURES.indexnow;
-    if (indexnow.kinds.includes(kind) && indexnow.find.test(text) && /\bcreateSiteApi\s*\(/.test(text) && !/\bindexNowHook\b|prelum-indexnow/.test(text) && !excused(config, "waive", `${prefix}indexnow`)) {
-      const how = /\bonPageChange\s*[:(]/.test(text) ? "with its own onPageChange submission" : "without IndexNow, so a publish from Carrel reaches no search engine";
-      found.push({ check: "features", file: dir, message: `${kind} ${dir === "." ? "" : `${dir} `}calls createSiteApi ${how}: hooks: [indexNowHook(...)] from site-api` });
+    if (
+      indexnow.kinds.includes(kind) &&
+      indexnow.find.test(text) &&
+      /\bcreateSiteApi\s*\(/.test(text) &&
+      !/\bindexNowHook\b|prelum-indexnow/.test(text) &&
+      !excused(config, "waive", `${prefix}indexnow`)
+    ) {
+      const how = /\bonPageChange\s*[:(]/.test(text)
+        ? "with its own onPageChange submission"
+        : "without IndexNow, so a publish from Carrel reaches no search engine";
+      found.push({
+        check: "features",
+        file: dir,
+        message: `${kind} ${dir === "." ? "" : `${dir} `}calls createSiteApi ${how}: hooks: [indexNowHook(...)] from site-api`,
+      });
     }
-    const all = tree.files.filter((f) => owner(f) === dir && !/(^|\/)(node_modules|dist|build|coverage)\//.test(f));
+    const all = tree.files.filter(
+      (f) => owner(f) === dir && !/(^|\/)(node_modules|dist|build|coverage)\//.test(f),
+    );
     for (const [name, { kinds, use, missing }] of Object.entries(ADVISORIES)) {
       if (!kinds.includes(kind)) continue;
       const what = missing({ files: all, text, read: tree.read });
-      if (what && !excused(config, "waive", `${prefix}${name}`)) found.push({ check: "features", file: dir, warn: true, message: `${kind} ${dir === "." ? "" : `${dir} `}has ${what}: ${use}` });
+      if (what && !excused(config, "waive", `${prefix}${name}`))
+        found.push({
+          check: "features",
+          file: dir,
+          warn: true,
+          message: `${kind} ${dir === "." ? "" : `${dir} `}has ${what}: ${use}`,
+        });
     }
   }
   return found;
@@ -751,13 +1161,41 @@ export const WORKFLOWS = [
   { name: "dependencies", needed: () => "every repository" },
   // The automatic PR reviewer (D5, 2026-11-03): advisory, so it costs a repository nothing to call it.
   { name: "review", failsFrom: "0.22.0", needed: () => "every repository" },
-  { name: "worker-size", runs: ["devkit-worker-size"], needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
+  {
+    name: "worker-size",
+    runs: ["devkit-worker-size"],
+    needed: ({ workers }) =>
+      workers.length ? `a repository with a Worker (${workers.join(", ")})` : null,
+  },
   // Many Workers deploy another way today (Workers Builds, a deploy job of their own), so this one stays a warning.
-  { name: "worker-deploy", warn: true, needed: ({ workers }) => (workers.length ? `a repository with a Worker (${workers.join(", ")})` : null) },
-  { name: "no-bloat", runs: ["devkit-no-bloat", "bin/no-bloat.mjs"], needed: ({ script, private: closed }) => (script && !closed ? "a public repository with JavaScript or TypeScript" : null) },
-  { name: "conformance", runs: ["devkit-conformance", "bin/conformance.mjs"], needed: ({ servers }) => (servers.length ? `a repository with an MCP server (${servers.join(", ")})` : null) },
-  { name: "scorecard", failsFrom: "0.22.0", needed: ({ private: closed }) => (closed === false ? "a public repository" : null) },
-  { name: "bump-consumers", example: ".github/workflows/bump-consumers.yml (the caller in its header)", needed: ({ self }) => (self ? "a shared package other repositories pin" : null) },
+  {
+    name: "worker-deploy",
+    warn: true,
+    needed: ({ workers }) =>
+      workers.length ? `a repository with a Worker (${workers.join(", ")})` : null,
+  },
+  {
+    name: "no-bloat",
+    runs: ["devkit-no-bloat", "bin/no-bloat.mjs"],
+    needed: ({ script, private: closed }) =>
+      script && !closed ? "a public repository with JavaScript or TypeScript" : null,
+  },
+  {
+    name: "conformance",
+    runs: ["devkit-conformance", "bin/conformance.mjs"],
+    needed: ({ servers }) =>
+      servers.length ? `a repository with an MCP server (${servers.join(", ")})` : null,
+  },
+  {
+    name: "scorecard",
+    failsFrom: "0.22.0",
+    needed: ({ private: closed }) => (closed === false ? "a public repository" : null),
+  },
+  {
+    name: "bump-consumers",
+    example: ".github/workflows/bump-consumers.yml (the caller in its header)",
+    needed: ({ self }) => (self ? "a shared package other repositories pin" : null),
+  },
 ];
 
 /**
@@ -773,26 +1211,58 @@ export function checkWorkflows(tree, config, repo = {}) {
     .map((f) => tree.read(f).replace(/(^|\s)#.*$/gm, "$1"))
     .filter((t) => repo.self !== "devkit" || !/^\s*workflow_call:/m.test(t))
     .join("\n");
-  const called = new Set([...text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/([\w.-]+?)\.ya?ml@/gi)].map((m) => m[1]));
+  const called = new Set(
+    [...text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/([\w.-]+?)\.ya?ml@/gi)].map(
+      (m) => m[1],
+    ),
+  );
   // devkit calls its own workflows by path.
-  if (repo.self === "devkit") for (const m of text.matchAll(/uses:\s*\.\/\.github\/workflows\/([\w.-]+?)\.ya?ml/g)) called.add(m[1]);
-  const scripts = tree.files.filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f)).flatMap((f) => Object.entries(JSON.parse(tree.read(f)).scripts ?? {}));
-  const invokes = (/** @type {string} */ cmd, /** @type {string} */ name) => new RegExp(`\\b(?:run(?:-script)?|pnpm|yarn|npm)\\s+(?:--?\\S+\\s+)*${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w:.-])`).test(cmd);
+  if (repo.self === "devkit")
+    for (const m of text.matchAll(/uses:\s*\.\/\.github\/workflows\/([\w.-]+?)\.ya?ml/g))
+      called.add(m[1]);
+  const scripts = tree.files
+    .filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f))
+    .flatMap((f) => Object.entries(JSON.parse(tree.read(f)).scripts ?? {}));
+  const invokes = (/** @type {string} */ cmd, /** @type {string} */ name) =>
+    new RegExp(
+      `\\b(?:run(?:-script)?|pnpm|yarn|npm)\\s+(?:--?\\S+\\s+)*${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w:.-])`,
+    ).test(cmd);
   /** @returns {boolean} */
   const reaches = (/** @type {string} */ cmd, /** @type {string} */ bin, seen = new Set()) =>
-    cmd.includes(bin) || scripts.some(([name, body]) => !seen.has(name) && invokes(cmd, name) && reaches(String(body), bin, seen.add(name)));
+    cmd.includes(bin) ||
+    scripts.some(
+      ([name, body]) =>
+        !seen.has(name) && invokes(cmd, name) && reaches(String(body), bin, seen.add(name)),
+    );
   const apps = Object.entries(config.apps ?? { ".": "site" });
   const owner = ownerOf(apps);
   const workers = apps
-    .filter(([dir, kind]) => ["site", "private", "worker"].includes(kind) && tree.files.some((f) => WRANGLER.test(f) && !NOT_SOURCE.test(f) && owner(f) === dir))
+    .filter(
+      ([dir, kind]) =>
+        ["site", "private", "worker"].includes(kind) &&
+        tree.files.some((f) => WRANGLER.test(f) && !NOT_SOURCE.test(f) && owner(f) === dir),
+    )
     .map(([dir]) => (dir === "." ? "the root" : dir));
   const script = tree.files.some((f) => SOURCE.test(f) && !NOT_SOURCE.test(f));
   const servers = [...mcpServerDirs(tree)].map((dir) => (dir === "." ? "the root" : dir));
   /** @type {Finding[]} */
   const found = [];
-  for (const { name, failsFrom, warn, runs = [], example = `examples/${name}-caller.yml`, needed } of WORKFLOWS) {
+  for (const {
+    name,
+    failsFrom,
+    warn,
+    runs = [],
+    example = `examples/${name}-caller.yml`,
+    needed,
+  } of WORKFLOWS) {
     const why = needed({ workers, servers, script, private: repo.private, self: repo.self });
-    if (!why || called.has(name) || runs.some((bin) => reaches(text, bin)) || excused(config, "waive", `workflow:${name}`)) continue;
+    if (
+      !why ||
+      called.has(name) ||
+      runs.some((bin) => reaches(text, bin)) ||
+      excused(config, "waive", `workflow:${name}`)
+    )
+      continue;
     // Outside Actions the repository's visibility is unknown, so no-bloat can only say what it would need.
     const unsure = name === "no-bloat" && repo.private === undefined;
     found.push({
@@ -806,6 +1276,86 @@ export function checkWorkflows(tree, config, repo = {}) {
   return found;
 }
 
+/** The one `lint` script every repository runs (README, "The shared lint config"). */
+export const LINT_SCRIPT =
+  "oxlint --type-aware --deny-warnings --report-unused-disable-directives-severity=error";
+/** The one `format:check` script every repository runs. */
+export const FORMAT_CHECK_SCRIPT = "oxfmt --check";
+/** A linter or formatter config of a repository's own, which the shared ones replace. */
+const OWN_LINT_CONFIG =
+  /(^|\/)(eslint\.config\.[mc]?[jt]s|\.eslintrc(\.[\w]+)?|biome\.jsonc?|\.oxlintrc\.jsonc?|\.oxfmtrc\.jsonc?|\.prettierrc(\.[\w]+)?|prettier\.config\.[mc]?[jt]s)$/;
+const LINT_FAILS_FROM = "0.25.0";
+
+/**
+ * A repository with JavaScript or TypeScript runs the shared Oxlint config, the same way everywhere: a root
+ * oxlint.config.ts extending @dustinedwards/devkit/oxlint (devkit's own imports ./lint/oxlint.mjs), no linter config of
+ * its own, the shared `lint` script, and a workflow that runs it. A nested oxlint.config.ts (foxing's apps/mobile) is a
+ * part's own additions and is allowed.
+ * @param {Tree} tree @param {Config} config @param {string} [self] the shared package's repository, if it is one
+ * @returns {Finding[]}
+ */
+export function checkLint(tree, config, self) {
+  if (
+    excused(config, "waive", "lint") ||
+    !tree.files.some((f) => SOURCE.test(f) && !NOT_SOURCE.test(f))
+  )
+    return [];
+  /** @type {Finding[]} */
+  const found = [];
+  const add = (/** @type {string} */ file, /** @type {string} */ message) =>
+    found.push({ check: "lint", file, failsFrom: LINT_FAILS_FROM, message });
+  const pkg = tree.files.includes("package.json") ? JSON.parse(tree.read("package.json")) : {};
+  const workflows = tree.files
+    .filter((f) => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(f))
+    .map((f) => tree.read(f).replace(/(^|\s)#.*$/gm, "$1"));
+  for (const { tool, verb, script, command, step } of [
+    {
+      tool: "oxlint",
+      verb: "extend",
+      script: "lint",
+      command: LINT_SCRIPT,
+      step: "a Lint step to CI after the typecheck",
+    },
+    {
+      tool: "oxfmt",
+      verb: "spread",
+      script: "format:check",
+      command: FORMAT_CHECK_SCRIPT,
+      step: "a Format step to CI",
+    },
+  ]) {
+    const root = tree.files.find((f) => new RegExp(`^${tool}\\.config\\.[mc]?ts$`).test(f));
+    const shared = new RegExp(
+      self === "devkit"
+        ? `from\\s+["']\\./lint/${tool}\\.mjs["']`
+        : `from\\s+["']@dustinedwards/devkit/${tool}["']`,
+    );
+    if (!root)
+      add(
+        `${tool}.config.ts`,
+        `no root ${tool}.config.ts: ${verb} @dustinedwards/devkit/${tool} (README, "The shared lint config")`,
+      );
+    else if (!shared.test(tree.read(root)))
+      add(
+        root,
+        `${root} does not ${verb} @dustinedwards/devkit/${tool}: import its config from there`,
+      );
+    if (pkg.scripts?.[script] !== command)
+      add(
+        "package.json",
+        `the root "${script}" script is ${pkg.scripts?.[script] === undefined ? "missing" : `"${pkg.scripts[script]}"`}: make it "${command}"`,
+      );
+    if (!workflows.some((t) => new RegExp(`\\bnpm run ${script}(?![\\w:.-])`).test(t)))
+      add(".github/workflows", `no workflow runs \`npm run ${script}\`: add ${step}`);
+  }
+  for (const file of tree.files.filter((f) => OWN_LINT_CONFIG.test(f) && !NOT_SOURCE.test(f)))
+    add(
+      file,
+      `a linter or formatter config of its own: the shared Oxlint and Oxfmt configs replace it; delete ${file} and move what it needs into oxlint.config.ts or oxfmt.config.ts`,
+    );
+  return found;
+}
+
 const TEST = /(^|\/)(test|tests|e2e|__tests__|test-integration)\/|\.(test|spec)\.[mc]?[jt]sx?$/;
 const FETCH_SWAP = String.raw`(?:globalThis\.fetch\s*=|stubGlobal\(\s*["'\x60]fetch["'\x60]\s*,|defineProperty\(\s*globalThis\s*,\s*["'\x60]fetch["'\x60]\s*,\s*\{\s*value\s*:|spyOn\(\s*globalThis\s*,\s*["'\x60]fetch["'\x60]\s*\)\s*\.mock\w*\()`;
 const DELETE_ALL = String.raw`DELETE FROM\s+["'\x60]?[\w$]+["'\x60]?(?=\s*(?:["'\x60;),]|$))`;
@@ -813,13 +1363,44 @@ const DELETE_ALL = String.raw`DELETE FROM\s+["'\x60]?[\w$]+["'\x60]?(?=\s*(?:["'
 /** Test fakes of a repository's own where devkit has one: every pattern in `find` matches the test file. */
 export const FAKES = [
   // GitHub's contents or git data routes answered behind a fetch stub.
-  { find: [/\/repos\/[^\s"'`]*\/(?:git\/(?:refs?|trees|commits|blobs)|contents)\b/, new RegExp(FETCH_SWAP)], use: "devkit ./github stubGitHub", say: "a GitHub API fake of its own" },
+  {
+    find: [
+      /\/repos\/[^\s"'`]*\/(?:git\/(?:refs?|trees|commits|blobs)|contents)\b/,
+      new RegExp(FETCH_SWAP),
+    ],
+    use: "devkit ./github stubGitHub",
+    say: "a GitHub API fake of its own",
+  },
   // An RSA key pair made here and a key set served from it: an Access issuer of its own.
-  { find: [/generateKey\(\s*\{\s*name\s*:\s*["'`]RSASSA-PKCS1-v1_5|generateKeyPair(?:Sync)?\(\s*["'`](?:RS256|rsa)["'`]/, /cdn-cgi\/access\/certs|\bjwks\b|["']?keys["']?\s*:\s*\[\s*(?:\{\s*\.\.\.)?\s*\w*[jJ]wk\b/], use: "devkit ./access stubAccess", say: "an Access fake of its own (a key pair it signs with and the key set it serves)" },
+  {
+    find: [
+      /generateKey\(\s*\{\s*name\s*:\s*["'`]RSASSA-PKCS1-v1_5|generateKeyPair(?:Sync)?\(\s*["'`](?:RS256|rsa)["'`]/,
+      /cdn-cgi\/access\/certs|\bjwks\b|["']?keys["']?\s*:\s*\[\s*(?:\{\s*\.\.\.)?\s*\w*[jJ]wk\b/,
+    ],
+    use: "devkit ./access stubAccess",
+    say: "an Access fake of its own (a key pair it signs with and the key set it serves)",
+  },
   // A fetch whose whole body throws an error naming the URL.
-  { find: [new RegExp(`${FETCH_SWAP}\\s*(?:vi\\.fn\\(\\s*)?(?:async\\s*)?(?:function\\s*)?\\(?[^)]*\\)?\\s*(?::\\s*[\\w<>]+\\s*)?(?:=>)?\\s*\\{?\\s*(?:throw\\s+new\\s+\\w*Error\\(\\s*|(?:return\\s+)?Promise\\.reject\\(\\s*(?:new\\s+\\w*Error\\(\\s*)?)\\x60[^\\x60]*\\$\\{`)], use: "devkit ./network refuseNetwork", say: "a fetch that refuses the network, written here" },
+  {
+    find: [
+      new RegExp(
+        `${FETCH_SWAP}\\s*(?:vi\\.fn\\(\\s*)?(?:async\\s*)?(?:function\\s*)?\\(?[^)]*\\)?\\s*(?::\\s*[\\w<>]+\\s*)?(?:=>)?\\s*\\{?\\s*(?:throw\\s+new\\s+\\w*Error\\(\\s*|(?:return\\s+)?Promise\\.reject\\(\\s*(?:new\\s+\\w*Error\\(\\s*)?)\\x60[^\\x60]*\\$\\{`,
+      ),
+    ],
+    use: "devkit ./network refuseNetwork",
+    say: "a fetch that refuses the network, written here",
+  },
   // Tables cleared by hand: three DELETE FROMs with no WHERE close together, or one in a loop.
-  { find: [new RegExp(`${DELETE_ALL}[^]{0,400}?${DELETE_ALL}[^]{0,400}?${DELETE_ALL}|\\bfor\\s*\\(\\s*(?:const|let)\\s+\\w+\\s+of\\s+[^)]+\\)[^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{|\\]\\s*\\.(?:map|forEach)\\([^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{`, "im")], use: "devkit ./d1 resetDb", say: "a hand list of tables to clear, which drifts the day a migration adds one" },
+  {
+    find: [
+      new RegExp(
+        `${DELETE_ALL}[^]{0,400}?${DELETE_ALL}[^]{0,400}?${DELETE_ALL}|\\bfor\\s*\\(\\s*(?:const|let)\\s+\\w+\\s+of\\s+[^)]+\\)[^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{|\\]\\s*\\.(?:map|forEach)\\([^]{0,160}?DELETE FROM\\s+["'\\x60]?\\$\\{`,
+        "im",
+      ),
+    ],
+    use: "devkit ./d1 resetDb",
+    say: "a hand list of tables to clear, which drifts the day a migration adds one",
+  },
 ];
 
 /**
@@ -831,19 +1412,30 @@ export function checkFakes(tree, config, self) {
   /** @type {Finding[]} */
   const found = [];
   if (self === "devkit") return found;
-  for (const file of tree.files.filter((f) => SOURCE.test(f) && TEST.test(f) && !/(^|\/)(node_modules|dist|build|coverage|fixtures)\//.test(f))) {
+  for (const file of tree.files.filter(
+    (f) =>
+      SOURCE.test(f) &&
+      TEST.test(f) &&
+      !/(^|\/)(node_modules|dist|build|coverage|fixtures)\//.test(f),
+  )) {
     const code = blankComments(tree.read(file));
     for (const { find, use, say } of FAKES) {
       const m = find[0].exec(code);
       if (!m || !find.every((f) => f.test(code)) || excused(config, "copies", file)) continue;
-      found.push({ check: "fakes", file, line: code.slice(0, m.index).split("\n").length, message: `${say}: use ${use}, or say why in .shared.json "copies"` });
+      found.push({
+        check: "fakes",
+        file,
+        line: code.slice(0, m.index).split("\n").length,
+        message: `${say}: use ${use}, or say why in .shared.json "copies"`,
+      });
     }
   }
   return found;
 }
 
 /** A model call in a file: the markers C6 needs before it reads a regex as cutting JSON out of a model's answer. */
-const MODEL_CALL = /\bAI\s*\.\s*run\s*\(|\.(?:chatCompletions|aiSearch)\s*\(|["'`]@dustinedwards\/site-runtime\/anthropic["'`]|["'`]@anthropic-ai\/sdk["'`]/;
+const MODEL_CALL =
+  /\bAI\s*\.\s*run\s*\(|\.(?:chatCompletions|aiSearch)\s*\(|["'`]@dustinedwards\/site-runtime\/anthropic["'`]|["'`]@anthropic-ai\/sdk["'`]/;
 
 /** A timeout within reach of a call that cannot take one through the shared caller. */
 const TIMEOUT = /AbortSignal\.timeout\(|\bsignal\s*:|\bsetTimeout\(|Promise\.race\(/;
@@ -862,7 +1454,8 @@ export const AI_RULES = [
     id: "C1",
     self: "site-runtime",
     find: /["'`]@anthropic-ai\/sdk["'`]|\bnew\s+Anthropic\s*\(|api\.anthropic\.com\/v1\/messages|["'`]\/v1\/messages["'`]/,
-    say: () => "calls Anthropic's Messages API outside site-runtime ./anthropic (C1, G1): use messages, structured or stream, which add the gateway, the timeout and the one retry layer",
+    say: () =>
+      "calls Anthropic's Messages API outside site-runtime ./anthropic (C1, G1): use messages, structured or stream, which add the gateway, the timeout and the one retry layer",
   },
   // A Workers AI run: it needs a deadline (`signal`), the site's gateway and a cap on the answer.
   {
@@ -870,38 +1463,50 @@ export const AI_RULES = [
     find: /\bAI\s*\.\s*run\s*\(/g,
     test: (code, m) => {
       const args = callArguments(code, m.index + m[0].length - 1);
-      const missing = [["signal", "a timeout (signal: AbortSignal.timeout(ms), C2)"], ["gateway", "the gateway (gateway: { id, metadata }, G1)"], ["max_tokens", "max_tokens (C5)"]].filter(([key]) => !new RegExp(`\\b${key}\\b`).test(args)).map(([, what]) => what);
+      const missing = [
+        ["signal", "a timeout (signal: AbortSignal.timeout(ms), C2)"],
+        ["gateway", "the gateway (gateway: { id, metadata }, G1)"],
+        ["max_tokens", "max_tokens (C5)"],
+      ]
+        .filter(([key]) => !new RegExp(`\\b${key}\\b`).test(args))
+        .map(([, what]) => what);
       return missing.length ? missing.join(", ") : null;
     },
-    say: (missing) => `runs Workers AI without ${missing}: a person waits on it and the gateway is where its cost shows (C13)`,
+    say: (missing) =>
+      `runs Workers AI without ${missing}: a person waits on it and the gateway is where its cost shows (C13)`,
   },
   // AI Search's model calls, the answer and the reranker: the binding takes no signal, so the deadline is the caller's.
   {
     id: "C13",
     find: /\.(?:chatCompletions|aiSearch)\s*\(|\breranking\s*:\s*\{\s*enabled\s*:\s*true/g,
-    test: (code, m) => (TIMEOUT.test(code.slice(Math.max(0, m.index - 1500), m.index + 800)) ? null : "a timeout"),
-    say: () => "calls an AI Search model (an answer or the reranker) with no timeout near it (C2, C13): race it against a deadline, as dustinedwards.info's askStream does",
+    test: (code, m) =>
+      TIMEOUT.test(code.slice(Math.max(0, m.index - 1500), m.index + 800)) ? null : "a timeout",
+    say: () =>
+      "calls an AI Search model (an answer or the reranker) with no timeout near it (C2, C13): race it against a deadline, as dustinedwards.info's askStream does",
   },
   // JSON cut out of free text with a greedy regex, in a file that calls a model: ask for structured output instead.
   {
     id: "C6",
     find: /\/\\[{[]\[\\s\\S\]\*\??\\[}\]]\//,
     test: (code) => (MODEL_CALL.test(code) ? "" : null),
-    say: () => "cuts JSON out of a model's free text with a regex (C6): ask for structured output (site-runtime ./anthropic structured, or Workers AI's response_format) and parse the answer whole",
+    say: () =>
+      "cuts JSON out of a model's free text with a regex (C6): ask for structured output (site-runtime ./anthropic structured, or Workers AI's response_format) and parse the answer whole",
   },
   // A prompt's own rule about dashes: WRITING_RULES already says it, so a second copy drifts from it.
   {
     id: "W5",
     self: "site-runtime",
     find: /["'`][^"'`\n]*?\b(?:do not use|don['’]t use|never use|avoid|no)\s+(?:any\s+)?(?:em|en|long)(?:\s+or\s+en)?[ -]?dash/i,
-    say: () => "writes its own dash rule into a prompt (W5): site-runtime ./prose WRITING_RULES says it; put WRITING_RULES in the prompt instead of local style text",
+    say: () =>
+      "writes its own dash rule into a prompt (W5): site-runtime ./prose WRITING_RULES says it; put WRITING_RULES in the prompt instead of local style text",
   },
   // fireRoutine on its own: a retry after an unanswered fire starts a second session.
   {
     id: "R2",
     self: "site-runtime",
     find: /(?:import|export)\s*(?:type\s*)?\{[^}]*\bfireRoutine\b[^}]*\}\s*from\s*["'`]@dustinedwards\/site-runtime\/routine["'`]/,
-    say: () => "fires a routine with fireRoutine, outside the duplicate guard (R2): use fireOnce from site-runtime ./routine with an atomic store (D1 or a Durable Object), so a retry never starts a second session",
+    say: () =>
+      "fires a routine with fireRoutine, outside the duplicate guard (R2): use fireOnce from site-runtime ./routine with an atomic store (D1 or a Durable Object), so a retry never starts a second session",
   },
 ];
 
@@ -927,17 +1532,29 @@ export function checkAi(tree, config, self) {
   for (const file of tree.files) {
     if (!SOURCE.test(file) || NOT_SOURCE.test(file)) continue;
     const text = tree.read(file);
-    if (!/\bAI\b|anthropic|chatCompletions|aiSearch|reranking|dash|fireRoutine|\{\[\\s\\S\]|\[\[\\s\\S\]/i.test(text)) continue;
+    if (
+      !/\bAI\b|anthropic|chatCompletions|aiSearch|reranking|dash|fireRoutine|\{\[\\s\\S\]|\[\[\\s\\S\]/i.test(
+        text,
+      )
+    )
+      continue;
     const code = blankComments(text);
     /** @type {Finding[]} */
     const mine = [];
     for (const rule of AI_RULES) {
       if (rule.self && rule.self === self) continue;
-      const find = rule.find.global ? rule.find : new RegExp(rule.find.source, `${rule.find.flags}g`);
+      const find = rule.find.global
+        ? rule.find
+        : new RegExp(rule.find.source, `${rule.find.flags}g`);
       for (const m of code.matchAll(find)) {
         const missing = rule.test ? rule.test(code, m) : "";
         if (missing === null) continue;
-        mine.push({ check: "ai", file, line: code.slice(0, m.index).split("\n").length, message: `[${rule.id}] this ${rule.say(missing)}` });
+        mine.push({
+          check: "ai",
+          file,
+          line: code.slice(0, m.index).split("\n").length,
+          message: `[${rule.id}] this ${rule.say(missing)}`,
+        });
         if (!rule.find.global) break;
       }
     }
@@ -957,7 +1574,9 @@ export function respell(text, from, to, protect, names) {
   const guarded = [...text.matchAll(protect)].map((g) => [g.index, g.index + g[0].length]);
   const [first, ...rest] = Array.from(from.toLowerCase());
   const body = rest.map((c) => `[${c}${c.toUpperCase()}]`).join("");
-  const start = names ? `(?:(?<![A-Za-z])${first}|${first.toUpperCase()})` : `(?<![A-Za-z0-9_$])[${first}${first.toUpperCase()}]`;
+  const start = names
+    ? `(?:(?<![A-Za-z])${first}|${first.toUpperCase()})`
+    : `(?<![A-Za-z0-9_$])[${first}${first.toUpperCase()}]`;
   const tail = names ? "(?![a-z])" : "(?![A-Za-z0-9_$])";
   const cased = to.toLowerCase();
   return text.replace(new RegExp(`${start}${body}${tail}`, "g"), (word, at) => {
@@ -974,9 +1593,21 @@ export function respell(text, from, to, protect, names) {
  * @returns {Finding[]}
  */
 export function checkSpelling(root, config, fix = false, names = true) {
-  const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" }).split("\0").filter(Boolean);
-  const skip = [...(config.spelling?.skip ?? []), "**/*.lock", "**/package-lock.json", "**/pnpm-lock.yaml", ".shared.json"];
-  const targets = files.filter((f) => !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) && !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f));
+  const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" })
+    .split("\0")
+    .filter(Boolean);
+  const skip = [
+    ...(config.spelling?.skip ?? []),
+    "**/*.lock",
+    "**/package-lock.json",
+    "**/pnpm-lock.yaml",
+    ".shared.json",
+  ];
+  const targets = files.filter(
+    (f) =>
+      !skip.some((s) => posix.matchesGlob?.(f, s) ?? f === s) &&
+      !/\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz|wasm)$/i.test(f),
+  );
   // Names other tools own: GitHub Actions' cancelled(), Renovate's minimumReleaseAgeBehaviour, and ARIA's labelledby as a // codespell:ignore
   // camelCase name (labelledBy, ariaLabelledByElements). codespell:ignore
   const builtIn = String.raw`\bcancelled\\?\(|\bminimumReleaseAgeBehaviour\b|[lL]abelledBy`; // codespell:ignore
@@ -984,13 +1615,23 @@ export function checkSpelling(root, config, fix = false, names = true) {
   const ignoreRegex = [builtIn, ...contracts].join("|");
   /** @returns {{ file: string, line: number, from: string, to: string }[]} */
   const read = (/** @type {string} */ regex, /** @type {string[]} */ words) => {
-    const args = ["--builtin", "en-GB_to_en-US", "--quiet-level", "3", "--check-filenames", "--ignore-regex", regex];
+    const args = [
+      "--builtin",
+      "en-GB_to_en-US",
+      "--quiet-level",
+      "3",
+      "--check-filenames",
+      "--ignore-regex",
+      regex,
+    ];
     if (words.length) args.push("--ignore-words-list", words.join(","));
     // Each part of a camelCase or CONSTANT_CASE name is read as a word, since a British name is spelling too.
     args.push("--regex", "[A-Z]?[a-z]+|[A-Z]+(?![a-z])");
     const out = [];
     for (let i = 0; i < targets.length; i += 400) {
-      for (const line of codespell([...args, "--", ...targets.slice(i, i + 400)], root).split("\n")) {
+      for (const line of codespell([...args, "--", ...targets.slice(i, i + 400)], root).split(
+        "\n",
+      )) {
         const m = /^(.+?):(\d+): (\S+) ==> (\S+)/.exec(line);
         if (m) out.push({ file: m[1], line: Number(m[2]), from: m[3], to: m[4] });
       }
@@ -998,19 +1639,32 @@ export function checkSpelling(root, config, fix = false, names = true) {
     return out;
   };
   const hits = read(ignoreRegex, ignore);
-  const found = hits.map(({ file, line, from, to }) => ({ check: "spelling", file, line, message: `${from} is British; write ${to} (or end the line with a codespell:ignore comment if it is a data contract)` }));
+  const found = hits.map(({ file, line, from, to }) => ({
+    check: "spelling",
+    file,
+    line,
+    message: `${from} is British; write ${to} (or end the line with a codespell:ignore comment if it is a data contract)`,
+  }));
   // An ignore or contract is used when a run without the repository's own finds more, in its word or on a line it matches.
   if (!fix && (ignore.length || contracts.length)) {
     const seen = new Set(hits.map((h) => `${h.file}:${h.line}:${h.from}`));
     const more = read(builtIn, []).filter((h) => !seen.has(`${h.file}:${h.line}:${h.from}`));
-    for (const word of ignore) if (more.some((h) => h.from.toLowerCase() === word.toLowerCase())) used(config, "spelling.ignore", word);
+    for (const word of ignore)
+      if (more.some((h) => h.from.toLowerCase() === word.toLowerCase()))
+        used(config, "spelling.ignore", word);
     for (const contract of contracts) {
       /** @type {RegExp | null} */
       let re = null;
       try {
         re = new RegExp(contract);
       } catch {}
-      if (!re || more.some((h) => re.test(readFileSync(join(root, h.file), "utf8").split("\n")[h.line - 1] ?? ""))) used(config, "spelling.contracts", contract);
+      if (
+        !re ||
+        more.some((h) =>
+          re.test(readFileSync(join(root, h.file), "utf8").split("\n")[h.line - 1] ?? ""),
+        )
+      )
+        used(config, "spelling.contracts", contract);
     }
   }
   if (!fix) return found;
@@ -1032,14 +1686,24 @@ export function checkSpelling(root, config, fix = false, names = true) {
 /** codespell from PATH, else through pipx at a pinned version. Its own exit code says only whether it found something. */
 function codespell(/** @type {string[]} */ args, /** @type {string} */ cwd) {
   /** @type {[string, string[]][]} */
-  const runners = [["codespell", []], ["pipx", ["run", "codespell==2.4.3"]]];
+  const runners = [
+    ["codespell", []],
+    ["pipx", ["run", "codespell==2.4.3"]],
+  ];
   for (const [cmd, pre] of runners) {
-    const run = spawnSync(cmd, [...pre, ...args], { cwd, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+    const run = spawnSync(cmd, [...pre, ...args], {
+      cwd,
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+    });
     if (run.error) continue;
-    if (run.status !== 0 && run.status !== 65) throw new Error(`codespell failed: ${run.stderr.trim()}`);
+    if (run.status !== 0 && run.status !== 65)
+      throw new Error(`codespell failed: ${run.stderr.trim()}`);
     return run.stdout;
   }
-  throw new Error("codespell is not installed and pipx is not either: pip install codespell==2.4.3");
+  throw new Error(
+    "codespell is not installed and pipx is not either: pip install codespell==2.4.3",
+  );
 }
 
 /**
@@ -1057,12 +1721,17 @@ export function readCatalog(locate) {
     const manifest = JSON.parse(readFileSync(join(dir, "package.json"), "utf8"));
     /** @type {[string, string[]][]} */
     const entries = [];
-    const exp = typeof manifest.exports === "string" ? { ".": manifest.exports } : (manifest.exports ?? {});
+    const exp =
+      typeof manifest.exports === "string" ? { ".": manifest.exports } : (manifest.exports ?? {});
     for (const [sub, target] of Object.entries(exp)) {
       if (sub === "./package.json" || /\.css$|\.json$/.test(sub)) continue;
       if (sub.includes("*")) {
         const base = sub.split("/")[1];
-        const comps = existsSync(join(dir, "components")) ? readdirSync(join(dir, "components")).filter((c) => statSync(join(dir, "components", c)).isDirectory()) : [];
+        const comps = existsSync(join(dir, "components"))
+          ? readdirSync(join(dir, "components")).filter((c) =>
+              statSync(join(dir, "components", c)).isDirectory(),
+            )
+          : [];
         // Capsomer's behaviors are listed by what each exports (behavior/time's relative, day...), so a site writing its
         // own finds them; the British spelling of the same subpath and the React components stay a list of components.
         if (sub === "./behavior/*") {
@@ -1079,9 +1748,17 @@ export function readCatalog(locate) {
       const names = file ? exportNames(followReexports(file)) : [];
       entries.push([sub, names]);
       // devkit's exports are test helpers, not site code a site could copy.
-      if (repo !== "devkit") for (const n of names) if (!catalog[n] || catalog[n].endsWith(" .")) catalog[n] = `${label} ${sub}`;
+      if (repo !== "devkit")
+        for (const n of names)
+          if (!catalog[n] || catalog[n].endsWith(" .")) catalog[n] = `${label} ${sub}`;
     }
-    packages.push({ label, repo, version: manifest.version, entries, bins: Object.keys(manifest.bin ?? {}) });
+    packages.push({
+      label,
+      repo,
+      version: manifest.version,
+      entries,
+      bins: Object.keys(manifest.bin ?? {}),
+    });
   }
   return { catalog, packages };
 }
@@ -1093,7 +1770,14 @@ function moduleFile(/** @type {string} */ dir, /** @type {unknown} */ target) {
   while (t && typeof t === "object") t = t.types ?? t.import ?? t.default;
   if (typeof t !== "string") return null;
   const f = join(dir, t);
-  const candidates = [f, f.replace(/\.m?js$/, ".d.mts"), f.replace(/\.js$/, ".d.ts"), f.replace(/^(.*)\/dist\/(.*)\.d\.ts$/, "$1/src/$2.ts"), f.replace(/^(.*)\/dist\/(.*)\.js$/, "$1/src/$2.ts"), f.replace(/^(.*)\/dist\/(.*)\.d\.ts$/, "$1/$2.ts")];
+  const candidates = [
+    f,
+    f.replace(/\.m?js$/, ".d.mts"),
+    f.replace(/\.js$/, ".d.ts"),
+    f.replace(/^(.*)\/dist\/(.*)\.d\.ts$/, "$1/src/$2.ts"),
+    f.replace(/^(.*)\/dist\/(.*)\.js$/, "$1/src/$2.ts"),
+    f.replace(/^(.*)\/dist\/(.*)\.d\.ts$/, "$1/$2.ts"),
+  ];
   return candidates.find((c) => existsSync(c) && statSync(c).isFile()) ?? null;
 }
 
@@ -1102,7 +1786,12 @@ function followReexports(/** @type {string} */ file) {
   let src = readFileSync(file, "utf8");
   for (const m of src.matchAll(/export\s+\*\s+from\s+["'](.+?)["']/g)) {
     const r = join(dirname(file), m[1]);
-    const hit = [r, r.replace(/\.m?js$/, ".d.mts"), r.replace(/\.js$/, ".ts"), r.replace(/\.js$/, ".d.ts")].find((c) => existsSync(c) && statSync(c).isFile());
+    const hit = [
+      r,
+      r.replace(/\.m?js$/, ".d.mts"),
+      r.replace(/\.js$/, ".ts"),
+      r.replace(/\.js$/, ".d.ts"),
+    ].find((c) => existsSync(c) && statSync(c).isFile());
     if (hit) src += `\n${readFileSync(hit, "utf8")}`;
   }
   return src;
@@ -1119,28 +1808,46 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
     "",
     "| Feature | Needed by | Provided by |",
     "| --- | --- | --- |",
-    ...Object.entries(FEATURES).map(([f, { kinds, use }]) => `| ${f} | ${kinds.join(", ")} | ${use} |`),
-    ...Object.entries(ADVISORIES).map(([f, { kinds, use }]) => `| ${f} (a warning) | ${kinds.join(", ")} | ${use} |`),
+    ...Object.entries(FEATURES).map(
+      ([f, { kinds, use }]) => `| ${f} | ${kinds.join(", ")} | ${use} |`,
+    ),
+    ...Object.entries(ADVISORIES).map(
+      ([f, { kinds, use }]) => `| ${f} (a warning) | ${kinds.join(", ")} | ${use} |`,
+    ),
     `| backup | any app with a D1 database | ${BACKUP.use} |`,
     `| assetCache | any React Router app (/assets/*, and /islands/* with devkit ./islands) | ${ASSET_CACHE.use} |`,
+    `| lint | every repository with JavaScript or TypeScript | devkit ./oxlint in a root oxlint.config.ts, the \`lint\` script \`${LINT_SCRIPT}\`, and \`npm run lint\` in CI |`,
+    `| format | every repository with JavaScript or TypeScript | devkit ./oxfmt in a root oxfmt.config.ts, the \`format:check\` script \`${FORMAT_CHECK_SCRIPT}\`, and \`npm run format:check\` in CI |`,
   ];
   for (const p of packages) {
     lines.push("", `## ${p.label} ${p.version} (DrDustinEdwards/${p.repo})`, "");
-    for (const [sub, names] of p.entries) lines.push(`- \`${sub}\`: ${names.length ? names.map((n) => `\`${n}\``).join(", ") : "(no named exports)"}`);
+    for (const [sub, names] of p.entries)
+      lines.push(
+        `- \`${sub}\`: ${names.length ? names.map((n) => `\`${n}\``).join(", ") : "(no named exports)"}`,
+      );
     if (p.bins.length) lines.push(`- bins: ${p.bins.map((b) => `\`${b}\``).join(", ")}`);
-    if (p.repo === "devkit") lines.push(`- Claude Code hooks (\`claude/hooks\`, run from \`.claude/settings.json\`, README "The shared Claude Code hooks"): ${CLAUDE_HOOKS.map((h) => `\`${h}\``).join(", ")}`);
+    if (p.repo === "devkit")
+      lines.push(
+        `- Claude Code hooks (\`claude/hooks\`, run from \`.claude/settings.json\`, README "The shared Claude Code hooks"): ${CLAUDE_HOOKS.map((h) => `\`${h}\``).join(", ")}`,
+      );
   }
   return `${lines.join("\n")}\n`;
 }
 
 /** Every tracked file, read from disk. */
 function gitTree(/** @type {string} */ root) {
-  const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" }).split("\0").filter(Boolean);
+  const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" })
+    .split("\0")
+    .filter(Boolean);
   /** @type {Record<string, string>} */
   const cache = {};
   return {
     files: files.filter((f) => !f.includes("node_modules/")),
-    read: (/** @type {string} */ f) => (cache[f] ??= existsSync(join(root, f)) && statSync(join(root, f)).isFile() ? readFileSync(join(root, f), "utf8") : ""),
+    read: (/** @type {string} */ f) =>
+      (cache[f] ??=
+        existsSync(join(root, f)) && statSync(join(root, f)).isFile()
+          ? readFileSync(join(root, f), "utf8")
+          : ""),
   };
 }
 
@@ -1150,7 +1857,10 @@ function peersOf(locate) {
   const peers = {};
   for (const p of PACKAGES) {
     const dir = locate(p.name, p.repo);
-    if (dir) peers[p.name] = Object.keys(JSON.parse(readFileSync(join(dir, "package.json"), "utf8")).peerDependencies ?? {});
+    if (dir)
+      peers[p.name] = Object.keys(
+        JSON.parse(readFileSync(join(dir, "package.json"), "utf8")).peerDependencies ?? {},
+      );
   }
   return peers;
 }
@@ -1173,37 +1883,68 @@ async function main(/** @type {string[]} */ argv) {
   validateConfig(config);
   const tree = gitTree(root);
   // A shared package defines its own exports; it is checked against the others, as a package, not a site.
-  const name = existsSync(join(root, "package.json")) ? JSON.parse(readFileSync(join(root, "package.json"), "utf8")).name : undefined;
+  const name = existsSync(join(root, "package.json"))
+    ? JSON.parse(readFileSync(join(root, "package.json"), "utf8")).name
+    : undefined;
   const self = PACKAGES.find((p) => p.name === name);
   if (self) config.apps ??= { ".": "package" };
   // A package the check cannot read is a check that did not run: in CI (--from) that stops it, locally it is said.
-  const missing = PACKAGES.filter((p) => p.repo !== self?.repo && !locate(p.name, p.repo)).map((p) => p.repo);
-  if (from && missing.length) throw new Error(`--from ${from} has no checkout of ${missing.join(", ")}`);
-  const { catalog } = readCatalog((name, repo) => (repo === self?.repo ? null : locate(name, repo)));
+  const missing = PACKAGES.filter((p) => p.repo !== self?.repo && !locate(p.name, p.repo)).map(
+    (p) => p.repo,
+  );
+  if (from && missing.length)
+    throw new Error(`--from ${from} has no checkout of ${missing.join(", ")}`);
+  const { catalog } = readCatalog((name, repo) =>
+    repo === self?.repo ? null : locate(name, repo),
+  );
   // A name the package exports itself is its own API, even when another package exports a different thing by that name.
-  if (self) for (const name of Object.keys(readCatalog((_, repo) => (repo === self.repo ? root : null)).catalog)) delete catalog[name];
+  if (self)
+    for (const name of Object.keys(
+      readCatalog((_, repo) => (repo === self.repo ? root : null)).catalog,
+    ))
+      delete catalog[name];
   // Whether the repository is private, from the event Actions hands every run; unknown locally.
-  const event = process.env.GITHUB_EVENT_PATH && existsSync(process.env.GITHUB_EVENT_PATH) ? JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf8")) : {};
+  const event =
+    process.env.GITHUB_EVENT_PATH && existsSync(process.env.GITHUB_EVENT_PATH)
+      ? JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf8"))
+      : {};
   /** @type {Record<string, Record<string, string> | Error>} */
   const dates = {};
   for (const [repo, days] of Object.entries(FRESH)) {
-    if (repo === self?.repo || !tree.files.some((f) => posix.basename(f) === "package.json" && tree.read(f).includes(`DrDustinEdwards/${repo}#`))) continue;
-    dates[repo] = await releaseDates(repo, Date.now() - days * DAY_MS).catch((error) => (error instanceof Error ? error : new Error(String(error))));
+    if (
+      repo === self?.repo ||
+      !tree.files.some(
+        (f) =>
+          posix.basename(f) === "package.json" && tree.read(f).includes(`DrDustinEdwards/${repo}#`),
+      )
+    )
+      continue;
+    dates[repo] = await releaseDates(repo, Date.now() - days * DAY_MS).catch((error) =>
+      error instanceof Error ? error : new Error(String(error)),
+    );
   }
   const findings = [
     ...checkPins(tree, lsRemoteTags, dates),
     ...checkCopies(tree, catalog, config, self?.label),
     ...checkLibraries(tree, config, peersOf(locate)),
     ...checkFeatures(tree, config),
-    ...(self?.repo === "capsomer" ? [] : checkTokens(tree, capsomerTokens(locate("capsomer", "capsomer")), config)),
+    ...(self?.repo === "capsomer"
+      ? []
+      : checkTokens(tree, capsomerTokens(locate("capsomer", "capsomer")), config)),
     ...checkSpelling(root, config, argv.includes("--fix-spelling"), !self),
     ...checkWorkflows(tree, config, { self: self?.repo, private: event.repository?.private }),
     ...checkFakes(tree, config, self?.label),
     ...checkAi(tree, config, self?.label),
+    ...checkLint(tree, config, self?.repo),
   ];
   if (missing.length) {
-    const tokens = missing.includes("capsomer") && self?.repo !== "capsomer" ? " and Capsomer's tokens" : "";
-    findings.push({ check: "config", warn: true, message: `not installed here: ${missing.join(", ")}, so copies of their exports${tokens} were not checked and no exception was judged stale; npm install, or --from <dir> of checkouts (CI reads them all)` });
+    const tokens =
+      missing.includes("capsomer") && self?.repo !== "capsomer" ? " and Capsomer's tokens" : "";
+    findings.push({
+      check: "config",
+      warn: true,
+      message: `not installed here: ${missing.join(", ")}, so copies of their exports${tokens} were not checked and no exception was judged stale; npm install, or --from <dir> of checkouts (CI reads them all)`,
+    });
   } else {
     findings.push(...staleExceptions(config));
   }
@@ -1212,9 +1953,28 @@ async function main(/** @type {string[]} */ argv) {
     const where = f.file ? ` file=${f.file}${f.line ? `,line=${f.line}` : ""}` : "";
     console.log(`::${isWarning(f) ? "warning" : "error"}${where}::[${f.check}] ${f.message}`);
   }
-  const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling", "workflows", "fakes", "ai", "config"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
-  console.log(errors.length ? `devkit-shared: ${errors.length} to fix (${counts}). What the packages export: npx devkit-shared list` : `devkit-shared: uses the shared code (${counts}).`);
-  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Shared-code check\n\n${counts}\n`);
+  const counts = [
+    "pins",
+    "copies",
+    "libraries",
+    "features",
+    "tokens",
+    "spelling",
+    "workflows",
+    "fakes",
+    "ai",
+    "lint",
+    "config",
+  ]
+    .map((c) => `${c} ${findings.filter((f) => f.check === c).length}`)
+    .join(", ");
+  console.log(
+    errors.length
+      ? `devkit-shared: ${errors.length} to fix (${counts}). What the packages export: npx devkit-shared list`
+      : `devkit-shared: uses the shared code (${counts}).`,
+  );
+  if (process.env.GITHUB_STEP_SUMMARY)
+    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Shared-code check\n\n${counts}\n`);
   return errors.length ? 1 : 0;
 }
 
@@ -1223,9 +1983,12 @@ export async function cli(/** @type {string[]} */ argv) {
   try {
     return await main(argv);
   } catch (error) {
-    console.log(`::error::devkit-shared could not run: ${error instanceof Error ? error.message : String(error)}`);
+    console.log(
+      `::error::devkit-shared could not run: ${error instanceof Error ? error.message : String(error)}`,
+    );
     return 2;
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) process.exitCode = await cli(process.argv.slice(2));
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
+  process.exitCode = await cli(process.argv.slice(2));
