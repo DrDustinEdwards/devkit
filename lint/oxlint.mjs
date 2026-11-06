@@ -106,6 +106,14 @@ export const react = {
     "react/error-boundaries": "error",
     "react/incompatible-library": "error",
     "react/unsupported-syntax": "error",
+    // jsx-a11y's correctness rules stay on (Capsomer's axe checks are the runtime half), less three that flag correct
+    // markup, measured on dustinedwards-info's first run (2026-11-06): `prefer-tag-over-role` (22) asks for a tag where
+    // the ARIA role is right, and no tag replaces `role="img"` on an SVG; `control-has-associated-label` (6) flagged a
+    // table cell filled by dangerouslySetInnerHTML and a datalist option; `media-has-caption` flags audio, whose
+    // accessible alternative is a transcript (WCAG 1.2.1), which the rule cannot see.
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/media-has-caption": "off",
   },
 };
 
