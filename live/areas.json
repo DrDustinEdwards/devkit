@@ -85,9 +85,9 @@
             "dustinedwards-info": ["--repo", "DrDustinEdwards/dustinedwards-info", "--drill-workflow", "restore-drill.yml"],
             "bsw": ["--repo", "DrDustinEdwards/bsw"],
             "capsid-mcp": ["--repo", "DrDustinEdwards/capsid", "--drill-workflow", "restore-rehearsal.yml"],
-            "foxhound-mcp": ["--repo", "DrDustinEdwards/foxhound", "--wrangler", "mcp/wrangler.jsonc"],
-            "foxing-mcp": ["--repo", "DrDustinEdwards/foxing", "--wrangler", "mcp/wrangler.jsonc.example"],
-            "dustinedwards-mcp": ["--repo", "DrDustinEdwards/dustinedwards-info", "--wrangler", "mcp/wrangler.jsonc.example"]
+            "foxhound-mcp": ["--repo", "DrDustinEdwards/foxhound", "--wrangler", "mcp/wrangler.jsonc", "--path", "mcp"],
+            "foxing-mcp": ["--repo", "DrDustinEdwards/foxing", "--wrangler", "mcp/wrangler.jsonc.example", "--path", "mcp"],
+            "dustinedwards-mcp": ["--repo", "DrDustinEdwards/dustinedwards-info", "--wrangler", "mcp/wrangler.jsonc.example", "--path", "mcp"]
           }
         }
       ],

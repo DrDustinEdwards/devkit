@@ -3,10 +3,12 @@
 // the branch head and the weekly restore drill passed. The scoreboard (live/areas.json, area 8) runs it against every site.
 //
 //   devkit-ops-audit --origin https://example.com [--from https://preview.example.workers.dev] [--health-path /health]
-//                    [--repo owner/name] [--branch main] [--drill-workflow restore-drill.yml] [--wrangler mcp/wrangler.jsonc]
+//                    [--repo owner/name] [--branch main] [--path mcp] [--drill-workflow restore-drill.yml] [--wrangler mcp/wrangler.jsonc]
 //
 // --from reads the site from another host. --health-path names a health route other than /health; there is no silent
-// fallback. --repo compares /health's `sha` with the branch head (--branch, else the repository's default branch), compares
+// fallback. --repo compares /health's `sha` with the branch head (--branch, else the repository's default branch; with --path,
+// the newest commit that touched that path, for a Worker that deploys only when its own directory changes, such as an admin
+// MCP in mcp/, so a commit elsewhere in the repository is not read as a missed deploy), compares
 // /health's `checks` with the bindings the repository's wrangler config declares (H5; --wrangler names the file, else the
 // first of wrangler.jsonc, wrangler.json, wrangler.jsonc.example, wrangler.json.example at the root), and with
 // --drill-workflow reads that workflow's newest completed run. GitHub is read without a token, or with GITHUB_TOKEN when
@@ -294,10 +296,11 @@ async function main() {
       branch: { type: "string" },
       "drill-workflow": { type: "string" },
       wrangler: { type: "string" },
+      path: { type: "string" },
     },
   });
-  if (!values.origin || ((values["drill-workflow"] || values.wrangler) && !values.repo) || (values.repo && !/^[\w.-]+\/[\w.-]+$/.test(values.repo))) {
-    console.error("usage: devkit-ops-audit --origin https://example.com [--from https://preview.example] [--health-path /health] [--repo owner/name [--branch main] [--drill-workflow restore-drill.yml] [--wrangler wrangler.jsonc]]");
+  if (!values.origin || ((values["drill-workflow"] || values.wrangler || values.path) && !values.repo) || (values.repo && !/^[\w.-]+\/[\w.-]+$/.test(values.repo))) {
+    console.error("usage: devkit-ops-audit --origin https://example.com [--from https://preview.example] [--health-path /health] [--repo owner/name [--branch main] [--path dir] [--drill-workflow restore-drill.yml] [--wrangler wrangler.jsonc]]");
     process.exit(2);
   }
   const base = (values.from ?? values.origin).replace(/\/$/, "");
@@ -355,13 +358,18 @@ async function main() {
       say(`github: ${repo.error}`);
     } else {
       const branch = values.branch ?? repo.body.default_branch;
-      const head = await github(`/repos/${values.repo}/commits/${encodeURIComponent(branch)}`);
+      let head;
+      if (values.path) {
+        // The newest commit on the branch that touched the path: a Worker that deploys on its own directory's changes is not behind a commit elsewhere.
+        const list = await github(`/repos/${values.repo}/commits?sha=${encodeURIComponent(branch)}&path=${encodeURIComponent(values.path)}&per_page=1`);
+        head = list.error ? list : list.body[0] ? { body: list.body[0] } : { error: `${values.repo}@${branch} has no commit touching ${values.path}` };
+      } else head = await github(`/repos/${values.repo}/commits/${encodeURIComponent(branch)}`);
       if (head.error) {
         unread.push({ item: "H4", url: health.url, reason: head.error });
         say(`branch head: ${head.error}`);
       } else {
         const date = head.body.commit.committer?.date ?? head.body.commit.author?.date;
-        say(`branch head: ${values.repo}@${branch} is ${head.body.sha}, committed ${date}`);
+        say(`branch head: ${values.repo}@${branch}${values.path ? ` (${values.path})` : ""} is ${head.body.sha}, committed ${date}`);
         if (body && /^[0-9a-f]{7,40}$/i.test(String(body.sha ?? ""))) findings.push(...shaFindings({ url: health.url, liveSha: body.sha, head: { sha: head.body.sha, date, url: head.body.html_url } }));
       }
       if (values["drill-workflow"]) {
