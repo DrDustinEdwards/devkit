@@ -1,14 +1,13 @@
 name: code-map-self
 
-# After each push to main, devkit maps its own scripts with its own code-map workflow (this commit's copy, so a change to the
-# map is measured by itself) and publishes code-map.json to the code-map branch for the Capsid system explorer. Once a week
-# (and on a manual run) it also runs Stryker on its own checks (stryker.config.mjs), failing below a module's bar; a push
-# reuses that run's numbers.
+# Nightly, devkit maps its own scripts with its own code-map workflow (main's copy) and publishes code-map.json to the
+# code-map branch for the Capsid system explorer, as examples/code-map-caller.yml does (not on every push since 0.24.0:
+# README, "No second run on main"). Monday's run (its own cron line) and a manual one also run Stryker on its own checks
+# (stryker.config.mjs), failing below a module's bar; the other nights reuse its numbers.
 
 on:
-  push:
-    branches: [main]
   schedule:
+    - cron: "41 4 * * 0,2-6"
     - cron: "41 4 * * 1"
   workflow_dispatch:
 
@@ -31,6 +30,6 @@ jobs:
       # Node's test runner does not create the destination folder.
       coverage-command: mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage/lcov.info "test/*.test.mjs"
       coverage-file: coverage/lcov.info
-      mutation-command: ${{ github.event_name != 'push' && 'node stryker.config.mjs' || '' }}
+      mutation-command: ${{ (github.event_name == 'workflow_dispatch' || github.event.schedule == '41 4 * * 1') && 'node stryker.config.mjs' || '' }}
       mutation-file: reports/mutation/*.json
-      timeout-minutes: ${{ github.event_name != 'push' && 90 || 20 }}
+      timeout-minutes: ${{ (github.event_name == 'workflow_dispatch' || github.event.schedule == '41 4 * * 1') && 90 || 20 }}

@@ -1,7 +1,7 @@
 name: scorecard
 
-# OPENSSF SCORECARD, PUBLISHED, AND A GATE ON ITS SCORE (checklist C5). Every public repository calls this weekly and on
-# each push to its default branch (examples/scorecard-caller.yml). Three jobs:
+# OPENSSF SCORECARD, PUBLISHED, AND A GATE ON ITS SCORE (checklist C5). Every public repository calls this nightly on its
+# default branch (examples/scorecard-caller.yml; until 0.24.0, weekly and on each push). Three jobs:
 #
 #   before    reads the repository's last published score from api.securityscorecards.dev, before this run publishes.
 #   analysis  runs ossf/scorecard-action twice: once for JSON (the score this run gates on, kept as an artifact) and once

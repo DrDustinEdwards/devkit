@@ -3,11 +3,12 @@ name: worker-size
 # The caller a repository keeps. Replace the sha with the devkit commit that holds the reviewed worker-size.yml, and keep it
 # a full sha: scripts/check-callers.mjs fails on anything else. The repository also lists "@dustinedwards/devkit" in its
 # devDependencies at a tag, and commits its budget in .worker-size.json: { "raw_kib": 1700, "gzip_kib": 400 }.
+#
+# SUPERSEDED for pull requests by examples/pr-caller.yml, which runs this check with the others in one job; keep this
+# file only until the repository moves (README, "One job per pull request").
 
 on:
   pull_request:
-  push:
-    branches: [main]
 
 permissions:
   contents: read

@@ -1,13 +1,12 @@
 name: scorecard-self
 
 # devkit's own OpenSSF Scorecard through its own scorecard.yml (this commit's copy), as every public repository's is
-# (examples/scorecard-caller.yml).
+# (examples/scorecard-caller.yml): nightly, not on every push (README, "No second run on main").
 
 on:
-  push:
-    branches: [main]
   schedule:
-    - cron: "17 6 * * 1"
+    - cron: "17 6 * * *"
+  workflow_dispatch:
 
 permissions: {}
 

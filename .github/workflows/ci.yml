@@ -1,9 +1,9 @@
 name: ci
 
+# Pull requests only: a merge was checked as one, and devkit's ruleset lets nothing else onto main (README, "No second run
+# on main"). release-self.yml and shared-list.yml are what a merge starts.
 on:
   pull_request:
-  push:
-    branches: [main]
 
 permissions:
   contents: read

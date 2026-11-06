@@ -142,6 +142,22 @@ THE CHECK NAME. Every repository's "Protect main" ruleset requires checks by nam
 
 A repository moving to `pr.yml` replaces its `checks.yml` caller with `examples/pr-caller.yml`, deletes its `review.yml`, `workflow-audit.yml`, `worker-size.yml` and (a public repository) `no-bloat.yml` callers, and keeps `dependencies.yml` with its daily schedule alone (a private repository also keeps its weekly `no-bloat.yml`). `devkit-shared` names a caller left on pull requests beside it. devkit runs itself through `pr.yml` in `checks-self.yml`, with OSV-Scanner and the workflow audit left to `ci.yml` until its ruleset stops requiring their standalone names.
 
+## No second run on main
+
+Pushes to main were 39% of the jobs on 2026-11-06, because the pull request checks ran again on each merge commit. Every repository's "Protect main" ruleset requires a pull request and has no bypass actor, so nothing reaches main that did not pass its pull request, and a second run on the merge commit repeats it. What each devkit workflow does on a push to main now, decided from what reads it:
+
+| Workflow | On a push to main | Why |
+| --- | --- | --- |
+| `pr.yml`, `checks.yml`, `review.yml`, `no-bloat.yml`, `worker-size.yml`, `workflow-audit.yml`, `conformance.yml` | no | Each gates the pull request; no deploy, release or scoreboard reads its result on main. |
+| `dependencies.yml` | no (daily schedule) | On a push it only lists what the daily run lists, as warnings, and never fails. The schedule finds an advisory published after a merge. |
+| `code-map.yml` | no (nightly) | The explorer reads the newest map, which is then at most a day behind. Monday's run also mutation-tests. |
+| `scorecard.yml` | no (nightly, and a dispatch) | The score reads settings and history a merge rarely moves. |
+| `worker-deploy.yml` | yes | It is the deploy: a merge to main ships. |
+| `release.yml` (`paths: [package.json, CHANGELOG.md]`) | yes | Merging a version bump is the release. |
+| devkit's `release-self.yml` and `shared-list.yml` | yes | devkit's release, and SHARED.md current the moment a merge changes what is shared. |
+
+A deploying repository keeps on a push to main exactly what its deploy needs, in its own workflow: the tests the deploy job `needs` (the `checks` job in `examples/worker-deploy-caller.yml`), then the deploy. No deploy reads a devkit check. dustinedwards-info's `deploy.yml` starts from `workflow_run` of its own `CI` workflow and its `decide` job ships only when that run concluded success, was a push and is main's tip, so its `ci.yml` keeps its `push: branches: [main]` trigger; nothing in it reads `checks / Repo checks` or any other shared check (searched 2026-11-06: no check-runs or statuses read in its workflows or scripts). Foxing's `ci-cf.yml` deploys from its own job on a push, Carrel and Capsid from their own CI's deploy job, and each keeps that. The shared-code check's verdict on main moves only when a shared package releases, so the pull request that bumps it is where it is judged.
+
 ## The rollback drill
 
 `.github/workflows/rollback-drill.yml` proves the shared deploy's rollback every week on a test Worker, `devkit-rollback-drill` on workers.dev (checklist F2). It deploys `drill/worker.mjs` as a known good version with a stand-in commit, then ships the committed config, whose every page answers 500, through this commit's `worker-deploy.yml`. The live gate must refuse it and roll it back. The `verdict` job passes only when `/health` reports the known good commit again and Cloudflare's newest deployment is the gate's rollback of this run's commit. `drill: true` is the one input that differs from a real deploy: the gate's refusal does not fail the run. It needs `CLOUDFLARE_API_TOKEN` (Workers Scripts: Edit) and `CLOUDFLARE_ACCOUNT_ID` as devkit repository secrets.
@@ -152,11 +168,11 @@ A repository moving to `pr.yml` replaces its `checks.yml` caller with `examples/
 
 ## The code map
 
-`.github/workflows/code-map.yml` runs on a push to a public repository's default branch and replaces `code-map.json` on that repository's orphan `code-map` branch. Capsid reads it there and the explorer draws it. The script, `scripts/code-map.mjs`, is inline in the workflow, so a caller pins one sha and needs no release (`examples/code-map-caller.yml`).
+`.github/workflows/code-map.yml` runs nightly on a public repository's default branch (until 0.24.0, on every push to it) and replaces `code-map.json` on that repository's orphan `code-map` branch. Capsid reads it there and the explorer draws it. The script, `scripts/code-map.mjs`, is inline in the workflow, so a caller pins one sha and needs no release (`examples/code-map-caller.yml`).
 
 It reads the code through the caller's own TypeScript, so there is no new dependency: imports are resolved with the caller's compiler options, and cyclomatic complexity is counted on the syntax tree (one, plus each if, loop, case, catch, `?:`, `&&`, `||` and `??` in a function's own body). Coverage is the istanbul JSON Vitest writes (`--coverage.reporter=json`) or the lcov file of `node --test --experimental-test-coverage --test-reporter=lcov`, and a Stryker `mutation.json` adds mutants and a mutation score; both are mapped onto the innermost function holding each statement or mutant. CRAP is CC² × (1 − coverage)³ + CC. A number nobody measured is null, never 0.
 
-Mutation runs only when `mutation-command` is given, which a caller does on a weekly schedule: that run's Stryker reports (`mutation-file`, a glob for one report per chunk) are kept as `mutation.json` on the `code-map` branch beside the map. Every other run reads that file back and, from the source each report holds, carries a function's numbers forward only while its lines are unchanged; a function that changed or is new is `stale: true` with no numbers, and the map names the run as `mutated: {sha, date}`.
+Mutation runs only when `mutation-command` is given, which a caller does on its Monday run: that run's Stryker reports (`mutation-file`, a glob for one report per chunk) are kept as `mutation.json` on the `code-map` branch beside the map. Every other run reads that file back and, from the source each report holds, carries a function's numbers forward only while its lines are unchanged; a function that changed or is new is `stale: true` with no numbers, and the map names the run as `mutated: {sha, date}`.
 
 Inputs: `coverage-command` (empty for no coverage), `coverage-file`, `mutation-command`, `mutation-artifacts` (for a caller whose Stryker run is a matrix of earlier jobs: the pattern of the artifacts holding the reports, downloaded from that run into `mutation-artifacts/<artifact>/`), `mutation-file`, `tsconfig` (a repository without one is read as plain JavaScript modules), `include` (path prefixes to map, separated by spaces, default `src/`; `.` for every folder), `exclude` (prefixes to leave out), `install` (must install `typescript`; a JavaScript repository can add it with `npm i --no-save typescript`), `npm-cache` (false for a repository with no `package-lock.json`) and `node-version-file`. Locally: `node scripts/code-map.mjs --out code-map.json [--coverage coverage/coverage-final.json]` from the repository's root.
 
