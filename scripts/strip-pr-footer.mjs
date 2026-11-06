@@ -9,7 +9,8 @@
 
 // The footer as the connection writes it: a rule, then one italic line linking Claude
 // Code, at the end of the description. Also the "Generated with Claude Code" wording.
-const FOOTER = /\s*(?:^|\n)-{3,}\s*\n+\s*_?(?:🤖\s*)?Generated (?:by|with) \[Claude Code\]\([^)]*\)_?\s*$/u;
+const FOOTER =
+  /\s*(?:^|\n)-{3,}\s*\n+\s*_?(?:🤖\s*)?Generated (?:by|with) \[Claude Code\]\([^)]*\)_?\s*$/u;
 // The bare line, with no rule above it, and a session link left on its own.
 const BARE = /\s*\n(?:🤖\s*)?_?Generated (?:by|with) \[Claude Code\]\([^)]*\)_?\s*$/u;
 const SESSION_LINK = /\s*\nhttps:\/\/claude\.ai\/code\/session_[A-Za-z0-9]+\s*$/u;
@@ -30,9 +31,16 @@ export function stripFooter(body) {
 async function gh(path, init = {}) {
   const res = await fetch(`https://api.github.com${path}`, {
     ...init,
-    headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+    },
   });
-  if (!res.ok) throw new Error(`${init.method ?? "GET"} ${path}: ${res.status} ${(await res.text()).slice(0, 200)}`);
+  if (!res.ok)
+    throw new Error(
+      `${init.method ?? "GET"} ${path}: ${res.status} ${(await res.text()).slice(0, 200)}`,
+    );
   return res.json();
 }
 
@@ -40,13 +48,17 @@ async function gh(path, init = {}) {
 async function fix(repo, number, body) {
   const stripped = stripFooter(body);
   if (stripped === null) return false;
-  await gh(`/repos/${repo}/pulls/${number}`, { method: "PATCH", body: JSON.stringify({ body: stripped }) });
+  await gh(`/repos/${repo}/pulls/${number}`, {
+    method: "PATCH",
+    body: JSON.stringify({ body: stripped }),
+  });
   return true;
 }
 
 async function main() {
   const repo = process.env.GITHUB_REPOSITORY;
-  if (!repo || !process.env.GITHUB_TOKEN) throw new Error("GITHUB_REPOSITORY and GITHUB_TOKEN are required");
+  if (!repo || !process.env.GITHUB_TOKEN)
+    throw new Error("GITHUB_REPOSITORY and GITHUB_TOKEN are required");
   const one = process.env.PR_NUMBER;
   if (one) {
     const pr = await gh(`/repos/${repo}/pulls/${one}`);

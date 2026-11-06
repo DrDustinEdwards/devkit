@@ -45,6 +45,8 @@ export function devToolbar() {
     name: "devkit-dev-toolbar",
     apply: "serve",
     configureServer: serveToolbar,
-    transformIndexHtml: () => [{ tag: "script", attrs: { type: "module", src: TOOLBAR_PATH }, injectTo: "body" }],
+    transformIndexHtml: () => [
+      { tag: "script", attrs: { type: "module", src: TOOLBAR_PATH }, injectTo: "body" },
+    ],
   };
 }

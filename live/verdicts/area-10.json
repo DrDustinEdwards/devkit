@@ -22,16 +22,12 @@
     },
     "enarratio": {
       "verdict": "complete",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/"
-      ],
+      "evidence": ["https://enarratio.dustinedwards.info/"],
       "note": "chart-audit 5 Nov: 127 charts on 4 pages, no findings"
     },
     "prelum": {
       "verdict": "complete",
-      "evidence": [
-        "https://prelum.dustinedwards.info/"
-      ],
+      "evidence": ["https://prelum.dustinedwards.info/"],
       "note": "chart-audit 5 Nov: 4 charts, no findings"
     },
     "capsid-portal": {
@@ -44,16 +40,12 @@
     },
     "carrel": {
       "verdict": "partial",
-      "evidence": [
-        "https://carrel.dustinedwards.info/"
-      ],
+      "evidence": ["https://carrel.dustinedwards.info/"],
       "note": "no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json"
     },
     "carrel-desk": {
       "verdict": "partial",
-      "evidence": [
-        "https://desk.dustinedwards.info/demos/progress"
-      ],
+      "evidence": ["https://desk.dustinedwards.info/demos/progress"],
       "note": "chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov"
     },
     "dustinedwards-info": {

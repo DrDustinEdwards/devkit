@@ -68,7 +68,8 @@ const started = new WeakSet();
 // bundled some other way, it is undefined and an island is /islands/<name>.js.
 /** @type {Record<string, string>} */
 const BUILT = typeof __DEVKIT_ISLANDS__ === "object" ? __DEVKIT_ISLANDS__ : {};
-const islandUrl = (/** @type {string} */ name) => (Object.hasOwn(BUILT, name) ? BUILT[name] : `/islands/${name}.js`);
+const islandUrl = (/** @type {string} */ name) =>
+  Object.hasOwn(BUILT, name) ? BUILT[name] : `/islands/${name}.js`;
 
 /**
  * Starts every island under `root` (the document by default). `load` imports an island's module; the default reads
@@ -76,14 +77,19 @@ const islandUrl = (/** @type {string} */ name) => (Object.hasOwn(BUILT, name) ? 
  * reported on the console and leaves the server's HTML as it was.
  * @param {{ root?: ParentNode, load?: (name: string) => Promise<{ default: (el: HTMLElement, props: unknown) => unknown }> }} [options]
  */
-export function startIslands({ root = document, load = (name) => import(/* @vite-ignore */ islandUrl(name)) } = {}) {
+export function startIslands({
+  root = document,
+  load = (name) => import(/* @vite-ignore */ islandUrl(name)),
+} = {}) {
   for (const el of root.querySelectorAll("[data-island]")) {
     if (!(el instanceof HTMLElement) || started.has(el)) continue;
     started.add(el);
     const name = el.dataset.island ?? "";
     const directive = DIRECTIVES[el.dataset.client ?? "load"];
     if (!ISLAND_NAME.test(name) || !directive) {
-      console.error(`island: "${name}" with data-client "${el.dataset.client}" is not an island this page can start`);
+      console.error(
+        `island: "${name}" with data-client "${el.dataset.client}" is not an island this page can start`,
+      );
       continue;
     }
     let ran = false;

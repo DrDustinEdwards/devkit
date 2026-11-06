@@ -15,7 +15,9 @@ const encoder = new TextEncoder();
 
 /** @param {Uint8Array<ArrayBuffer>} bytes */
 const sha1 = async (bytes) =>
-  Array.from(new Uint8Array(await crypto.subtle.digest("SHA-1", bytes)), (byte) => byte.toString(16).padStart(2, "0")).join("");
+  Array.from(new Uint8Array(await crypto.subtle.digest("SHA-1", bytes)), (byte) =>
+    byte.toString(16).padStart(2, "0"),
+  ).join("");
 
 /**
  * The sha git gives `content` as a blob: SHA-1 over `blob <byte length>\0` and the bytes. The header counts UTF-8
@@ -46,7 +48,14 @@ export async function gitBlobSha(content) {
  *
  * @param {{ owner: string, repo: string, branch?: string, files?: Record<string, string>, install?: boolean, token?: string }} options
  */
-export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, install = true, token }) {
+export function stubGitHub({
+  owner,
+  repo,
+  branch = "main",
+  files: seed = {},
+  install = true,
+  token,
+}) {
   if (!owner || !repo) throw new Error("stubGitHub needs the owner and repo it stands in for.");
   const prefix = `/repos/${owner}/${repo}`;
 
@@ -64,7 +73,9 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
   /** Every tree by sha; the head's is `files` itself. @type {Map<string, Map<string, string>>} */
   const trees = new Map([[head.treeSha, files]]);
   /** @type {Map<string, Commit>} */
-  const commits = new Map([[head.commitSha, { tree: head.treeSha, parents: [], message: "Initial" }]]);
+  const commits = new Map([
+    [head.commitSha, { tree: head.treeSha, parents: [], message: "Initial" }],
+  ]);
   let commitCounter = 0;
 
   const json = (/** @type {unknown} */ body, status = 200) =>
@@ -72,7 +83,11 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
   const refBody = () => ({
     ref: `refs/heads/${branch}`,
     url: `${API}${prefix}/git/refs/heads/${branch}`,
-    object: { type: "commit", sha: head.commitSha, url: `${API}${prefix}/git/commits/${head.commitSha}` },
+    object: {
+      type: "commit",
+      sha: head.commitSha,
+      url: `${API}${prefix}/git/commits/${head.commitSha}`,
+    },
   });
   const commitBody = (/** @type {string} */ sha, /** @type {Commit} */ commit) => ({
     sha,
@@ -107,7 +122,12 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
       handle: () =>
         history.length === 0
           ? json({ message: "no history planted" }, 500)
-          : json(history.map((c) => ({ sha: c.sha, commit: { message: c.message, author: { name: c.author, date: c.date } } }))),
+          : json(
+              history.map((c) => ({
+                sha: c.sha,
+                commit: { message: c.message, author: { name: c.author, date: c.date } },
+              })),
+            ),
     },
     { method: "POST", path: `${prefix}/git/blobs`, handle: postBlob },
     { method: "POST", path: `${prefix}/git/trees`, handle: postTree },
@@ -126,14 +146,29 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
     // file shows as its folder, `type: "dir"`.
     const children = [...tree.keys()].filter((p) => p.startsWith(`${target}/`));
     if (!tree.has(target) && children.length > 0) {
-      const names = [...new Set(children.map((p) => p.slice(target.length + 1).split("/")[0] ?? ""))];
+      const names = [
+        ...new Set(children.map((p) => p.slice(target.length + 1).split("/")[0] ?? "")),
+      ];
       return json(
         await Promise.all(
           names.map(async (name) => {
             const path = `${target}/${name}`;
             const content = tree.get(path);
-            if (content === undefined) return { name, path, sha: await sha1(encoder.encode(`tree ${path}`)), type: "dir", size: 0 };
-            return { name, path, sha: await gitBlobSha(content), type: "file", size: encoder.encode(content).byteLength };
+            if (content === undefined)
+              return {
+                name,
+                path,
+                sha: await sha1(encoder.encode(`tree ${path}`)),
+                type: "dir",
+                size: 0,
+              };
+            return {
+              name,
+              path,
+              sha: await gitBlobSha(content),
+              type: "file",
+              size: encoder.encode(content).byteLength,
+            };
           }),
         ),
       );
@@ -146,12 +181,23 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
     for (const byte of bytes) binary += String.fromCharCode(byte);
     // GitHub wraps the base64 at 60 characters, each line ending in a newline.
     const wrapped = btoa(binary).replace(/.{1,60}/g, "$&\n");
-    return json({ type: "file", name: target.split("/").pop(), path: target, content: wrapped, encoding: "base64", sha: await gitBlobSha(content), size: bytes.byteLength });
+    return json({
+      type: "file",
+      name: target.split("/").pop(),
+      path: target,
+      content: wrapped,
+      encoding: "base64",
+      sha: await gitBlobSha(content),
+      size: bytes.byteLength,
+    });
   }
 
   /** @param {string} _path @param {{ content: string, encoding?: string }} body */
   async function postBlob(_path, { content, encoding }) {
-    const text = encoding === "base64" ? new TextDecoder().decode(Uint8Array.from(atob(content), (c) => c.charCodeAt(0))) : content;
+    const text =
+      encoding === "base64"
+        ? new TextDecoder().decode(Uint8Array.from(atob(content), (c) => c.charCodeAt(0)))
+        : content;
     const sha = await gitBlobSha(text);
     blobs.set(sha, text);
     return json({ sha, url: `${API}${prefix}/git/blobs/${sha}` }, 201);
@@ -167,7 +213,8 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
       else if (entry.sha === null) next.delete(entry.path);
       else {
         const content = blobs.get(entry.sha ?? "");
-        if (content === undefined) throw new Error(`the tree names blob ${entry.sha}, which no recorded blob POST created.`);
+        if (content === undefined)
+          throw new Error(`the tree names blob ${entry.sha}, which no recorded blob POST created.`);
         next.set(entry.path, content);
       }
     }
@@ -178,7 +225,8 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
 
   /** @param {string} _path @param {{ message?: string, tree?: string, parents?: string[] }} body */
   async function postCommit(_path, { message, tree, parents = [] }) {
-    if (typeof message !== "string" || !trees.has(tree ?? "")) return json({ message: "a commit needs a message and a tree that exists" }, 422);
+    if (typeof message !== "string" || !trees.has(tree ?? ""))
+      return json({ message: "a commit needs a message and a tree that exists" }, 422);
     const commit = { tree: /** @type {string} */ (tree), parents, message };
     const sha = await sha1(encoder.encode(`commit ${++commitCounter} ${JSON.stringify(commit)}`));
     commits.set(sha, commit);
@@ -188,7 +236,7 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
   /** Whether `sha` is `ancestor` or reaches it through parents: a fast forward. */
   function descends(/** @type {string} */ sha, /** @type {string} */ ancestor) {
     const seen = new Set();
-    for (const queue = [sha]; queue.length > 0; ) {
+    for (const queue = [sha]; queue.length > 0;) {
       const next = /** @type {string} */ (queue.pop());
       if (next === ancestor) return true;
       if (!seen.has(next)) queue.push(...(commits.get(next)?.parents ?? []));
@@ -201,7 +249,8 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
   function patchRef(_path, { sha, force = false }) {
     const commit = commits.get(sha);
     if (!commit) return json({ message: "Object does not exist" }, 422);
-    if (!force && !descends(sha, head.commitSha)) return json({ message: "Update is not a fast forward" }, 422);
+    if (!force && !descends(sha, head.commitSha))
+      return json({ message: "Update is not a fast forward" }, 422);
     const tree = new Map(trees.get(commit.tree));
     trees.set(head.treeSha, new Map(files));
     files.clear();
@@ -243,7 +292,9 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
       }
     }
 
-    const route = routes.find((r) => r.method === method && (r.prefix ? path.startsWith(r.path) : path === r.path));
+    const route = routes.find(
+      (r) => r.method === method && (r.prefix ? path.startsWith(r.path) : path === r.path),
+    );
     if (route) return route.handle(path, body ?? {}, new URLSearchParams(search));
 
     throw new Error(
@@ -258,7 +309,8 @@ export function stubGitHub({ owner, repo, branch = "main", files: seed = {}, ins
     files,
     history,
     /** Fail the next `times` requests whose path contains `fragment`, with a 500. */
-    failNext: (/** @type {string} */ fragment, /** @type {number} */ times) => void failures.set(fragment, times),
+    failNext: (/** @type {string} */ fragment, /** @type {number} */ times) =>
+      void failures.set(fragment, times),
     fetch: stub,
     restore,
   };

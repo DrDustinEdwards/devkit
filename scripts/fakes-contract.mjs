@@ -9,7 +9,8 @@ import { writeFileSync } from "node:fs";
 
 const COMMIT = process.argv[2] ?? "066b825d08409eb6c48ddfdd7547c0b70a72dfaf";
 const OPENAPI = `https://raw.githubusercontent.com/github/rest-api-description/${COMMIT}/descriptions/api.github.com/api.github.com.json`;
-const DOCS = "https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie";
+const DOCS =
+  "https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie";
 const OPERATIONS = [
   ["get", "/repos/{owner}/{repo}/git/ref/{ref}"],
   ["get", "/repos/{owner}/{repo}/git/commits/{commit_sha}"],
@@ -28,13 +29,22 @@ async function get(/** @type {string} */ url) {
 }
 
 const spec = JSON.parse(await get(OPENAPI));
-const deref = (/** @type {any} */ node) => (node?.$ref ? deref(node.$ref.slice(2).split("/").reduce((/** @type {any} */ at, /** @type {string} */ key) => at[key], spec)) : node);
+const deref = (/** @type {any} */ node) =>
+  node?.$ref
+    ? deref(
+        node.$ref
+          .slice(2)
+          .split("/")
+          .reduce((/** @type {any} */ at, /** @type {string} */ key) => at[key], spec),
+      )
+    : node;
 
 /** Every field path a schema allows: `a`, `a.b`, `list[].c`, and `[].c` for a top-level array's items. */
 function fieldPaths(/** @type {any} */ schema, prefix = "", depth = 0, out = new Set()) {
   const node = deref(schema);
   if (!node || depth > 4) return out;
-  for (const variant of [...(node.oneOf ?? []), ...(node.anyOf ?? []), ...(node.allOf ?? [])]) fieldPaths(variant, prefix, depth, out);
+  for (const variant of [...(node.oneOf ?? []), ...(node.anyOf ?? []), ...(node.allOf ?? [])])
+    fieldPaths(variant, prefix, depth, out);
   if (node.items) fieldPaths(node.items, `${prefix}[]`, depth, out);
   for (const [name, property] of Object.entries(node.properties ?? {})) {
     const path = prefix ? `${prefix}.${name}` : name;
@@ -49,7 +59,15 @@ const operations = Object.fromEntries(
     const operation = spec.paths[path][method];
     const status = Object.keys(operation.responses).find((code) => code.startsWith("2"));
     const schema = deref(operation.responses[status]).content["application/json"].schema;
-    return [operation.operationId, { method: method.toUpperCase(), path, status: Number(status), fields: [...fieldPaths(schema)].sort() }];
+    return [
+      operation.operationId,
+      {
+        method: method.toUpperCase(),
+        path,
+        status: Number(status),
+        fields: [...fieldPaths(schema)].sort(),
+      },
+    ];
   }),
 );
 
@@ -69,7 +87,9 @@ const contract = {
   github: { source: OPENAPI, operations },
   access: {
     source: [`${DOCS}/application-token/`, `${DOCS}/validating-json/`],
-    applicationToken: Object.fromEntries(Object.entries(token).map(([claim, value]) => [claim, typeOf(value)])),
+    applicationToken: Object.fromEntries(
+      Object.entries(token).map(([claim, value]) => [claim, typeOf(value)]),
+    ),
     certs: {
       fields: Object.keys(certs),
       keys: certs.keys.length,
@@ -78,4 +98,7 @@ const contract = {
     },
   },
 };
-writeFileSync(new URL("../test/fixtures/fakes-contract.json", import.meta.url), `${JSON.stringify(contract, null, 2)}\n`);
+writeFileSync(
+  new URL("../test/fixtures/fakes-contract.json", import.meta.url),
+  `${JSON.stringify(contract, null, 2)}\n`,
+);

@@ -2,4 +2,7 @@
 import { defineConfig } from "oxfmt";
 import { format } from "./lint/oxfmt.mjs";
 
-export default defineConfig({ ...format, ignorePatterns: [...(format.ignorePatterns ?? []), "test/fixtures/"] });
+export default defineConfig({
+  ...format,
+  ignorePatterns: [...(format.ignorePatterns ?? []), "test/fixtures/"],
+});

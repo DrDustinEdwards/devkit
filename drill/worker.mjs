@@ -5,7 +5,10 @@ export default {
   /** @param {Request} request @param {{ DEPLOY_SHA?: string, DRILL_MODE?: string }} env */
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
-    if (pathname === "/health") return Response.json({ ok: true, sha: env.DEPLOY_SHA ?? "unknown" });
-    return env.DRILL_MODE === "good" ? new Response("good\n") : new Response("planted bad deploy\n", { status: 500 });
+    if (pathname === "/health")
+      return Response.json({ ok: true, sha: env.DEPLOY_SHA ?? "unknown" });
+    return env.DRILL_MODE === "good"
+      ? new Response("good\n")
+      : new Response("planted bad deploy\n", { status: 500 });
   },
 };

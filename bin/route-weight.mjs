@@ -33,7 +33,14 @@
 // (defaults 0.05 and 1024).
 
 import { execFileSync } from "node:child_process";
-import { appendFileSync, existsSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
+import {
+  appendFileSync,
+  existsSync,
+  readdirSync,
+  readFileSync,
+  realpathSync,
+  writeFileSync,
+} from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
@@ -52,7 +59,9 @@ const HYDRATE = /[{,]\s*hydrate\s*:\s*(?:!0|true)\s*[,}]/;
 
 /** The manifest object from the text of manifest-*.js (`window.__reactRouterManifest={...};`). */
 export function parseManifest(/** @type {string} */ text) {
-  return /** @type {Manifest} */ (JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1)));
+  return /** @type {Manifest} */ (
+    JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1))
+  );
 }
 
 /**
@@ -75,7 +84,8 @@ export function routeWeights(manifest, read, gzip, linkedCss = false, siteScript
     }
     return /** @type {{ bytes: Buffer, gzip: number }} */ (files.get(url));
   };
-  const sum = (/** @type {Set<string>} */ urls) => [...urls].reduce((n, url) => n + file(url).gzip, 0);
+  const sum = (/** @type {Set<string>} */ urls) =>
+    [...urls].reduce((n, url) => n + file(url).gzip, 0);
   const { entry, routes } = manifest;
 
   return Object.values(routes)
@@ -83,17 +93,34 @@ export function routeWeights(manifest, read, gzip, linkedCss = false, siteScript
     .map((route) => {
       /** @type {ManifestRoute[]} */
       const chain = [];
-      for (let at = /** @type {ManifestRoute | undefined} */ (route); at; at = at.parentId ? routes[at.parentId] : undefined) chain.unshift(at);
-      const hydrates = !siteScript || chain.some((step) => step.module && HYDRATE.test(file(step.module).bytes.toString("utf8")));
-      const js = new Set(hydrates ? [entry.module, ...(entry.imports ?? [])] : [/** @type {string} */ (siteScript)]);
+      for (
+        let at = /** @type {ManifestRoute | undefined} */ (route);
+        at;
+        at = at.parentId ? routes[at.parentId] : undefined
+      )
+        chain.unshift(at);
+      const hydrates =
+        !siteScript ||
+        chain.some((step) => step.module && HYDRATE.test(file(step.module).bytes.toString("utf8")));
+      const js = new Set(
+        hydrates ? [entry.module, ...(entry.imports ?? [])] : [/** @type {string} */ (siteScript)],
+      );
       const css = new Set(entry.css ?? []);
       for (const step of chain) {
         if (hydrates && step.module) js.add(step.module);
         if (hydrates) for (const url of step.imports ?? []) js.add(url);
         for (const url of step.css ?? []) css.add(url);
       }
-      if (linkedCss) for (const url of js) for (const m of file(url).bytes.toString("utf8").matchAll(/\/assets\/[\w.-]+\.css/g)) css.add(m[0]);
-      const path = `/${chain.map((step) => step.path).filter(Boolean).join("/")}`;
+      if (linkedCss)
+        for (const url of js)
+          for (const m of file(url)
+            .bytes.toString("utf8")
+            .matchAll(/\/assets\/[\w.-]+\.css/g))
+            css.add(m[0]);
+      const path = `/${chain
+        .map((step) => step.path)
+        .filter(Boolean)
+        .join("/")}`;
       const [jsBytes, cssBytes] = [sum(js), sum(css)];
       return { id: route.id, path, js: jsBytes, css: cssBytes, total: jsBytes + cssBytes };
     })
@@ -111,11 +138,15 @@ export function check(rows, config) {
   const warnings = [];
   for (const row of rows) {
     if (config.budget_bytes !== undefined && row.total > config.budget_bytes) {
-      warnings.push(`${row.id} (${row.path}) loads ${row.total} B gzip, over the budget of ${config.budget_bytes} B.`);
+      warnings.push(
+        `${row.id} (${row.path}) loads ${row.total} B gzip, over the budget of ${config.budget_bytes} B.`,
+      );
     }
     const was = base[row.id];
     if (was !== undefined && row.total - was > bytes && row.total - was > was * ratio) {
-      warnings.push(`${row.id} (${row.path}) loads ${row.total} B gzip, up ${row.total - was} B from the baseline ${was} B.`);
+      warnings.push(
+        `${row.id} (${row.path}) loads ${row.total} B gzip, up ${row.total - was} B from the baseline ${was} B.`,
+      );
     }
   }
   return { warnings, baselineOf: (/** @type {string} */ id) => (id in base ? base[id] : null) };
@@ -128,7 +159,11 @@ function fail(/** @type {string} */ message) {
 
 function shortHead(/** @type {string} */ root) {
   try {
-    return execFileSync("git", ["rev-parse", "--short", "HEAD"], { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    return execFileSync("git", ["rev-parse", "--short", "HEAD"], {
+      cwd: root,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
   } catch {
     return new Date().toISOString().slice(0, 10);
   }
@@ -136,7 +171,8 @@ function shortHead(/** @type {string} */ root) {
 
 function main() {
   const argv = process.argv.slice(2);
-  const opt = (/** @type {string} */ name, /** @type {string} */ fallback) => (argv.includes(name) && argv[argv.indexOf(name) + 1]) || fallback;
+  const opt = (/** @type {string} */ name, /** @type {string} */ fallback) =>
+    (argv.includes(name) && argv[argv.indexOf(name) + 1]) || fallback;
   const root = process.cwd();
   const client = resolve(root, opt("--client", join("build", "client")));
   const file = resolve(root, opt("--config", ".route-weight.json"));
@@ -152,7 +188,9 @@ function main() {
   }
 
   const assets = join(client, "assets");
-  const manifestFile = existsSync(assets) ? readdirSync(assets).find((name) => /^manifest-[\w-]+\.js$/.test(name)) : undefined;
+  const manifestFile = existsSync(assets)
+    ? readdirSync(assets).find((name) => /^manifest-[\w-]+\.js$/.test(name))
+    : undefined;
   if (!manifestFile) return fail(`no manifest-*.js in ${assets}. Build the app first.`);
   const read = (/** @type {string} */ url) => {
     const path = join(client, url.replace(/^\//, ""));
@@ -161,10 +199,19 @@ function main() {
   };
   const gzip = (/** @type {Buffer} */ bytes) => gzipSync(bytes, { level: 9 }).length;
   const siteScript = existsSync(join(client, "site.js")) ? "/site.js" : undefined;
-  const rows = routeWeights(parseManifest(readFileSync(join(assets, manifestFile), "utf8")), read, gzip, config.linked_css, siteScript);
+  const rows = routeWeights(
+    parseManifest(readFileSync(join(assets, manifestFile), "utf8")),
+    read,
+    gzip,
+    config.linked_css,
+    siteScript,
+  );
 
   if (argv.includes("--write-baseline")) {
-    config.baseline = { measured_at: shortHead(root), routes: Object.fromEntries(rows.map((row) => [row.id, row.total])) };
+    config.baseline = {
+      measured_at: shortHead(root),
+      routes: Object.fromEntries(rows.map((row) => [row.id, row.total])),
+    };
     writeFileSync(file, `${JSON.stringify(config, null, 2)}\n`);
     console.log(`devkit-route-weight: wrote the baseline to ${file}`);
     return;
@@ -183,20 +230,29 @@ function main() {
     "",
     "| Route | Path | JS | CSS | Total | Baseline |",
     "|---|---|--:|--:|--:|--:|",
-    ...rows.map((r) => `| ${r.id} | ${r.path} | ${r.js} | ${r.css} | ${r.total} | ${baselineOf(r.id) ?? (measuredAt ? "new" : "")} |`),
+    ...rows.map(
+      (r) =>
+        `| ${r.id} | ${r.path} | ${r.js} | ${r.css} | ${r.total} | ${baselineOf(r.id) ?? (measuredAt ? "new" : "")} |`,
+    ),
     "",
-    warnings.length ? warnings.map((w) => `- ${w}`).join("\n") : "No route is over its budget or grown past its baseline.",
+    warnings.length
+      ? warnings.map((w) => `- ${w}`).join("\n")
+      : "No route is over its budget or grown past its baseline.",
   ].join("\n");
   console.log(table);
   const level = config.enforce ? "error" : "warning";
   for (const w of warnings) console.log(`::${level} title=Route weight::${w}`);
-  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
+  if (process.env.GITHUB_STEP_SUMMARY)
+    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
   if (config.enforce && config.budget_bytes === undefined) {
-    console.log("::error title=Route weight::the config enforces the report but sets no budget_bytes, so it would pass any weight.");
+    console.log(
+      "::error title=Route weight::the config enforces the report but sets no budget_bytes, so it would pass any weight.",
+    );
     process.exit(1);
   }
   if (config.enforce && warnings.length) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
+  main();

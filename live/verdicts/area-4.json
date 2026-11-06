@@ -13,72 +13,52 @@
     },
     "dustinedwards-info": {
       "verdict": "partial",
-      "evidence": [
-        "https://dustinedwards.info/research"
-      ],
+      "evidence": ["https://dustinedwards.info/research"],
       "note": "53 pages render writing with no data-render-version wrapper, 6 images without width and height, h3 after h1 on /research/publications"
     },
     "bsw": {
       "verdict": "partial",
-      "evidence": [
-        "https://bsw.dustin-edwards.workers.dev/cookie-policy"
-      ],
+      "evidence": ["https://bsw.dustin-edwards.workers.dev/cookie-policy"],
       "note": "11 pages with h3 after h1 (heading order)"
     },
     "txasm": {
       "verdict": "partial",
-      "evidence": [
-        "https://txasm.org/award-nominations"
-      ],
+      "evidence": ["https://txasm.org/award-nominations"],
       "note": "checked on the workers.dev address: 41 pages, 0 errors; /award-nominations has no data-render-version wrapper"
     },
     "foxhound": {
       "verdict": "partial",
-      "evidence": [
-        "https://foxhoundapp.com/compare"
-      ],
+      "evidence": ["https://foxhoundapp.com/compare"],
       "note": "6 pages with h3 after h1"
     },
     "foxing": {
       "verdict": "partial",
-      "evidence": [
-        "https://foxing.app/books"
-      ],
+      "evidence": ["https://foxing.app/books"],
       "note": "/books has h3 after h1"
     },
     "capsomer": {
       "verdict": "partial",
-      "evidence": [
-        "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts"
-      ],
+      "evidence": ["https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts"],
       "note": "the live check is clean, but the showcase still renders Markdown with its own regex renderer (site/markdown.ts, used by home, views and main), so there is more than one renderer"
     },
     "enarratio": {
       "verdict": "partial",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/"
-      ],
+      "evidence": ["https://enarratio.dustinedwards.info/"],
       "note": "live check clean on 5 pages; its source was not available to this verifier, so use of Prelum and absence of a second renderer is not proven"
     },
     "carrel": {
       "verdict": "partial",
-      "evidence": [
-        "https://carrel.dustinedwards.info/"
-      ],
+      "evidence": ["https://carrel.dustinedwards.info/"],
       "note": "live check clean on 2 pages; the Carrel repository was not available to this verifier, and earlier notes say Carrel books still use a regex renderer"
     },
     "julieedwards-info": {
       "verdict": "partial",
-      "evidence": [
-        "https://julieedwards.info/"
-      ],
+      "evidence": ["https://julieedwards.info/"],
       "note": "live check clean on 1 page; the repository was not available, and earlier notes say it has its own section grammar rather than Prelum"
     },
     "prelum": {
       "verdict": "partial",
-      "evidence": [
-        "https://prelum.dustinedwards.info/"
-      ],
+      "evidence": ["https://prelum.dustinedwards.info/"],
       "note": "specimen renders writing with no data-render-version wrapper"
     }
   }

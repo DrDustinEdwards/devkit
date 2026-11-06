@@ -22,9 +22,7 @@
     },
     "germomics": {
       "verdict": "partial",
-      "evidence": [
-        "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
-      ],
+      "evidence": ["https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"],
       "note": "admin items pass; the admin 403 is not logged and nothing alerts on spikes (F2, F3)"
     },
     "txasm": {
@@ -92,9 +90,7 @@
     },
     "foxing-mcp": {
       "verdict": "partial",
-      "evidence": [
-        "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
-      ],
+      "evidence": ["https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"],
       "note": "parked: the Worker has never been deployed, so the old server fails H4 live"
     },
     "capsid-portal": {
@@ -107,9 +103,7 @@
     },
     "carrel-desk": {
       "verdict": "partial",
-      "evidence": [
-        "https://desk.dustinedwards.info/"
-      ],
+      "evidence": ["https://desk.dustinedwards.info/"],
       "note": "Signed-out redirect to Access is correct, but the Carrel repository and a signed-in session were not available to this verifier, so session lifetime, idle sign-out and revoke are unchecked"
     }
   }

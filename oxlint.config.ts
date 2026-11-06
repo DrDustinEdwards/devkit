@@ -6,5 +6,10 @@ import { base, node } from "./lint/oxlint.mjs";
 export default defineConfig({
   extends: [base],
   ignorePatterns: ["test/fixtures/oxlint/"],
-  overrides: [{ files: ["bin/**", "scripts/**", "test/**", "testing/**", "drill/**", "vite/**", "*.mjs"], ...node }],
+  overrides: [
+    {
+      files: ["bin/**", "scripts/**", "test/**", "testing/**", "drill/**", "vite/**", "*.mjs"],
+      ...node,
+    },
+  ],
 });

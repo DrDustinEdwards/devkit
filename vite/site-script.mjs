@@ -52,7 +52,11 @@ async function run(options, define) {
 async function bundle(entry, format = "iife", urls) {
   const output = await run(
     format === "iife"
-      ? { write: false, minify: true, lib: { entry, formats: ["iife"], name: "site", fileName: () => "out.js" } }
+      ? {
+          write: false,
+          minify: true,
+          lib: { entry, formats: ["iife"], name: "site", fileName: () => "out.js" },
+        }
       : {
           ...ISLAND_BUILD,
           rollupOptions: {
@@ -75,7 +79,11 @@ function bundleIslands(files) {
     rollupOptions: {
       input: Object.fromEntries(files),
       preserveEntrySignatures: "exports-only",
-      output: { format: "es", entryFileNames: "islands/[name]-[hash].js", chunkFileNames: "islands/chunks/[name]-[hash].js" },
+      output: {
+        format: "es",
+        entryFileNames: "islands/[name]-[hash].js",
+        chunkFileNames: "islands/chunks/[name]-[hash].js",
+      },
     },
   });
 }
@@ -86,7 +94,9 @@ function bundleIslands(files) {
  * @param {Output[]} output
  */
 function manifestOf(output) {
-  const chunks = new Map(output.flatMap((o) => (o.type === "chunk" ? [/** @type {const} */ ([o.fileName, o])] : [])));
+  const chunks = new Map(
+    output.flatMap((o) => (o.type === "chunk" ? [/** @type {const} */ ([o.fileName, o])] : [])),
+  );
   /** @type {Record<string, string>} */
   const urls = {};
   /** @type {Record<string, number>} */
@@ -103,7 +113,11 @@ function manifestOf(output) {
     };
     add(chunk.fileName);
     urls[chunk.name] = `/${chunk.fileName}`;
-    gzipBytes[chunk.name] = [...files].reduce((n, f) => n + gzipSync(chunks.get(f)?.code ?? "", { level: constants.Z_BEST_COMPRESSION }).length, 0);
+    gzipBytes[chunk.name] = [...files].reduce(
+      (n, f) =>
+        n + gzipSync(chunks.get(f)?.code ?? "", { level: constants.Z_BEST_COMPRESSION }).length,
+      0,
+    );
   }
   return { urls, gzipBytes };
 }
@@ -117,9 +131,14 @@ function islandFiles(dir) {
     return new Map();
   }
   const files = new Map();
-  for (const file of names.filter((f) => /\.(ts|mts|js|mjs)$/.test(f) && !/\.(test|spec|d)\./.test(f))) {
+  for (const file of names.filter(
+    (f) => /\.(ts|mts|js|mjs)$/.test(f) && !/\.(test|spec|d)\./.test(f),
+  )) {
     const name = basename(file, extname(file));
-    if (!ISLAND_NAME.test(name)) throw new Error(`site-script: island file "${file}" must be named in lower case words and hyphens`);
+    if (!ISLAND_NAME.test(name))
+      throw new Error(
+        `site-script: island file "${file}" must be named in lower case words and hyphens`,
+      );
     if (files.has(name)) throw new Error(`site-script: two island files are named "${name}"`);
     files.set(name, join(dir, file));
   }
@@ -132,7 +151,11 @@ function islandFiles(dir) {
  * @param {{ entry?: string | false, islands?: string, toolbar?: boolean }} [options]
  * @returns {import("vite").Plugin}
  */
-export function siteScript({ entry = "app/site.ts", islands = "app/islands", toolbar = true } = {}) {
+export function siteScript({
+  entry = "app/site.ts",
+  islands = "app/islands",
+  toolbar = true,
+} = {}) {
   let dev = false;
   // One islands build per build process, so the client output and the server's `virtual:islands` agree.
   /** @type {Promise<Output[]> | null} */
@@ -160,7 +183,9 @@ export function siteScript({ entry = "app/site.ts", islands = "app/islands", too
       const { urls, gzipBytes } = manifestOf(output);
       // `vite dev` serves each island whole by its plain name; the sizes are still the build's.
       if (dev) for (const name of Object.keys(urls)) urls[name] = `/islands/${name}.js`;
-      for (const out of output) if (out.type === "chunk") for (const file of out.moduleIds) if (!file.startsWith("\0")) this.addWatchFile(file);
+      for (const out of output)
+        if (out.type === "chunk")
+          for (const file of out.moduleIds) if (!file.startsWith("\0")) this.addWatchFile(file);
       return `export const ISLAND_URLS = ${JSON.stringify(urls)};\nexport const ISLAND_GZIP_BYTES = ${JSON.stringify(gzipBytes)};\n`;
     },
     configureServer(server) {
@@ -192,9 +217,18 @@ export function siteScript({ entry = "app/site.ts", islands = "app/islands", too
       if (this.environment.name !== "client") return;
       const output = islandFiles(islands).size ? await islandsBuild() : [];
       for (const out of output) {
-        this.emitFile({ type: "asset", fileName: out.fileName, source: out.type === "chunk" ? out.code : out.source });
+        this.emitFile({
+          type: "asset",
+          fileName: out.fileName,
+          source: out.type === "chunk" ? out.code : out.source,
+        });
       }
-      if (entry) this.emitFile({ type: "asset", fileName: "site.js", source: await bundle(entry, "iife", manifestOf(output).urls) });
+      if (entry)
+        this.emitFile({
+          type: "asset",
+          fileName: "site.js",
+          source: await bundle(entry, "iife", manifestOf(output).urls),
+        });
     },
   };
 }

@@ -13,7 +13,10 @@ test("the refusing fetch throws an error naming the URL and the hint, and restor
   const real = globalThis.fetch;
   const restore = refuseNetwork({ hint: "See the stubs." });
   try {
-    await assert.rejects(fetch("https://example.test/x"), /asked for https:\/\/example\.test\/x\. See the stubs\.$/);
+    await assert.rejects(
+      fetch("https://example.test/x"),
+      /asked for https:\/\/example\.test\/x\. See the stubs\.$/,
+    );
   } finally {
     restore();
   }

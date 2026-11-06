@@ -37,7 +37,16 @@
 // A tool the repository installs is run from node_modules/.bin; otherwise through npx at the spec in `tools`.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { appendFileSync, existsSync, lstatSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import {
+  appendFileSync,
+  existsSync,
+  lstatSync,
+  mkdtempSync,
+  readFileSync,
+  realpathSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, posix, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -72,7 +81,22 @@ export function knipCounts(/** @type {string} */ text) {
   return counts;
 }
 
-const KEYWORDS = new Set(["return", "typeof", "case", "do", "else", "in", "of", "new", "delete", "void", "throw", "yield", "await", "instanceof"]);
+const KEYWORDS = new Set([
+  "return",
+  "typeof",
+  "case",
+  "do",
+  "else",
+  "in",
+  "of",
+  "new",
+  "delete",
+  "void",
+  "throw",
+  "yield",
+  "await",
+  "instanceof",
+]);
 
 /**
  * Each line of a JS, TS or CSS file as "code", "comment" or "blank", and the text with comments and the insides of strings,
@@ -157,7 +181,8 @@ export function scan(/** @type {string} */ text, css = false) {
       i++;
     } else {
       if (templates.length && c === "{") templates[templates.length - 1]++;
-      if (templates.length && c === "}" && templates[templates.length - 1]-- === 0) inTemplate = true;
+      if (templates.length && c === "}" && templates[templates.length - 1]-- === 0)
+        inTemplate = true;
       put(text[i++], "code");
     }
   }
@@ -165,7 +190,21 @@ export function scan(/** @type {string} */ text, css = false) {
   return { kinds, code: out.join("") };
 }
 
-const MODIFIERS = new Set(["only", "skip", "todo", "concurrent", "sequential", "fails", "fixme", "fail", "slow", "each", "for", "skipIf", "runIf"]);
+const MODIFIERS = new Set([
+  "only",
+  "skip",
+  "todo",
+  "concurrent",
+  "sequential",
+  "fails",
+  "fixme",
+  "fail",
+  "slow",
+  "each",
+  "for",
+  "skipIf",
+  "runIf",
+]);
 const TAKES_DATA = new Set(["each", "for", "skipIf", "runIf"]);
 const AT_RUNTIME = new Set(["skip", "fixme", "fail", "slow"]);
 
@@ -173,29 +212,41 @@ const AT_RUNTIME = new Set(["skip", "fixme", "fail", "slow"]);
 export function testCases(/** @type {string} */ code) {
   let n = 0;
   for (const m of code.matchAll(/(?<![\w$.#])(?:test|it)((?:\s*\.\s*[A-Za-z]+)*)\s*\(\s*(\S)?/g)) {
-    const members = m[1].split(".").map((x) => x.trim()).filter(Boolean);
+    const members = m[1]
+      .split(".")
+      .map((x) => x.trim())
+      .filter(Boolean);
     if (!members.every((x) => MODIFIERS.has(x)) || m[2] === ")" || m[2] === undefined) continue;
     if (/\bfunction\s*\*?\s*$/.test(code.slice(Math.max(0, m.index - 16), m.index))) continue;
     // Playwright's test.skip(condition) and test.slow() inside a test change it; with a title first they declare one.
-    if (members.some((x) => AT_RUNTIME.has(x)) && !members.some((x) => TAKES_DATA.has(x)) && !"\"'`".includes(m[2])) continue;
+    if (
+      members.some((x) => AT_RUNTIME.has(x)) &&
+      !members.some((x) => TAKES_DATA.has(x)) &&
+      !"\"'`".includes(m[2])
+    )
+      continue;
     n++;
   }
   return n;
 }
 
-const matches = (/** @type {string} */ path, /** @type {string[]} */ globs) => globs.some((g) => posix.matchesGlob(path, g));
+const matches = (/** @type {string} */ path, /** @type {string[]} */ globs) =>
+  globs.some((g) => posix.matchesGlob(path, g));
 
 /** @param {Config} config */
 function globs(config) {
   const tests = config.tests || {};
   const comments = config.comments || {};
   return {
-    isTest: (/** @type {string} */ p) => matches(p, tests.files ?? TESTS) && !matches(p, tests.ignore ?? []),
-    isSource: (/** @type {string} */ p) => matches(p, comments.files ?? SOURCE) && !matches(p, comments.ignore ?? GENERATED),
+    isTest: (/** @type {string} */ p) =>
+      matches(p, tests.files ?? TESTS) && !matches(p, tests.ignore ?? []),
+    isSource: (/** @type {string} */ p) =>
+      matches(p, comments.files ?? SOURCE) && !matches(p, comments.ignore ?? GENERATED),
   };
 }
 
-const percent = (/** @type {number} */ part, /** @type {number} */ whole) => (whole ? Number(((100 * part) / whole).toFixed(2)) : 0);
+const percent = (/** @type {number} */ part, /** @type {number} */ whole) =>
+  whole ? Number(((100 * part) / whole).toFixed(2)) : 0;
 
 /**
  * The test files and cases, and the comment and code lines of the source, read from the files themselves.
@@ -227,7 +278,8 @@ export function countFiles(config, paths, read) {
   /** @type {Counts} */
   const counts = {};
   if (config.tests !== false) counts.tests = tests;
-  if (config.comments !== false) counts.comments = { lines, code, percentage: percent(lines, lines + code) };
+  if (config.comments !== false)
+    counts.comments = { lines, code, percentage: percent(lines, lines + code) };
   return counts;
 }
 
@@ -240,14 +292,21 @@ export function countFiles(config, paths, read) {
  * @param {Source} [source] the repository's files
  * @returns {{ counts: Counts, warnings: string[] }}
  */
-export function measure(config, run, jscpdConfigured = true, source = { list: () => [], read: () => "" }) {
+export function measure(
+  config,
+  run,
+  jscpdConfigured = true,
+  source = { list: () => [], read: () => "" },
+) {
   /** @type {Counts} */
   const counts = {};
   const warnings = [];
 
   for (const { label, args = [] } of config.knip ?? [{ label: "knip" }]) {
     try {
-      counts[label] = knipCounts(run("knip", [...args, "--no-exit-code", "--no-progress", "--reporter", "compact"]));
+      counts[label] = knipCounts(
+        run("knip", [...args, "--no-exit-code", "--no-progress", "--reporter", "compact"]),
+      );
     } catch (error) {
       warnings.push(`${label} could not run: ${messageOf(error)}`);
     }
@@ -260,9 +319,14 @@ export function measure(config, run, jscpdConfigured = true, source = { list: ()
     const out = mkdtempSync(join(tmpdir(), "jscpd-"));
     try {
       run("jscpd", [...own, ...paths, "--reporters", "json", "--output", out, "--silent"]);
-      const total = JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8")).statistics.total;
+      const total = JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8")).statistics
+        .total;
       if (!total.sources) throw new Error("it read no files; check its paths, format and ignore");
-      counts.jscpd = { clones: total.clones, lines: total.duplicatedLines, percentage: Number(Number(total.percentage).toFixed(2)) };
+      counts.jscpd = {
+        clones: total.clones,
+        lines: total.duplicatedLines,
+        percentage: Number(Number(total.percentage).toFixed(2)),
+      };
     } catch (error) {
       warnings.push(`jscpd could not run: ${messageOf(error)}`);
     } finally {
@@ -299,14 +363,22 @@ export function compare(baseline, counts, config = {}) {
   /** @type {string[]} */
   const lowered = [];
   const knipRuns = config.knip ?? [{ label: "knip" }];
-  const before = (/** @type {string} */ tool) => /** @type {Record<string, number> | null} */ (tool in baseline ? baseline[tool] : null);
+  const before = (/** @type {string} */ tool) =>
+    /** @type {Record<string, number> | null} */ (tool in baseline ? baseline[tool] : null);
   /** A gated count: a row, an error when it grew, a note when it went down. `zero` counts a key the baseline lacks from 0. */
-  const gate = (/** @type {string} */ tool, /** @type {string} */ key, /** @type {string} */ name, /** @type {string} */ hint, zero = false) => {
+  const gate = (
+    /** @type {string} */ tool,
+    /** @type {string} */ key,
+    /** @type {string} */ name,
+    /** @type {string} */ hint,
+    zero = false,
+  ) => {
     const old = before(tool);
     const was = old ? (old[key] ?? (zero ? 0 : null)) : null;
     const now = counts[tool][key] ?? 0;
     rows.push([tool, name, was, now]);
-    if (was !== null && now > was) errors.push(`${tool}: ${name} went from ${was} to ${now}. ${hint}`);
+    if (was !== null && now > was)
+      errors.push(`${tool}: ${name} went from ${was} to ${now}. ${hint}`);
     if (was !== null && now < was) lowered.push(`${tool}: ${name} ${was} to ${now}`);
   };
 
@@ -317,13 +389,25 @@ export function compare(baseline, counts, config = {}) {
     // A clean run is a row too, so the table shows the tool ran.
     if (keys.length === 0) rows.push([tool, "findings", was ? 0 : null, 0]);
     const args = knipRuns.find((r) => r.label === tool)?.args ?? [];
-    for (const key of keys) gate(tool, key, key, `Run \`npx knip${args.length ? ` ${args.join(" ")}` : ""}\` to see which.`, true);
+    for (const key of keys)
+      gate(
+        tool,
+        key,
+        key,
+        `Run \`npx knip${args.length ? ` ${args.join(" ")}` : ""}\` to see which.`,
+        true,
+      );
   }
 
   if (counts.jscpd) {
     gate("jscpd", "clones", "clones", "Run `npx jscpd` to see them.");
     gate("jscpd", "lines", "duplicated lines", "Run `npx jscpd` to see them.");
-    rows.push(["jscpd", "duplicated lines % (not gated)", before("jscpd")?.percentage ?? null, counts.jscpd.percentage]);
+    rows.push([
+      "jscpd",
+      "duplicated lines % (not gated)",
+      before("jscpd")?.percentage ?? null,
+      counts.jscpd.percentage,
+    ]);
   }
 
   if (counts.tests) {
@@ -336,20 +420,30 @@ export function compare(baseline, counts, config = {}) {
     const now = counts.comments;
     const tolerance = (config.comments || {}).tolerance ?? 1;
     rows.push(["comments", "comment lines", was?.lines ?? null, now.lines]);
-    rows.push(["comments", `share of lines % (tolerance ${tolerance})`, was?.percentage ?? null, now.percentage]);
+    rows.push([
+      "comments",
+      `share of lines % (tolerance ${tolerance})`,
+      was?.percentage ?? null,
+      now.percentage,
+    ]);
     const rise = was ? Math.round((now.percentage - was.percentage) * 100) : 0;
     if (was && rise > tolerance * 100 && now.lines > was.lines) {
       const finding = `comments: the share of source lines that are comments went from ${was.percentage}% to ${now.percentage}% (tolerance ${tolerance} points), comment lines from ${was.lines} to ${now.lines}. Remove comments that restate the code, or raise the baseline in a reviewed change.`;
       ((config.comments || {}).fail ? errors : warnings).push(finding);
     }
-    if (was && -rise >= tolerance * 100) lowered.push(`comments: share ${was.percentage}% to ${now.percentage}%`);
+    if (was && -rise >= tolerance * 100)
+      lowered.push(`comments: share ${was.percentage}% to ${now.percentage}%`);
   }
 
   const measured = new Set(["measured_at", ...knipRuns.map((r) => r.label)]);
-  for (const tool of ["jscpd", "tests", "comments"]) if (config[/** @type {"jscpd"} */ (tool)] !== false) measured.add(tool);
+  for (const tool of ["jscpd", "tests", "comments"])
+    if (config[/** @type {"jscpd"} */ (tool)] !== false) measured.add(tool);
   const stale = Object.keys(baseline)
     .filter((key) => !measured.has(key))
-    .map((key) => `the baseline has "${key}", which no run in the config measures. Restore the run, or drop the entry with \`npx devkit-no-bloat --write-baseline\` in a reviewed change.`);
+    .map(
+      (key) =>
+        `the baseline has "${key}", which no run in the config measures. Restore the run, or drop the entry with \`npx devkit-no-bloat --write-baseline\` in a reviewed change.`,
+    );
   return { rows, errors, warnings, lowered, stale };
 }
 
@@ -367,7 +461,10 @@ export function render(rows, problems, measuredAt, warnOnly = false) {
     "",
     "| Tool | Finding | Baseline | Now |",
     "|---|---|---|---|",
-    ...rows.map(([tool, key, a, b]) => `| ${tool} | ${key} | ${show(a)} | ${b}${a !== null && b > a ? " (up)" : ""} |`),
+    ...rows.map(
+      ([tool, key, a, b]) =>
+        `| ${tool} | ${key} | ${show(a)} | ${b}${a !== null && b > a ? " (up)" : ""} |`,
+    ),
     "",
     problems.length ? problems.map((w) => `- ${w}`).join("\n") : "Nothing grew past the baseline.",
   ].join("\n");
@@ -422,9 +519,22 @@ export function lineChanges(config, diff, kindsAt) {
       const added = line[0] === "+";
       const n = added ? newLine++ : oldLine++;
       const kinds = added ? file.new : file.old;
-      const kind = file.source ? (kinds?.[n - 1] ?? (line.slice(1).trim() ? "code" : "blank")) : line.slice(1).trim() ? "text" : "blank";
+      const kind = file.source
+        ? (kinds?.[n - 1] ?? (line.slice(1).trim() ? "code" : "blank"))
+        : line.slice(1).trim()
+          ? "text"
+          : "blank";
       if (kind === "blank") continue;
-      const into = kind === "comment" ? "comments" : file.source ? (file.test ? "tests" : "code") : file.docs ? "docs" : "other";
+      const into =
+        kind === "comment"
+          ? "comments"
+          : file.source
+            ? file.test
+              ? "tests"
+              : "code"
+            : file.docs
+              ? "docs"
+              : "other";
       totals[into][added ? "added" : "removed"]++;
     }
   }
@@ -432,14 +542,20 @@ export function lineChanges(config, diff, kindsAt) {
 }
 
 /** The lines summary for a pull request. */
-export function renderLines(/** @type {ReturnType<typeof lineChanges>} */ totals, /** @type {string} */ base) {
+export function renderLines(
+  /** @type {ReturnType<typeof lineChanges>} */ totals,
+  /** @type {string} */ base,
+) {
   const signed = (/** @type {number} */ n) => (n > 0 ? `+${n}` : String(n));
   return [
     `### Lines added and removed (against ${base.slice(0, 7)}, blank lines not counted)`,
     "",
     "| Lines | Added | Removed | Net |",
     "|---|---|---|---|",
-    ...Object.entries(totals).map(([kind, { added, removed }]) => `| ${kind} | ${added} | ${removed} | ${signed(added - removed)} |`),
+    ...Object.entries(totals).map(
+      ([kind, { added, removed }]) =>
+        `| ${kind} | ${added} | ${removed} | ${signed(added - removed)} |`,
+    ),
   ].join("\n");
 }
 
@@ -447,21 +563,48 @@ export function renderLines(/** @type {ReturnType<typeof lineChanges>} */ totals
 function gitSource(/** @type {string} */ root) {
   return {
     list: () =>
-      [...new Set(execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: root, encoding: "utf8", maxBuffer: BUFFER }).split("\0"))].filter(
-        (p) => p && existsSync(join(root, p)) && lstatSync(join(root, p)).isFile(),
-      ),
+      [
+        ...new Set(
+          execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], {
+            cwd: root,
+            encoding: "utf8",
+            maxBuffer: BUFFER,
+          }).split("\0"),
+        ),
+      ].filter((p) => p && existsSync(join(root, p)) && lstatSync(join(root, p)).isFile()),
     read: (/** @type {string} */ p) => readFileSync(join(root, p), "utf8"),
   };
 }
 
 /** Lines added and removed between the merge base of `from` and HEAD. */
-function gitLines(/** @type {string} */ root, /** @type {Config} */ config, /** @type {string} */ from) {
-  const git = (/** @type {string[]} */ args) => execFileSync("git", args, { cwd: root, encoding: "utf8", maxBuffer: BUFFER, stdio: ["ignore", "pipe", "pipe"] });
+function gitLines(
+  /** @type {string} */ root,
+  /** @type {Config} */ config,
+  /** @type {string} */ from,
+) {
+  const git = (/** @type {string[]} */ args) =>
+    execFileSync("git", args, {
+      cwd: root,
+      encoding: "utf8",
+      maxBuffer: BUFFER,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
   const base = git(["merge-base", from, "HEAD"]).trim();
-  const diff = git(["-c", "core.quotePath=false", "diff", "-U0", "--no-color", "--no-ext-diff", "-M", base, "HEAD"]);
+  const diff = git([
+    "-c",
+    "core.quotePath=false",
+    "diff",
+    "-U0",
+    "--no-color",
+    "--no-ext-diff",
+    "-M",
+    base,
+    "HEAD",
+  ]);
   const totals = lineChanges(config, diff, (side, path) => {
     try {
-      return scan(git(["show", `${side === "old" ? base : "HEAD"}:${path}`]), path.endsWith(".css")).kinds;
+      return scan(git(["show", `${side === "old" ? base : "HEAD"}:${path}`]), path.endsWith(".css"))
+        .kinds;
     } catch {
       return null;
     }
@@ -474,21 +617,37 @@ function gitLines(/** @type {string} */ root, /** @type {Config} */ config, /** 
  * under `npx --package <devkit>`, this bin inherits npm_config_package, and a bare `npx knip@6` would then look for a
  * command called "knip@6" in devkit.
  */
-export function npxArgs(/** @type {string} */ name, /** @type {string} */ spec, /** @type {string[]} */ args) {
+export function npxArgs(
+  /** @type {string} */ name,
+  /** @type {string} */ spec,
+  /** @type {string[]} */ args,
+) {
   return ["--yes", "--package", spec, "--", name, ...args];
 }
 
 /** Runs a tool from the repository's node_modules/.bin when it is installed there, through npx at `spec` otherwise. */
-export function runnerIn(/** @type {string} */ root, /** @type {{ knip: string, jscpd: string }} */ tools) {
+export function runnerIn(
+  /** @type {string} */ root,
+  /** @type {{ knip: string, jscpd: string }} */ tools,
+) {
   /** @type {Runner} */
   return (name, args) => {
-    const local = join(root, "node_modules", ".bin", process.platform === "win32" ? `${name}.cmd` : name);
-    const [file, argv] = existsSync(local) ? [local, args] : ["npx", npxArgs(name, tools[name], args)];
+    const local = join(
+      root,
+      "node_modules",
+      ".bin",
+      process.platform === "win32" ? `${name}.cmd` : name,
+    );
+    const [file, argv] = existsSync(local)
+      ? [local, args]
+      : ["npx", npxArgs(name, tools[name], args)];
     // A .cmd shim (and npx itself) on Windows needs cmd.exe; elsewhere the bin runs directly.
-    const [cmd, all] = process.platform === "win32" ? ["cmd.exe", ["/c", file, ...argv]] : [file, argv];
+    const [cmd, all] =
+      process.platform === "win32" ? ["cmd.exe", ["/c", file, ...argv]] : [file, argv];
     const r = spawnSync(cmd, all, { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
     if (r.error) throw r.error;
-    if (r.status !== 0) throw new Error(`${name} exited ${r.status}: ${(r.stderr || r.stdout).trim().slice(0, 400)}`);
+    if (r.status !== 0)
+      throw new Error(`${name} exited ${r.status}: ${(r.stderr || r.stdout).trim().slice(0, 400)}`);
     return r.stdout;
   };
 }
@@ -499,7 +658,10 @@ function messageOf(/** @type {unknown} */ error) {
 
 function shortHead(/** @type {string} */ root) {
   try {
-    return execFileSync("git", ["rev-parse", "--short", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
+    return execFileSync("git", ["rev-parse", "--short", "HEAD"], {
+      cwd: root,
+      encoding: "utf8",
+    }).trim();
   } catch {
     return new Date().toISOString().slice(0, 10);
   }
@@ -526,7 +688,12 @@ function main() {
     }
   }
 
-  const measured = measure(config, runnerIn(root, { ...DEFAULT_TOOLS, ...config.tools }), existsSync(join(root, ".jscpd.json")), gitSource(root));
+  const measured = measure(
+    config,
+    runnerIn(root, { ...DEFAULT_TOOLS, ...config.tools }),
+    existsSync(join(root, ".jscpd.json")),
+    gitSource(root),
+  );
 
   if (write) {
     if (measured.warnings.length) {
@@ -540,28 +707,40 @@ function main() {
     return;
   }
 
-  const { rows, errors, warnings, lowered, stale } = compare(config.baseline ?? {}, measured.counts, config);
+  const { rows, errors, warnings, lowered, stale } = compare(
+    config.baseline ?? {},
+    measured.counts,
+    config,
+  );
   if (errors.length) {
-    errors.push("Remove what was added. If it is deliberate, run `npx devkit-no-bloat --write-baseline` and commit the config, so the raise is reviewed.");
+    errors.push(
+      "Remove what was added. If it is deliberate, run `npx devkit-no-bloat --write-baseline` and commit the config, so the raise is reviewed.",
+    );
   }
   errors.unshift(...measured.warnings, ...stale);
   if (lowered.length) {
-    warnings.push(`Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`);
+    warnings.push(
+      `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
+    );
   }
   let table = render(rows, [...errors, ...warnings], config.baseline?.measured_at, warnOnly);
   if (from) {
     try {
       table += `\n\n${gitLines(root, config, from)}`;
     } catch (error) {
-      warnings.push(`The lines added and removed since ${from} could not be read: ${messageOf(error)}`);
+      warnings.push(
+        `The lines added and removed since ${from} could not be read: ${messageOf(error)}`,
+      );
     }
   }
   console.log(table);
   for (const e of errors) console.log(`::${warnOnly ? "warning" : "error"}::${e}`);
   for (const w of warnings) console.log(`::warning::${w}`);
-  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
+  if (process.env.GITHUB_STEP_SUMMARY)
+    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
   if (errors.length && !warnOnly) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
+  main();

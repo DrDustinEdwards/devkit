@@ -18,5 +18,13 @@
  * @type {import("oxfmt").OxfmtConfig}
  */
 export const format = {
-  ignorePatterns: ["build/", "dist/", ".react-router/", ".wrangler/", "worker-configuration.d.ts", "**/*.gen.ts", "package-lock.json"],
+  ignorePatterns: [
+    "build/",
+    "dist/",
+    ".react-router/",
+    ".wrangler/",
+    "worker-configuration.d.ts",
+    "**/*.gen.ts",
+    "package-lock.json",
+  ],
 };

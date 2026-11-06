@@ -41,7 +41,11 @@ export const base = {
     // top-level calls are not dropped promises (`allowForKnownSafeCalls`, the rule's option for such calls).
     "typescript/no-floating-promises": [
       "error",
-      { allowForKnownSafeCalls: [{ from: "package", package: "node:test", name: ["test", "describe", "it", "suite"] }] },
+      {
+        allowForKnownSafeCalls: [
+          { from: "package", package: "node:test", name: ["test", "describe", "it", "suite"] },
+        ],
+      },
     ],
     "typescript/no-misused-promises": "error",
     "typescript/no-explicit-any": "error",
@@ -52,7 +56,14 @@ export const base = {
     "typescript/unbound-method": "off",
     "typescript/require-array-sort-compare": "off",
   },
-  ignorePatterns: ["build/", "dist/", ".react-router/", ".wrangler/", "worker-configuration.d.ts", "**/*.gen.ts"],
+  ignorePatterns: [
+    "build/",
+    "dist/",
+    ".react-router/",
+    ".wrangler/",
+    "worker-configuration.d.ts",
+    "**/*.gen.ts",
+  ],
 };
 
 /**

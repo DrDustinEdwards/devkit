@@ -8,7 +8,11 @@ import test from "node:test";
 
 const FILE = new URL("../.github/workflows/bump-consumers.yml", import.meta.url);
 const text = readFileSync(FILE, "utf8").replace(/\r\n/g, "\n");
-const code = (/** @type {string} */ s) => s.split("\n").filter((line) => !/^\s*#/.test(line)).join("\n");
+const code = (/** @type {string} */ s) =>
+  s
+    .split("\n")
+    .filter((line) => !/^\s*#/.test(line))
+    .join("\n");
 
 /** The `script: |` block, dedented, as github-script receives it. */
 const script = (() => {
@@ -23,11 +27,16 @@ const script = (() => {
   return body.join("\n");
 })();
 
-const b64 = (/** @type {unknown} */ value) => ({ content: Buffer.from(JSON.stringify(value)).toString("base64") });
-const UNTICKED = "intro\n\n- [ ] <!-- manual job -->Check this box to trigger a request for Renovate to run again on this repository\n";
+const b64 = (/** @type {unknown} */ value) => ({
+  content: Buffer.from(JSON.stringify(value)).toString("base64"),
+});
+const UNTICKED =
+  "intro\n\n- [ ] <!-- manual job -->Check this box to trigger a request for Renovate to run again on this repository\n";
 
 /** A stub account: repos by name, each with files and issues. */
-function stub(/** @type {Record<string, { files?: Record<string, unknown>, issues?: any[], archived?: boolean, unreadable?: boolean }>} */ repos) {
+function stub(
+  /** @type {Record<string, { files?: Record<string, unknown>, issues?: any[], archived?: boolean, unreadable?: boolean }>} */ repos,
+) {
   const updates = [];
   const api = {
     rest: {
@@ -42,7 +51,11 @@ function stub(/** @type {Record<string, { files?: Record<string, unknown>, issue
       git: {
         getTree: async ({ repo }) => {
           if (repos[repo].unreadable) throw new Error("Bad credentials");
-          return { data: { tree: Object.keys(repos[repo].files ?? {}).map((path) => ({ path, type: "blob" })) } };
+          return {
+            data: {
+              tree: Object.keys(repos[repo].files ?? {}).map((path) => ({ path, type: "blob" })),
+            },
+          };
         },
       },
       issues: {
@@ -52,7 +65,12 @@ function stub(/** @type {Record<string, { files?: Record<string, unknown>, issue
     },
     paginate: async (method, args) => {
       if (method === api.rest.repos.listForAuthenticatedUser) {
-        return Object.entries(repos).map(([name, r]) => ({ name, archived: Boolean(r.archived), default_branch: "main", owner: { login: "DrDustinEdwards" } }));
+        return Object.entries(repos).map(([name, r]) => ({
+          name,
+          archived: Boolean(r.archived),
+          default_branch: "main",
+          owner: { login: "DrDustinEdwards" },
+        }));
       }
       return (repos[args.repo].issues ?? []).filter((issue) => issue.user === args.creator);
     },
@@ -63,7 +81,11 @@ function stub(/** @type {Record<string, { files?: Record<string, unknown>, issue
 async function run(repos, { self = "capsomer", dryRun = false } = {}) {
   const { api, updates } = stub(repos);
   const log = { warnings: [], errors: [], failed: null, info: [] };
-  const summary = { addHeading: () => summary, addTable: () => summary, write: async () => summary };
+  const summary = {
+    addHeading: () => summary,
+    addTable: () => summary,
+    write: async () => summary,
+  };
   const core = {
     warning: (m) => log.warnings.push(m),
     error: (m) => log.errors.push(m),
@@ -78,18 +100,37 @@ async function run(repos, { self = "capsomer", dryRun = false } = {}) {
   return { updates, log };
 }
 
-const dashboard = (number = 7) => ({ number, title: "Dependency Dashboard", user: "renovate[bot]", body: UNTICKED });
+const dashboard = (number = 7) => ({
+  number,
+  title: "Dependency Dashboard",
+  user: "renovate[bot]",
+  body: UNTICKED,
+});
 
 test("a consumer by github: reference, at any depth, gets its manual-run box ticked and nothing else changes", async () => {
   const { updates, log } = await run({
     capsomer: { files: { "package.json": { name: "capsomer" } } },
-    capsid: { files: { "package.json": {}, "dashboard/package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" } } }, issues: [dashboard(4)] },
-    bystander: { files: { "package.json": { dependencies: { zod: "4.0.0" } } }, issues: [dashboard(1)] },
+    capsid: {
+      files: {
+        "package.json": {},
+        "dashboard/package.json": {
+          dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" },
+        },
+      },
+      issues: [dashboard(4)],
+    },
+    bystander: {
+      files: { "package.json": { dependencies: { zod: "4.0.0" } } },
+      issues: [dashboard(1)],
+    },
   });
   assert.equal(updates.length, 1);
   assert.equal(updates[0].repo, "capsid");
   assert.equal(updates[0].issue_number, 4);
-  assert.equal(updates[0].body, UNTICKED.replace("- [ ] <!-- manual job -->", "- [x] <!-- manual job -->"));
+  assert.equal(
+    updates[0].body,
+    UNTICKED.replace("- [ ] <!-- manual job -->", "- [x] <!-- manual job -->"),
+  );
   assert.equal(log.failed, null);
 });
 
@@ -97,9 +138,32 @@ test("git+https and sha pins count, and so does the npm name for a package that 
   const { updates } = await run(
     {
       enarratio: { files: { "package.json": { name: "enarratio" } } },
-      capsomer: { files: { "package.json": { devDependencies: { enarratio: "git+https://github.com/DrDustinEdwards/enarratio.git#f419f16526ea1a0a51d1f7364262e50b1a57baf9" } } }, issues: [dashboard(2)] },
-      site: { files: { "package.json": { dependencies: { enarratio: "0.1.0-alpha.8" } } }, issues: [dashboard(18)] },
-      lookalike: { files: { "package.json": { dependencies: { enarratio: "github:someoneelse/enarratio#v1.0.0", x: "github:DrDustinEdwards/enarratio-extra#v1" } } }, issues: [dashboard(3)] },
+      capsomer: {
+        files: {
+          "package.json": {
+            devDependencies: {
+              enarratio:
+                "git+https://github.com/DrDustinEdwards/enarratio.git#f419f16526ea1a0a51d1f7364262e50b1a57baf9",
+            },
+          },
+        },
+        issues: [dashboard(2)],
+      },
+      site: {
+        files: { "package.json": { dependencies: { enarratio: "0.1.0-alpha.8" } } },
+        issues: [dashboard(18)],
+      },
+      lookalike: {
+        files: {
+          "package.json": {
+            dependencies: {
+              enarratio: "github:someoneelse/enarratio#v1.0.0",
+              x: "github:DrDustinEdwards/enarratio-extra#v1",
+            },
+          },
+        },
+        issues: [dashboard(3)],
+      },
     },
     { self: "enarratio" },
   );
@@ -110,16 +174,36 @@ test("an aliased dependency is found by its reference, not its name", async () =
   const { updates } = await run(
     {
       "site-runtime": { files: { "package.json": { name: "@dustinedwards/site-runtime" } } },
-      site: { files: { "package.json": { dependencies: { "@dustinedwards/security-headers": "github:DrDustinEdwards/site-runtime#v0.1.1" } } }, issues: [dashboard()] },
+      site: {
+        files: {
+          "package.json": {
+            dependencies: {
+              "@dustinedwards/security-headers": "github:DrDustinEdwards/site-runtime#v0.1.1",
+            },
+          },
+        },
+        issues: [dashboard()],
+      },
     },
     { self: "site-runtime" },
   );
-  assert.deepEqual(updates.map((u) => u.repo), ["site"]);
+  assert.deepEqual(
+    updates.map((u) => u.repo),
+    ["site"],
+  );
 });
 
 test("a dry run ticks nothing", async () => {
   const { updates, log } = await run(
-    { capsomer: { files: { "package.json": { name: "capsomer" } } }, site: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } } }, issues: [dashboard()] } },
+    {
+      capsomer: { files: { "package.json": { name: "capsomer" } } },
+      site: {
+        files: {
+          "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } },
+        },
+        issues: [dashboard()],
+      },
+    },
     { dryRun: true },
   );
   assert.equal(updates.length, 0);
@@ -129,16 +213,48 @@ test("a dry run ticks nothing", async () => {
 test("a consumer without Renovate is a warning naming it, and archived repositories and node_modules are skipped", async () => {
   const { updates, log } = await run({
     capsomer: { files: { "package.json": { name: "capsomer" } } },
-    blog: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } } } },
-    old: { archived: true, files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.1.0" } } }, issues: [dashboard()] },
-    vendored: { files: { "node_modules/x/package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.1.0" } } }, issues: [dashboard()] },
-    ticked: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" } } }, issues: [{ ...dashboard(), body: "- [x] <!-- manual job -->x" }] },
-    impostor: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" } } }, issues: [{ ...dashboard(), user: "someone" }] },
+    blog: {
+      files: {
+        "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } },
+      },
+    },
+    old: {
+      archived: true,
+      files: {
+        "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.1.0" } },
+      },
+      issues: [dashboard()],
+    },
+    vendored: {
+      files: {
+        "node_modules/x/package.json": {
+          dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.1.0" },
+        },
+      },
+      issues: [dashboard()],
+    },
+    ticked: {
+      files: {
+        "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" } },
+      },
+      issues: [{ ...dashboard(), body: "- [x] <!-- manual job -->x" }],
+    },
+    impostor: {
+      files: {
+        "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" } },
+      },
+      issues: [{ ...dashboard(), user: "someone" }],
+    },
   });
   assert.equal(updates.length, 0);
   assert.ok(log.warnings.some((w) => w.startsWith("blog:")));
-  assert.ok(log.warnings.some((w) => w.startsWith("impostor:")), "only an issue opened by renovate[bot] is the dashboard");
-  assert.ok(log.info.some((line) => line.startsWith("ticked") && line.includes("already requested")));
+  assert.ok(
+    log.warnings.some((w) => w.startsWith("impostor:")),
+    "only an issue opened by renovate[bot] is the dashboard",
+  );
+  assert.ok(
+    log.info.some((line) => line.startsWith("ticked") && line.includes("already requested")),
+  );
   assert.equal(log.failed, null);
 });
 
@@ -146,9 +262,18 @@ test("a repository that cannot be read fails the run instead of passing silently
   const { updates, log } = await run({
     capsomer: { files: { "package.json": { name: "capsomer" } } },
     broken: { unreadable: true },
-    site: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } } }, issues: [dashboard()] },
+    site: {
+      files: {
+        "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } },
+      },
+      issues: [dashboard()],
+    },
   });
-  assert.deepEqual(updates.map((u) => u.repo), ["site"], "the other consumers are still triggered");
+  assert.deepEqual(
+    updates.map((u) => u.repo),
+    ["site"],
+    "the other consumers are still triggered",
+  );
   assert.ok(log.errors.some((e) => e.startsWith("broken:")));
   assert.match(log.failed ?? "", /1 consumer/);
 });

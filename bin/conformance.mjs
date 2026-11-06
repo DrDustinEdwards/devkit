@@ -66,22 +66,42 @@ export function summarize(/** @type {string} */ out) {
  */
 export function judge(want, got) {
   const label = `${want.spec}  ${want.scenario}`;
-  if (!got) return { failed: true, line: `  NO RESULT  ${label}  (could not parse a count from the suite output)` };
+  if (!got)
+    return {
+      failed: true,
+      line: `  NO RESULT  ${label}  (could not parse a count from the suite output)`,
+    };
   const n = `${got.passed}/${got.total}`;
   if (want.passed == null) {
-    return got.passed === got.total ? { failed: false, line: `  PASS       ${label}  (${n})` } : { failed: true, line: `  FAIL       ${label}  (${n})` };
+    return got.passed === got.total
+      ? { failed: false, line: `  PASS       ${label}  (${n})` }
+      : { failed: true, line: `  FAIL       ${label}  (${n})` };
   }
-  if (got.total !== want.total) return { failed: true, line: `  RECOUNT    ${label}  total moved ${want.total} -> ${got.total}; the suite changed, re-baseline` };
-  if (got.passed < want.passed) return { failed: true, line: `  REGRESSED  ${label}  ${n}, baseline ${want.passed}` };
-  if (got.passed > want.passed) return { failed: true, line: `  IMPROVED   ${label}  ${n} beats baseline ${want.passed}; tighten it` };
-  return { failed: false, line: `  BASELINE   ${label}  ${n}${want.note ? `  (${want.note})` : ""}` };
+  if (got.total !== want.total)
+    return {
+      failed: true,
+      line: `  RECOUNT    ${label}  total moved ${want.total} -> ${got.total}; the suite changed, re-baseline`,
+    };
+  if (got.passed < want.passed)
+    return { failed: true, line: `  REGRESSED  ${label}  ${n}, baseline ${want.passed}` };
+  if (got.passed > want.passed)
+    return {
+      failed: true,
+      line: `  IMPROVED   ${label}  ${n} beats baseline ${want.passed}; tighten it`,
+    };
+  return {
+    failed: false,
+    line: `  BASELINE   ${label}  ${n}${want.note ? `  (${want.note})` : ""}`,
+  };
 }
 
 async function main() {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--config");
   const root = process.cwd();
-  const config = JSON.parse(readFileSync(resolve(root, at >= 0 ? argv[at + 1] : ".conformance.json"), "utf8"));
+  const config = JSON.parse(
+    readFileSync(resolve(root, at >= 0 ? argv[at + 1] : ".conformance.json"), "utf8"),
+  );
   const wranglerJs = resolve(root, "node_modules/wrangler/bin/wrangler.js");
   const suiteJs = resolve(root, "node_modules/@modelcontextprotocol/conformance/dist/index.js");
   /** @type {Server} */
@@ -92,11 +112,24 @@ async function main() {
   let failures = 0;
   const log = (/** @type {string} */ s) => process.stdout.write(`${s}\n`);
   const pass = (/** @type {string} */ what) => log(`  PASS       ${what}`);
-  const fail = (/** @type {string} */ what) => (failures++, log(`  FAIL       ${what}`));
+  const fail = (/** @type {string} */ what) =>
+    (failures++, log(`  FAIL       ${what}`));
 
-  const wrangler = (/** @type {string[]} */ args) => execFileSync(process.execPath, [wranglerJs, ...args], { cwd: root, stdio: ["ignore", "pipe", "pipe"] });
+  const wrangler = (/** @type {string[]} */ args) =>
+    execFileSync(process.execPath, [wranglerJs, ...args], {
+      cwd: root,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
   const dev = (/** @type {Server} */ s) => {
-    const args = [wranglerJs, "dev", ...(s.entry ? [s.entry] : []), "-c", String(s.config), "--port", String(s.port)];
+    const args = [
+      wranglerJs,
+      "dev",
+      ...(s.entry ? [s.entry] : []),
+      "-c",
+      String(s.config),
+      "--port",
+      String(s.port),
+    ];
     // Each process needs its own inspector port (both default to 9229) and, for a Durable Object, its own state
     // directory: two processes on one die at SQLITE_BUSY.
     args.push("--inspector-port", String(Number(s.port) + 1000));
@@ -114,24 +147,51 @@ async function main() {
   const suite = (/** @type {string[]} */ args) => {
     try {
       // Per-scenario timeout: one hanging scenario must not hang the gate.
-      return { ok: true, out: execFileSync(process.execPath, [suiteJs, ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], timeout: 120_000 }) };
+      return {
+        ok: true,
+        out: execFileSync(process.execPath, [suiteJs, ...args], {
+          encoding: "utf8",
+          stdio: ["ignore", "pipe", "pipe"],
+          timeout: 120_000,
+        }),
+      };
     } catch (error) {
       const e = /** @type {{ stdout?: string, stderr?: string }} */ (error);
       return { ok: false, out: `${e.stdout ?? ""}${e.stderr ?? ""}` };
     }
   };
-  const runAll = (/** @type {"server" | "authorization"} */ kind, /** @type {string} */ url, /** @type {Scenario[]} */ scenarios) => {
+  const runAll = (
+    /** @type {"server" | "authorization"} */ kind,
+    /** @type {string} */ url,
+    /** @type {Scenario[]} */ scenarios,
+  ) => {
     for (const want of scenarios) {
-      const { ok, out } = suite([kind, "--url", url, "--scenario", want.scenario, "--spec-version", want.spec]);
+      const { ok, out } = suite([
+        kind,
+        "--url",
+        url,
+        "--scenario",
+        want.scenario,
+        "--spec-version",
+        want.spec,
+      ]);
       const verdict = judge(want, summarize(out));
       if (verdict.failed) failures++;
       log(`${verdict.line}${ok ? "" : "  [suite exited non-zero]"}`);
       // The failing checks, printed so a baseline's note stays a measurement rather than a memory.
-      for (const l of out.split("\n").filter((x) => /FAIL/.test(x)).slice(0, 8)) log(`               ${l.trim().slice(0, 170)}`);
+      for (const l of out
+        .split("\n")
+        .filter((x) => /FAIL/.test(x))
+        .slice(0, 8))
+        log(`               ${l.trim().slice(0, 170)}`);
       if (!summarize(out)) log(out.slice(-1500));
     }
   };
-  const waitFor = async (/** @type {string} */ url, /** @type {RequestInit} */ init, ready = (/** @type {Response} */ r) => r.status > 0) => {
+  const waitFor = async (
+    /** @type {string} */ url,
+    /** @type {RequestInit} */ init,
+    ready = (/** @type {Response} */ r) => r.status > 0,
+  ) => {
     for (const deadline = Date.now() + 120_000; Date.now() < deadline; await sleep(1000)) {
       try {
         if (ready(await fetch(url, init))) return true;
@@ -146,12 +206,26 @@ async function main() {
     ? await new Promise((done) => {
         const server = createServer((req, res) => {
           req.resume();
-          req.on("end", () => res.writeHead(200, { "content-type": "application/json" }).end(JSON.stringify({ ok: true, data: { stub: true } })));
+          req.on("end", () =>
+            res
+              .writeHead(200, { "content-type": "application/json" })
+              .end(JSON.stringify({ ok: true, data: { stub: true } })),
+          );
         });
         server.listen(config.stub, () => done(server));
       })
     : null;
-  if (mcp.migrate) wrangler(["d1", "migrations", "apply", mcp.migrate, "--local", "-c", String(mcp.config), ...(mcp.persist ? ["--persist-to", mcp.persist] : [])]);
+  if (mcp.migrate)
+    wrangler([
+      "d1",
+      "migrations",
+      "apply",
+      mcp.migrate,
+      "--local",
+      "-c",
+      String(mcp.config),
+      ...(mcp.persist ? ["--persist-to", mcp.persist] : []),
+    ]);
   const servers = [dev(mcp), dev(auth)];
   const shutdown = () => {
     for (const { child } of servers) child.kill();
@@ -160,7 +234,13 @@ async function main() {
   process.on("exit", shutdown);
 
   const initialize = JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: {} });
-  if (!(await waitFor(`http://localhost:${mcp.port}/mcp`, { method: "POST", headers: { "content-type": "application/json" }, body: initialize }))) {
+  if (
+    !(await waitFor(`http://localhost:${mcp.port}/mcp`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: initialize,
+    }))
+  ) {
     log(`wrangler dev (protocol) did not come up. Output follows:\n${servers[0].output()}`);
     process.exit(2);
   }
@@ -168,40 +248,76 @@ async function main() {
   runAll("server", `http://localhost:${mcp.port}/mcp`, config.scenarios ?? []);
 
   if (!(await waitFor(`${origin}/.well-known/oauth-authorization-server`, {}, (r) => r.ok))) {
-    fail(`authorization: wrangler dev on the auth entry did not come up. Output follows:\n${servers[1].output()}`);
+    fail(
+      `authorization: wrangler dev on the auth entry did not come up. Output follows:\n${servers[1].output()}`,
+    );
   } else {
     runAll("authorization", origin, auth.scenarios ?? AUTH_SCENARIOS);
     const meta = await (await fetch(`${origin}/.well-known/oauth-authorization-server`)).json();
-    if (meta.client_id_metadata_document_supported === true) pass("metadata advertises CIMD (the path claude.ai and Claude Code take)");
+    if (meta.client_id_metadata_document_supported === true)
+      pass("metadata advertises CIMD (the path claude.ai and Claude Code take)");
     else fail("metadata does not advertise client_id_metadata_document_supported");
-    if (meta.registration_endpoint === `${origin}/register`) pass("metadata advertises the registration endpoint at /register");
-    else fail(`metadata advertises registration_endpoint ${meta.registration_endpoint}, not ${origin}/register`);
+    if (meta.registration_endpoint === `${origin}/register`)
+      pass("metadata advertises the registration endpoint at /register");
+    else
+      fail(
+        `metadata advertises registration_endpoint ${meta.registration_endpoint}, not ${origin}/register`,
+      );
 
     const register = (/** @type {string} */ uri) =>
       fetch(`${origin}/register`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ client_name: "devkit-conformance", redirect_uris: [uri], token_endpoint_auth_method: "none", grant_types: ["authorization_code", "refresh_token"], response_types: ["code"] }),
+        body: JSON.stringify({
+          client_name: "devkit-conformance",
+          redirect_uris: [uri],
+          token_endpoint_auth_method: "none",
+          grant_types: ["authorization_code", "refresh_token"],
+          response_types: ["code"],
+        }),
       });
     const allowed = allowedCallback(root, auth, config.registration?.allowed);
-    if (!allowed) log("  SKIP       no allowlisted callback configured, so only the refusal is checked");
+    if (!allowed)
+      log("  SKIP       no allowlisted callback configured, so only the refusal is checked");
     else {
       const r = await register(allowed);
       const body = await r.json().catch(() => ({}));
-      if (r.status === 201 && typeof body.client_id === "string" && body.client_id && body.access_token === undefined) pass(`POST /register registers ${allowed}, and grants nothing (201, no token)`);
+      if (
+        r.status === 201 &&
+        typeof body.client_id === "string" &&
+        body.client_id &&
+        body.access_token === undefined
+      )
+        pass(`POST /register registers ${allowed}, and grants nothing (201, no token)`);
       else fail(`POST /register answered ${r.status} for the allowlisted ${allowed}`);
     }
     const refused = await register(OFF_LIST);
     const refusedBody = await refused.json().catch(() => ({}));
-    if (refused.status === 400 && refusedBody.error === "invalid_redirect_uri") pass("POST /register refuses a callback off the allowlist (400 invalid_redirect_uri)");
-    else fail(`POST /register answered ${refused.status} ${refusedBody.error ?? ""} for a callback off the allowlist`);
-    const unauth = await fetch(`${origin}/mcp`, { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
+    if (refused.status === 400 && refusedBody.error === "invalid_redirect_uri")
+      pass("POST /register refuses a callback off the allowlist (400 invalid_redirect_uri)");
+    else
+      fail(
+        `POST /register answered ${refused.status} ${refusedBody.error ?? ""} for a callback off the allowlist`,
+      );
+    const unauth = await fetch(`${origin}/mcp`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: "{}",
+    });
     const challenge = unauth.headers.get("www-authenticate") ?? "";
-    if (unauth.status === 401 && (auth.resourceMetadata === false || challenge.includes("resource_metadata="))) {
-      pass(`/mcp without a token answers 401${auth.resourceMetadata === false ? " (resource_metadata not required by this config)" : " with a resource_metadata challenge"}`);
+    if (
+      unauth.status === 401 &&
+      (auth.resourceMetadata === false || challenge.includes("resource_metadata="))
+    ) {
+      pass(
+        `/mcp without a token answers 401${auth.resourceMetadata === false ? " (resource_metadata not required by this config)" : " with a resource_metadata challenge"}`,
+      );
     } else fail(`/mcp without a token answered ${unauth.status} (${challenge})`);
 
-    if (config.after) await (await import(pathToFileURL(resolve(root, config.after)).href)).default({ origin, pass, fail });
+    if (config.after)
+      await (
+        await import(pathToFileURL(resolve(root, config.after)).href)
+      ).default({ origin, pass, fail });
   }
 
   log("");
@@ -210,17 +326,29 @@ async function main() {
     log(`devkit-conformance: ${failures} check(s) failed.`);
     process.exit(1);
   }
-  log("devkit-conformance: no regression against the recorded baseline in any era, and the authorization server serves CIMD and the allowlisted registration only.");
+  log(
+    "devkit-conformance: no regression against the recorded baseline in any era, and the authorization server serves CIMD and the allowlisted registration only.",
+  );
 }
 
 /** The callback /register must accept: a literal, or the first entry of a var in the auth server's wrangler config. */
-function allowedCallback(/** @type {string} */ root, /** @type {Server} */ auth, /** @type {string | { var: string } | undefined} */ allowed) {
+function allowedCallback(
+  /** @type {string} */ root,
+  /** @type {Server} */ auth,
+  /** @type {string | { var: string } | undefined} */ allowed,
+) {
   if (typeof allowed !== "object") return allowed;
-  const file = [auth.config, `${auth.config}.example`].map((f) => resolve(root, String(f))).find((f) => existsSync(f));
+  const file = [auth.config, `${auth.config}.example`]
+    .map((f) => resolve(root, String(f)))
+    .find((f) => existsSync(f));
   const text = file ? readFileSync(file, "utf8") : "";
   const list = new RegExp(`"${allowed.var}":\\s*"([^"]*)"`).exec(text)?.[1] ?? "";
-  return list.split(",").map((u) => u.trim()).find(Boolean);
+  return list
+    .split(",")
+    .map((u) => u.trim())
+    .find(Boolean);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) await main();
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
+  await main();

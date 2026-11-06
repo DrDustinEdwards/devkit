@@ -18,11 +18,17 @@ test("PLANT: it merges the chunks into one score and names the zero-kill and cov
   };
   try {
     mkdirSync(join(dir, "reports", "mutation"), { recursive: true });
-    assert.match(run(["--protected", "x"]), /^1 devkit-mutation-report: no mutation JSON in \S+reports\/mutation\. Run Stryker first\./);
+    assert.match(
+      run(["--protected", "x"]),
+      /^1 devkit-mutation-report: no mutation JSON in \S+reports\/mutation\. Run Stryker first\./,
+    );
     assert.match(run([]), /^1 devkit-mutation-report: --protected <regex> is required/);
 
-    const report = (/** @type {object} */ testFiles, /** @type {object} */ files) => JSON.stringify({ testFiles, files });
-    const tests = (/** @type {string[]} */ ...names) => ({ tests: names.map((name, i) => ({ id: String(i + 1), name })) });
+    const report = (/** @type {object} */ testFiles, /** @type {object} */ files) =>
+      JSON.stringify({ testFiles, files });
+    const tests = (/** @type {string[]} */ ...names) => ({
+      tests: names.map((name, i) => ({ id: String(i + 1), name })),
+    });
     writeFileSync(
       join(dir, "reports", "mutation", "a.json"),
       report(
@@ -43,7 +49,17 @@ test("PLANT: it merges the chunks into one score and names the zero-kill and cov
     );
     writeFileSync(
       join(dir, "reports", "mutation", "b.json"),
-      report({ "test/b.test.mjs": tests("Keep: the deploy", "keep: zero") }, { "src/b.mjs": { mutants: [{ id: "1", status: "Killed", killedBy: ["1"] }, { id: "2", status: "Survived" }] } }),
+      report(
+        { "test/b.test.mjs": tests("Keep: the deploy", "keep: zero") },
+        {
+          "src/b.mjs": {
+            mutants: [
+              { id: "1", status: "Killed", killedBy: ["1"] },
+              { id: "2", status: "Survived" },
+            ],
+          },
+        },
+      ),
     );
     // Its own output and Stryker's incremental file are not reports.
     writeFileSync(join(dir, "reports", "mutation", "kill-matrix.json"), "[]");
@@ -66,10 +82,38 @@ test("PLANT: it merges the chunks into one score and names the zero-kill and cov
     }
     assert.deepEqual(JSON.parse(readFileSync(join(dir, "out", "kill-matrix.json"), "utf8")), [
       { file: "test/a.test.mjs", name: "unique", kills: 3, unique: 2, kind: "", protected: false },
-      { file: "test/a.test.mjs", name: "covered", kills: 1, unique: 0, kind: "covered", protected: false },
-      { file: "test/a.test.mjs", name: "zero", kills: 0, unique: 0, kind: "zero-kill", protected: false },
-      { file: "test/b.test.mjs", name: "Keep: the deploy", kills: 1, unique: 1, kind: "", protected: true },
-      { file: "test/b.test.mjs", name: "keep: zero", kills: 0, unique: 0, kind: "zero-kill", protected: true },
+      {
+        file: "test/a.test.mjs",
+        name: "covered",
+        kills: 1,
+        unique: 0,
+        kind: "covered",
+        protected: false,
+      },
+      {
+        file: "test/a.test.mjs",
+        name: "zero",
+        kills: 0,
+        unique: 0,
+        kind: "zero-kill",
+        protected: false,
+      },
+      {
+        file: "test/b.test.mjs",
+        name: "Keep: the deploy",
+        kills: 1,
+        unique: 1,
+        kind: "",
+        protected: true,
+      },
+      {
+        file: "test/b.test.mjs",
+        name: "keep: zero",
+        kills: 0,
+        unique: 0,
+        kind: "zero-kill",
+        protected: true,
+      },
     ]);
   } finally {
     rmSync(dir, { recursive: true, force: true });
