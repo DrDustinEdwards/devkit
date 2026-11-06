@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.23.1 (2026-11-06)
+
+- `bump-consumers.yml`: a consumer Renovate cannot reach (no Dependency Dashboard, or one with no manual-run checkbox) fails the run, naming the repository, instead of a warning on a green run. The other consumers are still ticked first. Capsomer depends on site-runtime but has no dashboard, so every site-runtime release since its history began on 2026-10-31 warned and passed, and it stayed on 0.77.1 while the network moved to 0.82.0.
+
 ## 0.23.0 (2026-11-06)
 
 - `claude/hooks/`: the network's Claude Code hooks, `no-em-dash.sh` and `scoped-git-add.sh`, in the package, one copy for every repository. Ten repositories (capsid, capsomer, dustinedwards-info, enarratio, foxhound, foxing, germomics, julieedwards-info, txasm, bsw) each kept a byte-identical copy in `.claude/hooks/`, which the copy scan never read because jscpd skips dot-folders. A repository runs them from `node_modules/@dustinedwards/devkit/claude/hooks` through `.claude/settings.json`; the settings block, which also fails closed before `npm ci`, is in README, "The shared Claude Code hooks". The hooks are unchanged apart from a header note.
