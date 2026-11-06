@@ -158,7 +158,7 @@ jobs:
           PINNED: ${{ job.workflow_sha }}
         run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
 
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: DrDustinEdwards/devkit
           ref: ${{ job.workflow_sha }}
@@ -188,7 +188,7 @@ jobs:
       - name: Check out the repository
         id: repo
         if: ${{ !cancelled() && env.CODE == 'true' }}
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           path: repo
           fetch-depth: 0
