@@ -13,7 +13,7 @@
 // with: it is pre-1.0, so a new release may move formatting, and Renovate's "Oxc" group bumps it everywhere at once.
 
 /**
- * Every repository: Oxfmt's defaults, with build output, generated files and lockfiles left alone (Oxfmt already
+ * Every repository: Oxfmt's defaults, with build output, generated files and lockfiles left alone (`.no-bloat.json` is written by devkit-no-bloat; Oxfmt already
  * skips what .gitignore lists).
  * @type {import("oxfmt").OxfmtConfig}
  */
