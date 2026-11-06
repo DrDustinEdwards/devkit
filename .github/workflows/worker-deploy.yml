@@ -256,17 +256,23 @@ jobs:
           # value is masked, written mode 600 under RUNNER_TEMP and removed when the step ends.
           secret_args=()
           if [ -n "$GENERATED_SECRETS" ]; then
-            have=$(npx --yes "wrangler@${WRANGLER_VERSION}" secret list --name "$WORKER" --format json) || {
-              echo "::error::could not list the secrets of ${WORKER}, so none was minted and nothing was deployed."
-              exit 1
-            }
+            # A Worker's first deploy has no script yet: Cloudflare answers 10007 (not found), and it holds no secret.
+            if ! have=$(npx --yes "wrangler@${WRANGLER_VERSION}" secret list --name "$WORKER" --format json 2>"$RUNNER_TEMP/secret-list.err"); then
+              if grep -Eq '10007|not found' "$RUNNER_TEMP/secret-list.err"; then
+                have="[]"
+              else
+                echo "::error::could not list the secrets of ${WORKER}, so none was minted and nothing was deployed."
+                exit 1
+              fi
+            fi
             secrets_file="$RUNNER_TEMP/generated-secrets.json"
             trap 'rm -f "$secrets_file"' EXIT
             # shellcheck disable=SC2016 # the ${...} below are JavaScript template literals, not shell.
             HAVE="$have" node -e '
               const fs = require("fs");
               const crypto = require("crypto");
-              const have = new Set(JSON.parse(process.env.HAVE.slice(process.env.HAVE.indexOf("["))).map((s) => s.name));
+              const list = process.env.HAVE.slice(Math.max(0, process.env.HAVE.search(/^\[/m)));
+              const have = new Set(JSON.parse(list).map((s) => s.name));
               const out = {};
               for (const name of process.env.GENERATED_SECRETS.split(/\s+/).filter(Boolean)) {
                 if (!/^[A-Z][A-Z0-9_]*$/.test(name)) { console.log(`::error::generated-secrets names ${name}, which is not a secret name.`); process.exit(1); }
