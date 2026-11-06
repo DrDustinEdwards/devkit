@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-05 15:30 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-06 00:24 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,16 +8,16 @@ Newest run 2026-11-05 15:30 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❔ | 🟡 | ❌ | ❌ | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ❌ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
-| 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | ❌ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
-| 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | 🟡 | ❌ | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6536 | −3234 |
+| 5. Carrel editing contract | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | · | ❌ | ❌ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
+| 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
+| 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | ✅ | ❌ | ❌ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❔ | 🟡 | ✅ | ❌ | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❌ | 🟡 | ✅ | ❌ | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
@@ -46,7 +46,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
 - 🟡 Foxhound: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
-- ❔ Foxing: prelum-audit could not measure: no reason given
+- 🟡 Foxing: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); about 700 of 2,200 sitemap URLs have no lastmod; llms-full.txt is 404
 - 🟡 Carrel: no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404
 - ❌ Enarratio: prelum-audit: 1 errors
   - icon-missing: https://enarratio.dustinedwards.info/favicon.ico answers 404 text/html; charset=utf-8
@@ -68,7 +68,7 @@ Builder: Complete shared security headers and CSP. Verifier: Verify security hea
 - ❌ Capsomer: site-runtime-security: 4 errors
   - C16: https://capsomer.dustinedwards.info/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://capsomer.dustinedwards.info/make/ (200) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
-  - C16: https://capsomer.dustinedwards.info/site-runtime-security-e203198b-ba75-4d1e-a882-f0bc04259f66 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
+  - C16: https://capsomer.dustinedwards.info/site-runtime-security-1bdc342a-776a-4a08-ac38-823b48ea0e00 (404) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
   - C16: https://capsomer.dustinedwards.info/ (405) frame-src lets in every post player (declared: embeds): refuses https://www.youtube-nocookie.com https://www.tiktok.com https://open.spotify.com https://w.soundcloud.com https://embed.podcasts.apple.com https://music.amazon.com https://www.google.com https://platform.twitter.com https://embed.bsky.app https://www.instagram.com (EMBED_FRAME_SOURCES, ./embeds)
 - 🟡 Prelum specimen: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3 (COEP enforced, not Report-Only). prelum #182 (v0.66.0) merged at 22:49Z but the live sha at 23:10Z was still ffbe359, so the deploy had not landed. It passes v0.65.0 with 0 errors. Re-check after the deploy.
 - 🟡 Foxing admin MCP: 0 errors, 0 warnings live (on Cloudflare since foxing #165), but mcp/package.json pins site-runtime v0.62.0, four minors behind v0.66.0. devkit's pin check (S7) wants every MCP server within one minor; it is a warning until devkit 0.21.0. Bump to the current release and redeploy.
@@ -117,11 +117,13 @@ Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cell
 Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editing contract.
 
 - 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
-- 🟡 dustinedwards.info: failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
+- ❌ dustinedwards.info: carrel-conformance: 1 errors
+  - M1: https://dustinedwards.info/api/carrel/v1 meta: answers with this contract's schema hash failed
 - 🟡 Germomics: author filter 501 though show.author is the byline; deleted post 404 not 410; preview is a hand-written shell; no series; no setTags; revisions author 'germomics', pages no history; admin.content.$key still writes pages outside Carrel
 - 🟡 julieedwards.info: pins v0.17.0 so webmentions can read the stale edge copy, sent on publish only; live section with a draft reads as draft; revisions capped at 50; no delete or unpublish (needs ruling); preview without page chrome
 - 🟡 TXASM: failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
-- 🟡 Foxhound: a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently
+- ❌ Foxhound: carrel-conformance: 1 errors
+  - M1: https://foxhoundapp.com/api/carrel/v1 meta: answers with this contract's schema hash failed
 - ❌ Foxing: carrel-conformance: 1 errors
   - M1: https://foxing.app/api/carrel/v1 meta: answers with this contract's schema hash failed
 
@@ -130,8 +132,7 @@ Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editin
 Builder: Complete shared images and media. Verifier: Verify area 6 images and media.
 
 - 🟡 Package: uploads built (HEIC, GPS strip, placeholder); a replace keeps the immutable size URL; pictureProps carries no placeholder; Prelum picture drops source media (GIF never moves) and counts priority per render; unsized diagram img; credit/license never reach the renderer; no 1.91:1 cover crop, no 16:9/4:3/1:1 set, no og:video; respond sets no CORP; AVIF not stripped; images check skips A6 and C9 and never runs on the Portal
-- ❌ dustinedwards.info: site-runtime-images: 1 errors
-  - E3: https://dustinedwards.info/ https://op3.dev/e/media.germomics.com/Podcast_010_Antitoxin_Togo_Please.mp3 has no transcript link on the page
+- 🟡 dustinedwards.info: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Germomics: episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper
 - 🟡 julieedwards.info: profile photo 884 KB, 2048 px, unsized, no srcset, 3.1x at 670 px, cached 4 h, other host without preconnect; must go into the library; fallback img unsized
 - 🟡 TXASM: og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap
@@ -154,22 +155,22 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- 🟡 dustinedwards.info: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
+- ❔ dustinedwards.info: site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❌ Germomics: site-runtime-speed: 2 errors
   - C2: https://germomics.com/fonts/space-grotesk-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
   - C2: https://germomics.com/fonts/fraunces-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
-- 🟡 julieedwards.info: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
+- ❔ julieedwards.info: site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❌ TXASM: site-runtime-speed: 1 errors
   - D1: https://txasm.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain
 - ❌ BSW: site-runtime-speed: 1 errors
   - D1: https://bsw.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain
-- 🟡 Foxhound: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
-- 🟡 Foxing: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
-- 🟡 Carrel: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
-- 🟡 Enarratio: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
-- 🟡 Capsomer: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
-- 🟡 Prelum specimen: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
-- 🟡 Capsid explorer: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
+- ❔ Foxhound: site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❔ Foxing: site-runtime-speed could not measure: A3: https://foxing.app/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxing.app/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❔ Carrel: site-runtime-speed-static could not measure: A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❔ Enarratio: site-runtime-speed-static could not measure: A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❔ Capsomer: site-runtime-speed-static could not measure: A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❔ Prelum specimen: site-runtime-speed-static could not measure: A3: https://prelum.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://prelum.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❔ Capsid explorer: site-runtime-speed could not measure: A3: https://capsid.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 
 ### 8. Running and recovery
 
@@ -192,8 +193,7 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
   - H5: https://admin-mcp.foxhoundapp.com/health no check on /health probes AUDIT_BUCKET (r2), OAUTH_KV (kv), MCP_RATE_LIMIT (durable_object), FOXHOUND (service), declared in https://github.com/DrDustinEdwards/foxhound/blob/main/mcp/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Carrel MCP: ops-audit: 1 errors
   - H5: https://carrel-mcp.dustinedwards.info/health no check on /health probes AUDIT_BUCKET (r2), declared in https://github.com/DrDustinEdwards/carrel/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Foxing admin MCP: ops-audit: 2 errors
-  - H4: https://admin-mcp.foxing.app/health serves ccc3d3b7871c796401d97b847f49d5babedae6a8, not the branch head 2907c161b4e635423036d74b9c7dac0e7322c937 (https://github.com/DrDustinEdwards/foxing/commit/2907c161b4e635423036d74b9c7dac0e7322c937), committed 395 minutes ago
+- ❌ Foxing admin MCP: ops-audit: 1 errors
   - H5: https://admin-mcp.foxing.app/health no check on /health probes AUDIT_BUCKET (r2), declared in https://github.com/DrDustinEdwards/foxing/blob/main/mcp/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 
 ### 9. Accessibility and components
@@ -224,7 +224,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `section:nth-of-type(2) > div.page-prose.mx-auto > p.mt-8:nth-of-type(2) > a.btn.btn-blue` "Go to the home page")
   - L2: https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
 - ❌ Foxhound: devkit-a11y: 5 errors
-  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
+  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
   - L3: https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical), `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical)
   - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body.min-h-full > div.fh-cap.fh-error-page > header.fh-error-bar.flex > a.no-underline` "foxhound")
   - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(3) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical) and 33 more
@@ -252,7 +252,8 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L2: https://prelum.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` "")
   - L2: https://prelum.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more
   - S2: https://prelum.dustinedwards.info/site.webmanifest no lang on <html>
-- ❌ Capsid explorer: devkit-a11y: 1 errors
+- ❌ Capsid explorer: devkit-a11y: 2 errors
+  - L2: https://capsid.dustinedwards.info/systems/ no skip link to main as the first Tab stop (first stop `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)` "Capsid")
   - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 18 more
 - Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
@@ -261,7 +262,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❔ Foxing: chart-audit could not measure: no reason given
+- ❌ Foxing: chart-audit: 1 errors
 - 🟡 Carrel: no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json
 - ❌ Capsomer: chart-audit: 1 errors
   - F: https://capsomer.dustinedwards.info/ an SVG chart drawn outside Enarratio: "One design system for every site and app" (168 rects)
@@ -277,30 +278,25 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 - 🟡 Germomics: local style text instead of WRITING_RULES; suggester gaps from the package
 - 🟡 julieedwards.info: suggester on site-api v0.17.0: no timeout, JSON mode or prose check
 - 🟡 TXASM: suggester inherits the package gaps (feature metadata, Llama list)
-- ❌ Foxhound: site-runtime-ai-audit: 2 errors
+- ❌ Foxhound: site-runtime-ai-audit: 1 errors
   - P3: https://foxhoundapp.com/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-zQ7yI8/site-runtime_v0.75.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
 - 🟡 Foxing: Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0
 - 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
 - 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
-- ❌ Capsid MCP: site-runtime-ai-audit: 13 errors
+- ❌ Capsid MCP: site-runtime-ai-audit: 12 errors
   - T4: https://mcp.dustinedwards.info/ops/mcp capsid_start_session: inputSchema does not set additionalProperties: false
   - T4: https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema does not set additionalProperties: false
   - T4: https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema does not set additionalProperties: false
   - T4: https://mcp.dustinedwards.info/ops/mcp capsid_lint_namespace: inputSchema does not set additionalProperties: false
   - T4: https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema does not set additionalProperties: false
-- ❌ Foxhound admin MCP: site-runtime-ai-audit: 2 errors
+- ❌ Foxhound admin MCP: site-runtime-ai-audit: 1 errors
   - P3: https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://admin-mcp.foxhoundapp.com the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-zQ7yI8/site-runtime_v0.75.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
-- ❌ Dustin Edwards admin MCP: site-runtime-ai-audit: 2 errors
+- ❌ Dustin Edwards admin MCP: site-runtime-ai-audit: 1 errors
   - P3: https://admin-mcp.dustinedwards.info/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://admin-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-zQ7yI8/site-runtime_v0.75.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
-- ❌ Carrel MCP: site-runtime-ai-audit: 2 errors
+- ❌ Carrel MCP: site-runtime-ai-audit: 1 errors
   - P3: https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://carrel-mcp.dustinedwards.info the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-zQ7yI8/site-runtime_v0.75.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
-- ❌ Foxing admin MCP: site-runtime-ai-audit: 2 errors
+- ❌ Foxing admin MCP: site-runtime-ai-audit: 1 errors
   - P3: https://admin-mcp.foxing.app/mcp conformance server-stateless passed 22/24 (failing: sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
-  - audit: https://admin-mcp.foxing.app the audit stopped before it finished: Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client |     at ServerResponse.writeHead (node:_http_server:422:11) |     at Server.<anonymous> (file:///tmp/devkit-live-zQ7yI8/site-runtime_v0.75.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:459:11)
 
 ### 12. Checks and tooling
 
