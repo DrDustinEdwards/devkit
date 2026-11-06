@@ -35,11 +35,11 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 
 | Job | Owner | Use |
 | --- | --- | --- |
-| backups | Capsid Admin | capsid_admin_run_controls control site_backup, and capsid_admin_read_ops action backups (a warning until devkit 0.26.0) |
-| media | Carrel | carrel_import_media and carrel_delete_media (a warning until devkit 0.26.0) |
+| backups | Capsid Admin | capsid_admin_run_controls control site_backup, and capsid_admin_read_ops action backups (a warning until devkit 0.28.0) |
+| media | Carrel | carrel_import_media and carrel_delete_media (a warning until devkit 0.28.0) |
 | writing | Carrel | carrel_save_draft, carrel_preview_item and carrel_publish_item |
-| webmentions | Carrel | Carrel's mention moderation over site-api's mentions group (a warning until devkit 0.26.0) |
-| site checks and drift repair | Capsid Admin | capsid_admin_run_controls control site_repair (a warning until devkit 0.26.0) |
+| webmentions | Carrel | Carrel's mention moderation over site-api's mentions group (a warning until devkit 0.28.0) |
+| site checks and drift repair | Capsid Admin | capsid_admin_run_controls control site_repair (a warning until devkit 0.28.0) |
 | email | site-runtime | site-runtime ./email: an app with a send_email binding that sends without it fails (features) |
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
@@ -154,7 +154,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`
 - bins: `d1-dump`
 
-## devkit 0.25.0 (DrDustinEdwards/devkit)
+## devkit 0.26.1 (DrDustinEdwards/devkit)
 
 - `./github`: `gitBlobSha`, `stubGitHub`, `versionOf`
 - `./network`: `urlOf`, `installFetch`, `refuseNetwork`
