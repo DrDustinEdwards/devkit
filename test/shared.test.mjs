@@ -6,7 +6,7 @@ import { delimiter, dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
+import { WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, lockDisagrees, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -56,7 +56,17 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
     checkPins(tree({ "mcp/package.json": `{"dependencies":{"s":"github:DrDustinEdwards/site-runtime#${ref}"}}`, "mcp/src/door.ts": 'import { x } from "@dustinedwards/site-runtime/mcp-login";' }), tags, {}, now)[0];
   assert.match(server("v0.2.0").message, /^the MCP server in mcp runs site-runtime v0\.2\.0, more than one minor behind v0\.10\.0/);
   assert.equal(isWarning(server("v0.2.0")), false);
-  assert.equal(server("v0.9.0").message, "site-runtime is at v0.9.0; the newest release is v0.10.0");
+  assert.equal(server("v0.9.0").message, "site-runtime is at v0.9.0; the newest release is v0.10.0");  // A lockfile that resolves another release than the pin names fails (capsid #785), npm and pnpm.
+  const pkg = '{"dependencies":{"@dustinedwards/site-runtime":"github:DrDustinEdwards/site-runtime#v0.10.0"}}';
+  const npm = (v) => tree({ "package.json": pkg, "package-lock.json": JSON.stringify({ packages: { "node_modules/@dustinedwards/site-runtime": { version: v } } }) });
+  const run = (t) => checkPins(t, tags).filter((f) => f.message.includes("lock"));
+  assert.equal(run(npm("0.10.0")).length, 0);
+  const stale = run(npm("0.9.0"));
+  assert.equal(stale.length, 1);
+  assert.equal(isWarning(stale[0]), false);
+  assert.match(stale[0].message, /pinned to v0\.10\.0 but package-lock\.json resolves 0\.9\.0/);
+  assert.equal(lockDisagrees(tree({ "package.json": pkg, "pnpm-lock.yaml": "specifier: github:DrDustinEdwards/site-runtime#v0.10.0" }), "package.json", 1, "x", "site-runtime", "v0.10.0").length, 0);
+  assert.equal(lockDisagrees(tree({ "package.json": pkg, "pnpm-lock.yaml": "specifier: github:DrDustinEdwards/site-runtime#v0.9.0" }), "package.json", 1, "x", "site-runtime", "v0.10.0").length, 1);
 });
 
 const catalog = { escapeHtml: "site-runtime ./html", slugify: "Prelum ./slug", render: "Prelum ./render", readThemeCookie: "Capsomer ./theme" };
