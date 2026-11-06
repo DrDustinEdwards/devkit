@@ -71,7 +71,7 @@ test("the token is read-only", () => {
 });
 
 test("the inputs and the two secrets the job names", () => {
-  for (const input of ["worker-name", "health-url", "verify-command", "node-version-file", "working-directory", "pre-deploy"]) {
+  for (const input of ["worker-name", "health-url", "verify-command", "node-version-file", "working-directory", "pre-deploy", "generated-secrets"]) {
     assert.match(text, new RegExp(`\\n {6}${input}:\\n`), input);
   }
   for (const secret of ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"]) {
@@ -100,6 +100,28 @@ test("wrangler is pinned to one exact version, and the bookmark, the deploy and 
   const uses = [...code.matchAll(/wrangler@(\S+)/g)].map((m) => m[1]);
   assert.ok(uses.length >= 3);
   assert.deepEqual(new Set(uses), new Set(['${WRANGLER_VERSION}"']));
+  // Generated secrets go up with the code, deploy and gradual upload alike, and only names the Worker lacks.
+  const deploy = step("Deploy");
+  assert.match(deploy, /args=\(deploy --name "\$WORKER" "\$\{secret_args\[@\]\}"\)/);
+  assert.match(deploy, /args=\(versions upload [^\n]*"\$\{secret_args\[@\]\}"\)/);
+  // The minting script itself, run as the step runs it, over what `wrangler secret list` prints (a warning line first).
+  const script = /HAVE="\$have" node -e '\n([\s\S]*?)\n\s*' "\$secrets_file" "\$RUNNER_TEMP\/generated-names"/.exec(deploy)?.[1];
+  assert.ok(script, "the minting script moved");
+  const dir = mkdtempSync(join(tmpdir(), "generated-secrets-"));
+  const mint = (have, names) => {
+    const run = spawnSync(process.execPath, ["-e", script, join(dir, "s.json"), join(dir, "n")], { encoding: "utf8", env: { ...process.env, HAVE: have, GENERATED_SECRETS: names } });
+    return { status: run.status, out: run.stdout, secrets: JSON.parse(readFileSync(join(dir, "s.json"), "utf8")), names: readFileSync(join(dir, "n"), "utf8") };
+  };
+  const held = `▲ [WARNING] proxy\n[{"name":"HELD","type":"secret_text"}]`;
+  const first = mint(held, "HELD NEW_ONE");
+  assert.deepEqual(Object.keys(first.secrets), ["NEW_ONE"], "a secret the Worker holds would be replaced");
+  assert.match(first.secrets.NEW_ONE, /^[A-Za-z0-9_-]{43}$/);
+  assert.equal(first.names, "NEW_ONE");
+  assert.ok(first.out.includes(`::add-mask::${first.secrets.NEW_ONE}`), "the value is not masked");
+  assert.equal(mint("[]", "HELD").names, "HELD", "a first deploy (no secrets yet) mints");
+  assert.equal(mint(held, "HELD").names, "", "nothing to mint still uploads a file");
+  assert.notEqual(mint(held, "bad-name").status, 0);
+  rmSync(dir, { recursive: true });
 });
 
 test("caller input reaches a shell only through the environment, never spliced into the script", () => {

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `worker-deploy.yml`: `generated-secrets` input. Names of secrets nobody needs to know (site-runtime's `ADMIN_IDLE_SECRET` first): a name the Worker lacks is minted (32 random bytes, base64url, masked) and uploaded with the deploy or gradual upload through `--secrets-file`, which keeps every other secret; a name it holds is never read or changed. So no site needs a hand-run `wrangler secret put` for a value no person uses. Empty, the default, changes nothing.
 - CI typechecks the package, the bins and the scripts (`tsconfig.json`, `npm run typecheck`: strict, `checkJs`, `tsc --noEmit`), with `@types/node` and `vite` (for its types) as dev dependencies. What it found is typed in place, behavior unchanged: `siteScript`, `devToolbar`, `serveToolbar` and the islands typed against their `.d.mts`; `devkit-shared`'s `Config` annotation sat on the file name, not the config; `devkit-worker-size`'s `fail` returns `never`; `devkit-ops-audit` reads a GitHub file's error by its presence. `test/`, `bin/live.mjs`, `bin/a11y.mjs`, `bin/a11y-judge.mjs`, `vite/dev-toolbar-client.mjs` and `scripts/fakes-contract.mjs` are not checked yet.
 
 ## 0.21.5 (2026-11-06)
