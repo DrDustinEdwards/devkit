@@ -29,6 +29,7 @@ function totalUpload(/** @type {string} */ text) {
   return { raw: kib(m[1], m[2]), gzip: kib(m[3], m[4]) };
 }
 
+/** @returns {never} */
 function fail(/** @type {string} */ message) {
   console.log(`::error::devkit-worker-size: ${message}`);
   process.exit(1);

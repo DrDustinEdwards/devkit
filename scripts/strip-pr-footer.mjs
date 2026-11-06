@@ -26,6 +26,7 @@ export function stripFooter(body) {
   return out === body ? null : `${out.trimEnd()}\n`;
 }
 
+/** @param {string} path @param {RequestInit} [init] */
 async function gh(path, init = {}) {
   const res = await fetch(`https://api.github.com${path}`, {
     ...init,
@@ -35,6 +36,7 @@ async function gh(path, init = {}) {
   return res.json();
 }
 
+/** @param {string} repo @param {string | number} number @param {unknown} body */
 async function fix(repo, number, body) {
   const stripped = stripFooter(body);
   if (stripped === null) return false;

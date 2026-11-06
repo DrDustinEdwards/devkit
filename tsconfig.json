@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2024",
+    "lib": ["es2024", "dom", "dom.iterable"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["build-defines.d.ts", "bin/*.mjs", "scripts/*.mjs", "testing/*.mjs", "vite/*.mjs", "drill/*.mjs", "*.mjs"],
+  "exclude": ["bin/live.mjs", "bin/a11y.mjs", "bin/a11y-judge.mjs", "vite/dev-toolbar-client.mjs", "scripts/fakes-contract.mjs"]
+}

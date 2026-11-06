@@ -32,6 +32,9 @@
 /** Island names: what the plugin accepts as a file name under the islands folder. */
 export const ISLAND_NAME = /^[a-z][a-z0-9-]*$/;
 
+/** @typedef {(run: () => void, el: HTMLElement) => void} Directive */
+
+/** @type {Record<string, Directive | undefined>} */
 const DIRECTIVES = {
   load: (run) => run(),
   idle: (run, el) => {
@@ -63,8 +66,9 @@ const started = new WeakSet();
 
 // A built /site.js has this replaced with each island's content-hashed URL (site-script.mjs); in `vite dev`, or a page
 // bundled some other way, it is undefined and an island is /islands/<name>.js.
+/** @type {Record<string, string>} */
 const BUILT = typeof __DEVKIT_ISLANDS__ === "object" ? __DEVKIT_ISLANDS__ : {};
-const islandUrl = (name) => (Object.hasOwn(BUILT, name) ? BUILT[name] : `/islands/${name}.js`);
+const islandUrl = (/** @type {string} */ name) => (Object.hasOwn(BUILT, name) ? BUILT[name] : `/islands/${name}.js`);
 
 /**
  * Starts every island under `root` (the document by default). `load` imports an island's module; the default reads

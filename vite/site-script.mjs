@@ -29,6 +29,13 @@ const RESOLVED = `\0${VIRTUAL}`;
 /** Replaced in a built /site.js with the name to URL map; islands.mjs reads it, and in dev finds it undefined. */
 const MANIFEST_GLOBAL = "__DEVKIT_ISLANDS__";
 
+/** @typedef {import("vite").Rolldown.RolldownOutput["output"][number]} Output */
+
+/**
+ * @param {import("vite").BuildEnvironmentOptions} options
+ * @param {Record<string, string>} [define]
+ * @returns {Promise<Output[]>}
+ */
 async function run(options, define) {
   const out = await build({ configFile: false, logLevel: "warn", define, build: options });
   const result = Array.isArray(out) ? out[0] : out;
@@ -36,7 +43,12 @@ async function run(options, define) {
   return result.output;
 }
 
-/** `entry` alone, as a classic script (/site.js, with the built island URLs when given) or, for an island in `vite dev`, one whole ES module. */
+/**
+ * `entry` alone, as a classic script (/site.js, with the built island URLs when given) or, for an island in `vite dev`, one whole ES module.
+ * @param {string} entry
+ * @param {"iife" | "es"} [format]
+ * @param {Record<string, string>} [urls]
+ */
 async function bundle(entry, format = "iife", urls) {
   const output = await run(
     format === "iife"
@@ -51,10 +63,12 @@ async function bundle(entry, format = "iife", urls) {
         },
     urls && { [MANIFEST_GLOBAL]: JSON.stringify(urls) },
   );
-  return output[0].code;
+  const [first] = output;
+  if (first?.type !== "chunk") throw new Error("site-script: the bundle produced no script");
+  return first.code;
 }
 
-/** Every island in one build: islands/<name>-<hash>.js each, and what two share once under islands/chunks/. */
+/** Every island in one build: islands/<name>-<hash>.js each, and what two share once under islands/chunks/. @param {Map<string, string>} files */
 function bundleIslands(files) {
   return run({
     ...ISLAND_BUILD,
@@ -69,27 +83,32 @@ function bundleIslands(files) {
 /**
  * Each island's URL, and the gzip bytes (level 9, what `gzip -9` reports) of everything a page that loads only that
  * island downloads: its file and the chunks it imports, each file once.
+ * @param {Output[]} output
  */
 function manifestOf(output) {
-  const chunks = new Map(output.filter((o) => o.type === "chunk").map((o) => [o.fileName, o]));
+  const chunks = new Map(output.flatMap((o) => (o.type === "chunk" ? [/** @type {const} */ ([o.fileName, o])] : [])));
+  /** @type {Record<string, string>} */
   const urls = {};
+  /** @type {Record<string, number>} */
   const gzipBytes = {};
   for (const chunk of chunks.values()) {
     if (!chunk.isEntry) continue;
+    /** @type {Set<string>} */
     const files = new Set();
-    const add = (file) => {
-      if (files.has(file) || !chunks.has(file)) return;
+    const add = (/** @type {string} */ file) => {
+      const imported = chunks.get(file);
+      if (files.has(file) || !imported) return;
       files.add(file);
-      for (const imported of chunks.get(file).imports) add(imported);
+      for (const next of imported.imports) add(next);
     };
     add(chunk.fileName);
     urls[chunk.name] = `/${chunk.fileName}`;
-    gzipBytes[chunk.name] = [...files].reduce((n, f) => n + gzipSync(chunks.get(f).code, { level: constants.Z_BEST_COMPRESSION }).length, 0);
+    gzipBytes[chunk.name] = [...files].reduce((n, f) => n + gzipSync(chunks.get(f)?.code ?? "", { level: constants.Z_BEST_COMPRESSION }).length, 0);
   }
   return { urls, gzipBytes };
 }
 
-/** The island modules under `dir`: name to file. A folder that does not exist has none. */
+/** The island modules under `dir`: name to file. A folder that does not exist has none. @param {string} dir @returns {Map<string, string>} */
 function islandFiles(dir) {
   let names;
   try {
@@ -109,9 +128,14 @@ function islandFiles(dir) {
 
 // `toolbar` (on by default) adds Astro's dev toolbar (dev-toolbar.mjs) to the dev /site.js; a build never has it.
 // `entry: false` is for an app with its own client script (a React Router site): no /site.js, islands only.
+/**
+ * @param {{ entry?: string | false, islands?: string, toolbar?: boolean }} [options]
+ * @returns {import("vite").Plugin}
+ */
 export function siteScript({ entry = "app/site.ts", islands = "app/islands", toolbar = true } = {}) {
   let dev = false;
   // One islands build per build process, so the client output and the server's `virtual:islands` agree.
+  /** @type {Promise<Output[]> | null} */
   let built = null;
   const islandsBuild = () => {
     if (!built) {
@@ -136,7 +160,7 @@ export function siteScript({ entry = "app/site.ts", islands = "app/islands", too
       const { urls, gzipBytes } = manifestOf(output);
       // `vite dev` serves each island whole by its plain name; the sizes are still the build's.
       if (dev) for (const name of Object.keys(urls)) urls[name] = `/islands/${name}.js`;
-      for (const out of output) for (const file of out.moduleIds ?? []) if (!file.startsWith("\0")) this.addWatchFile(file);
+      for (const out of output) if (out.type === "chunk") for (const file of out.moduleIds) if (!file.startsWith("\0")) this.addWatchFile(file);
       return `export const ISLAND_URLS = ${JSON.stringify(urls)};\nexport const ISLAND_GZIP_BYTES = ${JSON.stringify(gzipBytes)};\n`;
     },
     configureServer(server) {

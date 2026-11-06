@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- CI typechecks the package, the bins and the scripts (`tsconfig.json`, `npm run typecheck`: strict, `checkJs`, `tsc --noEmit`), with `@types/node` and `vite` (for its types) as dev dependencies. What it found is typed in place, behavior unchanged: `siteScript`, `devToolbar`, `serveToolbar` and the islands typed against their `.d.mts`; `devkit-shared`'s `Config` annotation sat on the file name, not the config; `devkit-worker-size`'s `fail` returns `never`; `devkit-ops-audit` reads a GitHub file's error by its presence. `test/`, `bin/live.mjs`, `bin/a11y.mjs`, `bin/a11y-judge.mjs`, `vite/dev-toolbar-client.mjs` and `scripts/fakes-contract.mjs` are not checked yet.
+
 ## 0.21.5 (2026-11-06)
 
 - `worker-deploy.yml`: `warm` input (default `true`, unchanged). "Warm the stored pages" runs inside the live gate, and every job that needs the deploy waits for it: 59 to 102 s on Foxing, 17 to 24 s on dustinedwards.info, which warms again in its converge job. `warm: false` ends the gate as soon as it passes, so e2e or a second Worker's deploy starts sooner and the gate's runner stops sooner; the caller warms with `npx devkit-warm <origin>` in a job nothing waits on, or not at all. Its first reads are then renders, so a caller whose e2e counts on stored pages keeps the default. Not a separate job: a caller's `needs:` waits for every job of the called workflow, so that would add a runner and save no time.

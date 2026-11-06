@@ -34,7 +34,7 @@ function checkOutput(result) {
   if (result?.status === "reviewed") {
     const findings = Array.isArray(result.findings) ? result.findings : [];
     const title = findings.length ? `${result.verdict}: ${findings.length} finding${findings.length === 1 ? "" : "s"}` : result.verdict;
-    const lines = findings.map((f) => `- **${f.kind}**, \`${f.file}${f.line ? `:${f.line}` : ""}\`: ${f.note}`);
+    const lines = findings.map((/** @type {{ kind: string, file: string, line?: number, note: string }} */ f) => `- **${f.kind}**, \`${f.file}${f.line ? `:${f.line}` : ""}\`: ${f.note}`);
     const body = [`**${result.verdict}**. ${result.summary ?? ""}`.trim(), lines.length ? lines.join("\n") : "No findings.", `Model: \`${result.model}\`, head \`${String(result.head_sha).slice(0, 7)}\`.`];
     return { conclusion: "neutral", title, summary: body.join("\n\n") + advisory };
   }
@@ -65,6 +65,7 @@ async function askCapsid() {
   }
 }
 
+/** @param {ReturnType<typeof checkOutput>} output */
 async function writeCheck(output) {
   const repo = process.env.GITHUB_REPOSITORY;
   const resp = await fetch(`https://api.github.com/repos/${repo}/check-runs`, {

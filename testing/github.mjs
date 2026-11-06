@@ -13,7 +13,7 @@ const API = "https://api.github.com";
 const STUB_HEAD_SHA = "a".repeat(40);
 const encoder = new TextEncoder();
 
-/** @param {Uint8Array} bytes */
+/** @param {Uint8Array<ArrayBuffer>} bytes */
 const sha1 = async (bytes) =>
   Array.from(new Uint8Array(await crypto.subtle.digest("SHA-1", bytes)), (byte) => byte.toString(16).padStart(2, "0")).join("");
 

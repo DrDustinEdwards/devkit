@@ -48,6 +48,8 @@ const WRANGLER_FILES = ["wrangler.jsonc", "wrangler.json", "wrangler.jsonc.examp
 /** @typedef {{ severity: "error" | "warning", item: string, url: string, detail: string }} Finding */
 /** @typedef {{ item: string, url: string, reason: string }} Unread */
 
+/** @typedef {{ name?: unknown, status?: string, detail?: string }} HealthCheck One entry of /health's `checks`, as read. */
+
 const finding = (/** @type {Finding["severity"]} */ severity, /** @type {string} */ item, /** @type {string} */ url, /** @type {string} */ detail) => ({ severity, item, url, detail });
 
 /**
@@ -78,7 +80,7 @@ export function healthFindings({ url, status, contentType, cacheControl, robots,
   if (typeof health.ok !== "boolean") missing.push("ok");
   if (typeof health.time !== "string" || Number.isNaN(Date.parse(health.time))) missing.push("time");
   if (!Array.isArray(health.checks)) missing.push("checks");
-  else if (!health.checks.every((c) => typeof c?.name === "string" && STATUSES.includes(c.status))) missing.push("a name and a pass, warn or fail status on every checks entry");
+  else if (!health.checks.every((/** @type {HealthCheck | null} */ c) => typeof c?.name === "string" && typeof c.status === "string" && STATUSES.includes(c.status))) missing.push("a name and a pass, warn or fail status on every checks entry");
   if (missing.length) {
     const old = health.status === undefined ? " (the old shape: site-runtime's health gives { status, ok, time, checks: [{ name, status }] })" : "";
     findings.push(finding("error", "H2", url, `the body does not carry ${missing.join(", ")}${old}`));
@@ -96,7 +98,7 @@ export function healthFindings({ url, status, contentType, cacheControl, robots,
     else if (health.backup.warning) findings.push(finding("warning", "B1", url, `backup warning: ${health.backup.warning}`));
   }
 
-  const cron = Array.isArray(health.checks) ? health.checks.find((c) => c?.name === "cron") : undefined;
+  const cron = Array.isArray(health.checks) ? health.checks.find((/** @type {HealthCheck | null} */ c) => c?.name === "cron") : undefined;
   if (cron && cron.status !== "pass") findings.push(finding("warning", "C2", url, `the cron check is ${cron.status}${cron.detail ? `: ${cron.detail}` : ""}`));
   return { findings, health };
 }
@@ -262,7 +264,11 @@ async function github(path) {
   }
 }
 
-/** One file from a repository at a ref: its text, null when there is no such file, or the reason it could not be read. @param {string} repo @param {string} path @param {string} ref */
+/**
+ * One file from a repository at a ref: its text, null when there is no such file, or the reason it could not be read.
+ * @param {string} repo @param {string} path @param {string} ref
+ * @returns {Promise<{ text: string | null, error?: undefined } | { error: string, text?: undefined }>}
+ */
 async function githubFile(repo, path, ref) {
   const headers = { accept: "application/vnd.github.raw+json", "user-agent": "devkit-ops-audit", ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}) };
   const where = `/repos/${repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(ref)}`;
@@ -397,7 +403,7 @@ async function bindingCheck({ repo, branch, path, health, healthUrl, findings, u
   let text = null;
   for (const candidate of path ? [path] : WRANGLER_FILES) {
     const read = await githubFile(repo, candidate, branch);
-    if (read.error) return void unread.push(read.error), say(`bindings: ${read.error}`);
+    if (read.error !== undefined) return void unread.push(read.error), say(`bindings: ${read.error}`);
     if (read.text !== null) {
       file = candidate;
       text = read.text;
@@ -420,7 +426,7 @@ async function bindingCheck({ repo, branch, path, health, healthUrl, findings, u
   }
   const dir = file.includes("/") ? file.slice(0, file.lastIndexOf("/") + 1) : "";
   const extra = await githubFile(repo, `${dir}.ops-audit.json`, branch);
-  if (extra.error) return void unread.push(extra.error);
+  if (extra.error !== undefined) return void unread.push(extra.error);
   let exempt = {};
   if (extra.text !== null) {
     try {

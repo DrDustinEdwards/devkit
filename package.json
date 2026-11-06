@@ -57,11 +57,14 @@
     "README.md"
   ],
   "scripts": {
+    "typecheck": "tsc -p .",
     "test": "node --test \"test/*.test.mjs\"",
     "contract": "node scripts/fakes-contract.mjs"
   },
   "license": "UNLICENSED",
   "devDependencies": {
-    "typescript": "5.9.3"
+    "@types/node": "24.19.2",
+    "typescript": "5.9.3",
+    "vite": "8.3.5"
   }
 }
