@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.22.0 (2026-11-06)
 
+- `live`: the Germomics admin MCP server (`admin-mcp.germomics.com`) is on the board with its `MCP_TEST_GRANT_ADMIN_MCP_GERMOMICS_COM`, as the Foxing, Foxhound and dustinedwards.info admin servers are.
 - `worker-deploy.yml`: `generated-secrets` input. Names of secrets nobody needs to know (site-runtime's `ADMIN_IDLE_SECRET` first): a name the Worker lacks is minted (32 random bytes, base64url, masked) and uploaded with the deploy or gradual upload through `--secrets-file`, which keeps every other secret; a name it holds is never read or changed. So no site needs a hand-run `wrangler secret put` for a value no person uses. Empty, the default, changes nothing.
 - CI typechecks the package, the bins and the scripts (`tsconfig.json`, `npm run typecheck`: strict, `checkJs`, `tsc --noEmit`), with `@types/node` and `vite` (for its types) as dev dependencies. What it found is typed in place, behavior unchanged: `siteScript`, `devToolbar`, `serveToolbar` and the islands typed against their `.d.mts`; `devkit-shared`'s `Config` annotation sat on the file name, not the config; `devkit-worker-size`'s `fail` returns `never`; `devkit-ops-audit` reads a GitHub file's error by its presence. `test/`, `bin/live.mjs`, `bin/a11y.mjs`, `bin/a11y-judge.mjs`, `vite/dev-toolbar-client.mjs` and `scripts/fakes-contract.mjs` are not checked yet.
 
