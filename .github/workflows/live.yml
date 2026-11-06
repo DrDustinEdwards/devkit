@@ -23,7 +23,7 @@ name: live
 #
 # The copies job is the network-wide check beside the per-site ones: bin/copies.mjs runs jscpd over every public
 # repository's source at once and fails when more blocks are copied between repositories than live/copies.json's baseline
-# (44 on 2026-11-06, from the shared-code audit). devkit-shared's copies check matches by name, so this catches a copy
+# (44 on 2026-11-06, from the shared-code audit; lowered as copies are removed). devkit-shared's copies check matches by name, so this catches a copy
 # under a new name. A pull request that changes the scan or its baseline runs it too. With LIVE_GITHUB_TOKEN it reads the
 # private repositories as well; without it, the public ones and a warning.
 
