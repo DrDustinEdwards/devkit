@@ -1,1 +1,4 @@
-{ "entry": ["stryker.config.mjs", "drill/worker.mjs", "scripts/review-check.mjs"] }
+{
+  "entry": ["stryker.config.mjs", "drill/worker.mjs", "scripts/review-check.mjs"],
+  "ignore": ["test/fixtures/oxlint/*.tsx"]
+}
