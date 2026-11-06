@@ -126,7 +126,7 @@ test("a dry run ticks nothing", async () => {
   assert.ok(log.info.some((line) => line.includes("would tick #7")));
 });
 
-test("a consumer without Renovate is a warning naming it, and archived repositories and node_modules are skipped", async () => {
+test("a consumer without Renovate fails the run naming it, and archived repositories and node_modules are skipped", async () => {
   const { updates, log } = await run({
     capsomer: { files: { "package.json": { name: "capsomer" } } },
     blog: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } } } },
@@ -136,10 +136,10 @@ test("a consumer without Renovate is a warning naming it, and archived repositor
     impostor: { files: { "package.json": { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.5.0" } } }, issues: [{ ...dashboard(), user: "someone" }] },
   });
   assert.equal(updates.length, 0);
-  assert.ok(log.warnings.some((w) => w.startsWith("blog:")));
-  assert.ok(log.warnings.some((w) => w.startsWith("impostor:")), "only an issue opened by renovate[bot] is the dashboard");
+  assert.ok(log.errors.some((e) => e.startsWith("blog:")));
+  assert.ok(log.errors.some((e) => e.startsWith("impostor:")), "only an issue opened by renovate[bot] is the dashboard");
   assert.ok(log.info.some((line) => line.startsWith("ticked") && line.includes("already requested")));
-  assert.equal(log.failed, null);
+  assert.match(log.failed ?? "", /^2 consumer/);
 });
 
 test("a repository that cannot be read fails the run instead of passing silently", async () => {

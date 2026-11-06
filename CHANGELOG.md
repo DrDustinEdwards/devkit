@@ -9,6 +9,11 @@ CI was slow because of the runner queue, not slow steps (measured 2026-11-06 ove
 - `devkit-shared` (workflows): a call of `pr.yml` counts as each of `checks`, `review`, `dependencies`, `workflow-audit`, `no-bloat` and `worker-size` its inputs leave on. A separate caller of one of those still running on `pull_request` or `merge_group` beside it is a warning, failing from 0.25.0: remove it, or keep only its schedule.
 - No second run on main: the example callers of `checks`, `no-bloat`, `worker-size`, `workflow-audit`, `dependencies` and `conformance` drop `push: branches: [main]` (`dependencies` keeps its daily schedule); `code-map` and `scorecard` run nightly with a dispatch in place of every push, code-map mutation-testing on its Monday cron line. Nothing reads a devkit check on main: dustinedwards-info's deploy reads its own CI workflow's conclusion, and every other deploy runs from its own CI job (README, "No second run on main"). devkit's `ci.yml`, `checks-self.yml`, `code-map-self.yml` and `scorecard-self.yml` do the same; `review-self.yml` is gone, `checks-self.yml` runs `pr.yml`.
 - `default.json`: Dustin's own packages bump as one group per repository, `network packages` (renovate/network-packages), devkit's workflow pin and npm package included, with `enarratio-astro` and `enarratio-emdash` added to the npm names. No cooldown, any-time schedule and the minor, patch and pin automerge are unchanged; a major keeps its own branch and a digest move leaves the group. `bump-consumers.yml` gets no debounce: a release moves the one open branch, and the pull request concurrency cancels its older run.
+- A test runs the README's `.claude/settings.json` block as Claude Code does: it blocks every call but `npm ci` or `npm install` until devkit is installed, then runs the shared hook.
+
+## 0.23.1 (2026-11-06)
+
+- `bump-consumers.yml`: a consumer Renovate cannot reach (no Dependency Dashboard, or one with no manual-run checkbox) fails the run, naming the repository, instead of a warning on a green run. The other consumers are still ticked first. Capsomer depends on site-runtime but has no dashboard, so every site-runtime release since its history began on 2026-10-31 warned and passed, and it stayed on 0.77.1 while the network moved to 0.82.0.
 
 ## 0.23.0 (2026-11-06)
 
