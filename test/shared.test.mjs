@@ -319,7 +319,7 @@ test("each app is checked for its kind's features, files belong to the deepest a
   const found = checkFeatures(
     tree({
       "app/robots.ts": 'import { robotsDocument } from "@drdustinedwards/site-helpers/robots";',
-      "wrangler.jsonc.example": '{ "d1_databases": [] }',
+      "wrangler.jsonc.example": '{ "d1_databases": [], "send_email": [{ "name": "EMAIL" }] }',
       "mcp/src/index.ts":
         'import { buildSecurityHeaders } from "@dustinedwards/site-runtime/headers";',
     }),
@@ -347,6 +347,7 @@ test("each app is checked for its kind's features, files belong to the deepest a
     [
       "site has no headers: site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)",
       ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth",
+      ". has a send_email binding and sends without site-runtime ./email sendEmail",
     ],
   );
 });
