@@ -163,13 +163,46 @@ export default defineConfig({
 
 The repository adds `oxlint` and `oxlint-tsgolint` to its devDependencies at the versions devkit's `peerDependencies` name (1.92.0 and 7.0.2006; optional peers, so a repository that does not lint yet installs neither), and one CI step, `npm run lint`, after the typecheck where the typecheck generates types (`wrangler types`, `react-router typegen`), since the type-aware rules read them. `oxlint.config.ts` needs Node 22.18 or later. No `--tsconfig`: type-aware mode finds each file's tsconfig itself. `test/oxlint.test.mjs` runs Oxlint on a fixture that extends the export by its package name and must be flagged for exactly a dropped promise, a conditional hook and a restricted import (`eslint/no-restricted-imports` with `patterns`, as txasm's boundary will use it).
 
+## The shared Claude Code hooks
+
+`claude/hooks/` holds the network's Claude Code hooks, one copy for every repository, in the package: `no-em-dash.sh` blocks a Write, Edit or Bash call that carries an em or en dash, and `scoped-git-add.sh` blocks `git add -A`, `--all` and `.`. Both fail closed, and each file's header says why. A repository runs them from `node_modules` through its committed `.claude/settings.json`, never a copy of its own; `devkit-shared` fails a `.claude/hooks/` copy of either.
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "h=\"$CLAUDE_PROJECT_DIR/node_modules/@dustinedwards/devkit/claude/hooks/no-em-dash.sh\"; [ -f \"$h\" ] && exec bash \"$h\"; grep -Eq '\"command\" *: *\"npm (ci|install)( --?[a-z-]+)*\"' && exit 0; echo \"devkit is not installed, so the shared Claude Code hooks cannot run and this call is BLOCKED: run npm ci first.\" >&2; exit 2"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "h=\"$CLAUDE_PROJECT_DIR/node_modules/@dustinedwards/devkit/claude/hooks/scoped-git-add.sh\"; [ -f \"$h\" ] && exec bash \"$h\"; grep -Eq '\"command\" *: *\"npm (ci|install)( --?[a-z-]+)*\"' && exit 0; echo \"devkit is not installed, so the shared Claude Code hooks cannot run and this call is BLOCKED: run npm ci first.\" >&2; exit 2"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Each command runs the hook from the installed devkit. Before `npm ci` it is not there, and the command fails closed too: it blocks every call except a Bash `npm ci` or `npm install`, so the session's first step installs and every later call is checked. A cloud session installs in its SessionStart hook where the repository has one. Not a plugin: a Claude Code cloud session loads neither the plugins a repository's `.claude/settings.json` enables nor the ones installed on a machine (code.claude.com/docs/en/plugins/install, "Cloud session"), so the hooks would not run where most of the work happens. A hook only one repository needs (dustinedwards.info's deploy and content guards) stays in that repository.
+
 ## The shared test helpers
 
 Test code that more than one repository needs, written once here. Installed by tag:
 
     "@dustinedwards/devkit": "github:DrDustinEdwards/devkit#v0.8.0"
 
-Only `testing/`, `lint/`, `vite/`, `bin/` and this README are in the package. No dependencies and no test framework: they run in node and in workerd. `oxlint` and `oxlint-tsgolint` are optional peer dependencies, for `./oxlint` only.
+Only `testing/`, `lint/`, `vite/`, `bin/`, `claude/` and this README are in the package. No dependencies and no test framework: they run in node and in workerd. `oxlint` and `oxlint-tsgolint` are optional peer dependencies, for `./oxlint` only.
 
 - `@dustinedwards/devkit/github`: `stubGitHub({ owner, repo, branch, files, token })`, a fake of the GitHub contents and Git Data API at the outbound fetch. An unknown host or route throws, blob shas are real and tree and commit shas are 40 hex digits, a tree applies only when the ref moves, and the ref moves only forward: a commit whose parents do not reach the head answers 422 `Update is not a fast forward` unless `force`. Writes answer 201, `base_tree` and `?ref=` are honored, and a `Request` is read for its method, headers and body. With `token` the repository is private: no token answers 404 and another one 401. `failNext` plants 500s and `history` plants the commit listing. `install: false` hands back the fake as `fetch` instead of installing it globally. `gitBlobSha` and `versionOf` come with it.
 - `@dustinedwards/devkit/network`: `refuseNetwork({ hint })`, the global fetch that throws naming the URL, and `installFetch`, the swap under it and under the GitHub fake. Each returns its restore.

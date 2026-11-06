@@ -9,7 +9,8 @@
 //   copies     a local definition with the name of something a shared package exports (or a known alias), or text only a
 //              shared builder should write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation
 //              rules, a Cloudflare Images resize, an island loader, JSON-LD, a hex or base64url encoder, a pre-paint theme
-//              script...), in source or in a static _headers file (a security header set);
+//              script...), in source or in a static _headers file (a security header set), and a repository's own copy
+//              of a Claude Code hook devkit ships (.claude/hooks/no-em-dash.sh, scoped-git-add.sh);
 //   libraries  a direct dependency on a library a shared package wraps (marked, remark, mermaid, sanitize-html...);
 //   features   a shared feature the repository's kind of app should have and does not import (robots.txt, security.txt,
 //              IndexNow, the CSP report endpoint, /health...), and as warnings an accessibility test, noindex on admin and
@@ -167,6 +168,9 @@ export const FINGERPRINTS = [
 ];
 /** A security header set written into Cloudflare's static `_headers` (bsw's copy). */
 export const HEADERS_COPY = { find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m, use: "site-runtime ./headers buildSecurityHeaders" };
+
+/** The Claude Code hooks in devkit's claude/hooks, one copy for every repository. */
+export const CLAUDE_HOOKS = ["no-em-dash.sh", "scoped-git-add.sh"];
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
 export const LIBRARIES = [
@@ -573,6 +577,12 @@ export function checkCopies(tree, catalog, config, self) {
       if (m && !mine.some((f) => f.line === lineOf(m.index))) mine.push({ check: "copies", file, line: lineOf(m.index), message: say ?? `this builds what ${use} builds: use it` });
     }
     if (mine.length && !excused(config, "copies", file)) found.push(...mine);
+  }
+  // The Claude Code hooks devkit ships (claude/hooks): a repository runs them from node_modules, never a copy of its own.
+  if (self !== "devkit") {
+    for (const file of tree.files.filter((f) => CLAUDE_HOOKS.includes(posix.basename(f)) && posix.dirname(f).endsWith(".claude/hooks"))) {
+      if (!excused(config, "copies", file)) found.push({ check: "copies", file, line: 1, message: `a copy of devkit's Claude Code hook: run node_modules/@dustinedwards/devkit/claude/hooks/${posix.basename(file)} from .claude/settings.json (devkit README, "The shared Claude Code hooks") and delete this file` });
+    }
   }
   if (self !== "site-runtime") {
     for (const file of tree.files.filter((f) => posix.basename(f) === "_headers" && !NOT_SOURCE.test(f))) {
@@ -1118,6 +1128,7 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
     lines.push("", `## ${p.label} ${p.version} (DrDustinEdwards/${p.repo})`, "");
     for (const [sub, names] of p.entries) lines.push(`- \`${sub}\`: ${names.length ? names.map((n) => `\`${n}\``).join(", ") : "(no named exports)"}`);
     if (p.bins.length) lines.push(`- bins: ${p.bins.map((b) => `\`${b}\``).join(", ")}`);
+    if (p.repo === "devkit") lines.push(`- Claude Code hooks (\`claude/hooks\`, run from \`.claude/settings.json\`, README "The shared Claude Code hooks"): ${CLAUDE_HOOKS.map((h) => `\`${h}\``).join(", ")}`);
   }
   return `${lines.join("\n")}\n`;
 }

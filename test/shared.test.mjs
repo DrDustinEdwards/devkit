@@ -293,6 +293,9 @@ test("PLANT: the fingerprints fail on a copy, and their look-alikes pass", () =>
     "app/color.mjs": 'export const css = `#${rgb.map((v) => v.toString(16).padStart(2, "0")).join("")}`;\n',
     "app/hash.ts": "for (let i = 0; i < s.length; i++) h ^= s.charCodeAt(i);\n",
     "public/_headers": "# Strict-Transport-Security: is set by the Worker\n/*\n  Strict-Transport-Security: max-age=63072000\n",
+    // A repository's own copy of a Claude Code hook devkit ships; another hook of its own passes.
+    ".claude/hooks/no-em-dash.sh": "#!/usr/bin/env bash\n",
+    ".claude/hooks/no-direct-deploy.sh": "#!/usr/bin/env bash\n",
   });
   assert.deepEqual(
     checkCopies(files, {}, {}).map((f) => `${f.file}:${f.line} ${isWarning(f)}`),
@@ -310,11 +313,12 @@ test("PLANT: the fingerprints fail on a copy, and their look-alikes pass", () =>
       "app/access.ts:1 false",
       "app/theme.ts:1 false",
       "app/root.tsx:2 false",
+      ".claude/hooks/no-em-dash.sh:1 false",
       "public/_headers:3 false",
     ],
   );
   // site-runtime writes its own encoders, Turnstile, Access and security headers.
-  assert.deepEqual(checkCopies(files, {}, {}, "site-runtime").map((f) => f.file), ["app/ld.tsx", "app/meta.ts", "app/card.tsx", "app/ld2.ts", "app/theme.ts", "app/root.tsx"]);
+  assert.deepEqual(checkCopies(files, {}, {}, "site-runtime").map((f) => f.file), ["app/ld.tsx", "app/meta.ts", "app/card.tsx", "app/ld2.ts", "app/theme.ts", "app/root.tsx", ".claude/hooks/no-em-dash.sh"]);
 });
 
 test("an alias that is also an ordinary name counts only when its body does the shared export's job", () => {
