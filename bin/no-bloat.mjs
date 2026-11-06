@@ -94,7 +94,10 @@ export function scan(/** @type {string} */ text, css = false) {
       return;
     }
     out.push(kind === "code" ? ch : " ");
-    if (ch.trim()) kind === "comment" ? (comment = true) : (code = true);
+    if (ch.trim()) {
+      if (kind === "comment") comment = true;
+      else code = true;
+    }
   };
   const regexHere = () => {
     let j = out.length - 1;
@@ -215,7 +218,10 @@ export function countFiles(config, paths, read) {
       tests.cases += testCases(scanned.code);
     }
     if (source) {
-      for (const kind of scanned.kinds) kind === "code" ? code++ : kind === "comment" && lines++;
+      for (const kind of scanned.kinds) {
+        if (kind === "code") code++;
+        else if (kind === "comment") lines++;
+      }
     }
   }
   /** @type {Counts} */

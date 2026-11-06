@@ -68,6 +68,11 @@ on:
         required: false
         type: string
         default: ""
+      generated-secrets:
+        description: Names of secrets the Worker needs that nobody has to know, such as site-runtime's ADMIN_IDLE_SECRET, separated by spaces. A name the Worker does not hold yet is minted (32 random bytes, base64url) and uploaded with this deploy (`--secrets-file`); one it holds is never changed or read. Empty for none.
+        required: false
+        type: string
+        default: ""
       d1-database:
         description: The D1 database's name. When set, its Time Travel bookmark is read before the pre-deploy guard (where migrations run), so a bad migration is one restore to undo. Empty for none.
         required: false
@@ -236,6 +241,7 @@ jobs:
           WORKER: ${{ inputs.worker-name }}
           SHA_VAR: ${{ inputs.sha-var }}
           GRADUAL: ${{ inputs.gradual-percent }}
+          GENERATED_SECRETS: ${{ inputs.generated-secrets }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
@@ -244,8 +250,47 @@ jobs:
             echo "::error::gradual-percent is a whole number from 0 to 99, not ${GRADUAL}."
             exit 1
           fi
+          # GENERATED SECRETS: a name the Worker lacks is minted here and goes up with the code in one operation
+          # (`--secrets-file`, which keeps every secret not in the file; Cloudflare Docs, "Secrets", "Upload secrets
+          # alongside code"), so a gradual upload carries it too. `secret list` gives names only, never values. The
+          # value is masked, written mode 600 under RUNNER_TEMP and removed when the step ends.
+          secret_args=()
+          if [ -n "$GENERATED_SECRETS" ]; then
+            # A Worker's first deploy has no script yet: Cloudflare answers 10007 (not found), and it holds no secret.
+            if ! have=$(npx --yes "wrangler@${WRANGLER_VERSION}" secret list --name "$WORKER" --format json 2>"$RUNNER_TEMP/secret-list.err"); then
+              if grep -Eq '10007|not found' "$RUNNER_TEMP/secret-list.err"; then
+                have="[]"
+              else
+                echo "::error::could not list the secrets of ${WORKER}, so none was minted and nothing was deployed."
+                exit 1
+              fi
+            fi
+            secrets_file="$RUNNER_TEMP/generated-secrets.json"
+            trap 'rm -f "$secrets_file"' EXIT
+            # shellcheck disable=SC2016 # the ${...} below are JavaScript template literals, not shell.
+            HAVE="$have" node -e '
+              const fs = require("fs");
+              const crypto = require("crypto");
+              const list = process.env.HAVE.slice(Math.max(0, process.env.HAVE.search(/^\[/m)));
+              const have = new Set(JSON.parse(list).map((s) => s.name));
+              const out = {};
+              for (const name of process.env.GENERATED_SECRETS.split(/\s+/).filter(Boolean)) {
+                if (!/^[A-Z][A-Z0-9_]*$/.test(name)) { console.log(`::error::generated-secrets names ${name}, which is not a secret name.`); process.exit(1); }
+                if (have.has(name)) continue;
+                out[name] = crypto.randomBytes(32).toString("base64url");
+                console.log(`::add-mask::${out[name]}`);
+              }
+              fs.writeFileSync(process.argv[1], JSON.stringify(out), { mode: 0o600 });
+              fs.writeFileSync(process.argv[2], Object.keys(out).join(" "));
+            ' "$secrets_file" "$RUNNER_TEMP/generated-names"
+            minted=$(cat "$RUNNER_TEMP/generated-names")
+            if [ -n "$minted" ]; then
+              secret_args=(--secrets-file "$secrets_file")
+              echo "minted and uploaded ${minted} (values not shown)" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          fi
           if [ "$GRADUAL" = "0" ]; then
-            args=(deploy --name "$WORKER")
+            args=(deploy --name "$WORKER" "${secret_args[@]}")
             if [ -n "$SHA_VAR" ]; then args+=(--var "${SHA_VAR}:${GITHUB_SHA}"); fi
             npx --yes "wrangler@${WRANGLER_VERSION}" "${args[@]}"
             echo "deployed ${GITHUB_SHA} as ${WORKER} in attempt ${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_STEP_SUMMARY"
@@ -257,7 +302,7 @@ jobs:
             exit 1
           }
           out="$RUNNER_TEMP/wrangler-output.ndjson"
-          args=(versions upload --name "$WORKER" --message "${GITHUB_SHA}")
+          args=(versions upload --name "$WORKER" --message "${GITHUB_SHA}" "${secret_args[@]}")
           if [ -n "$SHA_VAR" ]; then args+=(--var "${SHA_VAR}:${GITHUB_SHA}"); fi
           WRANGLER_OUTPUT_FILE_PATH="$out" npx --yes "wrangler@${WRANGLER_VERSION}" "${args[@]}"
           version=$(node -e 'const l=require("fs").readFileSync(process.argv[1],"utf8").split("\n").filter(Boolean).map(JSON.parse).find(e=>e.type==="version-upload");if(!l?.version_id)process.exit(1);process.stdout.write(l.version_id)' "$out") || {

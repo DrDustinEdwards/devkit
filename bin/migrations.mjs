@@ -164,7 +164,8 @@ function apply(/** @type {string} */ dir, /** @type {string} */ database, /** @t
   // The repository's own wrangler, by absolute path, so the bookmark read outside the checkout runs the same version.
   const bin = join(process.cwd(), "node_modules", ".bin", process.platform === "win32" ? "wrangler.cmd" : "wrangler");
   const local = existsSync(bin) ? bin : undefined;
-  const wrangler = (/** @type {string[]} */ args, /** @type {string | undefined} */ cwd = undefined) => {
+  /** @param {string[]} args @param {string} [cwd] */
+  const wrangler = (args, cwd) => {
     const r = spawnSync(local ?? "npx", local ? args : ["wrangler", ...args], { cwd, encoding: "utf8", shell: process.platform === "win32", env: { ...process.env, CI: "true" }, timeout: 300_000 });
     const text = `${r.stdout ?? ""}${r.stderr ?? ""}${r.error ? `\n${r.error.message}` : ""}`;
     process.stdout.write(text);

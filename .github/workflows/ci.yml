@@ -27,6 +27,9 @@ jobs:
       - run: npm ci
       - name: Typecheck the package, the bins and the scripts against their declarations
         run: npm run typecheck
+      # The shared Oxlint config (lint/oxlint.mjs) on devkit itself, type-aware, as every repository will run it.
+      - name: Lint with the shared Oxlint config
+        run: npm run lint
       - name: Hold the shared workflows to their properties, the caller check to its pin rule, and the package to its behavior
         run: node --test "test/*.test.mjs"
       - name: The example callers are themselves pinned
