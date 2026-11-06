@@ -414,6 +414,25 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
   assert.match(devkit[5].message, /\(a warning here: only Actions says whether this repository is public\)$/);
 });
 
+test("PLANT: a pr.yml call counts as each pull request check its inputs leave on, and a separate caller still on pull requests beside it is told to go", () => {
+  const files = { "wrangler.jsonc": "{}", "src/a.ts": "" };
+  const pr = (/** @type {string} */ inputs) => `on:\n  pull_request:\njobs:\n  checks:\n    uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${SHA_V2}\n    with:\n${inputs}`;
+  const run = (/** @type {Record<string, string>} */ more) => checkWorkflows(tree({ ...files, ...more }), { apps: { ".": "site" } }, { private: false });
+  // Only the pull request checks; scorecard and worker-deploy are other callers'.
+  const names = (/** @type {ReturnType<typeof run>} */ found) => found.map((f) => f.message.split("devkit's ")[1].split(".yml")[0]).filter((name) => !["scorecard", "worker-deploy"].includes(name));
+  assert.deepEqual(names(run({ ".github/workflows/checks.yml": pr("      no-bloat-prepare: npm run build\n") })), []);
+  // A comment is no input; `worker-size: false` and `node: false` turn checks off.
+  assert.deepEqual(names(run({ ".github/workflows/checks.yml": pr("      # no-bloat: false\n      worker-size: false\n") })), ["worker-size"]);
+  assert.deepEqual(names(run({ ".github/workflows/checks.yml": pr("      node: false\n") })), ["worker-size", "no-bloat"]);
+  const twice = run({
+    ".github/workflows/checks.yml": pr("      review: true\n"),
+    ".github/workflows/no-bloat.yml": `on:\n  pull_request:\njobs:\n  a:\n    uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${SHA_V2}\n`,
+    // Only a schedule: dependencies' daily scan stays.
+    ".github/workflows/dependencies.yml": `on:\n  schedule:\n    - cron: "1 2 * * *"\njobs:\n  a:\n    uses: DrDustinEdwards/devkit/.github/workflows/dependencies.yml@${SHA_V2}\n`,
+  }).filter((f) => f.file !== ".github/workflows");
+  assert.deepEqual(twice.map((f) => `${f.file} ${isWarning(f, "0.24.0")} ${isWarning(f, "0.25.0")}`), [".github/workflows/no-bloat.yml true false"]);
+});
+
 test("PLANT: a model call or prompt that skips the shared pieces is flagged with its checklist item; the shared way passes", () => {
   const bad = {
     "app/sdk.ts": 'import Anthropic from "@anthropic-ai/sdk";\nconst client = new Anthropic({ apiKey });',

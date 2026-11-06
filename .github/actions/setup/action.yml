@@ -1,0 +1,45 @@
+name: setup
+description: >-
+  The caller's Node and install, for the checks that run the caller's own copy of a devkit bin (no-bloat, worker-size).
+  pnpm is set up from the caller's packageManager field and its store is cached; npm's cache is keyed on the lockfile.
+  One copy for no-bloat.yml, worker-size.yml and pr.yml.
+
+inputs:
+  path:
+    description: The caller's checkout, relative to the workspace.
+    required: false
+    default: repo
+  node-version-file:
+    description: The file naming the Node version, relative to the caller's checkout, as actions/setup-node reads it.
+    required: false
+    default: .nvmrc
+  package-manager:
+    description: npm or pnpm.
+    required: false
+    default: npm
+  install:
+    description: The install command. It must install @dustinedwards/devkit. Empty for `npm ci` or `pnpm install --frozen-lockfile`.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    # pnpm/action-setup v4 is an annotated tag; the sha pinned is the commit it dereferences to (as in foxing's CI).
+    - if: inputs.package-manager == 'pnpm'
+      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      with:
+        package_json_file: ${{ inputs.path }}/package.json
+
+    - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+      with:
+        node-version-file: ${{ inputs.path }}/${{ inputs.node-version-file }}
+        cache: ${{ inputs.package-manager }}
+        cache-dependency-path: ${{ inputs.path }}/${{ inputs.package-manager == 'pnpm' && 'pnpm-lock.yaml' || 'package-lock.json' }}
+
+    - name: Install
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      env:
+        INSTALL: ${{ inputs.install || (inputs.package-manager == 'pnpm' && 'pnpm install --frozen-lockfile' || 'npm ci') }}
+      run: bash -euo pipefail -c "$INSTALL"

@@ -1,0 +1,30 @@
+name: shared
+description: >-
+  The shared-code check (bin/shared.mjs), against each shared package at its newest release tag, so a copy is judged
+  against what a bump would give the site. Nothing to install: codespell runs through pipx, which the runner has. One copy
+  for checks.yml and pr.yml.
+
+inputs:
+  path:
+    description: The caller's checkout, relative to the workspace.
+    required: false
+    default: repo
+
+runs:
+  using: composite
+  steps:
+    - name: Read each package at its newest release tag
+      shell: bash
+      run: |
+        set -euo pipefail
+        for repo in prelum site-runtime site-api d1-dump devkit capsomer enarratio; do
+          url="https://github.com/DrDustinEdwards/${repo}"
+          tag=$(git ls-remote --tags --refs "$url" | sed 's#.*refs/tags/##' | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+          rm -rf "$RUNNER_TEMP/packages/$repo"
+          git clone --quiet --depth 1 --branch "$tag" "$url" "$RUNNER_TEMP/packages/$repo"
+        done
+
+    - name: Uses the shared code
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: node "$GITHUB_ACTION_PATH/../../../bin/shared.mjs" --from "$RUNNER_TEMP/packages"

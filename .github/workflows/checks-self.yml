@@ -1,20 +1,24 @@
 name: checks-self
 
-# devkit's own pull requests and pushes through its own checks.yml (this commit's copy), as every caller's are: the footer
-# strip, the trailer check and the shared-code check in one job.
+# devkit's own pull requests through its own pr.yml (this commit's copy), as a caller's are (examples/pr-caller.yml): the
+# footer strip, the trailer check, the shared-code check, the no-bloat ratchet and the reviewer in one job, reported as
+# "checks / Repo checks", the name devkit's ruleset requires. devkit is not its own dependency, so the install links it
+# into node_modules where no-bloat looks for the bin. It has no Worker of its own (drill/ is the rollback drill's).
+#
+# OSV-Scanner and the workflow audit stay off here only because devkit's ruleset requires them by their standalone names
+# ("dependencies / OSV-Scanner", "workflow-audit / actionlint", "workflow-audit / zizmor"), which ci.yml reports. Once
+# the ruleset requires "checks / Repo checks" alone, ci.yml drops those two calls and these two lines go.
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, edited]
-  push:
-    branches: [main]
+    types: [opened, reopened, synchronize, edited, ready_for_review]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: checks-${{ github.event_name == 'pull_request' && format('{0}-{1}', github.ref, github.event.action == 'edited') || github.sha }}
+  group: checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event.action == 'edited' }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -22,4 +26,11 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    uses: ./.github/workflows/checks.yml
+      id-token: write
+      checks: write
+    uses: ./.github/workflows/pr.yml
+    with:
+      install: npm ci && mkdir -p node_modules/@dustinedwards && ln -sfn ../.. node_modules/@dustinedwards/devkit
+      worker-size: false
+      dependencies: false
+      workflow-audit: false

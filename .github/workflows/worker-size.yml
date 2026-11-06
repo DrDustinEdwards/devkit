@@ -67,96 +67,35 @@ jobs:
     permissions:
       contents: read
     steps:
+      # An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
+      # The steps are composite actions in devkit at that commit (.github/actions/), the one copy pr.yml runs too.
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
           persist-credentials: false
 
-      # pnpm/action-setup v4 is an annotated tag; the sha pinned is the commit it dereferences to (as in foxing's CI).
-      - if: inputs.package-manager == 'pnpm'
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      # The caller's files sit in repo/, beside .devkit.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          path: repo
+          persist-credentials: false
 
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+      - uses: ./.devkit/.github/actions/setup
         with:
           node-version-file: ${{ inputs.node-version-file }}
-          cache: ${{ inputs.package-manager }}
+          package-manager: ${{ inputs.package-manager }}
+          install: ${{ inputs.install }}
 
-      - name: Install
-        env:
-          INSTALL: ${{ inputs.install || (inputs.package-manager == 'pnpm' && 'pnpm install --frozen-lockfile' || 'npm ci') }}
-        run: bash -euo pipefail -c "$INSTALL"
-
-      - name: Prepare
-        if: inputs.workers == '' && inputs.prepare != ''
-        env:
-          PREPARE: ${{ inputs.prepare }}
-        run: bash -euo pipefail -c "$PREPARE"
-
-      - name: Check
-        if: inputs.workers == ''
-        env:
-          CONFIG: ${{ inputs.config }}
-          WORKDIR: ${{ inputs.working-directory }}
-        run: |
-          # The Worker's own install first (a pnpm workspace package), then the repository root.
-          bin="$PWD/$WORKDIR/node_modules/@dustinedwards/devkit/bin/worker-size.mjs"
-          [ -f "$bin" ] || bin="$PWD/node_modules/@dustinedwards/devkit/bin/worker-size.mjs"
-          if [ ! -f "$bin" ]; then
-            echo "::error::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README)."
-            exit 1
-          fi
-          cd "$WORKDIR"
-          node "$bin" --config "$CONFIG"
-
-      # Every Worker is checked even when one fails, so one run shows them all; the step fails if any did.
-      - name: Check each Worker
-        if: inputs.workers != ''
-        env:
-          WORKERS: ${{ inputs.workers }}
-        run: |
-          node --input-type=module - <<'EACH'
-          import { spawnSync } from "node:child_process";
-          import { appendFileSync, existsSync } from "node:fs";
-          import { join, resolve } from "node:path";
-          const root = process.cwd();
-          const summary = (text) => process.env.GITHUB_STEP_SUMMARY && appendFileSync(process.env.GITHUB_STEP_SUMMARY, text);
-          const KEYS = ["name", "working-directory", "config", "prepare"];
-          let workers;
-          try {
-            workers = JSON.parse(process.env.WORKERS);
-            const bad = !Array.isArray(workers) || !workers.length || workers.some((w) => !w || typeof w !== "object" || !/^[\w .-]+$/.test(w.name ?? "") || Object.keys(w).some((k) => !KEYS.includes(k) || typeof w[k] !== "string"));
-            if (bad) throw new Error(`not a non-empty array of objects with a name (letters, digits, space, dot, dash) and only the string fields ${KEYS.join(", ")}`);
-          } catch (error) {
-            console.log(`::error::the workers input: ${error.message}`);
-            process.exit(1);
-          }
-          const failed = [];
-          for (const w of workers) {
-            const dir = resolve(root, w["working-directory"] ?? ".");
-            console.log(`::group::${w.name}`);
-            summary(`\n## ${w.name}\n\n`);
-            let ok = true;
-            if (w.prepare) {
-              const r = spawnSync("bash", ["-euo", "pipefail", "-c", w.prepare], { cwd: root, stdio: "inherit" });
-              if (r.status !== 0) {
-                ok = false;
-                console.log(`::error title=${w.name}::its prepare failed (${r.error?.message ?? `exit ${r.status ?? r.signal}`}), so its size was not measured.`);
-                summary("Its prepare failed, so its size was not measured.\n");
-              }
-            }
-            // The Worker's own install first (a pnpm workspace package), then the repository root.
-            const bin = ok && [dir, root].map((d) => join(d, "node_modules/@dustinedwards/devkit/bin/worker-size.mjs")).find((f) => existsSync(f));
-            if (ok && !bin) {
-              ok = false;
-              console.log(`::error title=${w.name}::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README).`);
-            }
-            if (ok) {
-              const r = spawnSync(process.execPath, [bin, "--config", w.config ?? ".worker-size.json"], { cwd: dir, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
-              process.stdout.write(`${r.stdout ?? ""}${r.stderr ?? ""}`.replace(/^::(error|warning)::/gm, `::$1 title=${w.name}::`));
-              if (r.status !== 0) ok = false;
-            }
-            console.log("::endgroup::");
-            if (!ok) failed.push(w.name);
-          }
-          console.log(failed.length ? `::error::over budget or not measured: ${failed.join(", ")}` : `every Worker is within its budget (${workers.length})`);
-          process.exit(failed.length ? 1 : 0);
-          EACH
+      - uses: ./.devkit/.github/actions/worker-size
+        with:
+          prepare: ${{ inputs.prepare }}
+          working-directory: ${{ inputs.working-directory }}
+          config: ${{ inputs.config }}
+          workers: ${{ inputs.workers }}

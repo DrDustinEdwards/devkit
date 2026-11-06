@@ -768,14 +768,17 @@ export const WORKFLOWS = [
  */
 export function checkWorkflows(tree, config, repo = {}) {
   // What the workflows run, without their comments; in devkit, without the reusable workflows it ships for others.
-  const text = tree.files
+  const workflowFiles = tree.files
     .filter((f) => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(f))
-    .map((f) => tree.read(f).replace(/(^|\s)#.*$/gm, "$1"))
-    .filter((t) => repo.self !== "devkit" || !/^\s*workflow_call:/m.test(t))
-    .join("\n");
+    .map((f) => ({ file: f, text: tree.read(f).replace(/(^|\s)#.*$/gm, "$1") }))
+    .filter(({ text: t }) => repo.self !== "devkit" || !/^\s*workflow_call:/m.test(t));
+  const text = workflowFiles.map((w) => w.text).join("\n");
   const called = new Set([...text.matchAll(/DrDustinEdwards\/devkit\/\.github\/workflows\/([\w.-]+?)\.ya?ml@/gi)].map((m) => m[1]));
   // devkit calls its own workflows by path.
   if (repo.self === "devkit") for (const m of text.matchAll(/uses:\s*\.\/\.github\/workflows\/([\w.-]+?)\.ya?ml/g)) called.add(m[1]);
+  // pr.yml runs the pull request checks in one job: its call counts as each one its inputs leave on.
+  const covered = prCovers(workflowFiles, repo.self === "devkit");
+  for (const name of covered) called.add(name);
   const scripts = tree.files.filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f)).flatMap((f) => Object.entries(JSON.parse(tree.read(f)).scripts ?? {}));
   const invokes = (/** @type {string} */ cmd, /** @type {string} */ name) => new RegExp(`\\b(?:run(?:-script)?|pnpm|yarn|npm)\\s+(?:--?\\S+\\s+)*${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w:.-])`).test(cmd);
   /** @returns {boolean} */
@@ -790,7 +793,7 @@ export function checkWorkflows(tree, config, repo = {}) {
   const servers = [...mcpServerDirs(tree)].map((dir) => (dir === "." ? "the root" : dir));
   /** @type {Finding[]} */
   const found = [];
-  for (const { name, failsFrom, warn, runs = [], example = `examples/${name}-caller.yml`, needed } of WORKFLOWS) {
+  for (const { name, failsFrom, warn, runs = [], example = PR_CHECKS.includes(name) ? `examples/pr-caller.yml (pr.yml runs it with the other pull request checks in one job)` : `examples/${name}-caller.yml`, needed } of WORKFLOWS) {
     const why = needed({ workers, servers, script, private: repo.private, self: repo.self });
     if (!why || called.has(name) || runs.some((bin) => reaches(text, bin)) || excused(config, "waive", `workflow:${name}`)) continue;
     // Outside Actions the repository's visibility is unknown, so no-bloat can only say what it would need.
@@ -803,7 +806,51 @@ export function checkWorkflows(tree, config, repo = {}) {
       message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .shared.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
     });
   }
+  // A separate caller that still runs on pull requests beside pr.yml runs the same check twice, a runner each time.
+  for (const { file, text: body } of workflowFiles) {
+    if (!/^\s*(pull_request|merge_group)\s*:/m.test(onBlock(body))) continue;
+    const twice = [...body.matchAll(/(?:DrDustinEdwards\/devkit|\.)\/\.github\/workflows\/([\w.-]+?)\.ya?ml\b/gi)].map((m) => m[1]).filter((name) => PR_CHECKS.includes(name) && covered.has(name));
+    if (!twice.length) continue;
+    found.push({
+      check: "workflows",
+      file,
+      failsFrom: "0.25.0",
+      message: `${file} runs devkit's ${[...new Set(twice)].join(".yml, ")}.yml on pull requests, which pr.yml already runs: remove it, or drop its pull_request and merge_group triggers and keep only a schedule (dependencies' daily scan, a private repository's weekly no-bloat)`,
+    });
+  }
   return found;
+}
+
+/** The checks pr.yml runs in its one job; a call of it counts as each one its inputs leave on. */
+const PR_CHECKS = ["checks", "review", "dependencies", "workflow-audit", "no-bloat", "worker-size"];
+
+/** A workflow's `on:` block, or its whole text when it has none at the top level. @param {string} body */
+function onBlock(body) {
+  const at = body.search(/^on:/m);
+  return at < 0 ? body : body.slice(at + 3).split(/\n(?=\S)/)[0];
+}
+
+/**
+ * The checks the repository's calls of pr.yml cover, read from each call's `with:` inputs (a boolean input set to false
+ * turns its check off; `node: false` turns off no-bloat and worker-size, which run from the install).
+ * @param {{ file: string, text: string }[]} files @param {boolean} self devkit, which calls it by path
+ * @returns {Set<string>}
+ */
+export function prCovers(files, self) {
+  const call = self ? /uses:\s*\.\/\.github\/workflows\/pr\.ya?ml\b/ : /DrDustinEdwards\/devkit\/\.github\/workflows\/pr\.ya?ml@/i;
+  /** @type {Set<string>} */
+  const covered = new Set();
+  for (const { text: body } of files) {
+    if (!call.test(body)) continue;
+    const off = (/** @type {string} */ input) => new RegExp(`^\\s+${input}:\\s*["']?false["']?\\s*$`, "m").test(body);
+    for (const name of PR_CHECKS) {
+      const input = name === "checks" ? null : name;
+      if (input && off(input)) continue;
+      if ((name === "no-bloat" || name === "worker-size") && off("node")) continue;
+      covered.add(name);
+    }
+  }
+  return covered;
 }
 
 const TEST = /(^|\/)(test|tests|e2e|__tests__|test-integration)\/|\.(test|spec)\.[mc]?[jt]sx?$/;
