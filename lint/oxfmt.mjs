@@ -13,8 +13,8 @@
 // with: it is pre-1.0, so a new release may move formatting, and Renovate's "Oxc" group bumps it everywhere at once.
 
 /**
- * Every repository: Oxfmt's defaults, with build output, generated files and lockfiles left alone (`.no-bloat.json` is written by devkit-no-bloat; Oxfmt already
- * skips what .gitignore lists).
+ * Every repository: Oxfmt's defaults, with build output, generated files, lockfiles and `.no-bloat.json` (its writer,
+ * devkit-no-bloat --write-baseline, prints its own JSON) left alone. Oxfmt already skips what .gitignore lists.
  * @type {import("oxfmt").OxfmtConfig}
  */
 export const format = {
@@ -26,5 +26,6 @@ export const format = {
     "worker-configuration.d.ts",
     "**/*.gen.ts",
     "package-lock.json",
+    ".no-bloat.json",
   ],
 };
