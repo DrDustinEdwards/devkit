@@ -262,6 +262,7 @@ jobs:
             }
             secrets_file="$RUNNER_TEMP/generated-secrets.json"
             trap 'rm -f "$secrets_file"' EXIT
+            # shellcheck disable=SC2016 # the ${...} below are JavaScript template literals, not shell.
             HAVE="$have" node -e '
               const fs = require("fs");
               const crypto = require("crypto");

@@ -100,9 +100,7 @@ test("wrangler is pinned to one exact version, and the bookmark, the deploy and 
   const uses = [...code.matchAll(/wrangler@(\S+)/g)].map((m) => m[1]);
   assert.ok(uses.length >= 3);
   assert.deepEqual(new Set(uses), new Set(['${WRANGLER_VERSION}"']));
-});
-
-test("generated secrets go up with the code, deploy and gradual upload alike, and only names the Worker lacks", () => {
+  // Generated secrets go up with the code, deploy and gradual upload alike, and only names the Worker lacks.
   const deploy = step("Deploy");
   assert.match(deploy, /args=\(deploy --name "\$WORKER" "\$\{secret_args\[@\]\}"\)/);
   assert.match(deploy, /args=\(versions upload [^\n]*"\$\{secret_args\[@\]\}"\)/);
