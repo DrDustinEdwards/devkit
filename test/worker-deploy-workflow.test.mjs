@@ -71,7 +71,7 @@ test("the token is read-only", () => {
 });
 
 test("the inputs and the two secrets the job names", () => {
-  for (const input of ["worker-name", "health-url", "verify-command", "node-version-file", "working-directory", "pre-deploy"]) {
+  for (const input of ["worker-name", "health-url", "verify-command", "node-version-file", "working-directory", "pre-deploy", "generated-secrets"]) {
     assert.match(text, new RegExp(`\\n {6}${input}:\\n`), input);
   }
   for (const secret of ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"]) {
@@ -100,6 +100,14 @@ test("wrangler is pinned to one exact version, and the bookmark, the deploy and 
   const uses = [...code.matchAll(/wrangler@(\S+)/g)].map((m) => m[1]);
   assert.ok(uses.length >= 3);
   assert.deepEqual(new Set(uses), new Set(['${WRANGLER_VERSION}"']));
+});
+
+test("generated secrets go up with the code, deploy and gradual upload alike, and only names the Worker lacks", () => {
+  const deploy = step("Deploy");
+  assert.match(deploy, /args=\(deploy --name "\$WORKER" "\$\{secret_args\[@\]\}"\)/);
+  assert.match(deploy, /args=\(versions upload [^\n]*"\$\{secret_args\[@\]\}"\)/);
+  assert.match(deploy, /if \(have\.has\(name\)\) continue;/, "a secret the Worker holds would be replaced");
+  assert.match(deploy, /::add-mask::/);
 });
 
 test("caller input reaches a shell only through the environment, never spliced into the script", () => {
