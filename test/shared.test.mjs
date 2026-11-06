@@ -6,7 +6,7 @@ import { delimiter, dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, lockDisagrees, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
+import { WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkJobs, checkLibraries, checkPins, lockDisagrees, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -546,7 +546,7 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
   assert.ok(errors.includes(`::error file=src/app.css,line=2::[tokens] --page-max is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"`));
   assert.ok(errors.includes("::error file=src/index.ts,line=2::[copies] slugify is a local copy of Prelum ./slug slugify: import it"));
   assert.ok(site.lines.includes('::warning file=.shared.json::[config] "copies" "src/gone.ts" excuses nothing in this run: remove it'));
-  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: \d+ to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, ai 0, config 1\)/);
+  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: \d+ to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, ai 0, jobs 0, config 1\)/);
   assert.match(readFileSync(summary, "utf8"), /^### Shared-code check\n\npins 0, copies 1,/);
 
   // Prelum checking itself: its own export is its API, not a copy.
@@ -556,4 +556,28 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
 
   const local = run([]);
   assert.ok(local.lines.includes("::warning::[config] not installed here: site-runtime, site-api, d1-dump, devkit, capsomer, enarratio, so copies of their exports and Capsomer's tokens were not checked and no exception was judged stale; npm install, or --from <dir> of checkouts (CI reads them all)"));
+});
+
+test("PLANT: an MCP tool for a job another owner holds fails, renamed or not; the owner's own, a site's own job and an excused tool pass", () => {
+  const tools = [
+    'import { adminMcpWorker } from "@dustinedwards/site-runtime/admin-mcp";',
+    "export const TOOLS = [",
+    '  { name: "site_backup_media", config: { title: "Back up now" }, handler: (env) => operate(env, "backup_media") },',
+    '  { name: "site_sync_files", config: { title: "Copy the files now" }, handler: (env) => api(env, { path: "/backup/media" }) },',
+    '  { name: "site_save_post", config: { title: "Save a post" }, handler: (env) => api(env, { path: "/posts" }) },',
+    '  { name: "site_get_health", config: { title: "Read the platform snapshot" }, handler: (env) => api(env, { path: "/health" }) },',
+    '  { name: "site_publish_club_pick", config: { title: "Publish a club pick" }, handler: (env) => api(env, { path: "/clubs/picks" }) },',
+    "];",
+  ].join("\n");
+  const files = { "package.json": "{}", "mcp/package.json": "{}", "mcp/src/tools.ts": tools };
+  assert.deepEqual(
+    checkJobs(tree(files), {}, "site").map((f) => `${f.file}:${f.line} ${f.message.split(",")[0]} ${isWarning(f, "0.24.0")} ${isWarning(f, "0.25.0")}`),
+    [
+      "mcp/src/tools.ts:3 site_backup_media serves backups true false",
+      "mcp/src/tools.ts:4 site_sync_files serves backups true false",
+      "mcp/src/tools.ts:5 site_save_post serves writing false false",
+    ],
+  );
+  assert.deepEqual(checkJobs(tree(files), {}, "carrel").map((f) => f.message.split(",")[0]), ["site_backup_media serves backups", "site_sync_files serves backups"]);
+  assert.deepEqual(checkJobs(tree(files), { copies: { "mcp/src/tools.ts#site_save_post": "why" } }, "site").length, 2);
 });
