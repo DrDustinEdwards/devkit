@@ -7,6 +7,7 @@
 - devkit formats itself with it (`oxfmt.config.ts`, `npm run format:check` in CI). The reformat is its own commit, listed in `.git-blame-ignore-revs`.
 - `./oxlint`, from the first repositories on it: `ignorePatterns` is its own export, which a repository's config sets itself, because Oxlint 1.92 does not carry `ignorePatterns` through `extends` (`base`'s list did nothing; capsid's tracked `worker-configuration.d.ts` was linted). `typescript/no-non-null-assertion` is off (typescript-eslint keeps it in `strict`; 1,600 findings in capsid and site-api, mostly tests, none a bug) and `react/only-export-components` is off (Fast Refresh only). `react` keeps jsx-a11y's correctness rules less `prefer-tag-over-role`, `control-has-associated-label` and `media-has-caption`, which flagged correct markup on dustinedwards-info (reasons in the file). README notes that an override setting a plugin's rules lists that plugin.
 - `default.json`: `oxlint`, `oxlint-tsgolint` and `oxfmt` move as one "Oxc" update, since every repository pins oxlint and tsgolint together at devkit's peer versions.
+- A test runs the README's `.claude/settings.json` block as Claude Code does: it blocks every call but `npm ci` or `npm install` until devkit is installed, then runs the shared hook.
 
 ## 0.23.1 (2026-11-06)
 
