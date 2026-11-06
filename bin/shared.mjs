@@ -179,7 +179,10 @@ export const LIBRARIES = [
   { find: /^jose$/, use: "site-runtime ./access and ./access-login" },
 ];
 
-/** Local names for something a shared package exports under another name. */
+/**
+ * Local names for something a shared package exports under another name.
+ * @type {Readonly<Record<string, string>>}
+ */
 export const ALIASES = {
   xmlEscape: "escapeXml",
   escXml: "escapeXml",
@@ -1018,7 +1021,9 @@ export function checkSpelling(root, config, fix = false, names = true) {
 
 /** codespell from PATH, else through pipx at a pinned version. Its own exit code says only whether it found something. */
 function codespell(/** @type {string[]} */ args, /** @type {string} */ cwd) {
-  for (const [cmd, pre] of [["codespell", []], ["pipx", ["run", "codespell==2.4.3"]]]) {
+  /** @type {[string, string[]][]} */
+  const runners = [["codespell", []], ["pipx", ["run", "codespell==2.4.3"]]];
+  for (const [cmd, pre] of runners) {
     const run = spawnSync(cmd, [...pre, ...args], { cwd, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
     if (run.error) continue;
     if (run.status !== 0 && run.status !== 65) throw new Error(`codespell failed: ${run.stderr.trim()}`);
@@ -1151,8 +1156,8 @@ async function main(/** @type {string[]} */ argv) {
     process.stdout.write(listMarkdown(readCatalog(locate).packages));
     return 0;
   }
-  /** @type {Config} */
   const configFile = existsSync(join(root, ".shared.json")) ? ".shared.json" : null;
+  /** @type {Config} */
   const config = configFile ? JSON.parse(readFileSync(join(root, configFile), "utf8")) : {};
   validateConfig(config);
   const tree = gitTree(root);

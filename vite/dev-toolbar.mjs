@@ -20,7 +20,7 @@ const CLIENT = new URL("./dev-toolbar-client.mjs", import.meta.url);
 /** One line of classic script that loads the toolbar, for a page whose only script is not a module. */
 export const TOOLBAR_LOADER = `;(()=>{const s=document.createElement("script");s.type="module";s.src=${JSON.stringify(TOOLBAR_PATH)};document.head.append(s)})();`;
 
-/** Serves the toolbar and axe-core under /@devkit/ on a dev server's middleware. */
+/** Serves the toolbar and axe-core under /@devkit/ on a dev server's middleware. @param {import("vite").ViteDevServer} server */
 export function serveToolbar(server) {
   server.middlewares.use(TOOLBAR_PATH, (_req, res) => {
     res.setHeader("Content-Type", "text/javascript");
@@ -39,6 +39,7 @@ export function serveToolbar(server) {
   });
 }
 
+/** @returns {import("vite").Plugin} */
 export function devToolbar() {
   return {
     name: "devkit-dev-toolbar",

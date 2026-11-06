@@ -286,8 +286,11 @@ export function measure(config, run, jscpdConfigured = true, source = { list: ()
 export function compare(baseline, counts, config = {}) {
   /** @type {Array<[string, string, number | null, number]>} */
   const rows = [];
+  /** @type {string[]} */
   const errors = [];
+  /** @type {string[]} */
   const warnings = [];
+  /** @type {string[]} */
   const lowered = [];
   const knipRuns = config.knip ?? [{ label: "knip" }];
   const before = (/** @type {string} */ tool) => /** @type {Record<string, number> | null} */ (tool in baseline ? baseline[tool] : null);

@@ -2,6 +2,7 @@
 // other path answers 200 when DRILL_MODE is "good" and 500 otherwise. The committed config deploys it "bad", so the
 // drill's planted deploy is refused by the live gate; the drill's first job deploys it "good" with a stand-in commit.
 export default {
+  /** @param {Request} request @param {{ DEPLOY_SHA?: string, DRILL_MODE?: string }} env */
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
     if (pathname === "/health") return Response.json({ ok: true, sha: env.DEPLOY_SHA ?? "unknown" });

@@ -123,13 +123,14 @@ async function main() {
 
   const token = process.env.LIVE_GITHUB_TOKEN || undefined;
   let repos;
-  if (values.from) {
-    repos = readdirSync(values.from).filter((name) => existsSync(join(values.from, name, ".git"))).sort();
+  const { from } = values;
+  if (from) {
+    repos = readdirSync(from).filter((name) => existsSync(join(from, name, ".git"))).sort();
   } else {
     try {
       repos = await ownerRepos(token);
     } catch (error) {
-      console.log(`::error title=devkit-copies::could not list the repositories: ${error.message}`);
+      console.log(`::error title=devkit-copies::could not list the repositories: ${error instanceof Error ? error.message : String(error)}`);
       process.exit(2);
     }
   }
@@ -140,7 +141,8 @@ async function main() {
       try {
         execFileSync("git", ["clone", "--quiet", "--depth", "1", `https://github.com/${OWNER}/${repo}`, checkout], { stdio: "pipe", env: gitAuthEnv(token) });
       } catch (error) {
-        const why = String(error.stderr ?? error.message).trim().split("\n").at(-1);
+        const failure = /** @type {{ stderr?: Buffer, message?: string }} */ (error);
+        const why = String(failure.stderr ?? failure.message).trim().split("\n").at(-1);
         console.log(`::error title=devkit-copies::could not clone ${repo}: ${why}${token ? " (LIVE_GITHUB_TOKEN needs Contents read on every repository)" : ""}`);
         process.exit(2);
       }

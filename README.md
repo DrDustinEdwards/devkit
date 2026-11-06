@@ -20,6 +20,7 @@ Shared tooling for the Dustin Edwards repositories, public so private repositori
   - `bump-consumers.yml`: a package repository calls it on a tag push; it starts a Renovate run in every repository whose `package.json` depends on that package. It needs the `RENOVATE_TRIGGER_TOKEN` secret described in its header.
 - `testing/` and `bin/`: the package (`@dustinedwards/devkit`): shared test helpers and shared checks. See below.
 - `test/`: CI runs these (`npm test`).
+- `tsconfig.json`: CI's typecheck (`npm run typecheck`, strict, `checkJs`, Node and DOM types): the package (`testing/`, `vite/`) against its `.d.mts`, the bins and the scripts. Not checked yet: `test/`, `bin/live.mjs`, `bin/a11y.mjs`, `bin/a11y-judge.mjs`, `vite/dev-toolbar-client.mjs` and `scripts/fakes-contract.mjs`.
 
 ## The shared checks
 

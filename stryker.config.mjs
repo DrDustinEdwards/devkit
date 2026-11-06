@@ -12,7 +12,10 @@
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
-/** Each module's bar, in percent: the score it reached, rounded down, so a module only climbs. */
+/**
+ * Each module's bar, in percent: the score it reached, rounded down, so a module only climbs.
+ * @type {Readonly<Record<string, number>>}
+ */
 export const BARS = {
   "bin/bootstrap": 47,
   "bin/check-trailers": 70,
