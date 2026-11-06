@@ -1532,7 +1532,7 @@ export const JOBS = [
     repo: "capsid",
     words: /\bback ?ups?\b/,
     use: "capsid_admin_run_controls control site_backup, and capsid_admin_read_ops action backups",
-    failsFrom: "0.26.0",
+    failsFrom: "0.28.0",
   },
   {
     job: "media",
@@ -1540,7 +1540,7 @@ export const JOBS = [
     repo: "carrel",
     words: /\b(?:media|images?|photos?|uploads?)\b/,
     use: "carrel_import_media and carrel_delete_media",
-    failsFrom: "0.26.0",
+    failsFrom: "0.28.0",
   },
   {
     job: "writing",
@@ -1555,7 +1555,7 @@ export const JOBS = [
     repo: "carrel",
     words: /\b(?:web ?)?mentions?\b/,
     use: "Carrel's mention moderation over site-api's mentions group",
-    failsFrom: "0.26.0",
+    failsFrom: "0.28.0",
   },
   {
     job: "site checks and drift repair",
@@ -1563,7 +1563,7 @@ export const JOBS = [
     repo: "capsid",
     words: /\bdrift\b|\brepairs?\b|\bcheck (?:the )?site\b/,
     use: "capsid_admin_run_controls control site_repair",
-    failsFrom: "0.26.0",
+    failsFrom: "0.28.0",
   },
 ];
 /** The jobs another check holds, for the table in SHARED.md. */
