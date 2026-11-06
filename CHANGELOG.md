@@ -3,6 +3,7 @@
 ## 0.24.0 (2026-11-06)
 
 - `devkit-shared`: an app with a `send_email` binding in its wrangler config must send through site-runtime's `./email` (`sendEmail`), the `email` row of SHARED.md's feature table. Each site had wrapped the binding itself, with its own share of the guards `./email` holds for all (an address with a line break refused, sign-in links and recipients cut out of a logged error); the name-based copy check could not see a wrapper written fresh. Waive with `waive: { email: "..." }`.
+- A test runs the README's `.claude/settings.json` block as Claude Code does: it blocks every call but `npm ci` or `npm install` until devkit is installed, then runs the shared hook.
 
 ## 0.23.1 (2026-11-06)
 
