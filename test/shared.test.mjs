@@ -6,7 +6,7 @@ import { delimiter, dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkPins, lockDisagrees, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
+import { LINT_SCRIPT, WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkLint, checkPins, lockDisagrees, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -546,7 +546,7 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
   assert.ok(errors.includes(`::error file=src/app.css,line=2::[tokens] --page-max is Capsomer's: set it there (its site layer for this site's own look), or say why in .shared.json "tokens"`));
   assert.ok(errors.includes("::error file=src/index.ts,line=2::[copies] slugify is a local copy of Prelum ./slug slugify: import it"));
   assert.ok(site.lines.includes('::warning file=.shared.json::[config] "copies" "src/gone.ts" excuses nothing in this run: remove it'));
-  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: \d+ to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, ai 0, config 1\)/);
+  assert.match(site.lines.at(-1) ?? "", /^devkit-shared: \d+ to fix \(pins 0, copies 1, libraries 0, features 0, tokens 1, spelling 0, workflows \d+, fakes 0, ai 0, lint \d+, config 1\)/);
   assert.match(readFileSync(summary, "utf8"), /^### Shared-code check\n\npins 0, copies 1,/);
 
   // Prelum checking itself: its own export is its API, not a copy.
@@ -556,4 +556,31 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
 
   const local = run([]);
   assert.ok(local.lines.includes("::warning::[config] not installed here: site-runtime, site-api, d1-dump, devkit, capsomer, enarratio, so copies of their exports and Capsomer's tokens were not checked and no exception was judged stale; npm install, or --from <dir> of checkouts (CI reads them all)"));
+});
+
+test("PLANT: a repository off the shared Oxlint config is told each missing piece, as a warning until 0.25.0; the shared setup passes", () => {
+  const good = {
+    "app/root.tsx": "export default function App() {}",
+    "oxlint.config.ts": 'import { base, react } from "@dustinedwards/devkit/oxlint";',
+    "package.json": JSON.stringify({ scripts: { lint: LINT_SCRIPT } }),
+    ".github/workflows/ci.yml": "steps:\n  - run: npm run lint\n",
+  };
+  assert.deepEqual(checkLint(tree(good), {}), []);
+  const bad = checkLint(
+    tree({
+      "app/root.tsx": good["app/root.tsx"],
+      "oxlint.config.ts": 'import { defineConfig } from "oxlint";',
+      "biome.json": "{}",
+      "apps/mobile/eslint.config.js": "",
+      "package.json": JSON.stringify({ scripts: { lint: "biome check ." } }),
+      ".github/workflows/ci.yml": "steps:\n  - run: npm run lint:cf # npm run lint\n",
+    }),
+    {},
+  );
+  assert.deepEqual(
+    bad.map((f) => f.file),
+    ["oxlint.config.ts", "biome.json", "apps/mobile/eslint.config.js", "package.json", ".github/workflows"],
+  );
+  assert.ok(bad.every((f) => isWarning(f, "0.24.0") && !isWarning(f, "0.25.0")));
+  assert.deepEqual(checkLint(tree({ "README.md": "" }), {}), [], "no JavaScript or TypeScript, nothing to lint");
 });

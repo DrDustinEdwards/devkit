@@ -31,6 +31,10 @@
 //              call or reranker with no timeout (C2, C13), JSON cut out of a model's free text (C6), a prompt's own dash
 //              rule instead of WRITING_RULES (W5), a routine fired outside fireOnce (R2); and in pins, an MCP server's
 //              site-runtime more than one minor behind the newest release (S7);
+//   lint       a repository with JavaScript or TypeScript off the shared Oxlint config: no root oxlint.config.ts that
+//              extends @dustinedwards/devkit/oxlint, a linter config of its own (eslint.config.*, .eslintrc*, biome.json,
+//              .oxlintrc.json), a root `lint` script other than LINT_SCRIPT, or no workflow running `npm run lint`
+//              (a warning until 0.25.0, while the repositories move);
 //   config     .shared.json itself: an unknown key or kind stops the check (exit 2), and an exception that excused
 //              nothing in this run is a warning.
 //
@@ -806,6 +810,37 @@ export function checkWorkflows(tree, config, repo = {}) {
   return found;
 }
 
+/** The one `lint` script every repository runs (README, "The shared lint config"). */
+export const LINT_SCRIPT = "oxlint --type-aware --deny-warnings --report-unused-disable-directives-severity=error";
+/** A linter config of a repository's own, which the shared one replaces. */
+const OWN_LINT_CONFIG = /(^|\/)(eslint\.config\.[mc]?[jt]s|\.eslintrc(\.[\w]+)?|biome\.jsonc?|\.oxlintrc\.jsonc?)$/;
+const LINT_FAILS_FROM = "0.25.0";
+
+/**
+ * A repository with JavaScript or TypeScript runs the shared Oxlint config, the same way everywhere: a root
+ * oxlint.config.ts extending @dustinedwards/devkit/oxlint (devkit's own imports ./lint/oxlint.mjs), no linter config of
+ * its own, the shared `lint` script, and a workflow that runs it. A nested oxlint.config.ts (foxing's apps/mobile) is a
+ * part's own additions and is allowed.
+ * @param {Tree} tree @param {Config} config @param {string} [self] the shared package's repository, if it is one
+ * @returns {Finding[]}
+ */
+export function checkLint(tree, config, self) {
+  if (excused(config, "waive", "lint") || !tree.files.some((f) => SOURCE.test(f) && !NOT_SOURCE.test(f))) return [];
+  /** @type {Finding[]} */
+  const found = [];
+  const add = (/** @type {string} */ file, /** @type {string} */ message) => found.push({ check: "lint", file, failsFrom: LINT_FAILS_FROM, message });
+  const root = tree.files.find((f) => /^oxlint\.config\.[mc]?ts$/.test(f));
+  const shared = self === "devkit" ? /from\s+["']\.\/lint\/oxlint\.mjs["']/ : /from\s+["']@dustinedwards\/devkit\/oxlint["']/;
+  if (!root) add("oxlint.config.ts", "no root oxlint.config.ts: extend @dustinedwards/devkit/oxlint (README, \"The shared lint config\")");
+  else if (!shared.test(tree.read(root))) add(root, `${root} does not extend @dustinedwards/devkit/oxlint: import base (and react, node) from it`);
+  for (const file of tree.files.filter((f) => OWN_LINT_CONFIG.test(f) && !NOT_SOURCE.test(f))) add(file, `a linter config of its own: the shared Oxlint config replaces it; delete ${file} and move what it needs into oxlint.config.ts`);
+  const pkg = tree.files.includes("package.json") ? JSON.parse(tree.read("package.json")) : {};
+  if (pkg.scripts?.lint !== LINT_SCRIPT) add("package.json", `the root "lint" script is ${pkg.scripts?.lint === undefined ? "missing" : `"${pkg.scripts.lint}"`}: make it "${LINT_SCRIPT}"`);
+  const workflows = tree.files.filter((f) => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(f)).map((f) => tree.read(f).replace(/(^|\s)#.*$/gm, "$1"));
+  if (!workflows.some((t) => /\bnpm run lint(?![\w:.-])/.test(t))) add(".github/workflows", "no workflow runs `npm run lint`: add a Lint step to CI after the typecheck");
+  return found;
+}
+
 const TEST = /(^|\/)(test|tests|e2e|__tests__|test-integration)\/|\.(test|spec)\.[mc]?[jt]sx?$/;
 const FETCH_SWAP = String.raw`(?:globalThis\.fetch\s*=|stubGlobal\(\s*["'\x60]fetch["'\x60]\s*,|defineProperty\(\s*globalThis\s*,\s*["'\x60]fetch["'\x60]\s*,\s*\{\s*value\s*:|spyOn\(\s*globalThis\s*,\s*["'\x60]fetch["'\x60]\s*\)\s*\.mock\w*\()`;
 const DELETE_ALL = String.raw`DELETE FROM\s+["'\x60]?[\w$]+["'\x60]?(?=\s*(?:["'\x60;),]|$))`;
@@ -1123,6 +1158,7 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
     ...Object.entries(ADVISORIES).map(([f, { kinds, use }]) => `| ${f} (a warning) | ${kinds.join(", ")} | ${use} |`),
     `| backup | any app with a D1 database | ${BACKUP.use} |`,
     `| assetCache | any React Router app (/assets/*, and /islands/* with devkit ./islands) | ${ASSET_CACHE.use} |`,
+    `| lint | every repository with JavaScript or TypeScript | devkit ./oxlint in a root oxlint.config.ts, the \`lint\` script \`${LINT_SCRIPT}\`, and \`npm run lint\` in CI |`,
   ];
   for (const p of packages) {
     lines.push("", `## ${p.label} ${p.version} (DrDustinEdwards/${p.repo})`, "");
@@ -1200,6 +1236,7 @@ async function main(/** @type {string[]} */ argv) {
     ...checkWorkflows(tree, config, { self: self?.repo, private: event.repository?.private }),
     ...checkFakes(tree, config, self?.label),
     ...checkAi(tree, config, self?.label),
+    ...checkLint(tree, config, self?.repo),
   ];
   if (missing.length) {
     const tokens = missing.includes("capsomer") && self?.repo !== "capsomer" ? " and Capsomer's tokens" : "";
@@ -1212,7 +1249,7 @@ async function main(/** @type {string[]} */ argv) {
     const where = f.file ? ` file=${f.file}${f.line ? `,line=${f.line}` : ""}` : "";
     console.log(`::${isWarning(f) ? "warning" : "error"}${where}::[${f.check}] ${f.message}`);
   }
-  const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling", "workflows", "fakes", "ai", "config"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
+  const counts = ["pins", "copies", "libraries", "features", "tokens", "spelling", "workflows", "fakes", "ai", "lint", "config"].map((c) => `${c} ${findings.filter((f) => f.check === c).length}`).join(", ");
   console.log(errors.length ? `devkit-shared: ${errors.length} to fix (${counts}). What the packages export: npx devkit-shared list` : `devkit-shared: uses the shared code (${counts}).`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Shared-code check\n\n${counts}\n`);
   return errors.length ? 1 : 0;

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.24.0 (2026-11-06)
+
+- `devkit-shared` (lint, new): a repository with JavaScript or TypeScript runs the shared Oxlint config the same way everywhere: a root `oxlint.config.ts` extending `@dustinedwards/devkit/oxlint`, no `eslint.config.*`, `.eslintrc*`, `biome.json` or `.oxlintrc.json` of its own, the root `lint` script `oxlint --type-aware --deny-warnings --report-unused-disable-directives-severity=error`, and a workflow running `npm run lint`. Each missing piece is a warning in this release and fails from 0.25.0, while the repositories move (one PR each). `devkit-shared list` has a `lint` row. A nested config for one part is allowed; `.shared.json` "waive" "lint" exempts a repository.
+- `default.json`: `oxlint`, `oxlint-tsgolint` and `oxfmt` move as one "Oxc" update, since every repository pins oxlint and tsgolint together at devkit's peer versions.
+
 ## 0.23.0 (2026-11-06)
 
 - `claude/hooks/`: the network's Claude Code hooks, `no-em-dash.sh` and `scoped-git-add.sh`, in the package, one copy for every repository. Ten repositories (capsid, capsomer, dustinedwards-info, enarratio, foxhound, foxing, germomics, julieedwards-info, txasm, bsw) each kept a byte-identical copy in `.claude/hooks/`, which the copy scan never read because jscpd skips dot-folders. A repository runs them from `node_modules/@dustinedwards/devkit/claude/hooks` through `.claude/settings.json`; the settings block, which also fails closed before `npm ci`, is in README, "The shared Claude Code hooks". The hooks are unchanged apart from a header note.
