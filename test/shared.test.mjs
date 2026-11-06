@@ -146,16 +146,16 @@ test("a wrapped library in a site's manifest is refused unless waived with a rea
   assert.deepEqual(checkLibraries(tree(others), {}), []);
 });
 
-test("each app is checked for its kind's features, files belong to the deepest app, and a D1 database needs the dump", () => {
+test("each app is checked for its kind's features, files belong to the deepest app, a D1 database needs the dump and a send_email binding ./email", () => {
   const found = checkFeatures(
     tree({
       "app/robots.ts": 'import { robotsDocument } from "@drdustinedwards/site-helpers/robots";',
-      "wrangler.jsonc.example": '{ "d1_databases": [] }',
+      "wrangler.jsonc.example": '{ "d1_databases": [], "send_email": [{ "name": "EMAIL" }] }',
       "mcp/src/index.ts": 'import { buildSecurityHeaders } from "@dustinedwards/site-runtime/headers";',
     }),
     { apps: { ".": "site", mcp: "worker" }, waive: { aiTxt: "x", tdm: "x", sitemap: "x", llms: "x", head: "x", schema: "x", indexnow: "x", securityTxt: "x", csp: "x", cspReport: "x", health: "x", capsomer: "x", a11y: "x" } },
   );
-  assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth"]);
+  assert.deepEqual(found.map((f) => f.message), ["site has no headers: site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)", ". has a D1 database and no nightly dump: d1-dump runCheckedBackup and backupHealth", ". has a send_email binding and sends without site-runtime ./email sendEmail"]);
 });
 
 test("PLANT: a React Router app without a year on its hashed files fails, and passes once _headers gives them one", () => {

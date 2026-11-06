@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.23.0 (2026-11-06)
 
+- `devkit-shared`: an app with a `send_email` binding in its wrangler config must send through site-runtime's `./email` (`sendEmail`), the `email` row of SHARED.md's feature table. Each site had wrapped the binding itself, with its own share of the guards `./email` holds for all (an address with a line break refused, sign-in links and recipients cut out of a logged error); the name-based copy check could not see a wrapper written fresh. Waive with `waive: { email: "..." }`.
 - `devkit-ops-audit --path <dir>`: H4 compares `/health`'s `sha` with the newest commit on the branch that touched the directory, not the branch head. An admin MCP Worker in `mcp/` deploys only when `mcp/` changes, so a web-only commit (Foxing #252, fonts) made H4 fail on `foxing-mcp` for good. `live/areas.json` passes `--path mcp` for `foxhound-mcp`, `foxing-mcp`, `germomics-mcp` and `dustinedwards-mcp`.
 
 - `@dustinedwards/devkit/oxlint`: the shared Oxlint config (step 1 of the lint unification: Oxlint everywhere, type-aware through oxlint-tsgolint). `base`, `react` and `node`, plain config objects a repository's `oxlint.config.ts` extends, the way Oxlint's docs give for sharing a config from a package; README, "The shared lint config". `oxlint` 1.92.0 and `oxlint-tsgolint` 7.0.2006 are optional peer dependencies. The four type-aware rules dustinedwards-info turned off locally that stay off for everyone, and the four that come back on, are decided in `lint/oxlint.mjs` with the counts behind them. `test/oxlint.test.mjs` proves the export loads and that a dropped promise, a conditional hook and a restricted import are flagged.

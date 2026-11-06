@@ -125,6 +125,7 @@ export function cachesHashed(/** @type {string} */ headers, /** @type {string} *
 
 /** A D1 database needs the nightly dump, whatever the kind. */
 const BACKUP = { find: /@dustinedwards\/d1-dump["']/, use: "d1-dump runCheckedBackup and backupHealth" };
+const EMAIL = { find: /@dustinedwards\/site-runtime\/email["']/, use: "site-runtime ./email sendEmail" };
 
 /** Text only a shared builder should write. */
 export const FINGERPRINTS = [
@@ -709,6 +710,12 @@ export function checkFeatures(tree, config, now = Date.now()) {
     if (d1 && kind !== "package" && !BACKUP.find.test(text) && !excused(config, "waive", `${prefix}backup`)) {
       found.push({ check: "features", file: dir, message: `${dir} has a D1 database and no nightly dump: ${BACKUP.use}` });
     }
+    // Every mail goes through ./email, which refuses an address with a line break and cuts sign-in links out of errors;
+    // an app that calls its send_email binding itself has none of that.
+    const mail = mine.some((f) => /(^|\/)wrangler[^/]*\.jsonc?(\.example)?$/.test(f) && /"send_email"/.test(tree.read(f)));
+    if (mail && kind !== "package" && !EMAIL.find.test(text) && !excused(config, "waive", `${prefix}email`)) {
+      found.push({ check: "features", file: dir, message: `${dir} has a send_email binding and sends without ${EMAIL.use}` });
+    }
     // A Carrel site (it calls createSiteApi) tells IndexNow about each publish and schedule through site-api's hook. A
     // createSiteApi without it either tells nobody, or hands its own submitIndexNow to onPageChange (site-api v0.9.0's way, gone after v0.21.0).
     const indexnow = FEATURES.indexnow;
@@ -1112,6 +1119,7 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
     ...Object.entries(FEATURES).map(([f, { kinds, use }]) => `| ${f} | ${kinds.join(", ")} | ${use} |`),
     ...Object.entries(ADVISORIES).map(([f, { kinds, use }]) => `| ${f} (a warning) | ${kinds.join(", ")} | ${use} |`),
     `| backup | any app with a D1 database | ${BACKUP.use} |`,
+    `| email | any app with a send_email binding | ${EMAIL.use} |`,
     `| assetCache | any React Router app (/assets/*, and /islands/* with devkit ./islands) | ${ASSET_CACHE.use} |`,
   ];
   for (const p of packages) {
