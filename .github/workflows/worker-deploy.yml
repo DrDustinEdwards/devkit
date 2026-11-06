@@ -93,6 +93,11 @@ on:
         required: false
         type: string
         default: ""
+      warm:
+        description: Fetch every sitemap page once after the gate passes ("Warm the stored pages"), inside the live gate. false ends the gate as soon as it passes, so the caller's jobs that need it (e2e, a second Worker) start sooner, and their first reads are renders; such a caller warms where nothing waits on it (`npx devkit-warm <origin>`), or not at all.
+        required: false
+        type: boolean
+        default: true
       drill:
         description: The rollback drill (rollback-drill.yml) only. The live gate's failure does not fail the caller's run, since a drill plants a deploy the gate must refuse; the drill's own verdict job judges what happened. Never set it on a real deploy.
         required: false
@@ -175,6 +180,8 @@ jobs:
         with:
           persist-credentials: false
 
+      # No dependency cache in any job here: each holds the deploy secrets, and a cache restored from the repository's
+      # shared Actions cache is a path for code from a less trusted run into this one (cache poisoning).
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: ${{ inputs.node-version-file }}
@@ -586,9 +593,11 @@ jobs:
       # Every deploy starts the edge cache cold (the Worker version is in its key), so once the gate passes, each page in
       # the sitemap at the health route's origin is fetched once: the cache tiers store it, and the first reader gets a
       # stored page rather than a render. A site with no sitemap warms nothing. Never fails the deploy. bin/warm.mjs is the
-      # same loop for sites that deploy outside this workflow; change both.
+      # same loop for sites that deploy outside this workflow; change both. A job that needs this workflow waits for it,
+      # 1 to 2 minutes on a large sitemap (Foxing), so `warm: false` lets a caller warm off that path. Not a separate job:
+      # a caller's `needs:` waits for every job of a called workflow, so that would add a runner and save no time.
       - name: Warm the stored pages
-        if: success()
+        if: success() && inputs.warm
         env:
           HEALTH_URL: ${{ inputs.health-url }}
         run: |

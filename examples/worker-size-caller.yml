@@ -22,3 +22,8 @@ jobs:
     with:
       # A repository that commits only wrangler.jsonc.example gives the dry run a config; omit otherwise.
       prepare: cp wrangler.jsonc.example wrangler.jsonc
+      # A repository with more than one Worker lists them here, in one job with one install, instead of one job each
+      # (prepare and working-directory above then apply to none of them):
+      # workers: >-
+      #   [{ "name": "site", "prepare": "cp wrangler.jsonc.example wrangler.jsonc && npm run build" },
+      #    { "name": "mcp", "working-directory": "mcp", "prepare": "npm ci --prefix mcp" }]
