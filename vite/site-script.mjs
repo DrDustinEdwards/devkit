@@ -166,22 +166,27 @@ export function siteScript({ entry = "app/site.ts", islands = "app/islands", too
     configureServer(server) {
       if (toolbar) serveToolbar(server);
       if (entry) {
-        server.middlewares.use("/site.js", async (_req, res) => {
+        /** @type {(res: import("node:http").ServerResponse) => Promise<void>} */
+        const serveSite = async (res) => {
           res.setHeader("Content-Type", "text/javascript");
           res.end((await bundle(entry)) + (toolbar ? TOOLBAR_LOADER : ""));
-        });
+        };
+        server.middlewares.use("/site.js", (_req, res) => void serveSite(res));
       }
-      server.middlewares.use("/islands/", async (req, res) => {
+      /** @type {(req: import("node:http").IncomingMessage, res: import("node:http").ServerResponse) => Promise<void>} */
+      const serveIsland = async (req, res) => {
         const name = (req.url ?? "").replace(/^\//, "").replace(/\.js(?:\?.*)?$/, "");
         const file = islandFiles(islands).get(name);
         // Not handed on: Vite's page fallback would answer an unknown island with the HTML page.
         if (!file) {
           res.statusCode = 404;
-          return res.end(`no island named "${name}"`);
+          res.end(`no island named "${name}"`);
+          return;
         }
         res.setHeader("Content-Type", "text/javascript");
         res.end(await bundle(file, "es"));
-      });
+      };
+      server.middlewares.use("/islands/", (req, res) => void serveIsland(req, res));
     },
     async generateBundle() {
       if (this.environment.name !== "client") return;

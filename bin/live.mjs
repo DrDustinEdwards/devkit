@@ -140,7 +140,7 @@ export function lintConfig({ sites, areas, verdicts }) {
     for (const [cell, entry] of Object.entries(verdict.cells ?? {})) {
       if (cell !== "package" && !siteIds.has(cell)) problems.push(`the area ${verdict.area} verdict names unknown site ${cell}`);
       if (!VERDICTS.includes(entry.verdict)) problems.push(`the area ${verdict.area} verdict for ${cell} is ${entry.verdict}, not one of ${VERDICTS.join(", ")}`);
-      if (entry.verdict === "complete" && !(entry.evidence ?? []).some((url) => /^https:\/\//.test(url))) {
+      if (entry.verdict === "complete" && !(entry.evidence ?? []).some((url) => String(url).startsWith("https://"))) {
         problems.push(`the area ${verdict.area} verdict marks ${cell} complete with no evidence link`);
       }
     }

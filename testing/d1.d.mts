@@ -1,7 +1,7 @@
 /** The parts of a D1 binding `resetDb` uses. A `D1Database` fits. */
 export type D1Like = {
   prepare(sql: string): { all(): Promise<{ results: unknown[] }> };
-  batch(statements: any[]): Promise<unknown>;
+  batch(statements: unknown[]): Promise<unknown>;
 };
 
 /**

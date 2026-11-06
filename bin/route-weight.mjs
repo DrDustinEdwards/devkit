@@ -65,7 +65,7 @@ export function parseManifest(/** @type {string} */ text) {
  *   `hydrate: true` loads it in place of React
  * @returns {Row[]}
  */
-export function routeWeights(manifest, read, gzip, linkedCss = false, siteScript = undefined) {
+export function routeWeights(manifest, read, gzip, linkedCss = false, siteScript) {
   /** @type {Map<string, { bytes: Buffer, gzip: number }>} */
   const files = new Map();
   const file = (/** @type {string} */ url) => {

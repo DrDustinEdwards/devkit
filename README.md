@@ -18,9 +18,10 @@ Shared tooling for the Dustin Edwards repositories, public so private repositori
   - `release.yml`: a package repository's release. When `package.json`'s version on the default branch has no `v<version>` tag, it tags that commit and publishes a GitHub release with the version's CHANGELOG section (GitHub's generated notes when there is none), so merging the version bump is the release and nobody pushes a tag by hand. Its `created` output starts `bump-consumers.yml` (`examples/release-caller.yml`). devkit releases itself with it (`release-self.yml`), without the bump, which would need the token secret in devkit; Renovate finds the tag on its regular runs. Each release's `npm pack` tarball is attested (`actions/attest-build-provenance`) and attached to the release; `build: true` tags a release commit with the built files (Capsomer).
   - `scorecard.yml`: OpenSSF Scorecard for a public repository, published, uploaded to code scanning, and gated: it fails when the score falls below the last published one (`examples/scorecard-caller.yml`).
   - `bump-consumers.yml`: a package repository calls it on a tag push; it starts a Renovate run in every repository whose `package.json` depends on that package. It needs the `RENOVATE_TRIGGER_TOKEN` secret described in its header.
-- `testing/` and `bin/`: the package (`@dustinedwards/devkit`): shared test helpers and shared checks. See below.
+- `testing/`, `lint/` and `bin/`: the package (`@dustinedwards/devkit`): shared test helpers, the shared Oxlint config and shared checks. See below.
 - `test/`: CI runs these (`npm test`).
-- `tsconfig.json`: CI's typecheck (`npm run typecheck`, strict, `checkJs`, Node and DOM types): the package (`testing/`, `vite/`) against its `.d.mts`, the bins and the scripts. Not checked yet: `test/`, `bin/live.mjs`, `bin/a11y.mjs`, `bin/a11y-judge.mjs`, `vite/dev-toolbar-client.mjs` and `scripts/fakes-contract.mjs`.
+- `oxlint.config.ts`: devkit's own lint (`npm run lint`, in CI after the typecheck), with the shared config. See "The shared lint config".
+- `tsconfig.json`: CI's typecheck (`npm run typecheck`, strict, `checkJs`, Node and DOM types): the package (`testing/`, `lint/`, `vite/`) against its `.d.mts`, the bins and the scripts. Not checked yet: `test/`, `bin/live.mjs`, `bin/a11y.mjs`, `bin/a11y-judge.mjs`, `vite/dev-toolbar-client.mjs` and `scripts/fakes-contract.mjs`.
 
 ## The shared checks
 
@@ -137,13 +138,38 @@ Inputs: `coverage-command` (empty for no coverage), `coverage-file`, `mutation-c
 
 devkit maps itself the same way (`code-map-self.yml`), and once a week mutation-tests its own checks: `node stryker.config.mjs` runs Stryker 10.1.1 (through npx, so nothing is installed) once per module in `bin/` and `scripts/`, each against its own test file, and fails when a module's score falls below its bar in `stryker.config.mjs` (`thresholds.break`). One module: `MODULE=shared npx --package @stryker-mutator/core@10.1.1 stryker run`, report in `reports/mutation/shared.json`.
 
+## The shared lint config
+
+`@dustinedwards/devkit/oxlint` (`lint/oxlint.mjs`, typed by `lint/oxlint.d.mts`) is one Oxlint config for every repository: Oxlint, type-aware through oxlint-tsgolint, in place of ESLint and Biome's linter. It exports three plain config objects, which a repository's `oxlint.config.ts` extends. Oxlint's docs name this as the way to share a config from a package: "Use `oxlint.config.ts` when extending config objects imported from a shared package. Package imports are not supported in the `.oxlintrc.json` format." ([Configuration, Extend shared configs](https://oxc.rs/docs/guide/usage/linter/config.html#extend-shared-configs)). Configs merge first to last, so the repository's own `rules` and `overrides` after `extends` win.
+
+- `base`, every repository: the correctness category with the typescript, unicorn, oxc and import plugins; `typescript/no-floating-promises` (node:test's `test`, `describe`, `it` and `suite` allowed, since the runner awaits them), `typescript/no-misused-promises`, `typescript/no-explicit-any`, `typescript/no-non-null-assertion` and `eslint/prefer-const` at error; `build/`, `dist/`, `.react-router/`, `.wrangler/`, `worker-configuration.d.ts` and `**/*.gen.ts` ignored. Four type-aware correctness rules are off for everyone (`no-base-to-string`, `restrict-template-expressions`, `unbound-method`, `require-array-sort-compare`): each finding they made in dustinedwards-info and site-api was a value the checker could not narrow, not a bug. The counts are in the file.
+- `react`, a repository with React: base's plugins plus `react` and `jsx-a11y`; `react/rules-of-hooks`, `react/exhaustive-deps` and the native React Compiler rules at error; `react/only-export-components` allowing React Router's route module exports that are not components (`loader`, `action`, `meta`, `links`, `headers`, `handle`, `shouldRevalidate`, the client and middleware ones).
+- `node`, Node's globals, spread into an override.
+
+```ts
+// oxlint.config.ts
+import { defineConfig } from "oxlint";
+import { base, react, node } from "@dustinedwards/devkit/oxlint";
+
+export default defineConfig({
+  extends: [base, react],
+  overrides: [{ files: ["scripts/**", "bin/**", "test/**"], ...node }],
+});
+```
+
+```json
+"lint": "oxlint --type-aware --deny-warnings --report-unused-disable-directives-severity=error"
+```
+
+The repository adds `oxlint` and `oxlint-tsgolint` to its devDependencies at the versions devkit's `peerDependencies` name (1.92.0 and 7.0.2006; optional peers, so a repository that does not lint yet installs neither), and one CI step, `npm run lint`, after the typecheck where the typecheck generates types (`wrangler types`, `react-router typegen`), since the type-aware rules read them. `oxlint.config.ts` needs Node 22.18 or later. No `--tsconfig`: type-aware mode finds each file's tsconfig itself. `test/oxlint.test.mjs` runs Oxlint on a fixture that extends the export by its package name and must be flagged for exactly a dropped promise, a conditional hook and a restricted import (`eslint/no-restricted-imports` with `patterns`, as txasm's boundary will use it).
+
 ## The shared test helpers
 
 Test code that more than one repository needs, written once here. Installed by tag:
 
     "@dustinedwards/devkit": "github:DrDustinEdwards/devkit#v0.8.0"
 
-Only `testing/`, `vite/`, `bin/` and this README are in the package. No dependencies and no test framework: they run in node and in workerd.
+Only `testing/`, `lint/`, `vite/`, `bin/` and this README are in the package. No dependencies and no test framework: they run in node and in workerd. `oxlint` and `oxlint-tsgolint` are optional peer dependencies, for `./oxlint` only.
 
 - `@dustinedwards/devkit/github`: `stubGitHub({ owner, repo, branch, files, token })`, a fake of the GitHub contents and Git Data API at the outbound fetch. An unknown host or route throws, blob shas are real and tree and commit shas are 40 hex digits, a tree applies only when the ref moves, and the ref moves only forward: a commit whose parents do not reach the head answers 422 `Update is not a fast forward` unless `force`. Writes answer 201, `base_tree` and `?ref=` are honored, and a `Request` is read for its method, headers and body. With `token` the repository is private: no token answers 404 and another one 401. `failNext` plants 500s and `history` plants the commit listing. `install: false` hands back the fake as `fetch` instead of installing it globally. `gitBlobSha` and `versionOf` come with it.
 - `@dustinedwards/devkit/network`: `refuseNetwork({ hint })`, the global fetch that throws naming the URL, and `installFetch`, the swap under it and under the GitHub fake. Each returns its restore.
