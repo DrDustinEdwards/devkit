@@ -18,7 +18,7 @@ name: code-map
 # Every other run reads the kept mutation.json back from the branch: a function unchanged since keeps its numbers, and one that changed is marked stale. Capsid reads it with the contents permission its GitHub App already has. Only a public repository
 # calls this: Capsid refuses a map for one that is not.
 #
-# NOT A GATE. Callers run it nightly on their default branch (until 0.25.0, on every push to it), so a failure here is a
+# NOT A GATE. Callers run it nightly on their default branch (until 0.26.0, on every push to it), so a failure here is a
 # red run on main and never a red pull request.
 #
 # THE CALLER grants `contents: write` to its calling job (examples/code-map-caller.yml), because a called workflow holds no
