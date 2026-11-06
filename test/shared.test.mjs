@@ -6,7 +6,7 @@ import { delimiter, dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { LINT_SCRIPT, WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkLint, checkPins, lockDisagrees, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
+import { FORMAT_CHECK_SCRIPT, LINT_SCRIPT, WORKFLOWS, checkAi, checkCopies, checkFakes, checkFeatures, checkLibraries, checkLint, checkPins, lockDisagrees, checkSpelling, checkTokens, checkWorkflows, isWarning, newest, respell, staleExceptions } from "../bin/shared.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -558,12 +558,13 @@ test("PLANT: the bin reads every package's exports from --from checkouts, lists 
   assert.ok(local.lines.includes("::warning::[config] not installed here: site-runtime, site-api, d1-dump, devkit, capsomer, enarratio, so copies of their exports and Capsomer's tokens were not checked and no exception was judged stale; npm install, or --from <dir> of checkouts (CI reads them all)"));
 });
 
-test("PLANT: a repository off the shared Oxlint config is told each missing piece, as a warning until 0.25.0; the shared setup passes", () => {
+test("PLANT: a repository off the shared Oxlint or Oxfmt config is told each missing piece, as a warning until 0.25.0; the shared setup passes", () => {
   const good = {
     "app/root.tsx": "export default function App() {}",
     "oxlint.config.ts": 'import { base, react } from "@dustinedwards/devkit/oxlint";',
-    "package.json": JSON.stringify({ scripts: { lint: LINT_SCRIPT } }),
-    ".github/workflows/ci.yml": "steps:\n  - run: npm run lint\n",
+    "oxfmt.config.ts": 'import { format } from "@dustinedwards/devkit/oxfmt";',
+    "package.json": JSON.stringify({ scripts: { lint: LINT_SCRIPT, "format:check": FORMAT_CHECK_SCRIPT } }),
+    ".github/workflows/ci.yml": "steps:\n  - run: npm run lint\n  - run: npm run format:check\n",
   };
   assert.deepEqual(checkLint(tree(good), {}), []);
   const bad = checkLint(
@@ -572,14 +573,16 @@ test("PLANT: a repository off the shared Oxlint config is told each missing piec
       "oxlint.config.ts": 'import { defineConfig } from "oxlint";',
       "biome.json": "{}",
       "apps/mobile/eslint.config.js": "",
-      "package.json": JSON.stringify({ scripts: { lint: "biome check ." } }),
+      ".prettierrc": "{}",
+      "oxfmt.config.ts": good["oxfmt.config.ts"],
+      "package.json": JSON.stringify({ scripts: { lint: "biome check .", "format:check": FORMAT_CHECK_SCRIPT } }),
       ".github/workflows/ci.yml": "steps:\n  - run: npm run lint:cf # npm run lint\n",
     }),
     {},
   );
   assert.deepEqual(
     bad.map((f) => f.file),
-    ["oxlint.config.ts", "biome.json", "apps/mobile/eslint.config.js", "package.json", ".github/workflows"],
+    ["oxlint.config.ts", "package.json", ".github/workflows", ".github/workflows", "biome.json", "apps/mobile/eslint.config.js", ".prettierrc"],
   );
   assert.ok(bad.every((f) => isWarning(f, "0.24.0") && !isWarning(f, "0.25.0")));
   assert.deepEqual(checkLint(tree({ "README.md": "" }), {}), [], "no JavaScript or TypeScript, nothing to lint");

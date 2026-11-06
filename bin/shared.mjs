@@ -34,6 +34,8 @@
 //   lint       a repository with JavaScript or TypeScript off the shared Oxlint config: no root oxlint.config.ts that
 //              extends @dustinedwards/devkit/oxlint, a linter config of its own (eslint.config.*, .eslintrc*, biome.json,
 //              .oxlintrc.json), a root `lint` script other than LINT_SCRIPT, or no workflow running `npm run lint`
+//              and the same for the shared Oxfmt config (a root oxfmt.config.ts with @dustinedwards/devkit/oxfmt, no
+//              Prettier config, the `format:check` script FORMAT_CHECK_SCRIPT, a workflow running `npm run format:check`)
 //              (a warning until 0.25.0, while the repositories move);
 //   config     .shared.json itself: an unknown key or kind stops the check (exit 2), and an exception that excused
 //              nothing in this run is a warning.
@@ -812,8 +814,10 @@ export function checkWorkflows(tree, config, repo = {}) {
 
 /** The one `lint` script every repository runs (README, "The shared lint config"). */
 export const LINT_SCRIPT = "oxlint --type-aware --deny-warnings --report-unused-disable-directives-severity=error";
-/** A linter config of a repository's own, which the shared one replaces. */
-const OWN_LINT_CONFIG = /(^|\/)(eslint\.config\.[mc]?[jt]s|\.eslintrc(\.[\w]+)?|biome\.jsonc?|\.oxlintrc\.jsonc?)$/;
+/** The one `format:check` script every repository runs. */
+export const FORMAT_CHECK_SCRIPT = "oxfmt --check";
+/** A linter or formatter config of a repository's own, which the shared ones replace. */
+const OWN_LINT_CONFIG = /(^|\/)(eslint\.config\.[mc]?[jt]s|\.eslintrc(\.[\w]+)?|biome\.jsonc?|\.oxlintrc\.jsonc?|\.oxfmtrc\.jsonc?|\.prettierrc(\.[\w]+)?|prettier\.config\.[mc]?[jt]s)$/;
 const LINT_FAILS_FROM = "0.25.0";
 
 /**
@@ -829,15 +833,20 @@ export function checkLint(tree, config, self) {
   /** @type {Finding[]} */
   const found = [];
   const add = (/** @type {string} */ file, /** @type {string} */ message) => found.push({ check: "lint", file, failsFrom: LINT_FAILS_FROM, message });
-  const root = tree.files.find((f) => /^oxlint\.config\.[mc]?ts$/.test(f));
-  const shared = self === "devkit" ? /from\s+["']\.\/lint\/oxlint\.mjs["']/ : /from\s+["']@dustinedwards\/devkit\/oxlint["']/;
-  if (!root) add("oxlint.config.ts", "no root oxlint.config.ts: extend @dustinedwards/devkit/oxlint (README, \"The shared lint config\")");
-  else if (!shared.test(tree.read(root))) add(root, `${root} does not extend @dustinedwards/devkit/oxlint: import base (and react, node) from it`);
-  for (const file of tree.files.filter((f) => OWN_LINT_CONFIG.test(f) && !NOT_SOURCE.test(f))) add(file, `a linter config of its own: the shared Oxlint config replaces it; delete ${file} and move what it needs into oxlint.config.ts`);
   const pkg = tree.files.includes("package.json") ? JSON.parse(tree.read("package.json")) : {};
-  if (pkg.scripts?.lint !== LINT_SCRIPT) add("package.json", `the root "lint" script is ${pkg.scripts?.lint === undefined ? "missing" : `"${pkg.scripts.lint}"`}: make it "${LINT_SCRIPT}"`);
   const workflows = tree.files.filter((f) => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(f)).map((f) => tree.read(f).replace(/(^|\s)#.*$/gm, "$1"));
-  if (!workflows.some((t) => /\bnpm run lint(?![\w:.-])/.test(t))) add(".github/workflows", "no workflow runs `npm run lint`: add a Lint step to CI after the typecheck");
+  for (const { tool, verb, script, command, step } of [
+    { tool: "oxlint", verb: "extend", script: "lint", command: LINT_SCRIPT, step: "a Lint step to CI after the typecheck" },
+    { tool: "oxfmt", verb: "spread", script: "format:check", command: FORMAT_CHECK_SCRIPT, step: "a Format step to CI" },
+  ]) {
+    const root = tree.files.find((f) => new RegExp(`^${tool}\\.config\\.[mc]?ts$`).test(f));
+    const shared = new RegExp(self === "devkit" ? `from\\s+["']\\./lint/${tool}\\.mjs["']` : `from\\s+["']@dustinedwards/devkit/${tool}["']`);
+    if (!root) add(`${tool}.config.ts`, `no root ${tool}.config.ts: ${verb} @dustinedwards/devkit/${tool} (README, "The shared lint config")`);
+    else if (!shared.test(tree.read(root))) add(root, `${root} does not ${verb} @dustinedwards/devkit/${tool}: import its config from there`);
+    if (pkg.scripts?.[script] !== command) add("package.json", `the root "${script}" script is ${pkg.scripts?.[script] === undefined ? "missing" : `"${pkg.scripts[script]}"`}: make it "${command}"`);
+    if (!workflows.some((t) => new RegExp(`\\bnpm run ${script}(?![\\w:.-])`).test(t))) add(".github/workflows", `no workflow runs \`npm run ${script}\`: add ${step}`);
+  }
+  for (const file of tree.files.filter((f) => OWN_LINT_CONFIG.test(f) && !NOT_SOURCE.test(f))) add(file, `a linter or formatter config of its own: the shared Oxlint and Oxfmt configs replace it; delete ${file} and move what it needs into oxlint.config.ts or oxfmt.config.ts`);
   return found;
 }
 
@@ -1159,6 +1168,7 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
     `| backup | any app with a D1 database | ${BACKUP.use} |`,
     `| assetCache | any React Router app (/assets/*, and /islands/* with devkit ./islands) | ${ASSET_CACHE.use} |`,
     `| lint | every repository with JavaScript or TypeScript | devkit ./oxlint in a root oxlint.config.ts, the \`lint\` script \`${LINT_SCRIPT}\`, and \`npm run lint\` in CI |`,
+    `| format | every repository with JavaScript or TypeScript | devkit ./oxfmt in a root oxfmt.config.ts, the \`format:check\` script \`${FORMAT_CHECK_SCRIPT}\`, and \`npm run format:check\` in CI |`,
   ];
   for (const p of packages) {
     lines.push("", `## ${p.label} ${p.version} (DrDustinEdwards/${p.repo})`, "");

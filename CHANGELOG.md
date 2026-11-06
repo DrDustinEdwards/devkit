@@ -3,6 +3,8 @@
 ## 0.24.0 (2026-11-06)
 
 - `devkit-shared` (lint, new): a repository with JavaScript or TypeScript runs the shared Oxlint config the same way everywhere: a root `oxlint.config.ts` extending `@dustinedwards/devkit/oxlint`, no `eslint.config.*`, `.eslintrc*`, `biome.json` or `.oxlintrc.json` of its own, the root `lint` script `oxlint --type-aware --deny-warnings --report-unused-disable-directives-severity=error`, and a workflow running `npm run lint`. Each missing piece is a warning in this release and fails from 0.25.0, while the repositories move (one PR each). `devkit-shared list` has a `lint` row. A nested config for one part is allowed; `.shared.json` "waive" "lint" exempts a repository.
+- `@dustinedwards/devkit/oxfmt`: the shared Oxfmt config, the formatter for every repository (Dustin, 2026-11-06). `format` is Oxfmt's defaults with build output, generated types and lockfiles ignored; README, "The shared lint config". `oxfmt` 0.77.0 is an optional peer dependency. `devkit-shared`'s lint check also wants a root `oxfmt.config.ts` with it, a `format:check` script `oxfmt --check`, `npm run format:check` in CI, and no Prettier or `.oxfmtrc.json` config (a warning until 0.25.0).
+- devkit formats itself with it (`oxfmt.config.ts`, `npm run format:check` in CI). The reformat is its own commit, listed in `.git-blame-ignore-revs`.
 - `default.json`: `oxlint`, `oxlint-tsgolint` and `oxfmt` move as one "Oxc" update, since every repository pins oxlint and tsgolint together at devkit's peer versions.
 
 ## 0.23.0 (2026-11-06)

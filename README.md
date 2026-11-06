@@ -163,7 +163,24 @@ export default defineConfig({
 
 The repository adds `oxlint` and `oxlint-tsgolint` to its devDependencies at the versions devkit's `peerDependencies` name (1.92.0 and 7.0.2006; optional peers, so a repository that does not lint yet installs neither), and one CI step, `npm run lint`, after the typecheck where the typecheck generates types (`wrangler types`, `react-router typegen`), since the type-aware rules read them. `oxlint.config.ts` needs Node 22.18 or later. No `--tsconfig`: type-aware mode finds each file's tsconfig itself. `test/oxlint.test.mjs` runs Oxlint on a fixture that extends the export by its package name and must be flagged for exactly a dropped promise, a conditional hook and a restricted import (`eslint/no-restricted-imports` with `patterns`, as txasm's boundary will use it).
 
-`devkit-shared`'s `lint` check keeps every repository on it: a repository with JavaScript or TypeScript fails without a root `oxlint.config.ts` importing `@dustinedwards/devkit/oxlint`, with a linter config of its own (`eslint.config.*`, `.eslintrc*`, `biome.json`, `.oxlintrc.json`), with a root `lint` script other than the one above, or with no workflow running `npm run lint`. It warns in 0.24.0 and fails from 0.25.0. A nested `oxlint.config.ts` for one part (foxing's `apps/mobile`, with its local dash rule) is allowed. Renovate's shared policy (`default.json`) moves `oxlint`, `oxlint-tsgolint` and `oxfmt` as one "Oxc" update.
+`@dustinedwards/devkit/oxfmt` (`lint/oxfmt.mjs`) is the formatter's half: Oxfmt, Oxlint's formatter, which prints what Prettier prints and is tested against Prettier's own suite ([Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)), for every repository (Dustin, 2026-11-06). `format` is Oxfmt's defaults (2 spaces, double quotes, semicolons, trailing commas, width 100) with build output, generated types and lockfiles ignored; a repository adds only what its files need (astro: `astro: true` and `@astrojs/compiler-rs`).
+
+```ts
+// oxfmt.config.ts
+import { defineConfig } from "oxfmt";
+import { format } from "@dustinedwards/devkit/oxfmt";
+
+export default defineConfig({ ...format });
+```
+
+```json
+"format": "oxfmt",
+"format:check": "oxfmt --check"
+```
+
+`oxfmt` goes in devDependencies at devkit's peer version (0.77.0; pre-1.0, so pinned exactly), CI runs `npm run format:check`, and the commit that first formats a repository is listed in its `.git-blame-ignore-revs`, which GitHub's blame reads.
+
+`devkit-shared`'s `lint` check keeps every repository on both: a repository with JavaScript or TypeScript fails without a root `oxlint.config.ts` importing `@dustinedwards/devkit/oxlint`, with a linter config of its own (`eslint.config.*`, `.eslintrc*`, `biome.json`, `.oxlintrc.json`), with a root `lint` script other than the one above, or with no workflow running `npm run lint`, and the same for Oxfmt (`oxfmt.config.ts` with `@dustinedwards/devkit/oxfmt`, no Prettier or `.oxfmtrc.json` config, `format:check`, `npm run format:check` in CI). It warns in 0.24.0 and fails from 0.25.0. A nested `oxlint.config.ts` for one part (foxing's `apps/mobile`, with its local dash rule) is allowed. Renovate's shared policy (`default.json`) moves `oxlint`, `oxlint-tsgolint` and `oxfmt` as one "Oxc" update.
 
 ## The shared Claude Code hooks
 
