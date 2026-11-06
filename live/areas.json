@@ -87,6 +87,7 @@
             "capsid-mcp": ["--repo", "DrDustinEdwards/capsid", "--drill-workflow", "restore-rehearsal.yml"],
             "foxhound-mcp": ["--repo", "DrDustinEdwards/foxhound", "--wrangler", "mcp/wrangler.jsonc"],
             "foxing-mcp": ["--repo", "DrDustinEdwards/foxing", "--wrangler", "mcp/wrangler.jsonc.example"],
+            "germomics-mcp": ["--repo", "DrDustinEdwards/germomics", "--wrangler", "mcp/wrangler.jsonc.example"],
             "dustinedwards-mcp": ["--repo", "DrDustinEdwards/dustinedwards-info", "--wrangler", "mcp/wrangler.jsonc.example"]
           }
         }
@@ -109,7 +110,8 @@
         "foxhound-mcp": "an MCP endpoint with no public pages to scan",
         "dustinedwards-mcp": "an MCP endpoint with no public pages to scan: / and every unknown path answer a text/plain 404, and /authorize answers 400 without a registered client",
         "carrel-mcp": "an MCP endpoint with no public pages to scan: / and every unknown path answer a text/plain 404, and /authorize answers 400 without a registered client",
-        "foxing-mcp": "an MCP endpoint with no public pages to scan: / and every unknown path answer a text/plain 404, and /authorize answers 400 without a registered client"
+        "foxing-mcp": "an MCP endpoint with no public pages to scan: / and every unknown path answer a text/plain 404, and /authorize answers 400 without a registered client",
+        "germomics-mcp": "an MCP endpoint with no public pages to scan: / and every unknown path answer a text/plain 404, and /authorize answers 400 without a registered client"
       },
       "unchecked": {
         "the MCP servers' consent pages": "each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it"
