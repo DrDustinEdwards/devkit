@@ -1109,7 +1109,7 @@ test("PLANT: an MCP tool for a job another owner holds fails, renamed or not; th
   assert.deepEqual(
     checkJobs(tree(files), {}, "site").map(
       (f) =>
-        `${f.file}:${f.line} ${f.message.split(",")[0]} ${isWarning(f, "0.25.0")} ${isWarning(f, "0.26.0")}`,
+        `${f.file}:${f.line} ${f.message.split(",")[0]} ${isWarning(f, "0.27.0")} ${isWarning(f, "0.28.0")}`,
     ),
     [
       "mcp/src/tools.ts:3 site_backup_media serves backups true false",
