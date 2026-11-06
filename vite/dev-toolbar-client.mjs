@@ -178,7 +178,7 @@ class DevToolbar extends HTMLElement {
     addEventListener("resize", () => this.place());
     addEventListener("scroll", () => this.place(), { passive: true });
     // The audit runs once on load so its count shows without a click, as Astro's does.
-    setTimeout(() => this.audit(false), 1000);
+    setTimeout(() => void this.audit(false), 1000);
   }
 
   toggle(app) {
@@ -189,7 +189,7 @@ class DevToolbar extends HTMLElement {
     this.highlights = [];
     this.place();
     if (open === "inspect") this.inspect();
-    if (open === "audit") this.audit(true);
+    if (open === "audit") void this.audit(true);
     if (open === "settings") this.showSettings();
   }
 

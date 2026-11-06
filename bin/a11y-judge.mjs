@@ -58,7 +58,7 @@ export function pickPages(origin, urls, max) {
 /** Whether a focused element looks different from itself unfocused: an outline that paints, or any other style changed. */
 function focusVisible(/** @type {Record<string, string>} */ focused, /** @type {Record<string, string> | undefined} */ unfocused) {
   const outline = focused.outline ?? "";
-  const outlinePaints = !/^none/.test(outline) && !/ 0px /.test(`${outline} `) && !/rgba\(\d+, \d+, \d+, 0\)$/.test(outline);
+  const outlinePaints = !outline.startsWith("none") && !/ 0px /.test(`${outline} `) && !/rgba\(\d+, \d+, \d+, 0\)$/.test(outline);
   return outlinePaints || Object.keys(focused).some((key) => key !== "outline" && unfocused !== undefined && focused[key] !== unfocused[key]);
 }
 

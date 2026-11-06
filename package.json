@@ -21,6 +21,10 @@
       "types": "./testing/access.d.mts",
       "default": "./testing/access.mjs"
     },
+    "./oxlint": {
+      "types": "./lint/oxlint.d.mts",
+      "default": "./lint/oxlint.mjs"
+    },
     "./islands": {
       "types": "./vite/islands.d.mts",
       "default": "./vite/islands.mjs"
@@ -52,19 +56,35 @@
   },
   "files": [
     "bin",
+    "lint",
     "testing",
     "vite",
     "README.md"
   ],
   "scripts": {
     "typecheck": "tsc -p .",
+    "lint": "oxlint --type-aware --deny-warnings --report-unused-disable-directives-severity=error",
     "test": "node --test \"test/*.test.mjs\"",
     "contract": "node scripts/fakes-contract.mjs"
   },
   "license": "UNLICENSED",
   "devDependencies": {
     "@types/node": "24.19.2",
+    "oxlint": "1.92.0",
+    "oxlint-tsgolint": "7.0.2006",
     "typescript": "5.9.3",
     "vite": "8.3.5"
+  },
+  "peerDependencies": {
+    "oxlint": "1.92.0",
+    "oxlint-tsgolint": "7.0.2006"
+  },
+  "peerDependenciesMeta": {
+    "oxlint": {
+      "optional": true
+    },
+    "oxlint-tsgolint": {
+      "optional": true
+    }
   }
 }

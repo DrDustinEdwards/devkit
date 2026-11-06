@@ -417,7 +417,7 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
     const { tags, commits } = tagsOf(repo);
     const latest = newest(tags);
     if (!latest) return;
-    let at = semver(ref) ? (ref.startsWith("v") ? ref : `v${ref}`) : Object.keys(commits).find((t) => commits[t] === ref && semver(t));
+    const at = semver(ref) ? (ref.startsWith("v") ? ref : `v${ref}`) : Object.keys(commits).find((t) => commits[t] === ref && semver(t));
     const server = repo === "site-runtime" && servers.has(posix.dirname(file)) ? (posix.dirname(file) === "." ? "the root" : posix.dirname(file)) : null;
     if (!at) {
       found.push({ check: "pins", file, line, message: `${what} is pinned to ${ref.slice(0, 12)}, which is no release; pin ${latest}` });
@@ -641,7 +641,7 @@ export function checkTokens(tree, tokens, config) {
   const found = [];
   if (!tokens.size) return found;
   for (const file of tree.files) {
-    if (!(/\.css$/.test(file) || SOURCE.test(file)) || NOT_SOURCE.test(file)) continue;
+    if (!(file.endsWith(".css") || SOURCE.test(file)) || NOT_SOURCE.test(file)) continue;
     const text = tree.read(file);
     // Comments may name a token; only declarations count.
     const code = blankComments(text);
@@ -945,7 +945,7 @@ export function checkAi(tree, config, self) {
  */
 export function respell(text, from, to, protect, names) {
   const guarded = [...text.matchAll(protect)].map((g) => [g.index, g.index + g[0].length]);
-  const [first, ...rest] = [...from.toLowerCase()];
+  const [first, ...rest] = Array.from(from.toLowerCase());
   const body = rest.map((c) => `[${c}${c.toUpperCase()}]`).join("");
   const start = names ? `(?:(?<![A-Za-z])${first}|${first.toUpperCase()})` : `(?<![A-Za-z0-9_$])[${first}${first.toUpperCase()}]`;
   const tail = names ? "(?![a-z])" : "(?![A-Za-z0-9_$])";

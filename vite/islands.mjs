@@ -87,7 +87,8 @@ export function startIslands({ root = document, load = (name) => import(/* @vite
       continue;
     }
     let ran = false;
-    directive(async () => {
+    // Never rejects: a failure is caught and reported below.
+    const run = async () => {
       if (ran) return;
       ran = true;
       const start = performance.now();
@@ -100,6 +101,7 @@ export function startIslands({ root = document, load = (name) => import(/* @vite
       } catch (error) {
         console.error(`island "${name}" failed`, error);
       }
-    }, el);
+    };
+    directive(() => void run(), el);
   }
 }
