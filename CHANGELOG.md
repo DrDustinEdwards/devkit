@@ -1,8 +1,17 @@
 # Changelog
 
-## 0.23.0 (2026-11-06)
+## 0.24.0 (2026-11-06)
 
 - `devkit-shared`: an app with a `send_email` binding in its wrangler config must send through site-runtime's `./email` (`sendEmail`), the `email` row of SHARED.md's feature table. Each site had wrapped the binding itself, with its own share of the guards `./email` holds for all (an address with a line break refused, sign-in links and recipients cut out of a logged error); the name-based copy check could not see a wrapper written fresh. Waive with `waive: { email: "..." }`.
+
+## 0.23.1 (2026-11-06)
+
+- `bump-consumers.yml`: a consumer Renovate cannot reach (no Dependency Dashboard, or one with no manual-run checkbox) fails the run, naming the repository, instead of a warning on a green run. The other consumers are still ticked first. Capsomer depends on site-runtime but has no dashboard, so every site-runtime release since its history began on 2026-10-31 warned and passed, and it stayed on 0.77.1 while the network moved to 0.82.0.
+
+## 0.23.0 (2026-11-06)
+
+- `claude/hooks/`: the network's Claude Code hooks, `no-em-dash.sh` and `scoped-git-add.sh`, in the package, one copy for every repository. Ten repositories (capsid, capsomer, dustinedwards-info, enarratio, foxhound, foxing, germomics, julieedwards-info, txasm, bsw) each kept a byte-identical copy in `.claude/hooks/`, which the copy scan never read because jscpd skips dot-folders. A repository runs them from `node_modules/@dustinedwards/devkit/claude/hooks` through `.claude/settings.json`; the settings block, which also fails closed before `npm ci`, is in README, "The shared Claude Code hooks". The hooks are unchanged apart from a header note.
+- `devkit-shared` (copies): a `.claude/hooks/no-em-dash.sh` or `.claude/hooks/scoped-git-add.sh` of a repository's own fails, naming the devkit path to run instead. `devkit-shared list` names the hooks under devkit.
 - `devkit-ops-audit --path <dir>`: H4 compares `/health`'s `sha` with the newest commit on the branch that touched the directory, not the branch head. An admin MCP Worker in `mcp/` deploys only when `mcp/` changes, so a web-only commit (Foxing #252, fonts) made H4 fail on `foxing-mcp` for good. `live/areas.json` passes `--path mcp` for `foxhound-mcp`, `foxing-mcp`, `germomics-mcp` and `dustinedwards-mcp`.
 
 - `@dustinedwards/devkit/oxlint`: the shared Oxlint config (step 1 of the lint unification: Oxlint everywhere, type-aware through oxlint-tsgolint). `base`, `react` and `node`, plain config objects a repository's `oxlint.config.ts` extends, the way Oxlint's docs give for sharing a config from a package; README, "The shared lint config". `oxlint` 1.92.0 and `oxlint-tsgolint` 7.0.2006 are optional peer dependencies. The four type-aware rules dustinedwards-info turned off locally that stay off for everyone, and the four that come back on, are decided in `lint/oxlint.mjs` with the counts behind them. `test/oxlint.test.mjs` proves the export loads and that a dropped promise, a conditional hook and a restricted import are flagged.
