@@ -18,7 +18,7 @@ name: code-map
 # Every other run reads the kept mutation.json back from the branch: a function unchanged since keeps its numbers, and one that changed is marked stale. Capsid reads it with the contents permission its GitHub App already has. Only a public repository
 # calls this: Capsid refuses a map for one that is not.
 #
-# NOT A GATE. Callers run it nightly on their default branch (until 0.24.0, on every push to it), so a failure here is a
+# NOT A GATE. Callers run it nightly on their default branch (until 0.25.0, on every push to it), so a failure here is a
 # red run on main and never a red pull request.
 #
 # THE CALLER grants `contents: write` to its calling job (examples/code-map-caller.yml), because a called workflow holds no
@@ -237,7 +237,9 @@ jobs:
                 // Try the next place.
               }
             }
-            throw new Error("no typescript with the compiler API (5 or 6) is installed; the code map reads the code through it");
+            throw new Error(
+              "no typescript with the compiler API (5 or 6) is installed; the code map reads the code through it",
+            );
           }
 
           /**
@@ -250,24 +252,55 @@ jobs:
             /** @type {{ name: string, line: number, end: number, cc: number }[]} */
             const out = [];
             const K = ts.SyntaxKind;
-            const LOGICAL = new Set([K.AmpersandAmpersandToken, K.BarBarToken, K.QuestionQuestionToken, K.AmpersandAmpersandEqualsToken, K.BarBarEqualsToken, K.QuestionQuestionEqualsToken]);
+            const LOGICAL = new Set([
+              K.AmpersandAmpersandToken,
+              K.BarBarToken,
+              K.QuestionQuestionToken,
+              K.AmpersandAmpersandEqualsToken,
+              K.BarBarEqualsToken,
+              K.QuestionQuestionEqualsToken,
+            ]);
             const isFunction = (/** @type {any} */ n) =>
-              ts.isFunctionDeclaration(n) || ts.isFunctionExpression(n) || ts.isArrowFunction(n) || ts.isMethodDeclaration(n) ||
-              ts.isConstructorDeclaration(n) || ts.isGetAccessorDeclaration(n) || ts.isSetAccessorDeclaration(n);
+              ts.isFunctionDeclaration(n) ||
+              ts.isFunctionExpression(n) ||
+              ts.isArrowFunction(n) ||
+              ts.isMethodDeclaration(n) ||
+              ts.isConstructorDeclaration(n) ||
+              ts.isGetAccessorDeclaration(n) ||
+              ts.isSetAccessorDeclaration(n);
             const lineOf = (/** @type {number} */ pos) => sf.getLineAndCharacterOfPosition(pos).line + 1;
             const nameOf = (/** @type {any} */ n) => {
               if (ts.isConstructorDeclaration(n)) return "constructor";
-              if (n.name && (ts.isIdentifier(n.name) || ts.isStringLiteral(n.name) || ts.isPrivateIdentifier(n.name))) return n.name.text;
+              if (
+                n.name &&
+                (ts.isIdentifier(n.name) || ts.isStringLiteral(n.name) || ts.isPrivateIdentifier(n.name))
+              )
+                return n.name.text;
               const p = n.parent;
-              if (p && (ts.isVariableDeclaration(p) || ts.isPropertyAssignment(p) || ts.isPropertyDeclaration(p)) && ts.isIdentifier(p.name)) return p.name.text;
+              if (
+                p &&
+                (ts.isVariableDeclaration(p) || ts.isPropertyAssignment(p) || ts.isPropertyDeclaration(p)) &&
+                ts.isIdentifier(p.name)
+              )
+                return p.name.text;
               return `<anonymous:${lineOf(n.getStart(sf))}>`;
             };
             const branches = (/** @type {any} */ n) => {
               let count = 0;
               const walk = (/** @type {any} */ c) => {
                 if (isFunction(c)) return;
-                if (ts.isIfStatement(c) || ts.isConditionalExpression(c) || ts.isForStatement(c) || ts.isForInStatement(c) ||
-                  ts.isForOfStatement(c) || ts.isWhileStatement(c) || ts.isDoStatement(c) || ts.isCaseClause(c) || ts.isCatchClause(c)) count++;
+                if (
+                  ts.isIfStatement(c) ||
+                  ts.isConditionalExpression(c) ||
+                  ts.isForStatement(c) ||
+                  ts.isForInStatement(c) ||
+                  ts.isForOfStatement(c) ||
+                  ts.isWhileStatement(c) ||
+                  ts.isDoStatement(c) ||
+                  ts.isCaseClause(c) ||
+                  ts.isCatchClause(c)
+                )
+                  count++;
                 else if (ts.isBinaryExpression(c) && LOGICAL.has(c.operatorToken.kind)) count++;
                 ts.forEachChild(c, walk);
               };
@@ -276,7 +309,13 @@ jobs:
               return count;
             };
             const visit = (/** @type {any} */ n) => {
-              if (isFunction(n) && n.body) out.push({ name: nameOf(n), line: lineOf(n.getStart(sf)), end: lineOf(n.getEnd()), cc: 1 + branches(n) });
+              if (isFunction(n) && n.body)
+                out.push({
+                  name: nameOf(n),
+                  line: lineOf(n.getStart(sf)),
+                  end: lineOf(n.getEnd()),
+                  cc: 1 + branches(n),
+                });
               ts.forEachChild(n, visit);
             };
             visit(sf);
@@ -288,8 +327,19 @@ jobs:
             /** @type {string[]} */
             const out = [];
             const visit = (/** @type {any} */ n) => {
-              if ((ts.isImportDeclaration(n) || ts.isExportDeclaration(n)) && n.moduleSpecifier && ts.isStringLiteral(n.moduleSpecifier)) out.push(n.moduleSpecifier.text);
-              else if (ts.isCallExpression(n) && n.expression.kind === ts.SyntaxKind.ImportKeyword && n.arguments[0] && ts.isStringLiteral(n.arguments[0])) out.push(n.arguments[0].text);
+              if (
+                (ts.isImportDeclaration(n) || ts.isExportDeclaration(n)) &&
+                n.moduleSpecifier &&
+                ts.isStringLiteral(n.moduleSpecifier)
+              )
+                out.push(n.moduleSpecifier.text);
+              else if (
+                ts.isCallExpression(n) &&
+                n.expression.kind === ts.SyntaxKind.ImportKeyword &&
+                n.arguments[0] &&
+                ts.isStringLiteral(n.arguments[0])
+              )
+                out.push(n.arguments[0].text);
               ts.forEachChild(n, visit);
             };
             visit(sf);
@@ -312,8 +362,15 @@ jobs:
               for (const w of graph.get(v) ?? []) {
                 if (!idx.has(w)) {
                   connect(w);
-                  low.set(v, Math.min(/** @type {number} */ (low.get(v)), /** @type {number} */ (low.get(w))));
-                } else if (on.has(w)) low.set(v, Math.min(/** @type {number} */ (low.get(v)), /** @type {number} */ (idx.get(w))));
+                  low.set(
+                    v,
+                    Math.min(/** @type {number} */ (low.get(v)), /** @type {number} */ (low.get(w))),
+                  );
+                } else if (on.has(w))
+                  low.set(
+                    v,
+                    Math.min(/** @type {number} */ (low.get(v)), /** @type {number} */ (idx.get(w))),
+                  );
               }
               if (low.get(v) === idx.get(v)) {
                 /** @type {string[]} */ const component = [];
@@ -337,7 +394,9 @@ jobs:
            */
           function innermost(fns, line) {
             let best;
-            for (const f of fns) if (f.line <= line && line <= f.end && (!best || f.end - f.line < best.end - best.line)) best = f;
+            for (const f of fns)
+              if (f.line <= line && line <= f.end && (!best || f.end - f.line < best.end - best.line))
+                best = f;
             return best;
           }
 
@@ -403,9 +462,15 @@ jobs:
               for (const [path, f] of Object.entries(r?.files ?? {})) {
                 const mutants = (/** @type {any} */ (f).mutants ?? [])
                   .filter((/** @type {any} */ m) => VALID.has(m.status))
-                  .map((/** @type {any} */ m) => ({ status: m.status, location: { start: { line: m.location.start.line } } }));
+                  .map((/** @type {any} */ m) => ({
+                    status: m.status,
+                    location: { start: { line: m.location.start.line } },
+                  }));
                 const was = files[path];
-                files[path] = { source: was?.source ?? /** @type {any} */ (f).source ?? null, mutants: [...(was?.mutants ?? []), ...mutants] };
+                files[path] = {
+                  source: was?.source ?? /** @type {any} */ (f).source ?? null,
+                  mutants: [...(was?.mutants ?? []), ...mutants],
+                };
               }
             }
             return { version: 1, sha, date, files };
@@ -415,14 +480,49 @@ jobs:
            * The code map of a repository.
            * @param {{ ts: any, root: string, tsconfig?: string, include?: string[], exclude?: string[], coverage?: any, mutation?: any, repo: string, sha: string, date: string }} o
            */
-          export function codeMap({ ts, root, tsconfig = "tsconfig.json", include = ["src/"], exclude = [], coverage = null, mutation = null, repo, sha, date }) {
+          export function codeMap({
+            ts,
+            root,
+            tsconfig = "tsconfig.json",
+            include = ["src/"],
+            exclude = [],
+            coverage = null,
+            mutation = null,
+            repo,
+            sha,
+            date,
+          }) {
             const parsed = existsSync(resolve(root, tsconfig))
-              ? ts.getParsedCommandLineOfConfigFile(resolve(root, tsconfig), {}, { ...ts.sys, onUnRecoverableConfigFileDiagnostic: (/** @type {any} */ d) => { throw new Error(ts.flattenDiagnosticMessageText(d.messageText, "\n")); } })
-              : { fileNames: walk(root), options: { allowJs: true, module: ts.ModuleKind.NodeNext, moduleResolution: ts.ModuleResolutionKind.NodeNext, target: ts.ScriptTarget.ES2022 } };
+              ? ts.getParsedCommandLineOfConfigFile(
+                  resolve(root, tsconfig),
+                  {},
+                  {
+                    ...ts.sys,
+                    onUnRecoverableConfigFileDiagnostic: (/** @type {any} */ d) => {
+                      throw new Error(ts.flattenDiagnosticMessageText(d.messageText, "\n"));
+                    },
+                  },
+                )
+              : {
+                  fileNames: walk(root),
+                  options: {
+                    allowJs: true,
+                    module: ts.ModuleKind.NodeNext,
+                    moduleResolution: ts.ModuleResolutionKind.NodeNext,
+                    target: ts.ScriptTarget.ES2022,
+                  },
+                };
             const rel = (/** @type {string} */ abs) => relative(root, abs).split(sep).join("/");
             // A package that ships hand-written .d.mts beside its .mjs: the compiler lists the declaration in the source's place.
             const files = [...new Set(parsed.fileNames.map(sourceOf))]
-              .filter((f) => SOURCE.test(f) && !DECLARATION.test(f) && !TEST.test(f) && include.some((p) => p === "." || rel(f).startsWith(p)) && !exclude.some((p) => rel(f).startsWith(p)))
+              .filter(
+                (f) =>
+                  SOURCE.test(f) &&
+                  !DECLARATION.test(f) &&
+                  !TEST.test(f) &&
+                  include.some((p) => p === "." || rel(f).startsWith(p)) &&
+                  !exclude.some((p) => rel(f).startsWith(p)),
+              )
               .sort();
             const mapped = new Set(files.map(rel));
             const host = ts.createCompilerHost(parsed.options);
@@ -440,7 +540,13 @@ jobs:
               }
               graph.set(path, [...imports].sort());
               /** @type {{ name: string, line: number, end: number, cc: number, statements: number, covered: number, mutants: number, detected: number, stale?: true }[]} */
-              const fns = functionsOf(ts, sf).map((f) => ({ ...f, statements: 0, covered: 0, mutants: 0, detected: 0 }));
+              const fns = functionsOf(ts, sf).map((f) => ({
+                ...f,
+                statements: 0,
+                covered: 0,
+                mutants: 0,
+                detected: 0,
+              }));
 
               const cov = coverage?.[abs] ?? coverage?.[path];
               if (cov) {
@@ -455,7 +561,12 @@ jobs:
               if (mut) {
                 // Each mutant goes to the function it was made in, read from the file as the run saw it, so lines that moved since
                 // still meet their function.
-                const then = typeof mut.source === "string" ? functionsOf(ts, ts.createSourceFile(abs, mut.source, ts.ScriptTarget.Latest, true)).map((f) => ({ ...f, mutants: 0, detected: 0 })) : fns;
+                const then =
+                  typeof mut.source === "string"
+                    ? functionsOf(ts, ts.createSourceFile(abs, mut.source, ts.ScriptTarget.Latest, true)).map(
+                        (f) => ({ ...f, mutants: 0, detected: 0 }),
+                      )
+                    : fns;
                 for (const m of mut.mutants ?? []) {
                   if (!VALID.has(m.status)) continue;
                   const f = innermost(then, m.location.start.line);
@@ -468,16 +579,24 @@ jobs:
                   // against the nth then.
                   const linesThen = mut.source.split("\n");
                   const linesNow = text.split("\n");
-                  const body = (/** @type {string[]} */ lines, /** @type {{ line: number, end: number }} */ f) => lines.slice(f.line - 1, f.end).join("\n");
+                  const body = (
+                    /** @type {string[]} */ lines,
+                    /** @type {{ line: number, end: number }} */ f,
+                  ) => lines.slice(f.line - 1, f.end).join("\n");
                   const keyed = (/** @type {{ name: string }[]} */ list) => {
                     /** @type {Map<string, number>} */ const n = new Map();
-                    return list.map((f) => { const i = n.get(f.name) ?? 0; n.set(f.name, i + 1); return `${f.name}#${i}`; });
+                    return list.map((f) => {
+                      const i = n.get(f.name) ?? 0;
+                      n.set(f.name, i + 1);
+                      return `${f.name}#${i}`;
+                    });
                   };
                   const keysThen = keyed(then);
                   const byKey = new Map(then.map((f, i) => [keysThen[i], f]));
                   keyed(fns).forEach((key, i) => {
                     const was = byKey.get(key);
-                    if (was && body(linesThen, was) === body(linesNow, fns[i])) Object.assign(fns[i], { mutants: was.mutants, detected: was.detected });
+                    if (was && body(linesThen, was) === body(linesNow, fns[i]))
+                      Object.assign(fns[i], { mutants: was.mutants, detected: was.detected });
                     else Object.assign(fns[i], { stale: true });
                   });
                 }
@@ -487,11 +606,27 @@ jobs:
                 path,
                 loc: text.split("\n").filter((l) => l.trim() !== "").length,
                 imports: graph.get(path),
-                functions: fns.map(({ name, line, end, cc, statements, covered, mutants, detected, stale }) => {
-                  const c = cov ? (statements === 0 ? 1 : Math.round((covered / statements) * 1000) / 1000) : null;
-                  const measured = mut && !stale;
-                  return { name, line, end, cc, coverage: c, crap: crap(cc, c), mutants: measured ? mutants : null, score: measured && mutants > 0 ? Math.round((detected / mutants) * 1000) / 10 : null, ...(stale ? { stale } : {}) };
-                }),
+                functions: fns.map(
+                  ({ name, line, end, cc, statements, covered, mutants, detected, stale }) => {
+                    const c = cov
+                      ? statements === 0
+                        ? 1
+                        : Math.round((covered / statements) * 1000) / 1000
+                      : null;
+                    const measured = mut && !stale;
+                    return {
+                      name,
+                      line,
+                      end,
+                      cc,
+                      coverage: c,
+                      crap: crap(cc, c),
+                      mutants: measured ? mutants : null,
+                      score: measured && mutants > 0 ? Math.round((detected / mutants) * 1000) / 10 : null,
+                      ...(stale ? { stale } : {}),
+                    };
+                  },
+                ),
               };
             });
             const cycles = cyclesOf(graph);
@@ -502,8 +637,14 @@ jobs:
               repo,
               sha,
               date,
-              tools: { typescript: ts.version, coverage: coverage ? "istanbul" : null, mutation: mutation ? "stryker" : null },
-              ...(mutation?.sha && mutation.sha !== sha ? { mutated: { sha: mutation.sha, date: mutation.date } } : {}),
+              tools: {
+                typescript: ts.version,
+                coverage: coverage ? "istanbul" : null,
+                mutation: mutation ? "stryker" : null,
+              },
+              ...(mutation?.sha && mutation.sha !== sha
+                ? { mutated: { sha: mutation.sha, date: mutation.date } }
+                : {}),
               modules,
               cycles,
             };
@@ -514,7 +655,8 @@ jobs:
             /** @type {Record<string, string[]>} */
             const out = {};
             for (let i = 0; i < argv.length; i += 2) {
-              if (!argv[i].startsWith("--") || argv[i + 1] === undefined) throw new Error(`expected --name value, got ${argv[i]}`);
+              if (!argv[i].startsWith("--") || argv[i + 1] === undefined)
+                throw new Error(`expected --name value, got ${argv[i]}`);
               (out[argv[i].slice(2)] ??= []).push(argv[i + 1]);
             }
             return out;
@@ -523,21 +665,31 @@ jobs:
           if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
             const a = args(process.argv.slice(2));
             const root = process.cwd();
-            const json = (/** @type {string | undefined} */ f) => (f && existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : null);
-            for (const f of [a.coverage?.[0], ...(a.mutation ?? []), a["mutation-kept"]?.[0]]) if (f && !existsSync(f)) console.log(`::warning::${f} does not exist, so the map has no numbers from it`);
-            const sha = a.sha?.[0] ?? process.env.GITHUB_SHA ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+            const json = (/** @type {string | undefined} */ f) =>
+              f && existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : null;
+            for (const f of [a.coverage?.[0], ...(a.mutation ?? []), a["mutation-kept"]?.[0]])
+              if (f && !existsSync(f))
+                console.log(`::warning::${f} does not exist, so the map has no numbers from it`);
+            const sha =
+              a.sha?.[0] ??
+              process.env.GITHUB_SHA ??
+              execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
             const date = new Date().toISOString().slice(0, 10);
             // A fresh run's reports win over a kept one; with neither, the map has no mutation numbers.
             const reports = (a.mutation ?? []).map(json).filter(Boolean);
             const mutation = reports.length ? keptReport(reports, sha, date) : json(a["mutation-kept"]?.[0]);
-            if (mutation && a["mutation-out"]?.[0]) writeFileSync(a["mutation-out"][0], `${JSON.stringify(mutation)}\n`);
+            if (mutation && a["mutation-out"]?.[0])
+              writeFileSync(a["mutation-out"][0], `${JSON.stringify(mutation)}\n`);
             const map = codeMap({
               ts: loadTypeScript(root),
               root,
               tsconfig: a.tsconfig?.[0],
               include: a.include,
               exclude: a.exclude,
-              coverage: a.coverage?.[0] && existsSync(a.coverage[0]) && !a.coverage[0].endsWith(".json") ? lcovCoverage(readFileSync(a.coverage[0], "utf8"), root) : json(a.coverage?.[0]),
+              coverage:
+                a.coverage?.[0] && existsSync(a.coverage[0]) && !a.coverage[0].endsWith(".json")
+                  ? lcovCoverage(readFileSync(a.coverage[0], "utf8"), root)
+                  : json(a.coverage?.[0]),
               mutation,
               repo: a.repo?.[0] ?? process.env.GITHUB_REPOSITORY ?? "",
               sha,
@@ -546,7 +698,9 @@ jobs:
             writeFileSync(a.out?.[0] ?? "code-map.json", `${JSON.stringify(map, null, 2)}\n`);
             const fns = map.modules.reduce((n, m) => n + m.functions.length, 0);
             const stale = map.modules.reduce((n, m) => n + m.functions.filter((f) => f.stale).length, 0);
-            console.log(`code map: ${map.modules.length} modules, ${fns} functions, ${map.cycles.length} cycles${map.mutated ? `; mutation from ${map.mutated.sha.slice(0, 7)} (${map.mutated.date}), ${stale} functions stale` : ""}`);
+            console.log(
+              `code map: ${map.modules.length} modules, ${fns} functions, ${map.cycles.length} cycles${map.mutated ? `; mutation from ${map.mutated.sha.slice(0, 7)} (${map.mutated.date}), ${stale} functions stale` : ""}`,
+            );
           }
           CODE_MAP
           set -- --out "$RUNNER_TEMP/code-map.json" --tsconfig "$TSCONFIG"

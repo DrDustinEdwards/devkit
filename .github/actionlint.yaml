@@ -8,4 +8,4 @@ paths:
   # The red step's node -e script is in single quotes on purpose: its ${...} are JavaScript template literals.
   .github/workflows/live.yml:
     ignore:
-      - 'SC2016:info:1:9:'
+      - "SC2016:info:1:9:"

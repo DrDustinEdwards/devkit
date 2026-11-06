@@ -121,6 +121,11 @@
       "groupName": "React Router"
     },
     {
+      "description": "The Oxc tools move as ONE update (lint unification, 2026-11-06). oxlint and oxlint-tsgolint release together and every repository pins both exactly at devkit's peerDependencies (README, \"The shared lint config\"), so a separate PR for each would lint with a tsgolint the oxlint beside it was not built against; oxfmt joins them if it becomes the formatter. Automerge is unchanged: minor and patch on green CI, where a new finding fails the Lint step and holds the PR.",
+      "matchPackageNames": ["oxlint", "oxlint-tsgolint", "oxfmt"],
+      "groupName": "Oxc"
+    },
+    {
       "description": "React Router opens at any time, not only in the Monday window (Dustin, 2026-10-30). The family packages below run at any time with prPriority 10, and with prConcurrentLimit 3 and several family releases a day they held every slot each Monday: txasm stayed on 8.0.0 from June and Carrel, Foxhound, bsw and julieedwards-info on 8.3.1 while 8.4.0 (2026-09-15) and 8.5.x shipped, and txasm's Dependency Dashboard listed React Router under Awaiting Schedule. The three-day cooldown above still applies, and prPriority 5 lets it take a slot ahead of the weekly group but behind the family packages.",
       "matchPackageNames": ["react-router", "@react-router/**"],
       "schedule": ["* * * * *"],
@@ -178,7 +183,12 @@
     {
       "description": "The npm half of the rule above: the @dustinedwards scope, enarratio, and enarratio-astro and enarratio-emdash (the astro repository's packages), the packages the npm account dustinedwards publishes. Named one by one, never enarratio-*, which anyone could publish under. Same settings, same group, same reasons.",
       "matchDatasources": ["npm"],
-      "matchPackageNames": ["@dustinedwards/**", "enarratio", "enarratio-astro", "enarratio-emdash"],
+      "matchPackageNames": [
+        "@dustinedwards/**",
+        "enarratio",
+        "enarratio-astro",
+        "enarratio-emdash"
+      ],
       "minimumReleaseAge": null,
       "schedule": ["* * * * *"],
       "groupName": "network packages",
@@ -190,14 +200,26 @@
     {
       "description": "Minor, patch and pin of Dustin's own packages merge themselves, squashed, once CI is green (Dustin, 2026-10-09; pin added 2026-11-05: the floor above refuses automerge at every type, so Carrel's enarratio pin #221 sat open for five days holding a slot, though a pin changes no bytes). The two rules above are the floor: every update of these opens at once and never automerges, so majors and digest moves (a sha pin such as dustinedwards-info's capsomer can jump a major) wait for Dustin. This grant is the only automerge, the same floor-then-grant shape as the load-bearing set.",
       "matchDatasources": ["github-tags", "npm"],
-      "matchPackageNames": ["DrDustinEdwards/**", "@dustinedwards/**", "enarratio", "enarratio-astro", "enarratio-emdash"],
+      "matchPackageNames": [
+        "DrDustinEdwards/**",
+        "@dustinedwards/**",
+        "enarratio",
+        "enarratio-astro",
+        "enarratio-emdash"
+      ],
       "matchUpdateTypes": ["minor", "patch", "pin"],
       "automerge": true
     },
     {
       "description": "A digest move of Dustin's own packages (a github: dependency pinned to a commit, which can jump a major) leaves the network packages group for a PR of its own (2026-11-06). It never automerges, and in the group it would hold the group's minor and patch automerge with it, since a branch automerges only when every upgrade in it may.",
       "matchDatasources": ["github-tags", "npm"],
-      "matchPackageNames": ["DrDustinEdwards/**", "@dustinedwards/**", "enarratio", "enarratio-astro", "enarratio-emdash"],
+      "matchPackageNames": [
+        "DrDustinEdwards/**",
+        "@dustinedwards/**",
+        "enarratio",
+        "enarratio-astro",
+        "enarratio-emdash"
+      ],
       "matchUpdateTypes": ["digest"],
       "groupName": null
     },

@@ -4,22 +4,49 @@
       "id": 1,
       "name": "Search, sharing and AI answers",
       "builder": "Share SEO and other key site code",
-      "checks": [{ "name": "prelum-audit", "repo": "prelum", "bin": "prelum-audit", "kinds": ["site", "static"] }]
+      "checks": [
+        {
+          "name": "prelum-audit",
+          "repo": "prelum",
+          "bin": "prelum-audit",
+          "kinds": ["site", "static"]
+        }
+      ]
     },
     {
       "id": 2,
       "name": "Security headers and CSP",
       "builder": "Complete shared security headers and CSP",
       "checks": [
-        { "name": "site-runtime-security", "repo": "site-runtime", "bin": "site-runtime-security", "kinds": ["site", "static", "worker", "app"] },
-        { "name": "signed-in-security", "report": "https://mcp.dustinedwards.info/reports/signed-in-security.json", "site_reports": { "carrel-desk": "https://carrel-mcp.dustinedwards.info/reports/signed-in-security.json" }, "kinds": ["app"], "max_age_minutes": 180 }
+        {
+          "name": "site-runtime-security",
+          "repo": "site-runtime",
+          "bin": "site-runtime-security",
+          "kinds": ["site", "static", "worker", "app"]
+        },
+        {
+          "name": "signed-in-security",
+          "report": "https://mcp.dustinedwards.info/reports/signed-in-security.json",
+          "site_reports": {
+            "carrel-desk": "https://carrel-mcp.dustinedwards.info/reports/signed-in-security.json"
+          },
+          "kinds": ["app"],
+          "max_age_minutes": 180
+        }
       ]
     },
     {
       "id": 3,
       "name": "Sign-in and access",
       "builder": "Complete shared sign-in and access",
-      "checks": [{ "name": "site-runtime-sign-in", "repo": "site-runtime", "bin": "site-runtime-sign-in", "kinds": ["site", "worker", "app"] }],
+      "checks": [
+        {
+          "name": "site-runtime-sign-in",
+          "repo": "site-runtime",
+          "bin": "site-runtime-sign-in",
+          "kinds": ["site", "worker", "app"]
+        }
+      ],
       "skip": {
         "julieedwards-info": "no sign-in, admin pages or MCP server",
         "bsw": "no sign-in, admin pages or MCP server"
@@ -29,7 +56,14 @@
       "id": 4,
       "name": "Writing and rendering",
       "builder": "Complete shared writing and rendering",
-      "checks": [{ "name": "prelum-content", "repo": "prelum", "bin": "prelum-content", "kinds": ["site", "static"] }]
+      "checks": [
+        {
+          "name": "prelum-content",
+          "repo": "prelum",
+          "bin": "prelum-content",
+          "kinds": ["site", "static"]
+        }
+      ]
     },
     {
       "id": 5,
@@ -37,7 +71,12 @@
       "builder": "Complete Carrel editing contract",
       "checks": [
         { "name": "site-api-live", "repo": "site-api", "bin": "site-api-live", "kinds": ["site"] },
-        { "name": "carrel-conformance", "report": "https://carrel-mcp.dustinedwards.info/reports/conformance.json", "kinds": ["site"], "max_age_minutes": 60 }
+        {
+          "name": "carrel-conformance",
+          "report": "https://carrel-mcp.dustinedwards.info/reports/conformance.json",
+          "kinds": ["site"],
+          "max_age_minutes": 60
+        }
       ],
       "skip": {
         "bsw": "no Carrel site API: its content is not edited through Carrel",
@@ -48,7 +87,14 @@
       "id": 6,
       "name": "Images and media",
       "builder": "Complete shared images and media",
-      "checks": [{ "name": "site-runtime-images", "repo": "site-runtime", "bin": "site-runtime-images", "kinds": ["site", "static", "app"] }],
+      "checks": [
+        {
+          "name": "site-runtime-images",
+          "repo": "site-runtime",
+          "bin": "site-runtime-images",
+          "kinds": ["site", "static", "app"]
+        }
+      ],
       "skip": {
         "carrel-desk": "a private writing desk behind Access with nothing public to share, so no share card is wanted; its signed-in pages are listed as unchecked"
       },
@@ -61,8 +107,19 @@
       "name": "Speed and caching",
       "builder": "Complete shared speed and caching",
       "checks": [
-        { "name": "site-runtime-speed", "repo": "site-runtime", "bin": "site-runtime-speed", "kinds": ["site"] },
-        { "name": "site-runtime-speed-static", "repo": "site-runtime", "bin": "site-runtime-speed", "kinds": ["static"], "args": ["--kind", "static"] }
+        {
+          "name": "site-runtime-speed",
+          "repo": "site-runtime",
+          "bin": "site-runtime-speed",
+          "kinds": ["site"]
+        },
+        {
+          "name": "site-runtime-speed-static",
+          "repo": "site-runtime",
+          "bin": "site-runtime-speed",
+          "kinds": ["static"],
+          "args": ["--kind", "static"]
+        }
       ]
     },
     {
@@ -76,19 +133,84 @@
           "bin": "devkit-ops-audit",
           "kinds": ["site", "worker"],
           "site_args": {
-            "foxhound": ["--repo", "DrDustinEdwards/foxhound", "--drill-workflow", "restore-drill.yml"],
-            "foxing": ["--repo", "DrDustinEdwards/foxing", "--drill-workflow", "restore-drill.yml", "--wrangler", "apps/web/wrangler.jsonc.example"],
-            "germomics": ["--repo", "DrDustinEdwards/germomics", "--drill-workflow", "restore-drill.yml"],
-            "julieedwards-info": ["--repo", "DrDustinEdwards/julieedwards-info", "--drill-workflow", "restore-drill.yml"],
+            "foxhound": [
+              "--repo",
+              "DrDustinEdwards/foxhound",
+              "--drill-workflow",
+              "restore-drill.yml"
+            ],
+            "foxing": [
+              "--repo",
+              "DrDustinEdwards/foxing",
+              "--drill-workflow",
+              "restore-drill.yml",
+              "--wrangler",
+              "apps/web/wrangler.jsonc.example"
+            ],
+            "germomics": [
+              "--repo",
+              "DrDustinEdwards/germomics",
+              "--drill-workflow",
+              "restore-drill.yml"
+            ],
+            "julieedwards-info": [
+              "--repo",
+              "DrDustinEdwards/julieedwards-info",
+              "--drill-workflow",
+              "restore-drill.yml"
+            ],
             "txasm": ["--repo", "DrDustinEdwards/txasm", "--drill-workflow", "restore-drill.yml"],
-            "carrel-mcp": ["--repo", "DrDustinEdwards/carrel", "--drill-workflow", "restore-drill.yml"],
-            "dustinedwards-info": ["--repo", "DrDustinEdwards/dustinedwards-info", "--drill-workflow", "restore-drill.yml"],
+            "carrel-mcp": [
+              "--repo",
+              "DrDustinEdwards/carrel",
+              "--drill-workflow",
+              "restore-drill.yml"
+            ],
+            "dustinedwards-info": [
+              "--repo",
+              "DrDustinEdwards/dustinedwards-info",
+              "--drill-workflow",
+              "restore-drill.yml"
+            ],
             "bsw": ["--repo", "DrDustinEdwards/bsw"],
-            "capsid-mcp": ["--repo", "DrDustinEdwards/capsid", "--drill-workflow", "restore-rehearsal.yml"],
-            "foxhound-mcp": ["--repo", "DrDustinEdwards/foxhound", "--wrangler", "mcp/wrangler.jsonc", "--path", "mcp"],
-            "foxing-mcp": ["--repo", "DrDustinEdwards/foxing", "--wrangler", "mcp/wrangler.jsonc.example", "--path", "mcp"],
-            "germomics-mcp": ["--repo", "DrDustinEdwards/germomics", "--wrangler", "mcp/wrangler.jsonc.example", "--path", "mcp"],
-            "dustinedwards-mcp": ["--repo", "DrDustinEdwards/dustinedwards-info", "--wrangler", "mcp/wrangler.jsonc.example", "--path", "mcp"]
+            "capsid-mcp": [
+              "--repo",
+              "DrDustinEdwards/capsid",
+              "--drill-workflow",
+              "restore-rehearsal.yml"
+            ],
+            "foxhound-mcp": [
+              "--repo",
+              "DrDustinEdwards/foxhound",
+              "--wrangler",
+              "mcp/wrangler.jsonc",
+              "--path",
+              "mcp"
+            ],
+            "foxing-mcp": [
+              "--repo",
+              "DrDustinEdwards/foxing",
+              "--wrangler",
+              "mcp/wrangler.jsonc.example",
+              "--path",
+              "mcp"
+            ],
+            "germomics-mcp": [
+              "--repo",
+              "DrDustinEdwards/germomics",
+              "--wrangler",
+              "mcp/wrangler.jsonc.example",
+              "--path",
+              "mcp"
+            ],
+            "dustinedwards-mcp": [
+              "--repo",
+              "DrDustinEdwards/dustinedwards-info",
+              "--wrangler",
+              "mcp/wrangler.jsonc.example",
+              "--path",
+              "mcp"
+            ]
           }
         }
       ],
@@ -104,7 +226,14 @@
       "id": 9,
       "name": "Accessibility and components",
       "builder": "Complete accessibility and Capsomer components",
-      "checks": [{ "name": "devkit-a11y", "repo": "devkit", "bin": "devkit-a11y", "kinds": ["site", "static", "worker"] }],
+      "checks": [
+        {
+          "name": "devkit-a11y",
+          "repo": "devkit",
+          "bin": "devkit-a11y",
+          "kinds": ["site", "static", "worker"]
+        }
+      ],
       "skip": {
         "capsid-mcp": "an MCP endpoint with no public pages to scan",
         "foxhound-mcp": "an MCP endpoint with no public pages to scan",
@@ -129,13 +258,20 @@
           "kinds": ["site", "static", "app"],
           "site_args": {
             "foxhound": [
-              "--start", "https://foxhoundapp.com/demos/dashboard",
-              "--start", "https://foxhoundapp.com/demos/recovery",
-              "--start", "https://foxhoundapp.com/demos/intelligence",
-              "--pages", "/demos/dashboard,/demos/recovery,/demos/intelligence"
+              "--start",
+              "https://foxhoundapp.com/demos/dashboard",
+              "--start",
+              "https://foxhoundapp.com/demos/recovery",
+              "--start",
+              "https://foxhoundapp.com/demos/intelligence",
+              "--pages",
+              "/demos/dashboard,/demos/recovery,/demos/intelligence"
             ],
             "foxing": ["--pages", "/demos/stats,/demos/year,/demos/goals"],
-            "capsid-portal": ["--pages", "/demos/,/demos/health,/demos/health?tab=deploys,/demos/health?tab=backups,/demos/health?tab=ci,/demos/queue,/demos/prs,/demos/agents,/demos/agents?tab=claims,/demos/packages"],
+            "capsid-portal": [
+              "--pages",
+              "/demos/,/demos/health,/demos/health?tab=deploys,/demos/health?tab=backups,/demos/health?tab=ci,/demos/queue,/demos/prs,/demos/agents,/demos/agents?tab=claims,/demos/packages"
+            ],
             "carrel-desk": ["--pages", "/demos/progress"]
           }
         }
@@ -151,10 +287,30 @@
       "name": "AI and MCP",
       "builder": "Complete shared AI and MCP code",
       "checks": [
-        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["worker"], "args": ["--kind", "worker"], "grants": true, "site_args": { "capsid-mcp": ["--grant-path", "/ops/mcp"] } },
-        { "name": "site-runtime-ai-audit", "repo": "site-runtime", "bin": "site-runtime-ai-audit", "kinds": ["site", "static"], "args": ["--kind", "site"], "grants": true }
+        {
+          "name": "site-runtime-ai-audit",
+          "repo": "site-runtime",
+          "bin": "site-runtime-ai-audit",
+          "kinds": ["worker"],
+          "args": ["--kind", "worker"],
+          "grants": true,
+          "site_args": { "capsid-mcp": ["--grant-path", "/ops/mcp"] }
+        },
+        {
+          "name": "site-runtime-ai-audit",
+          "repo": "site-runtime",
+          "bin": "site-runtime-ai-audit",
+          "kinds": ["site", "static"],
+          "args": ["--kind", "site"],
+          "grants": true
+        }
       ]
     },
-    { "id": 12, "name": "Checks and tooling", "builder": "Complete shared checks and tooling", "checks": [] }
+    {
+      "id": 12,
+      "name": "Checks and tooling",
+      "builder": "Complete shared checks and tooling",
+      "checks": []
+    }
   ]
 }

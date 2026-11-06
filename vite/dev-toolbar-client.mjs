@@ -31,7 +31,10 @@ const EXTERNAL = /^(?:[a-z+]+:)?\/\//i;
 
 function readSettings() {
   try {
-    return { placement: "bottom-center", ...JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? "{}") };
+    return {
+      placement: "bottom-center",
+      ...JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? "{}"),
+    };
   } catch {
     return { placement: "bottom-center" };
   }
@@ -61,7 +64,8 @@ const PERF_RULES = [
   {
     code: "perf-responsive-image",
     title: "Serve this image in sizes",
-    message: "This image has no srcset. A large one could come from site-runtime's ./image, in AVIF and WebP at the sizes the page needs.",
+    message:
+      "This image has no srcset. A large one could come from site-runtime's ./image, in AVIF and WebP at the sizes the page needs.",
     selector: "img:not([srcset])",
     async match(el) {
       const src = el.getAttribute("src");
@@ -75,13 +79,15 @@ const PERF_RULES = [
     code: "perf-use-loading-lazy",
     title: "Lazy-load this image",
     message: (el) => `This ${el.localName} is below the fold and could be lazy-loaded.`,
-    selector: 'img:not([loading]), img[loading="eager"], iframe:not([loading]), iframe[loading="eager"]',
+    selector:
+      'img:not([loading]), img[loading="eager"], iframe:not([loading]), iframe[loading="eager"]',
     match: (el) => documentTop(el) >= window.innerHeight && !el.src.startsWith("data:"),
   },
   {
     code: "perf-use-loading-eager",
     title: "Load this image at once",
-    message: (el) => `This ${el.localName} is above the fold and lazy, which delays it; it could load eagerly.`,
+    message: (el) =>
+      `This ${el.localName} is above the fold and lazy, which delays it; it could load eagerly.`,
     selector: 'img[loading="lazy"], iframe[loading="lazy"]',
     match: (el) => documentTop(el) < window.innerHeight && !el.src.startsWith("data:"),
   },
@@ -90,12 +96,15 @@ const PERF_RULES = [
     title: "Use a video for this animation",
     message: "This GIF is over 100 KB; a video of it would be a fraction of the size.",
     selector: 'img[src$=".gif"]',
-    match: async (el) => !EXTERNAL.test(el.getAttribute("src") ?? "") && (await bytesOf(el.getAttribute("src"))) >= 102400,
+    match: async (el) =>
+      !EXTERNAL.test(el.getAttribute("src") ?? "") &&
+      (await bytesOf(el.getAttribute("src"))) >= 102400,
   },
   {
     code: "perf-slow-island",
     title: "This island took long to start",
-    message: (el) => `"${el.dataset.island}" took ${el.dataset.islandMs} ms from loading its module to running it. Something may be blocking the main thread.`,
+    message: (el) =>
+      `"${el.dataset.island}" took ${el.dataset.islandMs} ms from loading its module to running it. Something may be blocking the main thread.`,
     selector: "[data-island][data-island-ms]",
     match: (el) => Number(el.dataset.islandMs) > 500,
   },
@@ -109,7 +118,8 @@ async function perfFindings() {
     for (const el of document.querySelectorAll(rule.selector)) {
       if (el.closest("devkit-dev-toolbar")) continue;
       try {
-        if (await rule.match(el)) found.push({ el, code: rule.code, title: rule.title, message: text(rule.message, el) });
+        if (await rule.match(el))
+          found.push({ el, code: rule.code, title: rule.title, message: text(rule.message, el) });
       } catch (error) {
         console.warn(`dev toolbar: rule ${rule.code} failed`, error);
       }
@@ -132,14 +142,24 @@ async function a11yFindings() {
       return { missing: true, found: [] };
     }
   }
-  const results = await window.axe.run(document, { exclude: [["devkit-dev-toolbar"]], resultTypes: ["violations"] });
+  const results = await window.axe.run(document, {
+    exclude: [["devkit-dev-toolbar"]],
+    resultTypes: ["violations"],
+  });
   const found = [];
   for (const v of results.violations) {
     for (const node of v.nodes) {
       // A target inside a shadow root is an array of selectors; axe's exclude misses the toolbar's own, so skip them.
       if (node.target.some((t) => Array.isArray(t))) continue;
       const el = document.querySelector(node.target.join(" "));
-      if (el) found.push({ el, code: `a11y-${v.id}`, title: v.help, message: node.failureSummary ?? v.description, link: v.helpUrl });
+      if (el)
+        found.push({
+          el,
+          code: `a11y-${v.id}`,
+          title: v.help,
+          message: node.failureSummary ?? v.description,
+          link: v.helpUrl,
+        });
     }
   }
   return { missing: false, found };
@@ -173,7 +193,8 @@ class DevToolbar extends HTMLElement {
       </div>`;
     this.panel = this.root.querySelector(".panel");
     this.hls = this.root.querySelector(".hls");
-    for (const b of this.root.querySelectorAll("[data-app]")) b.addEventListener("click", () => this.toggle(b.dataset.app));
+    for (const b of this.root.querySelectorAll("[data-app]"))
+      b.addEventListener("click", () => this.toggle(b.dataset.app));
     this.addEventListener("keydown", (e) => e.key === "Escape" && this.toggle(null));
     addEventListener("resize", () => this.place());
     addEventListener("scroll", () => this.place(), { passive: true });
@@ -184,7 +205,8 @@ class DevToolbar extends HTMLElement {
   toggle(app) {
     const open = this.open === app ? null : app;
     this.open = open;
-    for (const b of this.root.querySelectorAll("[data-app]")) b.setAttribute("aria-pressed", String(b.dataset.app === open));
+    for (const b of this.root.querySelectorAll("[data-app]"))
+      b.setAttribute("aria-pressed", String(b.dataset.app === open));
     this.panel.hidden = !open;
     this.highlights = [];
     this.place();
@@ -201,7 +223,12 @@ class DevToolbar extends HTMLElement {
         const box = document.createElement("div");
         box.className = "hl";
         box.dataset.kind = kind;
-        Object.assign(box.style, { top: `${r.top}px`, left: `${r.left}px`, width: `${r.width}px`, height: `${r.height}px` });
+        Object.assign(box.style, {
+          top: `${r.top}px`,
+          left: `${r.left}px`,
+          width: `${r.width}px`,
+          height: `${r.height}px`,
+        });
         const tag = document.createElement("span");
         tag.textContent = label;
         // At the top of the viewport the label goes inside the box, where it can be read.
@@ -214,11 +241,17 @@ class DevToolbar extends HTMLElement {
 
   inspect() {
     const islands = [...document.querySelectorAll("[data-island]")];
-    this.highlights = islands.map((el) => ({ el, label: `${el.dataset.island} · ${el.dataset.client ?? "load"}`, kind: "island" }));
+    this.highlights = islands.map((el) => ({
+      el,
+      label: `${el.dataset.island} · ${el.dataset.client ?? "load"}`,
+      kind: "island",
+    }));
     this.place();
     this.panel.replaceChildren();
     const h = document.createElement("h2");
-    h.textContent = islands.length ? `${islands.length} island${islands.length === 1 ? "" : "s"} on this page` : "No islands on this page";
+    h.textContent = islands.length
+      ? `${islands.length} island${islands.length === 1 ? "" : "s"} on this page`
+      : "No islands on this page";
     const list = document.createElement("ol");
     for (const el of islands) {
       const li = document.createElement("li");
@@ -235,7 +268,10 @@ class DevToolbar extends HTMLElement {
 
   async audit(show) {
     const [a11y, perf] = await Promise.all([a11yFindings(), perfFindings()]);
-    const found = [...a11y.found.map((f) => ({ ...f, kind: "a11y" })), ...perf.map((f) => ({ ...f, kind: "perf" }))];
+    const found = [
+      ...a11y.found.map((f) => ({ ...f, kind: "a11y" })),
+      ...perf.map((f) => ({ ...f, kind: "perf" })),
+    ];
     const count = this.root.querySelector(".count");
     count.hidden = found.length === 0;
     count.textContent = String(found.length);
@@ -267,7 +303,8 @@ class DevToolbar extends HTMLElement {
     this.panel.append(h, list);
     if (a11y.missing) {
       const note = document.createElement("p");
-      note.textContent = "Accessibility is not checked: install axe-core in this site (npm i -D axe-core) so /@devkit/axe.js can serve it.";
+      note.textContent =
+        "Accessibility is not checked: install axe-core in this site (npm i -D axe-core) so /@devkit/axe.js can serve it.";
       this.panel.append(note);
     }
   }
@@ -279,7 +316,8 @@ class DevToolbar extends HTMLElement {
     const label = document.createElement("label");
     label.textContent = "Place the bar ";
     const select = document.createElement("select");
-    for (const p of PLACEMENTS) select.append(new Option(p.replace("-", " "), p, false, p === this.settings.placement));
+    for (const p of PLACEMENTS)
+      select.append(new Option(p.replace("-", " "), p, false, p === this.settings.placement));
     select.addEventListener("change", () => {
       this.settings.placement = select.value;
       saveSettings(this.settings);

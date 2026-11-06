@@ -8,24 +8,48 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 
-import { codeMap, crap, cyclesOf, keptReport, lcovCoverage, loadTypeScript } from "../scripts/code-map.mjs";
+import {
+  codeMap,
+  crap,
+  cyclesOf,
+  keptReport,
+  lcovCoverage,
+  loadTypeScript,
+} from "../scripts/code-map.mjs";
 
 const ROOT = fileURLToPath(new URL("fixtures/code-map/", import.meta.url));
 const ts = loadTypeScript(ROOT);
-const base = { ts, root: ROOT, repo: "example-org/sample", sha: "0".repeat(40), date: "2026-10-17" };
+const base = {
+  ts,
+  root: ROOT,
+  repo: "example-org/sample",
+  sha: "0".repeat(40),
+  date: "2026-10-17",
+};
 const fn = (/** @type {any} */ map, /** @type {string} */ path, /** @type {string} */ name) => {
-  const found = map.modules.find((/** @type {any} */ m) => m.path === path)?.functions.find((/** @type {any} */ f) => f.name === name);
+  const found = map.modules
+    .find((/** @type {any} */ m) => m.path === path)
+    ?.functions.find((/** @type {any} */ f) => f.name === name);
   assert.ok(found, `${path} ${name}`);
   return found;
 };
 
 test("it maps the included modules only, and resolves their imports to mapped paths", () => {
   const map = codeMap(base);
-  assert.deepEqual(map.modules.map((/** @type {any} */ m) => m.path), ["src/a.ts", "src/b-helper.ts", "src/b.ts", "src/branches.ts", "src/types.ts"]);
-  const imports = Object.fromEntries(map.modules.map((/** @type {any} */ m) => [m.path, m.imports]));
+  assert.deepEqual(
+    map.modules.map((/** @type {any} */ m) => m.path),
+    ["src/a.ts", "src/b-helper.ts", "src/b.ts", "src/branches.ts", "src/types.ts"],
+  );
+  const imports = Object.fromEntries(
+    map.modules.map((/** @type {any} */ m) => [m.path, m.imports]),
+  );
   assert.deepEqual(imports["src/a.ts"], ["src/b.ts"]);
   assert.deepEqual(imports["src/b-helper.ts"], ["src/a.ts"], "a re-export is an import");
-  assert.deepEqual(imports["src/branches.ts"], ["src/a.ts", "src/types.ts"], "a type import and a dynamic import both count");
+  assert.deepEqual(
+    imports["src/branches.ts"],
+    ["src/a.ts", "src/types.ts"],
+    "a type import and a dynamic import both count",
+  );
   assert.equal(map.version, 1);
   assert.equal(map.date, "2026-10-17");
 });
@@ -33,13 +57,32 @@ test("it maps the included modules only, and resolves their imports to mapped pa
 test("an import cycle is found and its modules are marked; a module outside it is not", () => {
   const map = codeMap(base);
   assert.deepEqual(map.cycles, [["src/a.ts", "src/b-helper.ts", "src/b.ts"]]);
-  const marked = map.modules.filter((/** @type {any} */ m) => m.cycle).map((/** @type {any} */ m) => m.path);
+  const marked = map.modules
+    .filter((/** @type {any} */ m) => m.cycle)
+    .map((/** @type {any} */ m) => m.path);
   assert.deepEqual(marked, ["src/a.ts", "src/b-helper.ts", "src/b.ts"]);
 });
 
 test("a module that imports itself is a cycle of one; a plain chain is none", () => {
-  assert.deepEqual(cyclesOf(new Map([["x", ["x"]], ["y", ["z"]], ["z", []]])), [["x"]]);
-  assert.deepEqual(cyclesOf(new Map([["y", ["z"]], ["z", []]])), []);
+  assert.deepEqual(
+    cyclesOf(
+      new Map([
+        ["x", ["x"]],
+        ["y", ["z"]],
+        ["z", []],
+      ]),
+    ),
+    [["x"]],
+  );
+  assert.deepEqual(
+    cyclesOf(
+      new Map([
+        ["y", ["z"]],
+        ["z", []],
+      ]),
+    ),
+    [],
+  );
 });
 
 test("complexity counts the function's own branches and none of a nested function's", () => {
@@ -62,7 +105,10 @@ test("with no coverage or mutation report, every such number is null, never 0", 
 
 test("coverage lands on the innermost function, and CRAP follows it", () => {
   const file = join(ROOT, "src/branches.ts");
-  const statement = (/** @type {number} */ line) => ({ start: { line, column: 0 }, end: { line, column: 1 } });
+  const statement = (/** @type {number} */ line) => ({
+    start: { line, column: 0 },
+    end: { line, column: 1 },
+  });
   const inner = fn(codeMap(base), "src/branches.ts", "inner");
   const coverage = {
     [file]: {
@@ -75,7 +121,11 @@ test("coverage lands on the innermost function, and CRAP follows it", () => {
   assert.equal(fn(map, "src/branches.ts", "classify").coverage, 0.5);
   assert.equal(fn(map, "src/branches.ts", "inner").coverage, 0);
   assert.equal(fn(map, "src/branches.ts", "inner").crap, crap(2, 0));
-  assert.equal(fn(map, "src/a.ts", "a").coverage, null, "a file the report does not name is unmeasured");
+  assert.equal(
+    fn(map, "src/a.ts", "a").coverage,
+    null,
+    "a file the report does not name is unmeasured",
+  );
   assert.equal(map.tools.coverage, "istanbul");
 });
 
@@ -88,35 +138,70 @@ test("CRAP is CC squared times uncovered cubed, plus CC", () => {
 
 test("mutants land on the innermost function; the score counts only valid mutants", () => {
   const classify = fn(codeMap(base), "src/branches.ts", "classify");
-  const at = (/** @type {number} */ line, /** @type {string} */ status) => ({ status, location: { start: { line, column: 1 }, end: { line, column: 2 } } });
+  const at = (/** @type {number} */ line, /** @type {string} */ status) => ({
+    status,
+    location: { start: { line, column: 1 }, end: { line, column: 2 } },
+  });
   const mutation = {
     files: {
       "src/branches.ts": {
-        mutants: [at(classify.line + 1, "Killed"), at(classify.line + 2, "Timeout"), at(classify.line + 3, "Survived"), at(classify.line + 4, "NoCoverage"), at(classify.line + 5, "Ignored"), at(classify.line + 6, "CompileError")],
+        mutants: [
+          at(classify.line + 1, "Killed"),
+          at(classify.line + 2, "Timeout"),
+          at(classify.line + 3, "Survived"),
+          at(classify.line + 4, "NoCoverage"),
+          at(classify.line + 5, "Ignored"),
+          at(classify.line + 6, "CompileError"),
+        ],
       },
     },
   };
   const f = fn(codeMap({ ...base, mutation }), "src/branches.ts", "classify");
   assert.equal(f.mutants, 4, "ignored and compile-error mutants are not counted");
   assert.equal(f.score, 50);
-  assert.equal(fn(codeMap({ ...base, mutation }), "src/a.ts", "a").mutants, null, "a file with no report entry is unmeasured");
+  assert.equal(
+    fn(codeMap({ ...base, mutation }), "src/a.ts", "a").mutants,
+    null,
+    "a file with no report entry is unmeasured",
+  );
 });
 
 test("a kept run's numbers follow a function whose lines moved; a function that changed is stale, and the map names the run", () => {
   const src = (/** @type {string} */ p) => readFileSync(join(ROOT, p), "utf8");
-  const at = (/** @type {number} */ line, /** @type {string} */ status) => ({ id: String(line), mutatorName: "x", status, location: { start: { line, column: 1 }, end: { line, column: 2 } } });
+  const at = (/** @type {number} */ line, /** @type {string} */ status) => ({
+    id: String(line),
+    mutatorName: "x",
+    status,
+    location: { start: { line, column: 1 }, end: { line, column: 2 } },
+  });
   // Then, branches.ts had two more lines at the top, so classify sat two lines lower; a.ts's function body differed.
   const branchesThen = `// then\n// then\n${src("src/branches.ts")}`;
   const classify = fn(codeMap(base), "src/branches.ts", "classify");
   const aThen = src("src/a.ts").replace("n - 1", "n - 2");
-  const stryker = (/** @type {Record<string, any>} */ files) => ({ schemaVersion: "1", thresholds: {}, files });
+  const stryker = (/** @type {Record<string, any>} */ files) => ({
+    schemaVersion: "1",
+    thresholds: {},
+    files,
+  });
   const kept = keptReport(
     [
-      stryker({ "src/branches.ts": { language: "typescript", source: branchesThen, mutants: [at(classify.line + 3, "Killed"), at(classify.line + 4, "Survived"), at(classify.line + 5, "Ignored")] } }),
-      stryker({ "src/a.ts": { language: "typescript", source: aThen, mutants: [at(4, "Killed")] } }),
+      stryker({
+        "src/branches.ts": {
+          language: "typescript",
+          source: branchesThen,
+          mutants: [
+            at(classify.line + 3, "Killed"),
+            at(classify.line + 4, "Survived"),
+            at(classify.line + 5, "Ignored"),
+          ],
+        },
+      }),
+      stryker({
+        "src/a.ts": { language: "typescript", source: aThen, mutants: [at(4, "Killed")] },
+      }),
     ],
     "1".repeat(40),
-    "2026-10-12"
+    "2026-10-12",
   );
   assert.equal(kept.files["src/branches.ts"].mutants.length, 2, "an ignored mutant is not kept");
   assert.deepEqual(Object.keys(kept.files["src/branches.ts"].mutants[0]), ["status", "location"]);
@@ -131,11 +216,22 @@ test("a kept run's numbers follow a function whose lines moved; a function that 
   assert.equal(changed.stale, true);
   assert.equal(changed.mutants, null, "a stale function carries no old number");
   assert.equal(changed.score, null);
-  assert.equal(fn(map, "src/b.ts", "b").mutants, null, "a file the run did not mutate is unmeasured, not stale");
+  assert.equal(
+    fn(map, "src/b.ts", "b").mutants,
+    null,
+    "a file the run did not mutate is unmeasured, not stale",
+  );
   assert.equal(fn(map, "src/b.ts", "b").stale, undefined);
 
   // A run at the map's own commit is current: no mutated, nothing stale.
-  const fresh = codeMap({ ...base, mutation: keptReport([stryker({ "src/a.ts": { source: src("src/a.ts"), mutants: [at(4, "Killed")] } })], base.sha, "2026-10-17") });
+  const fresh = codeMap({
+    ...base,
+    mutation: keptReport(
+      [stryker({ "src/a.ts": { source: src("src/a.ts"), mutants: [at(4, "Killed")] } })],
+      base.sha,
+      "2026-10-17",
+    ),
+  });
   assert.equal(fresh.mutated, undefined);
   assert.equal(fn(fresh, "src/a.ts", "a").score, 100);
 });
@@ -143,12 +239,33 @@ test("a kept run's numbers follow a function whose lines moved; a function that 
 test("a JavaScript repository with no tsconfig is mapped as plain modules, with lcov coverage from node --test", () => {
   const root = fileURLToPath(new URL("fixtures/code-map-js/", import.meta.url));
   // lines 3 to 6 of lib.mjs: the function line and the if ran, the early return did not, the last return did.
-  const lcov = ["TN:", "SF:lib.mjs", "DA:1,1", "DA:3,1", "DA:4,1", "DA:5,0", "DA:6,1", "end_of_record", "SF:util/twice.mjs", "DA:1,1", "end_of_record", ""].join("\n");
+  const lcov = [
+    "TN:",
+    "SF:lib.mjs",
+    "DA:1,1",
+    "DA:3,1",
+    "DA:4,1",
+    "DA:5,0",
+    "DA:6,1",
+    "end_of_record",
+    "SF:util/twice.mjs",
+    "DA:1,1",
+    "end_of_record",
+    "",
+  ].join("\n");
   const coverage = lcovCoverage(lcov, root);
   assert.deepEqual(Object.keys(coverage), [join(root, "lib.mjs"), join(root, "util/twice.mjs")]);
   const map = codeMap({ ...base, root, include: ["."], exclude: ["docs/", "test/"], coverage });
-  assert.deepEqual(map.modules.map((/** @type {any} */ m) => m.path), ["lib.mjs", "util/twice.mjs"], "no test file, no declaration, nothing excluded");
-  assert.deepEqual(map.modules[0].imports, ["util/twice.mjs"], "a .mjs import resolves with no tsconfig");
+  assert.deepEqual(
+    map.modules.map((/** @type {any} */ m) => m.path),
+    ["lib.mjs", "util/twice.mjs"],
+    "no test file, no declaration, nothing excluded",
+  );
+  assert.deepEqual(
+    map.modules[0].imports,
+    ["util/twice.mjs"],
+    "a .mjs import resolves with no tsconfig",
+  );
   const grade = fn(map, "lib.mjs", "grade");
   assert.equal(grade.cc, 3);
   assert.equal(grade.coverage, 0.75);
@@ -158,7 +275,10 @@ test("a JavaScript repository with no tsconfig is mapped as plain modules, with 
 test("a .mjs beside its hand-written .d.mts is mapped as the source, and imports of it land on it", () => {
   const root = fileURLToPath(new URL("fixtures/code-map-dts/", import.meta.url));
   const map = codeMap({ ...base, root, include: ["."] });
-  assert.deepEqual(map.modules.map((/** @type {any} */ m) => m.path), ["a.mjs", "b.mjs"]);
+  assert.deepEqual(
+    map.modules.map((/** @type {any} */ m) => m.path),
+    ["a.mjs", "b.mjs"],
+  );
   assert.deepEqual(map.modules[1].imports, ["a.mjs"]);
   assert.equal(fn(map, "a.mjs", "a").cc, 2);
 });

@@ -12,14 +12,31 @@ import test from "node:test";
 const ROOT = join(import.meta.dirname, "..");
 
 test("the shared config loads and its key rules fire on the fixture, and only there", () => {
-  const run = spawnSync(process.execPath, [join(ROOT, "node_modules", "oxlint", "bin", "oxlint"), "--type-aware", "-c", "fixture.config.ts", "-f", "unix"], {
-    cwd: join(ROOT, "test", "fixtures", "oxlint"),
-    encoding: "utf8",
-    timeout: 120_000,
-  });
+  const run = spawnSync(
+    process.execPath,
+    [
+      join(ROOT, "node_modules", "oxlint", "bin", "oxlint"),
+      "--type-aware",
+      "-c",
+      "fixture.config.ts",
+      "-f",
+      "unix",
+    ],
+    {
+      cwd: join(ROOT, "test", "fixtures", "oxlint"),
+      encoding: "utf8",
+      timeout: 120_000,
+    },
+  );
   const output = `${run.stdout}${run.stderr}`;
   assert.equal(run.status, 1, `expected the fixture to fail:\n${output}`);
   const findings = output.match(/^\S+:\d+:\d+: .*$/gm) ?? [];
-  const rules = findings.map((line) => `${line.split(":")[0]} ${line.match(/\(([\w-]+)\)\]$/)?.[1]}`).sort();
-  assert.deepEqual(rules, ["bad.ts no-floating-promises", "bad.ts no-restricted-imports", "bad.ts rules-of-hooks"], output);
+  const rules = findings
+    .map((line) => `${line.split(":")[0]} ${line.match(/\(([\w-]+)\)\]$/)?.[1]}`)
+    .sort();
+  assert.deepEqual(
+    rules,
+    ["bad.ts no-floating-promises", "bad.ts no-restricted-imports", "bad.ts rules-of-hooks"],
+    output,
+  );
 });

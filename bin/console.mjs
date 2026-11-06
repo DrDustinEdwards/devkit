@@ -29,7 +29,19 @@ import { parseArgs } from "node:util";
 import { scan } from "./no-bloat.mjs";
 
 const FILES = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
-const IGNORE = ["**/*.{test,spec}.*", "**/test/**", "**/tests/**", "**/e2e/**", "scripts/**", "bin/**", "**/*.d.{ts,mts,cts}", "**/*.min.*", "**/build/**", "**/dist/**", "**/node_modules/**"];
+const IGNORE = [
+  "**/*.{test,spec}.*",
+  "**/test/**",
+  "**/tests/**",
+  "**/e2e/**",
+  "scripts/**",
+  "bin/**",
+  "**/*.d.{ts,mts,cts}",
+  "**/*.min.*",
+  "**/build/**",
+  "**/dist/**",
+  "**/node_modules/**",
+];
 
 /** The raw console calls in one file's text. */
 export function consoleCalls(/** @type {string} */ text) {
@@ -43,7 +55,8 @@ export function consoleCalls(/** @type {string} */ text) {
  * @param {(path: string) => string} read
  */
 export function measure(config, paths, read) {
-  const matches = (/** @type {string} */ p, /** @type {string[]} */ globs) => globs.some((g) => posix.matchesGlob(p, g));
+  const matches = (/** @type {string} */ p, /** @type {string[]} */ globs) =>
+    globs.some((g) => posix.matchesGlob(p, g));
   /** @type {Record<string, number>} */
   const files = {};
   let calls = 0;
@@ -70,16 +83,27 @@ export function compare(baseline, counts) {
   /** @type {string[]} */
   const warnings = [];
   if (counts.calls > base) {
-    const grown = Object.entries(counts.files).filter(([path, n]) => n > (baseline?.files?.[path] ?? 0)).map(([path, n]) => `${path} ${baseline?.files?.[path] ?? 0} → ${n}`);
-    errors.push(`${counts.calls} raw console calls in server code, above the baseline of ${base}${grown.length ? `: ${grown.slice(0, 20).join(", ")}${grown.length > 20 ? ` and ${grown.length - 20} more` : ""}` : ""}. Log through the structured logger; a deliberate raise is \`npx devkit-console --write-baseline\` in the same change.`);
+    const grown = Object.entries(counts.files)
+      .filter(([path, n]) => n > (baseline?.files?.[path] ?? 0))
+      .map(([path, n]) => `${path} ${baseline?.files?.[path] ?? 0} → ${n}`);
+    errors.push(
+      `${counts.calls} raw console calls in server code, above the baseline of ${base}${grown.length ? `: ${grown.slice(0, 20).join(", ")}${grown.length > 20 ? ` and ${grown.length - 20} more` : ""}` : ""}. Log through the structured logger; a deliberate raise is \`npx devkit-console --write-baseline\` in the same change.`,
+    );
   } else if (counts.calls < base) {
-    warnings.push(`${counts.calls} raw console calls, below the baseline of ${base}. Lower it to lock this in: run \`npx devkit-console --write-baseline\` and commit the config.`);
+    warnings.push(
+      `${counts.calls} raw console calls, below the baseline of ${base}. Lower it to lock this in: run \`npx devkit-console --write-baseline\` and commit the config.`,
+    );
   }
   return { errors, warnings };
 }
 
 function main() {
-  const { values } = parseArgs({ options: { config: { type: "string", default: ".console.json" }, "write-baseline": { type: "boolean" } } });
+  const { values } = parseArgs({
+    options: {
+      config: { type: "string", default: ".console.json" },
+      "write-baseline": { type: "boolean" },
+    },
+  });
   const root = process.cwd();
   /** @type {{ files?: string[], ignore?: string[], baseline?: { measured_at?: string, calls?: number, files?: Record<string, number> } }} */
   let config = {};
@@ -87,33 +111,49 @@ function main() {
     try {
       config = JSON.parse(readFileSync(join(root, values.config), "utf8"));
     } catch (error) {
-      console.log(`::error::${values.config} is not JSON: ${error instanceof Error ? error.message : String(error)}`);
+      console.log(
+        `::error::${values.config} is not JSON: ${error instanceof Error ? error.message : String(error)}`,
+      );
       process.exit(2);
     }
   }
-  const git = (/** @type {string[]} */ args) => execFileSync("git", args, { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
-  const paths = git(["ls-files", "-z", "--cached", "--others", "--exclude-standard"]).split("\0").filter((p) => p && existsSync(join(root, p)));
+  const git = (/** @type {string[]} */ args) =>
+    execFileSync("git", args, { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const paths = git(["ls-files", "-z", "--cached", "--others", "--exclude-standard"])
+    .split("\0")
+    .filter((p) => p && existsSync(join(root, p)));
   const { counts, scanned } = measure(config, paths, (p) => readFileSync(join(root, p), "utf8"));
   if (!scanned) {
-    console.log("::error::devkit-console read no files: nothing matches `files`. A count over nothing is not a pass.");
+    console.log(
+      "::error::devkit-console read no files: nothing matches `files`. A count over nothing is not a pass.",
+    );
     process.exit(2);
   }
   if (values["write-baseline"]) {
     const measured_at = git(["rev-parse", "--short", "HEAD"]).trim();
-    writeFileSync(join(root, values.config), `${JSON.stringify({ ...config, baseline: { measured_at, ...counts } }, null, 2)}\n`);
+    writeFileSync(
+      join(root, values.config),
+      `${JSON.stringify({ ...config, baseline: { measured_at, ...counts } }, null, 2)}\n`,
+    );
     console.log(`devkit-console: wrote a baseline of ${counts.calls} calls to ${values.config}.`);
     return;
   }
   const { errors, warnings } = compare(config.baseline, counts);
   const table = ["| File | Raw console calls | Baseline |", "|---|---:|---:|"];
-  for (const [path, n] of Object.entries(counts.files)) table.push(`| ${path} | ${n} | ${config.baseline?.files?.[path] ?? 0} |`);
+  for (const [path, n] of Object.entries(counts.files))
+    table.push(`| ${path} | ${n} | ${config.baseline?.files?.[path] ?? 0} |`);
   table.push(`| **All** | **${counts.calls}** | **${config.baseline?.calls ?? 0}** |`);
   console.log(table.join("\n"));
-  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Raw console calls\n\n${table.join("\n")}\n`);
+  if (process.env.GITHUB_STEP_SUMMARY)
+    appendFileSync(
+      process.env.GITHUB_STEP_SUMMARY,
+      `### Raw console calls\n\n${table.join("\n")}\n`,
+    );
   for (const e of errors) console.log(`::error title=devkit-console::${e}`);
   for (const w of warnings) console.log(`::warning title=devkit-console::${w}`);
   if (errors.length) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
+  main();

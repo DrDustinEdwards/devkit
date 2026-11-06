@@ -1,7 +1,7 @@
 name: code-map-self
 
 # Nightly, devkit maps its own scripts with its own code-map workflow (main's copy) and publishes code-map.json to the
-# code-map branch for the Capsid system explorer, as examples/code-map-caller.yml does (not on every push since 0.24.0:
+# code-map branch for the Capsid system explorer, as examples/code-map-caller.yml does (not on every push since 0.25.0:
 # README, "No second run on main"). Monday's run (its own cron line) and a manual one also run Stryker on its own checks
 # (stryker.config.mjs), failing below a module's bar; the other nights reuse its numbers.
 

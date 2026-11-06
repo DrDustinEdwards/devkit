@@ -25,9 +25,7 @@
     },
     "germomics": {
       "verdict": "partial",
-      "evidence": [
-        "https://germomics.com/a-boy-named-flu"
-      ],
+      "evidence": ["https://germomics.com/a-boy-named-flu"],
       "note": "episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper"
     },
     "julieedwards-info": {
@@ -71,37 +69,27 @@
     },
     "carrel": {
       "verdict": "partial",
-      "evidence": [
-        "https://carrel.dustinedwards.info/"
-      ],
+      "evidence": ["https://carrel.dustinedwards.info/"],
       "note": "images check passes; share card answers CORP same-origin"
     },
     "enarratio": {
       "verdict": "partial",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/"
-      ],
+      "evidence": ["https://enarratio.dustinedwards.info/"],
       "note": "images check passes; share card answers CORP same-origin"
     },
     "capsomer": {
       "verdict": "partial",
-      "evidence": [
-        "https://capsomer.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsomer.dustinedwards.info/"],
       "note": "images check passes; share card answers CORP same-origin"
     },
     "prelum": {
       "verdict": "partial",
-      "evidence": [
-        "https://prelum.dustinedwards.info/"
-      ],
+      "evidence": ["https://prelum.dustinedwards.info/"],
       "note": "images check fails: unsized diagram SVGs, 3 fetchpriority=high, 48 px icon shown at 16 px; share card CORP same-origin"
     },
     "capsid": {
       "verdict": "partial",
-      "evidence": [
-        "https://capsid.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsid.dustinedwards.info/"],
       "note": "images check passes; share card answers CORP same-origin"
     }
   }

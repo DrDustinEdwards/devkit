@@ -14,8 +14,16 @@ import { pathToFileURL } from "node:url";
 const ROOT = new URL("..", import.meta.url);
 const INDENT = " ".repeat(10);
 const PAIRS = [
-  { workflow: ".github/workflows/worker-deploy.yml", script: "scripts/rollback-guard.mjs", marker: "ROLLBACK_GUARD" },
-  { workflow: ".github/workflows/code-map.yml", script: "scripts/code-map.mjs", marker: "CODE_MAP" },
+  {
+    workflow: ".github/workflows/worker-deploy.yml",
+    script: "scripts/rollback-guard.mjs",
+    marker: "ROLLBACK_GUARD",
+  },
+  {
+    workflow: ".github/workflows/code-map.yml",
+    script: "scripts/code-map.mjs",
+    marker: "CODE_MAP",
+  },
 ];
 
 /** The heredoc's bounds in the workflow. @param {string} workflow @param {string} marker */
@@ -31,19 +39,29 @@ function bounds(workflow, marker) {
 export function inlined(workflow, marker = "ROLLBACK_GUARD") {
   const { from, end } = bounds(workflow, marker);
   const block = workflow.slice(from, end);
-  return `${block.split("\n").map((line) => (line.startsWith(INDENT) ? line.slice(INDENT.length) : line)).join("\n")}\n`;
+  return `${block
+    .split("\n")
+    .map((line) => (line.startsWith(INDENT) ? line.slice(INDENT.length) : line))
+    .join("\n")}\n`;
 }
 
 /** The workflow with the heredoc's body replaced by the script. @param {string} workflow @param {string} guard @param {string} [marker] */
 function inline(workflow, guard, marker = "ROLLBACK_GUARD") {
   const { from, end } = bounds(workflow, marker);
-  const block = guard.replace(/\n$/, "").split("\n").map((line) => (line === "" ? "" : INDENT + line)).join("\n");
+  const block = guard
+    .replace(/\n$/, "")
+    .split("\n")
+    .map((line) => (line === "" ? "" : INDENT + line))
+    .join("\n");
   return workflow.slice(0, from) + block + workflow.slice(end);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   for (const { workflow, script, marker } of PAIRS) {
     const file = new URL(workflow, ROOT);
-    writeFileSync(file, inline(readFileSync(file, "utf8"), readFileSync(new URL(script, ROOT), "utf8"), marker));
+    writeFileSync(
+      file,
+      inline(readFileSync(file, "utf8"), readFileSync(new URL(script, ROOT), "utf8"), marker),
+    );
   }
 }

@@ -8,7 +8,9 @@ import { stubGitHub } from "@dustinedwards/devkit/github";
 
 // What GitHub and Cloudflare publish, extracted by scripts/fakes-contract.mjs. A fake answering another status, or a
 // field the real service never sends, lets a test pass that fails against the real one.
-const contract = JSON.parse(readFileSync(new URL("fixtures/fakes-contract.json", import.meta.url), "utf8"));
+const contract = JSON.parse(
+  readFileSync(new URL("fixtures/fakes-contract.json", import.meta.url), "utf8"),
+);
 
 /** Every field path in a JSON value, written as the extract writes them. */
 function fieldPaths(value, prefix = "", out = new Set()) {
@@ -29,7 +31,10 @@ test("the GitHub fake answers each operation with GitHub's status and only field
   gh.history.push({ sha: "f".repeat(40), message: "m", author: "A", date: "2026-10-01T00:00:00Z" });
   const API = "https://api.github.com/repos/Owner/site";
   const call = async (operationId, path, init) => {
-    const response = await fetch(`${API}${path}`, init && { ...init, body: JSON.stringify(init.body) });
+    const response = await fetch(
+      `${API}${path}`,
+      init && { ...init, body: JSON.stringify(init.body) },
+    );
     const body = await response.json();
     const { status, fields } = contract.github.operations[operationId];
     assert.equal(response.status, status, `${operationId}: ${JSON.stringify(body)}`);
@@ -43,17 +48,45 @@ test("the GitHub fake answers each operation with GitHub's status and only field
   await call("repos/get-content", "/contents/a.md");
   await call("repos/get-content", "/contents/dir");
   await call("repos/list-commits", "/commits?path=a.md");
-  const blob = await call("git/create-blob", "/git/blobs", { method: "POST", body: { content: "c" } });
-  const next = await call("git/create-tree", "/git/trees", { method: "POST", body: { base_tree: tree.sha, tree: [{ path: "c.md", mode: "100644", type: "blob", sha: blob.sha }] } });
-  const commit = await call("git/create-commit", "/git/commits", { method: "POST", body: { message: "m", tree: next.sha, parents: [head] } });
-  await call("git/update-ref", "/git/refs/heads/main", { method: "PATCH", body: { sha: commit.sha } });
+  const blob = await call("git/create-blob", "/git/blobs", {
+    method: "POST",
+    body: { content: "c" },
+  });
+  const next = await call("git/create-tree", "/git/trees", {
+    method: "POST",
+    body: {
+      base_tree: tree.sha,
+      tree: [{ path: "c.md", mode: "100644", type: "blob", sha: blob.sha }],
+    },
+  });
+  const commit = await call("git/create-commit", "/git/commits", {
+    method: "POST",
+    body: { message: "m", tree: next.sha, parents: [head] },
+  });
+  await call("git/update-ref", "/git/refs/heads/main", {
+    method: "PATCH",
+    body: { sha: commit.sha },
+  });
 });
 
 test("the Access fake's application token carries Cloudflare's claims, and its certs Cloudflare's fields", async () => {
   const certsUrl = "https://sample.cloudflareaccess.com/cdn-cgi/access/certs";
-  const stub = await stubAccess({ issuer: "https://sample.cloudflareaccess.com", audience: "aud-tag", email: "x@example.com", jwksUrl: certsUrl, install: false });
-  const claims = JSON.parse(Buffer.from((await stub.token()).split(".")[1], "base64url").toString("utf8"));
-  const types = Object.fromEntries(Object.entries(claims).map(([claim, value]) => [claim, Array.isArray(value) ? "array" : typeof value]));
+  const stub = await stubAccess({
+    issuer: "https://sample.cloudflareaccess.com",
+    audience: "aud-tag",
+    email: "x@example.com",
+    jwksUrl: certsUrl,
+    install: false,
+  });
+  const claims = JSON.parse(
+    Buffer.from((await stub.token()).split(".")[1], "base64url").toString("utf8"),
+  );
+  const types = Object.fromEntries(
+    Object.entries(claims).map(([claim, value]) => [
+      claim,
+      Array.isArray(value) ? "array" : typeof value,
+    ]),
+  );
   assert.deepEqual(types, contract.access.applicationToken);
 
   const certs = await (await stub.fetch(certsUrl)).json();
@@ -67,6 +100,9 @@ test("the Access fake's application token carries Cloudflare's claims, and its c
   for (const [i, entry] of certs.public_certs.entries()) {
     assert.deepEqual(Object.keys(entry), cert);
     assert.equal(entry.kid, certs.keys[i].kid);
-    assert.equal(new X509Certificate(entry.cert).publicKey.export({ format: "jwk" }).n, certs.keys[i].n);
+    assert.equal(
+      new X509Certificate(entry.cert).publicKey.export({ format: "jwk" }).n,
+      certs.keys[i].n,
+    );
   }
 });
