@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- A test runs the README's `.claude/settings.json` block as Claude Code does: it blocks every call but `npm ci` or `npm install` until devkit is installed, then runs the shared hook.
+
 ## 0.23.1 (2026-11-06)
 
 - `bump-consumers.yml`: a consumer Renovate cannot reach (no Dependency Dashboard, or one with no manual-run checkbox) fails the run, naming the repository, instead of a warning on a green run. The other consumers are still ticked first. Capsomer depends on site-runtime but has no dashboard, so every site-runtime release since its history began on 2026-10-31 warned and passed, and it stayed on 0.77.1 while the network moved to 0.82.0.
