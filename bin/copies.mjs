@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // The cross-repo copy ratchet. devkit-shared's copies check matches by name, so a block copied from one repository into
-// another under a new name slips past it; this scan reads the code itself. It shallow-clones every public repository of
-// the owner (no forks, nothing archived), gathers each one's tracked source (no tests, builds or vendored files, SOURCE
+// another under a new name slips past it; this scan reads the code itself. It shallow-clones every repository of the owner
+// it can read (no forks, nothing archived), gathers each one's tracked source (no tests, builds or vendored files, SOURCE
 // and SKIP below) into one folder, runs jscpd over all of it at once and counts the copied blocks whose two files sit in
 // different repositories. The count may only go down: above the baseline in live/copies.json it fails (exit 1); below it,
 // it passes and says to lower the baseline so the gain is kept.
@@ -13,9 +13,14 @@
 //
 // Each copied block is an ::warning line with both places, and the summary lists them all, so a failure says what to move
 // into a shared package. A repository that cannot be cloned stops the check (exit 2): a count over fewer repositories
-// would pass by reading less. The config:
+// would pass by reading less.
 //
-//   { "baseline": 44, "measured_at": "2026-11-06", "tool": "jscpd@5.4.0", "args": ["--min-lines", "10", "--min-tokens", "80"] }
+// LIVE_GITHUB_TOKEN, the live checks' fine-grained token, reads the private repositories: with Contents read on all of
+// the owner's repositories it lists and clones every one, private included. Without it only the public ones are read, and
+// a warning says so, since a repository that went private would then drop out of the count without any copy removed. The
+// token goes to git in its environment, never on a command line, and is never printed. The config:
+//
+//   { "baseline": 44, "measured_at": "2026-11-06", "tool": "jscpd@4.3.0", "args": ["--min-lines", "10", "--min-tokens", "80"] }
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { appendFileSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -59,17 +64,28 @@ export function crossRepo(report) {
     .sort((x, y) => `${x.a.repo}/${x.a.path}:${x.a.start}`.localeCompare(`${y.a.repo}/${y.a.path}:${y.a.start}`));
 }
 
-/** The owner's public repositories that are neither forks nor archived, by name. */
-async function publicRepos(/** @type {string | undefined} */ token) {
+/**
+ * The owner's repositories that are neither forks nor archived, by name: every one the token can read when there is a
+ * token for the owner (a fine-grained token lists its repositories at /user/repos), the public ones otherwise.
+ */
+async function ownerRepos(/** @type {string | undefined} */ token) {
   const headers = { Accept: "application/vnd.github+json", "User-Agent": "devkit-copies", ...(token ? { Authorization: `Bearer ${token}` } : {}) };
+  const list = token ? "https://api.github.com/user/repos?affiliation=owner&visibility=all" : `https://api.github.com/users/${OWNER}/repos?type=owner`;
   const names = [];
   for (let page = 1; ; page++) {
-    const resp = await fetch(`https://api.github.com/users/${OWNER}/repos?type=owner&per_page=100&page=${page}`, { headers });
+    const resp = await fetch(`${list}&per_page=100&page=${page}`, { headers });
     if (!resp.ok) throw new Error(`GitHub answered ${resp.status} for the repository list`);
-    const list = await resp.json();
-    for (const repo of list) if (!repo.private && !repo.fork && !repo.archived) names.push(repo.name);
-    if (list.length < 100) return names.sort();
+    const repos = await resp.json();
+    for (const repo of repos) if (repo.owner?.login === OWNER && !repo.fork && !repo.archived) names.push(repo.name);
+    if (repos.length < 100) return names.sort();
   }
+}
+
+/** The environment that gives git the token as an Authorization header, as actions/checkout does, off the command line. */
+function gitAuthEnv(/** @type {string | undefined} */ token) {
+  if (!token) return { ...process.env, GIT_TERMINAL_PROMPT: "0" };
+  const basic = Buffer.from(`x-access-token:${token}`).toString("base64");
+  return { ...process.env, GIT_TERMINAL_PROMPT: "0", GIT_CONFIG_COUNT: "1", GIT_CONFIG_KEY_0: "http.https://github.com/.extraheader", GIT_CONFIG_VALUE_0: `AUTHORIZATION: basic ${basic}` };
 }
 
 /** Copies one checkout's tracked source into dest/<repo>. */
@@ -105,12 +121,13 @@ async function main() {
   const all = join(work, "all");
   mkdirSync(all);
 
+  const token = process.env.LIVE_GITHUB_TOKEN || undefined;
   let repos;
   if (values.from) {
     repos = readdirSync(values.from).filter((name) => existsSync(join(values.from, name, ".git"))).sort();
   } else {
     try {
-      repos = await publicRepos(process.env.GITHUB_TOKEN);
+      repos = await ownerRepos(token);
     } catch (error) {
       console.log(`::error title=devkit-copies::could not list the repositories: ${error.message}`);
       process.exit(2);
@@ -121,15 +138,19 @@ async function main() {
     const checkout = values.from ? join(values.from, repo) : join(work, "clones", repo);
     if (!values.from) {
       try {
-        execFileSync("git", ["clone", "--quiet", "--depth", "1", `https://github.com/${OWNER}/${repo}`, checkout], { stdio: "pipe" });
+        execFileSync("git", ["clone", "--quiet", "--depth", "1", `https://github.com/${OWNER}/${repo}`, checkout], { stdio: "pipe", env: gitAuthEnv(token) });
       } catch (error) {
-        console.log(`::error title=devkit-copies::could not clone ${repo}: ${String(error.stderr ?? error.message).trim().split("\n").at(-1)}`);
+        const why = String(error.stderr ?? error.message).trim().split("\n").at(-1);
+        console.log(`::error title=devkit-copies::could not clone ${repo}: ${why}${token ? " (LIVE_GITHUB_TOKEN needs Contents read on every repository)" : ""}`);
         process.exit(2);
       }
     }
     counts.push(`${repo} ${gather(checkout, repo, all)}`);
   }
 
+  if (!values.from && !token) {
+    console.log("::warning title=devkit-copies::LIVE_GITHUB_TOKEN is not set, so only public repositories were read; a private one is left out of the count.");
+  }
   const pairs = crossRepo(jscpd(all, config.tool, config.args));
   const count = pairs.length;
   if (values["write-baseline"]) {

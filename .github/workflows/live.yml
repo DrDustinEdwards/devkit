@@ -10,8 +10,9 @@ name: live
 # The run fails when any check fails, so a gap on a live site turns this red on its own; a check that could not measure
 # is a warning with its reason, and its cell says "could not measure" on the board.
 #
-# LIVE_GITHUB_TOKEN, when set, is a fine-grained token (resource owner DrDustinEdwards, all repositories, Pull requests
-# read, Metadata read) for counting the lines of each area's pull requests in the private repositories too. PSI_API_KEY, when
+# LIVE_GITHUB_TOKEN, when set, is a fine-grained token (resource owner DrDustinEdwards, all repositories, Contents read,
+# Pull requests read, Metadata read) for counting the lines of each area's pull requests in the private repositories too,
+# and for the copies job's scan of the private repositories' code. PSI_API_KEY, when
 # set, is a PageSpeed Insights API key for area 7's lab and field numbers; Google's keyless quota refuses most days.
 #
 # MCP_TEST_GRANT_<HOST>, one per MCP server (the host upper-cased, every other character an underscore), is a READ-ONLY
@@ -23,7 +24,8 @@ name: live
 # The copies job is the network-wide check beside the per-site ones: bin/copies.mjs runs jscpd over every public
 # repository's source at once and fails when more blocks are copied between repositories than live/copies.json's baseline
 # (44 on 2026-11-06, from the shared-code audit). devkit-shared's copies check matches by name, so this catches a copy
-# under a new name. A pull request that changes the scan or its baseline runs it too.
+# under a new name. A pull request that changes the scan or its baseline runs it too. With LIVE_GITHUB_TOKEN it reads the
+# private repositories as well; without it, the public ones and a warning.
 
 on:
   schedule:
@@ -112,5 +114,5 @@ jobs:
           package-manager-cache: false
       - name: No more code copied between repositories than the baseline
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          LIVE_GITHUB_TOKEN: ${{ secrets.LIVE_GITHUB_TOKEN }}
         run: node bin/copies.mjs
