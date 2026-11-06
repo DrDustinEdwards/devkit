@@ -7,6 +7,10 @@ name: worker-size
 #
 # THE BIN COMES FROM THE CALLER'S OWN INSTALL: the caller lists "@dustinedwards/devkit" in its devDependencies at a tag.
 #
+# SEVERAL WORKERS IN ONE JOB (`workers`): one checkout and one install, then each Worker's prepare and check in turn, each
+# with its own summary section and annotations titled with its name. One job in place of one per Worker saves a runner's
+# setup and install per extra Worker; the check is then one status, "<caller job> / Worker bundle size".
+#
 # A CALLER (examples/worker-size-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
 
 on:
@@ -42,6 +46,11 @@ on:
         required: false
         type: string
         default: .worker-size.json
+      workers:
+        description: 'Several Workers checked in this one job, after one install, as a JSON array of { "name", "working-directory", "config", "prepare" } (only name is required; working-directory defaults to ".", config to ".worker-size.json", prepare to none, and each prepare runs from the repository root, in order). Empty for the one Worker the inputs above describe.'
+        required: false
+        type: string
+        default: ""
       timeout-minutes:
         required: false
         type: number
@@ -77,12 +86,13 @@ jobs:
         run: bash -euo pipefail -c "$INSTALL"
 
       - name: Prepare
-        if: inputs.prepare != ''
+        if: inputs.workers == '' && inputs.prepare != ''
         env:
           PREPARE: ${{ inputs.prepare }}
         run: bash -euo pipefail -c "$PREPARE"
 
       - name: Check
+        if: inputs.workers == ''
         env:
           CONFIG: ${{ inputs.config }}
           WORKDIR: ${{ inputs.working-directory }}
@@ -96,3 +106,57 @@ jobs:
           fi
           cd "$WORKDIR"
           node "$bin" --config "$CONFIG"
+
+      # Every Worker is checked even when one fails, so one run shows them all; the step fails if any did.
+      - name: Check each Worker
+        if: inputs.workers != ''
+        env:
+          WORKERS: ${{ inputs.workers }}
+        run: |
+          node --input-type=module - <<'EACH'
+          import { spawnSync } from "node:child_process";
+          import { appendFileSync, existsSync } from "node:fs";
+          import { join, resolve } from "node:path";
+          const root = process.cwd();
+          const summary = (text) => process.env.GITHUB_STEP_SUMMARY && appendFileSync(process.env.GITHUB_STEP_SUMMARY, text);
+          const KEYS = ["name", "working-directory", "config", "prepare"];
+          let workers;
+          try {
+            workers = JSON.parse(process.env.WORKERS);
+            const bad = !Array.isArray(workers) || !workers.length || workers.some((w) => !w || typeof w !== "object" || !/^[\w .-]+$/.test(w.name ?? "") || Object.keys(w).some((k) => !KEYS.includes(k) || typeof w[k] !== "string"));
+            if (bad) throw new Error(`not a non-empty array of objects with a name (letters, digits, space, dot, dash) and only the string fields ${KEYS.join(", ")}`);
+          } catch (error) {
+            console.log(`::error::the workers input: ${error.message}`);
+            process.exit(1);
+          }
+          const failed = [];
+          for (const w of workers) {
+            const dir = resolve(root, w["working-directory"] ?? ".");
+            console.log(`::group::${w.name}`);
+            summary(`\n## ${w.name}\n\n`);
+            let ok = true;
+            if (w.prepare) {
+              const r = spawnSync("bash", ["-euo", "pipefail", "-c", w.prepare], { cwd: root, stdio: "inherit" });
+              if (r.status !== 0) {
+                ok = false;
+                console.log(`::error title=${w.name}::its prepare failed (${r.error?.message ?? `exit ${r.status ?? r.signal}`}), so its size was not measured.`);
+                summary("Its prepare failed, so its size was not measured.\n");
+              }
+            }
+            // The Worker's own install first (a pnpm workspace package), then the repository root.
+            const bin = ok && [dir, root].map((d) => join(d, "node_modules/@dustinedwards/devkit/bin/worker-size.mjs")).find((f) => existsSync(f));
+            if (ok && !bin) {
+              ok = false;
+              console.log(`::error title=${w.name}::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README).`);
+            }
+            if (ok) {
+              const r = spawnSync(process.execPath, [bin, "--config", w.config ?? ".worker-size.json"], { cwd: dir, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+              process.stdout.write(`${r.stdout ?? ""}${r.stderr ?? ""}`.replace(/^::(error|warning)::/gm, `::$1 title=${w.name}::`));
+              if (r.status !== 0) ok = false;
+            }
+            console.log("::endgroup::");
+            if (!ok) failed.push(w.name);
+          }
+          console.log(failed.length ? `::error::over budget or not measured: ${failed.join(", ")}` : `every Worker is within its budget (${workers.length})`);
+          process.exit(failed.length ? 1 : 0);
+          EACH
