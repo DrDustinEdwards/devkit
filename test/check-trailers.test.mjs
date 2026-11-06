@@ -9,19 +9,36 @@ import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { checkRange, isAgentIdentity, rangeFromEvent, trailerViolations } from "../bin/check-trailers.mjs";
+import {
+  checkRange,
+  isAgentIdentity,
+  rangeFromEvent,
+  trailerViolations,
+} from "../bin/check-trailers.mjs";
 
 const BIN = fileURLToPath(new URL("../bin/check-trailers.mjs", import.meta.url));
 const BODY = "Add a thing\n\nWhat it does, in a sentence.";
-const PERSON = { GIT_AUTHOR_NAME: "Alex Rivera", GIT_AUTHOR_EMAIL: "alex@example.com", GIT_COMMITTER_NAME: "Alex Rivera", GIT_COMMITTER_EMAIL: "alex@example.com" };
+const PERSON = {
+  GIT_AUTHOR_NAME: "Alex Rivera",
+  GIT_AUTHOR_EMAIL: "alex@example.com",
+  GIT_COMMITTER_NAME: "Alex Rivera",
+  GIT_COMMITTER_EMAIL: "alex@example.com",
+};
 
 /** A throwaway repository; `commit` writes a new file content each time and returns the sha. */
 function repo() {
   const dir = mkdtempSync(join(tmpdir(), "trailers-"));
   const git = (/** @type {Record<string, string>} */ env, /** @type {string[]} */ ...args) =>
-    execFileSync("git", ["-c", "commit.gpgsign=false", ...args], { cwd: dir, encoding: "utf8", env: { ...process.env, ...PERSON, ...env } }).trim();
+    execFileSync("git", ["-c", "commit.gpgsign=false", ...args], {
+      cwd: dir,
+      encoding: "utf8",
+      env: { ...process.env, ...PERSON, ...env },
+    }).trim();
   let n = 0;
-  const commit = (/** @type {string} */ message, /** @type {Record<string, string>} */ env = {}) => {
+  const commit = (
+    /** @type {string} */ message,
+    /** @type {Record<string, string>} */ env = {},
+  ) => {
     writeFileSync(join(dir, "f.txt"), String((n += 1)));
     git(env, "add", "f.txt");
     git(env, "commit", "-q", "-m", message);
@@ -45,7 +62,11 @@ test("each named trailer form is refused, in any case", () => {
 });
 
 test("any other trailer naming Claude or Anthropic is refused", () => {
-  for (const trailer of ["Assisted-By: Claude", "Agent: anthropic/claude-opus", "Reviewed-by: Alex\nX-Model: Claude"]) {
+  for (const trailer of [
+    "Assisted-By: Claude",
+    "Agent: anthropic/claude-opus",
+    "Reviewed-by: Alex\nX-Model: Claude",
+  ]) {
     assert.ok(trailerViolations(`${BODY}\n\n${trailer}\n`).length >= 1, trailer);
   }
 });
@@ -65,17 +86,35 @@ test("THE INNOCENT DIRECTION: a message that only mentions Claude or CLAUDE.md p
 });
 
 test("the range comes from the event, and an event with no commits checks nothing; one it does not know is an error", () => {
-  assert.deepEqual(rangeFromEvent({ EVENT: "pull_request", PR_BASE: "a", PR_HEAD: "b" }), { base: "a", head: "b", authors: true });
-  assert.deepEqual(rangeFromEvent({ EVENT: "pull_request_target", PR_BASE: "a", PR_HEAD: "b" }), { base: "a", head: "b", authors: true });
-  assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "a", PUSH_AFTER: "b" }), { base: "a", head: "b", authors: false });
-  assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "0".repeat(40), PUSH_AFTER: "b" }), { base: null, head: "b", authors: false });
+  assert.deepEqual(rangeFromEvent({ EVENT: "pull_request", PR_BASE: "a", PR_HEAD: "b" }), {
+    base: "a",
+    head: "b",
+    authors: true,
+  });
+  assert.deepEqual(rangeFromEvent({ EVENT: "pull_request_target", PR_BASE: "a", PR_HEAD: "b" }), {
+    base: "a",
+    head: "b",
+    authors: true,
+  });
+  assert.deepEqual(rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "a", PUSH_AFTER: "b" }), {
+    base: "a",
+    head: "b",
+    authors: false,
+  });
+  assert.deepEqual(
+    rangeFromEvent({ EVENT: "push", PUSH_BEFORE: "0".repeat(40), PUSH_AFTER: "b" }),
+    { base: null, head: "b", authors: false },
+  );
   assert.equal(rangeFromEvent({ EVENT: "schedule" }), null);
   assert.equal(rangeFromEvent({ EVENT: "workflow_dispatch" }), null);
   // Fails closed: a pull_request or push without its shas is an error, not a pass, and so is an event it does not know.
   assert.throws(() => rangeFromEvent({ EVENT: "pull_request", PR_BASE: "a" }));
   assert.throws(() => rangeFromEvent({ EVENT: "push" }));
   assert.throws(() => rangeFromEvent({ EVENT: "merge_group" }), /merge_group event without/);
-  assert.throws(() => rangeFromEvent({ EVENT: "release" }), /event 'release' is not one this check knows/);
+  assert.throws(
+    () => rangeFromEvent({ EVENT: "release" }),
+    /event 'release' is not one this check knows/,
+  );
 });
 
 test("an AI identity is Anthropic's address, claude[bot], or the name Claude with a product word; a person is not", () => {
@@ -134,8 +173,14 @@ test("PLANT: a clean message authored or committed as Claude fails on the pull r
   try {
     const base = commit("Clean base");
     const alex = commit(BODY);
-    const authored = commit(BODY, { GIT_AUTHOR_NAME: "Claude", GIT_AUTHOR_EMAIL: "noreply@anthropic.com" });
-    const committed = commit(BODY, { GIT_COMMITTER_NAME: "Claude", GIT_COMMITTER_EMAIL: "noreply@anthropic.com" });
+    const authored = commit(BODY, {
+      GIT_AUTHOR_NAME: "Claude",
+      GIT_AUTHOR_EMAIL: "noreply@anthropic.com",
+    });
+    const committed = commit(BODY, {
+      GIT_COMMITTER_NAME: "Claude",
+      GIT_COMMITTER_EMAIL: "noreply@anthropic.com",
+    });
 
     assert.deepEqual(checkRange(base, alex, dir, true), [], "a person's commit was refused");
     const asAuthor = checkRange(base, authored, dir, true);
@@ -143,7 +188,9 @@ test("PLANT: a clean message authored or committed as Claude fails on the pull r
     assert.equal(asAuthor[0].sha, authored);
     assert.deepEqual(asAuthor[0].found, []);
     assert.deepEqual(asAuthor[0].identities, ["author Claude <noreply@anthropic.com>"]);
-    assert.deepEqual(checkRange(authored, committed, dir, true)[0].identities, ["committer Claude <noreply@anthropic.com>"]);
+    assert.deepEqual(checkRange(authored, committed, dir, true)[0].identities, [
+      "committer Claude <noreply@anthropic.com>",
+    ]);
 
     // The push path checks messages alone.
     assert.deepEqual(checkRange(base, committed, dir), []);
@@ -159,8 +206,16 @@ test("the bin as the workflow runs it: exit 1 with the way to re-author on a pul
   const { dir, commit, done } = repo();
   try {
     const base = commit("Base");
-    const head = commit("A clean message", { GIT_AUTHOR_NAME: "Claude", GIT_AUTHOR_EMAIL: "noreply@anthropic.com" });
-    const run = (/** @type {Record<string, string>} */ event) => spawnSync(process.execPath, [BIN], { cwd: dir, encoding: "utf8", env: { ...process.env, ...event } });
+    const head = commit("A clean message", {
+      GIT_AUTHOR_NAME: "Claude",
+      GIT_AUTHOR_EMAIL: "noreply@anthropic.com",
+    });
+    const run = (/** @type {Record<string, string>} */ event) =>
+      spawnSync(process.execPath, [BIN], {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, ...event },
+      });
 
     const pr = run({ EVENT: "pull_request", PR_BASE: base, PR_HEAD: head });
     assert.equal(pr.status, 1, pr.stdout + pr.stderr);

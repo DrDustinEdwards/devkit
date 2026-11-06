@@ -60,7 +60,13 @@ test("a full-text table is emptied through itself, its shadow tables left to it,
   assert.equal(count(db, "items_fts"), 0);
   assert.equal(count(db, "items_fts_log"), 0);
   db.sqlite.exec("INSERT INTO items_fts VALUES ('two', 'capsomer')");
-  assert.deepEqual(db.sqlite.prepare("SELECT title FROM items_fts WHERE items_fts MATCH 'capsomer'").all().map((r) => r.title), ["two"]);
+  assert.deepEqual(
+    db.sqlite
+      .prepare("SELECT title FROM items_fts WHERE items_fts MATCH 'capsomer'")
+      .all()
+      .map((r) => r.title),
+    ["two"],
+  );
 });
 
 test("foreign keys hold at the end, not between deletes, so the order tables are listed in does not matter", async () => {

@@ -31,22 +31,40 @@ export function pickPages(origin, urls, max) {
     } catch {
       continue;
     }
-    if (url.host.replace(/^www\./, "") !== host || /\.(?!html?$)[a-z0-9]{1,5}$/i.test(url.pathname) || url.pathname.startsWith("/cdn-cgi/")) continue;
+    if (
+      url.host.replace(/^www\./, "") !== host ||
+      /\.(?!html?$)[a-z0-9]{1,5}$/i.test(url.pathname) ||
+      url.pathname.startsWith("/cdn-cgi/")
+    )
+      continue;
     const path = url.pathname.replace(/\/$/, "") || "/";
     if (seen.has(path)) continue;
     seen.add(path);
-    candidates.push({ url: `${origin}${url.pathname}`, path, segments: path.split("/").filter(Boolean) });
+    candidates.push({
+      url: `${origin}${url.pathname}`,
+      path,
+      segments: path.split("/").filter(Boolean),
+    });
   }
   const chosen = new Map();
   const take = (candidate, why) => {
     if (candidate && !chosen.has(candidate) && chosen.size < max) chosen.set(candidate, why);
   };
-  for (const [pattern, why] of [[/about/i, "about"], [/contact/i, "contact"], [/(^|\/)(sign-?in|log-?in|account|auth)(\/|$)/i, "sign-in"]]) {
-    take(candidates.find((c) => pattern.test(c.path) && c.segments.length <= 2), why);
+  for (const [pattern, why] of [
+    [/about/i, "about"],
+    [/contact/i, "contact"],
+    [/(^|\/)(sign-?in|log-?in|account|auth)(\/|$)/i, "sign-in"],
+  ]) {
+    take(
+      candidates.find((c) => pattern.test(c.path) && c.segments.length <= 2),
+      why,
+    );
   }
   const lists = candidates.filter((c) => c.segments.length === 1 && !chosen.has(c));
   const sections = new Set();
-  const details = candidates.filter((c) => c.segments.length >= 2 && !sections.has(c.segments[0]) && sections.add(c.segments[0]));
+  const details = candidates.filter(
+    (c) => c.segments.length >= 2 && !sections.has(c.segments[0]) && sections.add(c.segments[0]),
+  );
   for (let i = 0; i < Math.max(lists.length, details.length); i++) {
     take(details[i], "detail");
     take(lists[i], "list");
@@ -56,10 +74,21 @@ export function pickPages(origin, urls, max) {
 }
 
 /** Whether a focused element looks different from itself unfocused: an outline that paints, or any other style changed. */
-function focusVisible(/** @type {Record<string, string>} */ focused, /** @type {Record<string, string> | undefined} */ unfocused) {
+function focusVisible(
+  /** @type {Record<string, string>} */ focused,
+  /** @type {Record<string, string> | undefined} */ unfocused,
+) {
   const outline = focused.outline ?? "";
-  const outlinePaints = !outline.startsWith("none") && !/ 0px /.test(`${outline} `) && !/rgba\(\d+, \d+, \d+, 0\)$/.test(outline);
-  return outlinePaints || Object.keys(focused).some((key) => key !== "outline" && unfocused !== undefined && focused[key] !== unfocused[key]);
+  const outlinePaints =
+    !outline.startsWith("none") &&
+    !/ 0px /.test(`${outline} `) &&
+    !/rgba\(\d+, \d+, \d+, 0\)$/.test(outline);
+  return (
+    outlinePaints ||
+    Object.keys(focused).some(
+      (key) => key !== "outline" && unfocused !== undefined && focused[key] !== unfocused[key],
+    )
+  );
 }
 
 /**
@@ -106,15 +135,36 @@ export function judgeSite({ statement, pages }) {
     judgeKeyboard(page, add);
     if (page.reflow && page.reflow.scrollWidth > page.reflow.clientWidth) {
       const w = page.reflow.widest;
-      add("error", "L3", url, `scrolls sideways at 320 px: scrollWidth ${page.reflow.scrollWidth}${w ? `, widest \`${w.sel}\` reaches ${w.right} px` : ""}`);
+      add(
+        "error",
+        "L3",
+        url,
+        `scrolls sideways at 320 px: scrollWidth ${page.reflow.scrollWidth}${w ? `, widest \`${w.sel}\` reaches ${w.right} px` : ""}`,
+      );
     }
-    if (page.clipped?.length) add("error", "L3", url, `text clipped with WCAG 1.4.12 text spacing: ${list(page.clipped.map((c) => `\`${c.sel}\` (${c.dir})`))}`);
+    if (page.clipped?.length)
+      add(
+        "error",
+        "L3",
+        url,
+        `text clipped with WCAG 1.4.12 text spacing: ${list(page.clipped.map((c) => `\`${c.sel}\` (${c.dir})`))}`,
+      );
     const zoom = page.zoom;
     const proxy = "200% zoom proxy (a 720 px viewport, not browser zoom)";
-    if (zoom && zoom.scrollWidth > zoom.clientWidth) add("error", "L3", url, `${proxy}: scrolls sideways, scrollWidth ${zoom.scrollWidth}`);
-    if (zoom && !zoom.navLinks && !zoom.toggle && page.basics?.landmarks.nav) add("error", "L3", url, `${proxy}: no visible nav link and no focusable menu toggle`);
-    const moving = (page.motion ?? []).filter((a) => a.iterations === "infinite" || a.duration === "auto" || Number(a.duration) > 50);
-    if (moving.length) add("error", "L4", url, `animations still running with reduced motion: ${list(moving.map((a) => `${a.name} on \`${a.target}\``))}`);
+    if (zoom && zoom.scrollWidth > zoom.clientWidth)
+      add("error", "L3", url, `${proxy}: scrolls sideways, scrollWidth ${zoom.scrollWidth}`);
+    if (zoom && !zoom.navLinks && !zoom.toggle && page.basics?.landmarks.nav)
+      add("error", "L3", url, `${proxy}: no visible nav link and no focusable menu toggle`);
+    const moving = (page.motion ?? []).filter(
+      (a) => a.iterations === "infinite" || a.duration === "auto" || Number(a.duration) > 50,
+    );
+    if (moving.length)
+      add(
+        "error",
+        "L4",
+        url,
+        `animations still running with reduced motion: ${list(moving.map((a) => `${a.name} on \`${a.target}\``))}`,
+      );
     judgeForced(page, add);
     const b = page.basics;
     if (!b) continue;
@@ -126,12 +176,27 @@ export function judgeSite({ statement, pages }) {
     if (skips.length) add("warning", "S2", url, `heading levels skipped: ${list(skips)}`);
     const l = b.landmarks;
     if (l.main !== 1 || !l.banner || !l.nav || !l.contentinfo) {
-      add("warning", "S2", url, `landmarks: main ${l.main}, header ${l.banner}, nav ${l.nav}, footer ${l.contentinfo}; each page needs one main and a header, nav and footer`);
+      add(
+        "warning",
+        "S2",
+        url,
+        `landmarks: main ${l.main}, header ${l.banner}, nav ${l.nav}, footer ${l.contentinfo}; each page needs one main and a header, nav and footer`,
+      );
     }
-    if (b.imgNoAlt.length) add("error", "S3", url, `images with no alt: ${list(b.imgNoAlt.map((sel) => `\`${sel}\``))}`);
+    if (b.imgNoAlt.length)
+      add("error", "S3", url, `images with no alt: ${list(b.imgNoAlt.map((sel) => `\`${sel}\``))}`);
   }
-  for (const [title, urls] of titles) if (urls.length > 1) for (const url of urls.slice(1)) add("warning", "S2", url, `the title "${title}" is also ${urls[0]}'s`);
-  if (statement.status !== 200) add("error", "S6", statement.url, `no accessibility statement: it answers ${statement.status || "nothing"}`);
+  for (const [title, urls] of titles)
+    if (urls.length > 1)
+      for (const url of urls.slice(1))
+        add("warning", "S2", url, `the title "${title}" is also ${urls[0]}'s`);
+  if (statement.status !== 200)
+    add(
+      "error",
+      "S6",
+      statement.url,
+      `no accessibility statement: it answers ${statement.status || "nothing"}`,
+    );
   return findings;
 }
 
@@ -152,7 +217,12 @@ function judgeAxe(/** @type {PageScan} */ page, add) {
   }
   for (const [id, { v, views, nodes }] of rules) {
     const wcag = v.tags.some((tag) => WCAG_TAGS.includes(tag));
-    add(wcag ? "error" : "warning", "L1", page.url, `axe ${id} (${v.impact ?? "no impact"}, ${wcag ? "WCAG" : "best practice"}) at ${views.join(", ")}: ${nodes} element${nodes === 1 ? "" : "s"}, first \`${v.target}\``);
+    add(
+      wcag ? "error" : "warning",
+      "L1",
+      page.url,
+      `axe ${id} (${v.impact ?? "no impact"}, ${wcag ? "WCAG" : "best practice"}) at ${views.join(", ")}: ${nodes} element${nodes === 1 ? "" : "s"}, first \`${v.target}\``,
+    );
   }
 }
 
@@ -170,22 +240,52 @@ function judgeKeyboard(/** @type {PageScan} */ page, add) {
   const stops = presses.map((stop, i) => ({ ...stop, i })).filter((stop) => !stop.body);
   const first = stops[0];
   if (!(first && first.i === 0 && first.skipTargetsMain)) {
-    add("error", "L2", page.url, `no skip link to main as the first Tab stop (first stop ${first ? `\`${first.sel}\` "${first.text}"` : "none: nothing takes focus"})`);
+    add(
+      "error",
+      "L2",
+      page.url,
+      `no skip link to main as the first Tab stop (first stop ${first ? `\`${first.sel}\` "${first.text}"` : "none: nothing takes focus"})`,
+    );
   }
   const unseen = unseenStops(presses);
-  if (unseen.length) add("error", "L2", page.url, `no visible focus on ${unseen.length} of ${stops.length} stops: ${list(unseen.map((s) => `\`${s.sel}\``))}`);
+  if (unseen.length)
+    add(
+      "error",
+      "L2",
+      page.url,
+      `no visible focus on ${unseen.length} of ${stops.length} stops: ${list(unseen.map((s) => `\`${s.sel}\``))}`,
+    );
   const covered = stops.filter((stop) => stop.covered);
   const under = covered.filter((stop) => stop.covered.position);
-  if (under.length) add("error", "L2", page.url, `focus hidden under ${under[0].covered.position} \`${under[0].covered.by}\` on ${under.length} stops: ${list(under.map((s) => `\`${s.sel}\``))}`);
+  if (under.length)
+    add(
+      "error",
+      "L2",
+      page.url,
+      `focus hidden under ${under[0].covered.position} \`${under[0].covered.by}\` on ${under.length} stops: ${list(under.map((s) => `\`${s.sel}\``))}`,
+    );
   if (covered.length > under.length) {
     const other = covered.filter((stop) => !stop.covered.position);
-    add("warning", "L2", page.url, `focused element covered by another on ${other.length} stops: ${list(other.map((s) => `\`${s.sel}\` by \`${s.covered.by}\``))}`);
+    add(
+      "warning",
+      "L2",
+      page.url,
+      `focused element covered by another on ${other.length} stops: ${list(other.map((s) => `\`${s.sel}\` by \`${s.covered.by}\``))}`,
+    );
   }
-  if (trap) add("error", "L2", page.url, `focus trap: ${TRAP_PRESSES} Tab presses stayed on \`${trap}\``);
+  if (trap)
+    add("error", "L2", page.url, `focus trap: ${TRAP_PRESSES} Tab presses stayed on \`${trap}\``);
   for (const control of page.escape ?? []) {
     if (!control.opened) continue;
-    if (!control.closed) add("error", "L2", page.url, `Escape did not close what \`${control.sel}\` opened`);
-    else if (!control.focusBack) add("error", "L2", page.url, `focus did not return to \`${control.sel}\` after Escape closed what it opened`);
+    if (!control.closed)
+      add("error", "L2", page.url, `Escape did not close what \`${control.sel}\` opened`);
+    else if (!control.focusBack)
+      add(
+        "error",
+        "L2",
+        page.url,
+        `focus did not return to \`${control.sel}\` after Escape closed what it opened`,
+      );
   }
 }
 
@@ -196,41 +296,69 @@ function judgeKeyboard(/** @type {PageScan} */ page, add) {
 function unseenStops(/** @type {object[]} */ presses) {
   const opaque = new Set();
   presses.forEach((stop, i) => stop.same && opaque.add(i).add(i - 1));
-  return presses.filter((stop, i) => !stop.body && !opaque.has(i) && !stop.offscreen && !focusVisible(stop.focused, stop.unfocused));
+  return presses.filter(
+    (stop, i) =>
+      !stop.body &&
+      !opaque.has(i) &&
+      !stop.offscreen &&
+      !focusVisible(stop.focused, stop.unfocused),
+  );
 }
 
 /** Forced colors: an axe rule the normal views did not break, and focus that only the forced palette hides. */
 function judgeForced(/** @type {PageScan} */ page, add) {
   const forced = page.forced;
   if (!forced) return;
-  if (!Array.isArray(forced.axe)) add("unmeasured", "L4", page.url, `axe could not run in forced colors: ${forced.axe.error}`);
+  if (!Array.isArray(forced.axe))
+    add("unmeasured", "L4", page.url, `axe could not run in forced colors: ${forced.axe.error}`);
   else {
-    const seen = new Set(Object.values(page.axe ?? {}).flatMap((result) => (Array.isArray(result) ? result.map((v) => v.id) : [])));
+    const seen = new Set(
+      Object.values(page.axe ?? {}).flatMap((result) =>
+        Array.isArray(result) ? result.map((v) => v.id) : [],
+      ),
+    );
     // Forced colors paints the reader's own palette, so contrast is theirs to choose: the color rules say nothing there.
-    for (const v of forced.axe.filter((each) => !seen.has(each.id) && !FORCED_COLOR_RULES.includes(each.id))) {
+    for (const v of forced.axe.filter(
+      (each) => !seen.has(each.id) && !FORCED_COLOR_RULES.includes(each.id),
+    )) {
       const wcag = v.tags.some((tag) => WCAG_TAGS.includes(tag));
-      add(wcag ? "error" : "warning", "L4", page.url, `axe ${v.id} (${v.impact ?? "no impact"}, ${wcag ? "WCAG" : "best practice"}) only in forced colors: first \`${v.target}\``);
+      add(
+        wcag ? "error" : "warning",
+        "L4",
+        page.url,
+        `axe ${v.id} (${v.impact ?? "no impact"}, ${wcag ? "WCAG" : "best practice"}) only in forced colors: first \`${v.target}\``,
+      );
     }
   }
   const unseenBefore = new Set(unseenStops(page.keyboard ?? []).map((stop) => stop.sel));
   const lost = unseenStops(forced.keyboard).filter((stop) => !unseenBefore.has(stop.sel));
-  if (lost.length) add("error", "L4", page.url, `no visible focus in forced colors on ${lost.length} stops (a box-shadow or background ring is dropped there): ${list(lost.map((s) => `\`${s.sel}\``))}`);
+  if (lost.length)
+    add(
+      "error",
+      "L4",
+      page.url,
+      `no visible focus in forced colors on ${lost.length} stops (a box-shadow or background ring is dropped there): ${list(lost.map((s) => `\`${s.sel}\``))}`,
+    );
 }
 
 /** Each place the heading level jumps by more than one, and a first heading below h2. */
 function headingSkips(/** @type {{ level: number, sel: string }[]} */ headings) {
   const skips = headings.length && headings[0].level > 2 ? [`starts at h${headings[0].level}`] : [];
   for (let i = 1; i < headings.length; i++) {
-    if (headings[i].level > headings[i - 1].level + 1) skips.push(`h${headings[i - 1].level} to h${headings[i].level} at \`${headings[i].sel}\``);
+    if (headings[i].level > headings[i - 1].level + 1)
+      skips.push(`h${headings[i - 1].level} to h${headings[i].level} at \`${headings[i].sel}\``);
   }
   return skips;
 }
 
-const list = (/** @type {string[]} */ items) => items.slice(0, 3).join(", ") + (items.length > 3 ? ` and ${items.length - 3} more` : "");
+const list = (/** @type {string[]} */ items) =>
+  items.slice(0, 3).join(", ") + (items.length > 3 ? ` and ${items.length - 3} more` : "");
 
 /** A finding as a GitHub annotation line, its detail on one line. */
 export function annotation(/** @type {Finding} */ { severity, item, url, detail }) {
   const text = detail.replace(/%/g, "%25").replace(/\s+/g, " ");
   // What could not be measured is a notice in devkit-live's form, never a pass or a failure.
-  return severity === "unmeasured" ? `::notice title=${item}::${url} could not measure: ${text}` : `::${severity} title=${item}::${url} ${text}`;
+  return severity === "unmeasured"
+    ? `::notice title=${item}::${url} could not measure: ${text}`
+    : `::${severity} title=${item}::${url} ${text}`;
 }

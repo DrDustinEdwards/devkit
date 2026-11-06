@@ -2,10 +2,5 @@
   "baseline": 23,
   "measured_at": "2026-11-06",
   "tool": "jscpd@4.3.0",
-  "args": [
-    "--min-lines",
-    "10",
-    "--min-tokens",
-    "80"
-  ]
+  "args": ["--min-lines", "10", "--min-tokens", "80"]
 }
