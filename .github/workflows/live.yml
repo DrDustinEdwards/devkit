@@ -19,17 +19,24 @@ name: live
 # and the rate-limit burst. bin/live.mjs hands these only to a check marked "grants": true in live/areas.json, and the
 # audit never prints one. A server without its secret is still checked without a token, and the board says what was
 # skipped. A new MCP server adds its line below and its secret.
+#
+# The copies job is the network-wide check beside the per-site ones: bin/copies.mjs runs jscpd over every public
+# repository's source at once and fails when more blocks are copied between repositories than live/copies.json's baseline
+# (44 on 2026-11-06, from the shared-code audit). devkit-shared's copies check matches by name, so this catches a copy
+# under a new name. A pull request that changes the scan or its baseline runs it too.
 
 on:
   schedule:
     - cron: "23 6 * * *"
   push:
     branches: [main]
-    paths: ["live/**", "bin/live.mjs"]
+    paths: ["live/**", "bin/live.mjs", "bin/copies.mjs"]
+  pull_request:
+    paths: ["live/copies.json", "bin/copies.mjs", ".github/workflows/live.yml"]
   workflow_dispatch:
 
 concurrency:
-  group: live
+  group: live-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'main' }}
   cancel-in-progress: false
 
 permissions:
@@ -37,6 +44,7 @@ permissions:
 
 jobs:
   board:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 150
     permissions:
@@ -90,3 +98,19 @@ jobs:
         if: github.event_name != 'push'
         run: |
           node -e 'const { results } = require(process.argv[1]); const bad = results.filter((r) => r.status !== "pass"); for (const r of bad) console.log(`::${r.status === "fail" ? "error" : "warning"} title=area ${r.area} ${r.site}::${r.check} ${r.status}${r.detail ? `: ${r.detail}` : ` (${r.errors} errors)`}`); process.exit(bad.some((r) => r.status === "fail") ? 1 : 0)' "$RUNNER_TEMP/run.json"
+
+  copies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - name: No more code copied between repositories than the baseline
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node bin/copies.mjs
