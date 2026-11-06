@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.26.2 (2026-11-06)
+
+- `./oxlint` (`react`): `jsx-a11y/no-noninteractive-tabindex` also allows `role="region"` (a scrollable region a keyboard must reach), and `jsx-a11y/no-redundant-roles` allows `role="list"` on `ul` and `ol` (Safari drops list semantics from a list with `list-style: none` without it). Both are options the rules already have; the fixture's `good.tsx` fails without them. A repository drops the `oxlint-disable` comments it wrote for these two.
+- README, "The shared lint config": Oxfmt is not idempotent (run it until `--check` passes), the reformat moves suppression and `codespell:ignore` comments, exact-text checks can break, and a formatting-only pull request merges with a merge commit.
+
 ## 0.26.1 (2026-11-06)
 
 - `devkit-shared` (jobs): the backups, media, webmentions and site-check rules fail from 0.28.0, not 0.26.0. 0.26.0 shipped before the Germomics and Foxhound backup tools and dustinedwards-info's mention tools were removed, so releasing it would have failed those repositories' checks. The rule is unchanged; only the date it fails moved.

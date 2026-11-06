@@ -114,6 +114,12 @@ export const react = {
     "jsx-a11y/prefer-tag-over-role": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "jsx-a11y/media-has-caption": "off",
+    // Two options the rules already have, for markup that is right (measured on the first runs, 2026-11-06). A
+    // scrollable region needs `tabIndex={0}` so a keyboard can scroll it, and names itself with `role="region"` (axe's
+    // scrollable-region-focusable; `tabpanel` is the rule's only default). Safari drops list semantics from a `ul` with
+    // `list-style: none` unless it says `role="list"`, so `ul` and `ol` may state theirs.
+    "jsx-a11y/no-noninteractive-tabindex": ["error", { roles: ["tabpanel", "region"] }],
+    "jsx-a11y/no-redundant-roles": ["error", { ul: ["list"], ol: ["list"] }],
   },
 };
 
