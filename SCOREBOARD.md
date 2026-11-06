@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-06 04:03 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-06 08:00 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -15,10 +15,10 @@ Newest run 2026-11-06 04:03 UTC. Filled only from the live checks and the verifi
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | ✅ | ❌ | ❌ | · | · | +28958 | −2924 |
+| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❌ | 🟡 | ✅ | ❌ | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ❌ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❌ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
+| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 Lines count public repositories only until the LIVE_GITHUB_TOKEN secret is set.
@@ -165,23 +165,16 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
 - 🟡 dustinedwards.info: Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Fixed since 31 Oct and checked: /health shared shape, sha d3e0303e = main head, 27 checks pass, backup 4 h old, cron passes; /api/health is now a 404; deploy goes through devkit worker-deploy v0.21.2 (ship.mjs gone, devkit-migrations); every binding has a check; console ratchet baseline present; 404 is the shared page. Still open: no 404 count (N1, N4, N7; waits on the privacy wording). Not verified here: the restore drill's newest run (R1), since GitHub reads were refused to this sandbox.
-- ❌ Germomics: ops-audit: 1 errors
-  - H5: https://germomics.com/health no check on /health probes MEDIA (r2), declared in https://github.com/DrDustinEdwards/germomics/blob/main/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason
+- 🟡 Germomics: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 julieedwards.info: Health passes at head, drill passed, excludes set; D4/D6 off; d1-dump v0.8.0
 - 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
 - 🟡 BSW: site-runtime v0.50.1; 404 is React Router's default page; no console ratchet; no request log wrapper; no --repo in areas.json; D4/D6 off
-- ❌ Foxhound: ops-audit: 1 errors
-  - H5: https://foxhoundapp.com/health no check on /health probes AUDIT_BUCKET (r2), EMAIL (send_email), declared in https://github.com/DrDustinEdwards/foxhound/blob/main/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Foxing: ops-audit: 1 errors
-  - H5: https://foxing.app/health no check on /health probes COMPANION_CACHE_QUEUE (queue), EMAIL (send_email), declared in https://github.com/DrDustinEdwards/foxing/blob/main/apps/web/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Capsid MCP: ops-audit: 1 errors
-  - H5: https://mcp.dustinedwards.info/health no check on /health probes AUDIT_BUCKET (r2), AI (ai), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H5: https://admin-mcp.foxhoundapp.com/health no check on /health probes AUDIT_BUCKET (r2), OAUTH_KV (kv), MCP_RATE_LIMIT (durable_object), FOXHOUND (service), declared in https://github.com/DrDustinEdwards/foxhound/blob/main/mcp/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Carrel MCP: ops-audit: 1 errors
-  - H5: https://carrel-mcp.dustinedwards.info/health no check on /health probes AUDIT_BUCKET (r2), declared in https://github.com/DrDustinEdwards/carrel/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Foxing admin MCP: ops-audit: 1 errors
-  - H5: https://admin-mcp.foxing.app/health no check on /health probes AUDIT_BUCKET (r2), declared in https://github.com/DrDustinEdwards/foxing/blob/main/mcp/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
+- 🟡 Foxhound: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+- 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
+- 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+- 🟡 Foxhound admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+- 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+- 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
 
@@ -249,9 +242,10 @@ Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign
 
 - ❌ Package: no verifier has checked the package
 - ❌ Foxing: chart-audit: 2 errors
+  - D5: https://foxing.app/demos/stats at 320 px, charts shift the page by 0.013 (layout shift); largest 0.013, button.enarratio-export -28 px
+  - D5: https://foxing.app/demos/year at 320 px, charts shift the page by 0.013 (layout shift); largest 0.013, button.enarratio-export -28 px
 - 🟡 Carrel: no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json
-- ❌ Capsomer: chart-audit: 1 errors
-  - F: https://capsomer.dustinedwards.info/ an SVG chart drawn outside Enarratio: "One design system for every site and app" (168 rects)
+- 🟡 Capsomer: checks pass; no verifier yet
 - 🟡 Capsid explorer: checks pass; no verifier yet
 - 🟡 Carrel Desk: chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov
 
@@ -264,17 +258,11 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 - 🟡 Germomics: local style text instead of WRITING_RULES; suggester gaps from the package
 - 🟡 julieedwards.info: suggester on site-api v0.17.0: no timeout, JSON mode or prose check
 - 🟡 TXASM: suggester inherits the package gaps (feature metadata, Llama list)
-- ❌ Foxhound: site-runtime-ai-audit: 1 errors
-  - P4: https://foxhoundapp.com/mcp conformance http-header-validation passed 12/13 (failing: sep-2243-server-accepts-whitespace-header-value)
+- 🟡 Foxhound: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Foxing: Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0
 - 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
 - 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
-- ❌ Capsid MCP: site-runtime-ai-audit: 11 errors
-  - T4: https://mcp.dustinedwards.info/ops/mcp capsid_start_session: inputSchema does not set additionalProperties: false
-  - T4: https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema does not set additionalProperties: false
-  - T4: https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema does not set additionalProperties: false
-  - T4: https://mcp.dustinedwards.info/ops/mcp capsid_lint_namespace: inputSchema does not set additionalProperties: false
-  - T4: https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema does not set additionalProperties: false
+- 🟡 Capsid MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Foxhound admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
