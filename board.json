@@ -3402,79 +3402,79 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "germomics": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "julieedwards-info": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "txasm": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "bsw": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "foxhound": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "foxing": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "carrel": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "enarratio": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "capsomer": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "prelum": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "capsid": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "capsid-mcp": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "foxhound-mcp": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "dustinedwards-mcp": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "carrel-mcp": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "foxing-mcp": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "capsid-portal": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     },
     "carrel-desk": {
      "status": "missing",
-     "reason": "no live check yet"
+     "reason": "no live check; no verifier has checked it"
     }
    }
   }

@@ -29,7 +29,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
 
 - ❌ Package: no verifier has checked the package
 - 🟡 dustinedwards.info: llms.txt says every page has a .md twin, but /about.md and /writing.md are 404 and Accept: text/markdown returns HTML; 1 internal link goes through a redirect; 3 titles over 60 characters
-- 🟡 Germomics: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod
+- 🟡 Germomics: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod
 - 🟡 julieedwards.info: no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
 - ❌ TXASM: prelum-audit: 165 errors
   - robots-blocks-all: https://txasm.org/robots.txt robots.txt disallows the home page to Googlebot, so no page is crawled
@@ -43,7 +43,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
-- 🟡 Foxhound: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
+- 🟡 Foxhound: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
 - ❌ Foxing: prelum-audit: 587 errors
   - link-redirect: https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
   - link-redirect: https://foxing.app/ links to https://foxing.app/people, which redirects to /login
@@ -53,7 +53,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
 - 🟡 Carrel: no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404
 - 🟡 Enarratio: checks pass; no verifier yet
 - 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Capsid explorer: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
+- 🟡 Capsid explorer: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
 
 ### 2. Security headers and CSP
 
@@ -192,54 +192,54 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 - ❌ Package: no verifier has checked the package
 - 🟡 dustinedwards.info: checks pass; no verifier yet
 - ❌ Germomics: devkit-a11y: 15 errors
-  - L2: https://germomics.com/ no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` "germomics")
-  - L3: https://germomics.com/ text clipped with WCAG 1.4.12 text spacing: `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(5) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(10) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical)
-  - L2: https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `main#main > div.cap-empty > div.cap-empty-content:nth-of-type(2) > a.cap-btn` "Go to the home page")
-  - L2: https://germomics.com/about no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` "germomics")
-  - L2: https://germomics.com/contact no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` "germomics")
+  - L2: https://germomics.com/ no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
+  - L3: https://germomics.com/ text clipped with WCAG 1.4.12 text spacing: &#96;div.grid.gap-3:nth-of-type(2) &gt; article.flex.gap-4:nth-of-type(2) &gt; div.min-w-0.flex-1 &gt; p.mt-1.line-clamp-2&#96; (vertical), &#96;div.grid.gap-3:nth-of-type(2) &gt; article.flex.gap-4:nth-of-type(5) &gt; div.min-w-0.flex-1 &gt; p.mt-1.line-clamp-2&#96; (vertical), &#96;div.grid.gap-3:nth-of-type(2) &gt; article.flex.gap-4:nth-of-type(10) &gt; div.min-w-0.flex-1 &gt; p.mt-1.line-clamp-2&#96; (vertical)
+  - L2: https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
+  - L2: https://germomics.com/about no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
+  - L2: https://germomics.com/contact no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
 - ❌ julieedwards.info: devkit-a11y: 6 errors
-  - L1: https://julieedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L1: https://julieedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L2: https://julieedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` "")
-  - L2: https://julieedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more
-  - S2: https://julieedwards.info/site.webmanifest no lang on <html>
+  - L1: https://julieedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
+  - L1: https://julieedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
+  - L2: https://julieedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop &#96;html &gt; body &gt; div.json-formatter-container&#96; "")
+  - L2: https://julieedwards.info/site.webmanifest no visible focus on 20 of 20 stops: &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96; and 17 more
+  - S2: https://julieedwards.info/site.webmanifest no lang on &lt;html&gt;
 - ❌ TXASM: devkit-a11y: 2 errors
-  - L2: https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `main#main > div.cap-empty > div.cap-empty-content:nth-of-type(2) > a.cap-btn` "Go to the home page")
-  - L1: https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter axe aria-prohibited-attr (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.pdf-viewer-page`
+  - L2: https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
+  - L1: https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter axe aria-prohibited-attr (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;.pdf-viewer-page&#96;
 - ❌ BSW: devkit-a11y: 10 errors
-  - L2: https://bsw.dustin-edwards.workers.dev/ no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
-  - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `section:nth-of-type(2) > div.page-prose.mx-auto > p.mt-8:nth-of-type(2) > a.btn.btn-blue` "Go to the home page")
-  - L2: https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
-  - L2: https://bsw.dustin-edwards.workers.dev/contact-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
-  - L2: https://bsw.dustin-edwards.workers.dev/grant-proposal-support no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
+  - L2: https://bsw.dustin-edwards.workers.dev/ no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
+  - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;section:nth-of-type(2) &gt; div.page-prose.mx-auto &gt; p.mt-8:nth-of-type(2) &gt; a.btn.btn-blue&#96; "Go to the home page")
+  - L2: https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
+  - L2: https://bsw.dustin-edwards.workers.dev/contact-us no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
+  - L2: https://bsw.dustin-edwards.workers.dev/grant-proposal-support no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
 - ❌ Foxhound: devkit-a11y: 5 errors
-  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
-  - L3: https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical), `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical)
-  - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body.min-h-full > div.fh-cap.fh-error-page > header.fh-error-bar.flex > a.no-underline` "foxhound")
-  - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(3) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical) and 33 more
-  - L2: https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what `section.mb-10:nth-of-type(4) > ul.m-0.flex > li.overflow-hidden.rounded-lg:nth-of-type(1) > button.flex.w-full` opened
+  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first &#96;li[data-queue-row="0"] &gt; .min-w-0.flex-1 &gt; .block.text-text-subtle[data-queue-meta=""]&#96;
+  - L3: https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: &#96;a.cap-panel.h-full &gt; div.cap-panel-body &gt; div.flex.h-full &gt; h3.m-0.line-clamp-2&#96; (vertical), &#96;a.cap-panel.h-full &gt; div.cap-panel-body &gt; div.flex.h-full &gt; h3.m-0.line-clamp-2&#96; (vertical)
+  - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;body.min-h-full &gt; div.fh-cap.fh-error-page &gt; header.fh-error-bar.flex &gt; a.no-underline&#96; "foxhound")
+  - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: &#96;div.flex.flex-col:nth-of-type(3) &gt; a.group.-mx-2:nth-of-type(1) &gt; div.min-w-0.flex-1 &gt; p.mt-0\.5.line-clamp-1:nth-of-type(2)&#96; (vertical), &#96;div.flex.flex-col:nth-of-type(3) &gt; a.group.-mx-2:nth-of-type(2) &gt; div.min-w-0.flex-1 &gt; p.mt-0\.5.line-clamp-1:nth-of-type(2)&#96; (vertical), &#96;div.flex.flex-col:nth-of-type(3) &gt; a.group.-mx-2:nth-of-type(3) &gt; div.min-w-0.flex-1 &gt; p.mt-0\.5.line-clamp-1:nth-of-type(2)&#96; (vertical) and 33 more
+  - L2: https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what &#96;section.mb-10:nth-of-type(4) &gt; ul.m-0.flex &gt; li.overflow-hidden.rounded-lg:nth-of-type(1) &gt; button.flex.w-full&#96; opened
 - ❌ Foxing: devkit-a11y: 2 errors
-  - L2: https://foxing.app/ no visible focus on 1 of 40 stops: `input#q`
-  - L2: https://foxing.app/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `main#main > div.cap-empty > div.cap-empty-content:nth-of-type(2) > a.cap-btn` "Go to the home page")
+  - L2: https://foxing.app/ no visible focus on 1 of 40 stops: &#96;input#q&#96;
+  - L2: https://foxing.app/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
 - ❌ Carrel: devkit-a11y: 6 errors
-  - L1: https://carrel.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L1: https://carrel.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L2: https://carrel.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` "")
-  - L2: https://carrel.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more
-  - S2: https://carrel.dustinedwards.info/site.webmanifest no lang on <html>
+  - L1: https://carrel.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
+  - L1: https://carrel.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
+  - L2: https://carrel.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop &#96;html &gt; body &gt; div.json-formatter-container&#96; "")
+  - L2: https://carrel.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96; and 17 more
+  - S2: https://carrel.dustinedwards.info/site.webmanifest no lang on &lt;html&gt;
 - 🟡 Enarratio: checks pass; no verifier yet
 - ❌ Capsomer: devkit-a11y: 3 errors
-  - L2: https://capsomer.dustinedwards.info/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body > main > p > a` "Go to Capsomer's front page")
-  - L1: https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first `section[aria-labelledby="ex-tip"] > .comp-ex-box > iframe[data-height="360"] a[aria-describedby="cap-popover-11"]`
-  - L2: https://capsomer.dustinedwards.info/make/ no visible focus on 1 of 40 stops: `input#mk-radius`
+  - L2: https://capsomer.dustinedwards.info/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;body &gt; main &gt; p &gt; a&#96; "Go to Capsomer's front page")
+  - L1: https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first &#96;section[aria-labelledby="ex-tip"] &gt; .comp-ex-box &gt; iframe[data-height="360"] a[aria-describedby="cap-popover-11"]&#96;
+  - L2: https://capsomer.dustinedwards.info/make/ no visible focus on 1 of 40 stops: &#96;input#mk-radius&#96;
 - ❌ Prelum specimen: devkit-a11y: 6 errors
-  - L1: https://prelum.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L1: https://prelum.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
-  - L2: https://prelum.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` "")
-  - L2: https://prelum.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more
-  - S2: https://prelum.dustinedwards.info/site.webmanifest no lang on <html>
+  - L1: https://prelum.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
+  - L1: https://prelum.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
+  - L2: https://prelum.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop &#96;html &gt; body &gt; div.json-formatter-container&#96; "")
+  - L2: https://prelum.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96; and 17 more
+  - S2: https://prelum.dustinedwards.info/site.webmanifest no lang on &lt;html&gt;
 - ❌ Capsid explorer: devkit-a11y: 1 errors
-  - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 18 more
+  - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(1)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(2)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(3)&#96; and 18 more
 - Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
 ### 10. Charts
@@ -277,22 +277,22 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 Builder: Complete shared checks and tooling. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: no live check yet
-- ❌ Germomics: no live check yet
-- ❌ julieedwards.info: no live check yet
-- ❌ TXASM: no live check yet
-- ❌ BSW: no live check yet
-- ❌ Foxhound: no live check yet
-- ❌ Foxing: no live check yet
-- ❌ Carrel: no live check yet
-- ❌ Enarratio: no live check yet
-- ❌ Capsomer: no live check yet
-- ❌ Prelum specimen: no live check yet
-- ❌ Capsid explorer: no live check yet
-- ❌ Capsid MCP: no live check yet
-- ❌ Foxhound admin MCP: no live check yet
-- ❌ Dustin Edwards admin MCP: no live check yet
-- ❌ Carrel MCP: no live check yet
-- ❌ Foxing admin MCP: no live check yet
-- ❌ Capsid Portal: no live check yet
-- ❌ Carrel Desk: no live check yet
+- ❌ dustinedwards.info: no live check; no verifier has checked it
+- ❌ Germomics: no live check; no verifier has checked it
+- ❌ julieedwards.info: no live check; no verifier has checked it
+- ❌ TXASM: no live check; no verifier has checked it
+- ❌ BSW: no live check; no verifier has checked it
+- ❌ Foxhound: no live check; no verifier has checked it
+- ❌ Foxing: no live check; no verifier has checked it
+- ❌ Carrel: no live check; no verifier has checked it
+- ❌ Enarratio: no live check; no verifier has checked it
+- ❌ Capsomer: no live check; no verifier has checked it
+- ❌ Prelum specimen: no live check; no verifier has checked it
+- ❌ Capsid explorer: no live check; no verifier has checked it
+- ❌ Capsid MCP: no live check; no verifier has checked it
+- ❌ Foxhound admin MCP: no live check; no verifier has checked it
+- ❌ Dustin Edwards admin MCP: no live check; no verifier has checked it
+- ❌ Carrel MCP: no live check; no verifier has checked it
+- ❌ Foxing admin MCP: no live check; no verifier has checked it
+- ❌ Capsid Portal: no live check; no verifier has checked it
+- ❌ Carrel Desk: no live check; no verifier has checked it
