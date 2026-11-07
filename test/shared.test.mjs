@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { delimiter, dirname, join } from "node:path";
 import test from "node:test";
@@ -15,6 +15,7 @@ import {
   checkFakes,
   checkFeatures,
   checkJobs,
+  blankComments,
   checkLibraries,
   checkLint,
   checkPins,
@@ -314,6 +315,27 @@ test("a wrapped library in a site's manifest is refused unless waived with a rea
       '{"name":"@drdustinedwards/site-helpers","dependencies":{"marked":"1"}}',
   };
   assert.deepEqual(checkLibraries(tree(others), {}), []);
+  // One manifest that is not JSON is a warning on that file; the others are still checked.
+  const broken = {
+    "packages/a/package.json": "{ not json",
+    "package.json": '{"dependencies":{"marked":"1"}}',
+  };
+  const found = checkLibraries(tree(broken), {});
+  assert.deepEqual(
+    found.map((f) => `${f.file} ${f.warn ?? false}`),
+    ["packages/a/package.json true", "package.json false"],
+  );
+});
+
+test("blankComments blanks comments and keeps `//` and `/*` inside strings, templates and regular expressions", () => {
+  const code =
+    'const u = "http://x/*"; // gone\nimport a from "src/*"; /* c */ const t = `a // ${"//q"} y`; const r = /[\'"]/; // end';
+  const out = blankComments(code);
+  assert.equal(out.length, code.length);
+  assert.equal(
+    out.replace(/ +/g, " "),
+    'const u = "http://x/*"; \nimport a from "src/*"; const t = `a // ${"//q"} y`; const r = /[\'"]/; ',
+  );
 });
 
 test("each app is checked for its kind's features, files belong to the deepest app, and a D1 database needs the dump", () => {
@@ -407,8 +429,22 @@ test("the spelling fix rewrites a word inside a name and keeps its case, but nev
   assert.equal(respell('status === "cancelled" was cancelled', "cancelled", "canceled", /"cancelled"/g, true), 'status === "cancelled" was canceled'); // codespell:ignore
 });
 
-/** A git repository holding `files`, with a stand-in codespell first on PATH: codespell's output for a few British words. */
-function repo(/** @type {Record<string, string>} */ files) {
+/** process.env without the runner's own files, so a spawned bin writes nothing into the run that tests it. */
+function ownEnv(/** @type {Record<string, string>} */ extra = {}) {
+  const env = { ...process.env };
+  for (const name of ["GITHUB_STEP_SUMMARY", "GITHUB_EVENT_PATH", "GITHUB_OUTPUT"])
+    delete env[name];
+  return { ...env, ...extra };
+}
+
+/**
+ * A git repository holding `files`, with a stand-in codespell first on PATH: codespell's output for a few British words.
+ * Both directories go when the test `t` ends.
+ */
+function repo(
+  /** @type {import("node:test").TestContext} */ t,
+  /** @type {Record<string, string>} */ files,
+) {
   const root = mkdtempSync(join(tmpdir(), "family-"));
   for (const [file, text] of Object.entries(files)) {
     mkdirSync(dirname(join(root, file)), { recursive: true });
@@ -417,6 +453,10 @@ function repo(/** @type {Record<string, string>} */ files) {
   execFileSync("git", ["init", "-q"], { cwd: root });
   execFileSync("git", ["add", "-A"], { cwd: root });
   const bin = mkdtempSync(join(tmpdir(), "codespell-"));
+  t.after(() => {
+    rmSync(root, { recursive: true, force: true });
+    rmSync(bin, { recursive: true, force: true });
+  });
   writeFileSync(
     join(bin, "codespell"),
     `#!/usr/bin/env node
@@ -428,6 +468,8 @@ const words = { colour: "color", licence: "license", favour: "favor", honour: "h
 const ignore = opt("--ignore-words-list").split(",");
 let found = false;
 for (const file of args.slice(args.indexOf("--") + 1)) {
+  for (const [w] of file.matchAll(new RegExp(opt("--regex"), "g")))
+    if (args.includes("--check-filenames") && words[w.toLowerCase()]) console.log(\`\${file}: \${w} ==> \${words[w.toLowerCase()]}\`), (found = true);
   readFileSync(file, "utf8").split("\\n").forEach((line, i) => {
     for (const [w] of line.replace(new RegExp(opt("--ignore-regex"), "g"), "").matchAll(new RegExp(opt("--regex"), "g"))) {
       if (words[w.toLowerCase()] && !ignore.includes(w.toLowerCase())) console.log(\`\${file}:\${i + 1}: \${w} ==> \${words[w.toLowerCase()]}\`), (found = true);
@@ -444,10 +486,11 @@ process.exit(found ? 65 : 0);
 test(
   "PLANT: a British word fails at its line; a skipped path, an ignored word, a contract and a name another tool owns pass; --fix-spelling rewrites it; an ignore or contract that excused nothing is named",
   { skip: process.platform === "win32" },
-  () => {
-    const { root, PATH } = repo({
+  (t) => {
+    const { root, PATH } = repo(t, {
       "app/a.ts": 'export const colour = "red";\nconst Licence = 1;\n', // codespell:ignore
       "app/b.ts": 'if (status === "cancelled" && job.cancelled()) favour();\n', // codespell:ignore
+      "app/colour-theme.ts": "export {};\n", // codespell:ignore
       "frame/notes.md": "colour\n", // codespell:ignore
       "package-lock.json": '{ "colour": 1 }\n', // codespell:ignore
       "logo.png": "colour", // codespell:ignore
@@ -465,13 +508,21 @@ test(
       const kept = config();
       assert.deepEqual(
         checkSpelling(root, kept).map((f) => `${f.file}:${f.line} ${f.message.split(";")[0]}`),
-        ["app/a.ts:1 colour is British", "app/a.ts:2 Licence is British"], // codespell:ignore
+        [
+          "app/a.ts:1 colour is British", // codespell:ignore
+          "app/a.ts:2 Licence is British", // codespell:ignore
+          "app/colour-theme.ts:0 colour in the file name is British", // codespell:ignore
+        ],
       );
       assert.deepEqual(
         staleExceptions(kept).map((f) => f.message.split(" excuses")[0]),
         ['"spelling" "ignore" "honour"', '"spelling" "contracts" ""gone""'], // codespell:ignore
       );
-      assert.deepEqual(checkSpelling(root, config(), true), []);
+      // --fix-spelling rewrites text, never a file name: that one stays reported.
+      assert.deepEqual(
+        checkSpelling(root, config(), true).map((f) => f.file),
+        ["app/colour-theme.ts"], // codespell:ignore
+      );
       assert.equal(
         readFileSync(join(root, "app/a.ts"), "utf8"),
         'export const color = "red";\nconst License = 1;\n',
@@ -877,15 +928,16 @@ test("a library's package.json with exports and no kind is judged as a site, and
   assert.match(first.message, /"apps": \{ "\.": "package" \}/);
 });
 
-test("PLANT: a .shared.json with an unknown key or kind, or a --from missing a package, stops the check (exit 2) naming what is valid", () => {
+test("PLANT: a .shared.json with an unknown key or kind, or a --from missing a package, stops the check (exit 2) naming what is valid", (t) => {
   const root = mkdtempSync(join(tmpdir(), "family-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
   spawnSync("git", ["init", "-q"], { cwd: root });
   const run = (/** @type {object} */ config, /** @type {string[]} */ args = []) => {
     writeFileSync(join(root, ".shared.json"), JSON.stringify(config));
     const out = spawnSync(
       process.execPath,
       [fileURLToPath(new URL("../bin/shared.mjs", import.meta.url)), ...args],
-      { cwd: root, encoding: "utf8" },
+      { cwd: root, encoding: "utf8", env: ownEnv() },
     );
     return `${out.status} ${out.stdout.trim()}`;
   };
@@ -908,10 +960,10 @@ test("PLANT: a .shared.json with an unknown key or kind, or a --from missing a p
 test(
   "PLANT: the bin reads every package's exports from --from checkouts, lists them, fails a copy of one, and passes a package's own; without them it says what it did not check",
   { skip: process.platform === "win32" },
-  () => {
+  (t) => {
     const pkg = (/** @type {string} */ name, /** @type {object} */ more = {}) =>
       JSON.stringify({ name, version: "1.0.0", ...more });
-    const from = repo({
+    const from = repo(t, {
       "prelum/package.json": pkg("@drdustinedwards/site-helpers", {
         exports: {
           "./slug": { types: "./dist/slug.d.ts", default: "./dist/slug.js" },
@@ -962,7 +1014,7 @@ test(
       "enarratio/package.json": pkg("enarratio", { exports: "./index.mjs" }),
       "enarratio/index.mjs": "export class ChartView {}\n",
     }).root;
-    const { root, PATH } = repo({
+    const { root, PATH } = repo(t, {
       ".shared.json": JSON.stringify({
         apps: { ".": "worker" },
         copies: { "src/gone.ts": "moved" },
@@ -979,7 +1031,7 @@ test(
         {
           cwd: root,
           encoding: "utf8",
-          env: { ...process.env, PATH, GITHUB_STEP_SUMMARY: summary, GITHUB_HEAD_REF: "" },
+          env: ownEnv({ PATH, GITHUB_STEP_SUMMARY: summary, GITHUB_HEAD_REF: "" }),
         },
       );
       return { status: out.status, lines: out.stdout.trim().split("\n") };

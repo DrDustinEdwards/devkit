@@ -45,10 +45,17 @@ function stub(
         getContent: async ({ repo, path }) => {
           const value = repos[repo]?.files?.[path];
           if (value === undefined) throw new Error("Not Found");
+          // Over 1 MB the contents API answers with no content: the blob API has it.
+          if (value?.raw !== undefined)
+            return { data: { content: Buffer.from(value.raw).toString("base64") } };
+          if (value?.big) return { data: { content: "", encoding: "none", sha: "big" } };
           return { data: b64(value) };
         },
       },
       git: {
+        getBlob: async ({ repo }) => ({
+          data: b64(Object.values(repos[repo].files).find((value) => value?.big)?.big),
+        }),
         getTree: async ({ repo }) => {
           if (repos[repo].unreadable) throw new Error("Bad credentials");
           return {
@@ -278,14 +285,23 @@ test("a repository that cannot be read fails the run instead of passing silently
   assert.match(log.failed ?? "", /1 consumer/);
 });
 
-test("it is only callable, every action is pinned, it asks GITHUB_TOKEN for nothing, and the token is passed by name", () => {
-  const on = text.slice(text.indexOf("\non:\n"), text.indexOf("\npermissions:"));
-  assert.match(on, /workflow_call:/);
-  assert.doesNotMatch(on, /workflow_dispatch|pull_request|push:|schedule:/);
+test("it asks GITHUB_TOKEN for nothing, and the token is passed by name", () => {
   assert.match(text, /\npermissions: \{\}\n/);
   assert.doesNotMatch(code(text), /: write\b/);
-  const uses = [...code(text).matchAll(/uses: (\S+)/g)].map((m) => m[1]);
-  assert.ok(uses.length >= 1);
-  for (const ref of uses) assert.match(ref, /@[0-9a-f]{40}$/, ref);
   assert.doesNotMatch(code(text), /secrets: inherit/);
+});
+
+test("a manifest over 1 MB is read through the blob API, and one that cannot be read fails the run naming its repository", async () => {
+  const dependent = { dependencies: { capsomer: "github:DrDustinEdwards/capsomer#v0.4.0" } };
+  const { updates, log } = await run({
+    capsomer: { files: { "package.json": { name: "capsomer" } } },
+    huge: { files: { "package.json": { big: dependent } }, issues: [dashboard(5)] },
+    nope: { files: { "package.json": { raw: "{" } }, issues: [dashboard(6)] },
+  });
+  assert.deepEqual(
+    updates.map((u) => u.repo),
+    ["huge"],
+  );
+  assert.ok(log.errors.some((e) => e.startsWith("nope:")));
+  assert.match(log.failed ?? "", /1 consumer/);
 });

@@ -87,8 +87,12 @@ jobs:
             echo "::error title=I2 access drift::not set up: the secret(s)${missing} are missing, so the Access policy of ${APP} is not checked."
             exit 2
           fi
+          if ! printf '%s' "$SITE_RUNTIME_REF" | grep -Eq '^(v[0-9]+\.[0-9]+\.[0-9]+|[0-9a-f]{40})$'; then
+            echo "::error::site-runtime-ref \"$SITE_RUNTIME_REF\" is neither a release tag (vX.Y.Z) nor a full 40-character commit sha; a branch moves under a run that holds the Cloudflare credentials."
+            exit 2
+          fi
           set +e
-          npx --yes --package "github:DrDustinEdwards/site-runtime#${SITE_RUNTIME_REF}" site-runtime-access-drift \
+          npx --yes --ignore-scripts --package "github:DrDustinEdwards/site-runtime#${SITE_RUNTIME_REF}" site-runtime-access-drift \
             --account "$CLOUDFLARE_ACCOUNT_ID" --app "$APP" --admins-url "$ADMINS_URL" 2>&1 | tee "$RUNNER_TEMP/drift.txt"
           code=${PIPESTATUS[0]}
           { echo '```'; cat "$RUNNER_TEMP/drift.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

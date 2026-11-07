@@ -45,16 +45,18 @@ permissions:
   contents: read
 
 jobs:
-  board:
-    if: github.event_name != 'pull_request'
+  # Runs the checks, which install and execute other repositories' code: read-only token, no credential left in .git, and
+  # bin/live.mjs hands each check only the variables it declares (checkEnv). It cannot push; the next job alone can.
+  run:
+    if: github.event_name != 'pull_request' && github.event_name != 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 150
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          persist-credentials: true
+          persist-credentials: false
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: .nvmrc
@@ -62,12 +64,10 @@ jobs:
       # Area 9's devkit-a11y drives Chromium with axe-core and finds both from the working directory, so they install here
       # without touching the lockfile; the check packages themselves install with --ignore-scripts and bring neither.
       - name: Chromium and axe-core for the accessibility check
-        if: github.event_name != 'push'
         run: |
           npm install --no-save --no-audit --no-fund --ignore-scripts playwright@1.63.0 @axe-core/playwright@4.14.0
           npx playwright install --with-deps chromium
       - name: Run every area's checks against every live site
-        if: github.event_name != 'push'
         env:
           LIVE_GITHUB_TOKEN: ${{ secrets.LIVE_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
@@ -79,6 +79,40 @@ jobs:
           MCP_TEST_GRANT_ADMIN_MCP_FOXHOUNDAPP_COM: ${{ secrets.MCP_TEST_GRANT_ADMIN_MCP_FOXHOUNDAPP_COM }}
           MCP_TEST_GRANT_FOXHOUNDAPP_COM: ${{ secrets.MCP_TEST_GRANT_FOXHOUNDAPP_COM }}
         run: node bin/live.mjs run --out "$RUNNER_TEMP/run.json"
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: live-run
+          path: ${{ runner.temp }}/run.json
+          if-no-files-found: ignore
+          retention-days: 1
+      # Red only for a measured failure; a check that could not measure is a warning with its reason, never red or green.
+      - name: Red when any check failed
+        run: |
+          node -e 'const esc = (t) => String(t).replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A"); const { results } = require(process.argv[1]); const bad = results.filter((r) => r.status !== "pass"); for (const r of bad) console.log(`::${r.status === "fail" ? "error" : "warning"} title=${esc(`area ${r.area} ${r.site}`)}::${esc(`${r.check} ${r.status}${r.detail ? `: ${r.detail}` : ` (${r.errors} errors)`}`)}`); process.exit(bad.some((r) => r.status === "fail") ? 1 : 0)' "$RUNNER_TEMP/run.json"
+
+  # Alone holds the write token. It runs this repository's own code on the run's JSON (a data file), never a check.
+  board:
+    needs: run
+    if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        if: github.event_name != 'push'
+        continue-on-error: true
+        with:
+          name: live-run
+          path: ${{ runner.temp }}
       - name: Add the run to the scoreboard branch and rebuild the board
         run: |
           git config user.name "github-actions[bot]"
@@ -95,11 +129,6 @@ jobs:
           if git diff --cached --quiet; then echo "The board is current."; exit 0; fi
           git commit --quiet -m "Scoreboard $(date -u +%F)"
           git push --quiet origin scoreboard
-      # Red only for a measured failure; a check that could not measure is a warning with its reason, never red or green.
-      - name: Red when any check failed
-        if: github.event_name != 'push'
-        run: |
-          node -e 'const { results } = require(process.argv[1]); const bad = results.filter((r) => r.status !== "pass"); for (const r of bad) console.log(`::${r.status === "fail" ? "error" : "warning"} title=area ${r.area} ${r.site}::${r.check} ${r.status}${r.detail ? `: ${r.detail}` : ` (${r.errors} errors)`}`); process.exit(bad.some((r) => r.status === "fail") ? 1 : 0)' "$RUNNER_TEMP/run.json"
 
   copies:
     runs-on: ubuntu-latest

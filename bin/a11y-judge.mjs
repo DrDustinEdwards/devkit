@@ -7,6 +7,8 @@
 //   L4 animations still running under reduced motion; axe and focus visible again in forced colors
 //   S2 page structure: lang, title, one h1, heading skips, landmarks   S3 image alt   S6 the /accessibility statement
 
+import { escapeAnnotation, escapeProperty } from "./annotate.mjs";
+
 export const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
 /** axe rules about the page's own colors, which forced colors replaces. */
@@ -138,10 +140,8 @@ export function judgeSite({ statement, pages }) {
   const titles = new Map();
   for (const page of pages) {
     const { url } = page;
-    if (page.error) {
-      add("unmeasured", "L1", url, `the page could not be scanned: ${page.error}`);
-      continue;
-    }
+    // A scan that stopped part way still proves what it measured before it stopped: its findings stand beside the notice.
+    if (page.error) add("unmeasured", "L1", url, `the page could not be scanned: ${page.error}`);
     judgeAxe(page, add);
     judgeKeyboard(page, add);
     if (page.reflow && page.reflow.scrollWidth > page.reflow.clientWidth) {
@@ -369,9 +369,10 @@ const list = (/** @type {string[]} */ items) =>
 
 /** A finding as a GitHub annotation line, its detail on one line. */
 export function annotation(/** @type {Finding} */ { severity, item, url, detail }) {
-  const text = detail.replace(/%/g, "%25").replace(/\s+/g, " ");
+  const text = escapeAnnotation(detail.replace(/\s+/g, " "));
   // What could not be measured is a notice in devkit-live's form, never a pass or a failure.
+  const at = escapeAnnotation(url);
   return severity === "unmeasured"
-    ? `::notice title=${item}::${url} could not measure: ${text}`
-    : `::${severity} title=${item}::${url} ${text}`;
+    ? `::notice title=${escapeProperty(item)}::${at} could not measure: ${text}`
+    : `::${severity} title=${escapeProperty(item)}::${at} ${text}`;
 }

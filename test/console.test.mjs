@@ -15,6 +15,16 @@ test("counts console calls in code only", () => {
     "logger.console.log(5); myconsole.log(6);",
   ].join("\n");
   assert.equal(consoleCalls(source), 3);
+  // The spellings that reach a console without `console.log(`.
+  const sneaky = [
+    "console?.log(1);",
+    'console["log"](2);',
+    "globalThis.console.log(3);",
+    "self.console.error(4);",
+    "const { log, error: fail } = console;",
+    "const out = console;",
+  ].join("\n");
+  assert.equal(consoleCalls(sneaky), 5);
 });
 
 test("a rise fails naming the file that grew; a fall asks to lower the baseline", () => {

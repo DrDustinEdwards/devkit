@@ -34,6 +34,7 @@ import { realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
+import { escapeAnnotation, escapeProperty } from "./annotate.mjs";
 const TIMEOUT_MS = 15_000;
 const STATUSES = ["pass", "warn", "fail"];
 const BACKUP_MAX_HOURS = 26;
@@ -413,6 +414,16 @@ export function drillFindings({ url, run, now = Date.now() }) {
     return [
       finding("error", "R1", run.html_url, `the newest restore drill ended ${run.conclusion}`),
     ];
+  // A date that does not parse is NaN, and NaN is below every limit: it must not read as a recent drill.
+  if (!Number.isFinite(days))
+    return [
+      finding(
+        "error",
+        "R1",
+        run.html_url,
+        `the newest restore drill has no readable date (created_at ${run.created_at})`,
+      ),
+    ];
   if (days >= DRILL_MAX_DAYS)
     return [
       finding(
@@ -599,6 +610,10 @@ async function main() {
   if (!explicit.error) {
     findings.push(...explicit404Findings(/** @type {any} */ (explicit)));
     say(`/404: ${explicit.url} answered ${explicit.status}`);
+  } else {
+    // A /404 that does not answer proves nothing about N2: said as a notice, never a pass.
+    unread.push({ item: "N2", url: explicit.url, reason: explicit.error });
+    say(`/404: ${explicit.url} did not answer: ${explicit.error}`);
   }
   if (!home.error) {
     findings.push(...maintenanceFindings(/** @type {any} */ (home)));
@@ -686,10 +701,15 @@ async function main() {
     }
   }
 
-  for (const f of findings) console.log(`::${f.severity} title=${f.item}::${f.url} ${f.detail}`);
+  for (const f of findings)
+    console.log(
+      `::${f.severity} title=${escapeProperty(f.item)}::${escapeAnnotation(`${f.url} ${f.detail}`)}`,
+    );
   // devkit-live's contract: an item that could not be measured is a notice that says so, and exit 3 when nothing failed.
   for (const u of unread)
-    console.log(`::notice title=${u.item}::${u.url} could not measure: ${u.reason}`);
+    console.log(
+      `::notice title=${escapeProperty(u.item)}::${escapeAnnotation(`${u.url} could not measure: ${u.reason}`)}`,
+    );
   const errors = findings.filter((f) => f.severity === "error").length;
   say(
     `${errors} errors, ${findings.length - errors} warnings, ${unread.length} not measured on ${base}.`,

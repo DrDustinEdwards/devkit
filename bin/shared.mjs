@@ -89,6 +89,7 @@ import {
 import { dirname, join, posix } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { escapeAnnotation, escapeProperty } from "./annotate.mjs";
 /** The shared packages: npm name, repository, and what a session should know them as. */
 export const PACKAGES = [
   { name: "@drdustinedwards/site-helpers", repo: "prelum", label: "Prelum" },
@@ -466,6 +467,26 @@ export function isWarning(/** @type {Finding} */ f, version = VERSION) {
   return f.warn === true || (f.failsFrom !== undefined && compare(version, f.failsFrom) < 0);
 }
 
+/**
+ * A package.json (or any JSON file) of the tree, parsed. One that is not valid JSON is a warning on that file and the
+ * fallback, so a single broken manifest does not stop the check for every other file.
+ * @param {Tree} tree @param {string} file @param {Finding[]} found @param {string} check @param {any} [fallback]
+ * @returns {any}
+ */
+function readManifest(tree, file, found, check, fallback = {}) {
+  try {
+    return JSON.parse(tree.read(file) || "{}");
+  } catch (error) {
+    found.push({
+      check,
+      file,
+      warn: true,
+      message: `${file} is not valid JSON, so the check skipped it (${error instanceof Error ? error.message : String(error)})`,
+    });
+    return fallback;
+  }
+}
+
 export const KINDS = ["site", "static", "private", "worker", "package"];
 const CONFIG_KEYS = {
   apps: 0,
@@ -558,7 +579,7 @@ export function lsRemoteTags(/** @type {string} */ repo) {
   const out = execFileSync(
     "git",
     ["ls-remote", "--tags", `https://github.com/DrDustinEdwards/${repo}`],
-    { encoding: "utf8" },
+    { encoding: "utf8", timeout: 60_000 },
   );
   /** @type {Record<string, string>} */
   const commits = {};
@@ -811,9 +832,86 @@ export function exportNames(/** @type {string} */ src) {
   return [...names];
 }
 
-/** Code without its comments, blanked rather than removed so line numbers hold. */
-function blankComments(/** @type {string} */ text) {
-  return text.replace(/\/\*[\s\S]*?\*\/|(^|[^:"'`])\/\/.*$/gm, (c) => c.replace(/[^\n]/g, " "));
+/**
+ * Code without its comments, blanked rather than removed so line numbers hold. String and template literals are read as
+ * strings and kept whole, so a `//` or `/*` inside one (a URL, a glob such as "src/*") is not a comment. A quote string
+ * ends at its line, so a stray apostrophe (in a regular expression or a JSX text) cannot swallow the rest of the file.
+ */
+export function blankComments(/** @type {string} */ text) {
+  const n = text.length;
+  const blank = (/** @type {string} */ s) => s.replace(/[^\n]/g, " ");
+  let out = "";
+  let depth = 0;
+  /** @type {number[]} brace depth at each open `${` */
+  const holes = [];
+  /** Reads template text from `from` to its closing backtick or the next `${`; where it stopped. */
+  const template = (/** @type {number} */ from) => {
+    let j = from;
+    while (j < n) {
+      if (text[j] === "\\") j += 2;
+      else if (text[j] === "`") {
+        j++;
+        break;
+      } else if (text[j] === "$" && text[j + 1] === "{") {
+        holes.push(depth++);
+        j += 2;
+        break;
+      } else j++;
+    }
+    j = Math.min(j, n);
+    out += text.slice(from, j);
+    return j;
+  };
+  for (let i = 0; i < n;) {
+    const c = text[i];
+    if (c === "/" && text[i + 1] === "*") {
+      const end = text.indexOf("*/", i + 2);
+      const stop = end < 0 ? n : end + 2;
+      out += blank(text.slice(i, stop));
+      i = stop;
+    } else if (c === "/" && text[i + 1] === "/") {
+      const end = text.indexOf("\n", i);
+      const stop = end < 0 ? n : end;
+      out += blank(text.slice(i, stop));
+      i = stop;
+    } else if (c === "/" && /(?:^|[(,=:[!&|?{};+\-*%<>~^]|\breturn)\s*$/.test(out.slice(-12))) {
+      // A regular expression literal: its quotes are not strings. No closing slash on the line makes it a division.
+      let j = i + 1;
+      let inClass = false;
+      while (j < n && text[j] !== "\n" && (inClass || text[j] !== "/")) {
+        if (text[j] === "\\") j++;
+        else if (text[j] === "[") inClass = true;
+        else if (text[j] === "]") inClass = false;
+        j++;
+      }
+      const stop = text[j] === "/" ? j + 1 : i + 1;
+      out += text.slice(i, stop);
+      i = stop;
+    } else if (c === '"' || c === "'") {
+      let j = i + 1;
+      while (j < n && text[j] !== c && text[j] !== "\n") j += text[j] === "\\" ? 2 : 1;
+      j = Math.min(j + (text[j] === c ? 1 : 0), n);
+      out += text.slice(i, j);
+      i = j;
+    } else if (c === "`") {
+      out += c;
+      i = template(i + 1);
+    } else {
+      if (c === "{") depth++;
+      else if (c === "}") {
+        depth--;
+        if (holes.length && holes.at(-1) === depth) {
+          holes.pop();
+          out += c;
+          i = template(i + 1);
+          continue;
+        }
+      }
+      out += c;
+      i++;
+    }
+  }
+  return out;
 }
 
 /** Whether a name is distinctive enough to flag a local definition of it. */
@@ -934,7 +1032,7 @@ export function checkLibraries(tree, config, peers = {}) {
   /** @type {Finding[]} */
   const found = [];
   for (const file of tree.files.filter((f) => posix.basename(f) === "package.json")) {
-    const manifest = JSON.parse(tree.read(file));
+    const manifest = readManifest(tree, file, found, "libraries");
     if (PACKAGES.some((p) => p.name === manifest.name)) continue;
     const deps = { ...manifest.dependencies, ...manifest.devDependencies };
     const asked = new Set(Object.keys(deps).flatMap((d) => peers[d] ?? []));
@@ -1043,7 +1141,7 @@ export function checkFeatures(tree, config, now = Date.now()) {
   const apps = Object.entries(config.apps ?? { ".": "site" });
   const owner = ownerOf(apps);
   // A library with no kind is judged as the default site; the finding says how to say otherwise.
-  const manifest = JSON.parse(tree.read("package.json") || "{}");
+  const manifest = readManifest(tree, "package.json", found, "features");
   const library =
     !config.apps && (manifest.exports || manifest.bin)
       ? ` (package.json has ${manifest.exports ? "exports" : "a bin"}: a library says .shared.json "apps": { ".": "package" })`
@@ -1249,9 +1347,11 @@ export function checkWorkflows(tree, config, repo = {}) {
   // pr.yml runs the pull request checks in one job: its call counts as each one its inputs leave on.
   const covered = prCovers(workflowFiles, repo.self === "devkit");
   for (const name of covered) called.add(name);
+  /** @type {Finding[]} */
+  const unreadable = [];
   const scripts = tree.files
     .filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f))
-    .flatMap((f) => Object.entries(JSON.parse(tree.read(f)).scripts ?? {}));
+    .flatMap((f) => Object.entries(readManifest(tree, f, unreadable, "workflows").scripts ?? {}));
   const invokes = (/** @type {string} */ cmd, /** @type {string} */ name) =>
     new RegExp(
       `\\b(?:run(?:-script)?|pnpm|yarn|npm)\\s+(?:--?\\S+\\s+)*${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w:.-])`,
@@ -1275,7 +1375,7 @@ export function checkWorkflows(tree, config, repo = {}) {
   const script = tree.files.some((f) => SOURCE.test(f) && !NOT_SOURCE.test(f));
   const servers = [...mcpServerDirs(tree)].map((dir) => (dir === "." ? "the root" : dir));
   /** @type {Finding[]} */
-  const found = [];
+  const found = [...unreadable];
   for (const {
     name,
     failsFrom,
@@ -1388,7 +1488,9 @@ export function checkLint(tree, config, self) {
   const found = [];
   const add = (/** @type {string} */ file, /** @type {string} */ message) =>
     found.push({ check: "lint", file, failsFrom: LINT_FAILS_FROM, message });
-  const pkg = tree.files.includes("package.json") ? JSON.parse(tree.read("package.json")) : {};
+  const pkg = tree.files.includes("package.json")
+    ? readManifest(tree, "package.json", found, "lint")
+    : {};
   const workflows = tree.files
     .filter((f) => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(f))
     .map((f) => tree.read(f).replace(/(^|\s)#.*$/gm, "$1"));
@@ -1856,8 +1958,9 @@ export function checkSpelling(root, config, fix = false, names = true) {
       for (const line of codespell([...args, "--", ...targets.slice(i, i + 400)], root).split(
         "\n",
       )) {
-        const m = /^(.+?):(\d+): (\S+) ==> (\S+)/.exec(line);
-        if (m) out.push({ file: m[1], line: Number(m[2]), from: m[3], to: m[4] });
+        // A hit in a file name has no line: `file: word ==> fix`. It is reported on the file, with line 0.
+        const m = /^(.+?):(?:(\d+):)? (\S+) ==> (\S+)/.exec(line);
+        if (m) out.push({ file: m[1], line: Number(m[2] ?? 0), from: m[3], to: m[4] });
       }
     }
     return out;
@@ -1867,7 +1970,9 @@ export function checkSpelling(root, config, fix = false, names = true) {
     check: "spelling",
     file,
     line,
-    message: `${from} is British; write ${to} (or end the line with a codespell:ignore comment if it is a data contract)`,
+    message: line
+      ? `${from} is British; write ${to} (or end the line with a codespell:ignore comment if it is a data contract)`
+      : `${from} in the file name is British; rename the file to use ${to}`,
   }));
   // An ignore or contract is used when a run without the repository's own finds more, in its word or on a line it matches.
   if (!fix && (ignore.length || contracts.length)) {
@@ -1884,8 +1989,10 @@ export function checkSpelling(root, config, fix = false, names = true) {
       } catch {}
       if (
         !re ||
-        more.some((h) =>
-          re.test(readFileSync(join(root, h.file), "utf8").split("\n")[h.line - 1] ?? ""),
+        more.some(
+          (h) =>
+            h.line > 0 &&
+            re.test(readFileSync(join(root, h.file), "utf8").split("\n")[h.line - 1] ?? ""),
         )
       )
         used(config, "spelling.contracts", contract);
@@ -1896,7 +2003,10 @@ export function checkSpelling(root, config, fix = false, names = true) {
   // an ignore regex covers, and keeping each word's case. In a shared package (names false) a word inside a name is
   // left: renaming an export breaks every site that imports it, so it is renamed by hand with the old name kept.
   const protect = new RegExp(ignoreRegex, "g");
-  const byFile = Map.groupBy(hits, (h) => h.file);
+  const byFile = Map.groupBy(
+    hits.filter((h) => h.line > 0),
+    (h) => h.file,
+  );
   for (const [file, list] of byFile) {
     const lines = readFileSync(join(root, file), "utf8").split("\n");
     for (const { line, from, to } of list) {
@@ -2121,7 +2231,13 @@ async function main(/** @type {string[]} */ argv) {
   const tree = gitTree(root);
   // A shared package defines its own exports; it is checked against the others, as a package, not a site.
   const name = existsSync(join(root, "package.json"))
-    ? JSON.parse(readFileSync(join(root, "package.json"), "utf8")).name
+    ? (() => {
+        try {
+          return JSON.parse(readFileSync(join(root, "package.json"), "utf8")).name;
+        } catch {
+          return undefined; // checkLibraries says it is not valid JSON
+        }
+      })()
     : undefined;
   const self = PACKAGES.find((p) => p.name === name);
   if (self) config.apps ??= { ".": "package" };
@@ -2188,8 +2304,12 @@ async function main(/** @type {string[]} */ argv) {
   }
   const errors = findings.filter((f) => !isWarning(f));
   for (const f of findings) {
-    const where = f.file ? ` file=${f.file}${f.line ? `,line=${f.line}` : ""}` : "";
-    console.log(`::${isWarning(f) ? "warning" : "error"}${where}::[${f.check}] ${f.message}`);
+    const where = f.file
+      ? ` file=${escapeProperty(f.file)}${f.line ? `,line=${Number(f.line)}` : ""}`
+      : "";
+    console.log(
+      `::${isWarning(f) ? "warning" : "error"}${where}::${escapeAnnotation(`[${f.check}] ${f.message}`)}`,
+    );
   }
   const counts = [
     "pins",
@@ -2223,7 +2343,7 @@ export async function cli(/** @type {string[]} */ argv) {
     return await main(argv);
   } catch (error) {
     console.log(
-      `::error::devkit-shared could not run: ${error instanceof Error ? error.message : String(error)}`,
+      `::error::${escapeAnnotation(`devkit-shared could not run: ${error instanceof Error ? error.message : String(error)}`)}`,
     );
     return 2;
   }

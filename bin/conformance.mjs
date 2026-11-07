@@ -23,11 +23,12 @@
 //               "localUpstream": true, "resourceMetadata": true },
 //     "stub": 8790,
 //     "scenarios": [{ "spec": "2026-07-28", "scenario": "server-stateless", "passed": 24, "total": 28, "note": "why" }],
+//     "allow_no_scenarios": false,
 //     "registration": { "allowed": "https://example.com/callback" },
 //     "after": "scripts/conformance-extra.mjs"
 //   }
 //
-// `entry` is optional (wrangler.jsonc's main otherwise). `migrate` applies that D1 binding's migrations locally first.
+// An empty `scenarios` fails (exit 1) unless `allow_no_scenarios` is true. `entry` is optional (wrangler.jsonc's main otherwise). `migrate` applies that D1 binding's migrations locally first.
 // `stub` answers every request with { ok: true } on that port, a stand-in for an API the tools call. `registration.allowed`
 // is a callback /register must accept, or { "var": "NAME" } to take the first from that var in the auth config (or its
 // .example); left out, only the refusal is checked. `resourceMetadata: false` accepts a 401 from /mcp whose challenge
@@ -102,6 +103,13 @@ async function main() {
   const config = JSON.parse(
     readFileSync(resolve(root, at >= 0 ? argv[at + 1] : ".conformance.json"), "utf8"),
   );
+  // No scenarios is a gate that checks nothing: it fails unless the config says that is meant ("allow_no_scenarios").
+  if (!config.allow_no_scenarios && !config.scenarios?.length) {
+    console.log(
+      '::error title=devkit-conformance::the config lists no server scenarios, so the gate would pass over nothing. List them, or set "allow_no_scenarios": true to say a server with none is meant.',
+    );
+    process.exit(1);
+  }
   const wranglerJs = resolve(root, "node_modules/wrangler/bin/wrangler.js");
   const suiteJs = resolve(root, "node_modules/@modelcontextprotocol/conformance/dist/index.js");
   /** @type {Server} */
@@ -194,7 +202,7 @@ async function main() {
   ) => {
     for (const deadline = Date.now() + 120_000; Date.now() < deadline; await sleep(1000)) {
       try {
-        if (ready(await fetch(url, init))) return true;
+        if (ready(await fetch(url, { ...init, signal: AbortSignal.timeout(30_000) }))) return true;
       } catch {
         /* not up yet */
       }
@@ -253,7 +261,11 @@ async function main() {
     );
   } else {
     runAll("authorization", origin, auth.scenarios ?? AUTH_SCENARIOS);
-    const meta = await (await fetch(`${origin}/.well-known/oauth-authorization-server`)).json();
+    const meta = await (
+      await fetch(`${origin}/.well-known/oauth-authorization-server`, {
+        signal: AbortSignal.timeout(30_000),
+      })
+    ).json();
     if (meta.client_id_metadata_document_supported === true)
       pass("metadata advertises CIMD (the path claude.ai and Claude Code take)");
     else fail("metadata does not advertise client_id_metadata_document_supported");
@@ -266,6 +278,7 @@ async function main() {
 
     const register = (/** @type {string} */ uri) =>
       fetch(`${origin}/register`, {
+        signal: AbortSignal.timeout(30_000),
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -300,6 +313,7 @@ async function main() {
         `POST /register answered ${refused.status} ${refusedBody.error ?? ""} for a callback off the allowlist`,
       );
     const unauth = await fetch(`${origin}/mcp`, {
+      signal: AbortSignal.timeout(30_000),
       method: "POST",
       headers: { "content-type": "application/json" },
       body: "{}",

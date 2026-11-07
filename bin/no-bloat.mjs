@@ -23,7 +23,7 @@
 //     "tests": { "files": ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"], "ignore": [] },
 //     "comments": { "files": ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"], "ignore": ["**/*.min.*", "**/worker-configuration.d.ts"],
 //                   "tolerance": 1, "fail": false },
-//     "tools": { "knip": "knip@6", "jscpd": "jscpd@4" },
+//     "tools": { "knip": "knip@6.44.0", "jscpd": "jscpd@4.3.0" },
 //     "baseline": { "measured_at": "036d615", "knip (Worker)": { "Unused exports": 12 }, "jscpd": { "clones": 23, "lines": 410,
 //       "percentage": 0.59 }, "tests": { "files": 40, "cases": 312 }, "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
 //   }
@@ -51,7 +51,8 @@ import { tmpdir } from "node:os";
 import { join, posix, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-export const DEFAULT_TOOLS = { knip: "knip@6", jscpd: "jscpd@4" };
+import { escapeAnnotation } from "./annotate.mjs";
+export const DEFAULT_TOOLS = { knip: "knip@6.44.0", jscpd: "jscpd@4.3.0" };
 const TESTS = ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const SOURCE = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"];
 const GENERATED = ["**/*.min.*", "**/worker-configuration.d.ts"];
@@ -211,7 +212,13 @@ const AT_RUNTIME = new Set(["skip", "fixme", "fail", "slow"]);
 /** The test cases a test file declares, read from scan()'s blanked text. */
 export function testCases(/** @type {string} */ code) {
   let n = 0;
-  for (const m of code.matchAll(/(?<![\w$.#])(?:test|it)((?:\s*\.\s*[A-Za-z]+)*)\s*\(\s*(\S)?/g)) {
+  // A subtest of node:test (`t.test("name", ...)`, also `it`) is a case too; a title in quotes tells it from a RegExp's test().
+  n += [
+    ...code.matchAll(/(?<![\w$.#])(?:t|tt|ctx|context|subtest)\s*\.\s*(?:test|it)\s*\(\s*["'`]/g),
+  ].length;
+  for (const m of code.matchAll(
+    /(?<![\w$.#])(?:test|it|specify)((?:\s*\.\s*[A-Za-z]+)*)\s*\(\s*(\S)?/g,
+  )) {
     const members = m[1]
       .split(".")
       .map((x) => x.trim())
@@ -718,6 +725,12 @@ function main() {
     );
   }
   errors.unshift(...measured.warnings, ...stale);
+  // No baseline is a ratchet that passes everything: a missing config, or one whose baseline counts nothing, fails.
+  const counted = Object.keys(config.baseline ?? {}).filter((key) => key !== "measured_at");
+  if (!counted.length)
+    errors.unshift(
+      `${existsSync(file) ? `${file} has no baseline` : `${file} does not exist`}, so every count would pass. Run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
+    );
   if (lowered.length) {
     warnings.push(
       `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
@@ -734,8 +747,9 @@ function main() {
     }
   }
   console.log(table);
-  for (const e of errors) console.log(`::${warnOnly ? "warning" : "error"}::${e}`);
-  for (const w of warnings) console.log(`::warning::${w}`);
+  for (const e of errors)
+    console.log(`::${warnOnly ? "warning" : "error"}::${escapeAnnotation(e)}`);
+  for (const w of warnings) console.log(`::warning::${escapeAnnotation(w)}`);
   if (process.env.GITHUB_STEP_SUMMARY)
     appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
   if (errors.length && !warnOnly) process.exit(1);

@@ -5,6 +5,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  boardMarkdown,
   buildBoard,
   checkEnv,
   CLEAN_DAYS,
@@ -43,10 +44,41 @@ test("the repository's own site, area and verdict files are sound", () => {
   assert.deepEqual(lintConfig(loadConfig()), []);
 });
 
-test("an MCP test grant reaches only a check marked grants, never any other check's code", () => {
-  const env = { PATH: "/bin", GITHUB_TOKEN: "t", MCP_TEST_GRANT_MCP_EXAMPLE_COM: "k" };
-  assert.deepEqual(checkEnv(env, { name: "audit" }), { PATH: "/bin", GITHUB_TOKEN: "t" });
-  assert.deepEqual(checkEnv(env, { name: "ai", grants: true }), env);
+test("a check's bin gets a minimal environment: tokens, keys and MCP grants only where it declares them", () => {
+  const env = {
+    PATH: "/bin",
+    HOME: "/h",
+    NODE_OPTIONS: "--require /tmp/x.js",
+    NODE_AUTH_TOKEN: "n",
+    NODE_EXTRA_CA_CERTS: "/ca.pem",
+    HTTPS_PROXY: "http://user:secret@proxy.example.com:8080",
+    LC_ALL: "C",
+    GITHUB_TOKEN: "t",
+    LIVE_GITHUB_TOKEN: "l",
+    PSI_API_KEY: "p",
+    MCP_TEST_GRANT_MCP_EXAMPLE_COM: "k",
+    MCP_TEST_GRANT_OTHER_EXAMPLE_COM: "o",
+  };
+  const base = {
+    PATH: "/bin",
+    HOME: "/h",
+    NODE_EXTRA_CA_CERTS: "/ca.pem",
+    HTTPS_PROXY: "http://proxy.example.com:8080/",
+    LC_ALL: "C",
+  };
+  assert.deepEqual(checkEnv(env, { name: "audit" }), base);
+  assert.deepEqual(checkEnv(env, { name: "speed", env: ["PSI_API_KEY"] }), {
+    ...base,
+    PSI_API_KEY: "p",
+  });
+  // Only the grant for the host being probed, never another server's.
+  assert.deepEqual(
+    checkEnv(env, { name: "ai", grants: true }, { origin: "https://mcp.example.com" }),
+    {
+      ...base,
+      MCP_TEST_GRANT_MCP_EXAMPLE_COM: "k",
+    },
+  );
   const bad = {
     id: 1,
     name: "AI",
@@ -67,6 +99,23 @@ test("a check's exit code, or its fresh report, decides pass, fail or could not 
     { status: "fail", errors: 1, warnings: 1, unmeasured: 0, findings: undefined, seconds: 2 },
   );
   assert.equal(resultOf({ code: 0, output: "", seconds: 1 }).status, "pass");
+  // An ::error line on exit 0 is no pass; exit 1 with none is a crash; a timeout is unmeasured and says so.
+  assert.equal(resultOf({ code: 0, output, seconds: 1 }).status, "fail");
+  const crash = resultOf({ code: 1, output: "TypeError: x is undefined", seconds: 1 });
+  assert.deepEqual(
+    [crash.status, crash.detail],
+    ["unmeasured", "could not run: exit 1 with no ::error line: TypeError: x is undefined"],
+  );
+  assert.match(
+    resultOf({ code: null, output: "", seconds: 1, killed: "timed out after 20 minutes" }).detail,
+    /^could not run: timed out after 20 minutes$/,
+  );
+  // bin/annotate.mjs's escapes are undone, so a finding reads as the check wrote it.
+  assert.deepEqual(
+    resultOf({ code: 1, output: "::error title=a%3Ab%2Cc::50%25 of%0Atwo lines", seconds: 1 })
+      .findings[0],
+    { severity: "error", check: "a:b,c", detail: "50% of\ntwo lines" },
+  );
   // What could not be measured is never a pass or a failure, and says why: a crash, exit 3, or a notice on a clean exit.
   assert.deepEqual(
     [
@@ -163,6 +212,64 @@ test("a check's exit code, or its fresh report, decides pass, fail or could not 
   );
 });
 
+test("lint names a malformed config instead of throwing, and refuses a bin, repo or ref that is not a plain name", () => {
+  const problems = lintConfig({
+    sites: [{ id: "b", name: "B", kind: "site" }],
+    areas: [
+      { id: 2, name: "X", builder: "b" },
+      {
+        id: 3,
+        name: "Y",
+        builder: "b",
+        checks: [{ name: "c", repo: "../x", bin: "../../bin/sh", ref: "main" }],
+      },
+    ],
+    verdicts: [{ area: 3, verifier: 7, date: day(1), cells: { b: null } }],
+    problems: ["areas.json cannot be read: Unexpected token"],
+  }).join("\n");
+  for (const want of [
+    /areas.json cannot be read/,
+    /site b has no origin/,
+    /area 2 has no list of checks/,
+    /bin \.\.\/\.\.\/bin\/sh is not a plain name/,
+    /repo \.\.\/x is not a repository name/,
+    /ref main is not a vX.Y.Z tag/,
+    /area 3 verdict names no verifier/,
+    /verdict for b is not an object/,
+  ])
+    assert.match(problems, want);
+});
+
+test("SCOREBOARD.md text from a check, a site or a verdict cannot break a line, a table or into HTML", () => {
+  const md = boardMarkdown(
+    buildBoard(
+      {
+        sites: [{ ...sites[0], name: "A|<b>" }],
+        areas: [{ ...areas[0], name: "Search\n# Owned" }],
+        verdicts: [],
+      },
+      [
+        {
+          at: `${day(1)}T06:00:00Z`,
+          results: [
+            {
+              ...run(1, "fail").results[0],
+              errors: 1,
+              findings: [
+                { severity: "error", check: "x`y", detail: "<img src=x onerror=a()> & |" },
+              ],
+            },
+          ],
+        },
+      ],
+    ),
+  );
+  assert.match(md, /\| A\\\|&lt;b&gt; \|/);
+  assert.match(md, /### 1\. Search # Owned/);
+  assert.match(md, /- x&#96;y: &lt;img src=x onerror=a\(\)&gt; &amp; \\\|/);
+  assert.doesNotMatch(md, /<img|^# Owned/m);
+});
+
 test("checks passing without a verdict is partial; a verdict signed by the builder is refused and never complete", () => {
   assert.equal(
     cell(buildBoard({ sites, areas, verdicts: [] }, [run(1, "pass")])).status,
@@ -204,4 +311,13 @@ test("finished only when every cell is complete and clean for the full run of da
   // A page the checks cannot reach is not proven, so it keeps the job open.
   const unreached = [{ ...areas[0], unchecked: { "a /stats": "signed-in only" } }];
   assert.equal(buildBoard({ sites, areas: unreached, verdicts }, days).finished, false);
+  // An area with no live check (area 12) is the verdict alone, with no clean days to wait for.
+  const tooling = [...areas, { id: 2, name: "Tooling", builder: "Build tooling", checks: [] }];
+  const signed = [...verdicts, { ...verdict("Verify tooling"), area: 2 }];
+  assert.equal(
+    buildBoard({ sites, areas: tooling, verdicts }, days).areas[1].cells.a.status,
+    "missing",
+  );
+  const done = buildBoard({ sites, areas: tooling, verdicts: signed }, days);
+  assert.deepEqual([done.areas[1].cells.a.status, done.finished], ["complete", true]);
 });

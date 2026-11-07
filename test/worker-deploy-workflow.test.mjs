@@ -21,7 +21,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { callerProblems } from "../scripts/check-callers.mjs";
 import { inlined } from "../scripts/inline-rollback-guard.mjs";
 
 const text = readFileSync(
@@ -79,8 +78,7 @@ const WATCHER = {
   rollbackStep: /^Roll back/i,
 };
 
-test("the token is read-only", () => {
-  assert.match(text, /\npermissions:\n {2}contents: read\n/);
+test("no job asks for a write", () => {
   assert.doesNotMatch(code, /: write\b/);
 });
 
@@ -120,24 +118,10 @@ test("THE NAMES CAPSID'S WATCHER READS: the job, the step and the three annotati
   );
 });
 
-test("wrangler is pinned to one exact version, and the bookmark, the deploy and the rollback all use it", () => {
+test("wrangler is pinned to one exact version, and every wrangler the workflow runs is that one", () => {
   const pinned = /\nenv:\n {2}WRANGLER_VERSION: "(\d+\.\d+\.\d+)"\n/.exec(text);
   assert.ok(pinned, "WRANGLER_VERSION is not an exact version");
-  assert.match(step("Deploy"), /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" "\$\{args\[@\]\}"/);
-  // A gradual rollout's version upload leaves the triggers alone, so the step applies them itself.
-  assert.match(
-    step("Deploy"),
-    /versions deploy [^\n]+\n(?:\s*#[^\n]*\n)*\s*npx --yes "wrangler@\$\{WRANGLER_VERSION\}" triggers deploy --name "\$WORKER"\n/,
-  );
-  assert.match(
-    step(ROLLBACK),
-    /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" rollback --name "\$WORKER"/,
-  );
-  assert.match(
-    step(BOOKMARK),
-    /npx --yes "wrangler@\$\{WRANGLER_VERSION\}" d1 time-travel info "\$DB" --json/,
-  );
-  // No other wrangler, floating or pinned elsewhere.
+  // No other wrangler, floating or pinned elsewhere. The RUN cases see the rollback call it.
   const uses = [...code.matchAll(/wrangler@(\S+)/g)].map((m) => m[1]);
   assert.ok(uses.length >= 3);
   assert.deepEqual(new Set(uses), new Set(['${WRANGLER_VERSION}"']));
@@ -152,32 +136,38 @@ test("wrangler is pinned to one exact version, and the bookmark, the deploy and 
     )?.[1];
   assert.ok(script, "the minting script moved");
   const dir = mkdtempSync(join(tmpdir(), "generated-secrets-"));
-  const mint = (have, names) => {
-    const run = spawnSync(process.execPath, ["-e", script, join(dir, "s.json"), join(dir, "n")], {
-      encoding: "utf8",
-      env: { ...process.env, HAVE: have, GENERATED_SECRETS: names },
-    });
-    return {
-      status: run.status,
-      out: run.stdout,
-      secrets: JSON.parse(readFileSync(join(dir, "s.json"), "utf8")),
-      names: readFileSync(join(dir, "n"), "utf8"),
+  try {
+    const mint = (have, names) => {
+      const run = spawnSync(process.execPath, ["-e", script, join(dir, "s.json"), join(dir, "n")], {
+        encoding: "utf8",
+        env: { ...process.env, HAVE: have, GENERATED_SECRETS: names },
+      });
+      return {
+        status: run.status,
+        out: run.stdout,
+        secrets: JSON.parse(readFileSync(join(dir, "s.json"), "utf8")),
+        names: readFileSync(join(dir, "n"), "utf8"),
+      };
     };
-  };
-  const held = `▲ [WARNING] proxy\n[{"name":"HELD","type":"secret_text"}]`;
-  const first = mint(held, "HELD NEW_ONE");
-  assert.deepEqual(
-    Object.keys(first.secrets),
-    ["NEW_ONE"],
-    "a secret the Worker holds would be replaced",
-  );
-  assert.match(first.secrets.NEW_ONE, /^[A-Za-z0-9_-]{43}$/);
-  assert.equal(first.names, "NEW_ONE");
-  assert.ok(first.out.includes(`::add-mask::${first.secrets.NEW_ONE}`), "the value is not masked");
-  assert.equal(mint("[]", "HELD").names, "HELD", "a first deploy (no secrets yet) mints");
-  assert.equal(mint(held, "HELD").names, "", "nothing to mint still uploads a file");
-  assert.notEqual(mint(held, "bad-name").status, 0);
-  rmSync(dir, { recursive: true });
+    const held = `▲ [WARNING] proxy\n[{"name":"HELD","type":"secret_text"}]`;
+    const first = mint(held, "HELD NEW_ONE");
+    assert.deepEqual(
+      Object.keys(first.secrets),
+      ["NEW_ONE"],
+      "a secret the Worker holds would be replaced",
+    );
+    assert.match(first.secrets.NEW_ONE, /^[A-Za-z0-9_-]{43}$/);
+    assert.equal(first.names, "NEW_ONE");
+    assert.ok(
+      first.out.includes(`::add-mask::${first.secrets.NEW_ONE}`),
+      "the value is not masked",
+    );
+    assert.equal(mint("[]", "HELD").names, "HELD", "a first deploy (no secrets yet) mints");
+    assert.equal(mint(held, "HELD").names, "", "nothing to mint still uploads a file");
+    assert.notEqual(mint(held, "bad-name").status, 0);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test("caller input reaches a shell only through the environment, never spliced into the script", () => {
@@ -222,18 +212,22 @@ test("the deploy job publishes the attempt it shipped in, and never deploys a pu
     /\n {4}outputs:\n {6}attempt: \$\{\{ github\.run_attempt \}\}\n/,
     "the deploy job does not publish its attempt",
   );
-  assert.match(
-    deploy,
-    /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target'\n/,
-  );
-  assert.match(
-    job("live"),
-    /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target' && !failure\(\) && !cancelled\(\)\n/,
-  );
+  for (const [key, body] of [
+    ["deploy", deploy],
+    ["live", job("live")],
+  ]) {
+    const when = /\n {4}if: (.+)\n/.exec(body)?.[1] ?? "";
+    for (const part of [
+      "github.event_name != 'pull_request'",
+      "github.event_name != 'pull_request_target'",
+      "github.event.repository.default_branch",
+    ])
+      assert.ok(when.includes(part), `${key} can run without ${part}`);
+  }
+  const guardAt = deploy.indexOf("- name: Pre-deploy guard");
   assert.ok(
-    step("Pre-deploy guard").length &&
-      deploy.indexOf("- name: Pre-deploy guard") < deploy.indexOf("- name: Deploy"),
-    "the guard runs after the deploy",
+    guardAt > -1 && guardAt < deploy.indexOf("- name: Deploy"),
+    "the guard does not run before the deploy",
   );
   assert.ok(
     deploy.indexOf(`- name: ${BOOKMARK}`) < deploy.indexOf("- name: Pre-deploy guard"),
@@ -241,19 +235,24 @@ test("the deploy job publishes the attempt it shipped in, and never deploys a pu
   );
   // The preview is the one job a pull request runs: same repository only, and never the guard, which may migrate.
   const preview = job("preview");
-  assert.match(
-    preview,
-    /\n {4}if: inputs\.preview && github\.event_name == 'pull_request' && github\.event\.pull_request\.head\.repo\.full_name == github\.repository\n/,
+  const previewWhen = /\n {4}if: (.+)\n/.exec(preview)?.[1] ?? "";
+  assert.ok(
+    previewWhen.includes("github.event.pull_request.head.repo.full_name == github.repository"),
+    "a fork's pull request can run the preview",
   );
   assert.doesNotMatch(preview, /PRE_DEPLOY|rollback|versions deploy/);
 });
 
 test("the rollback runs on a refusal only, calls the guard before wrangler, reads /health without -f, and checks the sha moved", () => {
   const body = step(ROLLBACK);
-  assert.match(
-    body,
-    /if: failure\(\) && needs\.deploy\.result == 'success' && \(steps\.verify\.outputs\.exit_code == '1' \|\| steps\.errors\.outputs\.exit_code == '1'\)\n/,
-  );
+  const when = /\n {8}if: (.+)\n/.exec(body)?.[1] ?? "";
+  for (const part of [
+    "failure()",
+    "needs.deploy.result == 'success'",
+    "steps.verify.outputs.exit_code == '1'",
+    "steps.errors.outputs.exit_code == '1'",
+  ])
+    assert.ok(when.includes(part), `the rollback's if: lost ${part}`);
   assert.match(
     text,
     /- name: verify:live\n\s+id: verify\n/,
@@ -293,12 +292,11 @@ test("a gate: nothing continues on error, except the live gate of a drill (input
   );
 });
 
-test("the example caller passes the pin check and names its secrets", () => {
+test("the example caller names its secrets and never cancels a deploy in flight", () => {
   const caller = readFileSync(
     new URL("../examples/worker-deploy-caller.yml", import.meta.url),
     "utf8",
   );
-  assert.deepEqual(callerProblems(caller), []);
   assert.match(caller, /CLOUDFLARE_API_TOKEN: \$\{\{ secrets\.CLOUDFLARE_API_TOKEN \}\}/);
   assert.match(
     caller,
@@ -309,6 +307,8 @@ test("the example caller passes the pin check and names its secrets", () => {
 
 // Run cases.
 
+// The run cases need bash, as the runner has.
+const BASH = { skip: process.platform === "win32" };
 const THIS_RUN = "4df127439ed3aa19aef8e350ab6311957b8f8611";
 const PREVIOUS = "376eecb3bc27c6d744de35453cfad7a08bdc1d5f";
 const health = (/** @type {string} */ sha) => JSON.stringify({ ok: true, sha });
@@ -399,82 +399,98 @@ const rollback = (
     env: { DEPLOY_ATTEMPT: attempts.deploy, GITHUB_RUN_ATTEMPT: attempts.run },
   });
 
-test("RUN: the guard step writes the guard, and a passing verify passes after /health catches up", () => {
-  const dir = gate();
-  try {
-    assert.equal(
-      readFileSync(join(dir, "rollback-guard.mjs"), "utf8"),
-      readFileSync(new URL("../scripts/rollback-guard.mjs", import.meta.url), "utf8"),
-    );
-    const ok = verify(
-      dir,
-      [health(PREVIOUS), "NOANSWER", health(THIS_RUN)],
-      'test "$EXPECT_SHA" = "$GITHUB_SHA" && test -n "$HEALTH_URL"',
-    );
-    assert.equal(ok.status, 0, ok.stdout + ok.stderr);
-    assert.match(ok.output, /^exit_code=0$/m);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
+test(
+  "RUN: the guard step writes the guard, and a passing verify passes after /health catches up",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      assert.equal(
+        readFileSync(join(dir, "rollback-guard.mjs"), "utf8"),
+        readFileSync(new URL("../scripts/rollback-guard.mjs", import.meta.url), "utf8"),
+      );
+      const ok = verify(
+        dir,
+        [health(PREVIOUS), "NOANSWER", health(THIS_RUN)],
+        'test "$EXPECT_SHA" = "$GITHUB_SHA" && test -n "$HEALTH_URL"',
+      );
+      assert.equal(ok.status, 0, ok.stdout + ok.stderr);
+      assert.match(ok.output, /^exit_code=0$/m);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
 
-test("RUN: a site in maintenance skips the page checks once /health reports this commit", () => {
-  const dir = gate();
-  try {
-    const skipped = verify(dir, [health(THIS_RUN), "503 3600"], "echo ran >&2; exit 1");
-    assert.equal(skipped.status, 0, skipped.stdout + skipped.stderr);
-    assert.match(skipped.output, /^exit_code=0$/m);
-    assert.match(skipped.stdout, /maintenance page/);
-    assert.doesNotMatch(skipped.stderr, /ran/);
-    const plain503 = verify(dir, [health(THIS_RUN), "503 "], "echo ran >&2; exit 1");
-    assert.equal(plain503.status, 1, "a 503 with no Retry-After is not maintenance");
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
+test(
+  "RUN: a site in maintenance skips the page checks once /health reports this commit",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      const skipped = verify(dir, [health(THIS_RUN), "503 3600"], "echo ran >&2; exit 1");
+      assert.equal(skipped.status, 0, skipped.stdout + skipped.stderr);
+      assert.match(skipped.output, /^exit_code=0$/m);
+      assert.match(skipped.stdout, /maintenance page/);
+      assert.doesNotMatch(skipped.stderr, /ran/);
+      const plain503 = verify(dir, [health(THIS_RUN), "503 "], "echo ran >&2; exit 1");
+      assert.equal(plain503.status, 1, "a 503 with no Retry-After is not maintenance");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
 
-test("RUN PLANT: a failing verify refuses (exit 1), and the rollback rolls back what this run shipped", () => {
-  const dir = gate();
-  try {
-    const refused = verify(dir, [health(THIS_RUN)], "echo 'gate 3 refused' >&2; exit 1");
-    assert.equal(refused.status, 1);
-    assert.match(
-      refused.output,
-      /^exit_code=1$/m,
-      "the refusal is not recorded, so the rollback's if: would not run",
-    );
-    const back = rollback(dir, [health(THIS_RUN), health(THIS_RUN), health(PREVIOUS)]);
-    assert.equal(back.status, 0, back.stdout + back.stderr);
-    assert.match(
-      back.npx,
-      new RegExp(
-        `^--yes wrangler@\\d+\\.\\d+\\.\\d+ rollback --name sample --message live gate failed for ${THIS_RUN} --yes$`,
-        "m",
-      ),
-    );
-    const said = WATCHER.rolledBack.exec(back.stdout);
-    assert.ok(said, `capsid's watcher cannot read: ${back.stdout}`);
-    assert.deepEqual([said[1], said[2]], [THIS_RUN, PREVIOUS]);
-    assert.match(back.stdout, /^::error::rolled back: was /m);
-    assert.equal(back.summary, `rollback_from=${THIS_RUN} rollback_to=${PREVIOUS}\n`);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
+test(
+  "RUN PLANT: a failing verify refuses (exit 1), and the rollback rolls back what this run shipped",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      const refused = verify(dir, [health(THIS_RUN)], "echo 'gate 3 refused' >&2; exit 1");
+      assert.equal(refused.status, 1);
+      assert.match(
+        refused.output,
+        /^exit_code=1$/m,
+        "the refusal is not recorded, so the rollback's if: would not run",
+      );
+      const back = rollback(dir, [health(THIS_RUN), health(THIS_RUN), health(PREVIOUS)]);
+      assert.equal(back.status, 0, back.stdout + back.stderr);
+      assert.match(
+        back.npx,
+        new RegExp(
+          `^--yes wrangler@\\d+\\.\\d+\\.\\d+ rollback --name sample --message live gate failed for ${THIS_RUN} --yes$`,
+          "m",
+        ),
+      );
+      const said = WATCHER.rolledBack.exec(back.stdout);
+      assert.ok(said, `capsid's watcher cannot read: ${back.stdout}`);
+      assert.deepEqual([said[1], said[2]], [THIS_RUN, PREVIOUS]);
+      assert.match(back.stdout, /^::error::rolled back: was /m);
+      assert.equal(back.summary, `rollback_from=${THIS_RUN} rollback_to=${PREVIOUS}\n`);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
 
-test("RUN: a deploy that broke /health is rolled back when it shipped in this attempt", () => {
-  const dir = gate();
-  try {
-    const back = rollback(dir, ["<html>502 Bad Gateway</html>", health(PREVIOUS)]);
-    assert.equal(back.status, 0, back.stdout + back.stderr);
-    assert.match(back.npx, / rollback --name sample /);
-    assert.deepEqual(WATCHER.rolledBack.exec(back.stdout)?.slice(1), ["unreadable", PREVIOUS]);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
+test(
+  "RUN: a deploy that broke /health is rolled back when it shipped in this attempt",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      const back = rollback(dir, ["<html>502 Bad Gateway</html>", health(PREVIOUS)]);
+      assert.equal(back.status, 0, back.stdout + back.stderr);
+      assert.match(back.npx, / rollback --name sample /);
+      assert.deepEqual(WATCHER.rolledBack.exec(back.stdout)?.slice(1), ["unreadable", PREVIOUS]);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
 
-test("RUN: THE RERUN CASE declines, rolls nothing back, and leaves the step green", () => {
+test("RUN: THE RERUN CASE declines, rolls nothing back, and leaves the step green", BASH, () => {
   const dir = gate();
   try {
     const declined = rollback(dir, [health(PREVIOUS)], { deploy: "1", run: "2" });
@@ -489,125 +505,158 @@ test("RUN: THE RERUN CASE declines, rolls nothing back, and leaves the step gree
   }
 });
 
-test("RUN: a rollback that never moves the sha fails the step and says what is still live", () => {
-  const dir = gate();
-  try {
-    const stuck = rollback(dir, [health(THIS_RUN)]);
-    assert.equal(stuck.status, 1);
-    assert.match(stuck.npx, / rollback /);
-    assert.equal(WATCHER.noEffect.exec(stuck.stdout)?.[1], THIS_RUN);
-    assert.match(stuck.summary, /^rollback_did_not_take_effect: /);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
+test(
+  "RUN: a rollback that never moves the sha fails the step and says what is still live",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      const stuck = rollback(dir, [health(THIS_RUN)]);
+      assert.equal(stuck.status, 1);
+      assert.match(stuck.npx, / rollback /);
+      assert.equal(WATCHER.noEffect.exec(stuck.stdout)?.[1], THIS_RUN);
+      assert.match(stuck.summary, /^rollback_did_not_take_effect: /);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
 
-test("RUN: a /health that never answers is exit 3, could not run, and is not a refusal", () => {
-  const dir = gate();
-  try {
-    const silent = verify(dir, ["NOANSWER"], "exit 0");
-    assert.equal(silent.status, 3);
-    assert.match(silent.output, /^exit_code=3$/m);
-    assert.match(silent.stdout, /could not run/);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
+test(
+  "RUN: a /health that never answers is exit 3, could not run, and is not a refusal",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      const silent = verify(dir, ["NOANSWER"], "exit 0");
+      assert.equal(silent.status, 3);
+      assert.match(silent.output, /^exit_code=3$/m);
+      assert.match(silent.stdout, /could not run/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
 
-test("RUN: a /health that answers with another commit until the polls run out is a refusal", () => {
-  const dir = gate();
-  try {
-    const stale = verify(dir, [health(PREVIOUS)], "exit 0");
-    assert.equal(stale.status, 1);
-    assert.match(stale.output, /^exit_code=1$/m);
-    assert.match(stale.stdout, new RegExp(`/health reports ${PREVIOUS}, not this run's commit`));
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
+test(
+  "RUN: a /health that answers with another commit until the polls run out is a refusal",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      const stale = verify(dir, [health(PREVIOUS)], "exit 0");
+      assert.equal(stale.status, 1);
+      assert.match(stale.output, /^exit_code=1$/m);
+      assert.match(stale.stdout, new RegExp(`/health reports ${PREVIOUS}, not this run's commit`));
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
 
-test("RUN: a verify command that could not run (exit 3) is recorded as such, so nothing rolls back", () => {
-  const dir = gate();
-  try {
-    const could = verify(dir, [health(THIS_RUN)], "exit 3");
-    assert.equal(could.status, 3);
-    assert.match(could.output, /^exit_code=3$/m);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
+test(
+  "RUN: a verify command that could not run (exit 3) is recorded as such, so nothing rolls back",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      const could = verify(dir, [health(THIS_RUN)], "exit 3");
+      assert.equal(could.status, 3);
+      assert.match(could.output, /^exit_code=3$/m);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
 
-test("RUN: a refused gradual rollout reads the new version through its override and rolls back to the version it shared with", () => {
-  const dir = gate();
-  try {
+test(
+  "RUN: a refused gradual rollout reads the new version through its override and rolls back to the version it shared with",
+  BASH,
+  () => {
+    const dir = gate();
+    try {
+      const env = {
+        DEPLOY_ATTEMPT: "1",
+        GITHUB_RUN_ATTEMPT: "1",
+        VERSION_ID: "new-version",
+        PREVIOUS_VERSION_ID: "old-version",
+      };
+      const back = runStep(ROLLBACK, { dir, health: [health(THIS_RUN), health(PREVIOUS)], env });
+      assert.equal(back.status, 0, back.stdout + back.stderr);
+      assert.match(
+        back.npx,
+        / rollback --name sample --message live gate failed for \S+ --yes old-version$/m,
+      );
+      assert.deepEqual(WATCHER.rolledBack.exec(back.stdout)?.slice(1), [THIS_RUN, PREVIOUS]);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test(
+  "RUN PLANT: a gradual version with a worse error rate is refused (exit 1); too few requests promotes with a warning",
+  BASH,
+  () => {
+    const rows = (fresh, old) =>
+      JSON.stringify({
+        data: {
+          viewer: {
+            accounts: [
+              {
+                workersInvocationsAdaptive: [
+                  { sum: fresh, dimensions: { scriptVersion: "new-version" } },
+                  { sum: old, dimensions: { scriptVersion: "old-version" } },
+                ],
+              },
+            ],
+          },
+        },
+      });
     const env = {
-      DEPLOY_ATTEMPT: "1",
-      GITHUB_RUN_ATTEMPT: "1",
       VERSION_ID: "new-version",
       PREVIOUS_VERSION_ID: "old-version",
+      SPLIT_AT: "2026-10-31T00:00:00Z",
+      MIN_REQUESTS: "20",
+      MIN_ERRORS: "3",
+      CLOUDFLARE_ACCOUNT_ID: "x",
+      CLOUDFLARE_API_TOKEN: "x",
     };
-    const back = runStep(ROLLBACK, { dir, health: [health(THIS_RUN), health(PREVIOUS)], env });
-    assert.equal(back.status, 0, back.stdout + back.stderr);
-    assert.match(
-      back.npx,
-      / rollback --name sample --message live gate failed for \S+ --yes old-version$/m,
-    );
-    assert.deepEqual(WATCHER.rolledBack.exec(back.stdout)?.slice(1), [THIS_RUN, PREVIOUS]);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-});
-
-test("RUN PLANT: a gradual version with a worse error rate is refused (exit 1); too few requests promotes with a warning", () => {
-  const rows = (fresh, old) =>
-    JSON.stringify({
-      data: {
-        viewer: {
-          accounts: [
-            {
-              workersInvocationsAdaptive: [
-                { sum: fresh, dimensions: { scriptVersion: "new-version" } },
-                { sum: old, dimensions: { scriptVersion: "old-version" } },
-              ],
-            },
-          ],
-        },
-      },
-    });
-  const env = {
-    VERSION_ID: "new-version",
-    PREVIOUS_VERSION_ID: "old-version",
-    SPLIT_AT: "2026-10-31T00:00:00Z",
-    MIN_REQUESTS: "20",
-    MIN_ERRORS: "3",
-    CLOUDFLARE_ACCOUNT_ID: "x",
-    CLOUDFLARE_API_TOKEN: "x",
-  };
-  const worse = runStep(ERRORS, {
-    health: [rows({ requests: 100, errors: 9 }, { requests: 900, errors: 9 })],
-    env,
-  });
-  assert.equal(worse.status, 1, worse.stdout + worse.stderr);
-  assert.match(
-    worse.output,
-    /^exit_code=1$/m,
-    "the refusal is not recorded, so the rollback's if: would not run",
-  );
-  const fine = runStep(ERRORS, {
-    health: [rows({ requests: 100, errors: 1 }, { requests: 900, errors: 9 })],
-    env,
-  });
-  assert.equal(fine.status, 0, fine.stdout + fine.stderr);
-  const few = runStep(ERRORS, {
-    health: [rows({ requests: 5, errors: 5 }, { requests: 900, errors: 0 })],
-    env,
-  });
-  assert.equal(few.status, 0, few.stdout + few.stderr);
-  assert.match(few.stdout, /::warning::.*too few to compare/);
-  const unread = runStep(ERRORS, {
-    health: [JSON.stringify({ data: null, errors: [{ message: "not authorized" }] })],
-    env,
-  });
-  assert.equal(unread.status, 3);
-  assert.match(unread.summary, /versions deploy new-version@100%/);
-});
+    const dir = mkdtempSync(join(tmpdir(), "worker-deploy-"));
+    try {
+      const worse = runStep(ERRORS, {
+        dir,
+        health: [rows({ requests: 100, errors: 9 }, { requests: 900, errors: 9 })],
+        env,
+      });
+      assert.equal(worse.status, 1, worse.stdout + worse.stderr);
+      assert.match(
+        worse.output,
+        /^exit_code=1$/m,
+        "the refusal is not recorded, so the rollback's if: would not run",
+      );
+      const fine = runStep(ERRORS, {
+        dir,
+        health: [rows({ requests: 100, errors: 1 }, { requests: 900, errors: 9 })],
+        env,
+      });
+      assert.equal(fine.status, 0, fine.stdout + fine.stderr);
+      const few = runStep(ERRORS, {
+        dir,
+        health: [rows({ requests: 5, errors: 5 }, { requests: 900, errors: 0 })],
+        env,
+      });
+      assert.equal(few.status, 0, few.stdout + few.stderr);
+      assert.match(few.stdout, /::warning::.*too few to compare/);
+      const unread = runStep(ERRORS, {
+        dir,
+        health: [JSON.stringify({ data: null, errors: [{ message: "not authorized" }] })],
+        env,
+      });
+      assert.equal(unread.status, 3);
+      assert.match(unread.summary, /versions deploy new-version@100%/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);

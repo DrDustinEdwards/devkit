@@ -28,6 +28,7 @@ import { parseArgs } from "node:util";
 
 import { scan } from "./no-bloat.mjs";
 
+import { escapeAnnotation } from "./annotate.mjs";
 const FILES = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const IGNORE = [
   "**/*.{test,spec}.*",
@@ -43,9 +44,22 @@ const IGNORE = [
   "**/node_modules/**",
 ];
 
+const HOST = String.raw`(?<![\w$.#])(?:(?:globalThis|self|window|global)\s*\.\s*)?console`;
+/** console.log(, console?.log(, console["log"]( (its text is blanked, so the quotes enclose spaces), and the same through globalThis, self, window or global. */
+const CALL = new RegExp(
+  `${HOST}\\s*(?:(?:\\?\\s*\\.|\\.)\\s*[A-Za-z]+|\\??\\.?\\s*\\[\\s*["'\`]\\s*["'\`]\\s*\\])\\s*\\(`,
+  "g",
+);
+/** const { log } = console: the method is taken out and called by a name no search for console finds. */
+const TAKEN = new RegExp(
+  String.raw`\b(?:const|let|var)\s*\{[^}]*\}\s*=\s*(?:(?:globalThis|self|window|global)\s*\.\s*)?console\b(?!\s*[.\[(])`,
+  "g",
+);
+
 /** The raw console calls in one file's text. */
 export function consoleCalls(/** @type {string} */ text) {
-  return [...scan(text).code.matchAll(/(?<![\w$.#])console\s*\.\s*[A-Za-z]+\s*\(/g)].length;
+  const { code } = scan(text);
+  return [...code.matchAll(CALL)].length + [...code.matchAll(TAKEN)].length;
 }
 
 /**
@@ -112,7 +126,7 @@ function main() {
       config = JSON.parse(readFileSync(join(root, values.config), "utf8"));
     } catch (error) {
       console.log(
-        `::error::${values.config} is not JSON: ${error instanceof Error ? error.message : String(error)}`,
+        `::error::${escapeAnnotation(`${values.config} is not JSON: ${error instanceof Error ? error.message : String(error)}`)}`,
       );
       process.exit(2);
     }
@@ -149,8 +163,8 @@ function main() {
       process.env.GITHUB_STEP_SUMMARY,
       `### Raw console calls\n\n${table.join("\n")}\n`,
     );
-  for (const e of errors) console.log(`::error title=devkit-console::${e}`);
-  for (const w of warnings) console.log(`::warning title=devkit-console::${w}`);
+  for (const e of errors) console.log(`::error title=devkit-console::${escapeAnnotation(e)}`);
+  for (const w of warnings) console.log(`::warning title=devkit-console::${escapeAnnotation(w)}`);
   if (errors.length) process.exit(1);
 }
 

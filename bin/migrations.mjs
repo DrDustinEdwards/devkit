@@ -13,13 +13,14 @@
 //   - the manifest is missing or empty, or the directory holds fewer than --min migrations;
 //   - a .sql file is not recorded (a new migration adds its hash in the same commit: --write), its bytes differ from its
 //     recorded hash (an applied migration was edited; the repair is a new migration), or a recorded file is gone;
-//   - a migration after the manifest's `expand_only_after` drops or renames a table or column without a line
-//     `-- contract: <reason>` in it (a table rebuild, for instance, says so). --write sets `expand_only_after` to the
+//   - a migration after the manifest's `expand_only_after` drops or renames a table or column, drops an index, view or
+//     trigger, updates, replaces or deletes rows, or sets PRAGMA writable_schema, without a line `-- contract: <reason>` in it
+//     (a table rebuild, for instance, says so; a marker inside a block comment or a string does not count). --write sets `expand_only_after` to the
 //     newest migration the first time it runs, so the files already applied are not judged again;
 //   - the local database under --state has a d1_migrations ledger that lacks a migration on disk or names one that is not
 //     on disk. No local database skips this, unless --require-ledger (CI that applies the migrations first passes it).
 //
-// --write refuses to change a recorded hash without --force, which puts the decision in the shell history. Line endings
+// --write refuses to change a recorded hash, or to drop a recorded migration that is gone from disk, without --force, which puts the decision in the shell history. Line endings
 // are read as LF, so a checkout with autocrlf hashes the same as the commit.
 //
 // APPLY, IN A DEPLOY. So no site needs migrations run by hand before a merge:
@@ -39,6 +40,8 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
+import { escapeAnnotation } from "./annotate.mjs";
+
 const NOTE =
   "sha256 of each migration. devkit-migrations compares against this. Adding a migration means adding its hash in the same commit.";
 /** @type {[RegExp, string][]} */
@@ -46,10 +49,72 @@ const DESTRUCTIVE = [
   [/\bDROP\s+TABLE\b/i, "drops a table"],
   [/\bALTER\s+TABLE\s+[^;]*?\bDROP\b/i, "drops a column"],
   [/\bALTER\s+TABLE\s+[^;]*?\bRENAME\b/i, "renames a table or column"],
+  [/\bDROP\s+(?:INDEX|VIEW|TRIGGER)\b/i, "drops an index, view or trigger"],
+  [/(?:^|;|\bDO)\s*UPDATE\b[^;]*?\bSET\b/i, "updates rows"],
+  [/\bINSERT\s+OR\s+REPLACE\b|\bREPLACE\s+INTO\b/i, "replaces rows"],
+  [/\bDELETE\s+FROM\b/i, "deletes rows"],
+  [/\bPRAGMA\s+writable_schema\b/i, "edits the schema table directly"],
 ];
+
+/** The shape of a migration file name; wrangler lists the pending ones by it. */
+const NAME = /^\d{4}_[\w-]+\.sql$/;
 
 export const sha256 = (/** @type {string} */ text) =>
   createHash("sha256").update(text.replace(/\r\n/g, "\n"), "utf8").digest("hex");
+
+/**
+ * The SQL with its comments, string literals and quoted identifiers blanked (an apostrophe inside "a'b", `a'b` or [a'b] is
+ * part of the name, not the start of a string), and whether a `-- contract: <reason>` line comment starts a line. A marker
+ * inside a block comment or a string is neither.
+ * @param {string} sql
+ * @returns {{ code: string, marked: boolean }}
+ */
+function scan(sql) {
+  let code = "";
+  let marked = false;
+  let lineStart = true;
+  for (let i = 0; i < sql.length;) {
+    const c = sql[i];
+    const close = c === "'" || c === '"' || c === "`" ? c : c === "[" ? "]" : "";
+    if (close) {
+      let j = i + 1;
+      while (j < sql.length) {
+        if (sql[j] === close) {
+          if (close !== "]" && sql[j + 1] === close) j += 2;
+          else break;
+        } else j++;
+      }
+      code += " _ ";
+      i = j + 1;
+      lineStart = false;
+    } else if (c === "-" && sql[i + 1] === "-") {
+      let j = sql.indexOf("\n", i);
+      if (j < 0) j = sql.length;
+      if (lineStart && /^--\s*contract:\s*\S/i.test(sql.slice(i, j))) marked = true;
+      code += " ";
+      i = j;
+    } else if (c === "/" && sql[i + 1] === "*") {
+      const j = sql.indexOf("*/", i + 2);
+      code += " ";
+      i = j < 0 ? sql.length : j + 2;
+      lineStart = false;
+    } else {
+      code += c;
+      if (c === "\n") lineStart = true;
+      else if (!/\s/.test(c)) lineStart = false;
+      i++;
+    }
+  }
+  // A trigger's body runs when a row changes, not when the migration does: it is not read.
+  code = code.replace(
+    /\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?\bEND\s*;/gi,
+    " ",
+  );
+  return { code, marked };
+}
+
+const findings = (/** @type {string} */ code) =>
+  DESTRUCTIVE.filter(([pattern]) => pattern.test(code)).map(([, what]) => what);
 
 /**
  * What a migration does beyond adding, read with its comments and string literals blanked; empty when it only adds or
@@ -58,41 +123,49 @@ export const sha256 = (/** @type {string} */ text) =>
  * @returns {string[]}
  */
 export function contractions(sql) {
-  if (/^\s*--\s*contract:\s*\S/im.test(sql)) return [];
-  const code = sql.replace(/'(?:[^']|'')*'|--[^\n]*|\/\*[\s\S]*?\*\//g, " ");
-  return DESTRUCTIVE.filter(([pattern]) => pattern.test(code)).map(([, what]) => what);
+  const { code, marked } = scan(sql);
+  return marked ? [] : findings(code);
 }
 
 /**
  * Why a pending migration must be applied by a person rather than by the deploy; empty when it only adds. Stricter than
- * `contractions`: a `-- contract:` line makes a migration reviewable, not safe to run unattended, and a DELETE loses rows.
+ * `contractions`: a `-- contract:` line makes a migration reviewable, not safe to run unattended.
  * @param {string} sql
  * @returns {string[]}
  */
 export function handOnly(sql) {
-  const marked = /^\s*--\s*contract:\s*\S/im.test(sql);
-  const unmarked = sql.replace(/^\s*--\s*contract:.*$/gim, "");
-  const code = unmarked
-    .replace(/'(?:[^']|'')*'|--[^\n]*|\/\*[\s\S]*?\*\//g, " ")
-    .replace(
-      /\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?\bEND\s*;/gi,
-      " ",
-    );
-  return [
-    ...(marked ? ["says `-- contract:`"] : []),
-    ...contractions(unmarked),
-    ...(/\bDELETE\s+FROM\b/i.test(code) ? ["deletes rows"] : []),
-  ];
+  const { code, marked } = scan(sql);
+  return [...(marked ? ["says `-- contract:`"] : []), ...findings(code)];
+}
+
+/**
+ * Why a pending file must be applied by a person; `sql` is its text, null when it is not on disk. A name this check does
+ * not recognize is a person's call too: it fails closed rather than being read as nothing.
+ * @param {string} file
+ * @param {string | null} sql
+ * @returns {string[]}
+ */
+export function pendingBlockers(file, sql) {
+  if (!NAME.test(file)) return ["has a name devkit-migrations does not recognize"];
+  return sql === null ? ["is not on disk"] : handOnly(sql);
 }
 
 /**
  * `wrangler d1 migrations list --remote`, read three ways: pending (with the names), clean, or unreadable. Names win over
- * the clean line, and output with neither is unreadable rather than clean, so a changed wrangler fails closed.
+ * the clean line, and output with neither is unreadable rather than clean, so a changed wrangler fails closed. Every
+ * `.sql` cell of the pending table is a name, whatever it looks like.
  * @param {{ code: number, text: string }} listed
  * @returns {{ state: "pending" | "clean" | "unreadable", pending: string[] }}
  */
 export function readPending({ code, text }) {
-  const names = [...new Set(String(text).match(/\b\d{4}_[\w-]+\.sql\b/g) ?? [])];
+  const section = String(text).split(/Migrations to be applied/)[1] ?? "";
+  const cells = section.split("\n").flatMap((line) => line.split(/[│|]/));
+  const names = [
+    ...new Set([
+      ...(String(text).match(/\b\d{4}_[\w-]+\.sql\b/g) ?? []),
+      ...cells.map((c) => c.trim()).filter((c) => /\.sql$/i.test(c) && !/\s{2,}/.test(c)),
+    ]),
+  ];
   if (code !== 0) return { state: "unreadable", pending: [] };
   if (names.length && /Migrations to be applied/.test(text))
     return { state: "pending", pending: names };
@@ -246,7 +319,7 @@ function apply(
     return { code: r.status ?? 1, text };
   };
   const stop = (/** @type {string} */ message) => {
-    console.log(`::error title=devkit-migrations::${message}`);
+    console.log(`::error title=devkit-migrations::${escapeAnnotation(message)}`);
     process.exit(1);
   };
   const handCommand = `npx wrangler d1 migrations apply ${database} --remote`;
@@ -261,9 +334,10 @@ function apply(
   if (before.state === "clean")
     return console.log(`devkit-migrations: ${database} has every migration.`);
   const blocked = before.pending.flatMap((file) => {
-    const why = existsSync(join(dir, file))
-      ? handOnly(readFileSync(join(dir, file), "utf8"))
-      : ["is not in " + dir];
+    const why = pendingBlockers(
+      file,
+      existsSync(join(dir, file)) ? readFileSync(join(dir, file), "utf8") : null,
+    );
     return why.length ? [`${file} ${why.join(" and ")}`] : [];
   });
   if (blocked.length)
@@ -328,9 +402,20 @@ async function main() {
     const previous = manifest?.sha256 ?? {};
     const sha = Object.fromEntries(files.map((f) => [f, sha256(read(f))]));
     const changed = files.filter((f) => previous[f] && previous[f] !== sha[f]);
-    if (changed.length && !values.force) {
+    const gone = Object.keys(previous).filter((f) => !files.includes(f));
+    if ((changed.length || gone.length) && !values.force) {
+      const why = [
+        ...(changed.length
+          ? [`${changed.join(", ")} would change hash, so an applied migration was edited`]
+          : []),
+        ...(gone.length
+          ? [
+              `${gone.join(", ")} is recorded but not on disk, so an applied migration was renamed or deleted`,
+            ]
+          : []),
+      ].join("; ");
       console.log(
-        `::error title=devkit-migrations::Refused: ${changed.join(", ")} would change hash, so an applied migration was edited. If the edit is right, run again with --force and say why in the commit.`,
+        `::error title=devkit-migrations::${escapeAnnotation(`Refused: ${why}. If it is right, run again with --force and say why in the commit.`)}`,
       );
       process.exit(1);
     }
@@ -359,7 +444,8 @@ async function main() {
   console.log(
     `devkit-migrations: ${files.length} migrations in ${dir}, ${Object.keys(manifest?.sha256 ?? {}).length} recorded, local ledger ${ledgers.length === 1 ? "compared" : "not found"}.`,
   );
-  for (const problem of problems) console.log(`::error title=devkit-migrations::${problem}`);
+  for (const problem of problems)
+    console.log(`::error title=devkit-migrations::${escapeAnnotation(problem)}`);
   if (problems.length) process.exit(1);
 }
 

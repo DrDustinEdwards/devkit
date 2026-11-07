@@ -26,7 +26,8 @@ name: worker-deploy
 # summary.
 #
 # A CALLER (examples/worker-deploy-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
-# It calls this on a push to its default branch only, and keeps a concurrency group that never cancels a deploy in flight.
+# It calls this on a push to its default branch only (the deploy and the live gate also refuse any other ref, as release.yml
+# does: a manual run from a feature branch deploys nothing), and keeps a concurrency group that never cancels a deploy in flight.
 
 on:
   workflow_call:
@@ -149,7 +150,7 @@ jobs:
   # "deployed" and "could not deploy" never look alike. Never on a pull request event (either kind): a PR is not what ships.
   deploy:
     name: deploy
-    if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
+    if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -329,7 +330,7 @@ jobs:
     name: live gate
     needs: deploy
     # !failure() && !cancelled(), as in capsid: a failed deploy skips the gate rather than failing it a second time.
-    if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target' && !failure() && !cancelled()
+    if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && !failure() && !cancelled()
     # A drill's refusal is the expected result, so it leaves the run green; the steps run exactly as for a real deploy.
     continue-on-error: ${{ inputs.drill }}
     runs-on: ubuntu-latest

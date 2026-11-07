@@ -73,13 +73,20 @@ jobs:
             const UNTICKED = "- [ ] <!-- manual job -->";
             const TICKED = "- [x] <!-- manual job -->";
 
+            // A manifest that cannot be read is a failure, never a skip: it could be the one that makes the repository a
+            // consumer. The contents API returns no content for a file over 1 MB; the blob API reads those (to 100 MB).
             const readJson = async (repo, path, ref) => {
+              const { data } = await github.rest.repos.getContent({ owner, repo, path, ref });
+              let content = data.content;
+              if (!content || data.encoding === "none") {
+                const { data: blob } = await github.rest.git.getBlob({ owner, repo, file_sha: data.sha });
+                content = blob.content;
+                if (!content) throw new Error(`${path} came back with no content (over 100 MB, or not a file), so it could not be read`);
+              }
               try {
-                const { data } = await github.rest.repos.getContent({ owner, repo, path, ref });
-                return JSON.parse(Buffer.from(data.content, "base64").toString("utf8"));
+                return JSON.parse(Buffer.from(content, "base64").toString("utf8"));
               } catch (error) {
-                core.warning(`${repo}: could not read ${path} as JSON (${error.message}); it is not counted as a consumer`);
-                return null;
+                throw new Error(`${path} is not JSON (${error.message})`);
               }
             };
 
