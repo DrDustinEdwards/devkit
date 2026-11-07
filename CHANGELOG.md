@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- `pr.yml`: the automatic reviewer runs in its own job (`Reviewer`), the only job with `id-token: write` and `checks: write`. Before, `Repo checks` held both while it installed and built the caller's code, so a dependency lifecycle script could mint an OIDC token (GitHub's OIDC hardening guide and zizmor's excessive-permissions audit say to grant it to the one job that needs it). The check name `checks / Repo checks` is unchanged. Cost: one more runner per same-repository pull request that is not a draft or Renovate's. The `review` action's `start` and `wait` modes are gone.
+- Renovate: a third-party GitHub Actions major, minor or patch release waits seven days (`minimumReleaseAge`, `matchManagers: ["github-actions"]`), as npm waits three. Network packages still arrive at once.
+
 - License: MIT. Added the LICENSE file and set `license` in package.json (it was UNLICENSED, which the other public repositories do not share).
 
 Fixes from a review of the checks and workflows. Behavior changes a repository may meet are marked **new failure**.
