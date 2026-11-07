@@ -24,10 +24,12 @@
 // run two ways, once per kind). "site_args" adds arguments for one site only, after "args", keyed by site id: area 8 gives
 // each site with a restore drill its repository and drill workflow (`--repo owner/name --drill-workflow restore-drill.yml`).
 // An area's "skip" names a site the area does not apply to, and why; its "unchecked" names what its checks cannot reach (a
-// signed-in site or page), and why, so the board says so instead of looking finished. A check's bin inherits the run's
-// environment, so GITHUB_TOKEN reaches it, except the MCP test grants: an MCP_TEST_GRANT_<HOST> variable (a read-only
-// key for one MCP server, which site-runtime-ai-audit reads for area 11's tools/list, conformance and burst probes)
-// reaches only a check marked "grants": true, so no other check's code ever holds a server's key (checkEnv).
+// signed-in site or page), and why, so the board says so instead of looking finished. A check's bin gets the basics of a
+// process (checkEnv: PATH, HOME, locale, a few NODE_ settings, proxy variables without their credentials) and the
+// variables its "env" lists; nothing else, so a token reaches only the check that names it. The MCP test grants: an
+// MCP_TEST_GRANT_<HOST> variable (a read-only key for one MCP server, which site-runtime-ai-audit reads for area 11's
+// tools/list, conformance and burst probes) reaches only a check marked "grants": true, and only the one for the host of
+// the site being probed (grantName), so no check's code ever holds another server's key.
 //
 // A REPORTED check is one that needs a site's secrets, so it runs where the secrets already live and publishes its result
 // on that system's own https origin; GitHub never holds a site key. The run reads the report instead of running a bin:
@@ -52,8 +54,9 @@
 // evidence, and no run after the verdict failed (a failure after a verdict voids it until a fresh verifier signs again).
 // Checks passing with no verdict is partial; no check or a failing check is missing; a check that could not measure (and
 // none failing) is "unmeasured", with why, which is neither, and not complete. The package
-// column has no live check, so it is the verdict alone. The job is finished when every cell is complete and every site
-// cell has passed CLEAN_DAYS daily runs in a row.
+// column has no live check, so it is the verdict alone, and so is every cell of an area with no checks at all (area 12,
+// the checks and tooling themselves, which no bin grades on a site). The job is finished when every cell is complete and
+// every site cell with a live check has passed CLEAN_DAYS daily runs in a row.
 //
 // Lines added and removed per area are read from GitHub: the merged pull requests labeled completeness-area-<n> in every
 // repository the token can read (LIVE_GITHUB_TOKEN, else GITHUB_TOKEN, which sees only public repositories).
@@ -65,12 +68,15 @@ import {
   mkdtempSync,
   readFileSync,
   readdirSync,
+  rmSync,
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
+
+import { escapeAnnotation } from "./annotate.mjs";
 
 /** @typedef {Record<string, any>} Json A site, area, check, verdict, run or cell: JSON the config and the runs hold. */
 
@@ -83,6 +89,10 @@ const CHECK_TIMEOUT_MS = 20 * 60_000;
 const PARALLEL = 4;
 const REPORT_MAX_AGE_MINUTES = 60;
 const STATUSES = ["pass", "fail", "unmeasured"];
+const MAX_OUTPUT = 5 * 1024 * 1024;
+const MAX_REPORT = 2 * 1024 * 1024;
+/** The longest a rate-limited GitHub read waits before it gives up and the area's lines are unmeasured. */
+const MAX_RATE_WAIT_MS = 60_000;
 /** The detail an unmeasured item's ::notice line starts with. */
 export const UNMEASURED_PREFIX = "could not measure: ";
 /** A check's exit when nothing failed but something could not be measured (Monitoring Plugins' UNKNOWN). */
@@ -91,46 +101,84 @@ export const EXIT_UNMEASURED = 3;
 const live = new URL("../live/", import.meta.url);
 const readJsonFile = (/** @type {string | URL} */ path) => JSON.parse(readFileSync(path, "utf8"));
 
-/** The site list, area list and verdicts in a directory laid out as live/ is. */
+/**
+ * The site list, area list and verdicts in a directory laid out as live/ is. A file that cannot be read or parsed is a
+ * problem for lintConfig, never a throw.
+ */
 export function loadConfig(/** @type {string | URL} */ dir = live) {
   const base = typeof dir === "string" ? pathToFileURL(dir.endsWith("/") ? dir : `${dir}/`) : dir;
-  const { sites } = readJsonFile(new URL("sites.json", base));
-  const { areas } = readJsonFile(new URL("areas.json", base));
+  /** @type {string[]} */
+  const problems = [];
+  const read = (/** @type {URL} */ url, /** @type {string} */ name) => {
+    try {
+      return readJsonFile(url);
+    } catch (error) {
+      problems.push(
+        `${name} cannot be read: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      return undefined;
+    }
+  };
+  const sites = read(new URL("sites.json", base), "sites.json")?.sites ?? [];
+  const areas = read(new URL("areas.json", base), "areas.json")?.areas ?? [];
   const verdictDir = new URL("verdicts/", base);
   const verdicts = existsSync(verdictDir)
     ? readdirSync(verdictDir)
         .filter((name) => /^area-\d+\.json$/.test(name))
-        .map((name) => readJsonFile(new URL(name, verdictDir)))
+        .map((name) => read(new URL(name, verdictDir), `verdicts/${name}`))
+        .filter((verdict) => verdict !== undefined)
     : [];
-  return { sites, areas, verdicts };
+  return { sites, areas, verdicts, problems };
 }
 
 /** Every problem with the config, as sentences; empty when it is sound. */
 export function lintConfig(
-  /** @type {{ sites: Json[], areas: Json[], verdicts: Json[] }} */ { sites, areas, verdicts },
+  /** @type {{ sites: Json[], areas: Json[], verdicts: Json[], problems?: string[] }} */ config,
 ) {
   /** @type {string[]} */
-  const problems = [];
+  const problems = [...(config.problems ?? [])];
+  const list = (/** @type {unknown} */ value, /** @type {string} */ name) => {
+    if (Array.isArray(value) && value.every(isObject)) return /** @type {Json[]} */ (value);
+    problems.push(`${name} is not a list of objects`);
+    return [];
+  };
+  const sites = list(config.sites, "the site list");
+  const areas = list(config.areas, "the area list");
+  const verdicts = list(config.verdicts, "the verdicts");
   const siteIds = new Set();
   for (const site of sites) {
+    if (typeof site.id !== "string" || !site.id) problems.push(`a site has no string id`);
     if (siteIds.has(site.id)) problems.push(`site ${site.id} is listed twice`);
     siteIds.add(site.id);
     if (!KINDS.includes(site.kind))
       problems.push(`site ${site.id} has kind ${site.kind}, not one of ${KINDS.join(", ")}`);
+    if (typeof site.origin !== "string") problems.push(`site ${site.id} has no origin`);
     for (const key of ["origin", "from"]) {
-      if (site[key] !== undefined && !/^https:\/\/[a-z0-9.-]+$/.test(site[key]))
+      if (
+        site[key] !== undefined &&
+        !(typeof site[key] === "string" && /^https:\/\/[a-z0-9.-]+$/.test(site[key]))
+      )
         problems.push(`site ${site.id} ${key} ${site[key]} is not a bare https origin`);
     }
   }
   const byArea = new Map(areas.map((area) => [area.id, area]));
   for (const area of areas) {
-    if (!area.builder) problems.push(`area ${area.id} names no builder`);
+    if (!Number.isInteger(area.id)) problems.push(`an area has id ${area.id}, not a whole number`);
+    if (typeof area.builder !== "string" || !area.builder.trim())
+      problems.push(`area ${area.id} names no builder`);
+    if (!Array.isArray(area.checks) || !area.checks.every(isObject)) {
+      problems.push(`area ${area.id} has no list of checks (an area with none has "checks": [])`);
+      continue;
+    }
     for (const check of area.checks) {
+      if (check.kinds !== undefined && !isStrings(check.kinds))
+        problems.push(`area ${area.id} check ${check.name} has kinds that are not a list`);
       if (check.report !== undefined) {
         if (
           !check.name ||
           check.repo ||
           check.bin ||
+          typeof check.report !== "string" ||
           !/^https:\/\/[a-z0-9.-]+\//.test(check.report)
         )
           problems.push(
@@ -138,6 +186,22 @@ export function lintConfig(
           );
       } else if (!check.name || !check.repo || !check.bin)
         problems.push(`area ${area.id} has a check without a name, repo and bin`);
+      else {
+        // The bin is joined onto node_modules/.bin and the repo and ref into an npm spec, so each must be a plain name.
+        if (!isName(check.bin))
+          problems.push(`area ${area.id} check ${check.name} bin ${check.bin} is not a plain name`);
+        if (!isName(check.repo))
+          problems.push(
+            `area ${area.id} check ${check.name} repo ${check.repo} is not a repository name`,
+          );
+        if (
+          check.ref !== undefined &&
+          !(typeof check.ref === "string" && /^(?:v\d+\.\d+\.\d+|[0-9a-f]{40})$/.test(check.ref))
+        )
+          problems.push(
+            `area ${area.id} check ${check.name} ref ${check.ref} is not a vX.Y.Z tag or a full commit sha`,
+          );
+      }
       for (const kind of check.kinds ?? [])
         if (!KINDS.includes(kind))
           problems.push(`area ${area.id} check ${check.name} names kind ${kind}`);
@@ -166,7 +230,11 @@ export function lintConfig(
           problems.push(
             `area ${area.id} check ${check.name} has a site_reports entry for unknown site ${id}`,
           );
-        if (check.report === undefined || !/^https:\/\/[a-z0-9.-]+\//.test(url))
+        if (
+          check.report === undefined ||
+          typeof url !== "string" ||
+          !/^https:\/\/[a-z0-9.-]+\//.test(url)
+        )
           problems.push(
             `area ${area.id} check ${check.name} site_reports ${id} needs a reported check and an https URL`,
           );
@@ -192,24 +260,37 @@ export function lintConfig(
       problems.push(`a verdict names area ${verdict.area}, which does not exist`);
       continue;
     }
-    if (!verdict.verifier) problems.push(`the area ${verdict.area} verdict names no verifier`);
+    if (typeof verdict.verifier !== "string" || !verdict.verifier.trim())
+      problems.push(`the area ${verdict.area} verdict names no verifier`);
     if (same(verdict.verifier, area.builder))
       problems.push(
         `the area ${verdict.area} verdict is signed by its builder, ${area.builder}; only a fresh verifier may sign it`,
       );
     if (!/^\d{4}-\d{2}-\d{2}$/.test(verdict.date ?? ""))
       problems.push(`the area ${verdict.area} verdict has no date (YYYY-MM-DD)`);
+    if (!isObject(verdict.cells ?? {}))
+      problems.push(`the area ${verdict.area} verdict's cells are not an object`);
     for (const [cell, entry] of Object.entries(verdict.cells ?? {})) {
       if (cell !== "package" && !siteIds.has(cell))
         problems.push(`the area ${verdict.area} verdict names unknown site ${cell}`);
+      if (!isObject(entry)) {
+        problems.push(`the area ${verdict.area} verdict for ${cell} is not an object`);
+        continue;
+      }
+      if (entry.note !== undefined && typeof entry.note !== "string")
+        problems.push(`the area ${verdict.area} verdict for ${cell} has a note that is not text`);
+      if (entry.evidence !== undefined && !isStrings(entry.evidence))
+        problems.push(
+          `the area ${verdict.area} verdict for ${cell} has evidence that is not a list of links`,
+        );
       if (!VERDICTS.includes(entry.verdict))
         problems.push(
           `the area ${verdict.area} verdict for ${cell} is ${entry.verdict}, not one of ${VERDICTS.join(", ")}`,
         );
       if (
         entry.verdict === "complete" &&
-        !(entry.evidence ?? []).some((/** @type {unknown} */ url) =>
-          String(url).startsWith("https://"),
+        !(isStrings(entry.evidence) ? entry.evidence : []).some((/** @type {string} */ url) =>
+          url.startsWith("https://"),
         )
       ) {
         problems.push(
@@ -224,8 +305,18 @@ export function lintConfig(
 const isStrings = (/** @type {unknown} */ list) =>
   Array.isArray(list) && list.every((item) => typeof item === "string");
 
-const same = (/** @type {string} */ a, /** @type {string} */ b) =>
-  Boolean(a) && a.trim().toLowerCase() === b?.trim().toLowerCase();
+const isObject = (/** @type {unknown} */ value) =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
+/** A repository or bin name: no path separator, no `..`, nothing npm or a path join would read as more. */
+const isName = (/** @type {unknown} */ name) =>
+  typeof name === "string" && /^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(name) && !name.includes("..");
+
+const same = (/** @type {unknown} */ a, /** @type {unknown} */ b) =>
+  typeof a === "string" &&
+  typeof b === "string" &&
+  Boolean(a.trim()) &&
+  a.trim().toLowerCase() === b.trim().toLowerCase();
 
 /** The checks of an area that apply to a site. */
 const checksFor = (/** @type {Json} */ area, /** @type {Json} */ site) =>
@@ -235,17 +326,21 @@ const checksFor = (/** @type {Json} */ area, /** @type {Json} */ site) =>
       check.site_reports?.[site.id] ? { ...check, report: check.site_reports[site.id] } : check,
     );
 
+/** Undoes bin/annotate.mjs's escapes (`%25`, `%0D`, `%0A`, and in a property `%3A`, `%2C`), in one pass. */
+const unescapeAnnotation = (/** @type {string} */ text) =>
+  text.replace(/%(25|0D|0A|3A|2C)/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+
 /** The annotation lines of a check's output, as findings; a ::notice is a finding only when it says what was not measured. */
 export function parseFindings(/** @type {string} */ output) {
   const findings = [];
   for (const line of output.split("\n")) {
     const match = /^::(error|warning|notice)(?: ([^:]*))?::(.*)$/.exec(line.trim());
     if (!match) continue;
-    const title = /(?:^|,)title=([^,]*)/.exec(match[2] ?? "")?.[1] ?? "";
-    if (match[1] !== "notice")
-      findings.push({ severity: match[1], check: title, detail: match[3] });
-    else if (match[3].includes(UNMEASURED_PREFIX))
-      findings.push({ severity: "unmeasured", check: title, detail: match[3] });
+    const title = unescapeAnnotation(/(?:^|,)title=([^,]*)/.exec(match[2] ?? "")?.[1] ?? "");
+    const detail = unescapeAnnotation(match[3]);
+    if (match[1] !== "notice") findings.push({ severity: match[1], check: title, detail });
+    else if (detail.includes(UNMEASURED_PREFIX))
+      findings.push({ severity: "unmeasured", check: title, detail });
   }
   return findings;
 }
@@ -263,19 +358,31 @@ function tally(/** @type {{ severity: string, check: string, detail: string }[]}
 }
 
 /**
- * One check's result on one site, from its exit code and output. A failure stands even beside an unmeasured item (what
- * was measured failed); a pass with an unmeasured item is not a pass.
+ * One check's result on one site, from its exit code and output. A failure is an ::error line on an exit of 0, 1 or 3,
+ * and stands even beside an unmeasured item (what was measured failed); a pass with an unmeasured item is not a pass.
+ * Exit 1 with no ::error line is a crash (an uncaught throw exits 1), so it is unmeasured, never a failure; and a
+ * timeout or a signal (`code` null, `killed` saying which) is unmeasured too.
  */
 export function resultOf(
-  /** @type {{ code: number | null, output: string, seconds: number }} */ { code, output, seconds },
+  /** @type {{ code: number | null, output: string, seconds: number, killed?: string }} */ {
+    code,
+    output,
+    seconds,
+    killed,
+  },
 ) {
   const findings = parseFindings(output);
   const { errors, warnings, unmeasured, reason } = tally(findings);
-  const status = code === 1 ? "fail" : code === 0 && !unmeasured ? "pass" : "unmeasured";
-  const tail =
-    code !== 0 && code !== 1 && code !== EXIT_UNMEASURED
-      ? `could not run: ${output.trim().split("\n").slice(-3).join(" ").slice(0, 300) || `exit ${code}`}`
-      : undefined;
+  const ran = code === 0 || code === 1 || code === EXIT_UNMEASURED;
+  const status = ran && errors ? "fail" : code === 0 && !unmeasured ? "pass" : "unmeasured";
+  const last = output.trim().split("\n").slice(-3).join(" ").slice(0, 300);
+  const tail = killed
+    ? `could not run: ${killed}${last ? `: ${last}` : ""}`
+    : code === 1 && !errors
+      ? `could not run: exit 1 with no ::error line${last ? `: ${last}` : ""}`
+      : !ran
+        ? `could not run: ${last || `exit ${code}`}`
+        : undefined;
   const detail =
     status === "unmeasured"
       ? [reason, tail].filter(Boolean).join("; ") || `exit ${code} with nothing said`
@@ -298,14 +405,7 @@ export function reportedResult(
   /** @type {Json} */ site,
   now = new Date(),
 ) {
-  const error = (/** @type {string} */ detail) => ({
-    status: "unmeasured",
-    errors: 0,
-    warnings: 0,
-    unmeasured: 0,
-    findings: [],
-    detail,
-  });
+  const error = unmeasuredResult;
   if (!report || typeof report !== "object") return error(`could not read ${check.report}`);
   if (report.check !== check.name)
     return error(`${check.report} reports ${report.check}, not ${check.name}`);
@@ -347,6 +447,17 @@ export function reportedResult(
   };
 }
 
+/** A result that measured nothing, with why. */
+const unmeasuredResult = (/** @type {string} */ detail) => ({
+  status: "unmeasured",
+  errors: 0,
+  warnings: 0,
+  unmeasured: 0,
+  findings: [],
+  detail,
+});
+
+/** A reported check's report, or why it could not be read (the HTTP status, a body over MAX_REPORT, bad JSON). */
 async function fetchReport(/** @type {string} */ url) {
   try {
     const resp = await fetch(url, {
@@ -354,18 +465,44 @@ async function fetchReport(/** @type {string} */ url) {
       redirect: "error",
       signal: AbortSignal.timeout(30_000),
     });
-    return resp.ok ? await resp.json() : null;
-  } catch {
-    return null;
+    if (!resp.ok) {
+      await resp.body?.cancel();
+      return { error: `HTTP ${resp.status}` };
+    }
+    if (Number(resp.headers.get("content-length")) > MAX_REPORT) {
+      await resp.body?.cancel();
+      return { error: `the report is over ${MAX_REPORT / 1024 / 1024} MB` };
+    }
+    /** @type {Uint8Array[]} */
+    const chunks = [];
+    let size = 0;
+    const reader = resp.body?.getReader();
+    for (let read = await reader?.read(); read && !read.done; read = await reader?.read()) {
+      size += read.value.byteLength;
+      if (size > MAX_REPORT) {
+        await reader?.cancel();
+        return { error: `the report is over ${MAX_REPORT / 1024 / 1024} MB` };
+      }
+      chunks.push(read.value);
+    }
+    return { report: JSON.parse(Buffer.concat(chunks).toString("utf8")) };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : String(error) };
   }
 }
+
+/**
+ * What git and npm get from the run's environment: the basics of a process and nothing else, so no token, no key and no
+ * MCP grant reaches a ls-remote or an install (the family's packages are public, so neither needs a token).
+ */
+const toolEnv = () => ({ ...checkEnv(process.env, {}), GIT_TERMINAL_PROMPT: "0" });
 
 /** The newest vX.Y.Z tag of one of the family's repositories. */
 function newestTag(/** @type {string} */ repo) {
   const out = execFileSync(
     "git",
     ["ls-remote", "--tags", "--refs", `https://github.com/${OWNER}/${repo}`],
-    { encoding: "utf8", timeout: 60_000 },
+    { encoding: "utf8", timeout: 60_000, env: toolEnv() },
   );
   const tags = [...out.matchAll(/refs\/tags\/(v\d+\.\d+\.\d+)$/gm)].map((m) => m[1]);
   tags.sort((/** @type {string} */ a, /** @type {string} */ b) =>
@@ -378,25 +515,35 @@ function newestTag(/** @type {string} */ repo) {
   return tags.at(-1);
 }
 
-/** Installs a check's package once per repo and ref; returns the bin's path or the reason it cannot run. */
+/**
+ * Installs a check's package once per repo and ref; returns the bin's path or the reason it cannot run. The newest tag
+ * is read once per repository for the run, so every site's check runs the same release.
+ */
 function install(
   /** @type {Json} */ check,
   /** @type {Map<string, Json>} */ cache,
   /** @type {string} */ root,
 ) {
-  let ref = check.ref;
-  try {
-    ref ??= newestTag(check.repo);
-  } catch {
-    return { ref: null, error: `could not read the tags of ${check.repo}` };
+  const tagKey = `tags:${check.repo}`;
+  if (check.ref === undefined && !cache.has(tagKey)) {
+    try {
+      const tag = newestTag(check.repo);
+      cache.set(tagKey, tag ? { ref: tag } : { error: `${check.repo} has no release tag` });
+    } catch {
+      cache.set(tagKey, { error: `could not read the tags of ${check.repo}` });
+    }
   }
-  if (!ref) return { ref: null, error: `${check.repo} has no release tag` };
+  const tagged = /** @type {Json} */ (
+    check.ref === undefined ? cache.get(tagKey) : { ref: check.ref }
+  );
+  if (tagged.error) return { ref: null, error: tagged.error };
+  const { ref } = tagged;
   const key = `${check.repo}#${ref}`;
   if (!cache.has(key)) {
     const dir = join(root, key.replace(/[^A-Za-z0-9.-]/g, "_"));
-    mkdirSync(dir, { recursive: true });
-    writeFileSync(join(dir, "package.json"), "{}");
     try {
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(join(dir, "package.json"), "{}");
       execFileSync(
         "npm",
         [
@@ -407,13 +554,13 @@ function install(
           "--no-fund",
           `github:${OWNER}/${check.repo}#${ref}`,
         ],
-        { cwd: dir, stdio: "pipe", timeout: 300_000 },
+        { cwd: dir, stdio: "pipe", timeout: 300_000, env: toolEnv() },
       );
       cache.set(key, { dir, ref });
     } catch (error) {
       cache.set(key, {
         ref,
-        error: `npm could not install ${key}: ${String(
+        error: `could not install ${key}: ${String(
           /** @type {Json} */ (error).stderr ?? /** @type {Json} */ (error).message,
         )
           .trim()
@@ -433,51 +580,163 @@ function install(
 /** The MCP test grants' variables: one read-only key per MCP server, for the checks marked "grants": true alone. */
 export const GRANT_ENV = /^MCP_TEST_GRANT_/;
 
-/** What every check's bin gets from the run's environment: the basics of a process, never a token or a key. */
+/**
+ * What every check's bin gets from the run's environment: the basics of a process, never a token or a key. Of the NODE_
+ * variables only these three: NODE_OPTIONS can load code (`--require`) and NODE_AUTH_TOKEN is npm's token.
+ */
 const BASE_ENV =
-  /^(?:PATH|HOME|USER|SHELL|TMPDIR|TEMP|TMP|TZ|CI|LANG|LANGUAGE|LC_[A-Z_]+|NODE_[A-Z_]+|SSL_CERT_(?:FILE|DIR)|(?:HTTPS?|NO|ALL)_PROXY|PLAYWRIGHT_BROWSERS_PATH|DEVKIT_A11Y_CHROMIUM|SYSTEMROOT|COMSPEC|PATHEXT)$/i;
+  /^(?:PATH|HOME|USER|SHELL|TMPDIR|TEMP|TMP|TZ|CI|LANG|LANGUAGE|LC_[A-Z_]+|NODE_EXTRA_CA_CERTS|NODE_NO_WARNINGS|NODE_ENV|SSL_CERT_(?:FILE|DIR)|(?:HTTPS?|NO|ALL)_PROXY|PLAYWRIGHT_BROWSERS_PATH|DEVKIT_A11Y_CHROMIUM|SYSTEMROOT|COMSPEC|PATHEXT)$/i;
+const PROXY_ENV = /^(?:HTTPS?|ALL)_PROXY$/i;
+
+/** The MCP test grant's variable for an origin: MCP_TEST_GRANT_ and its host upper-cased, every other character `_`. */
+export const grantName = (/** @type {string} */ origin) =>
+  `MCP_TEST_GRANT_${new URL(origin).hostname.toUpperCase().replace(/[^A-Z0-9]/g, "_")}`;
+
+/** A proxy URL without its user and password, which are a credential like any other. */
+const withoutCredentials = (/** @type {string} */ value) => {
+  try {
+    const url = new URL(value);
+    if (!url.username && !url.password) return value;
+    url.username = "";
+    url.password = "";
+    return url.href;
+  } catch {
+    return value.includes("@") ? undefined : value;
+  }
+};
 
 /**
  * The environment a check's bin runs with: the basics, the variables the check names in its `env` list, and, for a check
- * marked "grants", the MCP test grants. Nothing else, so a token or a key reaches only the check that declares it.
+ * marked "grants", the one MCP test grant for the site's origin (`site`). Nothing else, so a token or a key reaches only
+ * the check that declares it, and a server's grant only that server's probe.
  */
 export function checkEnv(
   /** @type {NodeJS.ProcessEnv} */ env,
   /** @type {{ grants?: boolean, env?: string[] }} */ check,
+  /** @type {Json} */ site = {},
 ) {
   const named = new Set(check.env ?? []);
-  return Object.fromEntries(
-    Object.entries(env).filter(
-      ([name]) =>
-        BASE_ENV.test(name) || named.has(name) || (check.grants === true && GRANT_ENV.test(name)),
-    ),
-  );
+  const grant = check.grants === true && site.origin ? grantName(site.origin) : undefined;
+  /** @type {Record<string, string>} */
+  const out = {};
+  for (const [name, value] of Object.entries(env)) {
+    if (value === undefined) continue;
+    if (named.has(name) || name === grant) out[name] = value;
+    else if (BASE_ENV.test(name)) {
+      const kept = PROXY_ENV.test(name) ? withoutCredentials(value) : value;
+      if (kept !== undefined) out[name] = kept;
+    }
+  }
+  return out;
 }
 
-function runBin(
+/**
+ * Runs a check's bin in its own process group, so a timeout kills what it started too (a Chromium holding stdio open),
+ * and so does its exit. Output is read as UTF-8 and kept to MAX_OUTPUT.
+ */
+export function runBin(
   /** @type {string} */ bin,
   /** @type {string[]} */ args,
   /** @type {NodeJS.ProcessEnv} */ env,
+  timeoutMs = CHECK_TIMEOUT_MS,
 ) {
-  return new Promise((resolve) => {
-    const started = Date.now();
-    let output = "";
-    const child = spawn(bin, args, {
-      stdio: ["ignore", "pipe", "pipe"],
-      timeout: CHECK_TIMEOUT_MS,
-      env,
-    });
-    child.stdout.on("data", (chunk) => (output += chunk));
-    child.stderr.on("data", (chunk) => (output += chunk));
-    child.on("error", (error) => (output += `\n${error.message}`));
-    child.on("close", (code) =>
-      resolve({ code: code ?? 3, output, seconds: Math.round((Date.now() - started) / 1000) }),
-    );
-  });
+  return new Promise(
+    (
+      /** @type {(r: { code: number | null, output: string, seconds: number, killed?: string }) => void} */ resolve,
+    ) => {
+      const started = Date.now();
+      let output = "";
+      let truncated = false;
+      /** @type {string | undefined} */
+      let killed;
+      const child = spawn(bin, args, { stdio: ["ignore", "pipe", "pipe"], env, detached: true });
+      const killGroup = (/** @type {NodeJS.Signals} */ signal) => {
+        try {
+          if (child.pid) process.kill(-child.pid, signal);
+        } catch {
+          // The group is already gone.
+        }
+      };
+      const add = (/** @type {string} */ chunk) => {
+        if (truncated) return;
+        if (output.length + chunk.length <= MAX_OUTPUT) output += chunk;
+        else {
+          output += `${chunk.slice(0, MAX_OUTPUT - output.length)}\n[output cut at ${MAX_OUTPUT / 1024 / 1024} MB]`;
+          truncated = true;
+        }
+      };
+      for (const stream of [child.stdout, child.stderr]) {
+        stream.setEncoding("utf8");
+        stream.on("data", add);
+      }
+      let hard = /** @type {NodeJS.Timeout | undefined} */ (undefined);
+      const timer = setTimeout(() => {
+        killed = `timed out after ${Math.round(timeoutMs / 60_000)} minutes`;
+        killGroup("SIGTERM");
+        hard = setTimeout(() => killGroup("SIGKILL"), 10_000);
+      }, timeoutMs);
+      let done = false;
+      const finish = (/** @type {number | null} */ code, /** @type {string | null} */ signal) => {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        clearTimeout(hard);
+        if (signal && !killed) killed = `killed by ${signal}`;
+        resolve({
+          code: killed ? null : code,
+          output,
+          seconds: Math.round((Date.now() - started) / 1000),
+          ...(killed ? { killed } : {}),
+        });
+      };
+      // What the bin left running would keep its stdio open, and "close" with it; the bin's exit ends the group.
+      child.on("exit", () => killGroup("SIGKILL"));
+      child.on("close", finish);
+      child.on("error", (error) => {
+        add(`\n${error.message}`);
+        if (!child.pid) finish(null, null);
+      });
+    },
+  );
 }
 
-/** Merged pull requests labeled for an area, with their lines, from every repository the token can read. */
-async function linesFor(/** @type {number} */ area, /** @type {string | undefined} */ token) {
+/**
+ * A GitHub API read that waits out a rate limit (Retry-After, else x-ratelimit-reset) when the wait is at most
+ * MAX_RATE_WAIT_MS, once; a longer one, or a second refusal, is returned for the caller to call unmeasured.
+ */
+async function githubFetch(
+  /** @type {string} */ url,
+  /** @type {Record<string, string>} */ headers,
+  /** @type {{ fetch?: typeof fetch, sleep?: (ms: number) => Promise<void>, now?: () => number }} */ io,
+) {
+  const { fetch: get = fetch, sleep = (ms) => new Promise((r) => setTimeout(r, ms)) } = io;
+  const now = io.now ?? Date.now;
+  for (let attempt = 0; ; attempt++) {
+    const resp = await get(url, { headers, signal: AbortSignal.timeout(30_000) });
+    const limited =
+      resp.status === 429 ||
+      (resp.status === 403 &&
+        (resp.headers.get("retry-after") !== null ||
+          resp.headers.get("x-ratelimit-remaining") === "0"));
+    if (!limited || attempt) return resp;
+    const after = Number(resp.headers.get("retry-after"));
+    const reset = Number(resp.headers.get("x-ratelimit-reset"));
+    const wait = after > 0 ? after * 1000 : reset > 0 ? reset * 1000 - now() : 1000;
+    if (!(wait <= MAX_RATE_WAIT_MS)) return resp;
+    await resp.body?.cancel();
+    await sleep(Math.max(wait, 0));
+  }
+}
+
+/**
+ * Merged pull requests labeled for an area, with their lines, from every repository the token can read: every page of
+ * the search, and an error (the area's lines unmeasured) rather than a short count when GitHub holds any back.
+ */
+export async function linesFor(
+  /** @type {number} */ area,
+  /** @type {string | undefined} */ token,
+  /** @type {{ fetch?: typeof fetch, sleep?: (ms: number) => Promise<void>, now?: () => number }} */ io = {},
+) {
   if (!token) return { error: "no GitHub token" };
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -485,18 +744,38 @@ async function linesFor(/** @type {number} */ area, /** @type {string | undefine
     "User-Agent": "devkit-live",
   };
   const q = encodeURIComponent(`user:${OWNER} is:pr is:merged label:completeness-area-${area}`);
-  const search = await fetch(`https://api.github.com/search/issues?q=${q}&per_page=100`, {
-    headers,
-    signal: AbortSignal.timeout(30_000),
-  });
-  if (!search.ok) return { error: `GitHub search answered ${search.status}` };
-  const { items } = await search.json();
+  /** @type {Json[]} */
+  const items = [];
+  for (let page = 1; ; page++) {
+    const search = await githubFetch(
+      `https://api.github.com/search/issues?q=${q}&per_page=100&page=${page}`,
+      headers,
+      io,
+    );
+    if (!search.ok) return { error: `GitHub search answered ${search.status}` };
+    const body = await search.json();
+    if (!Number.isInteger(body?.total_count) || !Array.isArray(body.items))
+      return { error: "GitHub search answered without total_count and items" };
+    if (body.incomplete_results) return { error: "GitHub search timed out (incomplete_results)" };
+    // The search API serves the first 1,000 results alone.
+    if (body.total_count > 1000)
+      return { error: `GitHub search found ${body.total_count} pull requests, over its 1,000` };
+    items.push(...body.items);
+    if (items.length >= body.total_count) break;
+    if (!body.items.length)
+      return { error: `GitHub search gave ${items.length} of ${body.total_count} pull requests` };
+  }
   let added = 0;
   let removed = 0;
   for (const item of items) {
-    const pr = await fetch(item.pull_request.url, { headers, signal: AbortSignal.timeout(30_000) });
+    const url = item?.pull_request?.url;
+    if (typeof url !== "string" || !url.startsWith("https://api.github.com/"))
+      return { error: `GitHub search gave an item with no pull request URL` };
+    const pr = await githubFetch(url, headers, io);
     if (!pr.ok) return { error: `GitHub answered ${pr.status} for ${item.html_url}` };
     const body = await pr.json();
+    if (!Number.isInteger(body?.additions) || !Number.isInteger(body?.deletions))
+      return { error: `GitHub gave no line counts for ${item.html_url}` };
     added += body.additions;
     removed += body.deletions;
   }
@@ -514,6 +793,23 @@ export async function runAll(
   } = {},
 ) {
   const root = mkdtempSync(join(tmpdir(), "devkit-live-"));
+  try {
+    return await runIn(root, { sites, areas }, { onlyAreas, onlySites, token, log });
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+}
+
+async function runIn(
+  /** @type {string} */ root,
+  /** @type {{ sites: Json[], areas: Json[] }} */ { sites, areas },
+  /** @type {{ onlyAreas?: number[], onlySites?: string[], token?: string, log: (line: string) => void }} */ {
+    onlyAreas,
+    onlySites,
+    token,
+    log,
+  },
+) {
   const cache = new Map();
   const reports = new Map();
   /** @type {(() => Promise<void>)[]} */
@@ -528,28 +824,25 @@ export async function runAll(
       for (const check of checksFor(area, site)) {
         if (check.report) {
           if (!reports.has(check.report)) reports.set(check.report, fetchReport(check.report));
-          const report = await reports.get(check.report);
+          const { report, error } = await reports.get(check.report);
           const record = {
             area: area.id,
             site: site.id,
             check: check.name,
             ref: typeof report?.ref === "string" ? report.ref.slice(0, 60) : null,
           };
-          results.push({ ...record, ...reportedResult(report, check, site) });
+          results.push({
+            ...record,
+            ...(error
+              ? unmeasuredResult(`could not read ${check.report}: ${error}`)
+              : reportedResult(report, check, site)),
+          });
           continue;
         }
         const { ref, bin, error } = install(check, cache, root);
         const record = { area: area.id, site: site.id, check: check.name, ref };
         if (error) {
-          results.push({
-            ...record,
-            status: "unmeasured",
-            errors: 0,
-            warnings: 0,
-            unmeasured: 0,
-            findings: [],
-            detail: `could not run: ${error}`,
-          });
+          results.push({ ...record, ...unmeasuredResult(`could not run: ${error}`) });
           continue;
         }
         const args = [
@@ -561,7 +854,7 @@ export async function runAll(
         ];
         jobs.push(async () => {
           const result = resultOf(
-            await runBin(/** @type {string} */ (bin), args, checkEnv(process.env, check)),
+            await runBin(/** @type {string} */ (bin), args, checkEnv(process.env, check, site)),
           );
           log(
             `area ${area.id} ${site.id} ${check.name}: ${result.status} (${result.errors} errors, ${result.warnings} warnings, ${result.seconds}s)`,
@@ -602,7 +895,7 @@ export function buildBoard(
   /** @type {{ sites: Json[], areas: Json[], verdicts: Json[] }} */ { sites, areas, verdicts },
   /** @type {Json[]} */ runs,
 ) {
-  const ordered = [...runs].sort((a, b) => a.at.localeCompare(b.at));
+  const ordered = [...runs].sort((a, b) => String(a.at).localeCompare(String(b.at)));
   const newest = ordered.at(-1);
   const cellOf = (
     /** @type {Json} */ run,
@@ -617,16 +910,20 @@ export function buildBoard(
     const signedByBuilder = verdict && same(verdict.verifier, area.builder);
     /** @type {Json} */
     const cells = {};
-    const pkg = verdict?.cells?.package;
-    cells.package = !pkg
-      ? { status: "missing", reason: "no verifier has checked the package" }
-      : signedByBuilder
-        ? { status: "partial", reason: "signed by its own builder" }
-        : {
-            status: pkg.verdict,
-            reason: pkg.note ?? `${verdict.verifier}, ${verdict.date}`,
-            evidence: pkg.evidence,
-          };
+    // A cell no live check grades (the package, and every cell of an area with no checks) is the verdict alone.
+    const verdictOnly = (/** @type {string} */ id, /** @type {string} */ none) => {
+      const entry = verdict?.cells?.[id];
+      return !entry
+        ? { status: "missing", reason: none }
+        : signedByBuilder
+          ? { status: "partial", reason: "signed by its own builder" }
+          : {
+              status: entry.verdict,
+              reason: entry.note ?? `${verdict.verifier}, ${verdict.date}`,
+              evidence: entry.evidence,
+            };
+    };
+    cells.package = verdictOnly("package", "no verifier has checked the package");
     for (const site of sites) {
       if (area.skip?.[site.id]) {
         cells[site.id] = { status: "n/a", reason: area.skip[site.id] };
@@ -635,6 +932,10 @@ export function buildBoard(
       const names = checksFor(area, site).map((/** @type {Json} */ check) => check.name);
       if (area.checks.length && !names.length) {
         cells[site.id] = { status: "n/a", reason: `no check for a ${site.kind}` };
+        continue;
+      }
+      if (!area.checks.length) {
+        cells[site.id] = verdictOnly(site.id, "no live check; no verifier has checked it");
         continue;
       }
       cells[site.id] = siteCell({
@@ -653,7 +954,9 @@ export function buildBoard(
     if (Object.keys(area.unchecked ?? {}).length) finished = false;
     for (const [id, cell] of Object.entries(cells)) {
       if (cell.status === "n/a") continue;
-      if (cell.status !== "complete" || (id !== "package" && cell.clean_days < CLEAN_DAYS))
+      // Clean days count only where a live check runs; a verdict-only cell has none to count.
+      const graded = id !== "package" && area.checks.length;
+      if (cell.status !== "complete" || (graded && !(cell.clean_days >= CLEAN_DAYS)))
         finished = false;
     }
     return {
@@ -741,6 +1044,19 @@ function siteCell(
 
 const MARK = { complete: "✅", partial: "🟡", missing: "❌", unmeasured: "❔", "n/a": "·" };
 
+/**
+ * Text from a check, a site, an area or a verdict, safe on one line of SCOREBOARD.md and in a table cell: no newline,
+ * no `|`, and no HTML or code span (`<`, `>`, `&`, backtick as entities).
+ */
+export const mdText = (/** @type {unknown} */ text) =>
+  String(text ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/`/g, "&#96;")
+    .replace(/\|/g, "\\|")
+    .replace(/[\r\n]+/g, " ");
+
 /** The board as Markdown, for GitHub to show. */
 export function boardMarkdown(/** @type {Json} */ board) {
   const out = ["# Shared-code completeness", ""];
@@ -758,7 +1074,7 @@ export function boardMarkdown(/** @type {Json} */ board) {
   );
   out.push("✅ complete · 🟡 partial · ❌ missing · ❔ could not measure · `·` does not apply", "");
   out.push(
-    `| Area | Package | ${board.sites.map((/** @type {Json} */ s) => s.name).join(" | ")} | Lines added | Lines removed |`,
+    `| Area | Package | ${board.sites.map((/** @type {Json} */ s) => mdText(s.name)).join(" | ")} | Lines added | Lines removed |`,
   );
   out.push(`|---|---|${board.sites.map(() => "---").join("|")}|---:|---:|`);
   for (const area of board.areas) {
@@ -766,10 +1082,15 @@ export function boardMarkdown(/** @type {Json} */ board) {
       (id) => MARK[/** @type {keyof typeof MARK} */ (area.cells[id].status)],
     );
     const lines =
-      area.lines && !area.lines.error
+      area.lines &&
+      !area.lines.error &&
+      Number.isInteger(area.lines.added) &&
+      Number.isInteger(area.lines.removed)
         ? [`+${area.lines.added}`, `−${area.lines.removed}`]
         : ["?", "?"];
-    out.push(`| ${area.id}. ${area.name} | ${marks.join(" | ")} | ${lines.join(" | ")} |`);
+    out.push(
+      `| ${mdText(area.id)}. ${mdText(area.name)} | ${marks.join(" | ")} | ${lines.join(" | ")} |`,
+    );
   }
   if (board.public_token)
     out.push("", "Lines count public repositories only until the LIVE_GITHUB_TOKEN secret is set.");
@@ -781,9 +1102,9 @@ export function boardMarkdown(/** @type {Json} */ board) {
     const unchecked = Object.entries(area.unchecked ?? {});
     if (!open.length && !unchecked.length) continue;
     out.push(
-      `### ${area.id}. ${area.name}`,
+      `### ${mdText(area.id)}. ${mdText(area.name)}`,
       "",
-      `Builder: ${area.builder}. Verifier: ${area.verifier ?? "none yet"}.`,
+      `Builder: ${mdText(area.builder)}. Verifier: ${mdText(area.verifier ?? "none yet")}.`,
       "",
     );
     for (const [id, cell] of open) {
@@ -792,45 +1113,107 @@ export function boardMarkdown(/** @type {Json} */ board) {
           ? "Package"
           : board.sites.find((/** @type {Json} */ s) => s.id === id).name;
       out.push(
-        `- ${MARK[/** @type {keyof typeof MARK} */ (cell.status)]} ${name}: ${cell.reason.replace(/\|/g, "\\|")}`,
+        `- ${MARK[/** @type {keyof typeof MARK} */ (cell.status)] ?? "?"} ${mdText(name)}: ${mdText(cell.reason)}`,
       );
       for (const finding of (cell.findings ?? [])
         .filter((/** @type {Json} */ f) => f.severity === "error")
         .slice(0, 5))
-        out.push(`  - ${finding.check}: ${finding.detail}`);
+        out.push(`  - ${mdText(finding.check)}: ${mdText(finding.detail)}`);
     }
-    for (const [what, why] of unchecked)
-      out.push(`- Not checked, ${what}: ${why.replace(/\|/g, "\\|")}`);
+    for (const [what, why] of unchecked) out.push(`- Not checked, ${mdText(what)}: ${mdText(why)}`);
     out.push("");
   }
   return `${out.join("\n").trimEnd()}\n`;
 }
 
+/** The runs in a directory; a file that is not a run is skipped with a warning, never the end of the board. */
+function readRuns(/** @type {string} */ dir) {
+  /** @type {Json[]} */
+  const runs = [];
+  for (const name of readdirSync(dir).filter((n) => n.endsWith(".json"))) {
+    try {
+      const run = readJsonFile(join(dir, name));
+      if (typeof run?.at !== "string" || !Array.isArray(run.results))
+        throw new Error('no "at" time and "results" list');
+      runs.push(run);
+    } catch (error) {
+      console.log(
+        `::warning title=devkit-live::${escapeAnnotation(`skipped run ${name}: ${error instanceof Error ? error.message : String(error)}`)}`,
+      );
+    }
+  }
+  return runs;
+}
+
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  const { positionals, values } = parseArgs({
-    allowPositionals: true,
-    options: {
-      out: { type: "string" },
-      md: { type: "string" },
-      runs: { type: "string" },
-      config: { type: "string" },
-      areas: { type: "string" },
-      sites: { type: "string" },
-    },
-  });
+  const usage = (/** @type {string} */ why) => {
+    console.error(
+      `devkit-live: ${why}\nusage: devkit-live run --out run.json [--areas 1,2] [--sites id] | board --runs <dir> --out board.json [--md SCOREBOARD.md] | lint`,
+    );
+    process.exit(2);
+  };
+  /** @type {{ positionals: string[], values: Record<string, string | undefined> }} */
+  let parsed = { positionals: [], values: {} };
+  try {
+    parsed = parseArgs({
+      allowPositionals: true,
+      options: {
+        out: { type: "string" },
+        md: { type: "string" },
+        runs: { type: "string" },
+        config: { type: "string" },
+        areas: { type: "string" },
+        sites: { type: "string" },
+      },
+    });
+  } catch (error) {
+    usage(error instanceof Error ? error.message : String(error));
+  }
+  const { positionals, values } = parsed;
+  const [command] = positionals;
+  if (command === "run" && !values.out) usage("run needs --out");
+  if (command === "board" && !(values.runs && values.out)) usage("board needs --runs and --out");
+  if (!["run", "board", "lint"].includes(command))
+    usage(command ? `no command ${command}` : "no command");
   const config = loadConfig(values.config ?? live);
   const problems = lintConfig(config);
-  for (const problem of problems) console.log(`::error title=devkit-live::${problem}`);
+  for (const problem of problems)
+    console.log(`::error title=devkit-live::${escapeAnnotation(problem)}`);
   if (problems.length) process.exit(1);
-  const [command] = positionals;
+  /** The ids of a comma list, each one of `known`; anything else is a usage error. */
+  const pick = (
+    /** @type {string | undefined} */ list,
+    /** @type {unknown[]} */ known,
+    /** @type {string} */ what,
+  ) => {
+    if (list === undefined) return undefined;
+    const ids = list
+      .split(",")
+      .map((id) => (what === "area" ? (/^\d+$/.test(id) ? Number(id) : id) : id));
+    const unknown = ids.filter((id) => !known.includes(id));
+    if (unknown.length) usage(`no ${what} ${unknown.join(", ")} in the config`);
+    return ids;
+  };
   if (command === "lint") {
     console.log(
       `devkit-live: ${config.sites.length} sites, ${config.areas.length} areas, ${config.verdicts.length} verdicts.`,
     );
   } else if (command === "run" && values.out) {
     const run = await runAll(config, {
-      onlyAreas: values.areas?.split(",").map(Number),
-      onlySites: values.sites?.split(","),
+      onlyAreas: /** @type {number[] | undefined} */ (
+        pick(
+          values.areas,
+          config.areas.map((/** @type {Json} */ a) => a.id),
+          "area",
+        )
+      ),
+      onlySites: /** @type {string[] | undefined} */ (
+        pick(
+          values.sites,
+          config.sites.map((/** @type {Json} */ s) => s.id),
+          "site",
+        )
+      ),
       token: process.env.LIVE_GITHUB_TOKEN || process.env.GITHUB_TOKEN,
     });
     writeFileSync(values.out, `${JSON.stringify(run, null, 1)}\n`);
@@ -843,16 +1226,9 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
       }.`,
     );
   } else if (command === "board" && values.runs && values.out) {
-    const runs = readdirSync(values.runs)
-      .filter((name) => name.endsWith(".json"))
-      .map((name) => readJsonFile(join(/** @type {string} */ (values.runs), name)));
-    const board = buildBoard(config, runs);
+    if (!existsSync(values.runs)) usage(`no runs directory ${values.runs}`);
+    const board = buildBoard(config, readRuns(values.runs));
     writeFileSync(values.out, `${JSON.stringify(board, null, 1)}\n`);
     if (values.md) writeFileSync(values.md, boardMarkdown(board));
-  } else {
-    console.error(
-      "usage: devkit-live run --out run.json [--areas 1,2] [--sites id] | board --runs <dir> --out board.json [--md SCOREBOARD.md] | lint",
-    );
-    process.exit(2);
   }
 }
