@@ -43,10 +43,27 @@ test("the repository's own site, area and verdict files are sound", () => {
   assert.deepEqual(lintConfig(loadConfig()), []);
 });
 
-test("an MCP test grant reaches only a check marked grants, never any other check's code", () => {
-  const env = { PATH: "/bin", GITHUB_TOKEN: "t", MCP_TEST_GRANT_MCP_EXAMPLE_COM: "k" };
-  assert.deepEqual(checkEnv(env, { name: "audit" }), { PATH: "/bin", GITHUB_TOKEN: "t" });
-  assert.deepEqual(checkEnv(env, { name: "ai", grants: true }), env);
+test("a check's bin gets a minimal environment: tokens, keys and MCP grants only where it declares them", () => {
+  const env = {
+    PATH: "/bin",
+    HOME: "/h",
+    NODE_OPTIONS: "--x",
+    LC_ALL: "C",
+    GITHUB_TOKEN: "t",
+    LIVE_GITHUB_TOKEN: "l",
+    PSI_API_KEY: "p",
+    MCP_TEST_GRANT_MCP_EXAMPLE_COM: "k",
+  };
+  const base = { PATH: "/bin", HOME: "/h", NODE_OPTIONS: "--x", LC_ALL: "C" };
+  assert.deepEqual(checkEnv(env, { name: "audit" }), base);
+  assert.deepEqual(checkEnv(env, { name: "speed", env: ["PSI_API_KEY"] }), {
+    ...base,
+    PSI_API_KEY: "p",
+  });
+  assert.deepEqual(checkEnv(env, { name: "ai", grants: true }), {
+    ...base,
+    MCP_TEST_GRANT_MCP_EXAMPLE_COM: "k",
+  });
   const bad = {
     id: 1,
     name: "AI",

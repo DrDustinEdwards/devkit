@@ -45,6 +45,7 @@ import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
 
+import { escapeAnnotation } from "./annotate.mjs";
 /**
  * @typedef {{ id: string, parentId?: string, path?: string, module?: string, imports?: string[], css?: string[],
  *   hasDefaultExport?: boolean }} ManifestRoute
@@ -153,7 +154,7 @@ export function check(rows, config) {
 }
 
 function fail(/** @type {string} */ message) {
-  console.log(`::error::devkit-route-weight: ${message}`);
+  console.log(`::error::${escapeAnnotation(`devkit-route-weight: ${message}`)}`);
   process.exit(1);
 }
 

@@ -69,11 +69,11 @@ test(
       // `args` reach the dry run.
       assert.match(
         run({ raw_kib: 1, gzip_kib: 1, args: ["--env", "staging"] }, { EXIT: "1" }),
-        /^1 ::error::devkit-worker-size: wrangler deploy --dry-run failed \(exit 1\):\nargs: deploy --dry-run --outdir \S+ --env staging\n/,
+        /^1 ::error::devkit-worker-size: wrangler deploy --dry-run failed \(exit 1\):%0Aargs: deploy --dry-run --outdir \S+ --env staging%0A/,
       );
       assert.match(
         run({ raw_kib: 1, gzip_kib: 1 }, { OUT: "Upload: 1 KiB" }),
-        /^1 ::error::devkit-worker-size: wrangler printed no "Total Upload" line:\nargs: /,
+        /^1 ::error::devkit-worker-size: wrangler printed no "Total Upload" line:%0Aargs: /,
       );
       assert.match(
         run("{ raw_kib: 1 }"),

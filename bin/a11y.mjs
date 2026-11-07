@@ -81,7 +81,7 @@ function load(/** @type {string} */ name) {
 
 async function fetchText(/** @type {string} */ url) {
   try {
-    const response = await fetch(url, { redirect: "follow" });
+    const response = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(30_000) });
     return { status: response.status, text: response.ok ? await response.text() : "" };
   } catch (error) {
     return { status: 0, text: "", error: /** @type {Error} */ (error).message };
@@ -93,13 +93,27 @@ const locs = (/** @type {string} */ xml) =>
 
 /** The sitemap's URLs (a sitemap index followed to its first five children), moved from origin to base. */
 async function sitemapUrls(/** @type {string} */ origin, /** @type {string} */ base) {
-  const move = (/** @type {string} */ url) =>
-    url.startsWith(origin) ? base + url.slice(origin.length) : url;
+  // Same origin by the parsed URL, not by prefix: https://example.com.evil.test starts with https://example.com.
+  const same = (/** @type {string} */ url) => {
+    try {
+      return new URL(url).origin === new URL(origin).origin;
+    } catch {
+      return false;
+    }
+  };
+  const move = (/** @type {string} */ url) => {
+    const u = new URL(url);
+    return base + u.pathname + u.search;
+  };
   const { text } = await fetchText(`${base}/sitemap.xml`);
-  if (!/<sitemapindex/i.test(text)) return locs(text).map(move);
+  if (!/<sitemapindex/i.test(text)) return locs(text).filter(same).map(move);
   const urls = [];
-  for (const child of locs(text).slice(0, 5))
-    urls.push(...locs((await fetchText(move(child))).text).map(move));
+  for (const child of locs(text).filter(same).slice(0, 5))
+    urls.push(
+      ...locs((await fetchText(move(child))).text)
+        .filter(same)
+        .map(move),
+    );
   return urls;
 }
 
@@ -202,7 +216,15 @@ async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
         let skipTargetsMain = false;
         const href = el.getAttribute("href") || "";
         if (el.localName === "a" && href.length > 1 && href.startsWith("#")) {
-          const target = document.getElementById(decodeURIComponent(href.slice(1)));
+          const target = document.getElementById(
+            (() => {
+              try {
+                return decodeURIComponent(href.slice(1));
+              } catch {
+                return href.slice(1); // a malformed escape (#%E0%A4%A) names the id as written
+              }
+            })(),
+          );
           const main = document.querySelector("main, [role=main]");
           skipTargetsMain = Boolean(
             target &&
@@ -588,7 +610,8 @@ async function main() {
   } finally {
     await browser.close();
   }
-  if (pages[0].error) {
+  // A home page that stopped part way is still judged on what it measured; one that measured nothing is not.
+  if (pages[0].error && !Object.keys(pages[0].axe ?? {}).length && !pages[0].basics) {
     for (const item of ITEMS)
       console.log(
         annotation({

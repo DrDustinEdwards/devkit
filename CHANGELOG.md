@@ -1,5 +1,26 @@
 # Changelog
 
+## Unreleased
+
+Fixes from a review of the checks and workflows. Behavior changes a repository may meet are marked **new failure**.
+
+- `devkit-migrations`: `--write` refuses, without `--force`, when a recorded migration is gone from disk or renamed. A migration after `expand_only_after` that updates, replaces (`INSERT OR REPLACE`, `REPLACE INTO`) or deletes rows, drops an index, view or trigger, or sets `PRAGMA writable_schema` needs a `-- contract:` line (**new failure**), and `--apply` hands such a migration to a person. An apostrophe inside a `"quoted"`, backtick or `[bracket]` identifier no longer starts a string, a `-- contract:` inside a `/* */` block does not count, and a pending file whose name is not `NNNN_name.sql` is a hand-only item rather than skipped.
+- `devkit-live`: a check's bin gets a minimal environment (the basics of a process, `NODE_*`, locale, proxy variables) plus the variables its entry in `live/areas.json` lists under `env` (`PSI_API_KEY` for the speed checks, `GITHUB_TOKEN` for ops-audit) and, for a `grants` check, the MCP grants; no `LIVE_GITHUB_TOKEN` or `GITHUB_TOKEN` otherwise. `live.yml` runs the checks in a read-only job with no credential left in `.git` and hands the run to a second job, the only one with `contents: write`, that pushes the scoreboard. `git ls-remote`, `npm install` and the GitHub fetches have timeouts.
+- `release.yml`: the `npm ci` and build step holds no token (`npm ci --ignore-scripts`, then the package's own `npm run prepare`); the tag, push and release step alone gets `GH_TOKEN`.
+- `worker-deploy.yml`: the deploy and the live gate run only on the default branch, as `release.yml` does. A caller that deploys on a push to its default branch is unchanged; a manual run from another branch now deploys nothing.
+- `scorecard.yml`: only HTTP 404 means the repository never published; any other answer fails the job instead of passing the gate.
+- `bump-consumers.yml`: a manifest that cannot be read or parsed fails the run, naming the repository, instead of being skipped with a warning. A `package.json` over 1 MB is read through the blob API.
+- `devkit-no-bloat`, `devkit-copies`, `devkit-conformance`: a missing `.no-bloat.json` or an empty baseline, a `live/copies.json` with no numeric `baseline`, and a conformance config with no `scenarios` (unless `"allow_no_scenarios": true`) now fail instead of passing every count (**new failure**).
+- Every `::error`, `::warning` and `::notice` line that prints a file name, a remote `/health` value, a tool's stderr or a baseline key escapes `%`, CR and LF through one helper, `bin/annotate.mjs`.
+- `devkit-shared`: `blankComments` reads string, template and regular-expression literals, so a `//` or `/*` inside one is not a comment; an invalid `package.json` is a warning on that file and the check continues; a British word in a file name (codespell's `file: word ==> fix`, no line) is reported.
+- `devkit-a11y`: a malformed `%` escape in a skip-link `href` no longer throws; a page whose scan stopped keeps the axe, keyboard and reflow findings already collected beside its "could not be scanned" notice; sitemap index children must be on the same origin by parsed URL, not by prefix.
+- `devkit-no-bloat` counts `t.test(` / `t.it(` subtests and `specify(`; `devkit-console` also counts `console?.log(`, `console["log"](`, `globalThis.console.log(`, `self.console.error(` and `const { log } = console` (**new failure** where a baseline missed them).
+- Timeouts of 30 s on the fetches in `devkit-copies`, `devkit-a11y`, `devkit-warm`, `devkit-conformance` and `devkit-live`. `devkit-warm` keeps its promise never to fail a warm, follows only same-origin sitemap children, and refuses a `--sha` shorter than 7 hex characters.
+- Pinned: `devkit-no-bloat`'s npx fallback (`knip@6.44.0`, `jscpd@4.3.0`) and `devkit-worker-size`'s (`wrangler@4.149.0`). `access-drift.yml` and `restore-drill.yml` accept only a release tag or a full commit sha as the package ref, and `access-drift.yml` installs with `--ignore-scripts`.
+- `devkit-ops-audit`: a drill run with an unreadable `created_at` fails R1 instead of passing; a `/404` that does not answer is a "could not measure" notice for N2.
+- `scripts/strip-pr-footer.mjs` reads the description line by line (a 100,000-space body took 12 s under the old pattern).
+- `shared-list.yml` and the `shared` action both accept a tag with or without the leading `v`.
+
 ## 0.27.0 (2026-11-07)
 
 - `./stryker`: `chunkedStryker`, the chunked Stryker config that d1-dump, site-api, Germomics and Foxhound each carried a copy of (the same options, the same `STRYKER_CHUNK` rule and the same `rest` chunk). A repository's `stryker.config.mjs` is now its file list.

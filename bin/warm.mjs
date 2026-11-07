@@ -14,23 +14,36 @@ import { pathToFileURL } from "node:url";
 
 const MAX_PAGES = 1000;
 const WORKERS = 4;
+const TIMEOUT_MS = 30_000;
 
 /** The <loc> values of a sitemap, or none when it does not answer 200. */
 async function locs(/** @type {string} */ url) {
-  const res = await fetch(url).catch(() => null);
-  return res?.ok
-    ? [...(await res.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1])
-    : [];
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS) });
+    return res.ok
+      ? [...(await res.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1])
+      : [];
+  } catch {
+    return [];
+  }
 }
+
+/** Whether a URL is on the origin, by the parsed origin: https://example.com.evil.test only starts with it. */
+const onOrigin = (/** @type {string} */ url, /** @type {string} */ origin) => {
+  try {
+    return new URL(url).origin === new URL(origin).origin;
+  } catch {
+    return false;
+  }
+};
 
 /** Every page the sitemap names on this origin, an index followed one level, at most MAX_PAGES. */
 export async function sitemapPages(/** @type {string} */ origin) {
   const top = await locs(`${origin}/sitemap.xml`);
   const pages = top.filter((u) => !/\.xml(\?|$)/.test(u));
-  for (const index of top.filter((u) => /\.xml(\?|$)/.test(u))) pages.push(...(await locs(index)));
-  return [...new Set(pages)]
-    .filter((u) => u.startsWith(`${origin}/`) || u === origin)
-    .slice(0, MAX_PAGES);
+  for (const index of top.filter((u) => /\.xml(\?|$)/.test(u) && onOrigin(u, origin)))
+    pages.push(...(await locs(index)));
+  return [...new Set(pages)].filter((u) => onOrigin(u, origin)).slice(0, MAX_PAGES);
 }
 
 /** Fetch each page once, WORKERS at a time; the count that answered 200. */
@@ -40,9 +53,13 @@ export async function warm(/** @type {string[]} */ pages) {
   await Promise.all(
     Array.from({ length: WORKERS }, async () => {
       for (let url = queue.shift(); url; url = queue.shift()) {
-        const res = await fetch(url).catch(() => null);
-        if (res?.ok) stored++;
-        await res?.arrayBuffer().catch(() => {});
+        try {
+          const res = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS) });
+          if (res.ok) stored++;
+          await res.arrayBuffer().catch(() => {});
+        } catch {
+          /* a page that does not answer is not stored */
+        }
       }
     }),
   );
@@ -52,7 +69,9 @@ export async function warm(/** @type {string[]} */ pages) {
 /** True once <origin>/health reports this sha, polling every 10 s for up to ten minutes. */
 async function waitForSha(/** @type {string} */ origin, /** @type {string} */ sha) {
   for (let i = 0; i < 60; i++) {
-    const res = await fetch(`${origin}/health`).catch(() => null);
+    const res = await fetch(`${origin}/health`, { signal: AbortSignal.timeout(TIMEOUT_MS) }).catch(
+      () => null,
+    );
     const live = res?.ok
       ? await res.json().then(
           (b) => b?.sha,
@@ -71,6 +90,11 @@ async function main(/** @type {string[]} */ argv) {
   const sha = shaAt >= 0 ? argv[shaAt + 1] : "";
   if (!origin) {
     console.error("usage: devkit-warm <origin> [--sha <commit>]");
+    return 1;
+  }
+  // A short sha names every commit that starts with it, so the wait would end on the wrong deploy.
+  if (shaAt >= 0 && !/^[0-9a-f]{7,40}$/i.test(sha ?? "")) {
+    console.error("devkit-warm: --sha needs at least 7 hex characters of the commit");
     return 1;
   }
   if (sha && !(await waitForSha(origin, sha))) {

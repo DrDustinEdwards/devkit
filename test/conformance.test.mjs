@@ -121,3 +121,16 @@ createServer((req, res) => {
     }
   },
 );
+
+test("a config with no server scenarios fails before anything starts, unless it says that is meant", () => {
+  const dir = mkdtempSync(join(tmpdir(), "conformance-"));
+  try {
+    const bin = fileURLToPath(new URL("../bin/conformance.mjs", import.meta.url));
+    writeFileSync(join(dir, ".conformance.json"), JSON.stringify({ mcp: {} }));
+    const r = spawnSync(process.execPath, [bin], { cwd: dir, encoding: "utf8" });
+    assert.equal(r.status, 1);
+    assert.match(r.stdout, /lists no server scenarios/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

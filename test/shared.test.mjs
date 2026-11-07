@@ -15,6 +15,7 @@ import {
   checkFakes,
   checkFeatures,
   checkJobs,
+  blankComments,
   checkLibraries,
   checkLint,
   checkPins,
@@ -314,6 +315,27 @@ test("a wrapped library in a site's manifest is refused unless waived with a rea
       '{"name":"@drdustinedwards/site-helpers","dependencies":{"marked":"1"}}',
   };
   assert.deepEqual(checkLibraries(tree(others), {}), []);
+  // One manifest that is not JSON is a warning on that file; the others are still checked.
+  const broken = {
+    "packages/a/package.json": "{ not json",
+    "package.json": '{"dependencies":{"marked":"1"}}',
+  };
+  const found = checkLibraries(tree(broken), {});
+  assert.deepEqual(
+    found.map((f) => `${f.file} ${f.warn ?? false}`),
+    ["packages/a/package.json true", "package.json false"],
+  );
+});
+
+test("blankComments blanks comments and keeps `//` and `/*` inside strings, templates and regular expressions", () => {
+  const code =
+    'const u = "http://x/*"; // gone\nimport a from "src/*"; /* c */ const t = `a // ${"//q"} y`; const r = /[\'"]/; // end';
+  const out = blankComments(code);
+  assert.equal(out.length, code.length);
+  assert.equal(
+    out.replace(/ +/g, " "),
+    'const u = "http://x/*"; \nimport a from "src/*"; const t = `a // ${"//q"} y`; const r = /[\'"]/; ',
+  );
 });
 
 test("each app is checked for its kind's features, files belong to the deepest app, and a D1 database needs the dump", () => {
@@ -428,6 +450,8 @@ const words = { colour: "color", licence: "license", favour: "favor", honour: "h
 const ignore = opt("--ignore-words-list").split(",");
 let found = false;
 for (const file of args.slice(args.indexOf("--") + 1)) {
+  for (const [w] of file.matchAll(new RegExp(opt("--regex"), "g")))
+    if (args.includes("--check-filenames") && words[w.toLowerCase()]) console.log(\`\${file}: \${w} ==> \${words[w.toLowerCase()]}\`), (found = true);
   readFileSync(file, "utf8").split("\\n").forEach((line, i) => {
     for (const [w] of line.replace(new RegExp(opt("--ignore-regex"), "g"), "").matchAll(new RegExp(opt("--regex"), "g"))) {
       if (words[w.toLowerCase()] && !ignore.includes(w.toLowerCase())) console.log(\`\${file}:\${i + 1}: \${w} ==> \${words[w.toLowerCase()]}\`), (found = true);
@@ -448,6 +472,7 @@ test(
     const { root, PATH } = repo({
       "app/a.ts": 'export const colour = "red";\nconst Licence = 1;\n', // codespell:ignore
       "app/b.ts": 'if (status === "cancelled" && job.cancelled()) favour();\n', // codespell:ignore
+      "app/colour-theme.ts": "export {};\n", // codespell:ignore
       "frame/notes.md": "colour\n", // codespell:ignore
       "package-lock.json": '{ "colour": 1 }\n', // codespell:ignore
       "logo.png": "colour", // codespell:ignore
@@ -465,13 +490,21 @@ test(
       const kept = config();
       assert.deepEqual(
         checkSpelling(root, kept).map((f) => `${f.file}:${f.line} ${f.message.split(";")[0]}`),
-        ["app/a.ts:1 colour is British", "app/a.ts:2 Licence is British"], // codespell:ignore
+        [
+          "app/a.ts:1 colour is British", // codespell:ignore
+          "app/a.ts:2 Licence is British", // codespell:ignore
+          "app/colour-theme.ts:0 colour in the file name is British", // codespell:ignore
+        ],
       );
       assert.deepEqual(
         staleExceptions(kept).map((f) => f.message.split(" excuses")[0]),
         ['"spelling" "ignore" "honour"', '"spelling" "contracts" ""gone""'], // codespell:ignore
       );
-      assert.deepEqual(checkSpelling(root, config(), true), []);
+      // --fix-spelling rewrites text, never a file name: that one stays reported.
+      assert.deepEqual(
+        checkSpelling(root, config(), true).map((f) => f.file),
+        ["app/colour-theme.ts"], // codespell:ignore
+      );
       assert.equal(
         readFileSync(join(root, "app/a.ts"), "utf8"),
         'export const color = "red";\nconst License = 1;\n',

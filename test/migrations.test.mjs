@@ -1,6 +1,10 @@
 // devkit-migrations: what counts as more than expanding, and the manifest comparison in both directions.
 
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 
 import {
@@ -8,6 +12,7 @@ import {
   contractions,
   handOnly,
   readBookmark,
+  pendingBlockers,
   readPending,
   sha256,
 } from "../bin/migrations.mjs";
@@ -62,7 +67,7 @@ test("an edited, unrecorded, deleted or contracting migration each fails; a clea
 test("--apply runs only what adds: a drop, rename, DELETE or `-- contract:` line is a person's call; trigger bodies are not read", () => {
   assert.deepEqual(
     handOnly(
-      "CREATE TABLE a (id INTEGER);\nALTER TABLE a ADD COLUMN b TEXT;\nUPDATE a SET b = 'x';\nCREATE TRIGGER a_ad AFTER DELETE ON a BEGIN DELETE FROM a_fts WHERE rowid = old.id; END;",
+      "CREATE TABLE a (id INTEGER);\nALTER TABLE a ADD COLUMN b TEXT;\nCREATE TABLE c (a INTEGER REFERENCES a ON DELETE SET NULL ON UPDATE CASCADE);\nCREATE TRIGGER a_ad AFTER DELETE ON a BEGIN DELETE FROM a_fts WHERE rowid = old.id; END;",
     ),
     [],
   );
@@ -71,6 +76,17 @@ test("--apply runs only what adds: a drop, rename, DELETE or `-- contract:` line
     "drops a table",
   ]);
   assert.deepEqual(handOnly("DELETE FROM sessions;"), ["deletes rows"]);
+  for (const sql of [
+    "UPDATE a SET b = 1;",
+    "INSERT OR REPLACE INTO a VALUES (1);",
+    "REPLACE INTO a VALUES (1);",
+    "DROP INDEX i;",
+    "DROP VIEW v;",
+    "DROP TRIGGER t;",
+    "PRAGMA writable_schema = 1;",
+  ])
+    assert.equal(contractions(sql).length, 1, sql);
+  assert.deepEqual(contractions("DELETE FROM a;"), ["deletes rows"]);
   assert.deepEqual(handOnly("ALTER TABLE a RENAME COLUMN b TO c;"), ["renames a table or column"]);
 });
 
@@ -95,4 +111,46 @@ test("--apply reads wrangler's list as pending, clean or unreadable, and its boo
     "00000085-0000024c",
   );
   assert.equal(readBookmark("✘ [ERROR] Authentication error"), "");
+});
+
+test("quoted identifiers hold apostrophes, and a marker inside a block comment is not a marker", () => {
+  assert.deepEqual(contractions("CREATE TABLE \"a'b\" (x);\nDROP TABLE t;\nSELECT 'x';"), [
+    "drops a table",
+  ]);
+  assert.deepEqual(contractions("CREATE TABLE [a'b] (x); ALTER TABLE `c'd` RENAME TO e;"), [
+    "renames a table or column",
+  ]);
+  assert.deepEqual(contractions("/*\n-- contract: x\n*/\nDROP TABLE a;"), ["drops a table"]);
+  assert.deepEqual(handOnly("/* -- contract: x */ SELECT 1;"), []);
+});
+
+test("a pending file with an unexpected name is a person's call, not skipped", () => {
+  const listed = readPending({
+    code: 0,
+    text: "Migrations to be applied:\n│ 0001_ok.sql │\n│ 1_bad.sql │",
+  });
+  assert.deepEqual(listed.pending, ["0001_ok.sql", "1_bad.sql"]);
+  assert.deepEqual(pendingBlockers("0001_ok.sql", "CREATE TABLE a (x);"), []);
+  assert.match(pendingBlockers("1_bad.sql", "CREATE TABLE a (x);").join(), /name/);
+  assert.match(pendingBlockers("0002_gone.sql", null).join(), /not on disk/);
+});
+
+test("--write refuses a recorded migration that is gone from disk, unless --force", () => {
+  const dir = mkdtempSync(join(tmpdir(), "mig-"));
+  try {
+    writeFileSync(join(dir, "0001_a.sql"), "CREATE TABLE a (x);");
+    const run = (...args) =>
+      spawnSync(process.execPath, ["bin/migrations.mjs", dir, "--write", ...args], {
+        encoding: "utf8",
+      });
+    assert.equal(run().status, 0);
+    rmSync(join(dir, "0001_a.sql"));
+    writeFileSync(join(dir, "0001_renamed.sql"), "CREATE TABLE a (x);");
+    const refused = run();
+    assert.equal(refused.status, 1);
+    assert.match(refused.stdout, /0001_a\.sql is recorded but not on disk/);
+    assert.equal(run("--force").status, 0);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

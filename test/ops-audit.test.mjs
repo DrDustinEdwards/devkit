@@ -150,6 +150,10 @@ test("H4 matches an abbreviated sha, waits 30 minutes for a deploy in flight; R1
   assert.deepEqual(items(drillFindings({ url, run: run(8.1), now })), ["error R1"]);
   assert.deepEqual(items(drillFindings({ url, run: run(1, "failure"), now })), ["error R1"]);
   assert.deepEqual(items(drillFindings({ url, run: undefined, now })), ["error R1"]);
+  assert.deepEqual(
+    items(drillFindings({ url, run: { ...run(1), created_at: "not a date" }, now })),
+    ["error R1"],
+  );
 });
 
 test("H5 lists each binding /health does not probe, unless the repository names it with a reason", () => {

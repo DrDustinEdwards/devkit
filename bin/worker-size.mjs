@@ -10,10 +10,10 @@
 //
 // The budget file:
 //
-//   { "raw_kib": 1700, "gzip_kib": 400, "args": ["--config", "wrangler.jsonc"], "wrangler": "wrangler@4" }
+//   { "raw_kib": 1700, "gzip_kib": 400, "args": ["--config", "wrangler.jsonc"], "wrangler": "wrangler@4.149.0" }
 //
 // `args` are added to the dry run (default none) and `wrangler` is the npx spec used when the repository does not install
-// wrangler itself (default wrangler@4).
+// wrangler itself (default wrangler@4.149.0).
 
 import { spawnSync } from "node:child_process";
 import {
@@ -28,6 +28,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { escapeAnnotation } from "./annotate.mjs";
 /** The sizes in KiB from wrangler's Total Upload line, or null when it has none. */
 function totalUpload(/** @type {string} */ text) {
   const m = /Total Upload:\s*([\d.]+)\s*(KiB|MiB)\s*\/\s*gzip:\s*([\d.]+)\s*(KiB|MiB)/.exec(text);
@@ -39,7 +40,7 @@ function totalUpload(/** @type {string} */ text) {
 
 /** @returns {never} */
 function fail(/** @type {string} */ message) {
-  console.log(`::error::devkit-worker-size: ${message}`);
+  console.log(`::error::${escapeAnnotation(`devkit-worker-size: ${message}`)}`);
   process.exit(1);
 }
 
@@ -71,7 +72,10 @@ function main() {
   const args = ["deploy", "--dry-run", "--outdir", out, ...(budget.args ?? [])];
   const [bin, argv2] = existsSync(local)
     ? [local, args]
-    : ["npx", ["--yes", "--package", budget.wrangler ?? "wrangler@4", "--", "wrangler", ...args]];
+    : [
+        "npx",
+        ["--yes", "--package", budget.wrangler ?? "wrangler@4.149.0", "--", "wrangler", ...args],
+      ];
   // A .cmd shim (and npx itself) on Windows needs cmd.exe; elsewhere the bin runs directly.
   const [cmd, all] =
     process.platform === "win32" ? ["cmd.exe", ["/c", bin, ...argv2]] : [bin, argv2];

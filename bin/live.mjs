@@ -145,6 +145,18 @@ export function lintConfig(
         problems.push(
           `area ${area.id} check ${check.name} has args that are not a list of strings`,
         );
+      if (
+        check.env !== undefined &&
+        !(
+          isStrings(check.env) &&
+          check.env.every(
+            (/** @type {string} */ n) => /^[A-Z][A-Z0-9_]*$/.test(n) && !GRANT_ENV.test(n),
+          )
+        )
+      )
+        problems.push(
+          `area ${area.id} check ${check.name} has env that is not a list of variable names (grants are named by "grants": true)`,
+        );
       if (check.grants !== undefined && (check.grants !== true || check.report !== undefined))
         problems.push(
           `area ${area.id} check ${check.name} has "grants" other than true on a bin check`,
@@ -353,7 +365,7 @@ function newestTag(/** @type {string} */ repo) {
   const out = execFileSync(
     "git",
     ["ls-remote", "--tags", "--refs", `https://github.com/${OWNER}/${repo}`],
-    { encoding: "utf8" },
+    { encoding: "utf8", timeout: 60_000 },
   );
   const tags = [...out.matchAll(/refs\/tags\/(v\d+\.\d+\.\d+)$/gm)].map((m) => m[1]);
   tags.sort((/** @type {string} */ a, /** @type {string} */ b) =>
@@ -395,7 +407,7 @@ function install(
           "--no-fund",
           `github:${OWNER}/${check.repo}#${ref}`,
         ],
-        { cwd: dir, stdio: "pipe" },
+        { cwd: dir, stdio: "pipe", timeout: 300_000 },
       );
       cache.set(key, { dir, ref });
     } catch (error) {
@@ -421,14 +433,25 @@ function install(
 /** The MCP test grants' variables: one read-only key per MCP server, for the checks marked "grants": true alone. */
 export const GRANT_ENV = /^MCP_TEST_GRANT_/;
 
-/** The environment a check's bin runs with: the run's own, without the MCP test grants unless the check is marked "grants". */
+/** What every check's bin gets from the run's environment: the basics of a process, never a token or a key. */
+const BASE_ENV =
+  /^(?:PATH|HOME|USER|SHELL|TMPDIR|TEMP|TMP|TZ|CI|LANG|LANGUAGE|LC_[A-Z_]+|NODE_[A-Z_]+|SSL_CERT_(?:FILE|DIR)|(?:HTTPS?|NO|ALL)_PROXY|PLAYWRIGHT_BROWSERS_PATH|DEVKIT_A11Y_CHROMIUM|SYSTEMROOT|COMSPEC|PATHEXT)$/i;
+
+/**
+ * The environment a check's bin runs with: the basics, the variables the check names in its `env` list, and, for a check
+ * marked "grants", the MCP test grants. Nothing else, so a token or a key reaches only the check that declares it.
+ */
 export function checkEnv(
   /** @type {NodeJS.ProcessEnv} */ env,
-  /** @type {{ grants?: boolean }} */ check,
+  /** @type {{ grants?: boolean, env?: string[] }} */ check,
 ) {
-  return check.grants === true
-    ? { ...env }
-    : Object.fromEntries(Object.entries(env).filter(([name]) => !GRANT_ENV.test(name)));
+  const named = new Set(check.env ?? []);
+  return Object.fromEntries(
+    Object.entries(env).filter(
+      ([name]) =>
+        BASE_ENV.test(name) || named.has(name) || (check.grants === true && GRANT_ENV.test(name)),
+    ),
+  );
 }
 
 function runBin(
@@ -464,13 +487,14 @@ async function linesFor(/** @type {number} */ area, /** @type {string | undefine
   const q = encodeURIComponent(`user:${OWNER} is:pr is:merged label:completeness-area-${area}`);
   const search = await fetch(`https://api.github.com/search/issues?q=${q}&per_page=100`, {
     headers,
+    signal: AbortSignal.timeout(30_000),
   });
   if (!search.ok) return { error: `GitHub search answered ${search.status}` };
   const { items } = await search.json();
   let added = 0;
   let removed = 0;
   for (const item of items) {
-    const pr = await fetch(item.pull_request.url, { headers });
+    const pr = await fetch(item.pull_request.url, { headers, signal: AbortSignal.timeout(30_000) });
     if (!pr.ok) return { error: `GitHub answered ${pr.status} for ${item.html_url}` };
     const body = await pr.json();
     added += body.additions;
@@ -555,7 +579,10 @@ export async function runAll(
   /** @type {Json} */
   const lines = {};
   for (const area of areas)
-    if (!onlyAreas || onlyAreas.includes(area.id)) lines[area.id] = await linesFor(area.id, token);
+    if (!onlyAreas || onlyAreas.includes(area.id))
+      lines[area.id] = await linesFor(area.id, token).catch((error) => ({
+        error: `GitHub could not be read: ${error instanceof Error ? error.message : String(error)}`,
+      }));
   results.sort(
     (a, b) => a.area - b.area || a.site.localeCompare(b.site) || a.check.localeCompare(b.check),
   );

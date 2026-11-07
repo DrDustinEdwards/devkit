@@ -224,11 +224,11 @@ test("the deploy job publishes the attempt it shipped in, and never deploys a pu
   );
   assert.match(
     deploy,
-    /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target'\n/,
+    /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target' && github\.ref == format\('refs\/heads\/\{0\}', github\.event\.repository\.default_branch\)\n/,
   );
   assert.match(
     job("live"),
-    /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target' && !failure\(\) && !cancelled\(\)\n/,
+    /\n {4}if: github\.event_name != 'pull_request' && github\.event_name != 'pull_request_target' && github\.ref == format\('refs\/heads\/\{0\}', github\.event\.repository\.default_branch\) && !failure\(\) && !cancelled\(\)\n/,
   );
   assert.ok(
     step("Pre-deploy guard").length &&

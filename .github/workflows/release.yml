@@ -62,7 +62,7 @@ jobs:
       id-token: write
       attestations: write
     outputs:
-      created: ${{ steps.release.outputs.created }}
+      created: ${{ steps.publish.outputs.created || steps.release.outputs.created }}
       tag: ${{ steps.release.outputs.tag }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -75,11 +75,12 @@ jobs:
           node-version-file: ${{ inputs.node-version-file }}
           package-manager-cache: false
 
+      # Reads only: the default-branch guard, the version, whether the tag exists and the notes. The build below runs the
+      # package's own code (its prepare script and, through npm ci, its dependencies), so it holds no token.
       - id: release
         env:
           GH_TOKEN: ${{ github.token }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-          BUILD: ${{ inputs.build }}
         run: |
           if [ "$GITHUB_REF" != "refs/heads/$DEFAULT_BRANCH" ]; then
             echo "::error::release runs only on the default branch ($DEFAULT_BRANCH), not $GITHUB_REF."
@@ -97,6 +98,7 @@ jobs:
             echo "created=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          echo "new=true" >> "$GITHUB_OUTPUT"
           if [ -f CHANGELOG.md ]; then
             awk -v v="$version" '
               index($0, "## " v " ") == 1 || $0 == "## " v || index($0, "## [" v "]") == 1 { on = 1; next }
@@ -104,9 +106,25 @@ jobs:
               on { print }
             ' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
           fi
+
+      # npm ci installs without lifecycle scripts; the package's own prepare script then builds.
+      - name: Build the package
+        if: steps.release.outputs.new == 'true' && inputs.build
+        run: |
+          npm ci --ignore-scripts
+          npm run prepare
+
+      - id: publish
+        name: Tag and publish the release
+        if: steps.release.outputs.new == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+          BUILD: ${{ inputs.build }}
+        run: |
+          tag="$TAG"
           if [ "$BUILD" = "true" ]; then
-            # npm ci runs prepare, which builds; the release commit holds the built files and no prepare script.
-            npm ci
+            # The release commit holds the built files and no prepare script.
             node -e 'const fs = require("node:fs"); const p = JSON.parse(fs.readFileSync("package.json", "utf8")); delete p.scripts.prepare; fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n")'
             git add -f dist package.json
             git -c user.name="github-actions[bot]" -c user.email="41898341+github-actions[bot]@users.noreply.github.com" commit -q -m "Release $tag: the built package"
@@ -124,20 +142,20 @@ jobs:
 
       - id: pack
         name: Pack the release
-        if: steps.release.outputs.created == 'true'
+        if: steps.publish.outputs.created == 'true'
         run: |
           mkdir -p "$RUNNER_TEMP/pack"
           npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/pack" >/dev/null
           echo "tarball=$(ls "$RUNNER_TEMP"/pack/*.tgz)" >> "$GITHUB_OUTPUT"
 
       - name: Attest the release's provenance
-        if: steps.release.outputs.created == 'true'
+        if: steps.publish.outputs.created == 'true'
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: ${{ steps.pack.outputs.tarball }}
 
       - name: Attach the tarball to the release
-        if: steps.release.outputs.created == 'true'
+        if: steps.publish.outputs.created == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.release.outputs.tag }}

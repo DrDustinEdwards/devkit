@@ -1,5 +1,10 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import { sharedNames } from "../bin/copies.mjs";
 
@@ -49,4 +54,18 @@ test("PLANT: a name two sites each define is counted; a re-export, a Drizzle tab
     },
   ]);
   assert.equal(sharedNames(shared).length, 1);
+});
+
+test("a config with no numeric baseline fails instead of passing every count", () => {
+  const dir = mkdtempSync(join(tmpdir(), "copies-"));
+  try {
+    const config = join(dir, "copies.json");
+    writeFileSync(config, JSON.stringify({ names: 1 }));
+    const bin = fileURLToPath(new URL("../bin/copies.mjs", import.meta.url));
+    const r = spawnSync(process.execPath, [bin, "--config", config], { encoding: "utf8" });
+    assert.equal(r.status, 1);
+    assert.match(r.stdout, /has no numeric "baseline"/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

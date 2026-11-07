@@ -39,3 +39,10 @@ test("a description with no footer, a rule in the middle, or a mention in prose 
   assert.equal(stripFooter(null), null);
   assert.equal(stripFooter(""), null);
 });
+
+test("a description of 100,000 spaces is read in milliseconds, not seconds", () => {
+  const started = performance.now();
+  assert.equal(stripFooter(`x\n${" ".repeat(100_000)}`), null);
+  assert.equal(stripFooter(`${" ".repeat(100_000)}\n---`), null);
+  assert.ok(performance.now() - started < 500);
+});

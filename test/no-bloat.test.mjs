@@ -257,6 +257,14 @@ test("scan tells comment lines from code past URLs, regular expressions and temp
     "test.fixme(isMobile); test.fail(isMobile); test.slow(isMobile); test.slow(); function* test() {} function test(a) {}",
   ];
   assert.equal(testCases(scan(modifiers.join("\n")).code), 15);
+  // node:test subtests and mocha's specify are cases; a RegExp's test() is not.
+  assert.equal(
+    testCases(
+      scan('it("a", f); specify("b", f); await t.test("c", f); await t.it("d", f); re.test("x");')
+        .code,
+    ),
+    4,
+  );
   assert.deepEqual(scan("a { color: red } /* note */\n/* only */\n", true).kinds, [
     "code",
     "comment",
@@ -637,6 +645,25 @@ test(
         git(dir, "rev-parse", "--short", "HEAD").trim(),
       );
       assert.equal(runBin(dir).status, 0);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test(
+  "end to end: no config, or one with an empty baseline, fails rather than passing every count",
+  { skip: process.platform === "win32" },
+  () => {
+    const dir = scratch();
+    try {
+      const missing = runBin(dir);
+      assert.equal(missing.status, 1);
+      assert.match(missing.stdout, /\.no-bloat\.json does not exist, so every count would pass/);
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify({ baseline: {} }));
+      const empty = runBin(dir);
+      assert.equal(empty.status, 1);
+      assert.match(empty.stdout, /\.no-bloat\.json has no baseline/);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

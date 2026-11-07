@@ -45,6 +45,7 @@ import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
+import { escapeAnnotation } from "./annotate.mjs";
 import { PACKAGES, distinctive, exportNames } from "./shared.mjs";
 
 const OWNER = "DrDustinEdwards";
@@ -181,7 +182,10 @@ async function ownerRepos(/** @type {string | undefined} */ token) {
     : `https://api.github.com/users/${OWNER}/repos?type=owner`;
   const names = [];
   for (let page = 1; ; page++) {
-    const resp = await fetch(`${list}&per_page=100&page=${page}`, { headers });
+    const resp = await fetch(`${list}&per_page=100&page=${page}`, {
+      headers,
+      signal: AbortSignal.timeout(30_000),
+    });
     if (!resp.ok) throw new Error(`GitHub answered ${resp.status} for the repository list`);
     const repos = await resp.json();
     for (const repo of repos)
@@ -289,6 +293,12 @@ async function main() {
   });
   const file = resolve(values.config ?? new URL("../live/copies.json", import.meta.url).pathname);
   const config = JSON.parse(readFileSync(file, "utf8"));
+  if (!values["write-baseline"] && !Number.isFinite(config.baseline)) {
+    console.log(
+      `::error title=devkit-copies::${escapeAnnotation(file)} has no numeric "baseline", so every count would pass. Run \`node bin/copies.mjs --write-baseline\` and commit it.`,
+    );
+    process.exit(1);
+  }
   const work = mkdtempSync(join(tmpdir(), "devkit-copies-"));
   const all = join(work, "all");
   mkdirSync(all);
@@ -305,7 +315,7 @@ async function main() {
       repos = await ownerRepos(token);
     } catch (error) {
       console.log(
-        `::error title=devkit-copies::could not list the repositories: ${error instanceof Error ? error.message : String(error)}`,
+        `::error title=devkit-copies::${escapeAnnotation(`could not list the repositories: ${error instanceof Error ? error.message : String(error)}`)}`,
       );
       process.exit(2);
     }
@@ -331,7 +341,7 @@ async function main() {
           .split("\n")
           .at(-1);
         console.log(
-          `::error title=devkit-copies::could not clone ${repo}: ${why}${token ? " (LIVE_GITHUB_TOKEN needs Contents read on every repository)" : ""}`,
+          `::error title=devkit-copies::${escapeAnnotation(`could not clone ${repo}: ${why}${token ? " (LIVE_GITHUB_TOKEN needs Contents read on every repository)" : ""}`)}`,
         );
         process.exit(2);
       }
@@ -394,21 +404,21 @@ async function main() {
   console.log(lines.join("\n"));
   for (const { a, b, lines: n } of pairs)
     console.log(
-      `::warning title=devkit-copies::${n} lines copied: ${a.repo}/${a.path}:${a.start} and ${b.repo}/${b.path}:${b.start}`,
+      `::warning title=devkit-copies::${escapeAnnotation(`${n} lines copied: ${a.repo}/${a.path}:${a.start} and ${b.repo}/${b.path}:${b.start}`)}`,
     );
   for (const places of same)
     console.log(
-      `::warning title=devkit-copies::the same file: ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`,
+      `::warning title=devkit-copies::${escapeAnnotation(`the same file: ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`)}`,
     );
   for (const { name, places } of names)
     console.log(
-      `::warning title=devkit-copies::${name} is defined in ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`,
+      `::warning title=devkit-copies::${escapeAnnotation(`${name} is defined in ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`)}`,
     );
   if (process.env.GITHUB_STEP_SUMMARY)
     appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
   for (const { name, places } of overlap)
     console.log(
-      `::warning title=devkit-copies::${name} is exported by ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`,
+      `::warning title=devkit-copies::${escapeAnnotation(`${name} is exported by ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`)}`,
     );
   let failed = false;
   if (count > config.baseline) {

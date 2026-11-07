@@ -44,12 +44,21 @@ jobs:
       - id: read
         name: Read the published score
         run: |
-          # A repository that has never published answers 404: the gate then only records this run's score.
-          if curl -fsS --retry 3 --max-time 30 -o "$RUNNER_TEMP/published.json" "https://api.securityscorecards.dev/projects/github.com/$GITHUB_REPOSITORY"; then
-            echo "score=$(jq -c '{score, date, commit: .repo.commit, checks: [.checks[] | {name, score}]}' "$RUNNER_TEMP/published.json")" >> "$GITHUB_OUTPUT"
-          else
+          # Only a 404 means the repository has never published: the gate then only records this run's score. Any other
+          # answer (a 5xx after the retries, a timeout, a body that is not a score) fails the job, never passes the gate.
+          code="$(curl -sS --retry 3 --max-time 30 -o "$RUNNER_TEMP/published.json" -w '%{http_code}' "https://api.securityscorecards.dev/projects/github.com/$GITHUB_REPOSITORY")" || code="000"
+          if [ "$code" = "200" ]; then
+            score="$(jq -ce '{score, date, commit: .repo.commit, checks: [.checks[] | {name, score}]}' "$RUNNER_TEMP/published.json")" || {
+              echo "::error title=Scorecard::the published score for $GITHUB_REPOSITORY could not be read"
+              exit 1
+            }
+            echo "score=$score" >> "$GITHUB_OUTPUT"
+          elif [ "$code" = "404" ]; then
             echo "No published score for $GITHUB_REPOSITORY yet."
             echo "score=" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error title=Scorecard::the published score for $GITHUB_REPOSITORY could not be read (HTTP $code), so the gate would pass over nothing"
+            exit 1
           fi
 
   analysis:

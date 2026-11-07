@@ -7,24 +7,35 @@
 //
 // NO node_modules IMPORTS: the job runs without npm ci.
 
-// The footer as the connection writes it: a rule, then one italic line linking Claude
-// Code, at the end of the description. Also the "Generated with Claude Code" wording.
-const FOOTER =
-  /\s*(?:^|\n)-{3,}\s*\n+\s*_?(?:🤖\s*)?Generated (?:by|with) \[Claude Code\]\([^)]*\)_?\s*$/u;
-// The bare line, with no rule above it, and a session link left on its own.
-const BARE = /\s*\n(?:🤖\s*)?_?Generated (?:by|with) \[Claude Code\]\([^)]*\)_?\s*$/u;
-const SESSION_LINK = /\s*\nhttps:\/\/claude\.ai\/code\/session_[A-Za-z0-9]+\s*$/u;
+// The footer as the connection writes it: a rule, then one italic line linking Claude Code, at the end of the
+// description. Also the "Generated with Claude Code" wording. Read line by line from the end, never with a pattern that
+// spans whitespace: a description of 100,000 spaces took twelve seconds under the single regular expression this was.
+const FOOTER_LINE = /^_?(?:🤖\s*)?_?Generated (?:by|with) \[Claude Code\]\([^)]*\)_?$/u;
+const RULE_LINE = /^-{3,}$/;
+// A session link left on its own line.
+const SESSION_LINK = /^https:\/\/claude\.ai\/code\/session_[A-Za-z0-9]+$/;
 
 /** The description without the footer, or null when it carries none. @param {unknown} body @returns {string | null} */
 export function stripFooter(body) {
   if (typeof body !== "string") return null;
-  let out = body;
-  for (let i = 0; i < 4; i++) {
-    const next = out.replace(FOOTER, "").replace(BARE, "").replace(SESSION_LINK, "");
-    if (next === out) break;
-    out = next;
+  const lines = body.split("\n");
+  let removed = false;
+  // A session link and a footer can stack, each under the other; four layers is more than the connection writes.
+  for (let layer = 0; layer < 12; layer++) {
+    let end = lines.length;
+    while (end > 0 && lines[end - 1].trim() === "") end--;
+    const last = end > 0 ? lines[end - 1].trim() : "";
+    if (FOOTER_LINE.test(last)) {
+      let rule = end - 1;
+      while (rule > 0 && lines[rule - 1].trim() === "") rule--;
+      if (rule > 0 && RULE_LINE.test(lines[rule - 1].trim())) lines.length = rule - 1;
+      else if (end > 1) lines.length = end - 1;
+      else break;
+    } else if (SESSION_LINK.test(last) && end > 1) lines.length = end - 1;
+    else break;
+    removed = true;
   }
-  return out === body ? null : `${out.trimEnd()}\n`;
+  return removed ? `${lines.join("\n").trimEnd()}\n` : null;
 }
 
 /** @param {string} path @param {RequestInit} [init] */

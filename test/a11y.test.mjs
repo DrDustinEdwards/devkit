@@ -4,7 +4,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { judgeSite, pickPages } from "../bin/a11y-judge.mjs";
+import { annotation, judgeSite, pickPages } from "../bin/a11y-judge.mjs";
 
 const style = (outline = "none 0px rgb(0, 0, 0)", bg = "rgba(0, 0, 0, 0)") => ({
   outline,
@@ -183,4 +183,31 @@ test("pages are picked by type from the sitemap, never an asset", () => {
     { url: "https://a.example.com/books/a", why: "detail" },
     { url: "https://a.example.com/books", why: "list" },
   ]);
+});
+
+test("a page whose scan stopped keeps what it measured, and an annotation carries no line break of its own", () => {
+  const found = judgeSite({
+    statement: { url: "https://a.example.com/accessibility", status: 200 },
+    pages: [
+      {
+        url: "https://a.example.com/",
+        why: "home",
+        error: "browser closed",
+        reflow: { scrollWidth: 400, clientWidth: 320 },
+      },
+    ],
+  });
+  assert.deepEqual(
+    found.map((f) => `${f.severity} ${f.item}`),
+    ["unmeasured L1", "error L3"],
+  );
+  assert.equal(
+    annotation({
+      severity: "error",
+      item: "L1",
+      url: "https://a.example.com/%",
+      detail: "x\n::error::y",
+    }),
+    "::error title=L1::https://a.example.com/%25 x ::error::y",
+  );
 });

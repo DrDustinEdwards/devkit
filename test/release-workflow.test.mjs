@@ -13,10 +13,11 @@ const text = readFileSync(
   "utf8",
 ).replace(/\r\n/g, "\n");
 
-/** The `run: |` block of the release step, dedented. */
-const script = (() => {
+/** The `run: |` block of the step whose line contains `marker`, dedented. */
+const block = (/** @type {string} */ marker) => {
   const lines = text.split("\n");
-  const start = lines.findIndex((line) => /^\s+run: \|$/.test(line));
+  const at = lines.findIndex((line) => line.includes(marker));
+  const start = at + lines.slice(at).findIndex((line) => /^\s+run: \|$/.test(line));
   const indent = lines[start + 1].search(/\S/);
   const body = [];
   for (const line of lines.slice(start + 1)) {
@@ -24,7 +25,9 @@ const script = (() => {
     body.push(line.slice(indent));
   }
   return body.join("\n");
-})();
+};
+const checkScript = block("- id: release");
+const publishScript = block("- id: publish");
 
 function run({
   version = "0.19.0",
@@ -40,20 +43,24 @@ function run({
     `#!/bin/sh\necho "$*" >> "${dir}/calls"\nfor a in "$@"; do [ "$prev" = --notes-file ] && cat "$a" > "${dir}/notes"; prev="$a"; done\ncase "$*" in "api repos/o/r/git/ref/tags/"*) ${tagExists ? "exit 0" : "exit 1"};; esac\n`,
   );
   chmodSync(join(dir, "gh"), 0o755);
-  const result = spawnSync("bash", ["-e", "-c", script], {
-    cwd: dir,
-    encoding: "utf8",
-    env: {
-      ...process.env,
-      PATH: `${dir}:${process.env.PATH}`,
-      GITHUB_REF: ref,
-      DEFAULT_BRANCH: "main",
-      GITHUB_REPOSITORY: "o/r",
-      GITHUB_SHA: "abc",
-      GITHUB_OUTPUT: join(dir, "out"),
-      RUNNER_TEMP: dir,
-    },
-  });
+  const env = {
+    ...process.env,
+    PATH: `${dir}:${process.env.PATH}`,
+    GITHUB_REF: ref,
+    DEFAULT_BRANCH: "main",
+    GITHUB_REPOSITORY: "o/r",
+    GITHUB_SHA: "abc",
+    GITHUB_OUTPUT: join(dir, "out"),
+    RUNNER_TEMP: dir,
+  };
+  let result = spawnSync("bash", ["-e", "-c", checkScript], { cwd: dir, encoding: "utf8", env });
+  // The publish step runs only when the check found no tag yet, as its `if` says.
+  if (result.status === 0 && readFileSync(join(dir, "out"), "utf8").includes("new=true"))
+    result = spawnSync("bash", ["-e", "-c", publishScript], {
+      cwd: dir,
+      encoding: "utf8",
+      env: { ...env, TAG: `v${version}`, BUILD: "false" },
+    });
   const read = (/** @type {string} */ f) =>
     spawnSync("cat", [join(dir, f)], { encoding: "utf8" }).stdout;
   return { status: result.status, calls: read("calls"), notes: read("notes"), out: read("out") };
@@ -91,4 +98,13 @@ test("another branch or a version that is not X.Y.Z fails before anything is mad
     assert.equal(r.status, 1);
     assert.doesNotMatch(r.calls, /release create|git\/refs -f/);
   }
+});
+
+test("the step that builds runs the package's code without the token", () => {
+  const build = text.slice(
+    text.indexOf("- name: Build the package"),
+    text.indexOf("- id: publish"),
+  );
+  assert.match(build, /npm ci --ignore-scripts\n\s+npm run prepare/);
+  assert.doesNotMatch(build, /GH_TOKEN|github\.token|secrets\./);
 });

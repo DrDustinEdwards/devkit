@@ -111,14 +111,16 @@
           "name": "site-runtime-speed",
           "repo": "site-runtime",
           "bin": "site-runtime-speed",
-          "kinds": ["site"]
+          "kinds": ["site"],
+          "env": ["PSI_API_KEY"]
         },
         {
           "name": "site-runtime-speed-static",
           "repo": "site-runtime",
           "bin": "site-runtime-speed",
           "kinds": ["static"],
-          "args": ["--kind", "static"]
+          "args": ["--kind", "static"],
+          "env": ["PSI_API_KEY"]
         }
       ]
     },
@@ -132,6 +134,7 @@
           "repo": "devkit",
           "bin": "devkit-ops-audit",
           "kinds": ["site", "worker"],
+          "env": ["GITHUB_TOKEN"],
           "site_args": {
             "foxhound": [
               "--repo",
