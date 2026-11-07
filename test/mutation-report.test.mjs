@@ -8,6 +8,8 @@ import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { chunkedStryker } from "../stryker/chunked.mjs";
+
 const BIN = fileURLToPath(new URL("../bin/mutation-report.mjs", import.meta.url));
 
 test("PLANT: it merges the chunks into one score and names the zero-kill and covered tests a keep rule does not protect; it fails with no keep rule or no report", () => {
@@ -118,4 +120,29 @@ test("PLANT: it merges the chunks into one score and names the zero-kill and cov
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+const options = {
+  all: ["src/**/*.ts"],
+  chunks: { server: ["src/server/**/*.ts"], admin: ["src/admin.ts", "src/admin/**/*.ts"] },
+};
+
+test("PLANT: the shared Stryker config: a whole run mutates everything; a chunk only its globs; rest is everything the chunks do not name", () => {
+  const whole = chunkedStryker(options, {});
+  assert.deepEqual(whole.mutate, ["src/**/*.ts", "!**/*.d.ts"]);
+  assert.equal(whole.jsonReporter.fileName, "reports/mutation/mutation.json");
+
+  const server = chunkedStryker(options, { STRYKER_CHUNK: "server" });
+  assert.deepEqual(server.mutate, ["src/server/**/*.ts", "!**/*.d.ts"]);
+  assert.equal(server.incrementalFile, "reports/stryker-incremental-server.json");
+
+  const rest = chunkedStryker({ ...options, exclude: ["src/demo/**"] }, { STRYKER_CHUNK: "rest" });
+  assert.deepEqual(rest.mutate, [
+    "src/**/*.ts",
+    "!src/server/**/*.ts",
+    "!src/admin.ts",
+    "!src/admin/**/*.ts",
+    "!src/demo/**",
+    "!**/*.d.ts",
+  ]);
 });
