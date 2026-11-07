@@ -32,4 +32,21 @@ test("PLANT: a name two sites each define is counted; a re-export, a Drizzle tab
       ],
     },
   ]);
+  const shared = [
+    { repo: "site-api", path: "src/frontmatter.ts", text: "export function splitSource() {}\n" },
+    { repo: "prelum", path: "frontmatter.mjs", text: "export function splitSource() {}\n" },
+    { repo: "germomics", path: "app/lib/a.ts", text: "export function splitSource() {}\n" },
+    { repo: "txasm", path: "app/lib/a.ts", text: "export function splitSource() {}\n" },
+  ];
+  // With packages: only the names two shared packages each export, not the sites' own definitions.
+  assert.deepEqual(sharedNames(shared, true), [
+    {
+      name: "splitSource",
+      places: [
+        { repo: "prelum", path: "frontmatter.mjs" },
+        { repo: "site-api", path: "src/frontmatter.ts" },
+      ],
+    },
+  ]);
+  assert.equal(sharedNames(shared).length, 1);
 });

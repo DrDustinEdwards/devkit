@@ -47,14 +47,17 @@ export function pickPages(origin, urls, max) {
     });
   }
   const chosen = new Map();
-  const take = (candidate, why) => {
+  const take = (
+    /** @type {{ url: string, path: string, segments: string[] } | undefined} */ candidate,
+    /** @type {string} */ why,
+  ) => {
     if (candidate && !chosen.has(candidate) && chosen.size < max) chosen.set(candidate, why);
   };
-  for (const [pattern, why] of [
+  for (const [pattern, why] of /** @type {[RegExp, string][]} */ ([
     [/about/i, "about"],
     [/contact/i, "contact"],
     [/(^|\/)(sign-?in|log-?in|account|auth)(\/|$)/i, "sign-in"],
-  ]) {
+  ])) {
     take(
       candidates.find((c) => pattern.test(c.path) && c.segments.length <= 2),
       why,
@@ -94,6 +97,9 @@ function focusVisible(
 /**
  * @typedef {{ severity: "error" | "warning" | "unmeasured", item: string, url: string, detail: string }} Finding
  * @typedef {{ id: string, impact?: string, tags: string[], nodes: number, target: string }} AxeViolation
+ * @typedef {{ body?: boolean, sel?: string, text?: string, same?: boolean, focused?: any, unfocused?: any,
+ *   covered?: { by: string, position?: string }, offscreen?: boolean, skipTargetsMain?: boolean }} Press one Tab press
+ * @typedef {(severity: Finding["severity"], item: string, url: string, detail: string) => unknown} Add
  * @typedef {object} PageScan
  * @property {string} url as loaded
  * @property {string} why home, 404, about, list, detail...
@@ -102,13 +108,13 @@ function focusVisible(
  * @property {{ lang: string | null, title: string | null, h1: number, headings: { level: number, sel: string }[],
  *   landmarks: { main: number, banner: number, nav: number, contentinfo: number }, imgNoAlt: string[] }} [basics]
  * @property {Record<string, AxeViolation[] | { error: string }>} [axe] per view ("1440-light")
- * @property {object[]} [keyboard] one entry per Tab press: { body: true }, or the focused element's sel, text, same (the
+ * @property {Press[]} [keyboard] one entry per Tab press: { body: true }, or the focused element's sel, text, same (the
  *   element the press before focused), focused and unfocused styles, covered ({ by, position }), offscreen, skipTargetsMain
  * @property {{ scrollWidth: number, clientWidth: number, widest?: { sel: string, right: number } | null }} [reflow]
  * @property {{ sel: string, dir: string }[]} [clipped] text clipped once WCAG 1.4.12 spacing is applied, and not before
  * @property {{ name: string, target: string, duration: number | string, iterations: number | string }[]} [motion]
  *   animations running 1.5 s after load with prefers-reduced-motion: reduce
- * @property {{ axe: AxeViolation[] | { error: string }, keyboard: object[] }} [forced] axe and a shorter Tab walk with
+ * @property {{ axe: AxeViolation[] | { error: string }, keyboard: Press[] }} [forced] axe and a shorter Tab walk with
  *   forced-colors: active
  * @property {{ scrollWidth: number, clientWidth: number, navLinks: number, toggle: string | null }} [zoom] at 720 x 450
  * @property {{ sel: string, opened: boolean, closed?: boolean, focusBack?: boolean }[]} [escape] each opener the walk
@@ -123,7 +129,12 @@ function focusVisible(
 export function judgeSite({ statement, pages }) {
   /** @type {Finding[]} */
   const findings = [];
-  const add = (severity, item, url, detail) => findings.push({ severity, item, url, detail });
+  const add = (
+    /** @type {Finding["severity"]} */ severity,
+    /** @type {string} */ item,
+    /** @type {string} */ url,
+    /** @type {string} */ detail,
+  ) => findings.push({ severity, item, url, detail });
   const titles = new Map();
   for (const page of pages) {
     const { url } = page;
@@ -201,7 +212,7 @@ export function judgeSite({ statement, pages }) {
 }
 
 /** One annotation per axe rule a page breaks, with every view (width and color scheme) it breaks in. */
-function judgeAxe(/** @type {PageScan} */ page, add) {
+function judgeAxe(/** @type {PageScan} */ page, /** @type {Add} */ add) {
   const rules = new Map();
   for (const [view, result] of Object.entries(page.axe ?? {})) {
     if (!Array.isArray(result)) {
@@ -216,7 +227,7 @@ function judgeAxe(/** @type {PageScan} */ page, add) {
     }
   }
   for (const [id, { v, views, nodes }] of rules) {
-    const wcag = v.tags.some((tag) => WCAG_TAGS.includes(tag));
+    const wcag = v.tags.some((/** @type {string} */ tag) => WCAG_TAGS.includes(tag));
     add(
       wcag ? "error" : "warning",
       "L1",
@@ -227,7 +238,7 @@ function judgeAxe(/** @type {PageScan} */ page, add) {
 }
 
 /** The Tab walk: a skip link to main first, a visible focus change at every stop, nothing fixed over it, and no trap. */
-function judgeKeyboard(/** @type {PageScan} */ page, add) {
+function judgeKeyboard(/** @type {PageScan} */ page, /** @type {Add} */ add) {
   const presses = page.keyboard;
   if (!presses) return;
   // A long enough run of presses on one element is a trap (a short one is focus moving inside an iframe; see unseenStops).
@@ -255,7 +266,9 @@ function judgeKeyboard(/** @type {PageScan} */ page, add) {
       page.url,
       `no visible focus on ${unseen.length} of ${stops.length} stops: ${list(unseen.map((s) => `\`${s.sel}\``))}`,
     );
-  const covered = stops.filter((stop) => stop.covered);
+  const covered = /** @type {(Press & { covered: { by: string, position?: string } })[]} */ (
+    stops.filter((stop) => stop.covered)
+  );
   const under = covered.filter((stop) => stop.covered.position);
   if (under.length)
     add(
@@ -293,7 +306,7 @@ function judgeKeyboard(/** @type {PageScan} */ page, add) {
  * The stops of a Tab walk that show no focus change. A run of presses on one element is focus inside something the page
  * cannot see into (an iframe, a closed shadow root), so those stops are left out, as are offscreen ones.
  */
-function unseenStops(/** @type {object[]} */ presses) {
+function unseenStops(/** @type {Press[]} */ presses) {
   const opaque = new Set();
   presses.forEach((stop, i) => stop.same && opaque.add(i).add(i - 1));
   return presses.filter(
@@ -306,7 +319,7 @@ function unseenStops(/** @type {object[]} */ presses) {
 }
 
 /** Forced colors: an axe rule the normal views did not break, and focus that only the forced palette hides. */
-function judgeForced(/** @type {PageScan} */ page, add) {
+function judgeForced(/** @type {PageScan} */ page, /** @type {Add} */ add) {
   const forced = page.forced;
   if (!forced) return;
   if (!Array.isArray(forced.axe))
@@ -321,7 +334,7 @@ function judgeForced(/** @type {PageScan} */ page, add) {
     for (const v of forced.axe.filter(
       (each) => !seen.has(each.id) && !FORCED_COLOR_RULES.includes(each.id),
     )) {
-      const wcag = v.tags.some((tag) => WCAG_TAGS.includes(tag));
+      const wcag = v.tags.some((/** @type {string} */ tag) => WCAG_TAGS.includes(tag));
       add(
         wcag ? "error" : "warning",
         "L4",

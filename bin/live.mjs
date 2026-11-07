@@ -72,6 +72,8 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
+/** @typedef {Record<string, any>} Json A site, area, check, verdict, run or cell: JSON the config and the runs hold. */
+
 export const CLEAN_DAYS = 7;
 const OWNER = "DrDustinEdwards";
 const KINDS = ["site", "static", "worker", "app"];
@@ -90,7 +92,7 @@ const live = new URL("../live/", import.meta.url);
 const readJson = (/** @type {string | URL} */ path) => JSON.parse(readFileSync(path, "utf8"));
 
 /** The site list, area list and verdicts in a directory laid out as live/ is. */
-export function loadConfig(dir = live) {
+export function loadConfig(/** @type {string | URL} */ dir = live) {
   const base = typeof dir === "string" ? pathToFileURL(dir.endsWith("/") ? dir : `${dir}/`) : dir;
   const { sites } = readJson(new URL("sites.json", base));
   const { areas } = readJson(new URL("areas.json", base));
@@ -104,7 +106,10 @@ export function loadConfig(dir = live) {
 }
 
 /** Every problem with the config, as sentences; empty when it is sound. */
-export function lintConfig({ sites, areas, verdicts }) {
+export function lintConfig(
+  /** @type {{ sites: Json[], areas: Json[], verdicts: Json[] }} */ { sites, areas, verdicts },
+) {
+  /** @type {string[]} */
   const problems = [];
   const siteIds = new Set();
   for (const site of sites) {
@@ -191,7 +196,9 @@ export function lintConfig({ sites, areas, verdicts }) {
         );
       if (
         entry.verdict === "complete" &&
-        !(entry.evidence ?? []).some((url) => String(url).startsWith("https://"))
+        !(entry.evidence ?? []).some((/** @type {unknown} */ url) =>
+          String(url).startsWith("https://"),
+        )
       ) {
         problems.push(
           `the area ${verdict.area} verdict marks ${cell} complete with no evidence link`,
@@ -209,10 +216,10 @@ const same = (/** @type {string} */ a, /** @type {string} */ b) =>
   Boolean(a) && a.trim().toLowerCase() === b?.trim().toLowerCase();
 
 /** The checks of an area that apply to a site. */
-const checksFor = (area, site) =>
+const checksFor = (/** @type {Json} */ area, /** @type {Json} */ site) =>
   area.checks
-    .filter((check) => (check.kinds ?? ["site", "static"]).includes(site.kind))
-    .map((check) =>
+    .filter((/** @type {Json} */ check) => (check.kinds ?? ["site", "static"]).includes(site.kind))
+    .map((/** @type {Json} */ check) =>
       check.site_reports?.[site.id] ? { ...check, report: check.site_reports[site.id] } : check,
     );
 
@@ -247,7 +254,9 @@ function tally(/** @type {{ severity: string, check: string, detail: string }[]}
  * One check's result on one site, from its exit code and output. A failure stands even beside an unmeasured item (what
  * was measured failed); a pass with an unmeasured item is not a pass.
  */
-export function resultOf({ code, output, seconds }) {
+export function resultOf(
+  /** @type {{ code: number | null, output: string, seconds: number }} */ { code, output, seconds },
+) {
   const findings = parseFindings(output);
   const { errors, warnings, unmeasured, reason } = tally(findings);
   const status = code === 1 ? "fail" : code === 0 && !unmeasured ? "pass" : "unmeasured";
@@ -271,8 +280,13 @@ export function resultOf({ code, output, seconds }) {
 }
 
 /** One site's result from a reported check's report (null when it could not be read), checked for name and age. Pure. */
-export function reportedResult(report, check, site, now = new Date()) {
-  const error = (detail) => ({
+export function reportedResult(
+  /** @type {Json | null | undefined} */ report,
+  /** @type {Json} */ check,
+  /** @type {Json} */ site,
+  now = new Date(),
+) {
+  const error = (/** @type {string} */ detail) => ({
     status: "unmeasured",
     errors: 0,
     warnings: 0,
@@ -292,8 +306,8 @@ export function reportedResult(report, check, site, now = new Date()) {
   if (!entry || !STATUSES.includes(given))
     return error(`${check.report} has no result for ${site.origin}`);
   const findings = (Array.isArray(entry.findings) ? entry.findings : [])
-    .filter((f) => ["error", "warning", "unmeasured"].includes(f?.severity))
-    .map((f) => ({
+    .filter((/** @type {Json} */ f) => ["error", "warning", "unmeasured"].includes(f?.severity))
+    .map((/** @type {Json} */ f) => ({
       severity: f.severity,
       check: String(f.check ?? "").slice(0, 200),
       detail: String(f.detail ?? "").slice(0, 600),
@@ -342,7 +356,7 @@ function newestTag(/** @type {string} */ repo) {
     { encoding: "utf8" },
   );
   const tags = [...out.matchAll(/refs\/tags\/(v\d+\.\d+\.\d+)$/gm)].map((m) => m[1]);
-  tags.sort((a, b) =>
+  tags.sort((/** @type {string} */ a, /** @type {string} */ b) =>
     a
       .slice(1)
       .split(".")
@@ -353,7 +367,11 @@ function newestTag(/** @type {string} */ repo) {
 }
 
 /** Installs a check's package once per repo and ref; returns the bin's path or the reason it cannot run. */
-function install(check, cache, root) {
+function install(
+  /** @type {Json} */ check,
+  /** @type {Map<string, Json>} */ cache,
+  /** @type {string} */ root,
+) {
   let ref = check.ref;
   try {
     ref ??= newestTag(check.repo);
@@ -383,14 +401,16 @@ function install(check, cache, root) {
     } catch (error) {
       cache.set(key, {
         ref,
-        error: `npm could not install ${key}: ${String(error.stderr ?? error.message)
+        error: `npm could not install ${key}: ${String(
+          /** @type {Json} */ (error).stderr ?? /** @type {Json} */ (error).message,
+        )
           .trim()
           .split("\n")
           .at(-1)}`,
       });
     }
   }
-  const got = cache.get(key);
+  const got = /** @type {Json} */ (cache.get(key));
   if (got.error) return { ref, error: got.error };
   const bin = join(got.dir, "node_modules", ".bin", check.bin);
   return existsSync(bin)
@@ -461,13 +481,20 @@ async function linesFor(/** @type {number} */ area, /** @type {string | undefine
 
 /** Runs every check that applies against every site; one record per area, site and check. */
 export async function runAll(
-  { sites, areas },
-  { onlyAreas, onlySites, token, log = console.error } = {},
+  /** @type {{ sites: Json[], areas: Json[] }} */ { sites, areas },
+  /** @type {{ onlyAreas?: number[], onlySites?: string[], token?: string, log?: (line: string) => void }} */ {
+    onlyAreas,
+    onlySites,
+    token,
+    log = console.error,
+  } = {},
 ) {
   const root = mkdtempSync(join(tmpdir(), "devkit-live-"));
   const cache = new Map();
   const reports = new Map();
+  /** @type {(() => Promise<void>)[]} */
   const jobs = [];
+  /** @type {Json[]} */
   const results = [];
   for (const area of areas) {
     if (onlyAreas && !onlyAreas.includes(area.id)) continue;
@@ -509,7 +536,9 @@ export async function runAll(
           ...(check.site_args?.[site.id] ?? []),
         ];
         jobs.push(async () => {
-          const result = resultOf(await runBin(bin, args, checkEnv(process.env, check)));
+          const result = resultOf(
+            await runBin(/** @type {string} */ (bin), args, checkEnv(process.env, check)),
+          );
           log(
             `area ${area.id} ${site.id} ${check.name}: ${result.status} (${result.errors} errors, ${result.warnings} warnings, ${result.seconds}s)`,
           );
@@ -523,6 +552,7 @@ export async function runAll(
       for (let job = jobs.shift(); job; job = jobs.shift()) await job();
     }),
   );
+  /** @type {Json} */
   const lines = {};
   for (const area of areas)
     if (!onlyAreas || onlyAreas.includes(area.id)) lines[area.id] = await linesFor(area.id, token);
@@ -539,18 +569,26 @@ export async function runAll(
 
 /**
  * The board, from the runs (any order) and the config. Pure.
- * @returns {{ as_of: string | null, finished: boolean, sites: object[], areas: object[] }}
+ * @returns {{ as_of: string | null, finished: boolean, sites: object[], areas: object[], public_token: boolean }}
  */
-export function buildBoard({ sites, areas, verdicts }, runs) {
+export function buildBoard(
+  /** @type {{ sites: Json[], areas: Json[], verdicts: Json[] }} */ { sites, areas, verdicts },
+  /** @type {Json[]} */ runs,
+) {
   const ordered = [...runs].sort((a, b) => a.at.localeCompare(b.at));
   const newest = ordered.at(-1);
-  const cellOf = (run, area, site) => run.results.filter((r) => r.area === area && r.site === site);
-  const passed = (records, names) =>
+  const cellOf = (
+    /** @type {Json} */ run,
+    /** @type {unknown} */ area,
+    /** @type {unknown} */ site,
+  ) => run.results.filter((/** @type {Json} */ r) => r.area === area && r.site === site);
+  const passed = (/** @type {Json[]} */ records, /** @type {string[]} */ names) =>
     names.every((name) => records.find((r) => r.check === name)?.status === "pass");
   let finished = Boolean(newest);
   const board = areas.map((area) => {
     const verdict = verdicts.find((v) => v.area === area.id);
     const signedByBuilder = verdict && same(verdict.verifier, area.builder);
+    /** @type {Json} */
     const cells = {};
     const pkg = verdict?.cells?.package;
     cells.package = !pkg
@@ -567,7 +605,7 @@ export function buildBoard({ sites, areas, verdicts }, runs) {
         cells[site.id] = { status: "n/a", reason: area.skip[site.id] };
         continue;
       }
-      const names = checksFor(area, site).map((check) => check.name);
+      const names = checksFor(area, site).map((/** @type {Json} */ check) => check.name);
       if (area.checks.length && !names.length) {
         cells[site.id] = { status: "n/a", reason: `no check for a ${site.kind}` };
         continue;
@@ -610,18 +648,21 @@ export function buildBoard({ sites, areas, verdicts }, runs) {
   };
 }
 
-function siteCell({
-  area,
-  site,
-  names,
-  verdict,
-  signedByBuilder,
-  ordered,
-  newest,
-  cellOf,
-  passed,
-}) {
+function siteCell(
+  /** @type {Json} */ {
+    area,
+    site,
+    names,
+    verdict,
+    signedByBuilder,
+    ordered,
+    newest,
+    cellOf,
+    passed,
+  },
+) {
   if (!names.length) return { status: "missing", reason: "no live check yet" };
+  /** @type {Json[]} */
   const records = newest ? cellOf(newest, area.id, site.id) : [];
   if (!records.length) return { status: "missing", reason: "not run yet" };
   // A measured failure is the cell's answer even when another check could not measure; with no failure, an unmeasured
@@ -654,7 +695,8 @@ function siteCell({
   if (signedByBuilder)
     return { status: "partial", reason: "signed by its own builder", clean_days };
   const failedAfter = ordered.find(
-    (run) => run.at.slice(0, 10) > verdict.date && !passed(cellOf(run, area.id, site.id), names),
+    (/** @type {Json} */ run) =>
+      run.at.slice(0, 10) > verdict.date && !passed(cellOf(run, area.id, site.id), names),
   );
   if (failedAfter)
     return {
@@ -673,7 +715,7 @@ function siteCell({
 const MARK = { complete: "✅", partial: "🟡", missing: "❌", unmeasured: "❔", "n/a": "·" };
 
 /** The board as Markdown, for GitHub to show. */
-export function boardMarkdown(board) {
+export function boardMarkdown(/** @type {Json} */ board) {
   const out = ["# Shared-code completeness", ""];
   out.push(
     board.as_of
@@ -689,12 +731,12 @@ export function boardMarkdown(board) {
   );
   out.push("✅ complete · 🟡 partial · ❌ missing · ❔ could not measure · `·` does not apply", "");
   out.push(
-    `| Area | Package | ${board.sites.map((s) => s.name).join(" | ")} | Lines added | Lines removed |`,
+    `| Area | Package | ${board.sites.map((/** @type {Json} */ s) => s.name).join(" | ")} | Lines added | Lines removed |`,
   );
   out.push(`|---|---|${board.sites.map(() => "---").join("|")}|---:|---:|`);
   for (const area of board.areas) {
-    const marks = ["package", ...board.sites.map((s) => s.id)].map(
-      (id) => MARK[area.cells[id].status],
+    const marks = ["package", ...board.sites.map((/** @type {Json} */ s) => s.id)].map(
+      (id) => MARK[/** @type {keyof typeof MARK} */ (area.cells[id].status)],
     );
     const lines =
       area.lines && !area.lines.error
@@ -718,9 +760,16 @@ export function boardMarkdown(board) {
       "",
     );
     for (const [id, cell] of open) {
-      const name = id === "package" ? "Package" : board.sites.find((s) => s.id === id).name;
-      out.push(`- ${MARK[cell.status]} ${name}: ${cell.reason.replace(/\|/g, "\\|")}`);
-      for (const finding of (cell.findings ?? []).filter((f) => f.severity === "error").slice(0, 5))
+      const name =
+        id === "package"
+          ? "Package"
+          : board.sites.find((/** @type {Json} */ s) => s.id === id).name;
+      out.push(
+        `- ${MARK[/** @type {keyof typeof MARK} */ (cell.status)]} ${name}: ${cell.reason.replace(/\|/g, "\\|")}`,
+      );
+      for (const finding of (cell.findings ?? [])
+        .filter((/** @type {Json} */ f) => f.severity === "error")
+        .slice(0, 5))
         out.push(`  - ${finding.check}: ${finding.detail}`);
     }
     for (const [what, why] of unchecked)
@@ -762,14 +811,14 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
     console.log(
       `devkit-live: ${run.results.length} checks; ${
         Object.entries(counts)
-          .map(([s, list]) => `${s} ${list.length}`)
+          .map(([s, list]) => `${s} ${list?.length}`)
           .join(", ") || "none to run"
       }.`,
     );
   } else if (command === "board" && values.runs && values.out) {
     const runs = readdirSync(values.runs)
       .filter((name) => name.endsWith(".json"))
-      .map((name) => readJson(join(values.runs, name)));
+      .map((name) => readJson(join(/** @type {string} */ (values.runs), name)));
     const board = buildBoard(config, runs);
     writeFileSync(values.out, `${JSON.stringify(board, null, 1)}\n`);
     if (values.md) writeFileSync(values.md, boardMarkdown(board));

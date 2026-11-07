@@ -29,7 +29,8 @@ async function get(/** @type {string} */ url) {
 }
 
 const spec = JSON.parse(await get(OPENAPI));
-const deref = (/** @type {any} */ node) =>
+/** @type {(node: any) => any} */
+const deref = (node) =>
   node?.$ref
     ? deref(
         node.$ref
@@ -57,7 +58,9 @@ function fieldPaths(/** @type {any} */ schema, prefix = "", depth = 0, out = new
 const operations = Object.fromEntries(
   OPERATIONS.map(([method, path]) => {
     const operation = spec.paths[path][method];
-    const status = Object.keys(operation.responses).find((code) => code.startsWith("2"));
+    const status = /** @type {string} */ (
+      Object.keys(operation.responses).find((code) => code.startsWith("2"))
+    );
     const schema = deref(operation.responses[status]).content["application/json"].schema;
     return [
       operation.operationId,

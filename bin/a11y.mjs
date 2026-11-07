@@ -103,19 +103,21 @@ async function sitemapUrls(/** @type {string} */ origin, /** @type {string} */ b
   return urls;
 }
 
-async function settle(page, ms) {
+/** @typedef {any} Page A Playwright page (Playwright is found at run time, so it has no types here). */
+
+async function settle(/** @type {Page} */ page, /** @type {number} */ ms) {
   await page.waitForLoadState("networkidle", { timeout: 6000 }).catch(() => {});
   await sleep(ms);
 }
 
-function basics(page) {
+function basics(/** @type {Page} */ page) {
   return page.evaluate(() => {
     const headings = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].filter(
       (h) => h.getClientRects().length || h.closest("[hidden]") === null,
     );
-    const outside = (sel) =>
+    const outside = (/** @type {string} */ sel) =>
       [...document.querySelectorAll(sel)].filter(
-        (el) => !el.parentElement.closest("article,aside,main,nav,section"),
+        (el) => !el.parentElement?.closest("article,aside,main,nav,section"),
       ).length;
     return {
       lang: document.documentElement.getAttribute("lang") || null,
@@ -135,12 +137,12 @@ function basics(page) {
   });
 }
 
-async function axe(AxeBuilder, page) {
+async function axe(/** @type {Page} */ AxeBuilder, /** @type {Page} */ page) {
   try {
     const { violations } = await new AxeBuilder({ page })
       .withTags([...WCAG_TAGS, "best-practice"])
       .analyze();
-    return violations.map((v) => ({
+    return violations.map((/** @type {Page} */ v) => ({
       id: v.id,
       impact: v.impact,
       tags: v.tags,
@@ -153,12 +155,12 @@ async function axe(AxeBuilder, page) {
 }
 
 /** Every Tab press from the top of the page: what took focus, how it looked, and what covered it. */
-async function keyboardWalk(page, count = TAB_PRESSES) {
+async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
   await page.mouse.click(1, 1).catch(() => {});
   await page.evaluate(() => {
     for (const el of document.querySelectorAll("[data-devkit-tab]"))
       el.removeAttribute("data-devkit-tab");
-    document.activeElement?.blur?.();
+    /** @type {HTMLElement | null} */ (document.activeElement)?.blur?.();
     window.scrollTo(0, 0);
   });
   const presses = [];
@@ -166,8 +168,8 @@ async function keyboardWalk(page, count = TAB_PRESSES) {
     await page.keyboard.press("Tab");
     await sleep(120);
     presses.push(
-      await page.evaluate((key) => {
-        const el = document.activeElement;
+      await page.evaluate((/** @type {number} */ key) => {
+        const el = /** @type {HTMLElement | null} */ (document.activeElement);
         if (!el || el === document.body || el === document.documentElement) return { body: true };
         const same = el.getAttribute("data-devkit-tab") === String(key - 1);
         el.setAttribute("data-devkit-tab", String(key));
@@ -186,7 +188,11 @@ async function keyboardWalk(page, count = TAB_PRESSES) {
           const hit = document.elementFromPoint(cx, cy);
           if (hit && hit !== el && !el.contains(hit) && !hit.contains(el)) {
             let position = null;
-            for (let n = hit; n && n !== document.body && !position; n = n.parentElement) {
+            for (
+              let n = /** @type {Element | null} */ (hit);
+              n && n !== document.body && !position;
+              n = n.parentElement
+            ) {
               const p = getComputedStyle(n).position;
               if (p === "fixed" || p === "sticky") position = p;
             }
@@ -227,7 +233,7 @@ async function keyboardWalk(page, count = TAB_PRESSES) {
       }, i),
     );
   }
-  await page.evaluate(() => document.activeElement?.blur?.());
+  await page.evaluate(() => /** @type {HTMLElement | null} */ (document.activeElement)?.blur?.());
   await sleep(150);
   const unfocused = new Map(
     await page.evaluate(() =>
@@ -246,12 +252,12 @@ async function keyboardWalk(page, count = TAB_PRESSES) {
   );
 }
 
-function reflow(page) {
+function reflow(/** @type {Page} */ page) {
   return page.evaluate(() => {
     const scrollWidth = document.documentElement.scrollWidth;
     const clientWidth = Math.min(innerWidth, document.documentElement.clientWidth);
     if (scrollWidth <= clientWidth) return { scrollWidth, clientWidth };
-    const inScroller = (el) => {
+    const inScroller = (/** @type {Element} */ el) => {
       for (let n = el.parentElement; n && n !== document.body; n = n.parentElement)
         if (/auto|scroll|hidden|clip/.test(getComputedStyle(n).overflowX)) return true;
       return false;
@@ -270,7 +276,7 @@ function reflow(page) {
       )
         continue;
       let d = 0;
-      for (let n = el; n; n = n.parentElement) d++;
+      for (let n = /** @type {Element | null} */ (el); n; n = n.parentElement) d++;
       if (d > depth) [widest, depth] = [{ sel: window.__sel(el), right: Math.round(right) }, d];
     }
     return { scrollWidth, clientWidth, widest };
@@ -278,9 +284,9 @@ function reflow(page) {
 }
 
 /** The 720 px viewport that stands in for 200% zoom of a 1440 px window: sideways scroll, and a way to the navigation. */
-function zoomProxy(page) {
+function zoomProxy(/** @type {Page} */ page) {
   return page.evaluate(() => {
-    const visible = (el) => {
+    const visible = (/** @type {Element} */ el) => {
       const r = el.getBoundingClientRect();
       const cs = getComputedStyle(el);
       return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none";
@@ -292,7 +298,12 @@ function zoomProxy(page) {
       ...document.querySelectorAll(
         "button[aria-expanded], button[aria-controls], [popovertarget], summary",
       ),
-    ].find((el) => visible(el) && !el.disabled && el.tabIndex >= 0);
+    ].find(
+      (el) =>
+        visible(el) &&
+        !(/** @type {HTMLButtonElement} */ (el).disabled) &&
+        /** @type {HTMLElement} */ (el).tabIndex >= 0,
+    );
     return {
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
@@ -303,12 +314,12 @@ function zoomProxy(page) {
 }
 
 /** Up to ESCAPE_CONTROLS openers the walk reached: Enter opens it, Escape must close it and put focus back on it. */
-async function escapeCloses(page) {
+async function escapeCloses(/** @type {Page} */ page) {
   const results = [];
   const url = page.url();
   for (const opener of (await page.$$("[data-devkit-opener]")).slice(0, ESCAPE_CONTROLS)) {
     const state = () =>
-      opener.evaluate((el) => ({
+      opener.evaluate((/** @type {Element} */ el) => ({
         expanded: el.getAttribute("aria-expanded") === "true",
         layers:
           document.querySelectorAll("dialog[open], :popover-open").length +
@@ -341,12 +352,15 @@ async function escapeCloses(page) {
 }
 
 /** Elements whose text the WCAG 1.4.12 spacing pushes out of an overflow-hidden box that held it before. */
-async function textSpacing(page) {
+async function textSpacing(/** @type {Page} */ page) {
   const clipped = () =>
     page.evaluate(() => {
-      const hides = (v) => v === "hidden" || v === "clip";
+      const hides = (/** @type {string} */ v) => v === "hidden" || v === "clip";
+      /** @type {{ sel: string, dir: string }[]} */
       const out = [];
-      for (const el of document.body.querySelectorAll("*")) {
+      for (const el of /** @type {NodeListOf<HTMLElement>} */ (
+        document.body.querySelectorAll("*")
+      )) {
         const cs = getComputedStyle(el);
         if (!hides(cs.overflowX) && !hides(cs.overflowY)) continue;
         if (el.clientWidth <= 2 || el.clientHeight <= 2 || !(el.innerText || "").trim()) continue;
@@ -360,15 +374,18 @@ async function textSpacing(page) {
       }
       return out;
     });
-  const before = new Set((await clipped()).map((c) => c.sel));
+  /** @type {{ sel: string, dir: string }[]} */
+  const first = await clipped();
+  const before = new Set(first.map((c) => c.sel));
   const style = await page.addStyleTag({ content: SPACING_CSS });
   await sleep(300);
+  /** @type {{ sel: string, dir: string }[]} */
   const after = await clipped();
-  await style.evaluate((node) => node.remove());
+  await style.evaluate((/** @type {Element} */ node) => node.remove());
   return after.filter((c) => !before.has(c.sel));
 }
 
-async function motion(browser, url) {
+async function motion(/** @type {Page} */ browser, /** @type {string} */ url) {
   const context = await browser.newContext({
     viewport: { width: 1440, height: 900 },
     reducedMotion: "reduce",
@@ -382,11 +399,12 @@ async function motion(browser, url) {
       document
         .getAnimations()
         .filter((a) => a.playState === "running")
-        .map((a) => {
+        .map((animation) => {
+          const a = /** @type {Animation & Record<string, any>} */ (animation);
           const timing = a.effect?.getTiming?.() ?? {};
           return {
             name: a.animationName || a.transitionProperty || a.constructor.name,
-            target: window.__sel(a.effect?.target),
+            target: window.__sel(/** @type {any} */ (a.effect)?.target),
             duration: timing.duration,
             iterations: timing.iterations === Infinity ? "infinite" : timing.iterations,
           };
@@ -398,7 +416,12 @@ async function motion(browser, url) {
 }
 
 /** Every measurement of one page, in the shape judgeSite reads. */
-async function scanPage(browser, AxeBuilder, { url, why }) {
+async function scanPage(
+  /** @type {Page} */ browser,
+  /** @type {Page} */ AxeBuilder,
+  /** @type {{ url: string, why: string }} */ { url, why },
+) {
+  /** @type {Record<string, any>} */
   const scan = { url, why };
   // bypassCSP: a style-src 'self' policy would refuse the injected text spacing, as it refuses the bookmarklet.
   const context = await browser.newContext({
@@ -551,6 +574,7 @@ async function main() {
       );
     return 3;
   }
+  /** @type {Record<string, any>[]} */
   const pages = [];
   try {
     for (const target of [
@@ -580,12 +604,15 @@ async function main() {
     url: `${base}/accessibility`,
     status: (await fetchText(`${base}/accessibility`)).status,
   };
-  const findings = judgeSite({ statement, pages });
+  const findings = judgeSite({
+    statement,
+    pages: /** @type {import("./a11y-judge.mjs").PageScan[]} */ (pages),
+  });
   for (const finding of findings) console.log(annotation(finding));
   const errors = findings.filter((f) => f.severity === "error").length;
   const unmeasured = findings.filter((f) => f.severity === "unmeasured").length;
   const items = Object.entries(Object.groupBy(findings, (f) => f.item))
-    .map(([item, list]) => `${item} ${list.length}`)
+    .map(([item, list]) => `${item} ${list?.length}`)
     .join(", ");
   console.log(
     `devkit-a11y: ${pages.length} pages on ${base}; ${errors} errors, ${findings.length - errors - unmeasured} warnings, ${unmeasured} not measured${items ? ` (${items})` : ""}.`,

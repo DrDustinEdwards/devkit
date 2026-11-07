@@ -40,7 +40,7 @@ function readSettings() {
   }
 }
 
-function saveSettings(settings) {
+function saveSettings(/** @type {{ placement: string }} */ settings) {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
   } catch {
@@ -49,17 +49,32 @@ function saveSettings(settings) {
 }
 
 /** How far down the document an element starts, as Astro's loading rules measure it. */
-function documentTop(el) {
+function documentTop(/** @type {HTMLElement} */ el) {
   let y = 0;
-  for (let at = el; at; at = at.offsetParent) y += at.offsetTop;
+  for (
+    let at = /** @type {HTMLElement | null} */ (el);
+    at;
+    at = /** @type {HTMLElement | null} */ (at.offsetParent)
+  )
+    y += at.offsetTop;
   return y;
 }
 
-async function bytesOf(src) {
+async function bytesOf(/** @type {string} */ src) {
   return (await (await fetch(src)).blob()).size;
 }
 
 // Astro's performance rules, for a site whose images come from site-runtime's ./image.
+/**
+ * @typedef {object} PerfRule
+ * @property {string} code
+ * @property {string} title
+ * @property {string | ((el: HTMLImageElement) => string)} message
+ * @property {string} selector
+ * @property {(el: HTMLImageElement) => boolean | Promise<boolean>} match
+ */
+
+/** @type {PerfRule[]} */
 const PERF_RULES = [
   {
     code: "perf-responsive-image",
@@ -98,7 +113,7 @@ const PERF_RULES = [
     selector: 'img[src$=".gif"]',
     match: async (el) =>
       !EXTERNAL.test(el.getAttribute("src") ?? "") &&
-      (await bytesOf(el.getAttribute("src"))) >= 102400,
+      (await bytesOf(/** @type {string} */ (el.getAttribute("src")))) >= 102400,
   },
   {
     code: "perf-slow-island",
@@ -110,12 +125,18 @@ const PERF_RULES = [
   },
 ];
 
-const text = (value, el) => (typeof value === "function" ? value(el) : value);
+const text = (/** @type {PerfRule["message"]} */ value, /** @type {HTMLImageElement} */ el) =>
+  typeof value === "function" ? value(el) : value;
+
+/** @typedef {{ el: Element, code: string, title: string, message: string, link?: string }} Finding */
 
 async function perfFindings() {
+  /** @type {Finding[]} */
   const found = [];
   for (const rule of PERF_RULES) {
-    for (const el of document.querySelectorAll(rule.selector)) {
+    for (const el of /** @type {NodeListOf<HTMLImageElement>} */ (
+      document.querySelectorAll(rule.selector)
+    )) {
       if (el.closest("devkit-dev-toolbar")) continue;
       try {
         if (await rule.match(el))
@@ -129,6 +150,8 @@ async function perfFindings() {
 }
 
 async function a11yFindings() {
+  /** @type {Finding[]} */
+  const found = [];
   if (!window.axe) {
     try {
       await new Promise((resolve, reject) => {
@@ -142,15 +165,16 @@ async function a11yFindings() {
       return { missing: true, found: [] };
     }
   }
+  // A script that loaded without defining axe is as missing as one that did not load.
+  if (!window.axe) return { missing: true, found: [] };
   const results = await window.axe.run(document, {
     exclude: [["devkit-dev-toolbar"]],
     resultTypes: ["violations"],
   });
-  const found = [];
   for (const v of results.violations) {
     for (const node of v.nodes) {
       // A target inside a shadow root is an array of selectors; axe's exclude misses the toolbar's own, so skip them.
-      if (node.target.some((t) => Array.isArray(t))) continue;
+      if (node.target.some((/** @type {unknown} */ t) => Array.isArray(t))) continue;
       const el = document.querySelector(node.target.join(" "));
       if (el)
         found.push({
@@ -182,19 +206,35 @@ select { font: inherit; }
 `;
 
 class DevToolbar extends HTMLElement {
+  settings = readSettings();
+  root = this.attachShadow({ mode: "open" });
+  /** @type {string | null} */
+  open = null;
+  /** @type {{ el: Element, label: string, kind: string }[]} */
+  highlights = [];
+  /** @type {HTMLElement} */
+  panel = document.createElement("div");
+  /** @type {HTMLElement} */
+  hls = document.createElement("div");
+
+  /** One of the toolbar's own parts, which its markup always holds. */
+  inside(/** @type {string} */ selector) {
+    return /** @type {HTMLElement} */ (this.root.querySelector(selector));
+  }
+
   connectedCallback() {
-    this.settings = readSettings();
-    this.root = this.attachShadow({ mode: "open" });
     this.root.innerHTML = `<style>${STYLE}</style><div class="hls"></div><div class="panel" hidden></div>
       <div class="bar" role="toolbar" aria-label="Dev toolbar" data-at="${this.settings.placement}">
         <button data-app="inspect" aria-pressed="false">Inspect</button>
         <button data-app="audit" aria-pressed="false">Audit<span class="count" hidden></span></button>
         <button data-app="settings" aria-pressed="false">Settings</button>
       </div>`;
-    this.panel = this.root.querySelector(".panel");
-    this.hls = this.root.querySelector(".hls");
-    for (const b of this.root.querySelectorAll("[data-app]"))
-      b.addEventListener("click", () => this.toggle(b.dataset.app));
+    this.panel = this.inside(".panel");
+    this.hls = this.inside(".hls");
+    for (const b of /** @type {NodeListOf<HTMLElement>} */ (
+      this.root.querySelectorAll("[data-app]")
+    ))
+      b.addEventListener("click", () => this.toggle(b.dataset.app ?? null));
     this.addEventListener("keydown", (e) => e.key === "Escape" && this.toggle(null));
     addEventListener("resize", () => this.place());
     addEventListener("scroll", () => this.place(), { passive: true });
@@ -202,10 +242,12 @@ class DevToolbar extends HTMLElement {
     setTimeout(() => void this.audit(false), 1000);
   }
 
-  toggle(app) {
+  toggle(/** @type {string | null} */ app) {
     const open = this.open === app ? null : app;
     this.open = open;
-    for (const b of this.root.querySelectorAll("[data-app]"))
+    for (const b of /** @type {NodeListOf<HTMLElement>} */ (
+      this.root.querySelectorAll("[data-app]")
+    ))
       b.setAttribute("aria-pressed", String(b.dataset.app === open));
     this.panel.hidden = !open;
     this.highlights = [];
@@ -240,7 +282,7 @@ class DevToolbar extends HTMLElement {
   }
 
   inspect() {
-    const islands = [...document.querySelectorAll("[data-island]")];
+    const islands = /** @type {HTMLElement[]} */ ([...document.querySelectorAll("[data-island]")]);
     this.highlights = islands.map((el) => ({
       el,
       label: `${el.dataset.island} · ${el.dataset.client ?? "load"}`,
@@ -266,13 +308,14 @@ class DevToolbar extends HTMLElement {
     this.panel.append(h, list);
   }
 
-  async audit(show) {
+  async audit(/** @type {boolean} */ show) {
     const [a11y, perf] = await Promise.all([a11yFindings(), perfFindings()]);
+    /** @type {(Finding & { kind: string })[]} */
     const found = [
       ...a11y.found.map((f) => ({ ...f, kind: "a11y" })),
       ...perf.map((f) => ({ ...f, kind: "perf" })),
     ];
-    const count = this.root.querySelector(".count");
+    const count = this.inside(".count");
     count.hidden = found.length === 0;
     count.textContent = String(found.length);
     if (!show || this.open !== "audit") return;
@@ -321,7 +364,7 @@ class DevToolbar extends HTMLElement {
     select.addEventListener("change", () => {
       this.settings.placement = select.value;
       saveSettings(this.settings);
-      this.root.querySelector(".bar").dataset.at = select.value;
+      this.inside(".bar").dataset.at = select.value;
     });
     label.append(select);
     const hide = document.createElement("button");
