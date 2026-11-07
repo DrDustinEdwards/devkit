@@ -24,7 +24,7 @@
 // `email`) covers the one binding of that kind.
 //
 // Each finding is an annotation, `::error title=<item>::<proof URL> <detail>` (or ::warning), the item one of area 8's
-// checklist ids: H1-H5 health, B1 backup, C2 cron, N1/N6 the 404, R1 the drill. One plain line per check says what it read,
+// checklist ids: H1-H5 health, B1 backup, C2 cron, N1/N6 the 404, N2 the /404 path, M1 maintenance left on, R1 the drill. One plain line per check says what it read,
 // so a clean run never means nothing was read. Exit 0 with no errors, 1 with any, 3 with none but an item not measured,
 // 2 when it could not run at all: the site answered nothing. N6 asks for the shared error page: the 404 is HTML with a
 // <title> and Capsomer's ErrorPage region (class `cap-error-page`, ERROR_PAGE_MARKER).
@@ -207,6 +207,37 @@ export function notFoundFindings({ url, status, contentType, location, body = ""
     lacks.push(`the shared error page (Capsomer's ErrorPage, class ${ERROR_PAGE_MARKER})`);
   return lacks.length
     ? [finding("error", "N6", url, `the 404 page lacks ${lacks.join(" and ")}`)]
+    : [];
+}
+
+/**
+ * N2: the path /404 itself answers an error, not 200. A static site once served its own /404 page with a 200, which a crawler
+ * reads as a real page; any 2xx is a finding, a redirect or a refusal (a site behind sign-in) is not.
+ * @param {{ url: string, status: number }} read
+ * @returns {Finding[]}
+ */
+export function explicit404Findings({ url, status }) {
+  return status >= 200 && status < 300
+    ? [finding("error", "N2", url, `the /404 path answers ${status}, not 404`)]
+    : [];
+}
+
+/**
+ * M1: the home page answers 503 with Retry-After, which is the shared maintenance page (site-runtime `./maintenance`). The
+ * MAINTENANCE variable is meant to be on for a short time, so a site found in it is a warning, not a failure.
+ * @param {{ url: string, status: number, retryAfter?: string }} read
+ * @returns {Finding[]}
+ */
+export function maintenanceFindings({ url, status, retryAfter = "" }) {
+  return status === 503 && retryAfter
+    ? [
+        finding(
+          "warning",
+          "M1",
+          url,
+          "the home page answers the maintenance page (503 with Retry-After): MAINTENANCE is on",
+        ),
+      ]
     : [];
 }
 
@@ -411,6 +442,7 @@ async function read(url, accept = "*/*") {
       cacheControl: header("cache-control"),
       robots: header("x-robots-tag"),
       location: header("location"),
+      retryAfter: header("retry-after"),
       body,
     };
   } catch (error) {
@@ -512,10 +544,11 @@ async function main() {
   /** @type {Unread[]} An item a failed GitHub read left unmeasured: never a pass or a failure. */
   const unread = [];
 
-  const [health, missing, home] = await Promise.all([
+  const [health, missing, home, explicit] = await Promise.all([
     read(`${base}${healthPath}`, "application/health+json, application/json"),
     read(`${base}/${randomUUID()}`, "text/html"),
     read(`${base}/`, "text/html"),
+    read(`${base}/404`, "text/html"),
   ]);
   if (!isRead(health) && !isRead(missing)) {
     console.error(
@@ -560,6 +593,17 @@ async function main() {
     findings.push(...notFoundFindings({ .../** @type {any} */ (missing), pages }));
     say(
       `404: ${missing.url} answered ${missing.status} ${missing.contentType || "(no Content-Type)"}${pages ? "" : `; the home page is '${home.contentType || "no Content-Type"}', so no HTML 404 is asked`}`,
+    );
+  }
+
+  if (!explicit.error) {
+    findings.push(...explicit404Findings(/** @type {any} */ (explicit)));
+    say(`/404: ${explicit.url} answered ${explicit.status}`);
+  }
+  if (!home.error) {
+    findings.push(...maintenanceFindings(/** @type {any} */ (home)));
+    say(
+      `maintenance: the home page answered ${home.status}${home.retryAfter ? " with Retry-After" : ""}`,
     );
   }
 

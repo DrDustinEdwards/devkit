@@ -8,6 +8,8 @@ import {
   bindingFindings,
   configBindings,
   drillFindings,
+  explicit404Findings,
+  maintenanceFindings,
   healthFindings,
   notFoundFindings,
   parseJsonc,
@@ -176,4 +178,16 @@ test("H5 lists each binding /health does not probe, unless the repository names 
   assert.deepEqual(items(h5({ unprobed: { EMAIL: "" }, checks: { MEDIA: "audio" } })), [
     "error H5",
   ]);
+});
+
+test("N2 and M1: /404 answering 200 is an error, and the maintenance page on the home page is a warning", () => {
+  const items = (found) => found.map((f) => `${f.severity} ${f.item}`);
+  assert.deepEqual(items(explicit404Findings({ url, status: 200 })), ["error N2"]);
+  assert.deepEqual(explicit404Findings({ url, status: 404 }), []);
+  assert.deepEqual(explicit404Findings({ url, status: 302 }), []);
+  assert.deepEqual(items(maintenanceFindings({ url, status: 503, retryAfter: "3600" })), [
+    "warning M1",
+  ]);
+  assert.deepEqual(maintenanceFindings({ url, status: 503 }), []);
+  assert.deepEqual(maintenanceFindings({ url, status: 200, retryAfter: "3600" }), []);
 });
