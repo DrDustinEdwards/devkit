@@ -21,6 +21,9 @@ Fixes from a review of the checks and workflows. Behavior changes a repository m
 - `scripts/strip-pr-footer.mjs` reads the description line by line (a 100,000-space body took 12 s under the old pattern).
 - `shared-list.yml` and the `shared` action both accept a tag with or without the leading `v`.
 
+- `default.json` (Renovate): `@types/node` major updates are off; the types move with the runtime's Node major, by hand, with `.nvmrc` (bsw #159 offered 26 on Node 24).
+- `default.json` (Renovate): `allow-git=all`, so Renovate's npm 12 can regenerate lockfiles that reach a git dependency of a git dependency (EALLOWGIT left them stale on every network packages PR). Peer ranges are never rewritten. The shared `rangeStrategy: pin` turned enarratio's and react-router's peer ranges into exact versions (capsomer #287, #288), which locks consumers out of every other version. Prelum carried this rule alone; it now applies to every repository.
+
 ## 0.27.0 (2026-11-07)
 
 - `./stryker`: `chunkedStryker`, the chunked Stryker config that d1-dump, site-api, Germomics and Foxhound each carried a copy of (the same options, the same `STRYKER_CHUNK` rule and the same `rest` chunk). A repository's `stryker.config.mjs` is now its file list.
