@@ -81,7 +81,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.98.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.98.2 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -123,7 +123,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./admin-mcp`: `ADMIN_MCP_ROUTE`, `ADMIN_MCP_OPERATOR_ROUTE`, `adminMcpJobs`, `ADMIN_MCP_ORIGINS`, `adminMcpOrigin`, `adminMcpWorker`
 - `./agent-keys`: `AGENT_KEY_PREFIX`, `bearerToken`, `agentPrincipal`, `agentKeyNames`, `agentScopes`, `agentCaller`, `PROBE_KEY_SECRET`, `PROBE_PRINCIPAL`, `isProbeKey`, `probeCaller`
 - `./owner-page`: `OWNER_PATH`, `OWNER_STYLE`, `listOwnerGrants`, `revokeOwnerGrant`, `readAuditLog`, `ownerPage`
-- `./access`: `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminEmails`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`, `adminIdle`, `withAdminIdle`
+- `./access`: `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `KEYS_MAX_AGE_MS`, `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminEmails`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`, `adminIdle`, `withAdminIdle`
 - `./access-sync`: `CAPSID_ORIGIN`, `postAccessSync`
 - `./members`: `PRIMARY_OWNER`, `OWNER`, `MANAGE_MEMBERS`, `REVIEW_DAYS`, `normalizeEmail`, `defineTitles`, `isExpired`, `reviewOpen`, `resolveActor`, `can`, `defaultEndDate`, `checkChange`, `auditRow`, `allowList`
 - `./prose`: `SIGNS`, `NOT_JUST`, `TELLS`, `PATTERNS`, `WRITING_RULES`, `checkProse`, `profileOf`, `distanceFrom`, `nearestPassages`, `VOICE_THRESHOLD`, `thresholdFor`, `copiedRuns`, `describeFeature`, `OUT_OF_PLACE`, `sentenceSpread`, `slopScan`, `instructionFor`, `voiceExcerpts`
@@ -133,14 +133,14 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./operator`: `MIN_TOKEN_LENGTH`, `OPERATOR_BODY_MAX`, `OPERATOR_RULES`, `operatorResponse`
 - `./origin`: `ORIGIN_REFUSAL`, `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`
 - `./url`: `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
-- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`
+- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`
 - `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `notFoundReport`, `REDIRECTS_SQL`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`
 - `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `cronFindings`, `cronCheck`, `cronSchedule`
 - `./signed-in-crawl`: `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`, `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`
 - `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `ADMIN_LIST_PATH`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
-## site-api 0.31.1 (DrDustinEdwards/site-api)
+## site-api 0.31.2 (DrDustinEdwards/site-api)
 
 - `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `ROUTES`, `schemaHash`, `capabilitiesOf`, `hasContentTrash`, `contentFiltersOf`, `contentVersion`, `VersionConflictError`, `NotFoundError`, `MediaInUseError`, `describeUses`, `RefusedError`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `HOOK_BACKOFF_MINUTES`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `readEmbedded`, `stripMetadata`, `duplicateKey`, `placeholderAndColor`, `fileNameFor`, `prepareUpload`, `PICTURE_TYPES`, `pictureLimits`, `PICTURE_RESIZE`, `extensionFor`, `datedKey`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `tombstoneResponse`, `gonePath`, `tombstoned`, `PREVIEW_LINK_PATH`
 - `./admin`: `readPostQuery`, `loadPosts`, `scheduleLabel`, `liveSaveWarning`, `loadScheduledUpdate`, `runPostsIntent`, `readMediaQuery`, `loadMedia`, `loadMediaChanges`, `parseMediaTags`, `runMediaIntent`, `MENTION_FILTERS`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `localClient`, `askFirst`
