@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-07 07:47 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-07 13:49 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,15 +8,15 @@ Newest run 2026-11-07 07:47 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
-| 4. Writing and rendering | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
-| 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
+| 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
+| 5. Carrel editing contract | 🟡 | ❔ | ❔ | ❔ | ❔ | · | ❔ | ❔ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ✅ | 🟡 | ❌ | · | · | +28958 | −2924 |
-| 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
+| 8. Running and recovery | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
+| 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | 🟡 | 🟡 | ✅ | 🟡 | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
@@ -43,27 +43,16 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
-- ❌ Foxhound: prelum-audit: 12 errors
-  - link-redirect: https://foxhoundapp.com/ links to https://foxhoundapp.com/demos/recovery, which redirects to /recovery/dashboard
-  - link-redirect: https://foxhoundapp.com/ links to https://foxhoundapp.com/demos/disputes, which redirects to /disputes/dashboard
-  - link-redirect: https://foxhoundapp.com/product/disputes links to https://foxhoundapp.com/connect, which redirects to /login
-  - link-redirect: https://foxhoundapp.com/demos links to https://foxhoundapp.com/demos/dashboard, which redirects to /console
-  - link-redirect: https://foxhoundapp.com/demos links to https://foxhoundapp.com/demos/recovery, which redirects to /recovery/dashboard
-- ❌ Foxing: prelum-audit: 5507 errors
+- 🟡 Foxhound: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
+- ❌ Foxing: prelum-audit: 587 errors
   - link-redirect: https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
   - link-redirect: https://foxing.app/ links to https://foxing.app/people, which redirects to /login
-  - link-redirect: https://foxing.app/ links to https://foxing.app/lists, which redirects to /login
   - link-redirect: https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
   - link-redirect: https://foxing.app/books links to https://foxing.app/people, which redirects to /login
+  - link-redirect: https://foxing.app/awards links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
 - 🟡 Carrel: no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404
-- ❌ Enarratio: prelum-audit: 1 errors
-  - icon-missing: https://enarratio.dustinedwards.info/favicon.ico answers 404 text/html; charset=utf-8
-- ❌ Capsomer: prelum-audit: 162 errors
-  - link-redirect: https://capsomer.dustinedwards.info/components/admin-shell/ links to https://capsomer.dustinedwards.info/components/admin-shell/states.html?theme=light, which redirects to /components/admin-shell/states?theme=light
-  - link-redirect: https://capsomer.dustinedwards.info/components/admin-shell/ links to https://capsomer.dustinedwards.info/components/admin-shell/states.html?theme=dark, which redirects to /components/admin-shell/states?theme=dark
-  - link-redirect: https://capsomer.dustinedwards.info/components/anchor-bar/ links to https://capsomer.dustinedwards.info/components/anchor-bar/states.html?theme=light, which redirects to /components/anchor-bar/states?theme=light
-  - link-redirect: https://capsomer.dustinedwards.info/components/anchor-bar/ links to https://capsomer.dustinedwards.info/components/anchor-bar/states.html?theme=dark, which redirects to /components/anchor-bar/states?theme=dark
-  - link-redirect: https://capsomer.dustinedwards.info/components/approval-sheet/ links to https://capsomer.dustinedwards.info/components/approval-sheet/states.html?theme=light, which redirects to /components/approval-sheet/states?theme=light
+- 🟡 Enarratio: checks pass; no verifier yet
+- 🟡 Capsomer: checks pass; no verifier yet
 - 🟡 Capsid explorer: no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
 
 ### 2. Security headers and CSP
@@ -100,12 +89,7 @@ Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cell
 
 - ❌ Package: no verifier has checked the package
 - 🟡 dustinedwards.info: 53 pages render writing with no data-render-version wrapper, 6 images without width and height, h3 after h1 on /research/publications
-- ❌ Germomics: prelum-content: 17 errors
-  - writing-render-version: https://germomics.com/about stored HTML from render version 18; the pipeline is at 19
-  - writing-render-version: https://germomics.com/about stored HTML from render version 18; the pipeline is at 19
-  - writing-render-version: https://germomics.com/about/dustin-edwards stored HTML from render version 18; the pipeline is at 19
-  - writing-render-version: https://germomics.com/privacy stored HTML from render version 18; the pipeline is at 19
-  - writing-render-version: https://germomics.com/terms stored HTML from render version 18; the pipeline is at 19
+- 🟡 Germomics: checks pass; no verifier yet
 - 🟡 julieedwards.info: live check clean on 1 page; the repository was not available, and earlier notes say it has its own section grammar rather than Prelum
 - 🟡 TXASM: checked on the workers.dev address: 41 pages, 0 errors; /award-nominations has no data-render-version wrapper
 - 🟡 BSW: 11 pages with h3 after h1 (heading order)
@@ -121,12 +105,12 @@ Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cell
 Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editing contract.
 
 - 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
-- 🟡 dustinedwards.info: failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
-- 🟡 Germomics: author filter 501 though show.author is the byline; deleted post 404 not 410; preview is a hand-written shell; no series; no setTags; revisions author 'germomics', pages no history; admin.content.$key still writes pages outside Carrel
-- 🟡 julieedwards.info: pins v0.17.0 so webmentions can read the stale edge copy, sent on publish only; live section with a draft reads as draft; revisions capped at 50; no delete or unpublish (needs ruling); preview without page chrome
-- 🟡 TXASM: failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
-- 🟡 Foxhound: a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently
-- 🟡 Foxing: failed on 2026-11-05, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
+- ❔ dustinedwards.info: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
+- ❔ Germomics: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
+- ❔ julieedwards.info: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
+- ❔ TXASM: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
+- ❔ Foxhound: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
+- ❔ Foxing: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
 
 ### 6. Images and media
 
@@ -142,10 +126,10 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
   - A12: https://bsw.dustin-edwards.workers.dev/media/uploads/2026/11/grant-review-6b238865.webp.avif?w=512 Cache-Control is "public, max-age=86400", not immutable
 - 🟡 Foxhound: cover picture is its own code, not pictureProps; a cover outside the library is unsized; no placeholder, credit, ImageObject or image sitemap; footer SVG has no loading/decoding
 - ❌ Foxing: site-runtime-images: 4 errors
-  - A6: https://foxing.app/books /media/covers/a-country-gentleman-and-his-family-oliphant.jpg.webp?w=240 is below the fold (y≈1971 at 390, y≈1074 at 1440) and loading="eager"
-  - A6: https://foxing.app/books /media/covers/a-cycle-of-the-west-neihardt.jpg.webp?w=240 is below the fold (y≈1971 at 390, y≈1074 at 1440) and loading="eager"
-  - A6: https://foxing.app/books /media/covers/a-damsel-in-distress-wodehouse.jpg.webp?w=240 is below the fold (y≈2444 at 390, y≈1074 at 1440) and loading="eager"
-  - A6: https://foxing.app/books /media/covers/a-daughter-of-eve-balzac.jpg.webp?w=240 is below the fold (y≈2444 at 390, y≈1074 at 1440) and loading="eager"
+  - A6: https://foxing.app/books /media/covers/a-country-gentleman-and-his-family-oliphant.jpg.webp?w=240 is below the fold (y≈2063 at 390, y≈1161 at 1440) and loading="eager"
+  - A6: https://foxing.app/books /media/covers/a-cycle-of-the-west-neihardt.jpg.webp?w=240 is below the fold (y≈2063 at 390, y≈1161 at 1440) and loading="eager"
+  - A6: https://foxing.app/books /media/covers/a-damsel-in-distress-wodehouse.jpg.webp?w=240 is below the fold (y≈2558 at 390, y≈1161 at 1440) and loading="eager"
+  - A6: https://foxing.app/books /media/covers/a-daughter-of-eve-balzac.jpg.webp?w=240 is below the fold (y≈2558 at 390, y≈1161 at 1440) and loading="eager"
 - 🟡 Carrel: images check passes; share card answers CORP same-origin
 - 🟡 Enarratio: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Capsomer: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
@@ -195,10 +179,11 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 9f10203c13f1982aed908174c982446cfe5248ec, not the branch head d1b2009e9c89092fd767f2c4a9ef10ae49af0f5d (https://github.com/DrDustinEdwards/foxhound/commit/d1b2009e9c89092fd767f2c4a9ef10ae49af0f5d), committed 344 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 543ec856f79d8c3cac76d2867286a91e7cb05f2c, not the branch head d1b2009e9c89092fd767f2c4a9ef10ae49af0f5d (https://github.com/DrDustinEdwards/foxhound/commit/d1b2009e9c89092fd767f2c4a9ef10ae49af0f5d), committed 708 minutes ago
+- ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
+  - H4: https://admin-mcp.dustinedwards.info/health serves cdb46887b051136814471abffa706d933e6c6017, not the branch head 9c6a6cde448dcc703ee55cc01861c8a5a5640b20 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/9c6a6cde448dcc703ee55cc01861c8a5a5640b20), committed 257 minutes ago
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- ❌ Foxing admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxing.app/health serves 608467ebf41c5d47b8de9a65eab6eb73a2d0eb89, not the branch head 4641c1e1ca2235817e24becbdb5b4857eb7cff52 (https://github.com/DrDustinEdwards/foxing/commit/4641c1e1ca2235817e24becbdb5b4857eb7cff52), committed 32 minutes ago
+- 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
 
@@ -206,12 +191,12 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
 - 🟡 dustinedwards.info: checks pass; no verifier yet
-- ❌ Germomics: devkit-a11y: 28 errors
-  - L1: https://germomics.com/ axe color-contrast (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `.ml-auto`
+- ❌ Germomics: devkit-a11y: 15 errors
   - L2: https://germomics.com/ no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` "germomics")
-  - L3: https://germomics.com/ scrolls sideways at 320 px: scrollWidth 350, widest `div.space-y-12 > section:nth-of-type(2) > div.grid.gap-3:nth-of-type(2) > article.flex.items-center:nth-of-type(1)` reaches 350 px
   - L3: https://germomics.com/ text clipped with WCAG 1.4.12 text spacing: `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(5) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(10) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical)
   - L2: https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `main#main > div.cap-empty > div.cap-empty-content:nth-of-type(2) > a.cap-btn` "Go to the home page")
+  - L2: https://germomics.com/about no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` "germomics")
+  - L2: https://germomics.com/contact no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` "germomics")
 - ❌ julieedwards.info: devkit-a11y: 6 errors
   - L1: https://julieedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
   - L1: https://julieedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
@@ -221,31 +206,28 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 - ❌ TXASM: devkit-a11y: 2 errors
   - L2: https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `main#main > div.cap-empty > div.cap-empty-content:nth-of-type(2) > a.cap-btn` "Go to the home page")
   - L1: https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter axe aria-prohibited-attr (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.pdf-viewer-page`
-- ❌ BSW: devkit-a11y: 12 errors
-  - L1: https://bsw.dustin-edwards.workers.dev/ axe scrollable-region-focusable (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `#psms-panel-simple > .psms-scroll-box`
+- ❌ BSW: devkit-a11y: 10 errors
   - L2: https://bsw.dustin-edwards.workers.dev/ no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
-  - L3: https://bsw.dustin-edwards.workers.dev/ scrolls sideways at 320 px: scrollWidth 342, widest `div#psms-track` reaches 342 px
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `section:nth-of-type(2) > div.page-prose.mx-auto > p.mt-8:nth-of-type(2) > a.btn.btn-blue` "Go to the home page")
   - L2: https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
+  - L2: https://bsw.dustin-edwards.workers.dev/contact-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
+  - L2: https://bsw.dustin-edwards.workers.dev/grant-proposal-support no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` "BioScience Writers home")
 - ❌ Foxhound: devkit-a11y: 5 errors
-  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
+  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row="0"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=""]`
   - L3: https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical), `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical)
   - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body.min-h-full > div.fh-cap.fh-error-page > header.fh-error-bar.flex > a.no-underline` "foxhound")
   - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(3) > div.min-w-0.flex-1 > p.mt-0\.5.line-clamp-1:nth-of-type(2)` (vertical) and 33 more
   - L2: https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what `section.mb-10:nth-of-type(4) > ul.m-0.flex > li.overflow-hidden.rounded-lg:nth-of-type(1) > button.flex.w-full` opened
-- ❌ Foxing: devkit-a11y: 3 errors
+- ❌ Foxing: devkit-a11y: 2 errors
   - L2: https://foxing.app/ no visible focus on 1 of 40 stops: `input#q`
   - L2: https://foxing.app/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `main#main > div.cap-empty > div.cap-empty-content:nth-of-type(2) > a.cap-btn` "Go to the home page")
-  - L3: https://foxing.app/books scrolls sideways at 320 px: scrollWidth 406, widest `div.mb-10.fx-books-card:nth-of-type(1) > div:nth-of-type(1) > div.row-2.wrap > a.cap-chip:nth-of-type(16)` reaches 406 px
 - ❌ Carrel: devkit-a11y: 6 errors
   - L1: https://carrel.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
   - L1: https://carrel.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`
   - L2: https://carrel.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` "")
   - L2: https://carrel.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more
   - S2: https://carrel.dustinedwards.info/site.webmanifest no lang on <html>
-- ❌ Enarratio: devkit-a11y: 2 errors
-  - L1: https://enarratio.dustinedwards.info/ axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `.enarratio-table-chart > table`
-  - L1: https://enarratio.dustinedwards.info/capsomer axe scrollable-region-focusable (serious, WCAG) at 390-light, 390-dark: 1 element, first `.enarratio-table-chart > table`
+- 🟡 Enarratio: checks pass; no verifier yet
 - ❌ Capsomer: devkit-a11y: 3 errors
   - L2: https://capsomer.dustinedwards.info/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body > main > p > a` "Go to Capsomer's front page")
   - L1: https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first `section[aria-labelledby="ex-tip"] > .comp-ex-box > iframe[data-height="360"] a[aria-describedby="cap-popover-11"]`
@@ -256,8 +238,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L2: https://prelum.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` "")
   - L2: https://prelum.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more
   - S2: https://prelum.dustinedwards.info/site.webmanifest no lang on <html>
-- ❌ Capsid explorer: devkit-a11y: 2 errors
-  - L2: https://capsid.dustinedwards.info/systems/ no skip link to main as the first Tab stop (first stop `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)` "Capsid")
+- ❌ Capsid explorer: devkit-a11y: 1 errors
   - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 18 more
 - Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
