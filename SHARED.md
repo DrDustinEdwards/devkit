@@ -44,7 +44,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.36.0 (DrDustinEdwards/prelum)
+## Prelum 0.37.0 (DrDustinEdwards/prelum)
 
 - `.`: `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`
 - `./xml`: `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`
@@ -80,7 +80,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-markdown`
 
-## site-runtime 0.92.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.96.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -90,7 +90,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./csp-report`: `MAX_REPORT_BYTES`, `MAX_REPORTS`, `trimReportUrl`, `reportBodies`, `summarizeReport`, `receiveCspReport`, `rateLimitAllow`
 - `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`
 - `./html`: `escapeHtml`
-- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `aiCheck`
+- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `aiCheck`, `isDatabaseDown`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`
 - `./image`: `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `IMAGE_FORMATS`, `IMAGE_QUALITY`, `FOCUS_METADATA`, `SHARE_IMAGE`, `ARTICLE_IMAGE_RATIOS`, `imageVersion`, `originalKey`, `focusOf`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `pictureHtml`, `imagePreload`, `editImage`
 - `./prefetch`: `SPECULATION_RULES_PATH`, `NEVER_PREFETCH`, `FILE_EXTENSIONS`, `speculationRules`, `speculationRulesResponse`, `SPECULATION_RULES_HEADER`
 - `./preload`: `preloads`, `rootStylesheets`, `withPreloadHeader`
@@ -133,7 +133,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./origin`: `ORIGIN_REFUSAL`, `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`
 - `./url`: `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
 - `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`
-- `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `notFoundReport`
+- `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `notFoundReport`, `REDIRECTS_SQL`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`
 - `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `cronFindings`, `cronCheck`, `cronSchedule`
 - `./signed-in-crawl`: `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`, `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`
 - `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `ADMIN_LIST_PATH`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`
@@ -172,7 +172,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-shared`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.79.1 (DrDustinEdwards/capsomer)
+## Capsomer 0.79.2 (DrDustinEdwards/capsomer)
 
 - `./fonts/*`: `fonts/admin-shell`, `fonts/anchor-bar`, `fonts/approval-sheet`, `fonts/attention-list`, `fonts/authorship`, `fonts/avatar`, `fonts/banner`, `fonts/breadcrumb`, `fonts/bulk-bar`, `fonts/button`, `fonts/catalog`, `fonts/chart-frame`, `fonts/chips`, `fonts/combobox`, `fonts/command-menu`, `fonts/confirm-dialog`, `fonts/content`, `fonts/date-picker`, `fonts/detail-panel`, `fonts/dialog`, `fonts/disclosure`, `fonts/draft-compare`, `fonts/drop-zone`, `fonts/email`, `fonts/empty`, `fonts/error-page`, `fonts/error-summary`, `fonts/family-footer`, `fonts/feed`, `fonts/field`, `fonts/flag-list`, `fonts/history-list`, `fonts/kit-form`, `fonts/link`, `fonts/listbox`, `fonts/manual`, `fonts/markdown-editor`, `fonts/media`, `fonts/media-library`, `fonts/mentions-list`, `fonts/menu`, `fonts/message`, `fonts/meter`, `fonts/moderation-queue`, `fonts/page-head`, `fonts/pagination`, `fonts/panel`, `fonts/people-roles`, `fonts/permission-matrix`, `fonts/picture`, `fonts/player`, `fonts/popover`, `fonts/posts-list`, `fonts/prose-blocks`, `fonts/publish-gate`, `fonts/row-list`, `fonts/segmented`, `fonts/select`, `fonts/session-row`, `fonts/share-preview`, `fonts/shell`, `fonts/shortcuts`, `fonts/site-header`, `fonts/skeleton`, `fonts/sortable-list`, `fonts/stat-tile`, `fonts/status`, `fonts/step-indicator`, `fonts/summary-list`, `fonts/switch`, `fonts/switch-reason`, `fonts/system-map`, `fonts/table`, `fonts/tabs`, `fonts/tag-group`, `fonts/theme-switch`, `fonts/time`, `fonts/toolbar`, `fonts/tooltip`, `fonts/tree`, `fonts/uptime-strip`, `fonts/usage-meter`
 - `./palette`: `themes`, `files`, `check`, `report`, `FAMILIES`, `oklch`, `contrast`, `apca`, `LEVELS`, `strengthen`, `seedLch`, `lightStep9`, `darkStep9`, `scale`, `CHART_ORDER`, `ELEVATION_ORDER`, `fitNeutrals`, `familyTheme`, `FAMILY_ORDER`, `pairs`, `apart`, `failures`, `moreLines`, `UI_STACK`, `MONO_STACK`, `renderFamily`, `renderScoped`, `renderMarks`, `enarratioTheme`, `renderEnarratioTheme`, `capsomerTheme`, `capsomerMoreTheme`, `CHART_PAIR_TOKENS`, `renderEnarratioCss`, `renderEmailColours`, `renderEmailColors`, `emailColors`, `min-height: var(--target);`
