@@ -230,6 +230,12 @@
       "groupName": null
     },
     {
+      "description": "@types/node follows the runtime's major, never Renovate's (2026-11-07). Its types describe the Node a Worker build and the tests run on, which .nvmrc names and moves in the quarterly session with the node rule below; bsw #159 offered @types/node 26 on Node 24 and would have typed APIs the runtime does not have. Minor and patch within the current major still arrive.",
+      "matchPackageNames": ["@types/node"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
       "matchPackageNames": ["node"],
       "enabled": false,
       "description": "Node moves in the quarterly dependency session with compatibility_date, never by bot. For an app, check:invariants 16 requires engines.node to equal .nvmrc exactly; a library (enarratio) keeps an engines range of the Node lines it supports, and its .nvmrc is only the tooling Node. Renovate pinned engines to the newest Node while .nvmrc stayed on 24 (PR #19, 2026-09-07)."

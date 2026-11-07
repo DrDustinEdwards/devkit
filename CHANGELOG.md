@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `default.json` (Renovate): `@types/node` major updates are off; the types move with the runtime's Node major, by hand, with `.nvmrc` (bsw #159 offered 26 on Node 24).
 - `default.json` (Renovate): `allow-git=all`, so Renovate's npm 12 can regenerate lockfiles that reach a git dependency of a git dependency (EALLOWGIT left them stale on every network packages PR). Peer ranges are never rewritten. The shared `rangeStrategy: pin` turned enarratio's and react-router's peer ranges into exact versions (capsomer #287, #288), which locks consumers out of every other version. Prelum carried this rule alone; it now applies to every repository.
 
 ## 0.27.0 (2026-11-07)
