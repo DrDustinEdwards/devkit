@@ -2,48 +2,14 @@ name: review
 description: >-
   The automatic PR reviewer (scripts/review-check.mjs): asks Capsid, with the job's OIDC token, to review the pull request
   and writes its verdict to a "review verdict" check and the job summary. Advisory: it never fails. The job grants
-  id-token and checks write. `run` reviews in this step (review.yml). `start` begins the review in the background and
-  `wait` collects it at the end, so a job that runs other checks (pr.yml) does them during the minutes the model takes.
-  One copy for review.yml and pr.yml.
-
-inputs:
-  mode:
-    description: run, start or wait.
-    required: false
-    default: run
+  id-token and checks write, and no other step of that job runs caller code. One copy for review.yml and pr.yml.
 
 runs:
   using: composite
   steps:
     - name: Review the pull request
-      if: inputs.mode == 'run'
       shell: bash
       env:
         GITHUB_TOKEN: ${{ github.token }}
         HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       run: node "$GITHUB_ACTION_PATH/../../../scripts/review-check.mjs"
-
-    # The runner ends a job's leftover processes only when the job ends, so the review outlives this step. Its log and its
-    # summary go to files, since a step's summary file is read when that step ends.
-    - name: Start the review
-      if: inputs.mode == 'start'
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-        HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-      run: |
-        GITHUB_STEP_SUMMARY="$RUNNER_TEMP/review-summary.md" nohup node "$GITHUB_ACTION_PATH/../../../scripts/review-check.mjs" > "$RUNNER_TEMP/review.log" 2>&1 &
-        echo "$!" > "$RUNNER_TEMP/review.pid"
-        echo "The review is running in the background; the step \"Review verdict\" collects it."
-
-    # review-check.mjs gives Capsid eight minutes; this waits nine, then says so and passes.
-    - name: Review verdict
-      if: inputs.mode == 'wait'
-      shell: bash
-      run: |
-        pid=$(cat "$RUNNER_TEMP/review.pid" 2>/dev/null || true)
-        if [ -z "$pid" ]; then echo "::warning::the review never started, so there is no verdict."; exit 0; fi
-        for _ in $(seq 1 540); do kill -0 "$pid" 2>/dev/null || break; sleep 1; done
-        if kill -0 "$pid" 2>/dev/null; then echo "::warning::the review was still running after nine minutes and stops with this job, so it may leave no review verdict check."; fi
-        cat "$RUNNER_TEMP/review.log" 2>/dev/null || true
-        if [ -f "$RUNNER_TEMP/review-summary.md" ]; then cat "$RUNNER_TEMP/review-summary.md" >> "$GITHUB_STEP_SUMMARY"; fi

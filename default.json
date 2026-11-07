@@ -70,6 +70,13 @@
       "internalChecksFilter": "strict"
     },
     {
+      "description": "THE COOLDOWN FOR GITHUB ACTIONS (2026-11-07): a workflow runs with the repository's token and often an OIDC token, so a compromised action release does more harm than a compromised dev dependency, and the tj-actions/changed-files compromise (March 2025) was a retagged release. A release of a third-party action waits seven days before Renovate raises it (zizmor's dependabot-cooldown audit uses seven as its floor). The github-tags datasource carries a release timestamp (Renovate's datasource docs, 'Release timestamp support: Yes'), so timestamp-required does not hold these forever. Scoped to major, minor and patch for the reason the npm rule gives: a pin or digest carries no timestamp. The network-package rules below set minimumReleaseAge to null again, so devkit's own workflow pins still arrive at once.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "minimumReleaseAge": "7 days",
+      "internalChecksFilter": "strict"
+    },
+    {
       "description": "ONE PR A WEEK for everything routine. A pile of single-package PRs is a pile nobody reads, and patch and minor are where the low-risk volume lives. It opens any time on Monday, Chicago time (the top-level schedule), with prPriority 4, ahead of other third-party updates and behind React Router (5) and the family packages (10) (Dustin, 2026-10-30). The window used to be before 6am Monday: too few Renovate runs fell in it, and the family packages took the two PRs an hour each run allows, so the group never opened. On 2026-10-30 txasm's Dependency Dashboard listed it under Awaiting Schedule with thirteen updates, React 19.3.1 and Vite 8.3.5 among them.",
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "weekly minor and patch",

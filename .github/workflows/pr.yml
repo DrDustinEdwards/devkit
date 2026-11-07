@@ -1,6 +1,6 @@
 name: pr
 
-# ONE JOB PER PULL REQUEST. Measured 2026-11-06 over 18 repositories and 2,454 jobs: CI was slow because of the runner
+# ONE JOB OF CHECKS PER PULL REQUEST (plus the reviewer's, below). Measured 2026-11-06 over 18 repositories and 2,454 jobs: CI was slow because of the runner
 # queue, not slow steps. The account runs 20 jobs at once and sat at 20 with 30 to 98 queued (queue p90 6.5 minutes, the
 # worst 16), 74% of jobs ran under a minute, and each pull request started six to eight tiny workflows from devkit
 # callers, each taking a runner of its own. This workflow runs all of them in one job, with one checkout and one install:
@@ -11,8 +11,12 @@ name: pr
 #   5. actionlint and zizmor, only when the change touches .github/ (workflow-audit.yml).
 #   6. The no-bloat ratchet (no-bloat.yml) and 7. the Worker bundle size, one Worker or several (worker-size.yml), from
 #      the caller's own install.
-#   8. The automatic reviewer (review.yml), started in the background first and collected last, so the other checks run
-#      during the minutes the model takes. Advisory: it never fails the job.
+#   8. The automatic reviewer (review.yml) runs in a SECOND job, beside this one. It is the only job that holds
+#      `id-token: write` and `checks: write`: the first job installs and builds the caller's code (dependency lifecycle
+#      scripts, a prepare command), and a step that runs such code can read the OIDC request variables of any job that
+#      holds `id-token: write` and mint a token. GitHub's OIDC hardening guide and zizmor's excessive-permissions audit
+#      both say to grant it to the one job that needs it. The reviewer job runs only devkit's own pinned file. Advisory:
+#      it never fails.
 #
 # EVERY CHECK RUNS AND REPORTS even when another failed: each step runs unless the run was canceled or what it needs
 # (a checkout, the install) failed, keeps its own annotations and its own section of the job summary, and the last step
@@ -31,6 +35,9 @@ name: pr
 # strip, under the name "Description footer". The rulesets also require the old workflows' names by name
 # ("no-bloat / No-bloat ratchet", "worker-size / Worker bundle size" and the like): a repository that moves here has them
 # removed from its ruleset in the same change, since this job's one check now covers them.
+#
+# THE COST of the second job is one more runner per same-repository pull request (not Renovate's, not a draft's), which
+# mostly waits on the model. The first job is no slower than before.
 #
 # THE CALLER (examples/pr-caller.yml) runs on pull_request and merge_group, never on a push to the default branch: the
 # merge was checked as a pull request, and the rulesets allow no other way onto it. Its concurrency group is the pull
@@ -142,13 +149,9 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-      id-token: write
-      checks: write
     env:
       CODE: ${{ github.event_name == 'push' || github.event_name == 'merge_group' || github.event_name == 'pull_request' }}
       FOOTER: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'synchronize' && github.event.pull_request.head.repo.full_name == github.repository) }}
-      # Same-repository pull requests only (a fork's run gets no OIDC token), never a draft or Renovate's.
-      REVIEW: ${{ inputs.review && github.event_name == 'pull_request' && github.event.action != 'edited' && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'renovate[bot]' }}
       NODE: ${{ inputs.node && (inputs.no-bloat || inputs.worker-size) }}
       BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
     steps:
@@ -170,13 +173,6 @@ jobs:
         with:
           node-version: 24.22.2
           package-manager-cache: false
-
-      - name: Review, started
-        id: review-start
-        if: env.REVIEW == 'true'
-        uses: ./.devkit/.github/actions/review
-        with:
-          mode: start
 
       - name: Footer
         id: footer
@@ -266,14 +262,8 @@ jobs:
           config: ${{ inputs.worker-size-config }}
           workers: ${{ inputs.workers }}
 
-      - name: Review verdict
-        if: ${{ !cancelled() && steps.review-start.outcome == 'success' }}
-        uses: ./.devkit/.github/actions/review
-        with:
-          mode: wait
-
       # Each check's outcome in one table, and the job fails if any failed. A check that could not start because what it
-      # needs failed (the checkout, the install) is a failure too, never a pass. The reviewer is advisory and not listed.
+      # needs failed (the checkout, the install) is a failure too, never a pass. The reviewer is its own job and not listed.
       - name: Result
         if: ${{ !cancelled() }}
         env:
@@ -303,3 +293,34 @@ jobs:
             exit 1
           fi
           echo "Every check that ran passed."
+
+  # The only job with an OIDC token. It checks out devkit at the caller's pin and runs one file; no caller code runs here.
+  # Same-repository pull requests only (a fork's run gets no OIDC token), never a draft or Renovate's.
+  review:
+    name: Reviewer
+    if: ${{ inputs.review && github.event_name == 'pull_request' && github.event.action != 'edited' && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'renovate[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      id-token: write
+      checks: write
+    steps:
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24.22.2
+          package-manager-cache: false
+
+      - name: Review the pull request
+        uses: ./.devkit/.github/actions/review
