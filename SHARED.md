@@ -81,7 +81,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-indexnow`, `prelum-audit`, `prelum-icons`, `prelum-content`, `prelum-chart-audit`, `prelum-markdown`
 
-## site-runtime 0.84.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.86.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -115,9 +115,9 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./rate-limit/durable-object`: `RateLimiter`
 - `./access-login`: `accessSaas`, `newSignIn`, `authorizationUrl`, `forgetKeys`, `remoteKeys`, `verifyJwt`, `verifyIdToken`, `finishSignIn`
 - `./mcp-login`: `describeRedirect`, `CONSENT_STYLE`, `loginHandler`, `isAdminUser`, `DCR_CALLBACKS`, `allowedRedirects`, `registrationRefusal`, `registrationLimited`
-- `./audit-log`: `ToolCallLog`, `verifyAuditChain`, `AUDIT_KEEP_DAYS`, `exportAuditLog`, `auditLogCheck`, `correlationId`, `loggedArgs`, `loggedResult`, `appendAudit`, `recordAudit`
+- `./audit-log`: `auditChainKey`, `ToolCallLog`, `verifyAuditChain`, `AUDIT_KEEP_DAYS`, `exportAuditLog`, `auditLogCheck`, `correlationId`, `loggedArgs`, `loggedResult`, `appendAudit`, `recordAudit`
 - `./mcp-server`: `withMcpHeaders`, `routeMcpEra`, `ApiLegError`, `callApi`, `MCP_PER_MINUTE`, `checkRateLimit`, `refuse`, `unauthorized`, `audienceRefusal`, `mcpOriginRefusal`, `mcpScopes`, `callerName`, `toolScope`, `toolsForGrant`, `authorizeCall`, `toolScopeChallenge`, `invokeTool`, `registerTools`, `OUTSIDE_DATA_NOTICE`, `outsideResult`, `toolListProblems`, `toolListHash`, `mcpCacheHints`, `PROBE_METHODS`, `probeRefusal`, `probeDoor`
-- `./admin-mcp`: `ADMIN_MCP_ROUTE`, `ADMIN_MCP_ORIGINS`, `adminMcpOrigin`, `adminMcpWorker`
+- `./admin-mcp`: `ADMIN_MCP_ROUTE`, `ADMIN_MCP_OPERATOR_ROUTE`, `adminMcpJobs`, `ADMIN_MCP_ORIGINS`, `adminMcpOrigin`, `adminMcpWorker`
 - `./agent-keys`: `AGENT_KEY_PREFIX`, `bearerToken`, `agentPrincipal`, `agentKeyNames`, `agentScopes`, `agentCaller`, `PROBE_KEY_SECRET`, `PROBE_PRINCIPAL`, `isProbeKey`, `probeCaller`
 - `./owner-page`: `OWNER_PATH`, `OWNER_STYLE`, `listOwnerGrants`, `revokeOwnerGrant`, `readAuditLog`, `ownerPage`
 - `./access`: `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminEmails`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`, `adminIdle`, `withAdminIdle`
@@ -131,10 +131,10 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./url`: `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
 - `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`
 - `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `notFoundReport`
-- `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_SKIPPED`, `runJobs`, `cronFindings`, `cronCheck`
+- `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `cronFindings`, `cronCheck`
 - `./signed-in-crawl`: `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`, `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`
 - `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `ADMIN_LIST_PATH`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`
-- bins: `site-runtime-security`, `site-runtime-headers`, `site-runtime-sign-in`, `site-runtime-speed`, `site-runtime-images`, `site-runtime-ai-audit`, `site-runtime-access-drift`, `site-runtime-session-check`
+- bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
 ## site-api 0.26.0 (DrDustinEdwards/site-api)
 
