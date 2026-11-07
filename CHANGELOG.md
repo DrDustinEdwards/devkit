@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.26.4 (2026-11-07)
+
+- `live`: the Germomics admin MCP server (`admin-mcp.germomics.com`) is off the board: its site entry, its `MCP_TEST_GRANT_ADMIN_MCP_GERMOMICS_COM` secret and its area 9 and area 3 rows. The server is gone.
+
 ## 0.26.3 (2026-11-07)
 
 - `worker-deploy.yml` (live gate): a site deliberately in maintenance (its home page answers the shared 503 with Retry-After, site-runtime `./maintenance`) no longer has its deploy rolled back by the caller's page checks. Once `/health` reports this run's commit, the gate sees the maintenance page, skips `verify-command` with a warning, and passes. A 503 without Retry-After still runs the checks.

@@ -77,7 +77,6 @@ jobs:
           MCP_TEST_GRANT_ADMIN_MCP_DUSTINEDWARDS_INFO: ${{ secrets.MCP_TEST_GRANT_ADMIN_MCP_DUSTINEDWARDS_INFO }}
           MCP_TEST_GRANT_ADMIN_MCP_FOXING_APP: ${{ secrets.MCP_TEST_GRANT_ADMIN_MCP_FOXING_APP }}
           MCP_TEST_GRANT_ADMIN_MCP_FOXHOUNDAPP_COM: ${{ secrets.MCP_TEST_GRANT_ADMIN_MCP_FOXHOUNDAPP_COM }}
-          MCP_TEST_GRANT_ADMIN_MCP_GERMOMICS_COM: ${{ secrets.MCP_TEST_GRANT_ADMIN_MCP_GERMOMICS_COM }}
           MCP_TEST_GRANT_FOXHOUNDAPP_COM: ${{ secrets.MCP_TEST_GRANT_FOXHOUNDAPP_COM }}
         run: node bin/live.mjs run --out "$RUNNER_TEMP/run.json"
       - name: Add the run to the scoreboard branch and rebuild the board
