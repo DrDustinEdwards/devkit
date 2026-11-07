@@ -33,3 +33,23 @@ test("PLANT: a name two sites each define is counted; a re-export, a Drizzle tab
     },
   ]);
 });
+
+test("PLANT: with packages, a name two shared packages each export is counted, and a site's own definition is not", () => {
+  const files = [
+    { repo: "site-api", path: "src/frontmatter.ts", text: "export function splitSource() {}\n" },
+    { repo: "prelum", path: "frontmatter.mjs", text: "export function splitSource() {}\n" },
+    { repo: "site-runtime", path: "email.mjs", text: "export async function sendEmail() {}\n" },
+    { repo: "germomics", path: "app/lib/a.ts", text: "export function splitSource() {}\n" },
+    { repo: "txasm", path: "app/lib/a.ts", text: "export function splitSource() {}\n" },
+  ];
+  assert.deepEqual(sharedNames(files, true), [
+    {
+      name: "splitSource",
+      places: [
+        { repo: "prelum", path: "frontmatter.mjs" },
+        { repo: "site-api", path: "src/frontmatter.ts" },
+      ],
+    },
+  ]);
+  assert.equal(sharedNames(files).length, 1);
+});

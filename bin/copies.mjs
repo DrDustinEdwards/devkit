@@ -20,12 +20,13 @@
 // a warning says so, since a repository that went private would then drop out of the count without any copy removed. The
 // token goes to git in its environment, never on a command line, and is never printed. The config:
 //
-//   { "baseline": 44, "names": 12, "measured_at": "2026-11-06", "tool": "jscpd@4.3.0", "args": ["--min-lines", "10", "--min-tokens", "80"] }
+//   { "baseline": 44, "names": 12, "packages": 12, "measured_at": "2026-11-06", "tool": "jscpd@4.3.0", "args": ["--min-lines", "10", "--min-tokens", "80"] }
 //
 // Two more passes count beside jscpd's blocks. A .claude file jscpd does not read (an agent, a skill, a command) with the
 // same bytes in another repository is a copy too, counted in "baseline". And "names" ratchets the distinctive exported
 // names (devkit-shared's rule) two or more repositories each define, none a shared package: the same job written twice
-// under one name, which jscpd misses whenever the code differs.
+// under one name, which jscpd misses whenever the code differs. "packages" ratchets the names two or more shared packages
+// each export, the overlap between the packages themselves.
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -114,14 +115,17 @@ const NOT_OWN =
 
 /**
  * Distinctive names (devkit-shared's rule) that two or more repositories each define and export, none of them a shared
- * package: the same job written twice under one name, which jscpd misses when the code differs. Pure.
+ * package: the same job written twice under one name, which jscpd misses when the code differs. With `packages`, the
+ * other way round: names two or more shared packages each export, which is overlap between the packages themselves (the
+ * same job in site-api and Prelum, say), the one place a name check over the sites cannot see. Pure.
  * @param {{ repo: string, path: string, text: string }[]} files code files
+ * @param {boolean} [packages] read the shared packages' repositories instead of the others
  */
-export function sharedNames(files) {
+export function sharedNames(files, packages = false) {
   /** @type {Map<string, Map<string, string>>} name -> repo -> its first path */
   const defined = new Map();
   for (const { repo, path, text } of files) {
-    if (PACKAGE_REPOS.has(repo)) continue;
+    if (PACKAGE_REPOS.has(repo) !== packages) continue;
     for (const name of exportNames(text.replace(NOT_OWN, ""))) {
       if (!distinctive(name) || ROUTE_EXPORTS.has(name)) continue;
       const repos = defined.get(name) ?? new Map();
@@ -349,14 +353,15 @@ async function main() {
   const count =
     pairs.length + same.reduce((n, places) => n + new Set(places.map((p) => p.repo)).size - 1, 0);
   const names = sharedNames(code);
+  const overlap = sharedNames(code, true);
   const namesBaseline = config.names ?? 0;
   if (values["write-baseline"]) {
     writeFileSync(
       file,
-      `${JSON.stringify({ ...config, baseline: count, names: names.length, measured_at: new Date().toISOString().slice(0, 10) }, null, 2)}\n`,
+      `${JSON.stringify({ ...config, baseline: count, names: names.length, packages: overlap.length, measured_at: new Date().toISOString().slice(0, 10) }, null, 2)}\n`,
     );
     console.log(
-      `devkit-copies: wrote the baselines, ${count} copies and ${names.length} names, to ${file}`,
+      `devkit-copies: wrote the baselines, ${count} copies, ${names.length} names and ${overlap.length} package overlaps, to ${file}`,
     );
     return;
   }
@@ -379,6 +384,12 @@ async function main() {
     ...names.map(
       ({ name, places }) => `- ${name}: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`,
     ),
+    "",
+    `## Names exported by more than one shared package: ${overlap.length} (baseline ${config.packages ?? "none yet"})`,
+    "",
+    ...overlap.map(
+      ({ name, places }) => `- ${name}: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`,
+    ),
   ];
   console.log(lines.join("\n"));
   for (const { a, b, lines: n } of pairs)
@@ -395,6 +406,10 @@ async function main() {
     );
   if (process.env.GITHUB_STEP_SUMMARY)
     appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
+  for (const { name, places } of overlap)
+    console.log(
+      `::warning title=devkit-copies::${name} is exported by ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`,
+    );
   let failed = false;
   if (count > config.baseline) {
     console.log(
@@ -413,7 +428,22 @@ async function main() {
     );
     failed = true;
   }
+  if (config.packages === undefined) {
+    console.log(
+      `::warning title=devkit-copies::live/copies.json has no "packages" baseline yet: run \`node bin/copies.mjs --write-baseline\` and commit it (${overlap.length} today).`,
+    );
+  } else if (overlap.length > config.packages) {
+    console.log(
+      `::error title=devkit-copies::${overlap.length} names are exported by more than one shared package, more than the baseline of ${config.packages}. Two packages doing one job is the overlap this check exists to stop: keep it in one and import it from the other, or rename one when they do different jobs.`,
+    );
+    failed = true;
+  }
   if (failed) process.exit(1);
+  if (config.packages !== undefined && overlap.length < config.packages) {
+    console.log(
+      `::notice title=devkit-copies::${overlap.length} package overlaps (baseline ${config.packages}). Lower the baseline: run \`node bin/copies.mjs --write-baseline\` and commit live/copies.json.`,
+    );
+  }
   if (count < config.baseline || (config.names !== undefined && names.length < namesBaseline)) {
     console.log(
       `::notice title=devkit-copies::${count} copies (baseline ${config.baseline}) and ${names.length} names (baseline ${namesBaseline}). Lower the baselines to keep the gain: run \`node bin/copies.mjs --write-baseline\` and commit live/copies.json.`,

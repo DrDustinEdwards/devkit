@@ -17,15 +17,9 @@
     "scripts/*.mjs",
     "testing/*.mjs",
     "lint/*.mjs",
+    "stryker/*.mjs",
     "vite/*.mjs",
     "drill/*.mjs",
     "*.mjs"
-  ],
-  "exclude": [
-    "bin/live.mjs",
-    "bin/a11y.mjs",
-    "bin/a11y-judge.mjs",
-    "vite/dev-toolbar-client.mjs",
-    "scripts/fakes-contract.mjs"
   ]
 }

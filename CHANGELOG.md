@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.27.0 (2026-11-07)
+
+- `./stryker`: `chunkedStryker`, the chunked Stryker config that d1-dump, site-api, Germomics and Foxhound each carried a copy of (the same options, the same `STRYKER_CHUNK` rule and the same `rest` chunk). A repository's `stryker.config.mjs` is now its file list.
+- Every file is type-checked. `bin/live.mjs`, `bin/a11y.mjs`, `bin/a11y-judge.mjs`, `scripts/fakes-contract.mjs` and `vite/dev-toolbar-client.mjs` were left out of `tsconfig.json` (231 errors); none is now, and the exclude list is gone. The dev toolbar now reports accessibility as not checked when `/@devkit/axe.js` loads without defining `axe`, where it threw.
+- `devkit-copies`: a third ratchet, `"packages"`, counts the names two or more shared packages each export (13 today: site-api and Prelum's frontmatter functions, `sha256Hex`, `escapeHtml` in three packages, `goneResponse`...), the overlap between the packages that no check over the sites could see. `live/copies.json` gains `packages: 13`, and `names` drops to 94, today's count.
+
 ## 0.26.4 (2026-11-07)
 
 - `live`: the Germomics admin MCP server (`admin-mcp.germomics.com`) is off the board: its site entry, its `MCP_TEST_GRANT_ADMIN_MCP_GERMOMICS_COM` secret and its area 9 and area 3 rows. The server is gone.

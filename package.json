@@ -1,6 +1,6 @@
 {
   "name": "@dustinedwards/devkit",
-  "version": "0.26.4",
+  "version": "0.27.0",
   "private": true,
   "description": "Shared tooling for the Dustin Edwards repositories. As a package: the shared test helpers and the shared checks, installed by git tag. The Renovate policy and the reusable workflows in this repository are not part of the package.",
   "license": "UNLICENSED",
@@ -24,6 +24,7 @@
     "bin",
     "claude",
     "lint",
+    "stryker",
     "testing",
     "vite",
     "README.md"
@@ -65,6 +66,10 @@
     "./vite/dev-toolbar": {
       "types": "./vite/dev-toolbar.d.mts",
       "default": "./vite/dev-toolbar.mjs"
+    },
+    "./stryker": {
+      "types": "./stryker/chunked.d.mts",
+      "default": "./stryker/chunked.mjs"
     }
   },
   "scripts": {
