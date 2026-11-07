@@ -285,15 +285,9 @@ test("a repository that cannot be read fails the run instead of passing silently
   assert.match(log.failed ?? "", /1 consumer/);
 });
 
-test("it is only callable, every action is pinned, it asks GITHUB_TOKEN for nothing, and the token is passed by name", () => {
-  const on = text.slice(text.indexOf("\non:\n"), text.indexOf("\npermissions:"));
-  assert.match(on, /workflow_call:/);
-  assert.doesNotMatch(on, /workflow_dispatch|pull_request|push:|schedule:/);
+test("it asks GITHUB_TOKEN for nothing, and the token is passed by name", () => {
   assert.match(text, /\npermissions: \{\}\n/);
   assert.doesNotMatch(code(text), /: write\b/);
-  const uses = [...code(text).matchAll(/uses: (\S+)/g)].map((m) => m[1]);
-  assert.ok(uses.length >= 1);
-  for (const ref of uses) assert.match(ref, /@[0-9a-f]{40}$/, ref);
   assert.doesNotMatch(code(text), /secrets: inherit/);
 });
 

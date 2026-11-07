@@ -7,6 +7,8 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import test from "node:test";
 
+import { callerProblems } from "../scripts/check-callers.mjs";
+
 const dir = new URL("../.github/workflows/", import.meta.url);
 const shared = readdirSync(dir)
   .filter((name) => name.endsWith(".yml"))
@@ -18,26 +20,6 @@ const actions = readdirSync(actionsDir).map((name) => ({
   text: readFileSync(new URL(`${name}/action.yml`, actionsDir), "utf8").replace(/\r\n/g, "\n"),
 }));
 
-test("the shared workflows are the ones every repository calls", () => {
-  assert.deepEqual(shared.map((w) => w.name).sort(), [
-    "access-drift.yml",
-    "bump-consumers.yml",
-    "checks.yml",
-    "code-map.yml",
-    "conformance.yml",
-    "dependencies.yml",
-    "no-bloat.yml",
-    "pr.yml",
-    "release.yml",
-    "restore-drill.yml",
-    "review.yml",
-    "scorecard.yml",
-    "worker-deploy.yml",
-    "worker-size.yml",
-    "workflow-audit.yml",
-  ]);
-});
-
 /** @param {string} text */
 const codeOf = (text) =>
   text
@@ -46,6 +28,7 @@ const codeOf = (text) =>
     .join("\n");
 
 test("each runs only when called", () => {
+  assert.ok(shared.length > 0, "no shared workflow found");
   for (const { name, text } of shared) {
     const on = text.slice(text.indexOf("\non:\n") + 1).split(/\n(?=\S)/)[0];
     assert.doesNotMatch(on, /workflow_dispatch|pull_request|push:|schedule:/, name);
@@ -64,20 +47,37 @@ test("each pins every action to a full commit sha, and no checkout keeps credent
 });
 
 test("each checks every file it downloads against its sha256", () => {
+  let downloads = 0;
   for (const { name, text } of [...shared, ...actions]) {
-    for (const [, file] of codeOf(text).matchAll(/curl -\w*o (\S+) https:/g)) {
+    const code = codeOf(text);
+    for (const [, file] of code.matchAll(/\bcurl\b[^\n]*?\s-\w*o (\S+) https:/g)) {
+      downloads += 1;
       assert.match(
-        text,
+        code,
         new RegExp(`^\\s*(?:echo ")?[0-9a-f]{64}  ${file.replace(/\./g, "\\.")}\\b`, "m"),
         `${name}: ${file}`,
       );
+      assert.match(code, /sha256sum -c -/, `${name}: ${file} has a sum that is never checked`);
     }
   }
+  assert.ok(downloads > 0, "no download found: the pattern no longer matches how curl is called");
+});
+
+test("each grants the job's token nothing, or contents: read, at the top", () => {
+  for (const { name, text } of shared)
+    assert.match(text, /\npermissions:(?: \{\}\n|\n {2}contents: read\n\n)/, name);
+});
+
+test("every example caller pins a full commit sha", () => {
+  const examples = new URL("../examples/", import.meta.url);
+  const files = readdirSync(examples).filter((file) => file.endsWith(".yml"));
+  assert.ok(files.length > 0);
+  for (const file of files)
+    assert.deepEqual(callerProblems(readFileSync(new URL(file, examples), "utf8")), [], file);
 });
 
 test("checks.yml writes only pull requests, only on the repository's own, checks the code on every event that adds commits, and counts as the checks workflow", async () => {
   const { checkWorkflows } = await import("../bin/shared.mjs");
-  const { callerProblems } = await import("../scripts/check-callers.mjs");
   const code = codeOf(readFileSync(new URL("checks.yml", dir), "utf8"));
   assert.deepEqual(
     [...code.matchAll(/(\S+): write\b/g)].map((m) => m[1]),
@@ -102,7 +102,6 @@ test("checks.yml writes only pull requests, only on the repository's own, checks
   ])
     assert.ok(runs.includes(`node "$GITHUB_ACTION_PATH/../../../${run}`), run);
   const caller = readFileSync(new URL("../examples/checks-caller.yml", import.meta.url), "utf8");
-  assert.deepEqual(callerProblems(caller), []);
   assert.match(caller, /permissions:\n {6}contents: read\n {6}pull-requests: write\n/);
   const files = { ".github/workflows/checks.yml": caller.replace(/0{40}/, "a".repeat(40)) };
   const missing = checkWorkflows(

@@ -5,12 +5,24 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { judge, summarize } from "../bin/conformance.mjs";
+
+/** A port the system says is free now: listen on 0, read what it assigned, close. */
+const freePort = () =>
+  new Promise((resolve, reject) => {
+    const server = createServer();
+    server.on("error", reject);
+    server.listen(0, () => {
+      const { port } = /** @type {import("node:net").AddressInfo} */ (server.address());
+      server.close(() => resolve(port));
+    });
+  });
 
 test("reads both summary forms the suite prints", () => {
   assert.deepEqual(summarize("...\nPassed: 24/28\n"), { passed: 24, total: 28 });
@@ -43,7 +55,10 @@ test("a baseline fails on regress, improve and recount; no baseline means every 
 test(
   "PLANT: the gate fails an authorization server that hides CIMD or registers a callback off the allowlist, and passes what it gets right",
   { skip: process.platform === "win32" },
-  () => {
+  async () => {
+    const port = await freePort();
+    let authPort = await freePort();
+    while (authPort === port) authPort = await freePort();
     const dir = mkdtempSync(join(tmpdir(), "conformance-"));
     const file = (/** @type {string} */ path, /** @type {string} */ text) => {
       mkdirSync(join(dir, path, ".."), { recursive: true });
@@ -78,12 +93,11 @@ createServer((req, res) => {
       '{ "vars": { "ALLOWED": "https://example.com/cb, https://example.com/other" } }',
     );
     file("after.mjs", 'export default ({ pass }) => pass("the after hook ran");\n');
-    const port = 20000 + Math.floor(Math.random() * 20000);
     file(
       ".conformance.json",
       JSON.stringify({
         mcp: { port, migrate: "DB", persist: "state" },
-        auth: { port: port + 1, config: "auth.jsonc" },
+        auth: { port: authPort, config: "auth.jsonc" },
         scenarios: [{ spec: "2026-07-28", scenario: "server-stateless", passed: 3, total: 3 }],
         registration: { allowed: { var: "ALLOWED" } },
         after: "after.mjs",

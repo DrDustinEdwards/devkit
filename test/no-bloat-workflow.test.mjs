@@ -1,11 +1,9 @@
-// Holds the shared no-bloat workflow to what makes it safe to call from every repository: only callable, read-only, no
-// secrets, and every action pinned. Text based.
+// Holds the shared no-bloat workflow to what makes it safe to call from every repository: no write, no secret, and no
+// caller input spliced into a script. Text based; workflows.test.mjs holds it to being callable only and pinned.
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-
-import { callerProblems } from "../scripts/check-callers.mjs";
 
 const text = readFileSync(
   new URL("../.github/workflows/no-bloat.yml", import.meta.url),
@@ -20,8 +18,7 @@ const steps = text
   .split(/\n(?=      - )/)
   .map((step) => step.trimEnd());
 
-test("the token is read-only and no secret is taken or read", () => {
-  assert.match(text, /\npermissions:\n {2}contents: read\n/);
+test("no job asks for a write and no secret is taken or read", () => {
   assert.doesNotMatch(code, /: write\b/);
   assert.doesNotMatch(code, /secrets/);
 });
@@ -31,25 +28,4 @@ test("caller input reaches a shell only through the environment, never spliced i
     const run = s.slice(s.indexOf("run:"));
     assert.doesNotMatch(run, /\$\{\{/, s.split("\n")[0]);
   }
-});
-
-test("it runs the package's bin, which the package ships", () => {
-  assert.match(text, /uses: \.\/\.devkit\/\.github\/actions\/no-bloat\n/);
-  const action = readFileSync(
-    new URL("../.github/actions/no-bloat/action.yml", import.meta.url),
-    "utf8",
-  );
-  assert.match(action, /node_modules\/@dustinedwards\/devkit\/bin\/no-bloat\.mjs/);
-  const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
-  assert.equal(pkg.bin["devkit-no-bloat"], "./bin/no-bloat.mjs");
-  assert.ok(pkg.files.includes("bin"));
-});
-
-test("the example caller passes the pin check", () => {
-  assert.deepEqual(
-    callerProblems(
-      readFileSync(new URL("../examples/no-bloat-caller.yml", import.meta.url), "utf8"),
-    ),
-    [],
-  );
 });

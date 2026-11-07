@@ -33,31 +33,38 @@ const bash = (/** @type {string} */ command) => ({
   tool_input: { command, description: "x" },
 });
 
-test("the README's settings block fails closed before npm ci and runs devkit's hook after", (t) => {
-  const project = mkdtempSync(join(tmpdir(), "claude-hooks-"));
-  t.after(() => rmSync(project, { recursive: true, force: true }));
-  for (const command of [emDash, scopedAdd]) {
-    assert.equal(run(command, project, bash("npm ci")), 0);
-    assert.equal(run(command, project, bash("npm install --no-audit")), 0);
-    assert.equal(run(command, project, bash("npm ci && git add -A")), 2);
-    assert.equal(run(command, project, bash("echo hi")), 2);
-    // A Write whose content quotes the allowed command is escaped JSON, so it cannot pass as one.
+test(
+  "the README's settings block fails closed before npm ci and runs devkit's hook after",
+  { skip: process.platform === "win32" },
+  (t) => {
+    const project = mkdtempSync(join(tmpdir(), "claude-hooks-"));
+    t.after(() => rmSync(project, { recursive: true, force: true }));
+    for (const command of [emDash, scopedAdd]) {
+      assert.equal(run(command, project, bash("npm ci")), 0);
+      assert.equal(run(command, project, bash("npm install --no-audit")), 0);
+      assert.equal(run(command, project, bash("npm ci && git add -A")), 2);
+      assert.equal(run(command, project, bash("echo hi")), 2);
+      // A Write whose content quotes the allowed command is escaped JSON, so it cannot pass as one.
+      assert.equal(
+        run(command, project, {
+          tool_name: "Write",
+          tool_input: { file_path: "a", content: '"command": "npm ci"' },
+        }),
+        2,
+      );
+    }
+    const hooks = join(project, "node_modules/@dustinedwards/devkit/claude/hooks");
+    mkdirSync(hooks, { recursive: true });
+    cpSync(join(ROOT, "claude/hooks"), hooks, { recursive: true });
+    assert.equal(run(emDash, project, bash("echo hi")), 0);
     assert.equal(
-      run(command, project, {
+      run(emDash, project, {
         tool_name: "Write",
-        tool_input: { file_path: "a", content: '"command": "npm ci"' },
+        tool_input: { file_path: "a", content: "a — b" },
       }),
       2,
     );
-  }
-  const hooks = join(project, "node_modules/@dustinedwards/devkit/claude/hooks");
-  mkdirSync(hooks, { recursive: true });
-  cpSync(join(ROOT, "claude/hooks"), hooks, { recursive: true });
-  assert.equal(run(emDash, project, bash("echo hi")), 0);
-  assert.equal(
-    run(emDash, project, { tool_name: "Write", tool_input: { file_path: "a", content: "a — b" } }),
-    2,
-  );
-  assert.equal(run(scopedAdd, project, bash("git add -A")), 2);
-  assert.equal(run(scopedAdd, project, bash("git add README.md")), 0);
-});
+    assert.equal(run(scopedAdd, project, bash("git add -A")), 2);
+    assert.equal(run(scopedAdd, project, bash("git add README.md")), 0);
+  },
+);

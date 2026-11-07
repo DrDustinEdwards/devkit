@@ -101,7 +101,3 @@ test("the migrations record, SQLite's own tables and the keep list are left alon
   assert.equal(count(db, "settings"), 1);
   assert.equal(count(db, "notes"), 0);
 });
-
-test("an empty database is a no-op", async () => {
-  assert.deepEqual(await resetDb(d1()), []);
-});

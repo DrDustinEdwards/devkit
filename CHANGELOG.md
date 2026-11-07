@@ -32,6 +32,7 @@ Fixes from a review of the checks and workflows. Behavior changes a repository m
 
 - `default.json` (Renovate): `@types/node` major updates are off; the types move with the runtime's Node major, by hand, with `.nvmrc` (bsw #159 offered 26 on Node 24).
 - `default.json` (Renovate): `allow-git=all`, so Renovate's npm 12 can regenerate lockfiles that reach a git dependency of a git dependency (EALLOWGIT left them stale on every network packages PR). Peer ranges are never rewritten. The shared `rangeStrategy: pin` turned enarratio's and react-router's peer ranges into exact versions (capsomer #287, #288), which locks consumers out of every other version. Prelum carried this rule alone; it now applies to every repository.
+- Tests only, no behavior change: the sha256 check over the shared workflows' downloads now matches how they call curl (it matched none) and fails if it finds no download; every example caller's pin check, and the top-level `permissions`, are each checked once in `workflows.test.mjs`. Removed tests that pinned workflow text a run case already proves, repeated another file's coverage, or could not fail (206 cases to 199). The ReDoS case counts pattern calls instead of timing them, the conformance case takes free ports from the system, the bash cases skip on Windows, temp directories are removed, and spawned bins get no `GITHUB_STEP_SUMMARY`, `GITHUB_OUTPUT` or `GITHUB_EVENT_PATH` of the run.
 
 ## 0.27.0 (2026-11-07)
 

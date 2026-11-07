@@ -133,33 +133,27 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
     findings.filter((f) => f.url === clean.url),
     [],
   );
-  const got = findings.map((f) => `${f.severity} ${f.item} ${f.detail.split(/[:(]/)[0].trim()}`);
-  assert.deepEqual(got, [
-    "error L1 axe color-contrast",
-    "warning L1 axe region",
-    "error L2 no skip link to main as the first Tab stop",
-    "error L2 no visible focus on 1 of 13 stops",
-    "error L2 focus hidden under sticky `header.sticky` on 1 stops",
-    "error L2 focus trap",
-    "error L2 Escape did not close what `button.menu` opened",
-    "error L2 focus did not return to `button.share` after Escape closed what it opened",
-    "error L3 scrolls sideways at 320 px",
-    "error L3 text clipped with WCAG 1.4.12 text spacing",
-    "error L3 200% zoom proxy",
-    "error L3 200% zoom proxy",
-    "error L4 animations still running with reduced motion",
-    "error L4 axe button-name",
-    "error L4 no visible focus in forced colors on 1 stops",
-    "error S2 no lang on <html>",
-    "warning S2 2 h1 elements, not one",
-    "warning S2 heading levels skipped",
-    "warning S2 landmarks",
-    "error S3 images with no alt",
-    'warning S2 the title "Home" is also https',
-    "error S6 no accessibility statement",
-  ]);
-  assert.match(findings[0].detail, /at 1440-light, 390-dark: 5 elements, first `\.btn`/);
-  assert.match(findings[3].detail, /`input#q`$/);
+  // Every planted mistake is found, counted by checklist item and severity; the wording is free to change.
+  const counts = {};
+  for (const f of findings)
+    counts[`${f.severity} ${f.item}`] = (counts[`${f.severity} ${f.item}`] ?? 0) + 1;
+  assert.equal(findings.length, 22);
+  assert.deepEqual(counts, {
+    "error L1": 1,
+    "warning L1": 1,
+    "error L2": 6,
+    "error L3": 4,
+    "error L4": 3,
+    "error S2": 1,
+    "warning S2": 4,
+    "error S3": 1,
+    "error S6": 1,
+  });
+  assert.match(
+    findings.find((f) => /color-contrast/.test(f.detail)).detail,
+    /at 1440-light, 390-dark: 5 elements, first `\.btn`/,
+  );
+  assert.match(findings.find((f) => /no visible focus on /.test(f.detail)).detail, /`input#q`$/);
   assert.match(findings.find((f) => /forced colors on/.test(f.detail)).detail, /`button\.menu`$/);
 });
 

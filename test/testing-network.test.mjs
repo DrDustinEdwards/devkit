@@ -27,10 +27,16 @@ test("installs restore in reverse order, as a stack", async () => {
   const real = globalThis.fetch;
   const first = async () => new Response("first");
   const restoreFirst = installFetch(first);
-  const restoreSecond = installFetch(async () => new Response("second"));
-  assert.equal(await (await fetch("https://example.test")).text(), "second");
-  restoreSecond();
-  assert.equal(globalThis.fetch, first);
-  restoreFirst();
+  try {
+    const restoreSecond = installFetch(async () => new Response("second"));
+    try {
+      assert.equal(await (await fetch("https://example.test")).text(), "second");
+    } finally {
+      restoreSecond();
+    }
+    assert.equal(globalThis.fetch, first);
+  } finally {
+    restoreFirst();
+  }
   assert.equal(globalThis.fetch, real);
 });

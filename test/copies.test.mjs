@@ -62,7 +62,11 @@ test("a config with no numeric baseline fails instead of passing every count", (
     const config = join(dir, "copies.json");
     writeFileSync(config, JSON.stringify({ names: 1 }));
     const bin = fileURLToPath(new URL("../bin/copies.mjs", import.meta.url));
-    const r = spawnSync(process.execPath, [bin, "--config", config], { encoding: "utf8" });
+    // Without the runner's files, so the bin writes nothing into the run that tests it.
+    const env = { ...process.env };
+    for (const name of ["GITHUB_STEP_SUMMARY", "GITHUB_EVENT_PATH", "GITHUB_OUTPUT"])
+      delete env[name];
+    const r = spawnSync(process.execPath, [bin, "--config", config], { encoding: "utf8", env });
     assert.equal(r.status, 1);
     assert.match(r.stdout, /has no numeric "baseline"/);
   } finally {

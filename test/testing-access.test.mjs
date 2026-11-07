@@ -172,17 +172,3 @@ test("a token request sent as a Request is recorded too", async () => {
     stub.restore();
   }
 });
-
-test("restore puts the real fetch back; install: false never touches it; issuer and audience are required", async () => {
-  const real = globalThis.fetch;
-  const stub = await stubAccess({ issuer: ISSUER, audience: "a", email: "x@example.com" });
-  assert.notEqual(globalThis.fetch, real);
-  stub.restore();
-  assert.equal(globalThis.fetch, real);
-  await stubAccess({ issuer: ISSUER, audience: "a", email: "x@example.com", install: false });
-  assert.equal(globalThis.fetch, real);
-  await assert.rejects(
-    stubAccess({ issuer: "", audience: "a", email: "x@example.com" }),
-    /needs the issuer and audience/,
-  );
-});

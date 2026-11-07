@@ -6,6 +6,7 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import {
   check,
@@ -16,6 +17,8 @@ import {
   readPending,
   sha256,
 } from "../bin/migrations.mjs";
+
+const BIN = fileURLToPath(new URL("../bin/migrations.mjs", import.meta.url));
 
 test("drops and renames are contractions unless the file says why; comments and strings are not read", () => {
   assert.deepEqual(
@@ -140,7 +143,7 @@ test("--write refuses a recorded migration that is gone from disk, unless --forc
   try {
     writeFileSync(join(dir, "0001_a.sql"), "CREATE TABLE a (x);");
     const run = (...args) =>
-      spawnSync(process.execPath, ["bin/migrations.mjs", dir, "--write", ...args], {
+      spawnSync(process.execPath, [BIN, dir, "--write", ...args], {
         encoding: "utf8",
       });
     assert.equal(run().status, 0);
