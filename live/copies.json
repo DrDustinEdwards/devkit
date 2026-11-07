@@ -4,5 +4,8 @@
   "measured_at": "2026-11-07",
   "tool": "jscpd@4.3.0",
   "args": ["--min-lines", "10", "--min-tokens", "80"],
-  "packages": 2
+  "packages": 1,
+  "packagesAccepted": {
+    "escapeHtml": "Enarratio is a published library with no runtime dependencies, so it carries its own copy; site-runtime's is the one every site and Capsomer import."
+  }
 }
