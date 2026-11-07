@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- License: MIT. Added the LICENSE file and set `license` in package.json (it was UNLICENSED, which the other public repositories do not share).
+
 Fixes from a review of the checks and workflows. Behavior changes a repository may meet are marked **new failure**.
 
 - `devkit-migrations`: `--write` refuses, without `--force`, when a recorded migration is gone from disk or renamed. A migration after `expand_only_after` that updates, replaces (`INSERT OR REPLACE`, `REPLACE INTO`) or deletes rows, drops an index, view or trigger, or sets `PRAGMA writable_schema` needs a `-- contract:` line (**new failure**), and `--apply` hands such a migration to a person. An apostrophe inside a `"quoted"`, backtick or `[bracket]` identifier no longer starts a string, a `-- contract:` inside a `/* */` block does not count, and a pending file whose name is not `NNNN_name.sql` is a hand-only item rather than skipped.

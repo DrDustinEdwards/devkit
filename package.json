@@ -3,7 +3,7 @@
   "version": "0.27.0",
   "private": true,
   "description": "Shared tooling for the Dustin Edwards repositories. As a package: the shared test helpers and the shared checks, installed by git tag. The Renovate policy and the reusable workflows in this repository are not part of the package.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bin": {
     "devkit-a11y": "./bin/a11y.mjs",
     "devkit-bootstrap": "./bin/bootstrap.mjs",
