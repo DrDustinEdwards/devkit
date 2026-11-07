@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.26.3 (2026-11-07)
+
+- `worker-deploy.yml` (live gate): a site deliberately in maintenance (its home page answers the shared 503 with Retry-After, site-runtime `./maintenance`) no longer has its deploy rolled back by the caller's page checks. Once `/health` reports this run's commit, the gate sees the maintenance page, skips `verify-command` with a warning, and passes. A 503 without Retry-After still runs the checks.
+- `devkit-ops-audit`: N2 fails a site whose `/404` path answers 2xx, and M1 warns when the home page answers the maintenance page, so MAINTENANCE left on is seen.
+
 ## 0.26.2 (2026-11-06)
 
 - `./oxlint` (`react`): `jsx-a11y/no-noninteractive-tabindex` also allows `role="region"` (a scrollable region a keyboard must reach), and `jsx-a11y/no-redundant-roles` allows `role="list"` on `ul` and `ol` (Safari drops list semantics from a list with `list-style: none` without it). Both are options the rules already have; the fixture's `good.tsx` fails without them. A repository drops the `oxlint-disable` comments it wrote for these two.

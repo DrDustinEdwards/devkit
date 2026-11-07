@@ -566,9 +566,21 @@ jobs:
                 sleep "$((GRADUAL_MINUTES * 60))"
               fi
             fi
+            # A site deliberately in maintenance answers every page but /health with the shared 503 and Retry-After (site-runtime
+            # ./maintenance), so the caller's page checks would refuse a good deploy. /health already reported this commit, so
+            # that is the whole verdict then: the page checks are skipped, loudly, and nothing is rolled back for it.
             if [ "$code" = "0" ]; then
-              bash -euo pipefail -c "$VERIFY"
-              code=$?
+              origin=$(printf '%s' "$HEALTH_URL" | sed -E 's#^(https?://[^/]+).*#\1#')
+              home=$(curl -sS -o /dev/null --max-time 10 "${override[@]}" -w '%{http_code} %header{retry-after}' "${origin}/" 2> /dev/null || true)
+              case "$home" in
+                "503 "[0-9]*)
+                  echo "::warning::${origin}/ answers the maintenance page (${home}), so the page checks were skipped; /health reports this commit. Turn MAINTENANCE off to check the pages."
+                  ;;
+                *)
+                  bash -euo pipefail -c "$VERIFY"
+                  code=$?
+                  ;;
+              esac
             fi
           fi
           echo "exit_code=${code}" >> "$GITHUB_OUTPUT"

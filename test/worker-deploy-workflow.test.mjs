@@ -418,6 +418,21 @@ test("RUN: the guard step writes the guard, and a passing verify passes after /h
   }
 });
 
+test("RUN: a site in maintenance skips the page checks once /health reports this commit", () => {
+  const dir = gate();
+  try {
+    const skipped = verify(dir, [health(THIS_RUN), "503 3600"], "echo ran >&2; exit 1");
+    assert.equal(skipped.status, 0, skipped.stdout + skipped.stderr);
+    assert.match(skipped.output, /^exit_code=0$/m);
+    assert.match(skipped.stdout, /maintenance page/);
+    assert.doesNotMatch(skipped.stderr, /ran/);
+    const plain503 = verify(dir, [health(THIS_RUN), "503 "], "echo ran >&2; exit 1");
+    assert.equal(plain503.status, 1, "a 503 with no Retry-After is not maintenance");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test("RUN PLANT: a failing verify refuses (exit 1), and the rollback rolls back what this run shipped", () => {
   const dir = gate();
   try {
