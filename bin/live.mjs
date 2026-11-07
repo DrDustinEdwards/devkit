@@ -89,18 +89,18 @@ export const UNMEASURED_PREFIX = "could not measure: ";
 export const EXIT_UNMEASURED = 3;
 
 const live = new URL("../live/", import.meta.url);
-const readJson = (/** @type {string | URL} */ path) => JSON.parse(readFileSync(path, "utf8"));
+const readJsonFile = (/** @type {string | URL} */ path) => JSON.parse(readFileSync(path, "utf8"));
 
 /** The site list, area list and verdicts in a directory laid out as live/ is. */
 export function loadConfig(/** @type {string | URL} */ dir = live) {
   const base = typeof dir === "string" ? pathToFileURL(dir.endsWith("/") ? dir : `${dir}/`) : dir;
-  const { sites } = readJson(new URL("sites.json", base));
-  const { areas } = readJson(new URL("areas.json", base));
+  const { sites } = readJsonFile(new URL("sites.json", base));
+  const { areas } = readJsonFile(new URL("areas.json", base));
   const verdictDir = new URL("verdicts/", base);
   const verdicts = existsSync(verdictDir)
     ? readdirSync(verdictDir)
         .filter((name) => /^area-\d+\.json$/.test(name))
-        .map((name) => readJson(new URL(name, verdictDir)))
+        .map((name) => readJsonFile(new URL(name, verdictDir)))
     : [];
   return { sites, areas, verdicts };
 }
@@ -818,7 +818,7 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   } else if (command === "board" && values.runs && values.out) {
     const runs = readdirSync(values.runs)
       .filter((name) => name.endsWith(".json"))
-      .map((name) => readJson(join(/** @type {string} */ (values.runs), name)));
+      .map((name) => readJsonFile(join(/** @type {string} */ (values.runs), name)));
     const board = buildBoard(config, runs);
     writeFileSync(values.out, `${JSON.stringify(board, null, 1)}\n`);
     if (values.md) writeFileSync(values.md, boardMarkdown(board));
