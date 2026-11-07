@@ -4,7 +4,7 @@
 
 - `./stryker`: `chunkedStryker`, the chunked Stryker config that d1-dump, site-api, Germomics and Foxhound each carried a copy of (the same options, the same `STRYKER_CHUNK` rule and the same `rest` chunk). A repository's `stryker.config.mjs` is now its file list.
 - Every file is type-checked. `bin/live.mjs`, `bin/a11y.mjs`, `bin/a11y-judge.mjs`, `scripts/fakes-contract.mjs` and `vite/dev-toolbar-client.mjs` were left out of `tsconfig.json` (231 errors); none is now, and the exclude list is gone. The dev toolbar now reports accessibility as not checked when `/@devkit/axe.js` loads without defining `axe`, where it threw.
-- `devkit-copies`: a third ratchet, `"packages"`, counts the names two or more shared packages each export (13 today: site-api and Prelum's frontmatter functions, `sha256Hex`, `escapeHtml` in three packages, `goneResponse`...), the overlap between the packages that no check over the sites could see. `live/copies.json` gains `packages: 13`, and `names` drops to 94, today's count.
+- `devkit-copies`: a third ratchet, `"packages"`, counts the names two or more shared packages each export, the overlap between the packages that no check over the sites could see. `live/copies.json` gains `packages: 6` (the CI run's count over every repository: `enhanceCharts`, `escapeHtml` in three packages, `goneResponse`, `kindOf`, `runConformance`, `toDate`), `names` drops to 148, and `baseline` rises from 24 to 28 for this release only: `stryker/chunked.mjs` is, until the four repositories import it, a fifth copy of their config, and the follow-up pull requests lower it again.
 
 ## 0.26.4 (2026-11-07)
 
