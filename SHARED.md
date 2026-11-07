@@ -44,12 +44,12 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.33.0 (DrDustinEdwards/prelum)
+## Prelum 0.34.0 (DrDustinEdwards/prelum)
 
-- `.`: `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `sitemapDocument`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`
+- `.`: `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `sitemapDocument`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`
 - `./xml`: `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`
 - `./slug`: `slugify`
-- `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`
+- `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`
 - `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`
 - `./sitemap`: `sitemapDocument`
 - `./accessibility`: `ACCESSIBILITY_PATH`, `ACCESSIBILITY_STANDARD`, `HAND_CHECK_LIMITATIONS`, `accessibilityStatement`
@@ -57,7 +57,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./markdown-copy`: `htmlToMarkdown`, `markdownCopies`, `llmsHeaderOf`, `sitemapLocs`
 - `./markdown-files`: `writeMarkdownCopies`
 - `./frontmatter`: `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`
-- `./head`: `headTags`, `articleDates`, `absoluteUrl`, `headHtml`, `truncateForSerp`, `searchTitle`, `SERP_TITLE`, `SERP_DESCRIPTION`, `serpWidth`, `BREADCRUMB_MIN_ITEMS`, `defineHead`, `metaText`
+- `./head`: `headTags`, `articleDates`, `SHARE_CARD_SIZE`, `shareCard`, `absoluteUrl`, `headHtml`, `truncateForSerp`, `searchTitle`, `SERP_TITLE`, `SERP_DESCRIPTION`, `serpWidth`, `BREADCRUMB_MIN_ITEMS`, `defineHead`, `metaText`
 - `./schema`: `jsonLd`, `thing`, `graph`, `website`, `pageImage`, `imageObject`, `ARTICLE_IMAGE_MIN_PIXELS`, `ARTICLE_IMAGE_RATIOS`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `faqPage`
 - `./robots`: `robotsDocument`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `CONTENT_SIGNAL`, `TDM_RESERVATION_HEADERS`, `aiTxt`, `PLAIN_TEXT_CACHE_CONTROL`, `isPreviewRequest`, `plainTextResponse`, `robotsNotes`, `robotsResponse`, `aiTxtResponse`
 - `./indexnow`: `submitIndexNow`, `keyFileResponse`, `recentSitemapUrls`
@@ -79,7 +79,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/link-icons`: `LINK_ICON_PATH`, `LINK_ICON_MAX_BYTES`, `LINK_ICON_TIMEOUT_MS`, `linkIconType`, `LINK_ICON_SIZE`, `fitLinkIcon`, `lookupLinkIcon`, `linkIconSrc`, `linkIconResponse`
 - `./render/diagram`: `diagramAssetPath`, `buildDiagramModel`, `DIAGRAM_ASSET_DIR`, `DIAGRAM_THEMES`, `DIAGRAM_SIZES_FILE`, `renderDiagramHast`, `diagramSize`
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
-- bins: `prelum-indexnow`, `prelum-audit`, `prelum-icons`, `prelum-content`, `prelum-chart-audit`, `prelum-markdown`
+- bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-markdown`
 
 ## site-runtime 0.88.0 (DrDustinEdwards/site-runtime)
 
@@ -137,12 +137,12 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `ADMIN_LIST_PATH`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
-## site-api 0.26.0 (DrDustinEdwards/site-api)
+## site-api 0.27.0 (DrDustinEdwards/site-api)
 
-- `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `ROUTES`, `schemaHash`, `capabilitiesOf`, `hasContentTrash`, `contentFiltersOf`, `contentVersion`, `VersionConflictError`, `NotFoundError`, `MediaInUseError`, `describeUses`, `RefusedError`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `MIN_KEY_LENGTH`, `insidePrefix`, `HOOK_BACKOFF_MINUTES`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `readEmbedded`, `stripMetadata`, `duplicateKey`, `placeholderAndColor`, `fileNameFor`, `prepareUpload`, `extensionFor`, `datedKey`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `sha256Hex`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `goneResponse`, `gonePath`, `tombstoned`, `PREVIEW_LINK_PATH`
+- `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `ROUTES`, `schemaHash`, `capabilitiesOf`, `hasContentTrash`, `contentFiltersOf`, `contentVersion`, `VersionConflictError`, `NotFoundError`, `MediaInUseError`, `describeUses`, `RefusedError`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `HOOK_BACKOFF_MINUTES`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `readEmbedded`, `stripMetadata`, `duplicateKey`, `placeholderAndColor`, `fileNameFor`, `prepareUpload`, `PICTURE_TYPES`, `pictureLimits`, `PICTURE_RESIZE`, `extensionFor`, `datedKey`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `goneResponse`, `gonePath`, `tombstoned`, `PREVIEW_LINK_PATH`
 - `./admin`: `readPostQuery`, `loadPosts`, `scheduleLabel`, `liveSaveWarning`, `loadScheduledUpdate`, `runPostsIntent`, `readMediaQuery`, `loadMedia`, `loadMediaChanges`, `parseMediaTags`, `runMediaIntent`, `MENTION_FILTERS`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `localClient`, `askFirst`
 - `./client`: `SiteApiError`, `createSiteClient`, `localClient`
-- `./frontmatter`: `tagsOf`, `setTags`, `SEARCH_FIELDS`, `searchFieldsOf`, `setSearchFields`, `POST_FIELDS`, `postFieldsOf`, `setPostFields`, `missingAltFields`, `JsonSourceError`, `jsonSource`, `joinSource`, `readKey`, `readList`, `setBlock`, `setRawKey`, `splitSource`
+- `./frontmatter`: `tagsOf`, `setTags`, `SEARCH_FIELDS`, `searchFieldsOf`, `setSearchFields`, `POST_FIELDS`, `postFieldsOf`, `setPostFields`, `missingAltFields`, `JsonSourceError`, `jsonSource`
 - `./schedules`: `SCHEDULED_UPDATES_SQL`, `utc`, `d1ScheduledUpdates`
 - `./store`: `gonePath`, `tombstoned`, `goneResponse`, `SITE_API_STORE_SQL_V0_21`, `SITE_API_STORE_SQL_V0_22`, `SITE_API_STORE_SQL`, `d1SiteApiStore`
 - `./r2`: `writeFocus`, `replaceObject`
@@ -150,12 +150,12 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./testing`: `MEMORY_MEDIA_LIMITS`, `memoryAdapter`
 - bins: `site-api-live`
 
-## d1-dump 0.13.2 (DrDustinEdwards/d1-dump)
+## d1-dump 0.14.0 (DrDustinEdwards/d1-dump)
 
-- `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`
+- `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`, `createSiteBackup`
 - bins: `d1-dump`
 
-## devkit 0.26.4 (DrDustinEdwards/devkit)
+## devkit 0.27.0 (DrDustinEdwards/devkit)
 
 - `./github`: `gitBlobSha`, `stubGitHub`, `versionOf`
 - `./network`: `urlOf`, `installFetch`, `refuseNetwork`
@@ -166,6 +166,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./islands`: `ISLAND_NAME`, `startIslands`
 - `./vite/site-script`: `siteScript`
 - `./vite/dev-toolbar`: `TOOLBAR_PATH`, `TOOLBAR_LOADER`, `serveToolbar`, `devToolbar`
+- `./stryker`: `chunkedStryker`
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-shared`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
@@ -248,7 +249,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./react/*`: `react/admin-shell`, `react/anchor-bar`, `react/approval-sheet`, `react/attention-list`, `react/authorship`, `react/avatar`, `react/banner`, `react/breadcrumb`, `react/bulk-bar`, `react/button`, `react/catalog`, `react/chart-frame`, `react/chips`, `react/combobox`, `react/command-menu`, `react/confirm-dialog`, `react/content`, `react/date-picker`, `react/detail-panel`, `react/dialog`, `react/disclosure`, `react/draft-compare`, `react/drop-zone`, `react/email`, `react/empty`, `react/error-page`, `react/error-summary`, `react/family-footer`, `react/feed`, `react/field`, `react/flag-list`, `react/history-list`, `react/link`, `react/listbox`, `react/manual`, `react/markdown-editor`, `react/media`, `react/media-library`, `react/mentions-list`, `react/menu`, `react/message`, `react/meter`, `react/moderation-queue`, `react/page-head`, `react/pagination`, `react/panel`, `react/people-roles`, `react/permission-matrix`, `react/picture`, `react/player`, `react/popover`, `react/posts-list`, `react/prose-blocks`, `react/publish-gate`, `react/row-list`, `react/segmented`, `react/select`, `react/session-row`, `react/share-preview`, `react/shell`, `react/shortcuts`, `react/site-header`, `react/skeleton`, `react/sortable-list`, `react/stat-tile`, `react/status`, `react/step-indicator`, `react/summary-list`, `react/switch`, `react/switch-reason`, `react/system-map`, `react/table`, `react/tabs`, `react/tag-group`, `react/theme-switch`, `react/time`, `react/toolbar`, `react/tooltip`, `react/tree`, `react/uptime-strip`, `react/usage-meter`
 - bins: `capsomer`
 
-## Enarratio 0.7.3 (DrDustinEdwards/enarratio)
+## Enarratio 0.8.0 (DrDustinEdwards/enarratio)
 
 - `.`: `element`, `escapeHtml`, `heatStrip`, `heatStripTable`, `progressRing`, `progressRingTable`, `sparkline`, `sparklineTable`, `timeline`, `timelineTable`, `uptimeStrip`, `uptimeStripTable`, `datasetJsonLd`, `dataTableBlock`, `figure`, `slotStyle`, `validateFigure`, `dateFormat`, `numberFormat`, `tableChart`, `ENGLISH`, `readingGrade`, `toCsv`, `checkTheme`, `DEFAULT_THRESHOLDS`, `colorDifference`, `contrastRatio`, `labelColor`, `readableShade`, `simulateColorVision`, `defineTheme`, `baseStylesheet`, `colorStyles`, `stylesheet`
 - `./plot`: `barChart`, `boxPlot`, `stripPlot`, `divergingBarChart`, `dotPlot`, `dumbbellPlot`, `rangePlot`, `smallMultiples`, `heatmap`, `densityPlot`, `histogram`, `areaChart`, `lineChart`, `pieChart`, `scatterPlot`, `slopeChart`, `waterfallChart`
