@@ -76,6 +76,11 @@
       "prPriority": 4
     },
     {
+      "description": "A peer range says which versions a package works with, so Renovate never rewrites one (2026-11-07). The shared rangeStrategy pin turned enarratio's peer range into the dev version and react-router's ^8.0.0 into 8.5.1 (capsomer #287 and #288), and Prelum 0.39.1 had to restore a range it locked sites out of. Peer ranges change by hand when the supported range changes. Prelum carried this rule alone; it is here for every repository.",
+      "matchDepTypes": ["peerDependencies"],
+      "enabled": false
+    },
+    {
       "description": "pinning a range to the installed version changes no bytes",
       "matchUpdateTypes": ["pin"],
       "automerge": true

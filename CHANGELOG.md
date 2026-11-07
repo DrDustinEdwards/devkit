@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `default.json` (Renovate): peer ranges are never rewritten. The shared `rangeStrategy: pin` turned enarratio's and react-router's peer ranges into exact versions (capsomer #287, #288), which locks consumers out of every other version. Prelum carried this rule alone; it now applies to every repository.
+
 ## 0.27.0 (2026-11-07)
 
 - `./stryker`: `chunkedStryker`, the chunked Stryker config that d1-dump, site-api, Germomics and Foxhound each carried a copy of (the same options, the same `STRYKER_CHUNK` rule and the same `rest` chunk). A repository's `stryker.config.mjs` is now its file list.
