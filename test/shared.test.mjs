@@ -142,6 +142,24 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
   assert.equal(stale.length, 1);
   assert.equal(isWarning(stale[0]), false);
   assert.match(stale[0].message, /pinned to v0\.10\.0 but package-lock\.json resolves 0\.9\.0/);
+  // An npm workspace member has no lock of its own: the root lock holds its entry, nested under the member or hoisted.
+  const member = (key, v) =>
+    tree({
+      "apps/web/package.json": pkg,
+      "package-lock.json": JSON.stringify({
+        packages: { [key]: { version: v } },
+      }),
+    });
+  const key = "@dustinedwards/site-runtime";
+  assert.equal(run(member(`apps/web/node_modules/${key}`, "0.10.0")).length, 0);
+  assert.equal(run(member(`node_modules/${key}`, "0.10.0")).length, 0);
+  const staleMember = run(member(`apps/web/node_modules/${key}`, "0.9.0"));
+  assert.equal(staleMember.length, 1);
+  assert.match(
+    staleMember[0].message,
+    /pinned to v0\.10\.0 but package-lock\.json resolves 0\.9\.0/,
+  );
+  assert.equal(run(member("apps/web/node_modules/other", "1.0.0")).length, 1); // no entry at all
   assert.equal(
     lockDisagrees(
       tree({
