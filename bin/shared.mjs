@@ -741,26 +741,49 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
 }
 
 /**
+ * The package-lock.json that governs a manifest: the one beside it, or the nearest above it (an npm workspace keeps one
+ * lock at the root for every package under it). Null when there is none.
+ * @param {Tree} tree @param {string} file
+ */
+function governingNpmLock(tree, file) {
+  for (let dir = posix.dirname(file); ; dir = posix.dirname(dir)) {
+    const lock = posix.join(dir, "package-lock.json");
+    if (tree.files.includes(lock)) return lock;
+    if (dir === ".") return null;
+  }
+}
+
+/**
  * A pin of a shared package whose lockfile resolves another release (an error): npm keeps a lock entry for a git
  * dependency when the tag in package.json moves, so a bump that only edits package.json ships the old code (capsid #785
  * pinned site-runtime v0.76.0 over a lock that resolved 0.74.0). npm: the lock's version for the package must equal the
- * tag. pnpm: the lock must record the same specifier.
+ * tag. A workspace member has no lock of its own: the root lock holds its entry, found the way Node resolves it, at
+ * `<member>/node_modules/<name>` and then in each directory above it (foxing's apps/web stayed on capsomer 0.83.1 under a
+ * v0.87.0 pin, because only a lock beside the manifest was read). pnpm: the lock must record the same specifier.
  * @param {Tree} tree @param {string} file @param {number} line @param {string} name @param {string} repo @param {string} ref
  * @returns {Finding[]}
  */
 export function lockDisagrees(tree, file, line, name, repo, ref) {
   const want = semver(ref) ? ref.replace(/^v/, "") : null;
   if (!want) return [];
-  const dir = posix.dirname(file);
-  const npmLock = posix.join(dir, "package-lock.json");
-  if (tree.files.includes(npmLock)) {
+  const npmLock = governingNpmLock(tree, file);
+  if (npmLock) {
     let lock;
     try {
       lock = JSON.parse(tree.read(npmLock));
     } catch {
       return [{ check: "pins", file: npmLock, message: "package-lock.json is not valid JSON" }];
     }
-    const got = lock?.packages?.[`node_modules/${name}`]?.version;
+    const base = posix.relative(posix.dirname(npmLock), posix.dirname(file));
+    let got;
+    for (let dir = base === "" ? "." : base; ; dir = posix.dirname(dir)) {
+      const entry = lock?.packages?.[posix.normalize(posix.join(dir, "node_modules", name))];
+      if (entry) {
+        got = entry.version;
+        break;
+      }
+      if (dir === ".") break;
+    }
     if (got !== want)
       return [
         {
