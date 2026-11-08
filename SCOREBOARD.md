@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-07 13:49 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-08 14:11 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,17 +8,17 @@ Newest run 2026-11-07 13:49 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
-| 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
-| 5. Carrel editing contract | 🟡 | ❔ | ❔ | ❔ | ❔ | · | ❔ | ❔ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
+| 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
+| 5. Carrel editing contract | 🟡 | ❌ | ❔ | ❔ | ❌ | · | ❌ | ❔ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
+| 8. Running and recovery | 🟡 | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | 🟡 | 🟡 | ✅ | 🟡 | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
+| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 ## Why a cell is not complete
@@ -28,7 +28,12 @@ Newest run 2026-11-07 13:49 UTC. Filled only from the live checks and the verifi
 Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: llms.txt says every page has a .md twin, but /about.md and /writing.md are 404 and Accept: text/markdown returns HTML; 1 internal link goes through a redirect; 3 titles over 60 characters
+- ❌ dustinedwards.info: prelum-audit: 33 errors
+  - link-broken: https://dustinedwards.info/ links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500
+  - link-broken: https://dustinedwards.info/research/publications links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500
+  - link-broken: https://dustinedwards.info/site-map links to https://dustinedwards.info/research/lab/primers, which answers 500
+  - link-broken: https://dustinedwards.info/research links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500
+  - link-broken: https://dustinedwards.info/research links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500
 - 🟡 Germomics: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod
 - 🟡 julieedwards.info: no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
 - ❌ TXASM: prelum-audit: 165 errors
@@ -44,7 +49,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
 - 🟡 Foxhound: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
-- ❌ Foxing: prelum-audit: 587 errors
+- ❌ Foxing: prelum-audit: 641 errors
   - link-redirect: https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
   - link-redirect: https://foxing.app/ links to https://foxing.app/people, which redirects to /login
   - link-redirect: https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
@@ -88,12 +93,22 @@ Builder: Complete shared sign-in and access. Verifier: Verify shared sign-in and
 Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: 53 pages render writing with no data-render-version wrapper, 6 images without width and height, h3 after h1 on /research/publications
+- ❌ dustinedwards.info: prelum-content: 61 errors
+  - writing-render-version: https://dustinedwards.info/about stored HTML from render version 22; the pipeline is at 23
+  - writing-render-version: https://dustinedwards.info/research stored HTML from render version 22; the pipeline is at 23
+  - writing-render-version: https://dustinedwards.info/research/retroviruses stored HTML from render version 22; the pipeline is at 23
+  - writing-render-version: https://dustinedwards.info/research/retroviruses/human stored HTML from render version 22; the pipeline is at 23
+  - writing-render-version: https://dustinedwards.info/research/retroviruses/avian stored HTML from render version 22; the pipeline is at 23
 - 🟡 Germomics: checks pass; no verifier yet
 - 🟡 julieedwards.info: live check clean on 1 page; the repository was not available, and earlier notes say it has its own section grammar rather than Prelum
 - 🟡 TXASM: checked on the workers.dev address: 41 pages, 0 errors; /award-nominations has no data-render-version wrapper
 - 🟡 BSW: 11 pages with h3 after h1 (heading order)
-- 🟡 Foxhound: 6 pages with h3 after h1
+- ❌ Foxhound: prelum-content: 43 errors
+  - writing-render-version: https://foxhoundapp.com/blog/stripe-billing-descriptor stored HTML from render version 22; the pipeline is at 23
+  - writing-render-version: https://foxhoundapp.com/blog/foxhound-vs-stripe-smart-retries stored HTML from render version 22; the pipeline is at 23
+  - writing-render-version: https://foxhoundapp.com/blog/best-dunning-software-2026 stored HTML from render version 22; the pipeline is at 23
+  - writing-render-version: https://foxhoundapp.com/blog/foxhound-vs-churn-buster stored HTML from render version 22; the pipeline is at 23
+  - writing-render-version: https://foxhoundapp.com/blog/foxhound-vs-churnkey stored HTML from render version 22; the pipeline is at 23
 - 🟡 Foxing: /books has h3 after h1
 - 🟡 Carrel: live check clean on 2 pages; the Carrel repository was not available to this verifier, and earlier notes say Carrel books still use a regex renderer
 - 🟡 Enarratio: live check clean on 5 pages; its source was not available to this verifier, so use of Prelum and absence of a second renderer is not proven
@@ -105,12 +120,15 @@ Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cell
 Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editing contract.
 
 - 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
-- ❔ dustinedwards.info: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
-- ❔ Germomics: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
-- ❔ julieedwards.info: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
-- ❔ TXASM: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
-- ❔ Foxhound: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
-- ❔ Foxing: site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log
+- ❌ dustinedwards.info: carrel-conformance: 1 errors
+  - M1: https://dustinedwards.info/api/carrel/v1 meta: answers with this contract's schema hash failed
+- ❔ Germomics: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log
+- ❔ julieedwards.info: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log
+- ❌ TXASM: carrel-conformance: 1 errors
+  - M1: https://txasm.dustin-edwards.workers.dev/api/carrel/v1 meta: answers with this contract's schema hash failed
+- ❌ Foxhound: carrel-conformance: 1 errors
+  - M1: https://foxhoundapp.com/api/carrel/v1 meta: answers with this contract's schema hash failed
+- ❔ Foxing: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log
 
 ### 6. Images and media
 
@@ -168,20 +186,23 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
 - ❌ dustinedwards.info: ops-audit: 1 errors
   - H5: https://dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- 🟡 Germomics: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+- ❌ Germomics: ops-audit: 1 errors
+  - R1: https://github.com/DrDustinEdwards/germomics/actions/runs/42475475140 the newest restore drill ended failure
 - ❌ julieedwards.info: ops-audit: 1 errors
   - H5: https://julieedwards.info/health no check on /health probes RATE_LIMITER (durable_object), declared in https://github.com/DrDustinEdwards/julieedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
 - ❌ BSW: ops-audit: 1 errors
   - H5: https://bsw.dustin-edwards.workers.dev/health no check on /health probes RATE_LIMITER (durable_object), declared in https://github.com/DrDustinEdwards/bsw/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- 🟡 Foxhound: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
+- ❌ Foxhound: ops-audit: 1 errors
+  - R1: https://github.com/DrDustinEdwards/foxhound/actions/runs/42475542149 the newest restore drill ended failure
+- ❌ Foxing: ops-audit: 1 errors
+  - R1: https://github.com/DrDustinEdwards/foxing/actions/runs/42475538189 the newest restore drill ended failure
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 543ec856f79d8c3cac76d2867286a91e7cb05f2c, not the branch head d1b2009e9c89092fd767f2c4a9ef10ae49af0f5d (https://github.com/DrDustinEdwards/foxhound/commit/d1b2009e9c89092fd767f2c4a9ef10ae49af0f5d), committed 708 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves d93c19dca401aad6d7c770bf5654a5eece72f5ff, not the branch head ea5476c52b3055b9154d860fbe7bf1249ad4d299 (https://github.com/DrDustinEdwards/foxhound/commit/ea5476c52b3055b9154d860fbe7bf1249ad4d299), committed 1283 minutes ago
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves cdb46887b051136814471abffa706d933e6c6017, not the branch head 9c6a6cde448dcc703ee55cc01861c8a5a5640b20 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/9c6a6cde448dcc703ee55cc01861c8a5a5640b20), committed 257 minutes ago
+  - H4: https://admin-mcp.dustinedwards.info/health serves 3bff1b5fa4be5c0c6080879965f8ab7cceabc35d, not the branch head dd5b9502de6a7a4986137cbd26430f0f0a66afe1 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/dd5b9502de6a7a4986137cbd26430f0f0a66afe1), committed 509 minutes ago
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
@@ -191,12 +212,12 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
 - 🟡 dustinedwards.info: checks pass; no verifier yet
-- ❌ Germomics: devkit-a11y: 15 errors
+- ❌ Germomics: devkit-a11y: 11 errors
   - L2: https://germomics.com/ no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
-  - L3: https://germomics.com/ text clipped with WCAG 1.4.12 text spacing: &#96;div.grid.gap-3:nth-of-type(2) &gt; article.flex.gap-4:nth-of-type(2) &gt; div.min-w-0.flex-1 &gt; p.mt-1.line-clamp-2&#96; (vertical), &#96;div.grid.gap-3:nth-of-type(2) &gt; article.flex.gap-4:nth-of-type(5) &gt; div.min-w-0.flex-1 &gt; p.mt-1.line-clamp-2&#96; (vertical), &#96;div.grid.gap-3:nth-of-type(2) &gt; article.flex.gap-4:nth-of-type(10) &gt; div.min-w-0.flex-1 &gt; p.mt-1.line-clamp-2&#96; (vertical)
   - L2: https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
   - L2: https://germomics.com/about no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
   - L2: https://germomics.com/contact no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
+  - L2: https://germomics.com/about/dustin-edwards no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
 - ❌ julieedwards.info: devkit-a11y: 6 errors
   - L1: https://julieedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
   - L1: https://julieedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
@@ -212,11 +233,8 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L2: https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
   - L2: https://bsw.dustin-edwards.workers.dev/contact-us no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
   - L2: https://bsw.dustin-edwards.workers.dev/grant-proposal-support no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
-- ❌ Foxhound: devkit-a11y: 5 errors
-  - L1: https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first &#96;li[data-queue-row="0"] &gt; .min-w-0.flex-1 &gt; .block.text-text-subtle[data-queue-meta=""]&#96;
-  - L3: https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: &#96;a.cap-panel.h-full &gt; div.cap-panel-body &gt; div.flex.h-full &gt; h3.m-0.line-clamp-2&#96; (vertical), &#96;a.cap-panel.h-full &gt; div.cap-panel-body &gt; div.flex.h-full &gt; h3.m-0.line-clamp-2&#96; (vertical)
+- ❌ Foxhound: devkit-a11y: 2 errors
   - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;body.min-h-full &gt; div.fh-cap.fh-error-page &gt; header.fh-error-bar.flex &gt; a.no-underline&#96; "foxhound")
-  - L3: https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: &#96;div.flex.flex-col:nth-of-type(3) &gt; a.group.-mx-2:nth-of-type(1) &gt; div.min-w-0.flex-1 &gt; p.mt-0\.5.line-clamp-1:nth-of-type(2)&#96; (vertical), &#96;div.flex.flex-col:nth-of-type(3) &gt; a.group.-mx-2:nth-of-type(2) &gt; div.min-w-0.flex-1 &gt; p.mt-0\.5.line-clamp-1:nth-of-type(2)&#96; (vertical), &#96;div.flex.flex-col:nth-of-type(3) &gt; a.group.-mx-2:nth-of-type(3) &gt; div.min-w-0.flex-1 &gt; p.mt-0\.5.line-clamp-1:nth-of-type(2)&#96; (vertical) and 33 more
   - L2: https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what &#96;section.mb-10:nth-of-type(4) &gt; ul.m-0.flex &gt; li.overflow-hidden.rounded-lg:nth-of-type(1) &gt; button.flex.w-full&#96; opened
 - ❌ Foxing: devkit-a11y: 2 errors
   - L2: https://foxing.app/ no visible focus on 1 of 40 stops: &#96;input#q&#96;
@@ -228,10 +246,11 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L2: https://carrel.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96; and 17 more
   - S2: https://carrel.dustinedwards.info/site.webmanifest no lang on &lt;html&gt;
 - 🟡 Enarratio: checks pass; no verifier yet
-- ❌ Capsomer: devkit-a11y: 3 errors
+- ❌ Capsomer: devkit-a11y: 4 errors
   - L2: https://capsomer.dustinedwards.info/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;body &gt; main &gt; p &gt; a&#96; "Go to Capsomer's front page")
-  - L1: https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first &#96;section[aria-labelledby="ex-tip"] &gt; .comp-ex-box &gt; iframe[data-height="360"] a[aria-describedby="cap-popover-11"]&#96;
+  - L1: https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first &#96;iframe[data-fk="admin-shell/only/tip"] a[aria-describedby="cap-popover-11"]&#96;
   - L2: https://capsomer.dustinedwards.info/make/ no visible focus on 1 of 40 stops: &#96;input#mk-radius&#96;
+  - L2: https://capsomer.dustinedwards.info/components/anchor-bar/ no skip link to main as the first Tab stop (first stop &#96;input#side-find&#96; "")
 - ❌ Prelum specimen: devkit-a11y: 6 errors
   - L1: https://prelum.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
   - L1: https://prelum.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
@@ -267,7 +286,8 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 - 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
 - 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
 - 🟡 Capsid MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
-- 🟡 Foxhound admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
+- ❌ Foxhound admin MCP: site-runtime-ai-audit: 1 errors
+  - T4: https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments does not set additionalProperties: false
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier

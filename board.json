@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-07T13:49:48.320Z",
+ "as_of": "2026-11-08T14:11:12.798Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -117,12 +117,180 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "llms.txt says every page has a .md twin, but /about.md and /writing.md are 404 and Accept: text/markdown returns HTML; 1 internal link goes through a redirect; 3 titles over 60 characters",
-     "evidence": [
-      "https://dustinedwards.info/llms.txt"
-     ],
-     "clean_days": 4
+     "status": "missing",
+     "reason": "prelum-audit: 33 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "sitemap-lastmod-missing",
+       "detail": "https://dustinedwards.info/sitemap.xml 27 of 204 sitemap URLs have no lastmod, e.g. https://dustinedwards.info/contact"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/ links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/publications links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/site-map links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/bacteriophages links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/science-education links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/phages links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/protocols links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/protocols links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/cv links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "sitemap-broken",
+       "detail": "https://dustinedwards.info/research/publications/10-1128-mra-01242-18/ the sitemap lists a URL that answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "sitemap-broken",
+       "detail": "https://dustinedwards.info/research/protocols/coi-primers the sitemap lists a URL that answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/protocols/pan-avian-gapdh links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/protocols/rev-lpdv-primers links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "sitemap-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers the sitemap lists a URL that answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/reagents links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/hco2198 links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/hco2198 links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/lco1490 links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/lco1490 links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/lpdv-p31-ca-forward links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/lpdv-p31-ca-reverse links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/gapdh-forward links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/gapdh-reverse links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/rev-3-ltr-forward links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/rev-3-ltr-reverse links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-pr-rt-forward links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-pr-rt-reverse links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-rt-in-forward links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/primers/rev-pol-rt-in-reverse links to https://dustinedwards.info/research/lab/primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/reagents/neb-100-bp-dna-ladder links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://dustinedwards.info/research/lab/reagents/gotaq-flexi-dna-polymerase links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500"
+      }
+     ]
     },
     "germomics": {
      "status": "partial",
@@ -130,7 +298,7 @@
      "evidence": [
       "https://germomics.com/sitemap.xml"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "julieedwards-info": {
      "status": "partial",
@@ -138,7 +306,7 @@
      "evidence": [
       "https://julieedwards.info/llms.txt"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "txasm": {
      "status": "missing",
@@ -763,17 +931,12 @@
      "evidence": [
       "https://foxhoundapp.com/sitemap.xml"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxing": {
      "status": "missing",
-     "reason": "prelum-audit: 587 errors",
+     "reason": "prelum-audit: 641 errors",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "sitemap-lastmod-missing",
-       "detail": "https://foxing.app/sitemap.xml 10 of 2200 sitemap URLs have no lastmod, e.g. https://foxing.app/"
-      },
       {
        "severity": "error",
        "check": "link-redirect",
@@ -1268,6 +1431,11 @@
        "severity": "error",
        "check": "link-redirect",
        "detail": "https://foxing.app/books/a-study-in-scarlet-doyle links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
+      },
+      {
+       "severity": "error",
+       "check": "link-redirect",
+       "detail": "https://foxing.app/books/a-study-in-scarlet-doyle links to https://foxing.app/people, which redirects to /login"
       }
      ]
     },
@@ -1277,17 +1445,17 @@
      "evidence": [
       "https://carrel.dustinedwards.info/sitemap.xml"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsomer": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "prelum": {
      "status": "complete",
@@ -1297,7 +1465,7 @@
       "https://prelum.dustinedwards.info/sitemap.xml",
       "https://prelum.dustinedwards.info/index.md"
      ],
-     "clean_days": 6
+     "clean_days": 7
     },
     "capsid": {
      "status": "partial",
@@ -1305,7 +1473,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/sitemap.xml"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1366,12 +1534,12 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 5
+     "clean_days": 6
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1379,7 +1547,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "txasm": {
      "status": "complete",
@@ -1387,7 +1555,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "bsw": {
      "status": "complete",
@@ -1395,7 +1563,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxhound": {
      "status": "partial",
@@ -1403,7 +1571,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxing": {
      "status": "complete",
@@ -1411,7 +1579,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "carrel": {
      "status": "complete",
@@ -1419,7 +1587,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "enarratio": {
      "status": "complete",
@@ -1427,12 +1595,12 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "prelum": {
      "status": "partial",
@@ -1440,7 +1608,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid": {
      "status": "complete",
@@ -1448,7 +1616,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1456,7 +1624,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1464,7 +1632,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1472,7 +1640,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1480,7 +1648,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxing-mcp": {
      "status": "partial",
@@ -1488,7 +1656,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "capsid-portal": {
      "status": "complete",
@@ -1497,7 +1665,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "carrel-desk": {
      "status": "missing",
@@ -1541,7 +1709,7 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier",
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "partial",
@@ -1549,7 +1717,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -1582,7 +1750,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
       "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxing": {
      "status": "partial",
@@ -1591,7 +1759,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "carrel": {
      "status": "n/a",
@@ -1615,7 +1783,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1624,7 +1792,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1633,7 +1801,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1642,7 +1810,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1651,7 +1819,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxing-mcp": {
      "status": "partial",
@@ -1659,7 +1827,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "capsid-portal": {
      "status": "complete",
@@ -1668,7 +1836,7 @@
       "https://portal.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/portal-auth.ts"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "carrel-desk": {
      "status": "partial",
@@ -1676,7 +1844,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 7
+     "clean_days": 8
     }
    }
   },
@@ -1697,17 +1865,320 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "53 pages render writing with no data-render-version wrapper, 6 images without width and height, h3 after h1 on /research/publications",
-     "evidence": [
-      "https://dustinedwards.info/research"
-     ],
-     "clean_days": 7
+     "status": "missing",
+     "reason": "prelum-content: 61 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/about stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/retroviruses stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/retroviruses/human stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/retroviruses/avian stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/bacteriophages stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/science-education stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/phages stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/phages stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/protocols stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/protocols stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/tools stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/tools/titer stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/tools/dilution stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/tools/webbed-plate stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/tools/moi stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/tools/eop stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/tools/lysate-volume stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/teaching stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/teaching/phage-discovery stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/teaching/virus-isolation stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/teaching/virus-isolation/faq stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/teaching/phage-bioinformatics stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/teaching/central-dogma stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/teaching/study-skills stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/foxhound stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/foxing stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/foxing-edu stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/germomics stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/capsid stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/enarratio stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/carrel stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/capsomer stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/prelum stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/site-runtime stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/site-api stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/d1-dump stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/software/devkit stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/privacy stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/terms stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/accessibility stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/protocols/coi-primers stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/protocols/pan-avian-gapdh stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/protocols/phage-dna-extraction stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/protocols/phage-isolation stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/research/protocols/rev-lpdv-primers stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/carrel-one-api-for-every-site stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/carrel-a-writing-desk-apart-from-the-site stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/agent-write-access-to-a-live-site stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/ten-years-on-cloudflare stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/site-search-on-d1 stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/posts-in-git-served-from-d1 stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/color-palette-the-build-can-check stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/blog-reading-without-javascript stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://dustinedwards.info/writing/where-should-a-blog-store-its-words stored HTML from render version 22; the pipeline is at 23"
+      }
+     ]
     },
     "germomics": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1715,7 +2186,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "txasm": {
      "status": "partial",
@@ -1723,7 +2194,7 @@
      "evidence": [
       "https://txasm.org/award-nominations"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "bsw": {
      "status": "partial",
@@ -1731,15 +2202,228 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/cookie-policy"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "6 pages with h3 after h1",
-     "evidence": [
-      "https://foxhoundapp.com/compare"
-     ],
-     "clean_days": 8
+     "status": "missing",
+     "reason": "prelum-content: 43 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/foxhound-vs-stripe-smart-retries stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/best-dunning-software-2026 stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/foxhound-vs-churn-buster stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/foxhound-vs-churnkey stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/foxhound-vs-paddle-retain stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/payment-failure-as-churn-signal stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/mrr-movement-explained stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/how-to-reduce-saas-churn stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/annual-to-monthly-churn-signal stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/customer-health-score-stripe stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/win-back-churned-customers stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/what-is-friendly-fraud stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-chargeback-reason-codes stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-dispute-evidence stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/chargeback-rebuttal-letter stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/how-to-prevent-chargebacks stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/visa-compelling-evidence-3 stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/involuntary-vs-voluntary-churn stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/how-much-revenue-losing-failed-payments stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-smart-retries-vs-dunning stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/expiring-cards-silent-mrr-killer stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/how-to-reduce-involuntary-churn-stripe stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-account-updater stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/why-dunning-tools-fail stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/dunning-email-sequence stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-transaction-not-allowed stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-revocation-of-authorization stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-do-not-try-again stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-call-issuer stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-fraudulent-decline stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-disputes-guide stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-failed-payment-recovery stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-lost-card stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-processing-error stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-incorrect-cvc stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-stolen-card stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-expired-card stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-do-not-honor stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-card-velocity-exceeded stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-insufficient-funds stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-generic-decline stored HTML from render version 22; the pipeline is at 23"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://foxhoundapp.com/blog/stripe-decline-codes stored HTML from render version 22; the pipeline is at 23"
+      }
+     ]
     },
     "foxing": {
      "status": "partial",
@@ -1747,7 +2431,7 @@
      "evidence": [
       "https://foxing.app/books"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "carrel": {
      "status": "partial",
@@ -1755,7 +2439,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "enarratio": {
      "status": "partial",
@@ -1763,7 +2447,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsomer": {
      "status": "partial",
@@ -1771,7 +2455,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "prelum": {
      "status": "partial",
@@ -1779,7 +2463,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid": {
      "status": "complete",
@@ -1788,7 +2472,7 @@
       "https://capsid.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/master/explorer/package.json"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1845,37 +2529,55 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log",
-     "findings": []
+     "status": "missing",
+     "reason": "carrel-conformance: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://dustinedwards.info/api/carrel/v1 meta: answers with this contract's schema hash failed"
+      }
+     ]
     },
     "germomics": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log",
      "findings": []
     },
     "julieedwards-info": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log",
      "findings": []
     },
     "txasm": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log",
-     "findings": []
+     "status": "missing",
+     "reason": "carrel-conformance: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://txasm.dustin-edwards.workers.dev/api/carrel/v1 meta: answers with this contract's schema hash failed"
+      }
+     ]
     },
     "bsw": {
      "status": "n/a",
      "reason": "no Carrel site API: its content is not edited through Carrel"
     },
     "foxhound": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log",
-     "findings": []
+     "status": "missing",
+     "reason": "carrel-conformance: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://foxhoundapp.com/api/carrel/v1 meta: answers with this contract's schema hash failed"
+      }
+     ]
     },
     "foxing": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: npm could not install site-api#v0.31.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-07T13_18_35_500Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log",
      "findings": []
     },
     "carrel": {
@@ -1956,7 +2658,7 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "germomics": {
      "status": "partial",
@@ -1964,7 +2666,7 @@
      "evidence": [
       "https://germomics.com/a-boy-named-flu"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1973,7 +2675,7 @@
       "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "txasm": {
      "status": "partial",
@@ -1982,7 +2684,7 @@
       "https://txasm.org/og-card.png",
       "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "bsw": {
      "status": "missing",
@@ -2006,7 +2708,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxing": {
      "status": "missing",
@@ -2040,17 +2742,17 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "enarratio": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "prelum": {
      "status": "partial",
@@ -2058,7 +2760,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "capsid": {
      "status": "partial",
@@ -2066,7 +2768,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2404,9 +3106,15 @@
      ]
     },
     "germomics": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "R1",
+       "detail": "https://github.com/DrDustinEdwards/germomics/actions/runs/42475475140 the newest restore drill ended failure"
+      }
+     ]
     },
     "julieedwards-info": {
      "status": "missing",
@@ -2426,7 +3134,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "bsw": {
      "status": "missing",
@@ -2440,14 +3148,26 @@
      ]
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 2
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "R1",
+       "detail": "https://github.com/DrDustinEdwards/foxhound/actions/runs/42475542149 the newest restore drill ended failure"
+      }
+     ]
     },
     "foxing": {
-     "status": "partial",
-     "reason": "failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 2
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "R1",
+       "detail": "https://github.com/DrDustinEdwards/foxing/actions/runs/42475538189 the newest restore drill ended failure"
+      }
+     ]
     },
     "carrel": {
      "status": "n/a",
@@ -2474,6 +3194,11 @@
      "reason": "ops-audit: 1 errors",
      "findings": [
       {
+       "severity": "warning",
+       "check": "C2",
+       "detail": "https://mcp.dustinedwards.info/health the cron check is warn: site-job failing"
+      },
+      {
        "severity": "error",
        "check": "H5",
        "detail": "https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason"
@@ -2487,7 +3212,7 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.foxhoundapp.com/health serves 543ec856f79d8c3cac76d2867286a91e7cb05f2c, not the branch head d1b2009e9c89092fd767f2c4a9ef10ae49af0f5d (https://github.com/DrDustinEdwards/foxhound/commit/d1b2009e9c89092fd767f2c4a9ef10ae49af0f5d), committed 708 minutes ago"
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves d93c19dca401aad6d7c770bf5654a5eece72f5ff, not the branch head ea5476c52b3055b9154d860fbe7bf1249ad4d299 (https://github.com/DrDustinEdwards/foxhound/commit/ea5476c52b3055b9154d860fbe7bf1249ad4d299), committed 1283 minutes ago"
       }
      ]
     },
@@ -2498,19 +3223,19 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.dustinedwards.info/health serves cdb46887b051136814471abffa706d933e6c6017, not the branch head 9c6a6cde448dcc703ee55cc01861c8a5a5640b20 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/9c6a6cde448dcc703ee55cc01861c8a5a5640b20), committed 257 minutes ago"
+       "detail": "https://admin-mcp.dustinedwards.info/health serves 3bff1b5fa4be5c0c6080879965f8ab7cceabc35d, not the branch head dd5b9502de6a7a4986137cbd26430f0f0a66afe1 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/dd5b9502de6a7a4986137cbd26430f0f0a66afe1), committed 509 minutes ago"
       }
      ]
     },
     "carrel-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid-portal": {
      "status": "n/a",
@@ -2543,21 +3268,16 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "missing",
-     "reason": "devkit-a11y: 15 errors",
+     "reason": "devkit-a11y: 11 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/ no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://germomics.com/ text clipped with WCAG 1.4.12 text spacing: `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(5) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(10) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical)"
       },
       {
        "severity": "error",
@@ -2591,18 +3311,8 @@
       },
       {
        "severity": "error",
-       "check": "L3",
-       "detail": "https://germomics.com/episodes text clipped with WCAG 1.4.12 text spacing: `div.grid.gap-3 > article.flex.gap-4:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3 > article.flex.gap-4:nth-of-type(6) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3 > article.flex.gap-4:nth-of-type(9) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical)"
-      },
-      {
-       "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/season/1 no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://germomics.com/season/1 text clipped with WCAG 1.4.12 text spacing: `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(6) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(9) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical)"
       },
       {
        "severity": "error",
@@ -2618,11 +3328,6 @@
        "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/archive no visible focus on 1 of 40 stops: `div.mb-6.flex:nth-of-type(1) > form.flex.items-center > div.flex.items-center > input.w-40.bg-transparent`"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://germomics.com/archive text clipped with WCAG 1.4.12 text spacing: `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(5) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical), `div.grid.gap-3:nth-of-type(2) > article.flex.gap-4:nth-of-type(10) > div.min-w-0.flex-1 > p.mt-1.line-clamp-2` (vertical)"
       },
       {
        "severity": "error",
@@ -2776,22 +3481,12 @@
     },
     "foxhound": {
      "status": "missing",
-     "reason": "devkit-a11y: 5 errors",
+     "reason": "devkit-a11y: 2 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://foxhoundapp.com/ axe color-contrast (serious, WCAG) at 390-light, 390-dark: 1 element, first `li[data-queue-row=\"0\"] > .min-w-0.flex-1 > .block.text-text-subtle[data-queue-meta=\"\"]`"
-      },
       {
        "severity": "warning",
        "check": "L2",
        "detail": "https://foxhoundapp.com/ focused element covered by another on 1 stops: `fieldset.cap-seg > div.cap-seg-options > label:nth-of-type(1) > input` by `div.cap-seg-options > label:nth-of-type(1) > span.block.text-caption > span.mt-0\\.5.block:nth-of-type(2)`"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxhoundapp.com/ text clipped with WCAG 1.4.12 text spacing: `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical), `a.cap-panel.h-full > div.cap-panel-body > div.flex.h-full > h3.m-0.line-clamp-2` (vertical)"
       },
       {
        "severity": "error",
@@ -2802,11 +3497,6 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://foxhoundapp.com/no-such-page-devkit-a11y landmarks: main 1, header 1, nav 0, footer 1; each page needs one main and a header, nav and footer"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxhoundapp.com/blog/archive text clipped with WCAG 1.4.12 text spacing: `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(1) > div.min-w-0.flex-1 > p.mt-0\\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(2) > div.min-w-0.flex-1 > p.mt-0\\.5.line-clamp-1:nth-of-type(2)` (vertical), `div.flex.flex-col:nth-of-type(3) > a.group.-mx-2:nth-of-type(3) > div.min-w-0.flex-1 > p.mt-0\\.5.line-clamp-1:nth-of-type(2)` (vertical) and 33 more"
       },
       {
        "severity": "error",
@@ -2900,11 +3590,11 @@
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsomer": {
      "status": "missing",
-     "reason": "devkit-a11y: 3 errors",
+     "reason": "devkit-a11y: 4 errors",
      "findings": [
       {
        "severity": "error",
@@ -2919,12 +3609,12 @@
       {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 10 elements, first `#ex-collapsed-tip`"
+       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `#ex-collapsed-tip`"
       },
       {
        "severity": "error",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first `section[aria-labelledby=\"ex-tip\"] > .comp-ex-box > iframe[data-height=\"360\"] a[aria-describedby=\"cap-popover-11\"]`"
+       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first `iframe[data-fk=\"admin-shell/only/tip\"] a[aria-describedby=\"cap-popover-11\"]`"
       },
       {
        "severity": "warning",
@@ -2947,9 +3637,14 @@
        "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `#main`"
       },
       {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ no skip link to main as the first Tab stop (first stop `input#side-find` \"\")"
+      },
+      {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#main > .comp-ex > .comp-ex-box > iframe[data-kind=\"example\"][data-height=\"0\"] #att-mixed-h`"
+       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `iframe[data-fk=\"attention-list/example/s-mixed\"] #att-mixed-h`"
       },
       {
        "severity": "warning",
@@ -2972,11 +3667,6 @@
      "status": "missing",
      "reason": "devkit-a11y: 6 errors",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://prelum.dustinedwards.info/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#el-code-lines > .pair > div:nth-child(2) > .output.prose[data-context=\"prose\"] > .shiki[data-lang=\"bash\"][aria-label=\"Code: Bash\"]`"
-      },
       {
        "severity": "error",
        "check": "L1",
@@ -3039,29 +3729,14 @@
      "reason": "devkit-a11y: 1 errors",
      "findings": [
       {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsid.dustinedwards.info/systems/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `section[aria-labelledby=\"table-title\"]`"
-      },
-      {
        "severity": "error",
        "check": "L2",
        "detail": "https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 18 more"
       },
       {
        "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsid.dustinedwards.info/numbers/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#every`"
-      },
-      {
-       "severity": "warning",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 2 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(8) > rect:nth-of-type(2)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(9) > circle:nth-of-type(1)`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsid.dustinedwards.info/code/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `section[aria-labelledby=\"repos-title\"]`"
+       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 2 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(8) > rect:nth-of-type(3)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(9) > circle:nth-of-type(1)`"
       }
      ]
     },
@@ -3119,7 +3794,7 @@
       "https://dustinedwards.info/cv",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/styles/post-enhancements.css"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "complete",
@@ -3128,7 +3803,7 @@
       "https://germomics.com/data/cholera-soho-1854",
       "https://germomics.com/data/influenza-1918"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -3150,12 +3825,12 @@
       "https://foxhoundapp.com/demos/recovery",
       "https://foxhoundapp.com/demos/intelligence"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel": {
      "status": "partial",
@@ -3163,7 +3838,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "enarratio": {
      "status": "complete",
@@ -3171,12 +3846,12 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 6
+     "clean_days": 7
     },
     "capsomer": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 2
+     "clean_days": 3
     },
     "prelum": {
      "status": "complete",
@@ -3184,12 +3859,12 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "capsid": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -3218,7 +3893,7 @@
       "https://portal.dustinedwards.info/demos/packages",
       "https://portal.dustinedwards.info/demos/queue"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel-desk": {
      "status": "partial",
@@ -3226,7 +3901,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/demos/progress"
      ],
-     "clean_days": 4
+     "clean_days": 5
     }
    }
   },
@@ -3257,7 +3932,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/lib/search/ask.server.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "germomics": {
      "status": "partial",
@@ -3265,7 +3940,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "julieedwards-info": {
      "status": "partial",
@@ -3273,7 +3948,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "txasm": {
      "status": "partial",
@@ -3281,7 +3956,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "bsw": {
      "status": "complete",
@@ -3290,12 +3965,12 @@
       "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
       "https://github.com/DrDustinEdwards/bsw"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxing": {
      "status": "partial",
@@ -3304,7 +3979,7 @@
       "https://foxing.app/",
       "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "carrel": {
      "status": "partial",
@@ -3312,7 +3987,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "enarratio": {
      "status": "complete",
@@ -3321,7 +3996,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/enarratio"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsomer": {
      "status": "complete",
@@ -3330,7 +4005,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsomer"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "prelum": {
      "status": "complete",
@@ -3339,7 +4014,7 @@
       "https://prelum.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/prelum"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid": {
      "status": "partial",
@@ -3347,32 +4022,98 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxhound-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 2
+     "status": "missing",
+     "reason": "site-runtime-ai-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.query is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.account_id is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.cursor is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.account_id is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "error",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments does not set additionalProperties: false"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_read_audit_log: inputSchema.cursor is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_list_staged: inputSchema.cursor is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.type is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.account_id is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.to is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to 5116042493cf3d5eed9032cbab09f7da36d4970ea12f01806aa79bcfeee963fe"
+      },
+      {
+       "severity": "warning",
+       "check": "P3",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+      },
+      {
+       "severity": "warning",
+       "check": "P7",
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+      }
+     ]
     },
     "dustinedwards-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "carrel-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "capsid-portal": {
      "status": "n/a",
