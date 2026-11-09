@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-08 14:11 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-09 17:22 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,16 +8,16 @@ Newest run 2026-11-08 14:11 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
-| 5. Carrel editing contract | 🟡 | ❌ | ❔ | ❔ | ❌ | · | ❌ | ❔ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
+| 5. Carrel editing contract | 🟡 | ❔ | ❔ | ❔ | ❔ | · | ❔ | ❔ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
+| 8. Running and recovery | 🟡 | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | 🟡 | 🟡 | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | 🟡 | 🟡 | ✅ | 🟡 | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ❔ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | · | · | · | · | · | ✅ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
@@ -28,12 +28,7 @@ Newest run 2026-11-08 14:11 UTC. Filled only from the live checks and the verifi
 Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: prelum-audit: 33 errors
-  - link-broken: https://dustinedwards.info/ links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500
-  - link-broken: https://dustinedwards.info/research/publications links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500
-  - link-broken: https://dustinedwards.info/site-map links to https://dustinedwards.info/research/lab/primers, which answers 500
-  - link-broken: https://dustinedwards.info/research links to https://dustinedwards.info/research/protocols/coi-primers, which answers 500
-  - link-broken: https://dustinedwards.info/research links to https://dustinedwards.info/research/publications/10-1128-mra-01242-18/, which answers 500
+- 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Germomics: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod
 - 🟡 julieedwards.info: no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
 - ❌ TXASM: prelum-audit: 165 errors
@@ -49,7 +44,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
   - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
 - 🟡 Foxhound: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
-- ❌ Foxing: prelum-audit: 641 errors
+- ❌ Foxing: prelum-audit: 307 errors
   - link-redirect: https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
   - link-redirect: https://foxing.app/ links to https://foxing.app/people, which redirects to /login
   - link-redirect: https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
@@ -120,15 +115,12 @@ Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cell
 Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editing contract.
 
 - 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
-- ❌ dustinedwards.info: carrel-conformance: 1 errors
-  - M1: https://dustinedwards.info/api/carrel/v1 meta: answers with this contract's schema hash failed
-- ❔ Germomics: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log
-- ❔ julieedwards.info: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log
-- ❌ TXASM: carrel-conformance: 1 errors
-  - M1: https://txasm.dustin-edwards.workers.dev/api/carrel/v1 meta: answers with this contract's schema hash failed
-- ❌ Foxhound: carrel-conformance: 1 errors
-  - M1: https://foxhoundapp.com/api/carrel/v1 meta: answers with this contract's schema hash failed
-- ❔ Foxing: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-08T13_38_43_777Z-debug-0.log
+- ❔ dustinedwards.info: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log
+- ❔ Germomics: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log
+- ❔ julieedwards.info: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log
+- ❔ TXASM: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log
+- ❔ Foxhound: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log
+- ❔ Foxing: site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log
 
 ### 6. Images and media
 
@@ -200,9 +192,8 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves d93c19dca401aad6d7c770bf5654a5eece72f5ff, not the branch head ea5476c52b3055b9154d860fbe7bf1249ad4d299 (https://github.com/DrDustinEdwards/foxhound/commit/ea5476c52b3055b9154d860fbe7bf1249ad4d299), committed 1283 minutes ago
-- ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves 3bff1b5fa4be5c0c6080879965f8ab7cceabc35d, not the branch head dd5b9502de6a7a4986137cbd26430f0f0a66afe1 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/dd5b9502de6a7a4986137cbd26430f0f0a66afe1), committed 509 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves cdd7591fd12d06a44c596a23515ae3b538537c7c, not the branch head ea5476c52b3055b9154d860fbe7bf1249ad4d299 (https://github.com/DrDustinEdwards/foxhound/commit/ea5476c52b3055b9154d860fbe7bf1249ad4d299), committed 2905 minutes ago
+- 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
@@ -266,7 +257,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- 🟡 Foxing: checks pass; no verifier yet
+- ❔ Foxing: chart-audit could not measure: G: https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.; could not run: timed out after 20 minutes: ::notice title=G::https://foxing.app/books/zuleika-dobson-beerbohm could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed ::notice title=G::https://foxing.app/books/zuni-folktales-cushing could not measure: the browser could not open
 - 🟡 Carrel: no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json
 - 🟡 Capsomer: checks pass; no verifier yet
 - 🟡 Capsid explorer: checks pass; no verifier yet
