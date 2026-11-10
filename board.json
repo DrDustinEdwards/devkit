@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-09T17:22:20.199Z",
+ "as_of": "2026-11-10T15:48:14.099Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -117,9 +117,20 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: fetch-failed: https://dustinedwards.info/writing/tags/security/rss.xml could not measure: no answer (fetch failed), so the page was not audited",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "sitemap-lastmod-missing",
+       "detail": "https://dustinedwards.info/sitemap.xml 27 of 204 sitemap URLs have no lastmod, e.g. https://dustinedwards.info/contact"
+      },
+      {
+       "severity": "unmeasured",
+       "check": "fetch-failed",
+       "detail": "https://dustinedwards.info/writing/tags/security/rss.xml could not measure: no answer (fetch failed), so the page was not audited"
+      }
+     ]
     },
     "germomics": {
      "status": "partial",
@@ -127,7 +138,7 @@
      "evidence": [
       "https://germomics.com/sitemap.xml"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "julieedwards-info": {
      "status": "partial",
@@ -135,7 +146,7 @@
      "evidence": [
       "https://julieedwards.info/llms.txt"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "txasm": {
      "status": "missing",
@@ -760,11 +771,11 @@
      "evidence": [
       "https://foxhoundapp.com/sitemap.xml"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxing": {
      "status": "missing",
-     "reason": "prelum-audit: 307 errors",
+     "reason": "prelum-audit: 3018 errors",
      "findings": [
       {
        "severity": "error",
@@ -1274,17 +1285,17 @@
      "evidence": [
       "https://carrel.dustinedwards.info/sitemap.xml"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "prelum": {
      "status": "complete",
@@ -1294,7 +1305,7 @@
       "https://prelum.dustinedwards.info/sitemap.xml",
       "https://prelum.dustinedwards.info/index.md"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsid": {
      "status": "partial",
@@ -1302,7 +1313,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/sitemap.xml"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1363,12 +1374,12 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 7
+     "clean_days": 8
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1376,7 +1387,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "txasm": {
      "status": "complete",
@@ -1384,7 +1395,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "bsw": {
      "status": "complete",
@@ -1392,7 +1403,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxhound": {
      "status": "partial",
@@ -1400,7 +1411,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxing": {
      "status": "complete",
@@ -1408,7 +1419,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "carrel": {
      "status": "complete",
@@ -1416,7 +1427,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "enarratio": {
      "status": "complete",
@@ -1424,12 +1435,12 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "prelum": {
      "status": "partial",
@@ -1437,7 +1448,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid": {
      "status": "complete",
@@ -1445,7 +1456,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1453,7 +1464,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1461,7 +1472,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1469,7 +1480,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1477,7 +1488,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxing-mcp": {
      "status": "partial",
@@ -1485,7 +1496,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "capsid-portal": {
      "status": "complete",
@@ -1494,7 +1505,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "carrel-desk": {
      "status": "missing",
@@ -1538,7 +1549,7 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier",
-     "clean_days": 5
+     "clean_days": 6
     },
     "germomics": {
      "status": "partial",
@@ -1546,7 +1557,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -1579,7 +1590,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
       "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxing": {
      "status": "partial",
@@ -1588,7 +1599,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "carrel": {
      "status": "n/a",
@@ -1612,7 +1623,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1621,7 +1632,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1630,7 +1641,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1639,7 +1650,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1648,7 +1659,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxing-mcp": {
      "status": "partial",
@@ -1656,7 +1667,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "capsid-portal": {
      "status": "complete",
@@ -1665,7 +1676,7 @@
       "https://portal.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/portal-auth.ts"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "carrel-desk": {
      "status": "partial",
@@ -1673,7 +1684,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 9
+     "clean_days": 10
     }
    }
   },
@@ -2007,7 +2018,7 @@
     "germomics": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2015,7 +2026,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "txasm": {
      "status": "partial",
@@ -2023,7 +2034,7 @@
      "evidence": [
       "https://txasm.org/award-nominations"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "bsw": {
      "status": "partial",
@@ -2031,228 +2042,12 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/cookie-policy"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "prelum-content: 43 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/foxhound-vs-stripe-smart-retries stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/best-dunning-software-2026 stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/foxhound-vs-churn-buster stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/foxhound-vs-churnkey stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/foxhound-vs-paddle-retain stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/payment-failure-as-churn-signal stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/mrr-movement-explained stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/how-to-reduce-saas-churn stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/annual-to-monthly-churn-signal stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/customer-health-score-stripe stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/win-back-churned-customers stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/what-is-friendly-fraud stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-chargeback-reason-codes stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-dispute-evidence stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/chargeback-rebuttal-letter stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/how-to-prevent-chargebacks stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/visa-compelling-evidence-3 stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/involuntary-vs-voluntary-churn stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/how-much-revenue-losing-failed-payments stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-smart-retries-vs-dunning stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/expiring-cards-silent-mrr-killer stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/how-to-reduce-involuntary-churn-stripe stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-account-updater stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/why-dunning-tools-fail stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/dunning-email-sequence stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-transaction-not-allowed stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-revocation-of-authorization stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-do-not-try-again stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-call-issuer stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-fraudulent-decline stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-disputes-guide stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-failed-payment-recovery stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-lost-card stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-processing-error stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-incorrect-cvc stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-stolen-card stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-expired-card stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-do-not-honor stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-card-velocity-exceeded stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-insufficient-funds stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-generic-decline stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://foxhoundapp.com/blog/stripe-decline-codes stored HTML from render version 22; the pipeline is at 23"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "foxing": {
      "status": "partial",
@@ -2260,7 +2055,7 @@
      "evidence": [
       "https://foxing.app/books"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "carrel": {
      "status": "partial",
@@ -2268,7 +2063,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "enarratio": {
      "status": "partial",
@@ -2276,7 +2071,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsomer": {
      "status": "partial",
@@ -2284,7 +2079,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "prelum": {
      "status": "partial",
@@ -2292,7 +2087,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid": {
      "status": "complete",
@@ -2301,7 +2096,7 @@
       "https://capsid.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/master/explorer/package.json"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2359,22 +2154,22 @@
     },
     "dustinedwards-info": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
      "findings": []
     },
     "germomics": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
      "findings": []
     },
     "julieedwards-info": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
      "findings": []
     },
     "txasm": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
      "findings": []
     },
     "bsw": {
@@ -2383,12 +2178,12 @@
     },
     "foxhound": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
      "findings": []
     },
     "foxing": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.34.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-09T16_38_47_582Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
      "findings": []
     },
     "carrel": {
@@ -2469,7 +2264,7 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "germomics": {
      "status": "partial",
@@ -2477,7 +2272,7 @@
      "evidence": [
       "https://germomics.com/a-boy-named-flu"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2486,7 +2281,7 @@
       "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "txasm": {
      "status": "partial",
@@ -2495,7 +2290,7 @@
       "https://txasm.org/og-card.png",
       "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "bsw": {
      "status": "missing",
@@ -2519,7 +2314,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxing": {
      "status": "missing",
@@ -2553,17 +2348,17 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "enarratio": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "prelum": {
      "status": "partial",
@@ -2571,7 +2366,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "capsid": {
      "status": "partial",
@@ -2579,7 +2374,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2748,7 +2543,7 @@
       {
        "severity": "warning",
        "check": "F2",
-       "detail": "https://foxhoundapp.com/?speedcheck=g28wzy1h an uncached render took 678 ms to the first byte (bar 600 ms)"
+       "detail": "https://foxhoundapp.com/?speedcheck=vwbl23wb an uncached render took 737 ms to the first byte (bar 600 ms)"
       },
       {
        "severity": "unmeasured",
@@ -2763,9 +2558,14 @@
      ]
     },
     "foxing": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://foxing.app/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxing.app/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 1 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/authors/a-e-w-mason not from the edge on the second request: cf-cache-status MISS (first none), cache-control public, max-age=0, colo ? then ATL"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2950,7 +2750,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "bsw": {
      "status": "missing",
@@ -3023,24 +2823,30 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.foxhoundapp.com/health serves cdd7591fd12d06a44c596a23515ae3b538537c7c, not the branch head ea5476c52b3055b9154d860fbe7bf1249ad4d299 (https://github.com/DrDustinEdwards/foxhound/commit/ea5476c52b3055b9154d860fbe7bf1249ad4d299), committed 2905 minutes ago"
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves 67281eba9244ab3eb1b5401c4451e08749d07bbb, not the branch head ea5476c52b3055b9154d860fbe7bf1249ad4d299 (https://github.com/DrDustinEdwards/foxhound/commit/ea5476c52b3055b9154d860fbe7bf1249ad4d299), committed 4250 minutes ago"
       }
      ]
     },
     "dustinedwards-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "H4",
+       "detail": "https://admin-mcp.dustinedwards.info/health serves b58d526305fa4d8a1a29497092695dbc28a7040d, not the branch head 292398c27926bab4a98be902f9c97144d2e940c8 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/292398c27926bab4a98be902f9c97144d2e940c8), committed 347 minutes ago"
+      }
+     ]
     },
     "carrel-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-portal": {
      "status": "n/a",
@@ -3073,7 +2879,7 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 5
+     "clean_days": 6
     },
     "germomics": {
      "status": "missing",
@@ -3395,7 +3201,7 @@
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "missing",
@@ -3592,23 +3398,26 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "complete",
-     "reason": "chart-audit 5 Nov on prelum main: 203 pages, 8 charts on 5 pages, no findings. Layout shift measured in Chromium, 3 runs per page at 1280 and 320 px, scrolled through: the four writing posts with charts and /cv all under 0.01 (worst 0.0096 once); the code-block room is reserved on pre[data-lang]. Fonts are font-display: optional.",
-     "evidence": [
-      "https://dustinedwards.info/writing/site-search-on-d1",
-      "https://dustinedwards.info/cv",
-      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/styles/post-enhancements.css"
-     ],
-     "clean_days": 5
+     "status": "missing",
+     "reason": "chart-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth an SVG chart drawn outside Enarratio: \"The MCP server holds no policy. It verifies identity, then m\" (12 lines)"
+      }
+     ]
     },
     "germomics": {
-     "status": "complete",
-     "reason": "chart-audit 5 Nov: 3 charts on 2 pages, no findings, including both data pages that shifted at 320 px on 4 Nov",
-     "evidence": [
-      "https://germomics.com/data/cholera-soho-1854",
-      "https://germomics.com/data/influenza-1918"
-     ],
-     "clean_days": 10
+     "status": "missing",
+     "reason": "chart-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: \"A schematic of that path, not a measurement from one patient\" (6 dots)"
+      }
+     ]
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -3623,18 +3432,19 @@
      "reason": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
     },
     "foxhound": {
-     "status": "complete",
-     "reason": "chart-audit 5 Nov: 37 charts on 7 pages, no findings",
-     "evidence": [
-      "https://foxhoundapp.com/demos/dashboard",
-      "https://foxhoundapp.com/demos/recovery",
-      "https://foxhoundapp.com/demos/intelligence"
-     ],
-     "clean_days": 6
+     "status": "missing",
+     "reason": "chart-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "F",
+       "detail": "https://foxhoundapp.com/blog/dunning-email-sequence an SVG chart drawn outside Enarratio: \"an svg\" (17 dots)"
+      }
+     ]
     },
     "foxing": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: G: https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.; could not run: timed out after 20 minutes: ::notice title=G::https://foxing.app/books/zuleika-dobson-beerbohm could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed ::notice title=G::https://foxing.app/books/zuni-folktales-cushing could not measure: the browser could not open",
+     "reason": "chart-audit could not measure: G: https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.; could not run: timed out after 20 minutes: ::notice title=G::https://foxing.app/books/the-merchant-of-venice-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed ::notice title=G::https://foxing.app/books/the-mercy-of-allah-belloc could not measure: the browser ",
      "findings": [
       {
        "severity": "unmeasured",
@@ -3914,227 +3724,227 @@
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/alices-adventures-in-wonderland-carroll could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/mystery-at-lynden-sands-connington could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/all-quiet-on-the-western-front-remarque could not measure: the browser could not open it: page.goto: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/narrative-of-the-life-of-frederick-douglass-douglass could not measure: the browser could not open it: page.goto: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/allan-quatermain-haggard could not measure: the browser could not open it: page.goto: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/national-avenue-tarkington could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/allan-quatermain-stories-haggard could not measure: the browser could not open it: page.goto: net::ERR_ABORTED at https://foxing.app/books/allan-quatermain-stories-haggard"
+       "detail": "https://foxing.app/books/new-grub-street-gissing could not measure: the browser could not open it: page.goto: net::ERR_ABORTED at https://foxing.app/books/new-grub-street-gissing"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/alls-well-that-ends-well-shakespeare could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
+       "detail": "https://foxing.app/books/new-hampshire-frost could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/almayers-folly-conrad could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
+       "detail": "https://foxing.app/books/news-from-nowhere-morris could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/amaryllis-at-the-fair-jefferies could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
+       "detail": "https://foxing.app/books/nicholas-nickleby-dickens could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/american-indian-stories-zitkala-sa could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/nicomachean-ethics-aristotle could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/an-american-tragedy-dreiser could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/niels-lyhne-jacobsen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/an-antarctic-mystery-verne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/night-and-day-woolf could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/an-autobiography-roosevelt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/nightmare-abbey-peacock could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/an-enquiry-concerning-human-understanding-hume could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/no-more-parades-ford could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/an-ideal-husband-wilde could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/no-name-collins could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/an-inquiry-into-the-accordancy-of-war-with-the-principles-of-christianity-dymond could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/no-treason-spooner could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/an-outback-marriage-paterson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/noli-me-tangere-rizal could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/an-outcast-of-the-islands-conrad could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/nonsense-books-lear could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/anna-karenina-tolstoy could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/nordenholts-million-connington could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/anna-of-the-five-towns-bennett could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/north-and-south-gaskell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/anne-of-avonlea-montgomery could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/north-of-boston-frost could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/anne-of-green-gables-montgomery could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/northanger-abbey-austen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/anne-of-the-island-montgomery could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/nostromo-conrad could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/antic-hay-huxley could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/not-without-laughter-hughes could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/antigone-sophocles could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/notes-from-underground-dostoevsky could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/antony-and-cleopatra-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/notre-dame-de-paris-hugo could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/armageddon-2419-ad-nowlan could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/now-it-can-be-told-gibbs could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/armed-with-madness-butts could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/o-pioneers-cather could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/arms-and-the-man-shaw could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/oedipus-at-colonus-sophocles could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/around-the-world-in-eighty-days-verne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/oedipus-rex-sophocles could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/arrowsmith-lewis could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/of-human-bondage-maugham could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/arsene-lupin-versus-herlock-sholmes-leblanc could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/oil-sinclair could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/as-i-lay-dying-faulkner could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/old-indian-legends-zitkala-sa could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/as-you-like-it-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/oliver-twist-dickens could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/ashenden-maugham could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/olney-hymns-newton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/ashton-kirk-investigator-mcintyre could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/omega-flammarion could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/aspects-of-the-novel-forster could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/on-a-chinese-screen-maugham could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/at-the-back-of-the-north-wind-macdonald could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/on-a-pincushion-morgan could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/at-the-earths-core-burroughs could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/on-liberty-mill could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/at-the-mountains-of-madness-lovecraft could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/on-the-art-of-reading-quiller-couch could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/at-the-villa-rose-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/on-the-art-of-writing-quiller-couch could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/aurora-floyd-braddon could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/on-the-eve-turgenev could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/babbitt-lewis could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/one-of-ours-cather could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/back-to-methuselah-shaw could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/orlando-furioso-ariosto could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/backwater-richardson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/orlando-woolf could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/bambi-salten could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/orley-farm-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       },
       {
        "severity": "unmeasured",
        "check": "G",
-       "detail": "https://foxing.app/books/barchester-towers-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
+       "detail": "https://foxing.app/books/orthodoxy-chesterton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
       }
      ]
     },
@@ -4144,7 +3954,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "enarratio": {
      "status": "complete",
@@ -4152,12 +3962,12 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "capsomer": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "prelum": {
      "status": "complete",
@@ -4165,12 +3975,12 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 9
+     "clean_days": 10
     },
     "capsid": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -4193,13 +4003,15 @@
      "reason": "no check for a worker"
     },
     "capsid-portal": {
-     "status": "complete",
-     "reason": "chart-audit 5 Nov: 28 charts on 10 demo pages, no findings, rerun 3 times on packages, prs and queue; signed-in pages are not checked",
-     "evidence": [
-      "https://portal.dustinedwards.info/demos/packages",
-      "https://portal.dustinedwards.info/demos/queue"
-     ],
-     "clean_days": 6
+     "status": "missing",
+     "reason": "chart-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "D5",
+       "detail": "https://portal.dustinedwards.info/demos/packages at 320 px, charts shift the page by 0.395 (layout shift); largest 0.395, div.enarratio-frame.enarratio-frame-wide +425 px, height +152"
+      }
+     ]
     },
     "carrel-desk": {
      "status": "partial",
@@ -4207,7 +4019,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/demos/progress"
      ],
-     "clean_days": 6
+     "clean_days": 7
     }
    }
   },
@@ -4238,7 +4050,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/lib/search/ask.server.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "germomics": {
      "status": "partial",
@@ -4246,7 +4058,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "julieedwards-info": {
      "status": "partial",
@@ -4254,7 +4066,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "txasm": {
      "status": "partial",
@@ -4262,7 +4074,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "bsw": {
      "status": "complete",
@@ -4271,12 +4083,12 @@
       "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
       "https://github.com/DrDustinEdwards/bsw"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "partial",
@@ -4285,7 +4097,7 @@
       "https://foxing.app/",
       "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "carrel": {
      "status": "partial",
@@ -4293,7 +4105,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "enarratio": {
      "status": "complete",
@@ -4302,7 +4114,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/enarratio"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsomer": {
      "status": "complete",
@@ -4311,7 +4123,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsomer"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "prelum": {
      "status": "complete",
@@ -4320,7 +4132,7 @@
       "https://prelum.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/prelum"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid": {
      "status": "partial",
@@ -4328,12 +4140,12 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxhound-mcp": {
      "status": "missing",
@@ -4409,17 +4221,17 @@
     "dustinedwards-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid-portal": {
      "status": "n/a",
