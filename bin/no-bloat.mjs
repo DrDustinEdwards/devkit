@@ -23,7 +23,7 @@
 //     "tests": { "files": ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"], "ignore": [] },
 //     "comments": { "files": ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"], "ignore": ["**/*.min.*", "**/worker-configuration.d.ts"],
 //                   "tolerance": 1, "fail": false },
-//     "tools": { "knip": "knip@6.44.0", "jscpd": "jscpd@4.3.0" },
+//     "tools": { "knip": "knip@6.45.1", "jscpd": "jscpd@4.3.0" },
 //     "baseline": { "measured_at": "036d615", "knip (Worker)": { "Unused exports": 12 }, "jscpd": { "clones": 23, "lines": 410,
 //       "percentage": 0.59 }, "tests": { "files": 40, "cases": 312 }, "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
 //   }
@@ -52,7 +52,7 @@ import { join, posix, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { escapeAnnotation } from "./annotate.mjs";
-export const DEFAULT_TOOLS = { knip: "knip@6.44.0", jscpd: "jscpd@4.3.0" };
+export const DEFAULT_TOOLS = { knip: "knip@6.45.1", jscpd: "jscpd@4.3.0" };
 const TESTS = ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const SOURCE = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"];
 const GENERATED = ["**/*.min.*", "**/worker-configuration.d.ts"];
