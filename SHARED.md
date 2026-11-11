@@ -44,12 +44,12 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.46.0 (DrDustinEdwards/prelum)
+## Prelum 0.49.0 (DrDustinEdwards/prelum)
 
-- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `SLUG_PATTERN`, `isSlug`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`
+- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `PUBLISHED_STATUS`, `isPubliclyVisible`, `ZERO_RESULT_MAX_LENGTH`, `normalizeZeroResultQuery`, `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
 - `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`
-- `./slug`: `slugify`, `SLUG_PATTERN`, `isSlug`
-- `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`
+- `./slug`: `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`
+- `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`, `hasWideDash`, `plural`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
 - `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`
 - `./lastmod`: `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`
 - `./sitemap`: `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`
@@ -59,13 +59,18 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./markdown-files`: `writeMarkdownCopies`, `writeSitemapLastmod`
 - `./frontmatter`: `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`
 - `./head`: `headTags`, `articleDates`, `SHARE_CARD_SIZE`, `shareCard`, `absoluteUrl`, `headHtml`, `truncateForSerp`, `searchTitle`, `SERP_TITLE`, `SERP_DESCRIPTION`, `serpWidth`, `BREADCRUMB_MIN_ITEMS`, `defineHead`, `metaText`, `rootLoaderData`, `privateMeta`
-- `./schema`: `jsonLd`, `thing`, `graph`, `website`, `pageImage`, `imageObject`, `ARTICLE_IMAGE_MIN_PIXELS`, `ARTICLE_IMAGE_RATIOS`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `faqPage`
+- `./scholar`: `toBibtex`, `toRis`, `coinsTitle`, `REQUIRED_CITATION_TAGS`, `citationTags`, `DOI_PATTERN`, `doiSlug`
+- `./vtt`: `parseVtt`, `transcriptText`, `transcriptDuration`, `isVtt`, `toParagraphs`, `srtToVtt`, `parseCueText`
+- `./schema`: `jsonLd`, `thing`, `graph`, `website`, `pageImage`, `imageObject`, `ARTICLE_IMAGE_MIN_PIXELS`, `ARTICLE_IMAGE_RATIOS`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `faqPage`, `sameAs`, `postalAddress`, `person`, `organization`, `softwareApplication`, `podcastSeries`, `podcastEpisode`, `scholarlyType`, `scholarlyArticle`
 - `./robots`: `robotsDocument`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `CONTENT_SIGNAL`, `TDM_RESERVATION_HEADERS`, `aiTxt`, `PLAIN_TEXT_CACHE_CONTROL`, `isPreviewRequest`, `plainTextResponse`, `robotsNotes`, `robotsResponse`, `aiTxtResponse`, `verificationFileResponse`
 - `./files`: `standardFiles`
-- `./indexnow`: `submitIndexNow`, `keyFileResponse`, `recentSitemapUrls`
+- `./indexnow`: `submitIndexNow`, `submitIndexNowIfChanged`, `keyFileResponse`, `recentSitemapUrls`
+- `./source`: `CHART_KINDS`, `csvColumns`, `chartBlock`, `chartBlocks`, `figureMarkup`, `imagesWithoutAlt`, `isAbsoluteHttps`
+- `./site-map`: `sectionOf`, `siteMapSections`, `lineText`
+- `./stored-render`: `RENDER_VERSION_ATTRIBUTE`, `wrapRendered`, `storedRender`, `rerenderEach`
 - `./icons`: `ICONS`, `iconLinks`, `webManifest`, `icoFile`, `auditIcons`, `webManifestResponse`
 - `./audit`: `auditPages`, `crawlSite`
-- `./search`: `ftsLiteral`, `toMatchExpression`, `fuse`, `RRF_K`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`
+- `./search`: `ftsLiteral`, `toMatchExpression`, `fuse`, `RRF_K`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `PUBLISHED_STATUS`, `isPubliclyVisible`, `ZERO_RESULT_MAX_LENGTH`, `normalizeZeroResultQuery`
 - `./render`: `render`, `ContentError`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `DEFAULT_SCAN_LIMITS`, `RENDER_VERSION`, `isAllowedUrl`
 - `./render/nomath`: `render`, `renderWith`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `DEFAULT_SCAN_LIMITS`, `ContentError`, `RENDER_VERSION`, `isAllowedUrl`
 - `./render/packs`: `remarkSwatch`, `remarkSidenote`, `remarkPullQuote`, `remarkChartSource`, `editorialPack`
@@ -82,7 +87,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.124.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.134.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -91,10 +96,14 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./context`: `cloudflareContext`, `cspNonceContext`, `serverTimingContext`, `getEnv`, `getExecutionContext`, `getNonce`, `getTimings`
 - `./kv-cache`: `KV_MIN_TTL`, `kvCached`
 - `./csp-report`: `MAX_REPORT_BYTES`, `MAX_REPORTS`, `trimReportUrl`, `reportBodies`, `summarizeReport`, `summarizeVital`, `receiveCspReport`, `rateLimitAllow`
-- `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`
+- `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`, `multipartBoundary`, `readMultipart`, `partText`, `readJsonWith`
+- `./confirm`: `confirmationSatisfied`, `confirmationRequired`
 - `./html`: `escapeHtml`
-- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `purgeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `aiCheck`, `isDatabaseDown`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`
-- `./image`: `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `IMAGE_FORMATS`, `IMAGE_QUALITY`, `FOCUS_METADATA`, `SHARE_IMAGE`, `ARTICLE_IMAGE_RATIOS`, `imageVersion`, `originalKey`, `focusOf`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `pictureHtml`, `imagePreload`, `editImage`
+- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `purgeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `browserCheck`, `aiCheck`, `isDatabaseDown`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`, `deployedAt`, `deployedSha`
+- `./deploy`: `deployedSha`, `deployedAt`
+- `./health-read`: `healthOf`, `parseHealth`, `failingCheckNames`, `healthChecks`
+- `./image`: `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `IMAGE_FORMATS`, `IMAGE_QUALITY`, `FOCUS_METADATA`, `SHARE_IMAGE`, `ARTICLE_IMAGE_RATIOS`, `imageVersion`, `originalKey`, `focusOf`, `IMMUTABLE_CACHE`, `versionedCache`, `assetsObject`, `mediaKey`, `focalPosition`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `pictureHtml`, `imagePreload`, `editImage`
+- `./r2-object`: `contentDisposition`, `attachmentResponse`, `r2ObjectResponse`
 - `./prefetch`: `SPECULATION_RULES_PATH`, `NEVER_PREFETCH`, `FILE_EXTENSIONS`, `speculationRules`, `speculationRulesResponse`, `SPECULATION_RULES_HEADER`
 - `./preload`: `preloads`, `rootStylesheets`, `withPreloadHeader`
 - `./edge-cache`: `SHARED_CACHE_CONTROL`, `UNCACHED`, `EDGE_CACHE_HEADER`, `PAGES_CACHE_TAG`, `publicPageHeaders`, `TRACKING_PARAMS`, `cacheKey`, `settleCacheHeaders`, `forRenderer`, `forReader`, `privateRender`, `purgeTags`, `PURGE_FAILED_KEY`, `recordPurge`, `withPurgePages`, `purgeAfterWrite`, `purgeViaRenderer`, `schedulePurgeHook`
@@ -102,17 +111,19 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./embeds`: `EMBED_FRAME_SOURCES`, `EMBED_FEATURES`, `permissionsAllowingEmbeds`
 - `./static-site`: `staticHeaders`, `staticSite`
 - `./sri`: `writeIntegrity`, `subresourceIntegrity`
-- `./share-card`: `SHARE_CARD_WIDTH`, `SHARE_CARD_HEIGHT`, `SHARE_CARD_TYPE`, `cardText`, `renderShareCard`, `googleFont`, `SHARE_CARD_HEADERS`, `shareCardResponse`
+- `./share-card`: `SHARE_CARD_WIDTH`, `SHARE_CARD_HEIGHT`, `SHARE_CARD_TYPE`, `cardText`, `CARD_TITLE_MAX`, `CARD_DESCRIPTION_MAX`, `CARD_TITLE_SIZES`, `clampTitle`, `titleFontSize`, `cardKey`, `cardLayout`, `renderShareCard`, `googleFont`, `SHARE_CARD_HEADERS`, `shareCardResponse`
 - `./maintenance`: `MAINTENANCE_RETRY_AFTER`, `maintenanceOn`, `maintenanceResponse`
 - `./security-txt`: `SECURITY_CONTACT`, `SECURITY_TXT_EXPIRES`, `securityTxt`, `securityTxtResponse`
 - `./encoding`: `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `sha256Hex`, `hmacSha256Hex`, `fnv1a32`
+- `./jwt`: `pkcs8FromPem`, `signJwt`, `githubAppJwt`
 - `./signed-token`: `signToken`, `readSignedToken`
 - `./turnstile`: `TURNSTILE_ORIGIN`, `mountTurnstile`, `SITEVERIFY_URL`, `verifyTurnstile`
-- `./sign-in`: `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
+- `./sign-in`: `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `pruneAuthEventsJob`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
 - `./sign-in-client`: `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`
 - `./vitals-client`: `inpEntry`, `reportInp`
 - `./trusted-types`: `REACT_SCRIPT_STUB`, `DOCUMENT_PARSE_SINK`, `allowDocumentParsing`, `TRUSTED_TYPES_NAMES`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`
 - `./page-client`: `startPage`
+- `./zod-jitless`: (no named exports)
 - `./apple-secret`: `appleClientSecret`
 - `./email`: `sendEmail`, `redact`
 - `./compare`: `safeEqual`
@@ -122,6 +133,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./owasp`: `OWASP_SOURCE`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`
 - `./rate-limit`: `hitRules`, `peekRules`, `secondsLeft`, `assertRules`, `idleDeadline`, `purgeExpired`, `limit`, `limitedResponse`, `mustStop`, `ipKey`, `emailKey`, `matchRule`, `normalizePath`
 - `./rate-limit/durable-object`: `RateLimiter`
+- `./doc-room`: `DocRoom`, `DOC_ROOM_VIEWER_HEADER`, `ROLE_RECHECK_MS`, `MAX_SUGGESTION`, `MAX_EDIT`, `MAX_COMMENT`, `MAX_QUOTE`, `MAX_ANCHOR`, `viewerRequest`, `readViewer`, `withinLimit`, `suggestOnly`, `applyComment`
 - `./access-login`: `accessSaas`, `newSignIn`, `authorizationUrl`, `forgetKeys`, `remoteKeys`, `verifyJwt`, `verifyIdToken`, `finishSignIn`
 - `./mcp-login`: `describeRedirect`, `CONSENT_STYLE`, `loginHandler`, `isAdminUser`, `DCR_CALLBACKS`, `allowedRedirects`, `registrationRefusal`, `registrationLimited`
 - `./audit-log`: `auditChainKey`, `ToolCallLog`, `verifyAuditChain`, `AUDIT_KEEP_DAYS`, `exportAuditLog`, `auditLogCheck`, `correlationId`, `loggedArgs`, `loggedResult`, `appendAudit`, `recordAudit`
@@ -142,8 +154,9 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./origin`: `ORIGIN_REFUSAL`, `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`
 - `./url`: `redirectStatus`, `isSameOriginPath`, `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
 - `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`, `PREVIEW_TOKEN`, `tokenPattern`, `serverErrorHandler`, `handleServerError`, `errorMessage`, `handleError`
-- `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `notFoundReport`, `REDIRECTS_SQL`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`
-- `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `cronFindings`, `cronCheck`, `cronSchedule`
+- `./redact`: `redact`, `redactText`
+- `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `pruneNotFoundJob`, `notFoundReport`, `REDIRECTS_SQL`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`
+- `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_LOG_SQL`, `CRON_REASON_MAX`, `CRON_EVENT_WINDOW_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `backupStatusTool`, `operatorJobTools`, `DAILY_MINUTES`, `carrelSchedulesJob`, `backupJob`, `cronFindings`, `readCronRuns`, `cronStates`, `cronCheck`, `cronSchedule`
 - `./signed-in-crawl`: `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`, `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`
 - `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `ADMIN_LIST_PATH`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`
 - `./nonce`: `NonceContext`, `useNonce`
@@ -158,6 +171,22 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./csv`: `CSV_CONTENT_TYPE`, `guardFormula`, `csvCell`, `csvRow`, `toCsv`, `recordsCsv`, `parseCsv`, `csvResponse`
 - `./csv-client`: `downloadCsv`
 - `./worker`: `SECURITY_TXT_PATH`, `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`, `PREVIEW_TOKEN`, `tokenPattern`
+- `./inbox-report`: `INBOX_REPORT_PATH`, `CAPSID_ORIGIN`, `MAX_REPORT_ITEMS`, `MAX_REPORT_TITLE`, `MAX_INBOX_REPORT_BYTES`, `REPORT_TTL_SECONDS`, `capsidOrigin`, `reportInbox`
+- `./secret-box`: `keyring`, `keyringFromEnv`, `seal`, `keyIdOf`, `open`, `reseal`
+- `./http-errors`: `PROBLEM_TYPE`, `AppError`, `errors`, `problemResponse`, `isKnownError`, `errorResponse`, `schemaIssues`, `honoErrorHandler`, `readProblem`
+- `./confirm-token`: `CONFIRM_TTL_SECONDS`, `canonicalJson`, `mintConfirm`, `redeemConfirm`
+- `./hono`: `operatorBearer`, `honoRateLimit`
+- `./web-push`: `subscriptionProblem`, `readVapidKey`, `encryptPayload`, `vapidJwt`, `sendPush`
+- `./cron-lock`: `TICKER_INTERVAL_MS`, `withLease`, `armIfIdle`, `tick`, `ensureTickerArmed`, `decideAcquire`, `decideRelease`, `lockHealth`
+- `./cron-lock/durable-object`: `CronLock`, `CronTicker`
+- `./health-alert`: `HEALTH_STATE_SQL`, `notifyOnChange`
+- `./health-snapshot`: `HEALTH_SNAPSHOT_KEY`, `HEALTH_SNAPSHOT_EVERY_MINUTES`, `healthTile`, `formatAge`, `snapshotFromBody`, `storeHealthSnapshot`, `readHealthTile`
+- `./print-pdf`: `PAGED_DONE_ATTRIBUTE`, `PAGED_JS_CONFIG`, `pagedScripts`, `quickPdf`, `pagedPdf`
+- `./cron-alert`: `ALERTS_SQL`, `describeAge`, `alertOnce`, `cronAlert`
+- `./ai-caps`: `pacedAllowance`, `secondsPerPacedUnit`, `kvCounter`, `reserveSettle`, `windowKey`, `consume`, `spent`, `ensureBudgetTable`, `resetBudget`
+- `./ai-caps/durable-object`: `DailyBudget`
+- `./ai-ask`: `CUT_EVENT`, `frameFields`, `takeSseFrames`, `answerDelta`, `finishReason`, `normalizeQuestion`, `answerKey`, `replayFrames`, `guardAnswerStream`
+- `./newsletter`: `SUBSCRIBERS_SQL`, `newsletter`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
 ## site-api 0.37.0 (DrDustinEdwards/site-api)
@@ -195,47 +224,61 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.95.1 (DrDustinEdwards/capsomer)
+## Capsomer 0.101.0 (DrDustinEdwards/capsomer)
 
-- `./fonts/*`: `fonts/admin-shell`, `fonts/anchor-bar`, `fonts/approval-sheet`, `fonts/attention-list`, `fonts/authorship`, `fonts/avatar`, `fonts/banner`, `fonts/breadcrumb`, `fonts/bulk-bar`, `fonts/button`, `fonts/catalog`, `fonts/chart-frame`, `fonts/checklist-run`, `fonts/chips`, `fonts/collab-editor`, `fonts/combobox`, `fonts/command-menu`, `fonts/confirm-dialog`, `fonts/content`, `fonts/count-up`, `fonts/danger-zone`, `fonts/date-picker`, `fonts/detail-panel`, `fonts/dialog`, `fonts/disclosure`, `fonts/draft-compare`, `fonts/drop-zone`, `fonts/email`, `fonts/empty`, `fonts/error-ad`, `fonts/error-page`, `fonts/error-summary`, `fonts/family-footer`, `fonts/feed`, `fonts/field`, `fonts/flag-list`, `fonts/freshness`, `fonts/history-list`, `fonts/inspector`, `fonts/kit-form`, `fonts/lightbox`, `fonts/link`, `fonts/listbox`, `fonts/manual`, `fonts/markdown-editor`, `fonts/media`, `fonts/media-library`, `fonts/mentions-list`, `fonts/menu`, `fonts/message`, `fonts/meter`, `fonts/moderation-queue`, `fonts/offline-keep`, `fonts/page-head`, `fonts/pagination`, `fonts/panel`, `fonts/pdf-viewer`, `fonts/people-roles`, `fonts/permission-matrix`, `fonts/picture`, `fonts/player`, `fonts/popover`, `fonts/posts-list`, `fonts/prose-blocks`, `fonts/publish-gate`, `fonts/range-slider`, `fonts/rich-editor`, `fonts/rich-text-field`, `fonts/route-splash`, `fonts/router`, `fonts/row-list`, `fonts/save-toggle`, `fonts/scope-chip`, `fonts/segmented`, `fonts/select`, `fonts/session-row`, `fonts/share-preview`, `fonts/share-row`, `fonts/shell`, `fonts/shortcuts`, `fonts/site-header`, `fonts/skeleton`, `fonts/sortable-list`, `fonts/split`, `fonts/stat-tile`, `fonts/status`, `fonts/step-indicator`, `fonts/subscribe-links`, `fonts/summary-list`, `fonts/switch`, `fonts/switch-reason`, `fonts/system-map`, `fonts/table`, `fonts/tabs`, `fonts/tag-group`, `fonts/theme-switch`, `fonts/time`, `fonts/timeline`, `fonts/toc`, `fonts/toolbar`, `fonts/tooltip`, `fonts/tree`, `fonts/trusted-html`, `fonts/uptime-strip`, `fonts/usage-meter`, `fonts/web-push`
+- `./fonts/*`: `fonts/admin-shell`, `fonts/ai-engine-settings`, `fonts/ai-job-buttons`, `fonts/anchor-bar`, `fonts/annotated-figure`, `fonts/approval-queue`, `fonts/approval-sheet`, `fonts/attention-list`, `fonts/author-list`, `fonts/authorship`, `fonts/avatar`, `fonts/banner`, `fonts/breadcrumb`, `fonts/bulk-bar`, `fonts/button`, `fonts/calculator`, `fonts/card`, `fonts/carousel`, `fonts/catalog`, `fonts/chart-builder`, `fonts/chart-frame`, `fonts/checklist-run`, `fonts/chips`, `fonts/cited-by`, `fonts/collab-editor`, `fonts/combobox`, `fonts/command-menu`, `fonts/config-form`, `fonts/confirm-dialog`, `fonts/consent`, `fonts/content`, `fonts/copy`, `fonts/count-up`, `fonts/danger-zone`, `fonts/date-picker`, `fonts/delta`, `fonts/detail-panel`, `fonts/dialog`, `fonts/dictionary-entry`, `fonts/disclosure`, `fonts/document-archive`, `fonts/draft-compare`, `fonts/draft-notice`, `fonts/drop-zone`, `fonts/editor-workspace`, `fonts/email`, `fonts/empty`, `fonts/error-ad`, `fonts/error-page`, `fonts/error-summary`, `fonts/family-footer`, `fonts/feed`, `fonts/field`, `fonts/flag-list`, `fonts/freshness`, `fonts/frontmatter-fields`, `fonts/generated-file`, `fonts/history-list`, `fonts/hooks`, `fonts/icons`, `fonts/inline-add-form`, `fonts/inspector`, `fonts/json-ld`, `fonts/kit-form`, `fonts/label-color-editor`, `fonts/label-color-list`, `fonts/lightbox`, `fonts/link`, `fonts/link-file`, `fonts/listbox`, `fonts/log-view`, `fonts/manual`, `fonts/markdown-editor`, `fonts/marquee`, `fonts/media`, `fonts/media-library`, `fonts/mentions-list`, `fonts/menu`, `fonts/message`, `fonts/meter`, `fonts/mode-banner`, `fonts/moderation-queue`, `fonts/not-found-report`, `fonts/offline-keep`, `fonts/page-head`, `fonts/pagination`, `fonts/panel`, `fonts/pdf-viewer`, `fonts/people-roles`, `fonts/permission-matrix`, `fonts/picture`, `fonts/plain-form`, `fonts/player`, `fonts/popover`, `fonts/posts-list`, `fonts/prose-blocks`, `fonts/publish-gate`, `fonts/qr`, `fonts/range-slider`, `fonts/read-state`, `fonts/reading-progress`, `fonts/record-facts`, `fonts/related-links`, `fonts/reveal`, `fonts/rich-editor`, `fonts/rich-text-field`, `fonts/route-splash`, `fonts/router`, `fonts/row-list`, `fonts/save-toggle`, `fonts/scale-control`, `fonts/schedule`, `fonts/schedule-dialog`, `fonts/scope-chip`, `fonts/scroll-area`, `fonts/segmented`, `fonts/select`, `fonts/series-nav`, `fonts/session-row`, `fonts/setup-checklist`, `fonts/share-preview`, `fonts/share-row`, `fonts/shell`, `fonts/shortcuts`, `fonts/site-header`, `fonts/skeleton`, `fonts/sortable-list`, `fonts/source-line`, `fonts/split`, `fonts/stat-tile`, `fonts/status`, `fonts/status-mark`, `fonts/status-matrix`, `fonts/step-indicator`, `fonts/subscribe-links`, `fonts/summary-list`, `fonts/switch`, `fonts/switch-reason`, `fonts/system-map`, `fonts/table`, `fonts/tabs`, `fonts/tag-group`, `fonts/theme-switch`, `fonts/time`, `fonts/timeline`, `fonts/toc`, `fonts/toolbar`, `fonts/tooltip`, `fonts/tree`, `fonts/trusted-html`, `fonts/uptime-strip`, `fonts/usage-meter`, `fonts/verdict`, `fonts/web-push`, `fonts/writing-progress`
 - `./palette`: `themes`, `files`, `check`, `report`, `FAMILIES`, `oklch`, `contrast`, `apca`, `LEVELS`, `strengthen`, `seedLch`, `lightStep9`, `darkStep9`, `scale`, `CHART_ORDER`, `ELEVATION_ORDER`, `fitNeutrals`, `familyTheme`, `FAMILY_ORDER`, `pairs`, `apart`, `failures`, `moreLines`, `UI_STACK`, `MONO_STACK`, `renderFamily`, `renderScoped`, `renderMarks`, `enarratioTheme`, `renderEnarratioTheme`, `capsomerTheme`, `capsomerMoreTheme`, `CHART_PAIR_TOKENS`, `renderEnarratioCss`, `renderEmailColours`, `renderEmailColors`, `emailColors`
 - `./content`: `queryHref`, `intentForm`, `outcomesOf`
 - `./email`: `checkUrl`, `renderEmail`, `magicLink`, `verification`, `reset`, `emailChange`, `alert`, `securityNotice`, `notice`
 - `./publish-transition`: `transitionsFor`, `PUBLISH_CONFIRMED_INTENT`, `FIRST_PUBLICATION_NOTE`, `DRAFT_BY_INTENT`, `draftForIntent`, `saveInPlaceIntent`, `stateOf`
 - `./theme-server`: `THEME_PREF`, `THEME_COOKIE`, `THEME_COOKIE_MAX_AGE`, `isThemeChoice`, `readThemeCookie`, `themeCookie`, `colorSchemeContent`, `themeColorTags`, `themeColorMeta`, `themeScript`, `themeReturnTo`, `readThemeChoice`, `themeAction`
-- `./testing`: `THEMES`, `eachTheme`, `visitStates`, `expectNoAxeViolations`, `settled`, `paintedContrast`, `expectContrast`, `focused`, `nextPost`, `ringContrast`, `countCssRules`, `rowOverflow`
+- `./testing`: `THEMES`, `eachTheme`, `visitStates`, `enforceTrustedTypes`, `expectNoAxeViolations`, `expectContrast`
+- `./testing/page`: `settled`, `paintedContrast`, `focused`, `nextPost`, `ringContrast`, `countCssRules`, `rowOverflow`
 - `./fonts`: `LOCAL`, `MEASURED`, `fallbackName`, `fallbackFontFace`
 - `./enarratio-theme`: `capsomerTheme`, `capsomerMoreTheme`
 - `./behavior/chart-enhance`: `enhanceCharts`, `watchCharts`
 - `./behavior/checklist-run-model`: `RUN_VERSION`, `timerMs`, `timerKey`, `newRun`, `toggleDone`, `setNote`, `setRunNote`, `setScale`, `finishRun`, `startTimer`, `pauseTimer`, `resetTimer`, `timerRemaining`, `tickTimers`, `clock`, `runProgress`, `shownStep`, `stepBeside`, `when`, `runRecord`, `runMarkdown`, `parseRun`
 - `./push-sw.js`: (no named exports)
 - `./offline-sw.js`: (no named exports)
-- `./behavior/admin-shell`: `ADMIN_PREF`, `pageTransitionsOn`, `startPageTransition`, `setMenu`, `toggleMenu`, `JUMP_WINDOW_MS`, `jumpTarget`, `enhance`, `badgeText`
+- `./behavior/admin-shell`: `ADMIN_PREF`, `pageTransitionsOn`, `startPageTransition`, `setMenu`, `toggleMenu`, `JUMP_WINDOW_MS`, `jumpTarget`, `isCollapseKey`, `currentEntryId`, `ACCESS_LOGOUT`, `enhance`, `badgeText`
+- `./behavior/ai-engine-settings`: `ENGINE_OPTIONS`, `dollars`, `engineWord`, `settingsFromForm`
+- `./behavior/ai-job-buttons`: `ENGINE_NAME`, `otherEngine`, `retryLabel`, `canRetry`
 - `./behavior/anchor-bar`: `scrollParent`, `sectionsIn`, `sectionLabel`, `meetsRule`, `currentSection`, `watchSections`, `goToSection`, `measureBar`, `markSections`, `enhance`
+- `./behavior/annotated-figure`: `round1`, `scalePoint`, `scalePathData`, `sideCallout`, `viewBox`, `nextPin`, `drawLeaders`, `attach`, `enhance`
+- `./behavior/approval-queue`: `DEFAULT_KEYS`, `keyOf`, `actionForKey`, `nextAfter`, `summaryLine`
 - `./behavior/approval-sheet`: `approveLabel`, `titleText`, `selection`, `isPending`, `update`, `setPending`, `setError`, `open`, `close`, `enhance`
 - `./behavior/attention-list`: `GROUP_CHILDREN`, `PROBLEM_ROWS`, `TONE_ORDER`, `TONE_WORD`, `isNotice`, `arrange`, `problemCount`, `viewLinkText`, `setGroup`, `toggleGroup`, `enhance`, `URGENCY_ORDER`, `URGENCY_TITLE`, `needsShown`, `needCount`, `focusNeighbor`, `severityOf`, `worstSeverity`, `severityTone`
+- `./behavior/author-list`: `nameOf`, `foldAuthors`
 - `./behavior/authorship`: `KINDS`, `KIND_WORD`, `KIND_LABEL`, `summarise`, `summarize`, `summaryText`, `summaryHtml`, `STORAGE_KEY`, `collectRuns`, `refresh`, `isShown`, `setShown`, `enhance`, `countWords`
 - `./behavior/avatar`: `enhance`, `initials`
 - `./behavior/banner`: `dismissBanner`, `focusMain`, `enhance`
 - `./behavior/breadcrumb`: `foldedLevels`, `collapse`, `enhance`
-- `./behavior/bulk-bar`: `countText`, `plural`, `fillCount`, `previewItems`, `orderOutcomes`, `outcomeSummary`, `performBulk`, `bindBulk`, `listOf`, `boxesOf`, `labelOf`, `selectedItems`, `itemsInView`, `setAllInView`, `showOutcomes`, `refresh`, `clearSelection`, `invoke`, `attachBulkBar`, `enhance`
+- `./behavior/bulk-bar`: `countText`, `plural`, `fillCount`, `previewItems`, `orderOutcomes`, `outcomeSummary`, `visibleSelection`, `allVisibleSelected`, `toggleAllVisible`, `toggleOne`, `failedIds`, `performBulk`, `bindBulk`, `listOf`, `boxesOf`, `labelOf`, `selectedItems`, `itemsInView`, `setAllInView`, `showOutcomes`, `refresh`, `clearSelection`, `invoke`, `attachBulkBar`, `enhance`
 - `./behavior/button`: `morphFrom`, `morphLabel`
+- `./behavior/calculator`: `VIEW_TAGS`, `textParts`, `lineNodes`, `resultView`, `checkTag`, `buildNode`, `formValues`, `initialValues`, `attach`, `enhance`
+- `./behavior/carousel`: `partsOf`, `statusText`, `canLoop`, `attach`, `enhance`
 - `./behavior/catalog`: `formHref`, `attachCatalog`, `enhance`
+- `./behavior/chart-builder`: `CHART_TYPES`, `csvColumns`, `chooseColumns`, `chartReady`, `MAX_CSV_BYTES`, `csvFileProblem`, `chartDirective`
 - `./behavior/chart-frame`: `frameHtml`, `noDataHtml`, `chartViewBox`
 - `./behavior/checklist-run`: `start`, `enhance`
 - `./behavior/chips`: `EVENT`, `valueOf`, `pressedValues`, `syncClear`, `ensureChips`, `setPressed`, `readParam`, `writeParam`, `setCount`, `toggle`, `clearAll`, `enhance`
 - `./behavior/collab-editor`: `FRAGMENT`, `isSeeded`, `loadMarkdown`, `markdownOf`, `markSaved`, `patchMarkdown`, `readMeta`, `roomJson`, `roomMarkdown`, `roomSchema`, `listSuggestions`, `settle`, `suggestionCounts`, `suggestingDispatch`, `suggestionPlugins`
-- `./behavior/command-menu`: `STOP_GROUP`, `STOP_HINTS`, `stopCommand`, `matchesQuery`, `filterCommands`, `step`, `groupCommands`, `emptyText`, `SEARCHING`, `buildMenu`, `attach`, `openCommandMenu`, `createCommandMenu`, `enhance`
+- `./behavior/command-menu`: `navCommands`, `markQuery`, `RECENT_MAX`, `readRecent`, `rememberRecent`, `STOP_GROUP`, `STOP_HINTS`, `stopCommand`, `matchesQuery`, `filterCommands`, `step`, `groupCommands`, `emptyText`, `SEARCHING`, `buildMenu`, `attach`, `openCommandMenu`, `createCommandMenu`, `enhance`
 - `./behavior/confirm-dialog`: `wordMatches`, `wordPattern`, `reasonOf`, `setBusy`, `showError`, `showReasonError`, `clearError`, `bindPerform`, `openConfirm`, `wasPerformed`, `wire`, `buildConfirm`, `confirm`, `confirmSubmit`, `enhance`, `errorText`, `isBackdropClick`, `isBusy`, `rememberOpener`, `returnFocus`, `uid`
 - `./behavior/content`: `queryHref`, `intentForm`, `outcomesOf`
+- `./behavior/copy`: `COPIED_MS`, `COPY_FAILED_MS`, `copyText`, `shareLink`, `textOf`, `messageFor`, `distinct`, `report`, `run`, `enhance`
 - `./behavior/count-up`: `DURATION_MS`, `easeOutCubic`, `reducedMotion`, `countUp`, `formatter`, `enhance`
 - `./behavior/date-picker`: `parseDate`, `isoDate`, `addMonths`, `moveDate`, `wirePicker`, `enhance`
+- `./behavior/delta`: `UNCHANGED_BELOW_PCT`, `compareFigures`, `deltaText`
 - `./behavior/detail-panel`: `detailHash`, `detailUrl`, `detailInUrl`, `wireDetail`, `openDetail`, `closeDetail`, `copyFrom`, `enhance`
 - `./behavior/dialog`: `rememberOpener`, `returnFocus`, `isBackdropClick`, `errorText`, `uid`, `isBusy`, `setDialogBusy`, `NATIVE_LIGHT_DISMISS`, `syncClosedBy`, `isLocked`, `historyHash`, `focusInitial`, `syncScroll`, `wireDialog`, `openDialog`, `closeDialog`, `enhance`
-- `./behavior/disclosure`: `setGroup`, `toggleGroup`, `groupDepth`, `enhance`
+- `./behavior/dictionary-entry`: `listenLabel`, `wireListen`, `enhance`
+- `./behavior/disclosure`: `setGroup`, `toggleGroup`, `groupDepth`, `enhanceExpand`, `enhance`
+- `./behavior/document-archive`: `adjacent`, `groupByCategory`
 - `./behavior/draft-compare`: `currentView`, `setView`, `toggleAll`, `enhance`, `tokenize`, `countWords`, `commonSubsequence`, `diffWords`, `splitSentences`, `diffSentences`, `analyze`, `analyse`, `// codespell:ignore
-countsText`, `VIEWS`, `STORAGE_KEY`, `esc`, `renderCompare`, `choicesOf`, `merged`, `mergePlan`, `startPicks`, `parsePatch`, `patchCounts`, `patchCountsText`, `revisionPair`, `renderPatch`
+countsText`, `VIEWS`, `STORAGE_KEY`, `esc`, `renderCompare`, `choicesOf`, `merged`, `mergePlan`, `startPicks`, `parsePatch`, `patchCounts`, `patchCountsText`, `revisionPair`, `renderPatch`, `unifiedPatch`, `hasChanges`
 - `./behavior/drop-zone`: `parseAccept`, `matchesAccept`, `acceptLabel`, `formatBytes`, `rejectionMessage`, `validateFiles`, `acceptedText`, `rejectedLead`, `dragHasFiles`, `setInputFiles`, `rulesOf`, `acceptFiles`, `attachDropZone`, `enhance`
+- `./behavior/editor-workspace`: `LAYOUTS`, `LAYOUT_KEY`, `readLayout`, `storedLayout`, `storeLayout`, `previewUrl`, `onSaveKey`, `TYPING_SURFACE`, `TYPING_ATTR`, `typingRecede`, `enhance`
 - `./behavior/email`: `checkUrl`, `renderEmail`, `magicLink`, `verification`, `reset`, `emailChange`, `alert`, `securityNotice`, `notice`
 - `./behavior/error-ad`: `AD_FONTS`, `adProblems`, `burstPoints`, `scopeArt`, `chooseAd`
 - `./behavior/error-summary`: `setTitleError`, `wireSummary`, `summaryFor`, `showSummary`, `hideSummary`, `enhance`
@@ -243,7 +286,12 @@ countsText`, `VIEWS`, `STORAGE_KEY`, `esc`, `renderCompare`, `choicesOf`, `merge
 - `./behavior/field`: `isControl`, `messageFor`, `groupOf`, `errorFor`, `showError`, `clearError`, `validate`, `validateForm`, `dateFrom`, `checkDate`, `setRevealed`, `revealedText`, `countText`, `limitOf`, `stepValue`, `keyValue`, `setValue`, `enhance`
 - `./behavior/flag-list`: `glyph`, `statusEl`, `readFlag`, `flagRows`, `readFlags`, `renderFlag`, `attachFlagList`, `enhance`, `groupFlags`, `countFlags`, `summaryLine`, `anchorStatus`, `applySuggestion`, `revertSuggestion`, `appliable`
 - `./behavior/freshness`: `shareLeft`, `RING_R`, `ringDash`
+- `./behavior/frontmatter-fields`: `LIST_HINT`, `LINES_HINT`, `shapeOf`, `labelOf`, `readBox`, `scalarRaw`, `writeBox`, `setBox`, `typeFront`
+- `./behavior/generated-file`: `LOCK_MS`, `STALLED_REASON`, `fileState`, `mayStart`, `STATE_WORDS`, `fileMeta`
 - `./behavior/history-list`: `attachListKeys`, `restoreVersion`, `appendEntries`, `syncPicks`, `enhance`, `countWords`, `wordDelta`, `deltaSign`, `deltaText`, `deltaOf`, `condense`, `stamp`, `dayOf`, `rangeText`, `runTitle`, `pickTwo`, `orderPair`, `compareHref`, `comparePicks`, `messageSummary`, `changeText`, `PICK_NONE`, `PICK_BLOCKED`, `pickedText`, `restoredEntry`, `restoredMessage`, `destinationWord`, `SIGN_GLYPH`, `destinationGlyph`, `destinationTone`, `buildRow`, `buildRun`, `isTypingKey`
+- `./behavior/hooks`: `cn`, `readStored`, `writeStored`, `subscribeStored`
+- `./behavior/icons`: `ICONS`, `SOCIAL`, `iconSvg`
+- `./behavior/label-color-list`: `COLOR_NAMES`, `COLORS`, `MAX_LABELS`, `MAX_LABEL_LENGTH`, `colorLabels`, `labelFor`, `cleanLabels`, `editRows`, `rowsFromForm`
 - `./behavior/lightbox`: `grow`, `openViewer`, `closeViewer`, `enhance`
 - `./behavior/link`: `ABSOLUTE`, `underPath`, `mayPrefetch`
 - `./behavior/listbox`: `matchesQuery`, `filterCommands`, `groupBy`, `step`, `stepEnabled`, `TYPEAHEAD_MS`, `nextTypeahead`, `resultsText`, `emptyText`, `createListbox`, `listboxFor`, `enhance`
@@ -256,25 +304,32 @@ countsText`, `VIEWS`, `STORAGE_KEY`, `esc`, `renderCompare`, `choicesOf`, `merge
 - `./behavior/message`: `CLEARS_AFTER_MS`, `newMessage`, `lasting`, `withMessage`, `undoneText`, `undoErrorText`, `resolveFocus`, `isTypingTarget`, `isUndoKey`, `currentUndo`, `actionResultView`, `GLYPHS`, `glyphSvg`, `messageKind`, `say`, `fail`, `dismiss`, `runUndo`, `enhance`
 - `./behavior/meter`: `ratio`, `toneFor`, `setBar`, `update`, `enhance`
 - `./behavior/moderation-queue`: `mentionOf`, `refresh`, `syncSelection`, `decideRows`, `run`, `setView`, `QUEUE_SHORTCUTS`, `enhance`, `VIEWS`, `VIEW_LABEL`, `STATE_LABEL`, `ACTIONS`, `ACTION_KEY`, `DELETE_KEY`, `decide`, `actionsFor`, `bulkActionsFor`, `inView`, `countStates`, `summaryText`, `statusOf`, `ACTION_LABEL`, `decidedText`, `undoneText`, `undoAction`, `NO_UNDO_TEXT`, `undoStack`, `sweepLines`, `mentionsWord`, `EMPTY_TEXT`, `statusEl`, `actionButton`, `isTypingKey`
+- `./behavior/not-found-report`: `referrerLine`, `hitsWord`, `windowOf`, `probesLine`
 - `./behavior/offline-keep`: `DEFAULT_CACHE`, `keepSupported`, `workerUrl`, `filesOfPage`, `isKept`, `keep`, `remove`, `enhance`
-- `./behavior/pagination`: `pageItems`, `showingRange`, `statusText`, `pageCountOf`, `render`, `setPage`, `enhance`
+- `./behavior/pagination`: `pageItems`, `showingRange`, `statusText`, `pageCountOf`, `parsePage`, `pageEnvelope`, `pageHref`, `pageRelLinks`, `countText`, `render`, `setPage`, `enhance`
 - `./behavior/pdf-viewer`: `MIN_SCALE`, `MAX_SCALE`, `SCALE_STEP`, `DEFAULT_SCALE`, `clampView`, `start`, `enhance`
 - `./behavior/people-roles`: `SOON_DAYS`, `REASON_MISSING`, `dayText`, `timeText`, `daysLeft`, `accessText`, `endsSoon`, `syncText`, `actionText`, `cloudflareText`, `endHelp`, `tallyText`, `removeBody`, `removeTarget`, `confirmRemove`, `rowActions`, `followTitle`, `updateTally`, `enhance`, `listText`, `pluralTitle`, `manageLead`, `personFromParam`, `roleSavedText`, `personName`
 - `./behavior/permission-matrix`: `holdings`, `holders`, `showView`, `enhance`
-- `./behavior/player`: `RATE_MIN`, `RATE_MAX`, `RATE_STEP`, `SPEEDS`, `SLEEP_MINUTES`, `RESUME_TAIL_SECONDS`, `RESUME_SAVE_SECONDS`, `RESTART_SECONDS`, `clampRate`, `clampVolume`, `resumePoint`, `playerStorage`, `formatTime`, `spokenTime`, `formatRate`, `sleepLabel`, `activeChapterIndex`, `mediaSession`, `setPositionState`, `clearPositionState`, `trackMetadata`, `setSessionHandlers`, `STARTED_ATTRIBUTE`, `AUDIO_SELECTOR`, `loadTrack`, `startTrack`, `PEAKS_LENGTH`, `WAVEFORM_BARS`, `computePeaks`, `decodePeaks`, `probeDuration`, `normalizePeaks`, `syntheticPeaks`, `toParagraphs`, `playheadCue`, `TRANSCRIPT_TRACK_LABEL`, `wireClip`, `enhance`
-- `./behavior/popover`: `SHOW_DELAY_MS`, `HIDE_GRACE_MS`, `GROUP_MS`, `supportsAnchor`, `place`, `attach`, `open`, `close`, `toggle`, `enhance`
+- `./behavior/player`: `RATE_MIN`, `RATE_MAX`, `RATE_STEP`, `SPEEDS`, `SLEEP_MINUTES`, `RESUME_TAIL_SECONDS`, `RESUME_SAVE_SECONDS`, `RESTART_SECONDS`, `clampRate`, `clampVolume`, `resumePoint`, `playerStorage`, `formatTime`, `spokenTime`, `formatRate`, `sleepLabel`, `activeChapterIndex`, `mediaSession`, `setPositionState`, `clearPositionState`, `trackMetadata`, `setSessionHandlers`, `STARTED_ATTRIBUTE`, `AUDIO_SELECTOR`, `loadTrack`, `startTrack`, `PEAKS_LENGTH`, `WAVEFORM_BARS`, `computePeaks`, `decodePeaks`, `probeDuration`, `normalizePeaks`, `syntheticPeaks`, `playheadCue`, `TRANSCRIPT_TRACK_LABEL`, `wireClip`, `enhance`
+- `./behavior/popover`: `SHOW_DELAY_MS`, `HIDE_GRACE_MS`, `GROUP_MS`, `supportsAnchor`, `place`, `attach`, `openAt`, `open`, `close`, `toggle`, `enhance`
 - `./behavior/posts-list`: `inDays`, `contentStatus`, `rowStatus`, `nounsOf`, `STATUS_TABS`, `SORTS`, `trashLine`, `countLine`, `authorLine`, `filtered`, `NO_FILTERS`, `emptyWords`, `postsHref`, `withFilter`, `postActions`, `scheduledTime`, `rowActions`, `localInputValue`, `isoFromLocal`, `intentForm`, `outcomesOf`
 - `./behavior/publish-gate`: `stateStatus`, `readCheck`, `readSite`, `attachPublishGate`, `enhance`, `checkState`, `sortChecks`, `gateState`, `appliesTo`, `siteState`, `worstState`, `countChecks`, `requiredHeading`, `advisoryHeading`, `passedHeading`, `holdText`, `nameList`, `stateWord`, `describeGate`, `siteDetail`, `FIRST_PUBLICATION_NOTE`
+- `./behavior/qr`: `qrPath`, `qrSize`, `qrLabel`, `checkQrUrl`
 - `./behavior/range-slider`: `COMMIT_DELAY_MS`, `COMMIT_EVENT`, `rangeFill`, `clampPair`, `formatValue`, `paint`, `enhance`
+- `./behavior/related-links`: `httpHref`, `sitePath`, `longDate`
 - `./behavior/rich-editor`: `BLOCK_TYPES`, `fingerprints`, `fromDoc`, `pastedBlocks`, `sameBlock`, `toDoc`, `writeChecked`, `baseExtensions`, `editorSchema`, `SourceBlock`, `SourceInline`, `SUGGESTION_BLOCKS`
 - `./behavior/rich-text-field`: `RICH_TEXT_TAGS`, `decodeEntities`, `parseRichText`, `serializeRichText`, `sanitizeRichText`, `richTextPlain`, `richTextWords`, `isEmptyRichText`, `richTextNodes`, `tagsAround`, `toggleTag`, `insertNodes`
 - `./behavior/route-splash`: `normalPath`, `shouldShowRouteSplash`
 - `./behavior/router`: `onlyParamsChanged`
 - `./behavior/row-list`: `rowTargets`, `moveRowFocus`, `isTyping`, `isTypingKey`, `listOwnsKeys`, `attachRowList`, `enhance`, `singleKeysOff`
 - `./behavior/save-toggle`: `savedRaw`, `savedIds`, `isSaved`, `toggleSaved`, `subscribeSaved`, `paint`, `enhance`
+- `./behavior/schedule`: `NO_DATE`, `toMs`, `dayKeyOf`, `groupByDay`, `dayRange`, `dayKeys`, `pickDay`, `dayLabel`, `clock`, `slotLabel`, `zoneLine`, `tracksLabel`
+- `./behavior/schedule-dialog`: `localValue`, `NO_TIME`, `PAST_TIME`, `checkSchedule`
 - `./behavior/scope-chip`: `enhance`
 - `./behavior/select`: `readOptions`, `triggerText`, `selectControlFor`, `createSelect`, `enhance`
+- `./behavior/series-nav`: `seriesPlace`
 - `./behavior/session-row`: `STATES`, `order`, `spokenCount`, `enhance`
+- `./behavior/share-preview`: `SERP_LIMITS`, `serpTextWidth`, `serpReading`
 - `./behavior/share-row`: `SHARE_NAMES`, `shareHref`
 - `./behavior/shell`: `DEFAULT_PREF`, `readPref`, `writePref`, `setRail`, `toggleRail`, `openMore`, `closeMore`, `DENSITY_PREF`, `readDensity`, `applyDensity`, `applyStoredDensity`, `enhance`
 - `./behavior/shortcuts`: `SINGLE_KEYS_PREF`, `SINGLE_KEYS_NOTE`, `SEQUENCE_MS`, `isMac`, `isSingleKey`, `singleKeysOn`, `singleKeysOff`, `setSingleKeys`, `isImeEnter`, `isTyping`, `start`, `modifiedShortcutFor`, `stop`, `register`, `list`, `grouped`, `capName`, `keyCaps`, `keysFragment`, `setSheetOpener`, `renderSheetList`, `buildSheet`, `wireSheet`, `openShortcutSheet`, `enhance`
@@ -294,12 +349,15 @@ countsText`, `VIEWS`, `STORAGE_KEY`, `esc`, `renderCompare`, `choicesOf`, `merge
 - `./behavior/tooltip`: `attach`, `showTip`, `hideTip`, `enhance`, `HIDE_GRACE_MS`, `SHOW_DELAY_MS`, `place`, `supportsAnchor`
 - `./behavior/tree`: `createTree`, `treeFor`, `enhance`, `visibleRows`, `branchIds`, `treeKey`, `findNode`, `findPlace`, `isWithin`, `planMove`, `dropMove`, `zoneAt`, `applyMove`, `reverseMove`, `movedText`, `cannotMoveText`
 - `./behavior/trusted-html`: `trustedHtml`, `setStaticHtml`, `copyChildren`, `markup`, `inertDocument`
+- `./behavior/uptime-strip`: `uptimeOf`, `padRing`, `fromRing`, `LEGEND`
 - `./behavior/usage-meter`: `MIN_HISTORY`, `WARN_AT`, `CRIT_AT`, `duration`, `utcClock`, `assess`, `widths`, `usageTable`, `sizeBar`, `enhance`
 - `./behavior/web-push`: `pushSupported`, `deviceLabel`, `PushRefused`, `subscribePush`
-- `./react/*`: `react/admin-shell`, `react/anchor-bar`, `react/approval-sheet`, `react/attention-list`, `react/authorship`, `react/avatar`, `react/banner`, `react/breadcrumb`, `react/bulk-bar`, `react/button`, `react/catalog`, `react/chart-frame`, `react/checklist-run`, `react/chips`, `react/collab-editor`, `react/combobox`, `react/command-menu`, `react/confirm-dialog`, `react/content`, `react/count-up`, `react/danger-zone`, `react/date-picker`, `react/detail-panel`, `react/dialog`, `react/disclosure`, `react/draft-compare`, `react/drop-zone`, `react/email`, `react/empty`, `react/error-ad`, `react/error-page`, `react/error-summary`, `react/family-footer`, `react/feed`, `react/field`, `react/flag-list`, `react/freshness`, `react/history-list`, `react/inspector`, `react/kit-form`, `react/lightbox`, `react/link`, `react/listbox`, `react/manual`, `react/markdown-editor`, `react/media`, `react/media-library`, `react/mentions-list`, `react/menu`, `react/message`, `react/meter`, `react/moderation-queue`, `react/offline-keep`, `react/page-head`, `react/pagination`, `react/panel`, `react/pdf-viewer`, `react/people-roles`, `react/permission-matrix`, `react/picture`, `react/player`, `react/popover`, `react/posts-list`, `react/prose-blocks`, `react/publish-gate`, `react/range-slider`, `react/rich-editor`, `react/rich-text-field`, `react/route-splash`, `react/router`, `react/row-list`, `react/save-toggle`, `react/scope-chip`, `react/segmented`, `react/select`, `react/session-row`, `react/share-preview`, `react/share-row`, `react/shell`, `react/shortcuts`, `react/site-header`, `react/skeleton`, `react/sortable-list`, `react/split`, `react/stat-tile`, `react/status`, `react/step-indicator`, `react/subscribe-links`, `react/summary-list`, `react/switch`, `react/switch-reason`, `react/system-map`, `react/table`, `react/tabs`, `react/tag-group`, `react/theme-switch`, `react/time`, `react/timeline`, `react/toc`, `react/toolbar`, `react/tooltip`, `react/tree`, `react/trusted-html`, `react/uptime-strip`, `react/usage-meter`, `react/web-push`
+- `./behavior/writing-progress`: `DEFAULT_GOAL`, `WEEKDAYS`, `STREAK_HORIZON_DAYS`, `knownZone`, `dayKey`, `dayTotals`, `writingDaysBetween`, `pace`, `targetFor`, `streak`, `recentDays`, `parseWritingDays`, `MAX_DAILY_TARGET`, `parseDailyTarget`, `goalFromForm`, `untypedCount`, `untypedTally`, `weekdayName`, `paceLine`, `weekSentence`
+- `./react/player-context`: `PlayerProvider`, `usePlayer`
+- `./react/*`: `react/admin-shell`, `react/ai-engine-settings`, `react/ai-job-buttons`, `react/anchor-bar`, `react/annotated-figure`, `react/approval-queue`, `react/approval-sheet`, `react/attention-list`, `react/author-list`, `react/authorship`, `react/avatar`, `react/banner`, `react/breadcrumb`, `react/bulk-bar`, `react/button`, `react/calculator`, `react/card`, `react/carousel`, `react/catalog`, `react/chart-builder`, `react/chart-frame`, `react/checklist-run`, `react/chips`, `react/cited-by`, `react/collab-editor`, `react/combobox`, `react/command-menu`, `react/config-form`, `react/confirm-dialog`, `react/consent`, `react/content`, `react/copy`, `react/count-up`, `react/danger-zone`, `react/date-picker`, `react/delta`, `react/detail-panel`, `react/dialog`, `react/dictionary-entry`, `react/disclosure`, `react/document-archive`, `react/draft-compare`, `react/draft-notice`, `react/drop-zone`, `react/editor-workspace`, `react/email`, `react/empty`, `react/error-ad`, `react/error-page`, `react/error-summary`, `react/family-footer`, `react/feed`, `react/field`, `react/flag-list`, `react/freshness`, `react/frontmatter-fields`, `react/generated-file`, `react/history-list`, `react/hooks`, `react/icons`, `react/inline-add-form`, `react/inspector`, `react/json-ld`, `react/kit-form`, `react/label-color-editor`, `react/label-color-list`, `react/lightbox`, `react/link`, `react/link-file`, `react/listbox`, `react/log-view`, `react/manual`, `react/markdown-editor`, `react/marquee`, `react/media`, `react/media-library`, `react/mentions-list`, `react/menu`, `react/message`, `react/meter`, `react/mode-banner`, `react/moderation-queue`, `react/not-found-report`, `react/offline-keep`, `react/page-head`, `react/pagination`, `react/panel`, `react/pdf-viewer`, `react/people-roles`, `react/permission-matrix`, `react/picture`, `react/plain-form`, `react/player`, `react/popover`, `react/posts-list`, `react/prose-blocks`, `react/publish-gate`, `react/qr`, `react/range-slider`, `react/read-state`, `react/reading-progress`, `react/record-facts`, `react/related-links`, `react/reveal`, `react/rich-editor`, `react/rich-text-field`, `react/route-splash`, `react/router`, `react/row-list`, `react/save-toggle`, `react/scale-control`, `react/schedule`, `react/schedule-dialog`, `react/scope-chip`, `react/scroll-area`, `react/segmented`, `react/select`, `react/series-nav`, `react/session-row`, `react/setup-checklist`, `react/share-preview`, `react/share-row`, `react/shell`, `react/shortcuts`, `react/site-header`, `react/skeleton`, `react/sortable-list`, `react/source-line`, `react/split`, `react/stat-tile`, `react/status`, `react/status-mark`, `react/status-matrix`, `react/step-indicator`, `react/subscribe-links`, `react/summary-list`, `react/switch`, `react/switch-reason`, `react/system-map`, `react/table`, `react/tabs`, `react/tag-group`, `react/theme-switch`, `react/time`, `react/timeline`, `react/toc`, `react/toolbar`, `react/tooltip`, `react/tree`, `react/trusted-html`, `react/uptime-strip`, `react/usage-meter`, `react/verdict`, `react/web-push`, `react/writing-progress`
 - bins: `capsomer`, `capsomer-roundtrip`
 
-## Enarratio 0.13.0 (DrDustinEdwards/enarratio)
+## Enarratio 0.13.1 (DrDustinEdwards/enarratio)
 
 - `.`: `element`, `heatStrip`, `heatStripTable`, `progressRing`, `progressRingTable`, `sparkline`, `sparklineTable`, `timeline`, `timelineTable`, `uptimeStrip`, `uptimeStripTable`, `datasetJsonLd`, `dataTableBlock`, `figure`, `slotStyle`, `validateFigure`, `dateFormat`, `numberFormat`, `tableChart`, `ENGLISH`, `readingGrade`, `toCsv`, `checkTheme`, `DEFAULT_THRESHOLDS`, `colorDifference`, `contrastRatio`, `labelColor`, `readableShade`, `simulateColorVision`, `defineTheme`, `baseStylesheet`, `colorStyles`, `stylesheet`
 - `./plot`: `barChart`, `bulletChart`, `boxPlot`, `stripPlot`, `chordDiagram`, `divergingBarChart`, `dotPlot`, `dumbbellPlot`, `rangePlot`, `smallMultiples`, `funnelChart`, `gaugeChart`, `heatmap`, `densityPlot`, `histogram`, `areaChart`, `lineChart`, `parallelCoordinates`, `pieChart`, `radarChart`, `sankeyDiagram`, `scatterPlot`, `slopeChart`, `sunburst`, `treemap`, `waterfallChart`
