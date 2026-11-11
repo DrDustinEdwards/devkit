@@ -41,7 +41,7 @@ on:
         required: true
         type: string
       verify-command:
-        description: The live checks, run after /health reports this run's commit. Exit 0 passes, 1 refuses (rolls back), 3 could not run.
+        description: The live checks, run after /health reports this run's commit. Exit 0 passes, 1 refuses (rolls back), 3 could not run. $DEVKIT_DIR is devkit at the caller's pin, so `node "$DEVKIT_DIR/bin/verify-deploy.mjs" <origin>` needs no install.
         required: true
         type: string
       node-version-file:
@@ -360,6 +360,19 @@ jobs:
         with:
           persist-credentials: false
 
+      # devkit at the commit the caller pinned, so a verify command can run devkit's own bins (`node "$DEVKIT_DIR/bin/verify-deploy.mjs"
+      # <origin>`) with no install. An empty ref checks out devkit's default branch, so the caller's pin would mean nothing.
+      - name: Know the commit the caller pinned
+        env:
+          PINNED: ${{ job.workflow_sha }}
+        run: test -n "$PINNED" || { echo "::error::job.workflow_sha is empty, so devkit cannot be read at the caller's pin."; exit 1; }
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: ${{ inputs.node-version-file }}
@@ -518,6 +531,7 @@ jobs:
           EXPECT_SHA: ${{ needs.deploy.result == 'success' && github.sha || '' }}
           HEALTH_URL: ${{ inputs.health-url }}
           VERIFY: ${{ inputs.verify-command }}
+          DEVKIT_DIR: ${{ github.workspace }}/.devkit
           VERIFY_POLL_ATTEMPTS: "40"
           WORKER: ${{ inputs.worker-name }}
           VERSION_ID: ${{ needs.deploy.outputs.version-id }}

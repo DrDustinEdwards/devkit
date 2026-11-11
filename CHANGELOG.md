@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.30.0 (2026-11-11)
+
+- `worker-deploy.yml`: the live gate checks devkit out at the caller's pin (`job.workflow_sha`) and sets `$DEVKIT_DIR` for the verify command, so a caller runs `node "$DEVKIT_DIR/bin/verify-deploy.mjs" <origin> ...` with no install (the gate installs nothing on purpose). Callers replace their inline `curl` home-page checks and local verify scripts with it.
+
 ## 0.29.0 (2026-11-11)
 
 - `devkit-test-assertions` (from dustinedwards.info's `check:test-assertions` and foxhound's `report:assertions`) and `devkit-verify-deploy` (from dustinedwards.info's `verify-deploy.mjs`, foxhound's `verify-live.mjs` and the `curl` home-page check six workflows wrote inline). Both read their options from the command line or a small JSON config; a site deletes its copy and calls the bin.
