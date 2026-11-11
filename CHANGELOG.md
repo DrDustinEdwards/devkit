@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.31.0 (2026-11-11)
+
+- `devkit-shared` features: site-runtime `./worker` counts for security.txt and the CSP report receiver (its gateway answers both on every site), Prelum `standardFiles({ ai })` for ai.txt and site-api `standardSiteApi({ indexNow })` for IndexNow, so a site on the one Worker passes.
+
 ## 0.30.0 (2026-11-11)
 
 - `worker-deploy.yml`: the live gate checks devkit out at the caller's pin (`job.workflow_sha`) and sets `$DEVKIT_DIR` for the verify command, so a caller runs `node "$DEVKIT_DIR/bin/verify-deploy.mjs" <origin> ...` with no install (the gate installs nothing on purpose). Callers replace their inline `curl` home-page checks and local verify scripts with it.

@@ -113,8 +113,9 @@ export const FEATURES = {
   },
   aiTxt: {
     kinds: SITE,
-    find: /\baiTxt(Response)?\b/,
-    use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt)",
+    // standardFiles serves ai.txt when it is given `ai`.
+    find: /\baiTxt(Response)?\b|\bstandardFiles\(\{[^]*?\bai:/,
+    use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt), or ./files standardFiles with `ai`",
   },
   tdm: {
     kinds: SITE,
@@ -139,13 +140,15 @@ export const FEATURES = {
   schema: { kinds: SITE, find: /site-helpers\/schema["']/, use: "Prelum ./schema (JSON-LD)" },
   indexnow: {
     kinds: SITE,
-    find: /site-helpers\/indexnow["']|prelum-indexnow/,
+    // site-api's standardSiteApi sends IndexNow when it is given `indexNow`.
+    find: /site-helpers\/indexnow["']|prelum-indexnow|\bstandardSiteApi\(\{[^]*?\bindexNow:/,
     use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)",
   },
   securityTxt: {
     kinds: SITE,
-    find: /site-runtime\/security-txt["']/,
-    use: "site-runtime ./security-txt (/.well-known/security.txt)",
+    // site-runtime ./worker's gateway answers /.well-known/security.txt on every site.
+    find: /site-runtime\/(security-txt|worker)["']/,
+    use: "site-runtime ./security-txt (/.well-known/security.txt), or ./worker's gateway",
   },
   // A registry entry (./sites) counts for both: staticSite({ site }) and site-runtime-headers build a static site's set
   // and page policy from it with buildSecurityHeaders and buildContentSecurityPolicy.
@@ -161,8 +164,8 @@ export const FEATURES = {
   },
   cspReport: {
     kinds: PUBLIC_OR_PRIVATE,
-    find: /site-runtime\/(csp-report|static-site)["']/,
-    use: "site-runtime ./csp-report receiveCspReport (./static-site staticSite receives them for a static site)",
+    find: /site-runtime\/(csp-report|static-site|worker)["']/,
+    use: "site-runtime ./csp-report receiveCspReport (./worker's gateway and ./static-site staticSite receive them)",
   },
   health: {
     kinds: ["site", "private"],
