@@ -44,11 +44,11 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.44.0 (DrDustinEdwards/prelum)
+## Prelum 0.45.0 (DrDustinEdwards/prelum)
 
-- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`
+- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `SLUG_PATTERN`, `isSlug`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`
 - `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`
-- `./slug`: `slugify`
+- `./slug`: `slugify`, `SLUG_PATTERN`, `isSlug`
 - `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`
 - `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`
 - `./lastmod`: `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`
