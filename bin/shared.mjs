@@ -23,7 +23,8 @@
 //              workflow-audit and dependencies everywhere, worker-size and worker-deploy for an app with a wrangler
 //              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package,
 //              conformance where an MCP server is (a source file importing site-runtime ./mcp-server or ./mcp-login),
-//              scorecard in a public repository;
+//              scorecard in a public repository, and devkit-css-vars (pr.yml's css-vars, with a .css-vars.json)
+//              in a repository with stylesheets;
 //   fakes      a test fake of its own where devkit has one: a GitHub API fake, an Access key pair and key set, a fetch
 //              that refuses every URL, a list of DELETE FROMs (./github, ./access, ./network, ./d1);
 //   ai         a model call or AI prompt that skips the shared pieces (area 11): Anthropic called outside site-runtime
@@ -1430,6 +1431,23 @@ export function checkWorkflows(tree, config, repo = {}) {
       message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .shared.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
     });
   }
+  // A stylesheet's var(--x) that nothing declares resolves to nothing, and only devkit-css-vars notices (second shared-code
+  // audit, 2026-11-11: Foxing's --fx-shadow-md, 14 uses). pr.yml runs it when the repository has a .css-vars.json.
+  const sheets = tree.files.some((f) => f.endsWith(".css") && !NOT_SOURCE.test(f));
+  if (sheets && !excused(config, "waive", "workflow:css-vars")) {
+    const runsIt =
+      covered.has("css-vars") ||
+      reaches(text, "devkit-css-vars") ||
+      (repo.self === "devkit" && reaches(text, "bin/css-vars.mjs"));
+    const configured = tree.files.includes(".css-vars.json");
+    if (!configured || !runsIt)
+      found.push({
+        check: "workflows",
+        file: configured ? ".github/workflows" : ".css-vars.json",
+        failsFrom: CSS_VARS_FAILS_FROM,
+        message: `a repository with stylesheets runs devkit-css-vars: ${configured ? "turn on pr.yml's css-vars input (it is off here, or no workflow calls pr.yml)" : 'add .css-vars.json ({ "dirs": [...], "declared_in": ["node_modules/capsomer"] }, see bin/css-vars.mjs), which pr.yml reads'}, or say why in .shared.json "waive" "workflow:css-vars"`,
+      });
+  }
   // A separate caller that still runs on pull requests beside pr.yml runs the same check twice, a runner each time.
   for (const { file, text: body } of workflowFiles) {
     if (!/^\s*(pull_request|merge_group)\s*:/m.test(onBlock(body))) continue;
@@ -1452,7 +1470,17 @@ export function checkWorkflows(tree, config, repo = {}) {
 }
 
 /** The checks pr.yml runs in its one job; a call of it counts as each one its inputs leave on. */
-const PR_CHECKS = ["checks", "review", "dependencies", "workflow-audit", "no-bloat", "worker-size"];
+const PR_CHECKS = [
+  "checks",
+  "review",
+  "dependencies",
+  "workflow-audit",
+  "no-bloat",
+  "worker-size",
+  "css-vars",
+];
+/** The release from which a repository with stylesheets and no css-vars run fails; a warning before it. */
+const CSS_VARS_FAILS_FROM = "0.34.0";
 
 /** A workflow's `on:` block, or its whole text when it has none at the top level. @param {string} body */
 function onBlock(body) {
@@ -1462,7 +1490,7 @@ function onBlock(body) {
 
 /**
  * The checks the repository's calls of pr.yml cover, read from each call's `with:` inputs (a boolean input set to false
- * turns its check off; `node: false` turns off no-bloat and worker-size, which run from the install).
+ * turns its check off; `node: false` turns off no-bloat, worker-size and css-vars, which run from the install).
  * @param {{ file: string, text: string }[]} files @param {boolean} self devkit, which calls it by path
  * @returns {Set<string>}
  */
@@ -1479,7 +1507,7 @@ export function prCovers(files, self) {
     for (const name of PR_CHECKS) {
       const input = name === "checks" ? null : name;
       if (input && off(input)) continue;
-      if ((name === "no-bloat" || name === "worker-size") && off("node")) continue;
+      if (["no-bloat", "worker-size", "css-vars"].includes(name) && off("node")) continue;
       covered.add(name);
     }
   }
