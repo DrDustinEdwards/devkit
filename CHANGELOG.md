@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.32.0 (2026-11-11)
+
+- New bin `devkit-css-vars`: fails on a `var(--x)` without a fallback that nothing declares (config `.css-vars.json`: `dirs`, `declared_in`, `external`). Foxing used `--fx-shadow-md` 14 times and declared it nowhere, so those shadows never drew; no check could see it (second shared-code audit, 2026-11-11).
+
 ## 0.31.0 (2026-11-11)
 
 - `devkit-shared` features: site-runtime `./worker` counts for security.txt and the CSP report receiver (its gateway answers both on every site), Prelum `standardFiles({ ai })` for ai.txt and site-api `standardSiteApi({ indexNow })` for IndexNow, so a site on the one Worker passes.
