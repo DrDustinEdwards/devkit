@@ -82,7 +82,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.117.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.120.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -110,7 +110,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./sign-in`: `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
 - `./sign-in-client`: `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`
 - `./vitals-client`: `inpEntry`, `reportInp`
-- `./trusted-types`: `REACT_SCRIPT_STUB`, `TRUSTED_TYPES_NAMES`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`
+- `./trusted-types`: `REACT_SCRIPT_STUB`, `DOCUMENT_PARSE_SINK`, `allowDocumentParsing`, `TRUSTED_TYPES_NAMES`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`
 - `./page-client`: `startPage`
 - `./apple-secret`: `appleClientSecret`
 - `./email`: `sendEmail`, `redact`
@@ -153,6 +153,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./d1`: `inList`, `notInList`, `D1_MAX_BOUND_PARAMS`, `IN_LIST_CHUNK`, `chunked`, `inChunks`, `rowsPerInsert`, `escapeLike`, `likeContains`, `likeStartsWith`, `encodeCursor`, `decodeCursor`, `olderThan`
 - `./csv`: `CSV_CONTENT_TYPE`, `guardFormula`, `csvCell`, `csvRow`, `toCsv`, `recordsCsv`, `parseCsv`, `csvResponse`
 - `./csv-client`: `downloadCsv`
+- `./worker`: `PREVIEW_TOKEN`, `SECURITY_TXT_PATH`, `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
 ## site-api 0.37.0 (DrDustinEdwards/site-api)
@@ -190,7 +191,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.91.0 (DrDustinEdwards/capsomer)
+## Capsomer 0.91.1 (DrDustinEdwards/capsomer)
 
 - `./fonts/*`: `fonts/admin-shell`, `fonts/anchor-bar`, `fonts/approval-sheet`, `fonts/attention-list`, `fonts/authorship`, `fonts/avatar`, `fonts/banner`, `fonts/breadcrumb`, `fonts/bulk-bar`, `fonts/button`, `fonts/catalog`, `fonts/chart-frame`, `fonts/chips`, `fonts/combobox`, `fonts/command-menu`, `fonts/confirm-dialog`, `fonts/content`, `fonts/date-picker`, `fonts/detail-panel`, `fonts/dialog`, `fonts/disclosure`, `fonts/draft-compare`, `fonts/drop-zone`, `fonts/email`, `fonts/empty`, `fonts/error-page`, `fonts/error-summary`, `fonts/family-footer`, `fonts/feed`, `fonts/field`, `fonts/flag-list`, `fonts/history-list`, `fonts/kit-form`, `fonts/lightbox`, `fonts/link`, `fonts/listbox`, `fonts/manual`, `fonts/markdown-editor`, `fonts/media`, `fonts/media-library`, `fonts/mentions-list`, `fonts/menu`, `fonts/message`, `fonts/meter`, `fonts/moderation-queue`, `fonts/page-head`, `fonts/pagination`, `fonts/panel`, `fonts/people-roles`, `fonts/permission-matrix`, `fonts/picture`, `fonts/player`, `fonts/popover`, `fonts/posts-list`, `fonts/prose-blocks`, `fonts/publish-gate`, `fonts/rich-text-field`, `fonts/row-list`, `fonts/segmented`, `fonts/select`, `fonts/session-row`, `fonts/share-preview`, `fonts/shell`, `fonts/shortcuts`, `fonts/site-header`, `fonts/skeleton`, `fonts/sortable-list`, `fonts/stat-tile`, `fonts/status`, `fonts/step-indicator`, `fonts/summary-list`, `fonts/switch`, `fonts/switch-reason`, `fonts/system-map`, `fonts/table`, `fonts/tabs`, `fonts/tag-group`, `fonts/theme-switch`, `fonts/time`, `fonts/toolbar`, `fonts/tooltip`, `fonts/tree`, `fonts/trusted-html`, `fonts/uptime-strip`, `fonts/usage-meter`
 - `./palette`: `themes`, `files`, `check`, `report`, `FAMILIES`, `oklch`, `contrast`, `apca`, `LEVELS`, `strengthen`, `seedLch`, `lightStep9`, `darkStep9`, `scale`, `CHART_ORDER`, `ELEVATION_ORDER`, `fitNeutrals`, `familyTheme`, `FAMILY_ORDER`, `pairs`, `apart`, `failures`, `moreLines`, `UI_STACK`, `MONO_STACK`, `renderFamily`, `renderScoped`, `renderMarks`, `enarratioTheme`, `renderEnarratioTheme`, `capsomerTheme`, `capsomerMoreTheme`, `CHART_PAIR_TOKENS`, `renderEnarratioCss`, `renderEmailColours`, `renderEmailColors`, `emailColors`
@@ -213,7 +214,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/bulk-bar`: `countText`, `plural`, `fillCount`, `previewItems`, `orderOutcomes`, `outcomeSummary`, `performBulk`, `bindBulk`, `listOf`, `boxesOf`, `labelOf`, `selectedItems`, `itemsInView`, `setAllInView`, `showOutcomes`, `refresh`, `clearSelection`, `invoke`, `attachBulkBar`, `enhance`
 - `./behavior/button`: `morphFrom`, `morphLabel`
 - `./behavior/catalog`: `formHref`, `attachCatalog`, `enhance`
-- `./behavior/chart-frame`: `frameHtml`, `noDataHtml`
+- `./behavior/chart-frame`: `frameHtml`, `noDataHtml`, `chartViewBox`
 - `./behavior/chips`: `EVENT`, `valueOf`, `pressedValues`, `syncClear`, `ensureChips`, `setPressed`, `readParam`, `writeParam`, `setCount`, `toggle`, `clearAll`, `enhance`
 - `./behavior/command-menu`: `STOP_GROUP`, `STOP_HINTS`, `stopCommand`, `matchesQuery`, `filterCommands`, `step`, `groupCommands`, `emptyText`, `SEARCHING`, `buildMenu`, `attach`, `openCommandMenu`, `createCommandMenu`, `enhance`
 - `./behavior/confirm-dialog`: `wordMatches`, `wordPattern`, `reasonOf`, `setBusy`, `showError`, `showReasonError`, `clearError`, `bindPerform`, `openConfirm`, `wasPerformed`, `wire`, `buildConfirm`, `confirm`, `confirmSubmit`, `enhance`, `errorText`, `isBackdropClick`, `isBusy`, `rememberOpener`, `returnFocus`, `uid`
