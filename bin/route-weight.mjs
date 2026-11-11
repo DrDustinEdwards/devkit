@@ -76,6 +76,7 @@ export function parseManifest(/** @type {string} */ text) {
  * @returns {Row[]}
  */
 export function routeWeights(manifest, read, gzip, linkedCss = false, siteScript) {
+  const bare = (/** @type {string} */ url) => url.replace(/[?#].*$/, "");
   /** @type {Map<string, { bytes: Buffer, gzip: number }>} */
   const files = new Map();
   const file = (/** @type {string} */ url) => {
@@ -106,11 +107,12 @@ export function routeWeights(manifest, read, gzip, linkedCss = false, siteScript
       const js = new Set(
         hydrates ? [entry.module, ...(entry.imports ?? [])] : [/** @type {string} */ (siteScript)],
       );
-      const css = new Set(entry.css ?? []);
+      // React Router writes a stylesheet that a dynamic import also reaches as `/assets/x.css#`: the same file.
+      const css = new Set((entry.css ?? []).map(bare));
       for (const step of chain) {
         if (hydrates && step.module) js.add(step.module);
         if (hydrates) for (const url of step.imports ?? []) js.add(url);
-        for (const url of step.css ?? []) css.add(url);
+        for (const url of step.css ?? []) css.add(bare(url));
       }
       if (linkedCss)
         for (const url of js)

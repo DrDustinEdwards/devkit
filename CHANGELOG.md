@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.35.1 (2026-11-11)
+
+- `devkit-route-weight`: a manifest stylesheet named with React Router's trailing `#` (`/assets/x.css#`, a stylesheet a dynamic import also reaches) is the same file, counted once; before, the gate stopped with "the manifest names … which is not in build/client" (found moving Carrel onto Capsomer 0.93.0).
+
 ## 0.35.0 (2026-11-11)
 
 - `release.yml`: a run releases every untagged version bump since the tenth newest tag, oldest first, each tagged on its own commit with its own CHANGELOG section and tarball (with `build: true`, each built on its own commit). Before, it tagged only the commit it started on. A caller's concurrency group keeps one waiting run and cancels an older pending one when a newer arrives (GitHub's concurrency docs, whatever `cancel-in-progress` says), so two bumps that merged close together left one without a tag: site-runtime's v0.121.0 and v0.122.0 were never tagged on their own commits. A tag that exists is never moved or replaced. **Behavior change:** the first run after this one backfills any bump that is newer than the newest tag and untagged.
