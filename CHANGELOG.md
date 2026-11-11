@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.28.0 (2026-11-11)
 
 - `docs/browser-support.md`: the network's browser support policy in Baseline terms (Widely available freely; Newly available with a graceful degrade or a small fallback; Limited availability only feature-detected, never for content or a core task; no polyfills).
+- New bins that sites ran from local `scripts/` copies (item 51 of the 2026-11-11 shared-code audit): `devkit-size-budget` (capsid's client bundle budget), `devkit-tokens` and `devkit-gates` (foxhound's token gate and gate-count floor), `devkit-db-migrate` (foxhound's guarded migration wrapper) and `devkit-fetch-fonts` (germomics's font self-hosting). Each reads a small JSON config in the repository; a site deletes its copy and calls the bin.
 - `devkit-shared` pins: a lock check now follows an npm workspace member to the root lock. Before, it read only a `package-lock.json` beside the manifest, so a pin in `apps/web/package.json` was never compared with the root lock's `apps/web/node_modules/<name>` (or hoisted `node_modules/<name>`) entry, and foxing shipped capsomer 0.83.1 under a v0.87.0 pin. **New failure** for a workspace whose lock is stale.
 - `pr.yml`: the automatic reviewer runs in its own job (`Reviewer`), the only job with `id-token: write` and `checks: write`. Before, `Repo checks` held both while it installed and built the caller's code, so a dependency lifecycle script could mint an OIDC token (GitHub's OIDC hardening guide and zizmor's excessive-permissions audit say to grant it to the one job that needs it). The check name `checks / Repo checks` is unchanged. Cost: one more runner per same-repository pull request that is not a draft or Renovate's. The `review` action's `start` and `wait` modes are gone.
 - Renovate: a third-party GitHub Actions major, minor or patch release waits seven days (`minimumReleaseAge`, `matchManagers: ["github-actions"]`), as npm waits three. Network packages still arrive at once.
