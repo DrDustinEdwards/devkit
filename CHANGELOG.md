@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.34.0 (2026-11-11)
+
+- `pr.yml` runs `devkit-css-vars` after the install in every repository with a `.css-vars.json` (devkit's own file at the caller's pin, so no devDependency bump is needed); `css-vars: false` or `node: false` turns it off, and the Result table lists it as CSS-variables.
+- `devkit-shared` workflows: a repository with `.css` files outside tests needs a `.css-vars.json` and `pr.yml`'s `css-vars` left on (or CI running `devkit-css-vars` itself), waived as `workflow:css-vars`. **New failure** from this release: add `.css-vars.json` when bumping to it.
+
 ## 0.33.0 (2026-11-11)
 
 - `./node` and `./node/syntax`: the helpers dustinedwards.info's gates kept in `scripts/lib/` (`createTally`, `assertFloor`, `walkFiles`, `readDevVar`; the syntax-tree readers of `syntax.mjs` and `destructive-scan.mjs`), so a site's own gate imports them instead of keeping a copy (item 51 of the 2026-11-11 shared-code audit). `typescript` is an optional peer for `./node/syntax`.

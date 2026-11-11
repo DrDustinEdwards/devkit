@@ -820,6 +820,33 @@ test("PLANT: a pr.yml call counts as each pull request check its inputs leave on
   );
 });
 
+test("PLANT: a repository with stylesheets needs a .css-vars.json and pr.yml's css-vars left on", () => {
+  const pr = (/** @type {string} */ inputs) =>
+    `on:\n  pull_request:\njobs:\n  checks:\n    uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${SHA_V2}\n    with:\n${inputs}`;
+  const css = (/** @type {Record<string, string>} */ files, config = {}) =>
+    checkWorkflows(tree({ "app/app.css": "a { color: red }", ...files }), {
+      apps: { ".": "site" },
+      ...config,
+    })
+      .filter((f) => f.message.includes("css-vars"))
+      .map((f) => `${f.file} ${isWarning(f, "0.33.0")} ${isWarning(f, "0.34.0")}`);
+  const on = { ".github/workflows/checks.yml": pr("      review: true\n") };
+  assert.deepEqual(css(on), [".css-vars.json true false"]);
+  assert.deepEqual(css({ ...on, ".css-vars.json": "{}" }), []);
+  assert.deepEqual(
+    css({ ".github/workflows/checks.yml": pr("      css-vars: false\n"), ".css-vars.json": "{}" }),
+    [".github/workflows true false"],
+  );
+  assert.deepEqual(css(on, { waive: { "workflow:css-vars": "no custom properties" } }), []);
+  // A stylesheet under a test fixture is no stylesheet of the repository's.
+  assert.deepEqual(
+    checkWorkflows(tree({ "test/fixtures/a.css": "" }), { apps: { ".": "site" } }).filter((f) =>
+      f.message.includes("css-vars"),
+    ),
+    [],
+  );
+});
+
 test("PLANT: a model call or prompt that skips the shared pieces is flagged with its checklist item; the shared way passes", () => {
   const bad = {
     "app/sdk.ts":
