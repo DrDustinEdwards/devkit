@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.33.0 (2026-11-11)
+
+- `./node` and `./node/syntax`: the helpers dustinedwards.info's gates kept in `scripts/lib/` (`createTally`, `assertFloor`, `walkFiles`, `readDevVar`; the syntax-tree readers of `syntax.mjs` and `destructive-scan.mjs`), so a site's own gate imports them instead of keeping a copy (item 51 of the 2026-11-11 shared-code audit). `typescript` is an optional peer for `./node/syntax`.
+- `devkit-secrets` (from dustinedwards.info's `check:secrets`): the Env declaration, the server-boundary read scan, the git-ignore proof and the tracked-file credential scan, from `.secrets.json`. New: built-in shapes for Anthropic, Stripe live and webhook, GitHub, AWS and Sentry keys and private keys, on every site that runs it.
+- `devkit-destructive` (from dustinedwards.info's `check:destructive`): route intents, machine-API tools and storage bindings, from `.destructive.json`. The backups bucket rule (`d1-dump`) names d1-dump's functions once, for every site.
+
 ## 0.30.0 (2026-11-11)
 
 - `worker-deploy.yml`: the live gate checks devkit out at the caller's pin (`job.workflow_sha`) and sets `$DEVKIT_DIR` for the verify command, so a caller runs `node "$DEVKIT_DIR/bin/verify-deploy.mjs" <origin> ...` with no install (the gate installs nothing on purpose). Callers replace their inline `curl` home-page checks and local verify scripts with it.

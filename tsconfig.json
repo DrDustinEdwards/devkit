@@ -17,6 +17,7 @@
     "scripts/*.mjs",
     "testing/*.mjs",
     "lint/*.mjs",
+    "node/*.mjs",
     "stryker/*.mjs",
     "vite/*.mjs",
     "drill/*.mjs",
