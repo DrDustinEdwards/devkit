@@ -47,6 +47,8 @@ const MANIFEST = {
       parentId: "routes/admin",
       path: "users",
       module: "/assets/admin.users.js",
+      // React Router's name for a stylesheet a dynamic import also reaches: the same file, counted once.
+      css: ["/assets/root.css#"],
       hasDefaultExport: true,
     },
     "routes/feed": {
@@ -61,6 +63,7 @@ const MANIFEST = {
 
 const read = (/** @type {string} */ url) => {
   const file = FILES[/** @type {keyof typeof FILES} */ (url)];
+  if (file === undefined) throw new Error(`the manifest names ${url}, which is not in the build.`);
   return Buffer.from(typeof file === "string" ? file : "x".repeat(file));
 };
 const size = (/** @type {Buffer} */ bytes) => bytes.length;

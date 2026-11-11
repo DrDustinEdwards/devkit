@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.34.1 (2026-11-11)
+
+- `devkit-route-weight`: a manifest stylesheet named with React Router's trailing `#` (`/assets/x.css#`, a stylesheet a dynamic import also reaches) is the same file, counted once; before, the gate stopped with "the manifest names … which is not in build/client" (found moving Carrel onto Capsomer 0.93.0).
+
 ## 0.34.0 (2026-11-11)
 
 - `pr.yml` runs `devkit-css-vars` after the install in every repository with a `.css-vars.json` (devkit's own file at the caller's pin, so no devDependency bump is needed); `css-vars: false` or `node: false` turns it off, and the Result table lists it as CSS-variables.
