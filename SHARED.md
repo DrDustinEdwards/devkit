@@ -44,7 +44,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.45.0 (DrDustinEdwards/prelum)
+## Prelum 0.46.0 (DrDustinEdwards/prelum)
 
 - `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `SLUG_PATTERN`, `isSlug`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`
 - `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`
@@ -82,13 +82,14 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.123.1 (DrDustinEdwards/site-runtime)
+## site-runtime 0.124.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
 - `./csp`: `CSP_REPORT_PATH`, `CSP_REPORT_GROUP`, `generateNonce`, `integrityHash`, `scriptHash`, `buildPolicy`, `buildContentSecurityPolicy`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `reportingEndpoints`, `broadSource`, `buildStagedPolicy`, `integrityPolicy`, `renewNonce`
 - `./page-headers`: `pageSecurity`
 - `./context`: `cloudflareContext`, `cspNonceContext`, `serverTimingContext`, `getEnv`, `getExecutionContext`, `getNonce`, `getTimings`
+- `./kv-cache`: `KV_MIN_TTL`, `kvCached`
 - `./csp-report`: `MAX_REPORT_BYTES`, `MAX_REPORTS`, `trimReportUrl`, `reportBodies`, `summarizeReport`, `summarizeVital`, `receiveCspReport`, `rateLimitAllow`
 - `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`
 - `./html`: `escapeHtml`
@@ -140,7 +141,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./draft-gate`: `draftGate`, `draftRobots`
 - `./origin`: `ORIGIN_REFUSAL`, `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`
 - `./url`: `redirectStatus`, `isSameOriginPath`, `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
-- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`, `handleServerError`, `errorMessage`, `handleError`
+- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`, `PREVIEW_TOKEN`, `tokenPattern`, `serverErrorHandler`, `handleServerError`, `errorMessage`, `handleError`
 - `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `notFoundReport`, `REDIRECTS_SQL`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`
 - `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `cronFindings`, `cronCheck`, `cronSchedule`
 - `./signed-in-crawl`: `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`, `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`
@@ -156,7 +157,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./d1`: `inList`, `notInList`, `D1_MAX_BOUND_PARAMS`, `IN_LIST_CHUNK`, `chunked`, `inChunks`, `rowsPerInsert`, `escapeLike`, `likeContains`, `likeStartsWith`, `encodeCursor`, `decodeCursor`, `olderThan`
 - `./csv`: `CSV_CONTENT_TYPE`, `guardFormula`, `csvCell`, `csvRow`, `toCsv`, `recordsCsv`, `parseCsv`, `csvResponse`
 - `./csv-client`: `downloadCsv`
-- `./worker`: `PREVIEW_TOKEN`, `SECURITY_TXT_PATH`, `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`
+- `./worker`: `SECURITY_TXT_PATH`, `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`, `PREVIEW_TOKEN`, `tokenPattern`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
 ## site-api 0.37.0 (DrDustinEdwards/site-api)
@@ -177,7 +178,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`, `createSiteBackup`
 - bins: `d1-dump`
 
-## devkit 0.35.1 (DrDustinEdwards/devkit)
+## devkit 0.35.2 (DrDustinEdwards/devkit)
 
 - `./node`: `assertFloor`, `createTally`, `walkFiles`, `readDevVar`
 - `./node/syntax`: `parseSource`, `propertyReads`, `interfaceMembers`, `findAction`, `intentBranches`, `objectConst`, `stringArrayConst`, `propertyValue`, `isLiteralString`, `bindingUses`, `ts`
