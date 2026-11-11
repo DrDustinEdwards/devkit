@@ -176,7 +176,7 @@ jobs:
       # devkit's own files run on this Node; the caller's Node comes with its install, below.
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
-          node-version: 24.22.2
+          node-version: 26.13.0
           package-manager-cache: false
 
       - name: Footer
@@ -335,7 +335,7 @@ jobs:
 
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
-          node-version: 24.22.2
+          node-version: 26.13.0
           package-manager-cache: false
 
       - name: Review the pull request
