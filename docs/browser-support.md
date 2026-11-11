@@ -5,11 +5,11 @@ project's stated policy in place of its default, "Interpreting Browser Support &
 [Baseline](https://web.dev/baseline) terms, the web platform's own status for a feature across the core browsers:
 Chrome and Edge, Firefox and Safari, on desktop and on phones.
 
-| Baseline status | How we use it |
-| --- | --- |
-| **Widely available** (in every core browser for 30 months or more) | Freely, with no fallback. |
-| **Newly available** (in every core browser, for less than 30 months) | Where it is the right tool, with a graceful degrade or a small fallback of our own for the browsers a few versions behind. |
-| **Limited availability** (missing from at least one core browser) | Only as progressive enhancement: feature-detected (`@supports`, `CSS.supports`, `"x" in obj`), and never required for content or a core task, which must work without it. |
+| Baseline status                                                      | How we use it                                                                                                                                                             |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Widely available** (in every core browser for 30 months or more)   | Freely, with no fallback.                                                                                                                                                 |
+| **Newly available** (in every core browser, for less than 30 months) | Where it is the right tool, with a graceful degrade or a small fallback of our own for the browsers a few versions behind.                                                |
+| **Limited availability** (missing from at least one core browser)    | Only as progressive enhancement: feature-detected (`@supports`, `CSS.supports`, `"x" in obj`), and never required for content or a core task, which must work without it. |
 
 - **No polyfills.** A Newly available feature that a core task needs gets a short fallback of our own or a different
   design, never a library that rebuilds the feature.
