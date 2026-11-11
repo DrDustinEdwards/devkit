@@ -1,10 +1,14 @@
 # Changelog
 
-## 0.32.0 (2026-11-11)
+## 0.33.0 (2026-11-11)
 
 - `./node` and `./node/syntax`: the helpers dustinedwards.info's gates kept in `scripts/lib/` (`createTally`, `assertFloor`, `walkFiles`, `readDevVar`; the syntax-tree readers of `syntax.mjs` and `destructive-scan.mjs`), so a site's own gate imports them instead of keeping a copy (item 51 of the 2026-11-11 shared-code audit). `typescript` is an optional peer for `./node/syntax`.
 - `devkit-secrets` (from dustinedwards.info's `check:secrets`): the Env declaration, the server-boundary read scan, the git-ignore proof and the tracked-file credential scan, from `.secrets.json`. New: built-in shapes for Anthropic, Stripe live and webhook, GitHub, AWS and Sentry keys and private keys, on every site that runs it.
 - `devkit-destructive` (from dustinedwards.info's `check:destructive`): route intents, machine-API tools and storage bindings, from `.destructive.json`. The backups bucket rule (`d1-dump`) names d1-dump's functions once, for every site.
+
+## 0.32.0 (2026-11-11)
+
+- New bin `devkit-css-vars`: fails on a `var(--x)` without a fallback that nothing declares (config `.css-vars.json`: `dirs`, `declared_in`, `external`). Foxing used `--fx-shadow-md` 14 times and declared it nowhere, so those shadows never drew; no check could see it (second shared-code audit, 2026-11-11).
 
 ## 0.31.0 (2026-11-11)
 
