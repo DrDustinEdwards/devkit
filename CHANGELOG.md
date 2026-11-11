@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.36.0 (2026-11-11)
+
+- New export `./migration-scan` (`handOnly`, `contractions`, `statements`): the reader `devkit-migrations` uses, moved out of bin/migrations.mjs into a module with no node imports so a Worker can import it. `devkit-migrations` behaves as before. Capsid's gate policy now classifies a migration through `handOnly` and `statements` instead of its own copy, so the deploy check and the pre-approval cannot disagree about one file.
+
 ## 0.35.2 (2026-11-11)
 
 - `devkit-no-bloat`: the npx fallback runs `knip@6.45.1`, not 6.44.0, which reported `cloudflare:workers` imports as an unlisted dependency `cloudflare` (site-runtime's baseline of 0 became 3). A repository with the same count can drop a `tools.knip` override.

@@ -1,6 +1,6 @@
 {
   "name": "@dustinedwards/devkit",
-  "version": "0.35.2",
+  "version": "0.36.0",
   "private": true,
   "description": "Shared tooling for the Dustin Edwards repositories. As a package: the shared test helpers and the shared checks, installed by git tag. The Renovate policy and the reusable workflows in this repository are not part of the package.",
   "license": "MIT",
@@ -89,6 +89,10 @@
     "./stryker": {
       "types": "./stryker/chunked.d.mts",
       "default": "./stryker/chunked.mjs"
+    },
+    "./migration-scan": {
+      "types": "./bin/migration-scan.d.mts",
+      "default": "./bin/migration-scan.mjs"
     }
   },
   "scripts": {
