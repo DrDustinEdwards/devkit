@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.35.2 (2026-11-11)
+
+- `devkit-no-bloat`: the npx fallback runs `knip@6.45.1`, not 6.44.0, which reported `cloudflare:workers` imports as an unlisted dependency `cloudflare` (site-runtime's baseline of 0 became 3). A repository with the same count can drop a `tools.knip` override.
+
 ## 0.35.1 (2026-11-11)
 
 - `devkit-route-weight`: a manifest stylesheet named with React Router's trailing `#` (`/assets/x.css#`, a stylesheet a dynamic import also reaches) is the same file, counted once; before, the gate stopped with "the manifest names … which is not in build/client" (found moving Carrel onto Capsomer 0.93.0).
