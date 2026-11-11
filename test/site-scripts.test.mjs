@@ -2,7 +2,8 @@
 
 import assert from "node:assert/strict";
 import { randomBytes } from "node:crypto";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
+import { createServer } from "node:http";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -12,6 +13,7 @@ import { fileURLToPath } from "node:url";
 import { plan } from "../bin/db-migrate.mjs";
 import { parseFaces } from "../bin/fetch-fonts.mjs";
 import { countGates } from "../bin/gates.mjs";
+import { testsWithoutAssertions } from "../bin/test-assertions.mjs";
 import { scanContent } from "../bin/tokens.mjs";
 
 const bin = (/** @type {string} */ name) =>
@@ -164,4 +166,82 @@ test("size-budget: passes within the limits and fails over one, on a missing bui
   assert.equal(run("size-budget", [], build(10)).status, 1);
   const { "build/client/assets/home.js": _gone, ...missing } = build(10);
   assert.equal(run("size-budget", [], { ".size-budget.json": cfg(5), ...missing }).status, 1);
+});
+
+test("test-assertions: flags a test that asserts nothing, accepts every assertion shape, holds the floor", () => {
+  const names = (/** @type {string} */ s) => testsWithoutAssertions(s).map((f) => f.name);
+  assert.deepEqual(names(`test("bare", () => { run(1); });`), ["bare"]);
+  assert.deepEqual(names(`test("a", () => { assert.equal(run(1), 2); });`), []);
+  assert.deepEqual(names(`it("a", async () => { expect(await run(1)).toBe(2); });`), []);
+  assert.deepEqual(names(`test("a", async () => { await assert.rejects(run(1)); });`), []);
+  assert.deepEqual(
+    names(`function same(a) { assert.equal(a, 1); }\ntest("a", () => { same(run(1)); });`),
+    [],
+  );
+  assert.deepEqual(names(`function noop(a) { return a; }\ntest("a", () => { noop(run(1)); });`), [
+    "a",
+  ]);
+  assert.deepEqual(names(`test("a", () => { const x = "\\")"; const r = /[")]/; run(r, x); });`), [
+    "a",
+  ]);
+  assert.deepEqual(names('test("a", () => { const s = `${ {a: 1}.a }`; assert.ok(s); });'), []);
+  const files = (/** @type {string} */ body) => ({ "t/a.test.mjs": body });
+  const cfg = (/** @type {object} */ o) => JSON.stringify({ dirs: ["t"], ...o });
+  const bare = `test("x", () => { run(); });`;
+  assert.equal(
+    run("test-assertions", [], { ".test-assertions.json": cfg({}), ...files(bare) }).status,
+    1,
+  );
+  assert.equal(
+    run("test-assertions", [], { ".test-assertions.json": cfg({ enforce: false }), ...files(bare) })
+      .status,
+    0,
+  );
+  assert.equal(
+    run("test-assertions", [], {
+      ".test-assertions.json": cfg({ floor: 2 }),
+      ...files(`test("x", () => { assert.ok(1); });`),
+    }).status,
+    1,
+  );
+  assert.equal(
+    run("test-assertions", [], { ".test-assertions.json": cfg({}), "t/readme.md": "" }).status,
+    1,
+  );
+});
+
+test("verify-deploy: 0 on a served site, 1 on a refusal, 3 when it could not decide", async () => {
+  const server = createServer((req, res) => {
+    const path = (req.url ?? "").split("?")[0];
+    const routes = /** @type {Record<string, [number, string]>} */ ({
+      "/": [200, '<link href="/assets/app-1.css"><script src="/assets/app-1.js">'],
+      "/assets/app-1.css": [200, "a{}"],
+      "/assets/app-1.js": [200, ""],
+      "/broken": [500, "x"],
+      "/health-ok": [200, '{"status":"warn"}'],
+      "/health-fail": [200, '{"status":"fail"}'],
+      "/bare": [200, "<p>no assets</p>"],
+    });
+    const [code, body] = routes[path] ?? [404, ""];
+    res.writeHead(code).end(body);
+  });
+  await new Promise((r) => server.listen(0, "127.0.0.1", () => r(undefined)));
+  const origin = `http://127.0.0.1:${/** @type {import("node:net").AddressInfo} */ (server.address()).port}`;
+  const verify = (/** @type {string[]} */ args) =>
+    new Promise((resolve) => {
+      const child = spawn(process.execPath, [bin("verify-deploy"), ...args], { stdio: "ignore" });
+      child.on("exit", (code) => resolve(code));
+    });
+  try {
+    assert.equal(await verify([origin]), 0);
+    assert.equal(await verify([origin, "--page", "/", "--health", "/health-ok", "--assets"]), 0);
+    assert.equal(await verify([origin, "--page", "/broken"]), 1);
+    assert.equal(await verify([origin, "--health", "/health-fail"]), 1);
+    assert.equal(await verify([origin, "--page", "/bare", "--assets", "--attempts", "1"]), 3);
+    assert.equal(await verify(["not-an-origin"]), 2);
+  } finally {
+    server.closeAllConnections();
+    server.close();
+  }
+  assert.equal(await verify(["http://127.0.0.1:1"]), 3);
 });

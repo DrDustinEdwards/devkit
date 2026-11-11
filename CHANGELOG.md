@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.29.0 (2026-11-11)
+
+- `devkit-test-assertions` (from dustinedwards.info's `check:test-assertions` and foxhound's `report:assertions`) and `devkit-verify-deploy` (from dustinedwards.info's `verify-deploy.mjs`, foxhound's `verify-live.mjs` and the `curl` home-page check six workflows wrote inline). Both read their options from the command line or a small JSON config; a site deletes its copy and calls the bin.
+
 ## 0.28.0 (2026-11-11)
 
 - `docs/browser-support.md`: the network's browser support policy in Baseline terms (Widely available freely; Newly available with a graceful degrade or a small fallback; Limited availability only feature-detected, never for content or a core task; no polyfills).
