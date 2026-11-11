@@ -1,6 +1,6 @@
 // The no-bloat bin: counts read from the tools and the files, compared with the repository's baseline, failing only on
 // growth. The units run against a fake runner; the end-to-end cases run the bin itself in a scratch git repository whose
-// node_modules/.bin holds stand-ins for knip and jscpd, so nothing is downloaded.
+// node_modules/.bin holds stand-ins for knip, jscpd and the legacy scanner, so nothing is downloaded.
 
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
@@ -14,6 +14,7 @@ import {
   compare,
   countFiles,
   knipCounts,
+  legacyCounts,
   lineChanges,
   measure,
   npxArgs,
@@ -28,6 +29,8 @@ const BIN = fileURLToPath(new URL("../bin/no-bloat.mjs", import.meta.url));
 const KNIP = "Unused files (2)\nsrc/a.ts\nsrc/b.ts\nUnused exports (3)\nsrc/c.ts: x, y, z\n";
 
 /** A runner that answers knip with `knip` and writes a jscpd report with `clones` into the --output directory. */
+const LEGACY = JSON.stringify({ totalFindings: 1, guides: [{ guideId: "dark-mode", count: 1 }] });
+
 const fakeRun = ({ knip = KNIP, clones = 4, percentage = 1.234, sources = 9 } = {}) => {
   /** @type {Array<[string, string[]]>} */
   const calls = [];
@@ -35,6 +38,7 @@ const fakeRun = ({ knip = KNIP, clones = 4, percentage = 1.234, sources = 9 } = 
   const run = (name, args) => {
     calls.push([name, args]);
     if (name === "knip") return knip;
+    if (name === "modern-web-guidance") return LEGACY;
     const out = args[args.indexOf("--output") + 1];
     writeFileSync(
       join(out, "jscpd-report.json"),
@@ -58,7 +62,11 @@ test("a tool that is not installed is named to npx with --package, so an inherit
   ]);
 });
 
-test("knipCounts reads the compact report's headings, and refuses output it cannot read rather than pass it as clean", () => {
+test("knipCounts and legacyCounts read their tool's report, and refuse output they cannot read rather than pass it as clean", () => {
+  assert.deepEqual(legacyCounts(LEGACY), { "dark-mode": 1 });
+  assert.deepEqual(legacyCounts(JSON.stringify({ totalFindings: 0, guides: [] })), {});
+  assert.throws(() => legacyCounts(JSON.stringify({ totalFindings: 2, guides: [] })), /add to 0/);
+  assert.throws(() => legacyCounts("{}"), /no report/);
   assert.deepEqual(knipCounts(KNIP), { "Unused files": 2, "Unused exports": 3 });
   assert.deepEqual(knipCounts(""), {});
   assert.deepEqual(knipCounts("✂️  Excellent, Knip found no issues.\n"), {});
@@ -78,6 +86,7 @@ test("with no config: one knip run, jscpd on the root unless the repository has 
   assert.deepEqual(measure({}, bare.run, false).counts, {
     knip: { "Unused files": 2, "Unused exports": 3 },
     jscpd: { clones: 4, lines: 40, percentage: 1.23 },
+    legacy: { "dark-mode": 1 },
     tests: { files: 0, cases: 0 },
     comments: { lines: 0, code: 0, percentage: 0 },
   });
@@ -89,6 +98,7 @@ test("with no config: one knip run, jscpd on the root unless the repository has 
     bare.calls[1][1].filter((a) => !a.includes("jscpd-")),
     [".", "--reporters", "json", "--output", "--silent"],
   );
+  assert.deepEqual(bare.calls[2], ["modern-web-guidance", ["legacy-scan", ".", "--json"]]);
 
   const configured = fakeRun();
   measure({}, configured.run);
@@ -111,6 +121,7 @@ test("each knip run is labeled and passes its own arguments; jscpd's arguments c
     "knip (Worker)",
     "knip (dashboard)",
     "jscpd",
+    "legacy",
     "tests",
     "comments",
   ]);
@@ -118,10 +129,12 @@ test("each knip run is labeled and passes its own arguments; jscpd's arguments c
   assert.deepEqual(calls[2][1].slice(0, 3), ["app", "--min-lines", "8"]);
 });
 
-test("jscpd, tests and comments each turn off with false; jscpd that read no files could not run", () => {
+test("jscpd, legacy, tests and comments each turn off with false; jscpd that read no files could not run", () => {
   const { run, calls } = fakeRun();
   assert.deepEqual(
-    Object.keys(measure({ jscpd: false, tests: false, comments: false }, run).counts),
+    Object.keys(
+      measure({ jscpd: false, legacy: false, tests: false, comments: false }, run).counts,
+    ),
     ["knip"],
   );
   assert.equal(calls.length, 1);
@@ -135,9 +148,10 @@ test("jscpd, tests and comments each turn off with false; jscpd that read no fil
       throw new Error("gone");
     },
   };
-  assert.deepEqual(measure({ jscpd: false }, fakeRun().run, true, unreadable).warnings, [
-    "tests and comments could not be counted: gone",
-  ]);
+  assert.deepEqual(
+    measure({ jscpd: false, legacy: false }, fakeRun().run, true, unreadable).warnings,
+    ["tests and comments could not be counted: gone"],
+  );
 });
 
 test("what grew is an error; what shrank is a note to lower the baseline; a finding new to a known tool counts from zero", () => {
@@ -461,7 +475,7 @@ test("lineChanges sorts a diff's lines into code, tests, comments, docs and othe
   );
 });
 
-/** A scratch repository with stand-in knip and jscpd in node_modules/.bin. */
+/** A scratch repository with stand-in knip, jscpd and the legacy scanner in node_modules/.bin. */
 function scratch({ knip = KNIP, clones = 4, jscpdFails = false } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "no-bloat-"));
   git(dir, "init", "-q", "-b", "main");
@@ -478,8 +492,10 @@ function scratch({ knip = KNIP, clones = 4, jscpdFails = false } = {}) {
       ? "#!/bin/sh\necho 'jscpd: boom' >&2\nexit 3\n"
       : `#!/bin/sh\nwhile [ "$1" != "--output" ]; do shift; done\nprintf '{"statistics":{"total":{"clones":${clones},"duplicatedLines":30,"percentage":2.5,"sources":3}}}' > "$2/jscpd-report.json"\n`,
   );
+  writeFileSync(join(bin, "modern-web-guidance"), `#!/bin/sh\nprintf '%s' '${LEGACY}'\n`);
   chmodSync(join(bin, "knip"), 0o755);
   chmodSync(join(bin, "jscpd"), 0o755);
+  chmodSync(join(bin, "modern-web-guidance"), 0o755);
   return dir;
 }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// The no-bloat ratchet. Knip for unused files, exports and dependencies, jscpd for duplicated blocks, and a static count of
-// test files and test cases, each compared with the repository's own baseline. A count above its baseline fails the run
+// The no-bloat ratchet. Knip for unused files, exports and dependencies, jscpd for duplicated blocks, Chrome's legacy
+// scanner for old web platform patterns, and a static count of test files and test cases, each compared with the repository's own baseline. A count above its baseline fails the run
 // (exit 1, an ::error:: line per count); a count at or below it passes, and one that went down is named so the baseline can
 // be lowered to lock the gain in. Adding a test is a raise: `--write-baseline` in the same change, so the diff shows it. The
 // share of source lines that are comments is recorded too, and a rise of more than `tolerance` points (with more comment
@@ -20,15 +20,22 @@
 //   {
 //     "knip": [{ "label": "knip (Worker)" }, { "label": "knip (dashboard)", "args": ["--directory", "dashboard"] }],
 //     "jscpd": { "args": ["app", "workers", "--min-lines", "8"] },
+//     "legacy": { "args": ["app"] },
 //     "tests": { "files": ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"], "ignore": [] },
 //     "comments": { "files": ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"], "ignore": ["**/*.min.*", "**/worker-configuration.d.ts"],
 //                   "tolerance": 1, "fail": false },
-//     "tools": { "knip": "knip@6.44.0", "jscpd": "jscpd@4.3.0" },
+//     "tools": { "knip": "knip@6.44.0", "jscpd": "jscpd@4.3.0", "modern-web-guidance": "modern-web-guidance@1.0.0" },
 //     "baseline": { "measured_at": "036d615", "knip (Worker)": { "Unused exports": 12 }, "jscpd": { "clones": 23, "lines": 410,
-//       "percentage": 0.59 }, "tests": { "files": 40, "cases": 312 }, "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
+//       "percentage": 0.59 }, "legacy": { "dark-mode": 1 }, "tests": { "files": 40, "cases": 312 },
+//       "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
 //   }
 //
-// `"jscpd": false`, `"tests": false` or `"comments": false` turns one off. jscpd's clones and duplicated lines are gated; its
+// `"jscpd": false`, `"legacy": false`, `"tests": false` or `"comments": false` turns one off. `legacy` is Chrome's
+// Modern Web Guidance scanner (`modern-web-guidance legacy-scan`, github.com/GoogleChrome/modern-web-guidance): a static
+// match of about 35 legacy patterns (a dialog built by hand, `100vh`, Enter that ignores an IME, `resize: none`...), counted
+// per guide, its paths the repository root unless `args` names them. Docs, examples and tests are skipped, as the scanner
+// skips them. A match is a lead, not a verdict: the guide's rubric (`npx modern-web-guidance retrieve <guide>`) says when to
+// keep one, and one kept on purpose stays in the baseline. jscpd's clones and duplicated lines are gated; its
 // percentage is shown, not gated, since deleting code that is not duplicated raises it. Test cases are counted from the
 // source, never by running a runner: each `test(` or `it(` call (node:test, vitest, Playwright), with their modifiers
 // (`.only`, `.skip`, `.each(...)`...), outside comments and strings; `describe`, hooks and Playwright's runtime
@@ -52,7 +59,11 @@ import { join, posix, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { escapeAnnotation } from "./annotate.mjs";
-export const DEFAULT_TOOLS = { knip: "knip@6.44.0", jscpd: "jscpd@4.3.0" };
+export const DEFAULT_TOOLS = {
+  knip: "knip@6.44.0",
+  jscpd: "jscpd@4.3.0",
+  "modern-web-guidance": "modern-web-guidance@1.0.0",
+};
 const TESTS = ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const SOURCE = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"];
 const GENERATED = ["**/*.min.*", "**/worker-configuration.d.ts"];
@@ -62,13 +73,33 @@ const BUFFER = 64 * 1024 * 1024;
 /**
  * @typedef {{ label: string, args?: string[] }} KnipRun
  * @typedef {{ files?: string[], ignore?: string[] }} Files
- * @typedef {{ knip?: KnipRun[], jscpd?: { args?: string[] } | false, tests?: Files | false,
- *   comments?: Files & { tolerance?: number, fail?: boolean } | false, tools?: { knip?: string, jscpd?: string },
+ * @typedef {{ knip?: KnipRun[], jscpd?: { args?: string[] } | false, legacy?: { args?: string[] } | false,
+ *   tests?: Files | false, comments?: Files & { tolerance?: number, fail?: boolean } | false,
+ *   tools?: { knip?: string, jscpd?: string, "modern-web-guidance"?: string },
  *   baseline?: Record<string, unknown> & { measured_at?: string } }} Config
- * @typedef {(name: "knip" | "jscpd", args: string[]) => string} Runner
+ * @typedef {(name: "knip" | "jscpd" | "modern-web-guidance", args: string[]) => string} Runner
  * @typedef {{ list: () => string[], read: (path: string) => string }} Source
  * @typedef {Record<string, Record<string, number>>} Counts
  */
+
+/**
+ * The legacy scanner's JSON report as counts per guide, e.g. { "dark-mode": 1 }. Its total must match the guides' sum, so
+ * a report this reads wrongly fails rather than counting nothing.
+ */
+export function legacyCounts(/** @type {string} */ text) {
+  const report = JSON.parse(text);
+  if (!report || typeof report.totalFindings !== "number" || !Array.isArray(report.guides))
+    throw new Error(`legacy-scan printed no report this reads: ${text.trim().slice(0, 200)}`);
+  /** @type {Record<string, number>} */
+  const counts = {};
+  for (const guide of report.guides) counts[String(guide.guideId)] = Number(guide.count);
+  const sum = Object.values(counts).reduce((a, b) => a + b, 0);
+  if (sum !== report.totalFindings)
+    throw new Error(
+      `legacy-scan counted ${report.totalFindings} findings but its guides add to ${sum}`,
+    );
+  return counts;
+}
 
 /** Knip's compact report as counts per heading, e.g. { "Unused exports": 12 }. A clean run prints nothing. */
 export function knipCounts(/** @type {string} */ text) {
@@ -341,6 +372,16 @@ export function measure(
     }
   }
 
+  if (config.legacy !== false) {
+    try {
+      counts.legacy = legacyCounts(
+        run("modern-web-guidance", ["legacy-scan", ...(config.legacy?.args ?? ["."]), "--json"]),
+      );
+    } catch (error) {
+      warnings.push(`legacy-scan could not run: ${messageOf(error)}`);
+    }
+  }
+
   if (config.tests !== false || config.comments !== false) {
     try {
       Object.assign(counts, countFiles(config, source.list(), source.read));
@@ -390,7 +431,7 @@ export function compare(baseline, counts, config = {}) {
   };
 
   for (const [tool, now] of Object.entries(counts)) {
-    if (tool === "jscpd" || tool === "tests" || tool === "comments") continue;
+    if (tool === "jscpd" || tool === "tests" || tool === "comments" || tool === "legacy") continue;
     const was = before(tool);
     const keys = [...new Set([...Object.keys(was ?? {}), ...Object.keys(now)])];
     // A clean run is a row too, so the table shows the tool ran.
@@ -415,6 +456,20 @@ export function compare(baseline, counts, config = {}) {
       before("jscpd")?.percentage ?? null,
       counts.jscpd.percentage,
     ]);
+  }
+
+  if (counts.legacy) {
+    const was = before("legacy");
+    const keys = [...new Set([...Object.keys(was ?? {}), ...Object.keys(counts.legacy)])];
+    if (keys.length === 0) rows.push(["legacy", "findings", was ? 0 : null, 0]);
+    for (const key of keys)
+      gate(
+        "legacy",
+        key,
+        key,
+        `Run \`npx modern-web-guidance legacy-scan\` to see where, and \`npx modern-web-guidance retrieve ${key}\` for the fix.`,
+        true,
+      );
   }
 
   if (counts.tests) {
@@ -443,7 +498,7 @@ export function compare(baseline, counts, config = {}) {
   }
 
   const measured = new Set(["measured_at", ...knipRuns.map((r) => r.label)]);
-  for (const tool of ["jscpd", "tests", "comments"])
+  for (const tool of ["jscpd", "legacy", "tests", "comments"])
     if (config[/** @type {"jscpd"} */ (tool)] !== false) measured.add(tool);
   const stale = Object.keys(baseline)
     .filter((key) => !measured.has(key))
@@ -635,7 +690,7 @@ export function npxArgs(
 /** Runs a tool from the repository's node_modules/.bin when it is installed there, through npx at `spec` otherwise. */
 export function runnerIn(
   /** @type {string} */ root,
-  /** @type {{ knip: string, jscpd: string }} */ tools,
+  /** @type {{ knip: string, jscpd: string, "modern-web-guidance": string }} */ tools,
 ) {
   /** @type {Runner} */
   return (name, args) => {
