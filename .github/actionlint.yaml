@@ -2,7 +2,7 @@ paths:
   # job.workflow_sha is GitHub's documented commit of the workflow file that defines the job (Contexts reference, job
   # context); actionlint 1.7.12 does not know the job.workflow_* properties yet. Every shared workflow that reads devkit's
   # composite actions at the caller's pin uses it.
-  .github/workflows/{checks,review,pr,no-bloat,worker-size,dependencies,workflow-audit}.yml:
+  .github/workflows/{checks,review,pr,no-bloat,worker-size,worker-deploy,dependencies,workflow-audit}.yml:
     ignore:
       - 'property "workflow_sha" is not defined in object type \{check_run_id: number'
   # The red step's node -e script is in single quotes on purpose: its ${...} are JavaScript template literals.
