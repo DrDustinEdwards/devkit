@@ -76,8 +76,8 @@ export function parseManifest(/** @type {string} */ text) {
  * @returns {Row[]}
  */
 export function routeWeights(manifest, read, gzip, linkedCss = false, siteScript) {
-  /** @type {Map<string, { bytes: Buffer, gzip: number }>} */
   const bare = (/** @type {string} */ url) => url.replace(/[?#].*$/, "");
+  /** @type {Map<string, { bytes: Buffer, gzip: number }>} */
   const files = new Map();
   const file = (/** @type {string} */ url) => {
     if (!files.has(url)) {
