@@ -110,6 +110,8 @@ The limits. Cloudflare's rollback swaps the Worker's code and bindings only. It 
 | `preview`         | `false` | Upload a preview version for each pull request from this repository.                          |
 | `preview-build`   | none    | Run before the preview upload, with the Cloudflare secrets (a config rebuild, a build).       |
 
+Which browser features a site may use, and with what fallback, is [docs/browser-support.md](docs/browser-support.md): Baseline Widely available freely, Newly available with a small fallback, Limited availability only as feature-detected enhancement, no polyfills.
+
 When something breaks after a deploy, or anywhere else, the steps are in [docs/runbook.md](docs/runbook.md): site down, database down, bad deploy, stale backup and lost data, each site's RPO and RTO, and the incident record.
 
 The guard is inlined into the workflow so a caller's one pinned sha fixes both. After an edit to `scripts/rollback-guard.mjs`, run `node scripts/inline-rollback-guard.mjs`; the test fails while the two differ.
