@@ -44,25 +44,26 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.42.0 (DrDustinEdwards/prelum)
+## Prelum 0.43.0 (DrDustinEdwards/prelum)
 
-- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`
-- `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`
+- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `slugify`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`
+- `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`
 - `./slug`: `slugify`
-- `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`
-- `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`
+- `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`
+- `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`
 - `./lastmod`: `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`
-- `./sitemap`: `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`
+- `./sitemap`: `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`
 - `./accessibility`: `ACCESSIBILITY_PATH`, `ACCESSIBILITY_STANDARD`, `HAND_CHECK_LIMITATIONS`, `accessibilityStatement`
 - `./llms`: `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `llmsResponse`, `serveMarkdownCopies`
 - `./markdown-copy`: `htmlToMarkdown`, `markdownCopies`, `llmsHeaderOf`, `sitemapLocs`
 - `./markdown-files`: `writeMarkdownCopies`, `writeSitemapLastmod`
 - `./frontmatter`: `splitSource`, `joinSource`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`
-- `./head`: `headTags`, `articleDates`, `SHARE_CARD_SIZE`, `shareCard`, `absoluteUrl`, `headHtml`, `truncateForSerp`, `searchTitle`, `SERP_TITLE`, `SERP_DESCRIPTION`, `serpWidth`, `BREADCRUMB_MIN_ITEMS`, `defineHead`, `metaText`
+- `./head`: `headTags`, `articleDates`, `SHARE_CARD_SIZE`, `shareCard`, `absoluteUrl`, `headHtml`, `truncateForSerp`, `searchTitle`, `SERP_TITLE`, `SERP_DESCRIPTION`, `serpWidth`, `BREADCRUMB_MIN_ITEMS`, `defineHead`, `metaText`, `rootLoaderData`, `privateMeta`
 - `./schema`: `jsonLd`, `thing`, `graph`, `website`, `pageImage`, `imageObject`, `ARTICLE_IMAGE_MIN_PIXELS`, `ARTICLE_IMAGE_RATIOS`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `faqPage`
-- `./robots`: `robotsDocument`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `CONTENT_SIGNAL`, `TDM_RESERVATION_HEADERS`, `aiTxt`, `PLAIN_TEXT_CACHE_CONTROL`, `isPreviewRequest`, `plainTextResponse`, `robotsNotes`, `robotsResponse`, `aiTxtResponse`
+- `./robots`: `robotsDocument`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `CONTENT_SIGNAL`, `TDM_RESERVATION_HEADERS`, `aiTxt`, `PLAIN_TEXT_CACHE_CONTROL`, `isPreviewRequest`, `plainTextResponse`, `robotsNotes`, `robotsResponse`, `aiTxtResponse`, `verificationFileResponse`
+- `./files`: `standardFiles`
 - `./indexnow`: `submitIndexNow`, `keyFileResponse`, `recentSitemapUrls`
-- `./icons`: `ICONS`, `iconLinks`, `webManifest`, `icoFile`, `auditIcons`
+- `./icons`: `ICONS`, `iconLinks`, `webManifest`, `icoFile`, `auditIcons`, `webManifestResponse`
 - `./audit`: `auditPages`, `crawlSite`
 - `./search`: `ftsLiteral`, `toMatchExpression`, `fuse`, `RRF_K`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`
 - `./render`: `render`, `ContentError`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `DEFAULT_SCAN_LIMITS`, `RENDER_VERSION`, `isAllowedUrl`
@@ -81,10 +82,10 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.112.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.113.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
-- `./headers`: `buildSecurityHeaders`, `hostCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
+- `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
 - `./csp`: `CSP_REPORT_PATH`, `CSP_REPORT_GROUP`, `generateNonce`, `integrityHash`, `scriptHash`, `buildPolicy`, `buildContentSecurityPolicy`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `reportingEndpoints`, `broadSource`, `buildStagedPolicy`, `integrityPolicy`, `renewNonce`
 - `./page-headers`: `pageSecurity`
 - `./context`: `cloudflareContext`, `cspNonceContext`, `getEnv`, `getExecutionContext`, `getNonce`
@@ -102,8 +103,8 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./sri`: `writeIntegrity`, `subresourceIntegrity`
 - `./share-card`: `SHARE_CARD_WIDTH`, `SHARE_CARD_HEIGHT`, `SHARE_CARD_TYPE`, `cardText`, `renderShareCard`, `googleFont`, `SHARE_CARD_HEADERS`, `shareCardResponse`
 - `./maintenance`: `MAINTENANCE_RETRY_AFTER`, `maintenanceOn`, `maintenanceResponse`
-- `./security-txt`: `securityTxt`, `securityTxtResponse`
-- `./encoding`: `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `sha256Hex`
+- `./security-txt`: `SECURITY_CONTACT`, `SECURITY_TXT_EXPIRES`, `securityTxt`, `securityTxtResponse`
+- `./encoding`: `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `sha256Hex`, `hmacSha256Hex`, `fnv1a32`
 - `./signed-token`: `signToken`, `readSignedToken`
 - `./turnstile`: `TURNSTILE_ORIGIN`, `mountTurnstile`, `SITEVERIFY_URL`, `verifyTurnstile`
 - `./sign-in`: `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
@@ -136,12 +137,15 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./routine`: `routineId`, `routineConfig`, `fireRoutine`, `fireOnce`, `ROUTINE_FIRES_SQL`, `d1FireStore`
 - `./operator`: `MIN_TOKEN_LENGTH`, `OPERATOR_BODY_MAX`, `OPERATOR_RULES`, `OperatorError`, `operatorResponse`
 - `./origin`: `ORIGIN_REFUSAL`, `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`
-- `./url`: `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
-- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`, `handleServerError`, `handleError`
+- `./url`: `redirectStatus`, `isSameOriginPath`, `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
+- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`, `handleServerError`, `errorMessage`, `handleError`
 - `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `notFoundReport`, `REDIRECTS_SQL`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`
 - `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `cronFindings`, `cronCheck`, `cronSchedule`
 - `./signed-in-crawl`: `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`, `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`
 - `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `ADMIN_LIST_PATH`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`
+- `./nonce`: `NonceContext`, `useNonce`
+- `./react-entry`: `streamTimeout`, `reactEntry`, `handleError`
+- `./http`: `OUTBOUND_TIMEOUT_MS`, `clientIp`, `isWrite`, `textResponse`, `jsonResponse`, `timedFetch`, `fetchUntil`, `isWorkerPreview`, `publicOrigin`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
 ## site-api 0.36.0 (DrDustinEdwards/site-api)
