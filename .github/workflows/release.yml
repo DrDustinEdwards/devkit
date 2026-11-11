@@ -203,7 +203,7 @@ jobs:
         if: steps.publish.outputs.created == 'true'
         run: |
           mkdir -p "$RUNNER_TEMP/pack"
-          while IFS=$'\t' read -r -u 3 tag sha; do
+          while IFS=$'\t' read -r -u 3 _ sha; do
             git checkout -q --force "$sha"
             npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/pack" >/dev/null
           done 3< "$RUNNER_TEMP/releases.tsv"
@@ -219,7 +219,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          while IFS=$'\t' read -r -u 3 tag sha; do
+          while IFS=$'\t' read -r -u 3 tag _; do
             tarball="$(ls "$RUNNER_TEMP"/pack/*-"${tag#v}".tgz)"
             gh release upload "$tag" "$tarball" -R "$GITHUB_REPOSITORY"
           done 3< "$RUNNER_TEMP/releases.tsv"
