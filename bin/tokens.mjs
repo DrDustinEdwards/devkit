@@ -22,6 +22,7 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { escapeAnnotation } from "./annotate.mjs";
+import { readConfig } from "./site-config.mjs";
 
 const HEX_PATTERN = /#[0-9a-fA-F]{3,8}\b/g;
 const NUMERIC_ENTITY_PATTERN = /&#\d+;/g;
@@ -69,22 +70,12 @@ function walk(dir, skip, out = []) {
 }
 
 function main() {
-  const argv = process.argv.slice(2);
-  const ci = argv.indexOf("--config");
-  const configPath = resolve(ci >= 0 ? (argv[ci + 1] ?? "") : ".tokens.json");
+  const { config, path: configPath } = readConfig(process.argv.slice(2), ".tokens.json", "tokens");
   /** @param {string} m @returns {never} */
   const fail = (m) => {
     console.error(`::error::tokens: ${escapeAnnotation(m)}`);
     process.exit(1);
   };
-  if (!existsSync(configPath)) fail(`no config at ${configPath}`);
-  /** @type {{ dirs?: string[], hex_exempt?: string[], px_font_exempt?: string[], skip_dirs?: string[] }} */
-  let config;
-  try {
-    config = JSON.parse(readFileSync(configPath, "utf8"));
-  } catch (e) {
-    return fail(`${configPath} is not JSON: ${e instanceof Error ? e.message : String(e)}`);
-  }
   if (!Array.isArray(config.dirs) || config.dirs.length === 0)
     fail(`${configPath} needs a non-empty "dirs" list`);
   const root = process.cwd();

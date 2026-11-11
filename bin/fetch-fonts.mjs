@@ -17,9 +17,11 @@
 // size-matched fallback, so text never moves once drawn). Each file is named `<family-slug>-<subset>.woff2`; a variable font
 // is one file per family and subset, which covers every weight.
 
-import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { mkdirSync, realpathSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { pathToFileURL } from "node:url";
+
+import { readConfig } from "./site-config.mjs";
 
 // A modern desktop UA makes Google return woff2 with per-subset unicode-range blocks.
 const UA =
@@ -54,19 +56,7 @@ export function parseFaces(css, keep) {
 }
 
 async function main() {
-  const argv = process.argv.slice(2);
-  const ci = argv.indexOf("--config");
-  const configPath = resolve(ci >= 0 ? (argv[ci + 1] ?? "") : ".fonts.json");
-  /** @type {Record<string, any>} */
-  let c;
-  try {
-    c = JSON.parse(readFileSync(configPath, "utf8"));
-  } catch (e) {
-    console.error(
-      `fetch-fonts: cannot read ${configPath}: ${e instanceof Error ? e.message : String(e)}`,
-    );
-    process.exit(1);
-  }
+  const { config: c } = readConfig(process.argv.slice(2), ".fonts.json", "fetch-fonts");
   if (typeof c.css_url !== "string" || !c.css_url.startsWith("https://fonts.googleapis.com/")) {
     console.error('fetch-fonts: "css_url" must be an https://fonts.googleapis.com/ URL');
     process.exit(1);

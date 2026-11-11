@@ -28,6 +28,7 @@ import { pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
 
 import { escapeAnnotation } from "./annotate.mjs";
+import { readConfig } from "./site-config.mjs";
 
 const KB = 1024;
 const LIMITS = ["initial_js_kb", "lazy_chunk_kb", "css_kb", "lazy_css_kb"];
@@ -42,17 +43,11 @@ function fail(msg) {
 const fmt = (n) => `${(n / KB).toFixed(1)} KB`;
 
 async function main() {
-  const argv = process.argv.slice(2);
-  const ci = argv.indexOf("--config");
-  const configPath = resolve(ci >= 0 ? (argv[ci + 1] ?? "") : ".size-budget.json");
-  if (!existsSync(configPath)) fail(`no budget file at ${configPath}`);
-  /** @type {Record<string, any>} */
-  let config;
-  try {
-    config = JSON.parse(readFileSync(configPath, "utf8"));
-  } catch (e) {
-    return fail(`${configPath} is not JSON: ${e instanceof Error ? e.message : String(e)}`);
-  }
+  const { config, path: configPath } = readConfig(
+    process.argv.slice(2),
+    ".size-budget.json",
+    "size-budget",
+  );
   for (const k of LIMITS)
     if (typeof config[k] !== "number" || !(config[k] > 0))
       fail(`${configPath} needs a positive number for ${k}`);
