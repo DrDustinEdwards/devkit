@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.42.0 (2026-11-12)
+
+Closes the ways around the no-bloat ratchet that the 0.41.1 verifier found (capsid handoff/no-bloat-gaps-verify-0.41.md: H, I, J, K, B2 and knip with no lockfile). **Breaking**: jscpd's `unread` no longer counts a file shorter than jscpd's `minLines`, so a repository's count can fall and its bump PR runs `npx devkit-no-bloat --write-baseline` as before; and a pull request can no longer change the inputs of the job that runs the check.
+
+- H, I, K, no lockfile: knip and jscpd are never the repository's own. The check installs them itself (`toolRunner`), at the exact `tools` versions, into a fresh directory and npm cache, from registry.npmjs.org named outright, with no user, global or project npmrc and no install scripts, and runs them on its own node with no variable that loads code (`NODE_OPTIONS`, `LD_PRELOAD`, `npm_config_*`). A postinstall or a pnpm patch that rewrites node_modules/knip, an npm-shrinkwrap.json or a second lockfile, and a hand-made node_modules with no lockfile no longer change what counts, and a `tools` entry that is not `<tool>@x.y.z` cannot run. The lockfile provenance check (`installedFromNpm`, `pnpmProblem`) and the npx path (`runnerIn`, `npxArgs`) are gone. The no-bloat action runs the bin without `NODE_OPTIONS`, `NODE_PATH`, `LD_PRELOAD` and `LD_LIBRARY_PATH`.
+- H: what an install runs or patches is a change of measure, so it comes in a change of its own: package.json's install scripts (`preinstall`, `install`, `postinstall`, `prepare` and the rest) and `pnpm.patchedDependencies`, `.npmrc`, `.pnpmfile.cjs`, `pnpm-workspace.yaml` and `patches/`.
+- I: a directory with two lockfiles fails.
+- J: no change may drop the job that calls `pr.yml` or `no-bloat.yml`, give it an `if`, or change an input that turns the check off or decides what runs before it (`node`, `node-version-file`, `package-manager`, `install`, `no-bloat`, `no-bloat-prepare`, `no-bloat-config`; no-bloat.yml's `prepare` and `config`). A pull request that turns no-bloat off never runs it, so pr.yml's new "No-bloat stays on" step runs `--inputs-from <base> <caller>` from its own devkit whenever no-bloat does not run on a pull request. Such a change is the owner's, made past the check. A workflow counts as one that runs the check only when a job calls the workflow or a step runs the bin, not when it names them (devkit's own pr.yml).
+- B2: a jscpd path may widen but never stop covering one it read (`["src"]` to the current file list fails), and a file the change creates that jscpd skips beside files it reads fails by name, so the count no longer misses one when another file starts being read in the same change.
+
 ## 0.41.2 (2026-11-12)
 
 - `devkit-secrets`: an Env interface that extends a shared type (`interface Env extends SiteSecrets {}`, site-runtime 0.144.0's standard secrets) carries that type's members, read with TypeScript's checker from the file and the packages it imports, so a site that moves onto `SiteSecrets` still passes "is declared". `env_exact` still checks only what the file itself declares. `interfaceMembers` (./node/syntax) returns `own` beside `members`.

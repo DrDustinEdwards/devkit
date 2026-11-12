@@ -45,5 +45,8 @@ runs:
         # The bin is the caller's own install, so a change could install an older devkit, a fork or a rewritten bin whose
         # check lets more in. The workflow's own devkit checks it first: an x.y.z no older than its own, every file the
         # file at that release's tag.
-        node "$GITHUB_ACTION_PATH/../../../bin/no-bloat.mjs" --verify-install "$PWD/node_modules/@dustinedwards/devkit"
-        node "$bin" --config "$CONFIG" ${LINES_FROM:+--lines-from "$LINES_FROM"}
+        # An earlier step's GITHUB_ENV line (an install script's, the prepare's) could load code into node; the bin runs
+        # without those variables, and installs knip and jscpd itself, so nothing the install put in node_modules counts.
+        clean=(env -u NODE_OPTIONS -u NODE_PATH -u LD_PRELOAD -u LD_LIBRARY_PATH -u DEVKIT_NO_BLOAT_TOOLS)
+        "${clean[@]}" node "$GITHUB_ACTION_PATH/../../../bin/no-bloat.mjs" --verify-install "$PWD/node_modules/@dustinedwards/devkit"
+        "${clean[@]}" node "$bin" --config "$CONFIG" ${LINES_FROM:+--lines-from "$LINES_FROM"}
