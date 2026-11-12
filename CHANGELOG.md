@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.37.0 (2026-11-12)
+
+How the network stops bolt-on code (a parallel helper, wrapper or stylesheet beside code that already does the job, Dustin 2026-11-12). **Breaking** for every caller: each needs `"shared copies"` in its `.no-bloat.json` baseline (`npx devkit-no-bloat --write-baseline`), and a caller of pr.yml or no-bloat.yml that passes `no-bloat-warn-only` or `warn-only` must drop it.
+
+- `devkit-no-bloat` holds the count exactly. A count below its baseline now fails until the change lowers the baseline, so the room a cleanup leaves cannot let the next copy in (the ratchet of ESLint's bulk suppressions, which fail on a suppression no longer needed, and Betterer's `ci` mode). Before, it was a warning and the room stayed.
+- On a pull request (`--lines-from`, which pr.yml and no-bloat.yml pass) a raised baseline for Knip, jscpd or the shared copies fails. Before, the error for a new copy told the author to run `--write-baseline` and commit, which raised the limit and passed the copy. The way out now is to remove it, or to put a real exception in `knip.json`'s or `.jscpd.json`'s ignore list with its reason. A change that moves `tools` may raise them, and one that bumps a shared package may raise the shared copies. Tests rise as before.
+- New gated count `shared copies`: jscpd over the repository's source and every shared package installed in `node_modules` (`packageCopies` in bin/copies.mjs), counting the blocks in both. A copy under a new name is caught on its pull request; devkit-shared's `copies` check matches only names, and the network scan in live.yml runs a day later. Each copy is a warning with both places. `"shared": false` turns it off.
+- jscpd reads JavaScript as TypeScript (`COPY_ARGS`, `--formats-exts`), in the shared copies and in the network scan: jscpd compares files of one format only, so a site's `.ts` copy of site-runtime's or Prelum's `.mjs` was never counted (checked with jscpd 4.3.0 and 5.4.0). The network scan's baseline is re-measured with it (live/copies.json, from this change's run over every repository): 65 copied blocks, 126 names, 7 package overlaps. Most of the rise is copies nobody removed, not the mapping (Carrel still holds its own copy of Capsomer's collaborative and rich editors, about 1,900 lines); the new baseline is today's debt, for the cleanup threads to lower.
+- `--warn-only` is removed from `devkit-no-bloat`, `no-bloat.yml` and pr.yml (`no-bloat-warn-only`): a report never stops a copy from merging, and Enarratio, germomics and txasm ran it so. The bin refuses the flag (exit 2). `devkit-shared` no longer counts a no-bloat step with `continue-on-error: true` as the check.
+
 ## 0.36.0 (2026-11-11)
 
 - New export `./migration-scan` (`handOnly`, `contractions`, `statements`): the reader `devkit-migrations` uses, moved out of bin/migrations.mjs into a module with no node imports so a Worker can import it. `devkit-migrations` behaves as before. Capsid's gate policy now classifies a migration through `handOnly` and `statements` instead of its own copy, so the deploy check and the pre-approval cannot disagree about one file.

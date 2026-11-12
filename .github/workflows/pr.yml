@@ -83,11 +83,6 @@ on:
         required: false
         type: string
         default: .no-bloat.json
-      no-bloat-warn-only:
-        description: Report only (devkit-no-bloat --warn-only).
-        required: false
-        type: boolean
-        default: false
       worker-size:
         description: The Worker bundle size budget. False for a repository with no Worker.
         required: false
@@ -255,7 +250,6 @@ jobs:
         with:
           prepare: ${{ inputs.no-bloat-prepare }}
           config: ${{ inputs.no-bloat-config }}
-          warn-only: ${{ inputs.no-bloat-warn-only }}
 
       - name: Worker size
         id: worker-size

@@ -1417,7 +1417,7 @@ export function checkWorkflows(tree, config, repo = {}) {
     if (
       !why ||
       called.has(name) ||
-      runs.some((bin) => reaches(text, bin)) ||
+      runs.some((bin) => reaches(name === "no-bloat" ? gating(text) : text, bin)) ||
       excused(config, "waive", `workflow:${name}`)
     )
       continue;
@@ -1467,6 +1467,17 @@ export function checkWorkflows(tree, config, repo = {}) {
     });
   }
   return found;
+}
+
+/**
+ * A workflow's text without the steps that cannot fail their job (`continue-on-error: true`): no-bloat run that way is a
+ * report, and a report lets every new copy merge (germomics and Enarratio ran it so before 0.37.0).
+ */
+export function gating(/** @type {string} */ text) {
+  return text
+    .split(/\n(?=\s*-\s+(?:name|run|uses|id|if):)/)
+    .filter((step) => !/^\s*continue-on-error:\s*["']?true["']?\s*$/m.test(step))
+    .join("\n");
 }
 
 /** The checks pr.yml runs in its one job; a call of it counts as each one its inputs leave on. */

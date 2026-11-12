@@ -1,8 +1,9 @@
 name: no-bloat
 
-# Knip, jscpd and the test count against the repository's committed baseline (.no-bloat.json), with the comment share as a
-# warning. A count above its baseline fails the job; a count that went down passes and says how to lower the baseline. On a
-# pull request the job summary also has the lines it adds and removes (code, tests, comments, docs, other); nothing is posted.
+# Knip, jscpd, the copies of shared packages and the test count against the repository's committed baseline (.no-bloat.json),
+# with the comment share as a warning. A count above or below its baseline fails the job until the change lowers it; on a pull
+# request a raised Knip, jscpd or shared-copies baseline fails too, and the job summary has the lines it adds and removes
+# (code, tests, comments, docs, other); nothing is posted.
 # The work is the package's bin, bin/no-bloat.mjs, so the same check runs locally with `npx devkit-no-bloat`; this file only
 # checks out, installs and calls it.
 #
@@ -41,11 +42,6 @@ on:
         required: false
         type: string
         default: .no-bloat.json
-      warn-only:
-        description: Report only. Growth and a tool that cannot run are warnings and the job passes (devkit-no-bloat --warn-only).
-        required: false
-        type: boolean
-        default: false
       timeout-minutes:
         required: false
         type: number
@@ -94,4 +90,3 @@ jobs:
         with:
           prepare: ${{ inputs.prepare }}
           config: ${{ inputs.config }}
-          warn-only: ${{ inputs.warn-only }}

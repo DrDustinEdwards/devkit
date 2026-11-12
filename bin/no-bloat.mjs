@@ -1,19 +1,24 @@
 #!/usr/bin/env node
-// The no-bloat ratchet. Knip for unused files, exports and dependencies, jscpd for duplicated blocks, and a static count of
-// test files and test cases, each compared with the repository's own baseline. A count above its baseline fails the run
-// (exit 1, an ::error:: line per count); a count at or below it passes, and one that went down is named so the baseline can
-// be lowered to lock the gain in. Adding a test is a raise: `--write-baseline` in the same change, so the diff shows it. The
-// share of source lines that are comments is recorded too, and a rise of more than `tolerance` points (with more comment
-// lines than the baseline) is a warning, or an error with `"fail": true`. A tool that cannot run fails the run too (an
-// ::error:: naming its error): a count nobody measured is not a pass, and neither is a baseline entry no run measures. The
-// table goes to the job summary.
+// The no-bloat ratchet. Knip for unused files, exports and dependencies, jscpd for duplicated blocks, jscpd again for the
+// blocks copied from the shared packages the repository installs ("shared copies", copies.mjs packageCopies, so a copy
+// under a new name is caught too), and a static count of test files and test cases, each compared with the repository's
+// own baseline. The baseline is the count exactly: one above it fails the run (exit 1, an ::error:: line per count), and so
+// does one below it, until the baseline is lowered in the same change, so the room a removal leaves can never let a new
+// copy back in (the ratchet of ESLint's bulk suppressions and Betterer's ci mode). On a pull request (`--lines-from`) a
+// baseline raised for Knip, jscpd or the shared copies fails too, unless the change also moves `tools` to another version:
+// a copy or unused export is removed, never accepted by raising the number, and a real exception goes in knip.json's or
+// .jscpd.json's ignore list, where the reviewer reads why. Adding a test is a raise: `--write-baseline` in the same change,
+// so the diff shows it. The share of source lines that are comments is recorded too, and a rise of more than `tolerance`
+// points (with more comment lines than the baseline) is a warning, or an error with `"fail": true`. A tool that cannot run
+// fails the run too (an ::error:: naming its error): a count nobody measured is not a pass, and neither is a baseline entry
+// no run measures. The table goes to the job summary.
 //
-//   npx devkit-no-bloat                      report against .no-bloat.json (no file: one knip run, jscpd on its own config)
+//   npx devkit-no-bloat                      check against .no-bloat.json (no file: one knip run, jscpd on its own config)
 //   npx devkit-no-bloat --config <file>      another config
 //   npx devkit-no-bloat --write-baseline     measure and record the counts as the config's baseline
-//   npx devkit-no-bloat --warn-only          the same report, every error a warning, exit 0: a report, never a gate
-//   npx devkit-no-bloat --lines-from <rev>   also report the lines added and removed since the merge base with <rev>, as
-//                                            code, tests, comments, docs and other (no-bloat.yml passes it on a pull request)
+//   npx devkit-no-bloat --lines-from <rev>   a pull request against <rev>: refuse a raised baseline (above), and report the
+//                                            lines added and removed since the merge base, as code, tests, comments, docs
+//                                            and other (pr.yml and no-bloat.yml pass it on a pull request)
 //
 // The config, every field optional (globs match paths from the repository root, as git lists them):
 //
@@ -25,14 +30,17 @@
 //                   "tolerance": 1, "fail": false },
 //     "tools": { "knip": "knip@6.45.1", "jscpd": "jscpd@4.3.0" },
 //     "baseline": { "measured_at": "036d615", "knip (Worker)": { "Unused exports": 12 }, "jscpd": { "clones": 23, "lines": 410,
-//       "percentage": 0.59 }, "tests": { "files": 40, "cases": 312 }, "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
+//       "percentage": 0.59 }, "shared copies": { "clones": 0, "lines": 0 }, "tests": { "files": 40, "cases": 312 },
+//       "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
 //   }
 //
-// `"jscpd": false`, `"tests": false` or `"comments": false` turns one off. jscpd's clones and duplicated lines are gated; its
-// percentage is shown, not gated, since deleting code that is not duplicated raises it. Test cases are counted from the
-// source, never by running a runner: each `test(` or `it(` call (node:test, vitest, Playwright), with their modifiers
-// (`.only`, `.skip`, `.each(...)`...), outside comments and strings; `describe`, hooks and Playwright's runtime
-// `test.skip(condition)` are not cases. A case made in a loop counts once.
+// `"jscpd": false`, `"shared": false`, `"tests": false` or `"comments": false` turns one off. jscpd's clones and duplicated
+// lines are gated; its percentage is shown, not gated, since deleting code that is not duplicated raises it. The shared
+// copies read every shared package (shared.mjs PACKAGES) installed in node_modules, the repository's own excepted; each copy
+// is an ::warning:: line with both places. Test cases are counted from the source, never by running a runner: each `test(`
+// or `it(` call (node:test, vitest, Playwright), with their modifiers (`.only`, `.skip`, `.each(...)`...), outside comments
+// and strings; `describe`, hooks and Playwright's runtime `test.skip(condition)` are not cases. A case made in a loop counts
+// once.
 //
 // A tool the repository installs is run from node_modules/.bin; otherwise through npx at the spec in `tools`.
 
@@ -48,10 +56,12 @@ import {
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, posix, resolve } from "node:path";
+import { join, posix, relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { escapeAnnotation } from "./annotate.mjs";
+import { packageCopies } from "./copies.mjs";
+import { PACKAGES } from "./shared.mjs";
 export const DEFAULT_TOOLS = { knip: "knip@6.45.1", jscpd: "jscpd@4.3.0" };
 const TESTS = ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const SOURCE = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"];
@@ -62,7 +72,7 @@ const BUFFER = 64 * 1024 * 1024;
 /**
  * @typedef {{ label: string, args?: string[] }} KnipRun
  * @typedef {{ files?: string[], ignore?: string[] }} Files
- * @typedef {{ knip?: KnipRun[], jscpd?: { args?: string[] } | false, tests?: Files | false,
+ * @typedef {{ knip?: KnipRun[], jscpd?: { args?: string[] } | false, shared?: false, tests?: Files | false,
  *   comments?: Files & { tolerance?: number, fail?: boolean } | false, tools?: { knip?: string, jscpd?: string },
  *   baseline?: Record<string, unknown> & { measured_at?: string } }} Config
  * @typedef {(name: "knip" | "jscpd", args: string[]) => string} Runner
@@ -297,17 +307,22 @@ export function countFiles(config, paths, read) {
  * @param {Runner} run
  * @param {boolean} [jscpdConfigured] whether the repository has its own .jscpd.json, which then names the paths
  * @param {Source} [source] the repository's files
- * @returns {{ counts: Counts, warnings: string[] }}
+ * @param {{ root: string, packages: { repo: string, dir: string }[], missing: string[] }} [shared] the repository and the
+ *   shared packages installed in it; `missing`, those its package.json names and node_modules lacks
+ * @returns {{ counts: Counts, warnings: string[], copies: ReturnType<typeof packageCopies> }}
  */
 export function measure(
   config,
   run,
   jscpdConfigured = true,
   source = { list: () => [], read: () => "" },
+  shared = { root: ".", packages: [], missing: [] },
 ) {
   /** @type {Counts} */
   const counts = {};
   const warnings = [];
+  /** @type {ReturnType<typeof packageCopies>} */
+  let copies = [];
 
   for (const { label, args = [] } of config.knip ?? [{ label: "knip" }]) {
     try {
@@ -341,6 +356,23 @@ export function measure(
     }
   }
 
+  if (config.shared !== false) {
+    try {
+      // A package the repository depends on and has not installed would be a count over less than it copies from.
+      if (shared.missing.length)
+        throw new Error(`${shared.missing.join(", ")} not installed; run the install first`);
+      copies = packageCopies(shared.root, source.list(), shared.packages, (args) => {
+        run("jscpd", args);
+      });
+      counts["shared copies"] = {
+        clones: copies.length,
+        lines: copies.reduce((n, [a]) => n + a.end - a.start + 1, 0),
+      };
+    } catch (error) {
+      warnings.push(`the shared copies could not be counted: ${messageOf(error)}`);
+    }
+  }
+
   if (config.tests !== false || config.comments !== false) {
     try {
       Object.assign(counts, countFiles(config, source.list(), source.read));
@@ -349,12 +381,13 @@ export function measure(
     }
   }
 
-  return { counts, warnings };
+  return { counts, warnings, copies };
 }
 
 /**
  * One row per finding the baseline or the measurement names, an error for each that grew, a warning for a comment share that
- * rose past its tolerance (an error with `"fail": true`), and a note for each that went down. A finding with no baseline is a
+ * rose past its tolerance (an error with `"fail": true`), and in `lowered` each gated count that went down, which main()
+ * fails until the baseline is lowered (the comment share's fall is only a note). A finding with no baseline is a
  * row and never an error: there is nothing to have grown from. A baseline entry that no run in the config measures is stale.
  * @param {Record<string, unknown>} baseline
  * @param {Counts} counts
@@ -390,7 +423,7 @@ export function compare(baseline, counts, config = {}) {
   };
 
   for (const [tool, now] of Object.entries(counts)) {
-    if (tool === "jscpd" || tool === "tests" || tool === "comments") continue;
+    if (["jscpd", "shared copies", "tests", "comments"].includes(tool)) continue;
     const was = before(tool);
     const keys = [...new Set([...Object.keys(was ?? {}), ...Object.keys(now)])];
     // A clean run is a row too, so the table shows the tool ran.
@@ -417,6 +450,18 @@ export function compare(baseline, counts, config = {}) {
     ]);
   }
 
+  if (counts["shared copies"]) {
+    const hint =
+      "Each is a warning above with both places: import the shared one, delete the copy (SHARED.md).";
+    // A repository that never measured them would pass any number, so no baseline here is an error, not a new row.
+    if (!before("shared copies"))
+      errors.push(
+        "shared copies: the baseline has no count yet. Run `npx devkit-no-bloat --write-baseline` and commit the config.",
+      );
+    gate("shared copies", "clones", "clones", hint);
+    gate("shared copies", "lines", "copied lines", hint);
+  }
+
   if (counts.tests) {
     gate("tests", "files", "test files", "A new test file needs a reviewed raise of the baseline.");
     gate("tests", "cases", "test cases", "A new test needs a reviewed raise of the baseline.");
@@ -439,12 +484,15 @@ export function compare(baseline, counts, config = {}) {
       ((config.comments || {}).fail ? errors : warnings).push(finding);
     }
     if (was && -rise >= tolerance * 100)
-      lowered.push(`comments: share ${was.percentage}% to ${now.percentage}%`);
+      warnings.push(
+        `comments: the share fell from ${was.percentage}% to ${now.percentage}%. Lower the baseline to keep it: run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
+      );
   }
 
   const measured = new Set(["measured_at", ...knipRuns.map((r) => r.label)]);
   for (const tool of ["jscpd", "tests", "comments"])
     if (config[/** @type {"jscpd"} */ (tool)] !== false) measured.add(tool);
+  if (config.shared !== false) measured.add("shared copies");
   const stale = Object.keys(baseline)
     .filter((key) => !measured.has(key))
     .map(
@@ -459,12 +507,11 @@ export function compare(baseline, counts, config = {}) {
  * @param {Array<[string, string, number | null, number]>} rows
  * @param {string[]} problems the errors, then the warnings
  * @param {string | undefined} measuredAt
- * @param {boolean} [warnOnly]
  */
-export function render(rows, problems, measuredAt, warnOnly = false) {
+export function render(rows, problems, measuredAt) {
   const show = (/** @type {number | null} */ n) => (n === null ? "none" : String(n));
   return [
-    `### No-bloat ${warnOnly ? "report (warn-only, never blocks a merge)" : "ratchet"} (${measuredAt ? `baseline ${measuredAt}` : "no baseline yet: run `npx devkit-no-bloat --write-baseline`"})`,
+    `### No-bloat ratchet (${measuredAt ? `baseline ${measuredAt}` : "no baseline yet: run `npx devkit-no-bloat --write-baseline`"})`,
     "",
     "| Tool | Finding | Baseline | Now |",
     "|---|---|---|---|",
@@ -674,13 +721,109 @@ function shortHead(/** @type {string} */ root) {
   }
 }
 
+/**
+ * The shared packages installed in node_modules (the repository's own left out) for the shared copies, and those the root
+ * package.json depends on that are not installed.
+ */
+function installedPackages(/** @type {string} */ root) {
+  /** @type {{ name?: string, dependencies?: object, devDependencies?: object }} */
+  let manifest = {};
+  try {
+    manifest = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+  } catch {
+    // No package.json, or one that is not JSON: nothing is named, and only what is installed is read.
+  }
+  const wanted = { ...manifest.dependencies, ...manifest.devDependencies };
+  const packages = [];
+  const missing = [];
+  for (const { name, repo } of PACKAGES) {
+    if (name === manifest.name) continue;
+    const dir = join(root, "node_modules", name);
+    if (existsSync(join(dir, "package.json"))) packages.push({ repo, dir });
+    else if (name in wanted) missing.push(name);
+  }
+  return { root, packages, missing };
+}
+
+/**
+ * The config at the merge base of `from` and HEAD (null when the file did not exist there), and whether the change moves a
+ * shared package's pin in the root package.json.
+ */
+function atBase(
+  /** @type {string} */ root,
+  /** @type {string} */ file,
+  /** @type {string} */ from,
+) {
+  const git = (/** @type {string[]} */ args) =>
+    execFileSync("git", args, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+  const base = git(["merge-base", from, "HEAD"]).trim();
+  const read = (/** @type {string} */ path) =>
+    git(["ls-tree", "--name-only", base, "--", path]).trim()
+      ? JSON.parse(git(["show", `${base}:${path}`]))
+      : null;
+  const pins = (/** @type {any} */ m) =>
+    JSON.stringify(
+      PACKAGES.map((p) => m?.dependencies?.[p.name] ?? m?.devDependencies?.[p.name] ?? null),
+    );
+  const manifest = existsSync(join(root, "package.json"))
+    ? JSON.parse(readFileSync(join(root, "package.json"), "utf8"))
+    : null;
+  return {
+    config: /** @type {Config | null} */ (
+      read(posix.normalize(relative(root, file).split(sep).join("/")))
+    ),
+    bumped: pins(read("package.json")) !== pins(manifest),
+  };
+}
+
+/**
+ * Each Knip, jscpd or shared-copies count the change raised in the baseline: a copy or unused code accepted by moving the
+ * number instead of removing it. A change that moves `tools` to another version may raise them, since the new version
+ * counts differently, and one that bumps a shared package may raise the shared copies, since the new release can ship
+ * what the repository already had (a copy older than the change, each one still a warning). Tests may rise: a new test is
+ * how they do. Pure.
+ * @param {Config} config @param {Config | null} base the config at the pull request's base
+ * @param {boolean} [bumped] whether the change moves a shared package's pin
+ */
+export function raised(config, base, bumped = false) {
+  if (!base?.baseline || JSON.stringify(config.tools ?? {}) !== JSON.stringify(base.tools ?? {}))
+    return [];
+  const now = config.baseline ?? {};
+  const was = base.baseline;
+  /** @type {string[]} */
+  const out = [];
+  for (const [tool, counts] of Object.entries(now)) {
+    if (
+      ["measured_at", "tests", "comments"].includes(tool) ||
+      !counts ||
+      typeof counts !== "object"
+    )
+      continue;
+    if (tool === "shared copies" && bumped) continue;
+    const before = /** @type {Record<string, number> | undefined} */ (was[tool]);
+    if (!before) continue;
+    for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
+      if (key !== "percentage" && typeof n === "number" && n > (before[key] ?? 0))
+        out.push(
+          `${tool}: this change raises the baseline's ${key} from ${before[key] ?? 0} to ${n}. A raise lets the new copy or unused code in: remove it instead, and put a real exception in knip.json's or .jscpd.json's ignore list with its reason.`,
+        );
+  }
+  return out;
+}
+
 function main() {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--config");
   const root = process.cwd();
   const file = resolve(root, at >= 0 && argv[at + 1] ? argv[at + 1] : ".no-bloat.json");
   const write = argv.includes("--write-baseline");
-  const warnOnly = argv.includes("--warn-only");
+  if (argv.includes("--warn-only")) {
+    // A report never stops a copy from merging (Enarratio, germomics and txasm ran it so). The ratchet always gates.
+    console.error(
+      "devkit-no-bloat: --warn-only was removed in 0.37.0; the ratchet always gates. Drop the flag (and any continue-on-error on its step).",
+    );
+    process.exit(2);
+  }
   const from = argv.includes("--lines-from") ? argv[argv.indexOf("--lines-from") + 1] : undefined;
 
   /** @type {Config} */
@@ -700,6 +843,7 @@ function main() {
     runnerIn(root, { ...DEFAULT_TOOLS, ...config.tools }),
     existsSync(join(root, ".jscpd.json")),
     gitSource(root),
+    installedPackages(root),
   );
 
   if (write) {
@@ -721,8 +865,21 @@ function main() {
   );
   if (errors.length) {
     errors.push(
-      "Remove what was added. If it is deliberate, run `npx devkit-no-bloat --write-baseline` and commit the config, so the raise is reviewed.",
+      "Remove what was added: change the code that already does it, or import the shared one, and delete the copy (SHARED.md). A real exception goes in knip.json's or .jscpd.json's ignore list with its reason. Only a new test raises the baseline (`npx devkit-no-bloat --write-baseline`).",
     );
+  }
+  // The room a removal leaves is where the next copy would go: a count below its baseline fails until it is lowered.
+  if (lowered.length)
+    errors.push(
+      `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config in this change.`,
+    );
+  if (from) {
+    try {
+      const base = atBase(root, file, from);
+      errors.push(...raised(config, base.config, base.bumped));
+    } catch (error) {
+      errors.push(`The baseline at ${from} could not be read: ${messageOf(error)}`);
+    }
   }
   errors.unshift(...measured.warnings, ...stale);
   // No baseline is a ratchet that passes everything: a missing config, or one whose baseline counts nothing, fails.
@@ -731,12 +888,7 @@ function main() {
     errors.unshift(
       `${existsSync(file) ? `${file} has no baseline` : `${file} does not exist`}, so every count would pass. Run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
     );
-  if (lowered.length) {
-    warnings.push(
-      `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
-    );
-  }
-  let table = render(rows, [...errors, ...warnings], config.baseline?.measured_at, warnOnly);
+  let table = render(rows, [...errors, ...warnings], config.baseline?.measured_at);
   if (from) {
     try {
       table += `\n\n${gitLines(root, config, from)}`;
@@ -747,12 +899,15 @@ function main() {
     }
   }
   console.log(table);
-  for (const e of errors)
-    console.log(`::${warnOnly ? "warning" : "error"}::${escapeAnnotation(e)}`);
+  for (const [mine, theirs] of measured.copies)
+    console.log(
+      `::warning file=${escapeAnnotation(mine.path)},line=${mine.start}::${escapeAnnotation(`lines ${mine.start}-${mine.end} copy ${theirs.repo}'s ${theirs.path}:${theirs.start}-${theirs.end}: import it from the package and delete this copy`)}`,
+    );
+  for (const e of errors) console.log(`::error::${escapeAnnotation(e)}`);
   for (const w of warnings) console.log(`::warning::${escapeAnnotation(w)}`);
   if (process.env.GITHUB_STEP_SUMMARY)
     appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
-  if (errors.length && !warnOnly) process.exit(1);
+  if (errors.length) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.

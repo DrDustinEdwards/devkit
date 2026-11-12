@@ -743,6 +743,15 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
     }),
   };
   assert.deepEqual(missing(ci), ["worker-deploy"]);
+  // PLANT: a no-bloat step that cannot fail its job is a report, and a report lets a new copy merge.
+  const report = {
+    ...ci,
+    ".github/workflows/ci.yml": ci[".github/workflows/ci.yml"].replace(
+      "      - run: npm run check\n",
+      "      - name: Bloat\n        continue-on-error: true\n        run: npm run check\n      - run: npm test\n",
+    ),
+  };
+  assert.deepEqual(missing(report), ["worker-deploy", "no-bloat"]);
   assert.deepEqual(
     missing(ci, { waive: { "workflow:worker-deploy": "Workers Builds deploys it" } }),
     [],

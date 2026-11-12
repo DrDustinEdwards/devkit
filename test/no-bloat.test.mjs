@@ -78,6 +78,7 @@ test("with no config: one knip run, jscpd on the root unless the repository has 
   assert.deepEqual(measure({}, bare.run, false).counts, {
     knip: { "Unused files": 2, "Unused exports": 3 },
     jscpd: { clones: 4, lines: 40, percentage: 1.23 },
+    "shared copies": { clones: 0, lines: 0 },
     tests: { files: 0, cases: 0 },
     comments: { lines: 0, code: 0, percentage: 0 },
   });
@@ -111,6 +112,7 @@ test("each knip run is labeled and passes its own arguments; jscpd's arguments c
     "knip (Worker)",
     "knip (dashboard)",
     "jscpd",
+    "shared copies",
     "tests",
     "comments",
   ]);
@@ -118,10 +120,12 @@ test("each knip run is labeled and passes its own arguments; jscpd's arguments c
   assert.deepEqual(calls[2][1].slice(0, 3), ["app", "--min-lines", "8"]);
 });
 
-test("jscpd, tests and comments each turn off with false; jscpd that read no files could not run", () => {
+test("jscpd, the shared copies, tests and comments each turn off with false; jscpd that read no files could not run", () => {
   const { run, calls } = fakeRun();
   assert.deepEqual(
-    Object.keys(measure({ jscpd: false, tests: false, comments: false }, run).counts),
+    Object.keys(
+      measure({ jscpd: false, shared: false, tests: false, comments: false }, run).counts,
+    ),
     ["knip"],
   );
   assert.equal(calls.length, 1);
@@ -135,9 +139,10 @@ test("jscpd, tests and comments each turn off with false; jscpd that read no fil
       throw new Error("gone");
     },
   };
-  assert.deepEqual(measure({ jscpd: false }, fakeRun().run, true, unreadable).warnings, [
-    "tests and comments could not be counted: gone",
-  ]);
+  assert.deepEqual(
+    measure({ jscpd: false, shared: false }, fakeRun().run, true, unreadable).warnings,
+    ["tests and comments could not be counted: gone"],
+  );
 });
 
 test("what grew is an error; what shrank is a note to lower the baseline; a finding new to a known tool counts from zero", () => {
@@ -370,12 +375,12 @@ test("a test added without a raise fails; the comment share warns past its toler
     compare(baseline, { comments: { lines: 130, code: 900, percentage: 11 } }).warnings,
     [],
   );
-  assert.deepEqual(
-    compare(baseline, { comments: { lines: 90, code: 900, percentage: 9 } }).lowered,
-    ["comments: share 10% to 9%"],
+  assert.match(
+    compare(baseline, { comments: { lines: 90, code: 900, percentage: 9 } }).warnings[0],
+    /^comments: the share fell from 10% to 9%\. Lower the baseline/,
   );
   assert.deepEqual(
-    compare(baseline, { comments: { lines: 90, code: 900, percentage: 9.01 } }).lowered,
+    compare(baseline, { comments: { lines: 90, code: 900, percentage: 9.01 } }).warnings,
     [],
   );
 });
@@ -504,7 +509,7 @@ const runBin = (/** @type {string} */ cwd, /** @type {string[]} */ args = [], en
   });
 
 test(
-  "end to end: --write-baseline records the counts, a later run that grew fails, and one that shrank passes",
+  "end to end: --write-baseline records the counts, a later run that grew fails, and so does one that shrank until the baseline is lowered",
   { skip: process.platform === "win32" },
   () => {
     const dir = scratch();
@@ -536,7 +541,7 @@ test(
       );
       assert.match(
         r.stdout,
-        /::error::jscpd: clones went from 4 to 7. Run `npx jscpd` to see them.\n::error::Remove what was added\./,
+        /::error::jscpd: clones went from 4 to 7. Run `npx jscpd` to see them.\n::error::Remove what was added:/,
       );
       assert.doesNotMatch(r.stdout, /::error::knip/);
       assert.match(readFileSync(summary, "utf8"), /### No-bloat ratchet \(baseline /);
@@ -544,12 +549,14 @@ test(
       const shrunk = scratch({ clones: 2 });
       writeFileSync(join(shrunk, ".no-bloat.json"), JSON.stringify(config));
       const s = runBin(shrunk);
-      rmSync(shrunk, { recursive: true, force: true });
-      assert.equal(s.status, 0, s.stdout);
+      assert.equal(s.status, 1, s.stdout);
       assert.match(
         s.stdout,
-        /\n- Lower the baseline to lock this in \(jscpd: clones 4 to 2\)[^\n]*\n::warning::Lower the baseline to lock this in \(jscpd: clones 4 to 2\)/,
+        /::error::Lower the baseline to lock this in \(jscpd: clones 4 to 2\)/,
       );
+      assert.equal(runBin(shrunk, ["--write-baseline"]).status, 0);
+      assert.equal(runBin(shrunk).status, 0);
+      rmSync(shrunk, { recursive: true, force: true });
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -557,7 +564,7 @@ test(
 );
 
 test(
-  "end to end: a tool that fails is an error and exit 1, a warning under --warn-only; --write-baseline refuses a partial baseline",
+  "end to end: a tool that fails is an error and exit 1, there is no --warn-only, and --write-baseline refuses a partial baseline",
   { skip: process.platform === "win32" },
   () => {
     const dir = scratch({ jscpdFails: true });
@@ -574,29 +581,19 @@ test(
           baseline: { knip: { "Unused files": 1 } },
         }),
       );
-      const warned = runBin(dir, [
-        "--warn-only",
-        "--config",
-        "bloat.json",
-        "--lines-from",
-        "no-such-rev",
-      ]);
-      assert.equal(warned.status, 0, warned.stdout);
+      const failed = runBin(dir, ["--config", "bloat.json", "--lines-from", "no-such-rev"]);
+      assert.equal(failed.status, 1, failed.stdout);
       assert.match(
-        warned.stdout,
-        /^### No-bloat report \(warn-only, never blocks a merge\) \(no baseline yet: run `npx devkit-no-bloat --write-baseline`\)/,
+        failed.stdout,
+        /::error::knip \(broken\) could not run: knip exited 2: knip: boom/,
       );
-      assert.doesNotMatch(warned.stdout, /::error::/);
-      assert.match(
-        warned.stdout,
-        /::warning::knip \(broken\) could not run: knip exited 2: knip: boom/,
-      );
-      assert.match(warned.stdout, /::warning::jscpd could not run/);
-      assert.match(warned.stdout, /::warning::knip: Unused files went from 1 to 2/);
-      assert.match(
-        warned.stdout,
-        /::warning::The lines added and removed since no-such-rev could not be read: /,
-      );
+      assert.match(failed.stdout, /::error::jscpd could not run/);
+      assert.match(failed.stdout, /::error::knip: Unused files went from 1 to 2/);
+      assert.match(failed.stdout, /::error::The baseline at no-such-rev could not be read: /);
+      // A report never stops a copy, so there is no report mode.
+      const warnOnly = runBin(dir, ["--warn-only"]);
+      assert.equal(warnOnly.status, 2);
+      assert.match(warnOnly.stderr, /--warn-only was removed in 0\.37\.0/);
 
       const w = runBin(dir, ["--write-baseline"]);
       assert.equal(w.status, 1);
@@ -645,6 +642,40 @@ test(
         git(dir, "rev-parse", "--short", "HEAD").trim(),
       );
       assert.equal(runBin(dir).status, 0);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test(
+  "end to end: a pull request that raises the jscpd baseline fails, unless it also moves the tools to another version",
+  { skip: process.platform === "win32" },
+  () => {
+    const dir = scratch();
+    try {
+      assert.equal(runBin(dir, ["--write-baseline"]).status, 0);
+      git(dir, "add", "-A");
+      git(dir, "commit", "-qm", "Base");
+      git(dir, "checkout", "-qb", "change");
+      const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
+      config.baseline.jscpd.clones = 5;
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
+      git(dir, "commit", "-qam", "Raise");
+      const grown = join(dir, "node_modules", ".bin", "jscpd");
+      writeFileSync(grown, readFileSync(grown, "utf8").replace('"clones":4', '"clones":5'));
+      const r = runBin(dir, ["--lines-from", "main"]);
+      assert.equal(r.status, 1, r.stdout);
+      assert.match(
+        r.stdout,
+        /::error::jscpd: this change raises the baseline's clones from 4 to 5/,
+      );
+      // Without --lines-from (a run on main) the raised baseline is the count.
+      assert.equal(runBin(dir).status, 0);
+      config.tools = { jscpd: "jscpd@4.4.0" };
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
+      git(dir, "commit", "-qam", "New jscpd");
+      assert.equal(runBin(dir, ["--lines-from", "main"]).status, 0);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
