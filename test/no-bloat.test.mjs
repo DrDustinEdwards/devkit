@@ -77,6 +77,11 @@ test("knipCounts counts each issue in Knip's JSON report, not each file, and ref
     { dependencies: 2 },
   );
   assert.deepEqual(knipCounts('{"issues":[]}'), {});
+  // A plugin's warning on stdout before the report is not the report.
+  assert.deepEqual(knipCounts(`[WARN] Missing pages directory: src/pages\n${KNIP}\n`), {
+    files: 2,
+    exports: 3,
+  });
   for (const text of ["", "Unused files (2)\nsrc/a.ts\n", "{}"])
     assert.throws(() => knipCounts(text), /knip printed no report this reads/);
 });
@@ -859,12 +864,22 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
   });
   // A baseline and lockfile change alone moves nothing the counts read.
   files[".no-bloat.json"] = ['{"baseline":{}}', '{"baseline":{"a":1},"tools":{"knip":"knip@7"}}'];
-  assert.deepEqual(classify(change([".no-bloat.json", "package-lock.json"])), {
-    code: false,
-    definition: [],
-    workflow: [],
-    back: [],
-  });
+  // A workspace package's manifest and lockfile are read like the root's.
+  files["mcp/package.json"] = [
+    JSON.stringify({ name: "m", dependencies: { a: "1.0.0" } }),
+    JSON.stringify({ name: "m", dependencies: { a: "1.1.0" } }),
+  ];
+  assert.deepEqual(
+    classify(
+      change([".no-bloat.json", "package-lock.json", "mcp/package.json", "mcp/package-lock.json"]),
+    ),
+    {
+      code: false,
+      definition: [],
+      workflow: [],
+      back: [],
+    },
+  );
 });
 
 test(

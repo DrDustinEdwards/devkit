@@ -89,7 +89,13 @@ export function knipCounts(/** @type {string} */ text) {
   /** @type {{ issues?: Array<Record<string, unknown>> }} */
   let report;
   try {
-    report = JSON.parse(text);
+    // A Knip plugin can print a warning on stdout before the report (Astro's "[WARN] Missing pages directory"), and the
+    // report is one line, so it is the last line that is a JSON object.
+    const line = text
+      .split("\n")
+      .map((l) => l.trim())
+      .findLast((l) => l.startsWith("{"));
+    report = JSON.parse(line ?? text);
   } catch {
     // Output this cannot read is a format that changed, not a clean run.
     throw new Error(`knip printed no report this reads: ${text.trim().slice(0, 200)}`);
@@ -914,8 +920,10 @@ export function classify(change) {
   const without = (/** @type {any} */ o, /** @type {string[]} */ keys) =>
     JSON.stringify(Object.fromEntries(Object.entries(o ?? {}).filter(([k]) => !keys.includes(k))));
   for (const p of changed) {
-    if (LOCKFILES.test(p)) continue;
-    if (DEFINITIONS.test(p)) {
+    // A workspace has a manifest and a lockfile per package, so each is read by its name in any directory.
+    const name = posix.basename(p);
+    if (LOCKFILES.test(name)) continue;
+    if (DEFINITIONS.test(name)) {
       definition.push(p);
       continue;
     }
@@ -927,7 +935,7 @@ export function classify(change) {
         definition.push(`${p} (outside baseline and tools)`);
       continue;
     }
-    if (p === "package.json") {
+    if (name === "package.json") {
       const [a, b] = [json(change.before(p)), json(change.now(p))];
       if (!a || !b) {
         code = true;
