@@ -21,6 +21,7 @@ import {
   measure,
   narrowed,
   npxArgs,
+  pnpmProblem,
   raised,
   render,
   renderLines,
@@ -1157,3 +1158,51 @@ test(
     }
   },
 );
+
+test("pnpm-lock.yaml installs npm's own knip only at a bare version that resolves by integrity", () => {
+  const lock = (/** @type {string} */ version, /** @type {string} */ resolution) =>
+    [
+      "lockfileVersion: '9.0'",
+      "",
+      "importers:",
+      "",
+      "  .:",
+      "    devDependencies:",
+      "      knip:",
+      "        specifier: 6.45.1",
+      `        version: ${version}`,
+      "",
+      "  packages/web:",
+      "    devDependencies:",
+      "      jscpd:",
+      "        specifier: 4.3.0",
+      "        version: 4.3.0",
+      "",
+      "packages:",
+      "",
+      `  ${/^\d/.test(version) ? `knip@${version.replace(/\(.*/, "")}` : `'${version}'`}:`,
+      `    resolution: ${resolution}`,
+      "",
+    ].join("\n");
+  assert.equal(
+    pnpmProblem(lock("6.45.1(typescript@5.9.3)", "{integrity: sha512-x}"), "knip"),
+    null,
+  );
+  assert.match(
+    pnpmProblem(lock("6.45.1", "{tarball: https://example.com/knip.tgz}"), "knip") ?? "",
+    /resolves knip@6\.45\.1 by resolution: \{tarball/,
+  );
+  assert.match(
+    pnpmProblem(lock("fake-knip@1.0.0", "{integrity: sha512-x}"), "knip") ?? "",
+    /installs it as fake-knip@1\.0\.0/,
+  );
+  assert.match(
+    pnpmProblem(lock("link:../fake", "{directory: ../fake}"), "knip") ?? "",
+    /installs it as link:\.\.\/fake/,
+  );
+  // Only the root importer installs node_modules/.bin at the root.
+  assert.match(
+    pnpmProblem(lock("6.45.1", "{integrity: sha512-x}"), "jscpd") ?? "",
+    /root importer does not list it/,
+  );
+});

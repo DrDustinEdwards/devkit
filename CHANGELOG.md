@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.41.1 (2026-11-12)
+
+- `devkit-no-bloat`: the check that an installed knip or jscpd is npm's own reads `pnpm-lock.yaml` too, when there is no `package-lock.json`. The root importer must list the tool at a bare version (an alias, a git or tarball source, a link or a path fails), and its package must resolve by `integrity` alone. Before, a pnpm repository's lockfile was not read, so it could install another program as knip.
+
 ## 0.41.0 (2026-11-12)
 
 Closes the ways around the no-bloat ratchet that the 0.40.0 verifier found (capsid handoff/no-bloat-gaps-verify-0.40.md, gaps A to G). **Breaking**: jscpd's baseline gains `unread`, so each repository's bump PR runs `npx devkit-no-bloat --write-baseline` as before; a Knip config in code (`knip.ts`, `knip.config.js`) can no longer change (write it as `knip.jsonc`); and a devkit pin behind a minor out two days now fails `devkit-shared`.
