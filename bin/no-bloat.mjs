@@ -4,15 +4,18 @@
 // under a new name is caught too), and a static count of test files and test cases, each compared with the repository's
 // own baseline. The baseline is the count exactly: one above it fails the run (exit 1, an ::error:: line per count), and so
 // does one below it, until the baseline is lowered in the same change, so the room a removal leaves can never let a new
-// copy back in (the ratchet of ESLint's bulk suppressions and Betterer's ci mode). Against the branch the change goes into
-// (`--lines-from` on a pull request; locally the first of origin/HEAD, origin/main, origin/master) a baseline raised for
-// Knip, jscpd or the shared copies fails too, a count new to the baseline raised from 0, and `--write-baseline` refuses
-// to record one: a copy or unused export is removed, never accepted by raising the number. Only a change that moves what
-// is measured and no code may raise one (the config, a lockfile, the workflows, and in package.json only dependency
-// versions or a new shared package: a tool, devkit or shared package bump alone). A real exception goes in knip.json's
-// ignore list with a comment saying why, or behind `jscpd:ignore-start` and its reason in the source; an ignore entry
-// added with no reason fails, and so does any added to .jscpd.json or the config's jscpd --ignore, which are strict JSON
-// and cannot hold one. Adding a test is a raise: `--write-baseline` in the same change,
+// copy back in (the ratchet of ESLint's bulk suppressions and Betterer's ci mode). Knip counts each issue (its JSON
+// report), not each file. Every count the run measures needs its baseline entry, and no change drops one. Against the
+// branch the change goes into (`--lines-from` on a pull request; otherwise the first of origin/HEAD, origin/main and
+// origin/master) a change that moves code may not raise a Knip, jscpd or shared-copies count (one new to the baseline
+// is raised from 0), change how a count is measured (the no-bloat config outside baseline and tools, a Knip config in
+// any format, .jscpd.json, package.json's knip or jscpd), change a workflow that runs this check, or move a shared
+// package back; `--write-baseline` refuses what the check would. A change of measure comes alone and may not lower a
+// count, so a narrower measure cannot hide what it stops reading; a version bump alone (tools, a lockfile, dependency
+// versions forward, a new shared package) may raise or lower. A real exception goes in knip.json's ignore list with a
+// comment saying why, behind `jscpd:ignore-start` and its reason, or after `@public` with who uses it; one added with no
+// reason fails, and so does any entry added to .jscpd.json or the config's jscpd --ignore, which are strict JSON and
+// cannot hold one. Adding a test is a raise: `--write-baseline` in the same change,
 // so the diff shows it. The share of source lines that are comments is recorded too, and a rise of more than `tolerance`
 // points (with more comment lines than the baseline) is a warning, or an error with `"fail": true`. A tool that cannot run
 // fails the run too (an ::error:: naming its error): a count nobody measured is not a pass, and neither is a baseline entry
@@ -77,15 +80,30 @@ const BUFFER = 64 * 1024 * 1024;
  * @typedef {Record<string, Record<string, number>>} Counts
  */
 
-/** Knip's compact report as counts per heading, e.g. { "Unused exports": 12 }. A clean run prints nothing. */
+/**
+ * Knip's JSON report as counts per issue type, e.g. { exports: 12 }: each unused export, dependency or file is one, so a
+ * second unused export in a file that has one already counts. (The compact report's heading counts files, and one per
+ * package.json for its dependencies.) Types with no issue are left out; a clean run is {}.
+ */
 export function knipCounts(/** @type {string} */ text) {
-  /** @type {Record<string, number>} */
-  const counts = {};
-  for (const m of text.matchAll(/^([A-Z][A-Za-z ]+) \((\d+)\)$/gm)) counts[m[1]] = Number(m[2]);
-  // Output with no heading this reads is a format that changed, not a clean run.
-  if (Object.keys(counts).length === 0 && text.trim() && !/Knip found no issues/.test(text)) {
+  /** @type {{ issues?: Array<Record<string, unknown>> }} */
+  let report;
+  try {
+    report = JSON.parse(text);
+  } catch {
+    // Output this cannot read is a format that changed, not a clean run.
     throw new Error(`knip printed no report this reads: ${text.trim().slice(0, 200)}`);
   }
+  if (!Array.isArray(report?.issues))
+    throw new Error(`knip printed no report this reads: ${text.trim().slice(0, 200)}`);
+  /** @type {Record<string, number>} */
+  const counts = {};
+  for (const issue of report.issues)
+    for (const [type, found] of Object.entries(issue)) {
+      if (type === "file" || !found || typeof found !== "object") continue;
+      const n = Array.isArray(found) ? found.length : Object.keys(found).length;
+      if (n) counts[type] = (counts[type] ?? 0) + n;
+    }
   return counts;
 }
 
@@ -324,7 +342,7 @@ export function measure(
   for (const { label, args = [] } of config.knip ?? [{ label: "knip" }]) {
     try {
       counts[label] = knipCounts(
-        run("knip", [...args, "--no-exit-code", "--no-progress", "--reporter", "compact"]),
+        run("knip", [...args, "--no-exit-code", "--no-progress", "--reporter", "json"]),
       );
     } catch (error) {
       warnings.push(`${label} could not run: ${messageOf(error)}`);
@@ -421,6 +439,14 @@ export function compare(baseline, counts, config = {}) {
     if (was !== null && now < was) lowered.push(`${tool}: ${name} ${was} to ${now}`);
   };
 
+  // A count the baseline has no entry for would pass any number, so a measured tool missing from it is an error, not a
+  // new row: dropping a tool's entry from the baseline must not turn its gate off.
+  for (const tool of Object.keys(counts))
+    if (!before(tool))
+      unmeasured.push(
+        `${tool}: the baseline has no count yet. Run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
+      );
+
   for (const [tool, now] of Object.entries(counts)) {
     if (["jscpd", "shared copies", "tests", "comments"].includes(tool)) continue;
     const was = before(tool);
@@ -452,11 +478,6 @@ export function compare(baseline, counts, config = {}) {
   if (counts["shared copies"]) {
     const hint =
       "Each is a warning above with both places: import the shared one, delete the copy (SHARED.md).";
-    // A repository that never measured them would pass any number, so no baseline here is an error, not a new row.
-    if (!before("shared copies"))
-      unmeasured.push(
-        "shared copies: the baseline has no count yet. Run `npx devkit-no-bloat --write-baseline` and commit the config.",
-      );
     gate("shared copies", "clones", "clones", hint);
     gate("shared copies", "lines", "copied lines", hint);
   }
@@ -743,12 +764,27 @@ function installedPackages(/** @type {string} */ root) {
   return { root, packages, missing };
 }
 
-/** The default branch a local run is checked against when `--lines-from` is not given, the first that resolves. */
+/** The default branch a run is checked against when `--lines-from` is not given, the first that resolves. */
 const UPSTREAMS = ["origin/HEAD", "origin/main", "origin/master"];
 
 /** Where a reason for an exception can be written: Knip's config reads comments (these names, or a run's --config); jscpd's .jscpd.json is strict JSON. */
 const KNIP_CONFIGS = ["knip.json", "knip.jsonc", ".knip.json", ".knip.jsonc"];
 const JSCPD_CONFIG = ".jscpd.json";
+/** Every file that says how Knip or jscpd counts, in any format Knip reads (knip.dev, "Configuration"). */
+const DEFINITIONS =
+  /^(?:\.?knip(?:\.config)?\.(?:json|jsonc|js|cjs|mjs|ts|cts|mts)|\.jscpd\.json)$/;
+const LOCKFILES = /^(?:package-lock\.json|npm-shrinkwrap\.json|pnpm-lock\.yaml)$/;
+/** package.json keys that configure a tool instead of the package: a change to one is a change to how it counts. */
+const TOOL_KEYS = ["knip", "jscpd"];
+
+/** The value of `--flag value` or `--flag=value` for each flag in `names`. */
+function flagValues(/** @type {string[]} */ args, /** @type {string[]} */ names) {
+  return args.flatMap((arg, i) => {
+    const eq = names.find((n) => arg.startsWith(`${n}=`));
+    if (eq) return [arg.slice(eq.length + 1)];
+    return names.includes(args[i - 1] ?? "") ? [arg] : [];
+  });
+}
 
 /**
  * The change against the merge base of `from` with the working tree (so a local run sees what is not committed yet): the
@@ -767,6 +803,22 @@ function atBase(
       stdio: ["ignore", "pipe", "pipe"],
     });
   const base = git(["merge-base", from, "HEAD"]).trim();
+  const head = git(["rev-parse", "HEAD"]).trim();
+  // A base that is HEAD itself compares the change with itself. On a pull request the base is its first parent, so this
+  // is a run pointed at its own commit while the default branch says the change is not in it yet.
+  if (base === head)
+    for (const ref of UPSTREAMS) {
+      let tip;
+      try {
+        tip = git(["rev-parse", "--verify", "--quiet", `${ref}^{commit}`]).trim();
+      } catch {
+        continue;
+      }
+      if (git(["merge-base", tip, head]).trim() !== head)
+        throw new Error(
+          `${from} is the change itself (its merge base with HEAD is HEAD, which ${ref} does not have). Pass the branch the change goes into.`,
+        );
+    }
   const before = (/** @type {string} */ path) =>
     git(["ls-tree", "--name-only", base, "--", path]).trim()
       ? git(["show", `${base}:${path}`])
@@ -800,11 +852,13 @@ function atBase(
   };
 }
 
-/** The base a run checks the baseline against: `--lines-from`, else (outside Actions) the default branch, else none. */
+/**
+ * The base a run checks the baseline against: `--lines-from`, else the default branch. Only a run in Actions with none of
+ * them (a shallow checkout of the default branch, or a merge queue whose pull request ran it) has no base; a local run
+ * with none fails, and setting GITHUB_ACTIONS does not skip a base that resolves.
+ */
 function baseRef(/** @type {string} */ root, /** @type {string | undefined} */ from) {
   if (from) return from;
-  // In Actions a run without --lines-from is the default branch itself, or a merge queue whose pull request ran it.
-  if (process.env.GITHUB_ACTIONS === "true") return null;
   for (const ref of UPSTREAMS)
     try {
       execFileSync("git", ["rev-parse", "--verify", "--quiet", `${ref}^{commit}`], {
@@ -813,26 +867,17 @@ function baseRef(/** @type {string} */ root, /** @type {string | undefined} */ f
       });
       return ref;
     } catch {}
+  if (process.env.GITHUB_ACTIONS === "true") return null;
   throw new Error(
     `none of ${UPSTREAMS.join(", ")} resolves, so a raised baseline cannot be told from the count. Pass --lines-from <rev> (the branch the change goes into).`,
   );
 }
 
-/**
- * Whether a change only moves what is measured, never the code measured: it touches nothing but the config, a lockfile,
- * the workflows, and in package.json only dependency versions or a new shared package. Such a change may raise a
- * baseline, since a new tool, devkit or shared release counts what the repository already had. Pure.
- * @param {string[]} changed @param {string} configPath
- * @param {string | null} manifestBefore package.json at the base @param {string | null} manifestNow package.json now
- */
-export function measurementOnly(changed, configPath, manifestBefore, manifestNow) {
-  return changed.every(
-    (p) =>
-      p === configPath ||
-      /^(?:package-lock\.json|npm-shrinkwrap\.json|pnpm-lock\.yaml)$/.test(p) ||
-      /^\.github\/workflows\/[^/]+\.ya?ml$/.test(p) ||
-      (p === "package.json" && pinsOnly(manifestBefore, manifestNow)),
-  );
+/** A dependency pin's version: `1.2.3`, `^1.2.3`, or a git pin's `#v1.2.3`; null when it names none. */
+function pinVersion(/** @type {unknown} */ pin) {
+  const m =
+    typeof pin === "string" ? /(\d+)\.(\d+)\.(\d+)/.exec(pin.split("#").at(-1) ?? "") : null;
+  return m ? [Number(m[1]), Number(m[2]), Number(m[3])] : null;
 }
 
 const DEPENDENCY_FIELDS = [
@@ -842,52 +887,138 @@ const DEPENDENCY_FIELDS = [
   "peerDependencies",
 ];
 
-/** package.json changed only in dependency versions, or by adding a shared package (an added library can be unused). */
-function pinsOnly(/** @type {string | null} */ before, /** @type {string | null} */ now) {
-  if (before === null || now === null) return false;
-  const [a, b] = [JSON.parse(before), JSON.parse(now)];
-  const rest = (/** @type {Record<string, unknown>} */ m) =>
-    JSON.stringify(
-      Object.fromEntries(Object.entries(m).filter(([k]) => !DEPENDENCY_FIELDS.includes(k))),
-    );
-  if (rest(a) !== rest(b)) return false;
-  const shared = new Set(PACKAGES.map((p) => p.name));
-  return DEPENDENCY_FIELDS.every((field) => {
-    const [was, is] = [a[field] ?? {}, b[field] ?? {}];
-    return (
-      Object.keys(was).every((name) => name in is) &&
-      Object.keys(is).every((name) => name in was || shared.has(name))
-    );
-  });
+/**
+ * What a change does to the counts, from the files it touches. `code`: it changes something the counts read (anything
+ * but the config's `baseline` and `tools`, a lockfile, a definition, and in package.json dependency versions moved
+ * forward or a new shared package). `definition`: what it changes in how Knip or jscpd counts (their config files in any
+ * format, package.json's `knip` or `jscpd`, the no-bloat config outside `baseline` and `tools`). `workflow`: the
+ * workflows it changes that run the check. `back`: the shared packages it moves to an older release. Pure.
+ * @param {{ changed: string[], configPath: string, before: (path: string) => string | null, now: (path: string) => string | null }} change
+ */
+export function classify(change) {
+  const { changed, configPath } = change;
+  /** @type {string[]} */
+  const definition = [];
+  /** @type {string[]} */
+  const back = [];
+  let code = false;
+  /** @type {string[]} */
+  const workflow = [];
+  const json = (/** @type {string | null} */ text) => {
+    try {
+      return text === null ? null : JSON.parse(text);
+    } catch {
+      return null;
+    }
+  };
+  const without = (/** @type {any} */ o, /** @type {string[]} */ keys) =>
+    JSON.stringify(Object.fromEntries(Object.entries(o ?? {}).filter(([k]) => !keys.includes(k))));
+  for (const p of changed) {
+    if (LOCKFILES.test(p)) continue;
+    if (DEFINITIONS.test(p)) {
+      definition.push(p);
+      continue;
+    }
+    if (p === configPath) {
+      if (
+        without(json(change.before(p)), ["baseline", "tools"]) !==
+        without(json(change.now(p)), ["baseline", "tools"])
+      )
+        definition.push(`${p} (outside baseline and tools)`);
+      continue;
+    }
+    if (p === "package.json") {
+      const [a, b] = [json(change.before(p)), json(change.now(p))];
+      if (!a || !b) {
+        code = true;
+        continue;
+      }
+      for (const key of TOOL_KEYS)
+        if (JSON.stringify(a[key]) !== JSON.stringify(b[key]))
+          definition.push(`package.json "${key}"`);
+      if (
+        without(a, [...DEPENDENCY_FIELDS, ...TOOL_KEYS]) !==
+        without(b, [...DEPENDENCY_FIELDS, ...TOOL_KEYS])
+      )
+        code = true;
+      const shared = new Set(PACKAGES.map((x) => x.name));
+      for (const field of DEPENDENCY_FIELDS) {
+        const [was, is] = [a[field] ?? {}, b[field] ?? {}];
+        // An added library can be unused, and a removed one can leave an import unlisted.
+        if (!Object.keys(was).every((n) => n in is)) code = true;
+        if (!Object.keys(is).every((n) => n in was || shared.has(n))) code = true;
+        for (const name of Object.keys(is)) {
+          const [x, y] = [pinVersion(was[name]), pinVersion(is[name])];
+          if (x && y && (y[0] - x[0] || y[1] - x[1] || y[2] - x[2]) < 0) {
+            code = true;
+            if (shared.has(name)) back.push(`${name} ${was[name]} to ${is[name]}`);
+          }
+        }
+      }
+      continue;
+    }
+    code = true;
+    if (/^\.github\/workflows\/[^/]+\.ya?ml$/.test(p)) {
+      const text = `${change.before(p) ?? ""}\n${change.now(p) ?? ""}`;
+      if (/\.github\/workflows\/(?:pr|no-bloat)\.yml|devkit-no-bloat|no-bloat\.mjs/.test(text))
+        workflow.push(p);
+    }
+  }
+  return { code, definition, workflow, back };
 }
 
 /**
- * Each Knip, jscpd or shared-copies count the change raised in the baseline: a copy or unused code accepted by moving the
- * number instead of removing it. A count the base did not have is raised from 0, and so is every count when the base had
- * no baseline. Only a change that moves what is measured and no code (`measurementOnly`) may raise one. Tests may rise:
- * a new test is how they do. Pure.
+ * What the change is refused for, against the config at its base. A change that moves code may not raise a Knip, jscpd
+ * or shared-copies count (a count the base lacked is raised from 0, and every count when the base had no baseline), nor
+ * change how a count is measured, nor the workflows that run the check, nor move a shared package back. A change of what
+ * is measured comes on its own, and may raise but not lower or drop a count: a narrower measure would hide what it no
+ * longer reads. Only a version bump alone may lower one. No change drops a count from the baseline. Tests may rise: a
+ * new test is how they do. Pure.
  * @param {Config} config @param {Config | null} base the config at the pull request's base
- * @param {boolean} [measuring] whether the change is `measurementOnly`
+ * @param {ReturnType<typeof classify>} kind
  */
-export function raised(config, base, measuring = false) {
-  if (measuring) return [];
+export function raised(config, base, kind) {
   const was = base?.baseline ?? {};
+  const now = config.baseline ?? {};
   /** @type {string[]} */
   const out = [];
-  for (const [tool, counts] of Object.entries(config.baseline ?? {})) {
-    if (
-      ["measured_at", "tests", "comments"].includes(tool) ||
-      !counts ||
-      typeof counts !== "object"
-    )
-      continue;
-    const before = /** @type {Record<string, number>} */ (was[tool] ?? {});
-    for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
-      if (key !== "percentage" && typeof n === "number" && n > (before[key] ?? 0))
-        out.push(
-          `${tool}: this change raises the baseline's ${key} from ${before[key] ?? 0} to ${n}. A raise lets the new copy or unused code in: remove it instead, and put a real exception in knip.json's ignore list with a comment saying why. Only a change that moves no code (a tool, devkit or shared package bump alone) may raise it.`,
-        );
-  }
+  const skip = (/** @type {string} */ tool, /** @type {unknown} */ counts) =>
+    tool === "measured_at" || !counts || typeof counts !== "object";
+  for (const [tool, counts] of Object.entries(was))
+    if (!skip(tool, counts) && !(tool in now))
+      out.push(
+        `${tool}: this change drops its count from the baseline, which turns its gate off. Put the count back; a measure is never switched off.`,
+      );
+  if (kind.code) {
+    for (const [tool, counts] of Object.entries(now)) {
+      if (skip(tool, counts) || ["tests", "comments"].includes(tool)) continue;
+      const before = /** @type {Record<string, number>} */ (was[tool] ?? {});
+      for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
+        if (key !== "percentage" && typeof n === "number" && n > (before[key] ?? 0))
+          out.push(
+            `${tool}: this change raises the baseline's ${key} from ${before[key] ?? 0} to ${n}. A raise lets the new copy or unused code in: remove it instead, and put a real exception in knip.json's ignore list with a comment saying why. Only a change that moves no code (a tool, devkit or shared package bump alone) may raise it.`,
+          );
+    }
+    if (kind.definition.length)
+      out.push(
+        `this change moves code and also how it is counted (${kind.definition.join(", ")}). Change the measure in a change of its own.`,
+      );
+    if (kind.workflow.length)
+      out.push(
+        `this change moves code and also the workflow that runs this check (${kind.workflow.join(", ")}). Change the workflow in a change of its own.`,
+      );
+  } else if (kind.definition.length)
+    for (const [tool, counts] of Object.entries(was)) {
+      if (skip(tool, counts)) continue;
+      const after = /** @type {Record<string, number>} */ (now[tool] ?? {});
+      for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
+        if (key !== "percentage" && typeof n === "number" && (after[key] ?? 0) < n)
+          out.push(
+            `${tool}: this change of how it is counted (${kind.definition.join(", ")}) lowers ${key} from ${n} to ${after[key] ?? 0}, so the narrower measure hides what it no longer reads. Measure as much as before; an exception goes in knip.json's ignore list with its reason.`,
+          );
+    }
+  for (const b of kind.back)
+    out.push(`this change moves ${b}, an older release. Keep the shared package at its newest.`);
   return out;
 }
 
@@ -917,7 +1048,7 @@ function parseJsonc(/** @type {string} */ text) {
 /** The values of jscpd's `--ignore` and `--ignore-pattern` in a config's jscpd args. */
 function jscpdIgnores(/** @type {Config | null} */ config) {
   const args = config?.jscpd && typeof config.jscpd === "object" ? (config.jscpd.args ?? []) : [];
-  return args.filter((_, i) => /^(?:--ignore|--ignore-pattern|-i)$/.test(args[i - 1] ?? ""));
+  return flagValues(args, ["--ignore", "--ignore-pattern", "-i"]);
 }
 
 /**
@@ -956,7 +1087,7 @@ export function unreasoned(change, config, base) {
     [...new Set(is)].filter((e) => !was.includes(e));
   // The default names, and any a knip run in the config names with --config.
   const knipArgs = (config.knip ?? []).flatMap((r) => r.args ?? []);
-  const named = knipArgs.filter((_, i) => /^(?:--config|-c)$/.test(knipArgs[i - 1] ?? ""));
+  const named = flagValues(knipArgs, ["--config", "-c"]);
   for (const path of new Set([...KNIP_CONFIGS, ...named])) {
     const now = change.now(path);
     if (now === null) continue;
@@ -993,6 +1124,11 @@ export function unreasoned(change, config, base) {
     if (/jscpd:ignore-start(?:\s*(?:\*\/|-->)?\s*)$/.test(line))
       out.push(
         `a new \`jscpd:ignore-start\` gives no reason (${line.trim()}). Write why after the marker on the same line, or remove the copy.`,
+      );
+    // Knip never reports an export tagged @public, so the tag is an exception like any other.
+    else if (/@public(?:\s*(?:\*\/)?\s*)$/.test(line))
+      out.push(
+        `a new \`@public\` gives no reason (${line.trim()}). Knip skips the export it tags: write who uses it after the tag, or remove the export.`,
       );
   return out;
 }
@@ -1032,15 +1168,9 @@ function main() {
     ref = baseRef(root, from) ?? undefined;
     if (ref) {
       const base = atBase(root, file, ref);
-      const measuring = measurementOnly(
-        base.changed,
-        base.configPath,
-        base.before("package.json"),
-        base.now("package.json"),
-      );
       const next = write ? { ...config, baseline: { ...measured.counts } } : config;
       refused.push(
-        ...raised(next, base.config, measuring),
+        ...raised(next, base.config, classify(base)),
         ...unreasoned(base, config, base.config),
       );
     }

@@ -11,6 +11,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
+  classify,
   compare,
   countFiles,
   knipCounts,
@@ -25,7 +26,13 @@ import {
 
 const BIN = fileURLToPath(new URL("../bin/no-bloat.mjs", import.meta.url));
 
-const KNIP = "Unused files (2)\nsrc/a.ts\nsrc/b.ts\nUnused exports (3)\nsrc/c.ts: x, y, z\n";
+const KNIP = JSON.stringify({
+  issues: [
+    { file: "src/a.ts", files: [{ name: "src/a.ts" }], exports: [] },
+    { file: "src/b.ts", files: [{ name: "src/b.ts" }] },
+    { file: "src/c.ts", exports: [{ name: "x" }, { name: "y" }, { name: "z" }] },
+  ],
+});
 
 /** A runner that answers knip with `knip` and writes a jscpd report with `clones` into the --output directory. */
 const fakeRun = ({ knip = KNIP, clones = 4, percentage = 1.234, sources = 9 } = {}) => {
@@ -58,25 +65,26 @@ test("a tool that is not installed is named to npx with --package, so an inherit
   ]);
 });
 
-test("knipCounts reads the compact report's headings, and refuses output it cannot read rather than pass it as clean", () => {
-  assert.deepEqual(knipCounts(KNIP), { "Unused files": 2, "Unused exports": 3 });
-  assert.deepEqual(knipCounts(""), {});
-  assert.deepEqual(knipCounts("✂️  Excellent, Knip found no issues.\n"), {});
-  assert.deepEqual(knipCounts("\n"), {});
-  // Only a heading line counts: not a file line that ends in a count.
-  assert.deepEqual(knipCounts("Unused exports (12)\nsrc/c.ts: Thing (4)\n"), {
-    "Unused exports": 12,
-  });
-  assert.throws(
-    () => knipCounts("src/a.ts: unused file\n"),
-    /knip printed no report this reads: src\/a\.ts: unused file$/,
+test("knipCounts counts each issue in Knip's JSON report, not each file, and refuses output it cannot read rather than pass it as clean", () => {
+  // Three unused exports in one file are three, and two unused dependencies in one package.json are two.
+  assert.deepEqual(knipCounts(KNIP), { files: 2, exports: 3 });
+  assert.deepEqual(
+    knipCounts(
+      JSON.stringify({
+        issues: [{ file: "package.json", dependencies: [{ name: "a" }, { name: "b" }] }],
+      }),
+    ),
+    { dependencies: 2 },
   );
+  assert.deepEqual(knipCounts('{"issues":[]}'), {});
+  for (const text of ["", "Unused files (2)\nsrc/a.ts\n", "{}"])
+    assert.throws(() => knipCounts(text), /knip printed no report this reads/);
 });
 
 test("with no config: one knip run, jscpd on the root unless the repository has its own .jscpd.json", () => {
   const bare = fakeRun();
   assert.deepEqual(measure({}, bare.run, false).counts, {
-    knip: { "Unused files": 2, "Unused exports": 3 },
+    knip: { files: 2, exports: 3 },
     jscpd: { clones: 4, lines: 40, percentage: 1.23 },
     "shared copies": { clones: 0, lines: 0 },
     tests: { files: 0, cases: 0 },
@@ -84,7 +92,7 @@ test("with no config: one knip run, jscpd on the root unless the repository has 
   });
   assert.deepEqual(bare.calls[0], [
     "knip",
-    ["--no-exit-code", "--no-progress", "--reporter", "compact"],
+    ["--no-exit-code", "--no-progress", "--reporter", "json"],
   ]);
   assert.deepEqual(
     bare.calls[1][1].filter((a) => !a.includes("jscpd-")),
@@ -183,8 +191,8 @@ test("what grew is an error; what shrank is a note to lower the baseline; a find
   );
 });
 
-test("a tool with no baseline is reported and never an error", () => {
-  const { rows, errors } = compare(
+test("a tool with no baseline is a row and an error, so dropping its entry cannot turn its gate off", () => {
+  const { rows, errors, stale } = compare(
     { jscpd: { clones: 50 } },
     { knip: { "Unused files": 9 }, jscpd: { clones: 50, lines: 600, percentage: 3 } },
   );
@@ -195,6 +203,9 @@ test("a tool with no baseline is reported and never an error", () => {
     ["jscpd", "duplicated lines % (not gated)", null, 3],
   ]);
   assert.deepEqual(errors, []);
+  assert.deepEqual(stale, [
+    "knip: the baseline has no count yet. Run `npx devkit-no-bloat --write-baseline` and commit the config.",
+  ]);
   assert.equal(
     render([...rows, ["jscpd", "lines", 4, 3], ["tests", "cases", 3, 4]], [], "abc1234"),
     [
@@ -522,7 +533,7 @@ test(
       assert.equal(written.status, 0, written.stderr);
       const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
       assert.deepEqual(config.knip, [{ label: "knip (root)" }]);
-      assert.deepEqual(config.baseline["knip (root)"], { "Unused files": 2, "Unused exports": 3 });
+      assert.deepEqual(config.baseline["knip (root)"], { files: 2, exports: 3 });
       assert.deepEqual(config.baseline.jscpd, { clones: 4, lines: 30, percentage: 2.5 });
       assert.deepEqual(config.baseline.tests, { files: 0, cases: 0 });
       // No commit yet: the day.
@@ -572,13 +583,13 @@ test(
       const r = runBin(dir);
       assert.equal(r.status, 1);
       assert.match(r.stdout, /::error::jscpd could not run: jscpd exited 3: jscpd: boom/);
-      assert.match(r.stdout, /\| knip \| Unused files \| none \| 2 \|/);
+      assert.match(r.stdout, /\| knip \| files \| none \| 2 \|/);
 
       writeFileSync(
         join(dir, "bloat.json"),
         JSON.stringify({
           knip: [{ label: "knip" }, { label: "knip (broken)", args: ["--fail"] }],
-          baseline: { knip: { "Unused files": 1 } },
+          baseline: { knip: { files: 1 } },
         }),
       );
       const failed = runBin(dir, ["--config", "bloat.json", "--lines-from", "no-such-rev"]);
@@ -588,7 +599,7 @@ test(
         /::error::knip \(broken\) could not run: knip exited 2: knip: boom/,
       );
       assert.match(failed.stdout, /::error::jscpd could not run/);
-      assert.match(failed.stdout, /::error::knip: Unused files went from 1 to 2/);
+      assert.match(failed.stdout, /::error::knip: files went from 1 to 2/);
       assert.match(failed.stdout, /::error::The baseline at no-such-rev could not be read: /);
       // A report never stops a copy, so there is no report mode.
       const warnOnly = runBin(dir, ["--warn-only"]);
@@ -691,8 +702,12 @@ test(
       const local = runBin(dir, [], { GITHUB_ACTIONS: "" });
       assert.equal(local.status, 1, local.stdout);
       assert.match(local.stdout, /::error::jscpd: this change raises the baseline's clones/);
-      // A run on the default branch in Actions has nothing to compare.
-      assert.equal(runBin(dir).status, 0);
+      // Setting GITHUB_ACTIONS does not skip a default branch that resolves.
+      assert.equal(runBin(dir).status, 1);
+      // Nor does pointing --lines-from at the change itself.
+      const self = runBin(dir, ["--lines-from", "HEAD"]);
+      assert.equal(self.status, 1, self.stdout);
+      assert.match(self.stdout, /HEAD is the change itself/);
 
       // The same raise with no code moved (a tool bump: config, lockfile, versions) passes; a new library does not.
       git(dir, "rm", "-q", "copy.mjs");
@@ -734,7 +749,7 @@ test(
       git(dir, "checkout", "-qb", "change");
       writeFileSync(join(dir, "a.mjs"), "export const a = 1;\n");
       assert.equal(runBin(dir, ["--write-baseline"], { GITHUB_ACTIONS: "" }).status, 1);
-      config.baseline.knip = { "Unused files": 2, "Unused exports": 3 };
+      config.baseline.knip = { files: 2, exports: 3 };
       writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
       writeFileSync(
         join(dir, "knip.json"),
@@ -743,16 +758,13 @@ test(
       writeFileSync(join(dir, ".jscpd.json"), '{ "ignore": ["**/node_modules/**", "copy/**"] }\n');
       writeFileSync(
         join(dir, "b.mjs"),
-        "// jscpd:ignore-start\nexport const b = 1;\n// jscpd:ignore-end\n// jscpd:ignore-start the fixture mirrors the API reply\n",
+        "// jscpd:ignore-start\nexport const b = 1;\n// jscpd:ignore-end\n// jscpd:ignore-start the fixture mirrors the API reply\n/** @public */\nexport const c = 1;\n/** @public read by the docs build */\n",
       );
       git(dir, "add", "-A");
       git(dir, "commit", "-qm", "Change");
       const r = runBin(dir, ["--lines-from", "main"]);
       assert.equal(r.status, 1, r.stdout);
-      assert.match(
-        r.stdout,
-        /::error::knip: this change raises the baseline's Unused files from 0 to 2/,
-      );
+      assert.match(r.stdout, /::error::knip: this change raises the baseline's files from 0 to 2/);
       assert.match(
         r.stdout,
         /::error::knip\.json: the ignore entry "a" is new and says nothing about why/,
@@ -764,6 +776,7 @@ test(
         /::error::a new `jscpd:ignore-start` gives no reason \(\/\/ jscpd:ignore-start\)/,
       );
       assert.equal(r.stdout.match(/::error::a new `jscpd:ignore-start`/g)?.length, 1);
+      assert.equal(r.stdout.match(/::error::a new `@public` gives no reason/g)?.length, 1);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -799,6 +812,110 @@ test(
       const r = runBin(dir);
       assert.equal(r.status, 1);
       assert.match(r.stdout, /\.no-bloat\.json is not JSON/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test("classify: what counts as code, a change of measure, a workflow that runs the check, and a shared package moved back", () => {
+  const files = /** @type {Record<string, [string | null, string | null]>} */ ({
+    ".no-bloat.json": [
+      '{"jscpd":{"args":["src"]},"baseline":{}}',
+      '{"jscpd":{"args":["src","--ignore=**/x.js"]},"baseline":{"a":1}}',
+    ],
+    "knip.ts": ["export default {}", "export default { entry: ['src/**'] }"],
+    "package.json": [
+      JSON.stringify({
+        name: "x",
+        knip: {},
+        devDependencies: { "@dustinedwards/devkit": "github:DrDustinEdwards/devkit#v0.38.0" },
+      }),
+      JSON.stringify({
+        name: "x",
+        knip: { rules: { exports: "off" } },
+        devDependencies: { "@dustinedwards/devkit": "github:DrDustinEdwards/devkit#v0.37.1" },
+      }),
+    ],
+    ".github/workflows/checks.yml": [
+      "uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@abc",
+      "uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@abc\n  with: { no-bloat-prepare: rm src/copy.ts }",
+    ],
+    ".github/workflows/deploy.yml": ["on: push", "on: [push]"],
+  });
+  const change = (/** @type {string[]} */ changed) => ({
+    changed,
+    configPath: ".no-bloat.json",
+    before: (/** @type {string} */ p) => files[p]?.[0] ?? null,
+    now: (/** @type {string} */ p) => files[p]?.[1] ?? null,
+  });
+  assert.deepEqual(classify(change(Object.keys(files))), {
+    code: true,
+    definition: [".no-bloat.json (outside baseline and tools)", "knip.ts", 'package.json "knip"'],
+    workflow: [".github/workflows/checks.yml"],
+    back: [
+      "@dustinedwards/devkit github:DrDustinEdwards/devkit#v0.38.0 to github:DrDustinEdwards/devkit#v0.37.1",
+    ],
+  });
+  // A baseline and lockfile change alone moves nothing the counts read.
+  files[".no-bloat.json"] = ['{"baseline":{}}', '{"baseline":{"a":1},"tools":{"knip":"knip@7"}}'];
+  assert.deepEqual(classify(change([".no-bloat.json", "package-lock.json"])), {
+    code: false,
+    definition: [],
+    workflow: [],
+    back: [],
+  });
+});
+
+test(
+  "end to end: dropping a count, switching a measure off, or changing a measure with code fails; a measure changed alone may not lower a count",
+  { skip: process.platform === "win32" },
+  () => {
+    const dir = scratch();
+    try {
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify({ shared: false }));
+      assert.equal(runBin(dir, ["--write-baseline"]).status, 0);
+      writeFileSync(join(dir, "a.mjs"), "export const a = 1;\n");
+      git(dir, "add", "-A");
+      git(dir, "commit", "-qm", "Base");
+      git(dir, "update-ref", "refs/remotes/origin/main", "main");
+      git(dir, "checkout", "-qb", "change");
+      const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
+
+      // jscpd switched off and its count dropped, with code beside it.
+      writeFileSync(join(dir, "b.mjs"), "export const b = 1;\n");
+      const off = { ...config, jscpd: false, baseline: { ...config.baseline } };
+      delete off.baseline.jscpd;
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(off));
+      const r = runBin(dir, [], { GITHUB_ACTIONS: "" });
+      assert.equal(r.status, 1, r.stdout);
+      assert.match(r.stdout, /::error::jscpd: this change drops its count from the baseline/);
+      assert.match(
+        r.stdout,
+        /::error::this change moves code and also how it is counted \(\.no-bloat\.json/,
+      );
+
+      // The same switch alone still drops the count; a narrower knip config alone may not lower one.
+      rmSync(join(dir, "b.mjs"));
+      assert.match(
+        runBin(dir, [], { GITHUB_ACTIONS: "" }).stdout,
+        /::error::jscpd: this change drops its count/,
+      );
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
+      writeFileSync(join(dir, "knip.ts"), "export default { entry: ['**'] };\n");
+      const knip = join(dir, "node_modules", ".bin", "knip");
+      writeFileSync(
+        knip,
+        readFileSync(knip, "utf8").replace(/printf '%s' '.*'/, `printf '%s' '{"issues":[]}'`),
+      );
+      const lowered = { ...config, baseline: { ...config.baseline, knip: {} } };
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(lowered));
+      const n = runBin(dir, [], { GITHUB_ACTIONS: "" });
+      assert.equal(n.status, 1, n.stdout);
+      assert.match(
+        n.stdout,
+        /::error::knip: this change of how it is counted \(knip\.ts\) lowers files from 2 to 0/,
+      );
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.40.0 (2026-11-12)
+
+Closes the eight ways around the no-bloat ratchet that the 0.38.0 verifier found (capsid handoff/no-bloat-gaps-verify.md). **Breaking**: every Knip baseline is re-keyed, so each repository's bump PR runs `npx devkit-no-bloat --write-baseline`, as a change of its own (the bump alone may raise or lower). A repository that drops `--warn-only` from its workflow does that in a PR before the bump, since a workflow that runs the check no longer goes in a change with anything but itself.
+
+- Knip is read from `--reporter json`, one count per issue. Before, the compact report's heading counted files (and one per package.json), so a second unused export in a file with one, or a second unused dependency, passed. The baseline keys are Knip's issue types (`files`, `exports`, `dependencies`, `types`...) instead of its headings.
+- Every count the run measures needs its baseline entry, and a change that drops one fails. Before, deleting `baseline.knip` turned Knip's gate off.
+- A change that moves code may not also change how a count is measured: the no-bloat config outside `baseline` and `tools` (`"jscpd": false`, `"knip": []`, run arguments), a Knip config in any format (`knip.json`, `.jsonc`, `.ts`, `knip.config.*`), `.jscpd.json` (any key, not only `ignore`), or `package.json`'s `knip` or `jscpd`. A change of measure on its own may raise a count but not lower one, so narrowing what is read cannot hide code. Only a version bump alone may lower counts.
+- A new `@public` tag needs its reason after it: Knip never reports the export it tags.
+- `pr.yml` and `no-bloat.yml` fail when the installed devkit is older than the devkit the workflow runs from, and the bin refuses a change that moves a shared package to an older release.
+- `GITHUB_ACTIONS=true` no longer skips the base: the default branch is used whenever it resolves, and a `--lines-from` whose merge base is HEAD itself, while the default branch lacks HEAD, fails.
+- Workflows no longer count as "measurement only". A change to a workflow that runs the check (calls `pr.yml` or `no-bloat.yml`, or runs the bin) beside other code fails: a prepare step or a `config:` input could otherwise hide the change it ships with.
+- `--ignore=<glob>` and `--config=<file>` are read like their two-argument forms.
+
 ## 0.39.0 (2026-11-12)
 
 The copies inside devkit are one each, the bolt-on sweep's rows for this repository. New exports below; no breaking change to a config.
