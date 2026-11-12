@@ -5,6 +5,15 @@
       "scripts",
       "testing",
       "vite",
+      "node",
+      "lint",
+      "stryker",
+      "drill",
+      "test/fixtures",
+      "build-defines.d.ts",
+      "oxfmt.config.ts",
+      "oxlint.config.ts",
+      "stryker.config.mjs",
       "--min-lines",
       "8"
     ]
@@ -14,12 +23,12 @@
     "jscpd": "jscpd@5.4.0"
   },
   "baseline": {
-    "measured_at": "02677f9",
+    "measured_at": "6da058c",
     "knip": {},
     "jscpd": {
-      "clones": 0,
-      "lines": 0,
-      "percentage": 0,
+      "clones": 2,
+      "lines": 40,
+      "percentage": 0.25,
       "unread": 0
     },
     "shared copies": {
@@ -31,9 +40,9 @@
       "cases": 244
     },
     "comments": {
-      "lines": 3156,
-      "code": 18646,
-      "percentage": 14.48
+      "lines": 3222,
+      "code": 18901,
+      "percentage": 14.56
     }
   }
 }
