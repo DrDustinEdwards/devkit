@@ -17,10 +17,11 @@
 // `--available-height`, Shiki's `--shiki-*`): exact, or a prefix ending in `*`. `skip_dirs` (default `node_modules`, `assets`) names directory names the walk
 // of `dirs` does not enter.
 
-import { existsSync, readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { walkFiles } from "../node/index.mjs";
 import { escapeAnnotation } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
 
@@ -60,19 +61,10 @@ export function uses(content) {
 const CHECKED = /\.(tsx?|css)$/;
 const DECLARING = /\.(tsx?|css|m?js)$/;
 
-/** @param {string} path @param {Set<string>} skip @param {RegExp} kinds @param {string[]} [out] @returns {string[]} */
-function walk(path, skip, kinds, out = []) {
-  if (statSync(path).isFile()) {
-    if (kinds.test(path)) out.push(path);
-    return out;
-  }
-  for (const e of readdirSync(path, { withFileTypes: true })) {
-    const full = `${path}/${e.name}`;
-    if (e.isDirectory()) {
-      if (!skip.has(e.name)) walk(full, skip, kinds, out);
-    } else if (kinds.test(e.name)) out.push(full);
-  }
-  return out;
+/** The files of one kind at a path: the file itself, or every one under the directory. @param {string} path @param {Set<string>} skip @param {RegExp} kinds @returns {string[]} */
+function filesAt(path, skip, kinds) {
+  if (statSync(path).isFile()) return kinds.test(path) ? [path] : [];
+  return walkFiles(path, { keep: (name) => kinds.test(name), skipDir: (name) => skip.has(name) });
 }
 
 function main() {
@@ -94,7 +86,7 @@ function main() {
   for (const d of config.declared_in ?? []) {
     const abs = resolve(root, d);
     if (!existsSync(abs)) fail(`declared_in ${d} does not exist (is it installed?)`);
-    for (const f of walk(abs, new Set(), DECLARING))
+    for (const f of filesAt(abs, new Set(), DECLARING))
       for (const n of declarations(readFileSync(f, "utf8"))) declared.add(n);
   }
   /** @type {Array<{ rel: string, content: string }>} */
@@ -102,7 +94,7 @@ function main() {
   for (const d of config.dirs) {
     const abs = resolve(root, d);
     if (!existsSync(abs)) fail(`directory ${d} does not exist`);
-    for (const f of walk(abs, skip, CHECKED)) {
+    for (const f of filesAt(abs, skip, CHECKED)) {
       const content = readFileSync(f, "utf8");
       files.push({ rel: f.slice(root.length + 1).replace(/\\/g, "/"), content });
       for (const n of declarations(content)) declared.add(n);
