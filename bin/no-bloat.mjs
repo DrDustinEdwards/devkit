@@ -1605,7 +1605,11 @@ function checkPart(job) {
       inputs[key] = v;
     }
   // A `with` that is not a map is kept whole: GitHub refuses it, and so does the comparison.
-  const rest = { ...j, uses: workflow, with: given && typeof given === "object" ? null : given };
+  const rest = {
+    ...j,
+    uses: workflow,
+    with: given === undefined || (given && typeof given === "object") ? null : given,
+  };
   return { job: rest, workflow, inputs, twice };
 }
 
