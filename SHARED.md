@@ -87,7 +87,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.141.3 (DrDustinEdwards/site-runtime)
+## site-runtime 0.142.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -114,10 +114,10 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./share-card`: `SHARE_CARD_WIDTH`, `SHARE_CARD_HEIGHT`, `SHARE_CARD_TYPE`, `cardText`, `CARD_TITLE_MAX`, `CARD_DESCRIPTION_MAX`, `CARD_TITLE_SIZES`, `clampTitle`, `titleFontSize`, `cardKey`, `cardLayout`, `renderShareCard`, `googleFont`, `SHARE_CARD_HEADERS`, `shareCardResponse`
 - `./maintenance`: `MAINTENANCE_RETRY_AFTER`, `maintenanceOn`, `maintenanceResponse`
 - `./security-txt`: `SECURITY_CONTACT`, `SECURITY_TXT_EXPIRES`, `securityTxt`, `securityTxtResponse`
-- `./encoding`: `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `fromBase64Text`, `fromBase64urlText`, `sha256Hex`, `hmacSha256Hex`, `fnv1a32`
+- `./encoding`: `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `fromBase64Text`, `fromBase64urlText`, `pageCursor`, `readPageCursor`, `sha256Hex`, `hmacSha256Hex`, `fnv1a32`
 - `./jwt`: `pkcs8FromPem`, `signJwt`, `githubAppJwt`
 - `./github`: `GITHUB_API`, `GITHUB_API_VERSION`, `githubHeaders`, `installationToken`, `readAllPages`, `githubJson`, `DISPATCH_PROBE_REF`, `canDispatch`, `PR_URL_SOURCE`, `parsePrUrl`
-- `./time`: `parseSqlTime`, `toDate`, `toMs`
+- `./time`: `parseSqlTime`, `toDate`, `toMs`, `monthKey`
 - `./google-service-account`: `GOOGLE_TOKEN_URL`, `parseServiceAccountKey`, `clearServiceAccountTokens`, `serviceAccountToken`
 - `./signed-token`: `signToken`, `readSignedToken`
 - `./turnstile`: `TURNSTILE_ORIGIN`, `mountTurnstile`, `SITEVERIFY_URL`, `verifyTurnstile`
@@ -210,7 +210,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`, `createSiteBackup`
 - bins: `d1-dump`
 
-## devkit 0.37.2 (DrDustinEdwards/devkit)
+## devkit 0.38.0 (DrDustinEdwards/devkit)
 
 - `./node`: `assertFloor`, `createTally`, `walkFiles`, `readDevVar`
 - `./node/syntax`: `parseSource`, `propertyReads`, `interfaceMembers`, `findAction`, `intentBranches`, `objectConst`, `stringArrayConst`, `propertyValue`, `isLiteralString`, `bindingUses`, `ts`
