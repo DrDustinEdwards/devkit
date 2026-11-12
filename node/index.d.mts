@@ -36,3 +36,6 @@ export function walkFiles(
 
 /** One value from `.dev.vars` under `root` (default the working directory), or null. */
 export function readDevVar(name: string, options?: { root?: string }): string | null;
+
+/** True when `importMetaUrl` (the caller's `import.meta.url`) is the script Node was started with, symlinks resolved. */
+export function isMain(importMetaUrl: string): boolean;

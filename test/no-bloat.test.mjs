@@ -798,7 +798,7 @@ test(
       writeFileSync(join(dir, ".no-bloat.json"), "{ nope");
       const r = runBin(dir);
       assert.equal(r.status, 1);
-      assert.match(r.stderr, /\.no-bloat\.json is not JSON/);
+      assert.match(r.stdout, /\.no-bloat\.json is not JSON/);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

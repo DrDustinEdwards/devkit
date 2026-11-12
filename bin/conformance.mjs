@@ -36,11 +36,12 @@
 // { origin, pass, fail }, for the site's own checks against the auth server.
 
 import { execFileSync, spawn } from "node:child_process";
-import { existsSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { resolve } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
+import { isMain } from "../node/index.mjs";
 
 const AUTH_SCENARIOS = [{ spec: "2026-07-28", scenario: "authorization-server-metadata-endpoint" }];
 const OFF_LIST = "http://127.0.0.1:3000/callback";
@@ -364,5 +365,4 @@ function allowedCallback(
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  await main();
+if (isMain(import.meta.url)) await main();

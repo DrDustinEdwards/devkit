@@ -17,11 +17,11 @@
 // size-matched fallback, so text never moves once drawn). Each file is named `<family-slug>-<subset>.woff2`; a variable font
 // is one file per family and subset, which covers every weight.
 
-import { mkdirSync, realpathSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { pathToFileURL } from "node:url";
 
 import { readConfig } from "./site-config.mjs";
+import { isMain } from "../node/index.mjs";
 
 // A modern desktop UA makes Google return woff2 with per-subset unicode-range blocks.
 const UA =
@@ -94,5 +94,4 @@ async function main() {
   for (const f of files) console.log(`  ${f.file}  ${(f.bytes / 1024).toFixed(1)} KB`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  await main();
+if (isMain(import.meta.url)) await main();

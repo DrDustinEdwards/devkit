@@ -4,3 +4,4 @@
 export { assertFloor, createTally } from "./tally.mjs";
 export { walkFiles } from "./walk-files.mjs";
 export { readDevVar } from "./dev-vars.mjs";
+export { isMain } from "./is-main.mjs";

@@ -22,22 +22,17 @@
 // reports every route and warns; this gates the heaviest page and the chunks that load later. Raise a limit in a reviewed
 // change that says why.
 
-import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { escapeAnnotation, fail } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
+import { isMain } from "../node/index.mjs";
 
 const KB = 1024;
 const LIMITS = ["initial_js_kb", "lazy_chunk_kb", "css_kb", "lazy_css_kb"];
-
-/** @param {string} msg @returns {never} */
-function fail(msg) {
-  console.error(`::error::size-budget: ${escapeAnnotation(msg)}`);
-  process.exit(1);
-}
 
 /** @param {number} n */
 const fmt = (n) => `${(n / KB).toFixed(1)} KB`;
@@ -50,7 +45,7 @@ async function main() {
   );
   for (const k of LIMITS)
     if (typeof config[k] !== "number" || !(config[k] > 0))
-      fail(`${configPath} needs a positive number for ${k}`);
+      fail("size-budget", `${configPath} needs a positive number for ${k}`);
   const budget = {
     initialJs: config.initial_js_kb * KB,
     lazyChunk: config.lazy_chunk_kb * KB,
@@ -59,22 +54,27 @@ async function main() {
   };
   const client = resolve(config.client ?? "build/client");
   const server = resolve(config.server ?? "build/server/index.js");
-  if (!existsSync(client) || !existsSync(server)) fail("no build; run the build first");
+  if (!existsSync(client) || !existsSync(server))
+    fail("size-budget", "no build; run the build first");
 
   /** @type {{ entry?: { module: string, imports?: string[], css?: string[] }, url: string, routes: Record<string, { id: string, parentId?: string, module?: string, imports?: string[], css?: string[], clientLoaderModule?: string }> }} */
   let assets;
   try {
     ({ assets } = await import(pathToFileURL(server).href));
   } catch (e) {
-    return fail(`the server build is unreadable: ${e instanceof Error ? e.message : String(e)}`);
+    return fail(
+      "size-budget",
+      `the server build is unreadable: ${e instanceof Error ? e.message : String(e)}`,
+    );
   }
-  if (!assets?.entry?.module) fail("the manifest names no entry");
+  if (!assets?.entry?.module) fail("size-budget", "the manifest names no entry");
   const entry = assets.entry;
 
   const file = (/** @type {string} */ url) => url.replace(/^\//, "").replace(/#$/, "");
   const sizeOf = (/** @type {string} */ rel) => {
     const p = join(client, rel);
-    if (!existsSync(p)) fail(`the manifest names ${rel}, which is not in the client build`);
+    if (!existsSync(p))
+      fail("size-budget", `the manifest names ${rel}, which is not in the client build`);
     const buf = readFileSync(p);
     return { raw: buf.length, gz: gzipSync(buf, { level: 9 }).length };
   };
@@ -83,7 +83,7 @@ async function main() {
   /** @type {(r: (typeof routes)[number] | undefined) => typeof routes} */
   const chain = (r) => (r ? [...chain(assets.routes[r.parentId ?? ""]), r] : []);
   const leaves = routes.filter((r) => r.parentId && !routes.some((c) => c.parentId === r.id));
-  if (leaves.length === 0) fail("the manifest names no page");
+  if (leaves.length === 0) fail("size-budget", "the manifest names no page");
 
   const pages = leaves.map((leaf) => {
     const js = new Set([file(assets.url), file(entry.module), ...(entry.imports ?? []).map(file)]);
@@ -137,7 +137,7 @@ async function main() {
     if (!anyPage.has(f)) lazyCssGz += s.gz;
     rows.push([heaviestCss.css.has(f) ? "css" : "lazy css", f, s.raw, s.gz, ""]);
   }
-  if (cssGz === 0) fail("no initial CSS found through the manifest");
+  if (cssGz === 0) fail("size-budget", "no initial CSS found through the manifest");
   rows.push(["css", `TOTAL (${heaviestCss.id})`, null, cssGz, `<= ${fmt(budget.css)}`]);
   rows.push(["lazy css", "TOTAL", null, lazyCssGz, `<= ${fmt(budget.lazyCss)}`]);
   if (cssGz > budget.css)
@@ -178,5 +178,4 @@ async function main() {
   console.log("size-budget: pass");
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  await main();
+if (isMain(import.meta.url)) await main();

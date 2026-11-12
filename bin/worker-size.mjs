@@ -16,19 +16,12 @@
 // wrangler itself (default wrangler@4.149.0).
 
 import { spawnSync } from "node:child_process";
-import {
-  appendFileSync,
-  existsSync,
-  mkdtempSync,
-  readFileSync,
-  realpathSync,
-  rmSync,
-} from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { appendSummary, fail } from "./annotate.mjs";
+import { isMain } from "../node/index.mjs";
 /** The sizes in KiB from wrangler's Total Upload line, or null when it has none. */
 function totalUpload(/** @type {string} */ text) {
   const m = /Total Upload:\s*([\d.]+)\s*(KiB|MiB)\s*\/\s*gzip:\s*([\d.]+)\s*(KiB|MiB)/.exec(text);
@@ -38,12 +31,6 @@ function totalUpload(/** @type {string} */ text) {
   return { raw: kib(m[1], m[2]), gzip: kib(m[3], m[4]) };
 }
 
-/** @returns {never} */
-function fail(/** @type {string} */ message) {
-  console.log(`::error::${escapeAnnotation(`devkit-worker-size: ${message}`)}`);
-  process.exit(1);
-}
-
 function main() {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--config");
@@ -51,16 +38,22 @@ function main() {
   const file = resolve(root, at >= 0 && argv[at + 1] ? argv[at + 1] : ".worker-size.json");
 
   if (!existsSync(file))
-    fail(`no budget file at ${file}. Commit one: { "raw_kib": <KiB>, "gzip_kib": <KiB> }.`);
+    fail(
+      "devkit-worker-size",
+      `no budget file at ${file}. Commit one: { "raw_kib": <KiB>, "gzip_kib": <KiB> }.`,
+    );
   /** @type {{ raw_kib?: number, gzip_kib?: number, args?: string[], wrangler?: string }} */
   let budget;
   try {
     budget = JSON.parse(readFileSync(file, "utf8"));
   } catch (error) {
-    return fail(`${file} is not JSON: ${error instanceof Error ? error.message : String(error)}`);
+    return fail(
+      "devkit-worker-size",
+      `${file} is not JSON: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
   if (typeof budget.raw_kib !== "number" || typeof budget.gzip_kib !== "number")
-    fail(`${file} needs numbers raw_kib and gzip_kib.`);
+    fail("devkit-worker-size", `${file} needs numbers raw_kib and gzip_kib.`);
 
   const out = mkdtempSync(join(tmpdir(), "worker-size-"));
   const local = join(
@@ -89,11 +82,16 @@ function main() {
   const text = `${r.stdout ?? ""}\n${r.stderr ?? ""}`;
   if (r.error || r.status !== 0)
     fail(
+      "devkit-worker-size",
       `wrangler deploy --dry-run failed (${r.error?.message ?? `exit ${r.status}`}):\n${text.trim().slice(-1500)}`,
     );
 
   const size = totalUpload(text);
-  if (!size) fail(`wrangler printed no "Total Upload" line:\n${text.trim().slice(-1500)}`);
+  if (!size)
+    fail(
+      "devkit-worker-size",
+      `wrangler printed no "Total Upload" line:\n${text.trim().slice(-1500)}`,
+    );
 
   const over = [];
   if (size.raw > budget.raw_kib)
@@ -114,11 +112,9 @@ function main() {
       : "Within budget.",
   ].join("\n");
   console.log(table);
-  if (process.env.GITHUB_STEP_SUMMARY)
-    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
-  if (over.length) fail(over.join("; "));
+  appendSummary(table);
+  if (over.length) fail("devkit-worker-size", over.join("; "));
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

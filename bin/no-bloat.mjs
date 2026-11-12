@@ -50,23 +50,15 @@
 // A tool the repository installs is run from node_modules/.bin; otherwise through npx at the spec in `tools`.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import {
-  appendFileSync,
-  existsSync,
-  lstatSync,
-  mkdtempSync,
-  readFileSync,
-  realpathSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, lstatSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, posix, relative, resolve, sep } from "node:path";
-import { pathToFileURL } from "node:url";
+import { join, posix, relative, sep } from "node:path";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { appendSummary, escapeAnnotation, shortHead } from "./annotate.mjs";
 import { packageCopies } from "./copies.mjs";
 import { PACKAGES, blankComments } from "./shared.mjs";
+import { readConfig } from "./site-config.mjs";
+import { isMain } from "../node/index.mjs";
 export const DEFAULT_TOOLS = { knip: "knip@6.45.1", jscpd: "jscpd@4.3.0" };
 const TESTS = ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const SOURCE = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"];
@@ -727,17 +719,6 @@ function messageOf(/** @type {unknown} */ error) {
   return error instanceof Error ? error.message : String(error);
 }
 
-function shortHead(/** @type {string} */ root) {
-  try {
-    return execFileSync("git", ["rev-parse", "--short", "HEAD"], {
-      cwd: root,
-      encoding: "utf8",
-    }).trim();
-  } catch {
-    return new Date().toISOString().slice(0, 10);
-  }
-}
-
 /**
  * The shared packages installed in node_modules (the repository's own left out) for the shared copies, and those the root
  * package.json depends on that are not installed.
@@ -1018,9 +999,7 @@ export function unreasoned(change, config, base) {
 
 function main() {
   const argv = process.argv.slice(2);
-  const at = argv.indexOf("--config");
   const root = process.cwd();
-  const file = resolve(root, at >= 0 && argv[at + 1] ? argv[at + 1] : ".no-bloat.json");
   const write = argv.includes("--write-baseline");
   if (argv.includes("--warn-only")) {
     // A report never stops a copy from merging (Enarratio, germomics and txasm ran it so). The ratchet always gates.
@@ -1031,17 +1010,10 @@ function main() {
   }
   const from = argv.includes("--lines-from") ? argv[argv.indexOf("--lines-from") + 1] : undefined;
 
-  /** @type {Config} */
-  let config = {};
-  if (existsSync(file)) {
-    try {
-      config = JSON.parse(readFileSync(file, "utf8"));
-    } catch (error) {
-      // A broken config would otherwise be no baseline, and so a ratchet that passes everything.
-      console.error(`devkit-no-bloat: ${file} is not JSON: ${messageOf(error)}`);
-      process.exit(1);
-    }
-  }
+  // A broken config would otherwise be no baseline, and so a ratchet that passes everything.
+  const { config, path: file } = /** @type {{ config: Config, path: string }} */ (
+    readConfig(argv, ".no-bloat.json", "devkit-no-bloat", { optional: true })
+  );
 
   const measured = measure(
     config,
@@ -1133,11 +1105,9 @@ function main() {
     );
   for (const e of errors) console.log(`::error::${escapeAnnotation(e)}`);
   for (const w of warnings) console.log(`::warning::${escapeAnnotation(w)}`);
-  if (process.env.GITHUB_STEP_SUMMARY)
-    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
+  appendSummary(table);
   if (errors.length) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

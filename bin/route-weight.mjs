@@ -32,20 +32,13 @@
 // grown past its baseline warns when it grew by more than `growth.ratio` of the baseline and more than `growth.bytes`
 // (defaults 0.05 and 1024).
 
-import { execFileSync } from "node:child_process";
-import {
-  appendFileSync,
-  existsSync,
-  readdirSync,
-  readFileSync,
-  realpathSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { appendSummary, fail, shortHead } from "./annotate.mjs";
+import { readConfig } from "./site-config.mjs";
+import { isMain } from "../node/index.mjs";
 /**
  * @typedef {{ id: string, parentId?: string, path?: string, module?: string, imports?: string[], css?: string[],
  *   hasDefaultExport?: boolean }} ManifestRoute
@@ -155,49 +148,27 @@ export function check(rows, config) {
   return { warnings, baselineOf: (/** @type {string} */ id) => (id in base ? base[id] : null) };
 }
 
-function fail(/** @type {string} */ message) {
-  console.log(`::error::${escapeAnnotation(`devkit-route-weight: ${message}`)}`);
-  process.exit(1);
-}
-
-function shortHead(/** @type {string} */ root) {
-  try {
-    return execFileSync("git", ["rev-parse", "--short", "HEAD"], {
-      cwd: root,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "ignore"],
-    }).trim();
-  } catch {
-    return new Date().toISOString().slice(0, 10);
-  }
-}
-
 function main() {
   const argv = process.argv.slice(2);
   const opt = (/** @type {string} */ name, /** @type {string} */ fallback) =>
     (argv.includes(name) && argv[argv.indexOf(name) + 1]) || fallback;
   const root = process.cwd();
   const client = resolve(root, opt("--client", join("build", "client")));
-  const file = resolve(root, opt("--config", ".route-weight.json"));
 
-  /** @type {Config} */
-  let config = {};
-  if (existsSync(file)) {
-    try {
-      config = JSON.parse(readFileSync(file, "utf8"));
-    } catch (error) {
-      fail(`${file} is not JSON: ${error instanceof Error ? error.message : String(error)}`);
-    }
-  }
+  const { config, path: file } = /** @type {{ config: Config, path: string }} */ (
+    readConfig(argv, ".route-weight.json", "devkit-route-weight", { optional: true })
+  );
 
   const assets = join(client, "assets");
   const manifestFile = existsSync(assets)
     ? readdirSync(assets).find((name) => /^manifest-[\w-]+\.js$/.test(name))
     : undefined;
-  if (!manifestFile) return fail(`no manifest-*.js in ${assets}. Build the app first.`);
+  if (!manifestFile)
+    return fail("devkit-route-weight", `no manifest-*.js in ${assets}. Build the app first.`);
   const read = (/** @type {string} */ url) => {
     const path = join(client, url.replace(/^\//, ""));
-    if (!existsSync(path)) fail(`the manifest names ${url}, which is not in ${client}.`);
+    if (!existsSync(path))
+      fail("devkit-route-weight", `the manifest names ${url}, which is not in ${client}.`);
     return readFileSync(path);
   };
   const gzip = (/** @type {Buffer} */ bytes) => gzipSync(bytes, { level: 9 }).length;
@@ -245,8 +216,7 @@ function main() {
   console.log(table);
   const level = config.enforce ? "error" : "warning";
   for (const w of warnings) console.log(`::${level} title=Route weight::${w}`);
-  if (process.env.GITHUB_STEP_SUMMARY)
-    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${table}\n`);
+  appendSummary(table);
   if (config.enforce && config.budget_bytes === undefined) {
     console.log(
       "::error title=Route weight::the config enforces the report but sets no budget_bytes, so it would pass any weight.",
@@ -257,5 +227,4 @@ function main() {
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

@@ -20,15 +20,15 @@
 // files) always applies, so the logger that wraps console is named there. A call is `console.<method>(`, read from the
 // code with comments and the insides of strings, templates and regular expressions blanked.
 
-import { appendFileSync, existsSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join, posix } from "node:path";
-import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
 import { scan } from "./no-bloat.mjs";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { appendSummary, escapeAnnotation } from "./annotate.mjs";
+import { isMain } from "../node/index.mjs";
 const FILES = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const IGNORE = [
   "**/*.{test,spec}.*",
@@ -158,16 +158,11 @@ function main() {
     table.push(`| ${path} | ${n} | ${config.baseline?.files?.[path] ?? 0} |`);
   table.push(`| **All** | **${counts.calls}** | **${config.baseline?.calls ?? 0}** |`);
   console.log(table.join("\n"));
-  if (process.env.GITHUB_STEP_SUMMARY)
-    appendFileSync(
-      process.env.GITHUB_STEP_SUMMARY,
-      `### Raw console calls\n\n${table.join("\n")}\n`,
-    );
+  appendSummary(`### Raw console calls\n\n${table.join("\n")}`);
   for (const e of errors) console.log(`::error title=devkit-console::${escapeAnnotation(e)}`);
   for (const w of warnings) console.log(`::warning title=devkit-console::${escapeAnnotation(w)}`);
   if (errors.length) process.exit(1);
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();
