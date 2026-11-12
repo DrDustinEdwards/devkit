@@ -251,6 +251,19 @@ jobs:
           prepare: ${{ inputs.no-bloat-prepare }}
           config: ${{ inputs.no-bloat-config }}
 
+      # A pull request that turns no-bloat off (no-bloat: false, node: false) skips the check that would refuse it, so
+      # devkit's own bin compares the caller's inputs with the base's whenever the check does not run.
+      - name: No-bloat stays on
+        id: no-bloat-on
+        if: ${{ !cancelled() && steps.repo.outcome == 'success' && github.event_name == 'pull_request' && !(inputs.node && inputs.no-bloat) }}
+        working-directory: repo
+        env:
+          WORKFLOW_REF: ${{ github.workflow_ref }}
+        run: |
+          set -euo pipefail
+          ref=${WORKFLOW_REF%%@*}
+          node "$GITHUB_WORKSPACE/.devkit/bin/no-bloat.mjs" --inputs-from "$BASE_SHA" "${ref#*/*/}"
+
       - name: Worker size
         id: worker-size
         if: ${{ !cancelled() && steps.install.outcome == 'success' && inputs.worker-size }}
@@ -285,6 +298,7 @@ jobs:
             Workflow-audit=${{ steps.touched.outcome == 'failure' && 'failure' || steps.workflow-audit.outcome }}
             Install=${{ steps.install.outcome }}
             No-bloat=${{ steps.no-bloat.outcome }}
+            No-bloat-on=${{ steps.no-bloat-on.outcome }}
             Worker-size=${{ steps.worker-size.outcome }}
             CSS-variables=${{ steps.css-vars.outcome }}
         run: |

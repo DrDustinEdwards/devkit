@@ -1,6 +1,6 @@
 // The no-bloat bin: counts read from the tools and the files, compared with the repository's baseline, failing only on
-// growth. The units run against a fake runner; the end-to-end cases run the bin itself in a scratch git repository whose
-// node_modules/.bin holds stand-ins for knip and jscpd, so nothing is downloaded.
+// growth. The units run against a fake runner; the end-to-end cases run the bin itself in a scratch git repository, with
+// stand-ins for knip and jscpd where DEVKIT_NO_BLOAT_TOOLS points, so nothing is downloaded.
 
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
@@ -11,6 +11,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
+  callerJobs,
   classify,
   compare,
   countFiles,
@@ -18,17 +19,19 @@ import {
   isReason,
   knipCounts,
   lineChanges,
+  lockfileProblems,
   measure,
   narrowed,
-  npxArgs,
-  pnpmProblem,
   raised,
   render,
   renderLines,
   scan,
   testCases,
+  toolRunner,
+  unreadAdded,
   unreadFiles,
   unreasoned,
+  workflowInputs,
 } from "../bin/no-bloat.mjs";
 
 const BIN = fileURLToPath(new URL("../bin/no-bloat.mjs", import.meta.url));
@@ -60,17 +63,6 @@ const fakeRun = ({ knip = KNIP, clones = 4, percentage = 1.234, sources = 9 } = 
   };
   return { run, calls };
 };
-
-test("a tool that is not installed is named to npx with --package, so an inherited npm_config_package cannot replace it", () => {
-  assert.deepEqual(npxArgs("knip", "knip@6", ["--no-progress"]), [
-    "--yes",
-    "--package",
-    "knip@6",
-    "--",
-    "knip",
-    "--no-progress",
-  ]);
-});
 
 test("knipCounts counts each issue in Knip's JSON report, not each file, and refuses output it cannot read rather than pass it as clean", () => {
   // Three unused exports in one file are three, and two unused dependencies in one package.json are two.
@@ -489,27 +481,41 @@ test("lineChanges sorts a diff's lines into code, tests, comments, docs and othe
   );
 });
 
-/** A scratch repository with stand-in knip and jscpd in node_modules/.bin. */
+/**
+ * A scratch repository, with stand-in knip and jscpd as an install DEVKIT_NO_BLOAT_TOOLS names (runBin), and in its own
+ * node_modules/.bin a knip and a jscpd that would report nothing, which the check must never run.
+ */
 function scratch({ knip = KNIP, clones = 4, jscpdFails = false } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "no-bloat-"));
   git(dir, "init", "-q", "-b", "main");
   writeFileSync(join(dir, ".gitignore"), "node_modules/\nsummary.md\n");
   const bin = join(dir, "node_modules", ".bin");
   mkdirSync(bin, { recursive: true });
+  for (const name of ["knip", "jscpd"]) {
+    writeFileSync(join(bin, name), "#!/bin/sh\necho '{\"issues\":[]}'\nexit 9\n");
+    chmodSync(join(bin, name), 0o755);
+    mkdirSync(join(dir, "node_modules", ".tools", "node_modules", name), { recursive: true });
+    writeFileSync(
+      join(dir, "node_modules", ".tools", "node_modules", name, "package.json"),
+      JSON.stringify({ name, bin: { [name]: "bin.mjs" } }),
+    );
+  }
   writeFileSync(
-    join(bin, "knip"),
-    `#!/bin/sh\nif [ "$1" = "--fail" ]; then echo 'knip: boom' >&2; exit 2; fi\nprintf '%s' '${knip}'\n`,
+    tool(dir, "knip"),
+    `if (process.argv.includes("--fail")) { console.error("knip: boom"); process.exit(2); }\nprocess.stdout.write(${JSON.stringify(knip)});\n`,
   );
   writeFileSync(
-    join(bin, "jscpd"),
+    tool(dir, "jscpd"),
     jscpdFails
-      ? "#!/bin/sh\necho 'jscpd: boom' >&2\nexit 3\n"
-      : `#!/bin/sh\nwhile [ "$1" != "--output" ]; do shift; done\nprintf '{"statistics":{"total":{"clones":${clones},"duplicatedLines":30,"percentage":2.5,"sources":3}}}' > "$2/jscpd-report.json"\n`,
+      ? 'console.error("jscpd: boom");\nprocess.exit(3);\n'
+      : `import { writeFileSync } from "node:fs";\nconst out = process.argv[process.argv.indexOf("--output") + 1];\nwriteFileSync(out + "/jscpd-report.json", '{"statistics":{"total":{"clones":${clones},"duplicatedLines":30,"percentage":2.5,"sources":3}}}');\n`,
   );
-  chmodSync(join(bin, "knip"), 0o755);
-  chmodSync(join(bin, "jscpd"), 0o755);
   return dir;
 }
+
+/** A stand-in tool's script in a scratch repository. */
+const tool = (/** @type {string} */ dir, /** @type {string} */ name) =>
+  join(dir, "node_modules", ".tools", "node_modules", name, "bin.mjs");
 
 const git = (/** @type {string} */ cwd, /** @type {string[]} */ ...args) =>
   execFileSync("git", ["-c", "commit.gpgsign=false", ...args], {
@@ -528,7 +534,13 @@ const runBin = (/** @type {string} */ cwd, /** @type {string[]} */ args = [], en
   spawnSync(process.execPath, [BIN, ...args], {
     cwd,
     encoding: "utf8",
-    env: { ...process.env, GITHUB_STEP_SUMMARY: "", GITHUB_ACTIONS: "true", ...env },
+    env: {
+      ...process.env,
+      GITHUB_STEP_SUMMARY: "",
+      GITHUB_ACTIONS: "true",
+      DEVKIT_NO_BLOAT_TOOLS: join(cwd, "node_modules", ".tools"),
+      ...env,
+    },
   });
 
 test(
@@ -687,7 +699,7 @@ test(
       git(dir, "checkout", "-qb", "change");
       // A copy and the raise that would let it in, with the tools moved too.
       writeFileSync(join(dir, "copy.mjs"), "export const a = 1;\n");
-      const grown = join(dir, "node_modules", ".bin", "jscpd");
+      const grown = tool(dir, "jscpd");
       writeFileSync(grown, readFileSync(grown, "utf8").replace('"clones":4', '"clones":5'));
       const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
       config.tools = { jscpd: "jscpd@4.4.0" };
@@ -727,30 +739,8 @@ test(
         join(dir, "package.json"),
         JSON.stringify({ name: "x", devDependencies: { a: "2.0.0" } }),
       );
-      // The installed tools must be npm's own: a lockfile that installs another program as knip makes it unable to run.
-      const lock = (/** @type {string} */ knip) =>
-        JSON.stringify({
-          packages: {
-            "node_modules/knip": { resolved: knip },
-            "node_modules/jscpd": {
-              resolved: "https://registry.npmjs.org/jscpd/-/jscpd-4.4.0.tgz",
-            },
-          },
-        });
-      writeFileSync(join(dir, "package-lock.json"), lock("git+ssh://git@github.com/x/knip.git#1"));
       git(dir, "add", "-A");
       git(dir, "commit", "-qm", "Bump");
-      const fake = runBin(dir, ["--lines-from", "main"]);
-      assert.equal(fake.status, 1, fake.stdout);
-      assert.match(
-        fake.stdout,
-        /::error::knip could not run: node_modules\/\.bin\/knip is not npm's knip/,
-      );
-      writeFileSync(
-        join(dir, "package-lock.json"),
-        lock("https://registry.npmjs.org/knip/-/knip-6.45.1.tgz"),
-      );
-      git(dir, "commit", "-qam", "Lock");
       assert.equal(runBin(dir, ["--lines-from", "main"]).status, 0);
       writeFileSync(
         join(dir, "package.json"),
@@ -991,11 +981,7 @@ test(
       );
       writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
       writeFileSync(join(dir, "knip.ts"), "export default { entry: ['**'] };\n");
-      const knip = join(dir, "node_modules", ".bin", "knip");
-      writeFileSync(
-        knip,
-        readFileSync(knip, "utf8").replace(/printf '%s' '.*'/, `printf '%s' '{"issues":[]}'`),
-      );
+      writeFileSync(tool(dir, "knip"), "process.stdout.write('{\"issues\":[]}');\n");
       const lowered = { ...config, baseline: { ...config.baseline, knip: {} } };
       writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(lowered));
       const n = runBin(dir, [], { GITHUB_ACTIONS: "" });
@@ -1051,7 +1037,7 @@ test("a Knip config line, a skip tag or a jscpd marker needs a reason of its own
   assert.equal(isReason("the fixture mirrors the API reply"), true);
 });
 
-test("jscpd: a narrower measure is refused, a path is judged by the files it leaves unread beside files it reads, and a knip run's args cannot change", () => {
+test("jscpd: a narrower measure or path is refused, a new file it skips beside files it reads fails, and a knip run's args cannot change", () => {
   const files = /** @type {Record<string, [string | null, string | null]>} */ ({
     ".jscpd.json": [
       '{ "path": ["src"], "minLines": 5 }',
@@ -1076,20 +1062,34 @@ test("jscpd: a narrower measure is refused, a path is judged by the files it lea
       "(minLines from 5 to 20)",
       "(format from every format to javascript)",
       "(gitignore turned on)",
+      '(path from ["src"] to ["src/a.ts"], which no longer reads src)',
       'run "knip"',
     ],
   );
-  assert.deepEqual(narrowed({ before: () => null, now: () => null }, {}, {}), []);
-  // src/a.ts is read; src/b.ts beside it is not; scripts/ and tests are never read and not counted.
-  assert.equal(
-    unreadFiles(
-      {},
-      ["src/a.ts", "src/b.ts", "src/b.test.ts", "scripts/x.ts"],
-      [{ sources: { "src/a.ts": {} } }],
-      "/r",
+  // A wider path, or the same read through its parent, is no narrowing.
+  assert.deepEqual(
+    narrowed(change, { jscpd: { args: ["."] } }, { jscpd: { args: ["src", "lib/"] } }).filter((m) =>
+      m.includes("path from"),
     ),
-    1,
+    [],
   );
+  assert.deepEqual(narrowed({ before: () => null, now: () => null }, {}, {}), []);
+  // src/a.ts is read; src/b.ts beside it is not; a file under minLines holds no copy; scripts/ and tests are never read.
+  const unread = unreadFiles(
+    {},
+    ["src/a.ts", "src/b.ts", "src/tiny.ts", "src/b.test.ts", "scripts/x.ts"],
+    [{ sources: { "src/a.ts": {} } }],
+    "/r",
+    (p) => (p === "src/tiny.ts" ? "export {};\n" : "a\nb\nc\nd\ne\n"),
+    5,
+  );
+  assert.deepEqual(unread, ["src/b.ts"]);
+  // The count can stay level when another file starts being read, so a new skipped file fails by name.
+  assert.match(
+    unreadAdded(unread, ["src/b.ts"]).join(),
+    /src\/b\.ts is new, and jscpd does not read it/,
+  );
+  assert.deepEqual(unreadAdded(unread, ["src/a.ts"]), []);
 });
 
 test("a pin-only workflow change passes alone; any other change to the workflow that runs the check may not lower a count", () => {
@@ -1159,50 +1159,76 @@ test(
   },
 );
 
-test("pnpm-lock.yaml installs npm's own knip only at a bare version that resolves by integrity", () => {
-  const lock = (/** @type {string} */ version, /** @type {string} */ resolution) =>
+test("the tools are the check's own install at exact versions, and a second lockfile beside one fails", () => {
+  // A range or tag would measure with whatever it resolves to, so the check refuses before it installs anything.
+  assert.throws(
+    () => toolRunner(".", { knip: "knip@6", jscpd: "jscpd@4.3.0" }, "")("knip", []),
+    /tools\.knip is "knip@6", and the check runs only npm's knip at an exact version/,
+  );
+  assert.deepEqual(
+    lockfileProblems([
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "web/pnpm-lock.yaml",
+      "web/a.ts",
+    ]),
     [
-      "lockfileVersion: '9.0'",
-      "",
-      "importers:",
-      "",
-      "  .:",
-      "    devDependencies:",
-      "      knip:",
-      "        specifier: 6.45.1",
-      `        version: ${version}`,
-      "",
-      "  packages/web:",
-      "    devDependencies:",
-      "      jscpd:",
-      "        specifier: 4.3.0",
-      "        version: 4.3.0",
-      "",
-      "packages:",
-      "",
-      `  ${/^\d/.test(version) ? `knip@${version.replace(/\(.*/, "")}` : `'${version}'`}:`,
-      `    resolution: ${resolution}`,
-      "",
-    ].join("\n");
-  assert.equal(
-    pnpmProblem(lock("6.45.1(typescript@5.9.3)", "{integrity: sha512-x}"), "knip"),
-    null,
+      "the root has package-lock.json and npm-shrinkwrap.json. Keep the one lockfile its package manager installs from, and delete the other.",
+    ],
   );
-  assert.match(
-    pnpmProblem(lock("6.45.1", "{tarball: https://example.com/knip.tgz}"), "knip") ?? "",
-    /resolves knip@6\.45\.1 by resolution: \{tarball/,
+});
+
+test("a workflow change that turns the check off or changes what runs before it is refused; an install script is a change of measure", () => {
+  const caller = (/** @type {string} */ extra = "", /** @type {string} */ job = "") =>
+    `jobs:\n  checks:\n${job}    uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${"a".repeat(40)} # v1.0.0\n    with:\n      review: false\n${extra}`;
+  const base = caller("      no-bloat-prepare: >-\n        npm run gen\n");
+  assert.deepEqual(callerJobs(base).checks.inputs, { "no-bloat-prepare": ">-\nnpm run gen" });
+  // Moving the pin, or an input the check does not depend on, is no such change.
+  assert.deepEqual(
+    workflowInputs(
+      "c.yml",
+      base,
+      base.replace("a".repeat(40), "b".repeat(40)).replace("review: false", "review: true"),
+    ),
+    [],
   );
-  assert.match(
-    pnpmProblem(lock("fake-knip@1.0.0", "{integrity: sha512-x}"), "knip") ?? "",
-    /installs it as fake-knip@1\.0\.0/,
-  );
-  assert.match(
-    pnpmProblem(lock("link:../fake", "{directory: ../fake}"), "knip") ?? "",
-    /installs it as link:\.\.\/fake/,
-  );
-  // Only the root importer installs node_modules/.bin at the root.
-  assert.match(
-    pnpmProblem(lock("6.45.1", "{integrity: sha512-x}"), "jscpd") ?? "",
-    /root importer does not list it/,
-  );
+  for (const [now, what] of [
+    [
+      caller("      no-bloat-prepare: >-\n        npm run gen && rm src/copy.ts\n"),
+      /changes no-bloat-prepare/,
+    ],
+    [
+      caller("      no-bloat-prepare: >-\n        npm run gen\n      no-bloat: false\n"),
+      /changes no-bloat from "\(default\)" to "false"/,
+    ],
+    [
+      caller("      no-bloat-prepare: >-\n        npm run gen\n", "    if: false\n"),
+      /changes the job "checks"'s if/,
+    ],
+    ["jobs: {}\n", /drops the job "checks"/],
+  ])
+    assert.match(
+      workflowInputs("c.yml", base, /** @type {string} */ (now)).join(),
+      /** @type {RegExp} */ (what),
+    );
+
+  const manifest = (/** @type {object} */ scripts) =>
+    JSON.stringify({ name: "x", scripts: { test: "node --test", ...scripts } });
+  const files = /** @type {Record<string, [string | null, string | null]>} */ ({
+    "package.json": [manifest({}), manifest({ postinstall: "node scripts/pi.mjs" })],
+    ".npmrc": [null, "registry=https://example.com/\n"],
+    "patches/knip@6.45.1.patch": [null, "--- a\n"],
+  });
+  const kind = classify({
+    changed: Object.keys(files),
+    configPath: ".no-bloat.json",
+    before: (p) => files[p]?.[0] ?? null,
+    now: (p) => files[p]?.[1] ?? null,
+  });
+  assert.equal(kind.code, false);
+  assert.deepEqual(kind.definition, [
+    "package.json install scripts or patches",
+    ".npmrc",
+    "patches/knip@6.45.1.patch",
+  ]);
 });
