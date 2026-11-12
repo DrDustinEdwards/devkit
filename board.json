@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-10T15:48:14.099Z",
+ "as_of": "2026-11-12T15:52:56.593Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -118,1202 +118,63 @@
     },
     "dustinedwards-info": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: fetch-failed: https://dustinedwards.info/writing/tags/security/rss.xml could not measure: no answer (fetch failed), so the page was not audited",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "sitemap-lastmod-missing",
-       "detail": "https://dustinedwards.info/sitemap.xml 27 of 204 sitemap URLs have no lastmod, e.g. https://dustinedwards.info/contact"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "fetch-failed",
-       "detail": "https://dustinedwards.info/writing/tags/security/rss.xml could not measure: no answer (fetch failed), so the page was not audited"
-      }
-     ]
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "germomics": {
-     "status": "partial",
-     "reason": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod",
-     "evidence": [
-      "https://germomics.com/sitemap.xml"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "julieedwards-info": {
-     "status": "partial",
-     "reason": "no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404",
-     "evidence": [
-      "https://julieedwards.info/llms.txt"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "txasm": {
-     "status": "missing",
-     "reason": "prelum-audit: 165 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "sitemap-lastmod-missing",
-       "detail": "https://txasm.org/sitemap.xml 8 of 41 sitemap URLs have no lastmod, e.g. https://txasm.org/"
-      },
-      {
-       "severity": "error",
-       "check": "robots-blocks-all",
-       "detail": "https://txasm.org/robots.txt robots.txt disallows the home page to Googlebot, so no page is crawled"
-      },
-      {
-       "severity": "warning",
-       "check": "robots-no-sitemap",
-       "detail": "https://txasm.org/robots.txt robots.txt has no Sitemap line, so a crawler finds the sitemap only if it is told"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awardees the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/award-nominations the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/branch-officers the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/archive/abstract-books the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/archive/programs the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/trail the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/sponsorship the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/contact the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/accessibility the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings/spring-2026/program the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings/fall-2025/program the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings/fall-2025/abstracts the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings/spring-2025/program the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings/spring-2025/abstracts the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings/fall-2024/program the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/meetings/fall-2024/abstracts the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/thomas-s-matney-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/s-e-sulkin-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/sarah-a-mcintire-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/samuel-kaplan-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/o-b-williams-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/joan-abramowitz-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/charlie-gauntt-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/orville-wyss-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/graduate-student-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/faculty-education-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/faculty-mentor-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/distinguished-service-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/awards/lifetime-achievement-award the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters/fall-1991-newsletter the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters/fall-1988-newsletter the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters/fall-1987-newsletter the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters/spring-1983-newsletter the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters/spring-1981-newsletter the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters/fall-1971-newsletter the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters/fall-1967-newsletter the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-blocked",
-       "detail": "https://txasm.org/newsletters/spring-1966-newsletter the sitemap lists a URL robots.txt disallows"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/ links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/ links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/meetings links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/awardees links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/awardees links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/award-nominations links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/award-nominations links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/award-nominations links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/branch-officers links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/branch-officers links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/branch-officers links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/newsletters links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/newsletters links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/newsletters links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/archive/abstract-books links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/archive/abstract-books links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/archive/abstract-books links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/archive/programs links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/archive/programs links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/archive/programs links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/trail links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/trail links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/trail links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/sponsorship links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/sponsorship links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/sponsorship links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/contact links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/contact links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/contact links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/accessibility links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/accessibility links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/accessibility links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/meetings/spring-2026/program links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/program links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/program links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/meetings/fall-2025/program links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2025/program links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2025/program links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/meetings/fall-2025/abstracts links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2025/abstracts links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2025/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/meetings/spring-2025/program links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2025/program links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2025/program links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/meetings/spring-2025/abstracts links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2025/abstracts links to https://txasm.org/my/abstracts, which redirects to /signin"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2025/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://txasm.org/meetings/fall-2024/program links to https://txasm.org/register, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2024/program links to https://txasm.org/my/abstracts, which redirects to /signin"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "bsw": {
-     "status": "missing",
-     "reason": "prelum-audit: 20 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "sitemap-lastmod-missing",
-       "detail": "https://bsw.dustin-edwards.workers.dev/sitemap.xml 20 of 20 sitemap URLs have no lastmod, e.g. https://bsw.dustin-edwards.workers.dev/"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/career-development the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/editing-process the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/institutional-partnerships the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/pricing the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/our-experts the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/knowledge-hub the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/about-us the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/careers the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/contact-us the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/editing-guarantee the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/security-confidentiality the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/privacy-policy the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/terms-of-service the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/cookie-policy the sitemap lists a noindex page"
-      },
-      {
-       "severity": "error",
-       "check": "sitemap-noindex",
-       "detail": "https://bsw.dustin-edwards.workers.dev/accessibility the sitemap lists a noindex page"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects",
-     "evidence": [
-      "https://foxhoundapp.com/sitemap.xml"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "foxing": {
-     "status": "missing",
-     "reason": "prelum-audit: 3018 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/ links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/awards links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/awards links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/picks links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/picks links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/book-of-the-month links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/book-of-the-month links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal/archive links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/journal/archive links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/about links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/about links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/accessibility links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/accessibility links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/features links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/features links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/813-leblanc links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bid-for-fortune-boothby links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bid-for-fortune-boothby links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-christmas-carol-dickens links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-christmas-carol-dickens links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-confession-tolstoy links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-country-gentleman-and-his-family-oliphant links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-cycle-of-the-west-neihardt links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-damsel-in-distress-wodehouse links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-eve-balzac links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-eve-balzac links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-daughter-of-the-samurai-sugimoto links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-day-at-a-time-alexander links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-day-at-a-time-alexander links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-dolls-house-ibsen links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-farewell-to-arms-hemingway links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-history-of-the-pirates-johnson links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-general-view-of-positivism-comte links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-gentleman-of-leisure-wodehouse links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-hazard-of-new-fortunes-howells links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-high-wind-in-jamaica-hughes links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-house-of-gentlefolk-turgenev links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-journal-of-the-plague-year-defoe links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-little-princess-burnett links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-man-could-stand-up--ford links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-man-could-stand-up--ford links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-marriage-settlement-balzac links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-marriage-settlement-balzac links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-midsummer-nights-dream-shakespeare links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-midsummer-nights-dream-shakespeare links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-negro-explorer-at-the-north-pole-henson links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-negro-explorer-at-the-north-pole-henson links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-pair-of-blue-eyes-hardy links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-pair-of-blue-eyes-hardy links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-passage-to-india-forster links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-passage-to-india-forster links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-personal-record-conrad links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-personal-record-conrad links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-pluralistic-universe-james links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-pluralistic-universe-james links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-popular-schoolgirl-brazil links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-popular-schoolgirl-brazil links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-portrait-of-the-artist-as-a-young-man-joyce links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-portrait-of-the-artist-as-a-young-man-joyce links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-prefects-uncle-wodehouse links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-prefects-uncle-wodehouse links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-princess-of-mars-burroughs links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-princess-of-mars-burroughs links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-room-with-a-view-forster links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-room-with-a-view-forster links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-sicilian-romance-radcliffe links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-sicilian-romance-radcliffe links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-start-in-life-balzac links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-start-in-life-balzac links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-strange-disappearance-green links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-strange-disappearance-green links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-strange-manuscript-found-in-a-copper-cylinder-mille links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-strange-manuscript-found-in-a-copper-cylinder-mille links to https://foxing.app/people, which redirects to /login"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-study-in-scarlet-doyle links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://foxing.app/books/a-study-in-scarlet-doyle links to https://foxing.app/people, which redirects to /login"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "carrel": {
-     "status": "partial",
-     "reason": "no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404",
-     "evidence": [
-      "https://carrel.dustinedwards.info/sitemap.xml"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "enarratio": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsomer": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "prelum": {
-     "status": "complete",
-     "reason": "prelum-audit clean on 7 pages; Accept: text/markdown and .md answer text/markdown; canonical, Open Graph with image size and alt, max-image-preview, Content-Signal, llms.txt, favicon and manifest all present. Minor: /accessibility has no lastmod.",
-     "evidence": [
-      "https://prelum.dustinedwards.info/",
-      "https://prelum.dustinedwards.info/sitemap.xml",
-      "https://prelum.dustinedwards.info/index.md"
-     ],
-     "clean_days": 9
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsid": {
-     "status": "partial",
-     "reason": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404",
-     "evidence": [
-      "https://capsid.dustinedwards.info/sitemap.xml"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1374,12 +235,12 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 8
+     "clean_days": 9
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1387,7 +248,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "txasm": {
      "status": "complete",
@@ -1395,7 +256,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "bsw": {
      "status": "complete",
@@ -1403,7 +264,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxhound": {
      "status": "partial",
@@ -1411,7 +272,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxing": {
      "status": "complete",
@@ -1419,7 +280,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "carrel": {
      "status": "complete",
@@ -1427,7 +288,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "enarratio": {
      "status": "complete",
@@ -1435,12 +296,12 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 5
+     "clean_days": 6
     },
     "prelum": {
      "status": "partial",
@@ -1448,7 +309,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "capsid": {
      "status": "complete",
@@ -1456,7 +317,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1464,7 +325,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1472,7 +333,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1480,7 +341,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1488,7 +349,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxing-mcp": {
      "status": "partial",
@@ -1496,7 +357,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid-portal": {
      "status": "complete",
@@ -1505,7 +366,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "carrel-desk": {
      "status": "missing",
@@ -1549,7 +410,7 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "germomics": {
      "status": "partial",
@@ -1557,7 +418,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -1590,7 +451,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
       "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxing": {
      "status": "partial",
@@ -1599,7 +460,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "carrel": {
      "status": "n/a",
@@ -1623,7 +484,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "capsid-mcp": {
      "status": "complete",
@@ -1632,7 +493,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1641,7 +502,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1650,7 +511,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1659,7 +520,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxing-mcp": {
      "status": "partial",
@@ -1667,7 +528,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid-portal": {
      "status": "complete",
@@ -1676,7 +537,7 @@
       "https://portal.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/portal-auth.ts"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "carrel-desk": {
      "status": "partial",
@@ -1684,7 +545,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     }
    }
   },
@@ -1705,398 +566,64 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "prelum-content: 61 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/about stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/retroviruses stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/retroviruses/human stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/retroviruses/avian stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/bacteriophages stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/science-education stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/phages stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/phages stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/titer stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/dilution stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/webbed-plate stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/moi stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/eop stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/tools/lysate-volume stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/phage-discovery stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/virus-isolation stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/virus-isolation/faq stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/phage-bioinformatics stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/central-dogma stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/teaching/study-skills stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/foxhound stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/foxing stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/foxing-edu stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/germomics stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/capsid stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/enarratio stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/carrel stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/capsomer stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/prelum stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/site-runtime stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/site-api stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/d1-dump stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/software/devkit stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/privacy stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/terms stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/accessibility stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/coi-primers stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/pan-avian-gapdh stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/phage-dna-extraction stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/phage-isolation stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/research/protocols/rev-lpdv-primers stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/carrel-one-api-for-every-site stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/carrel-a-writing-desk-apart-from-the-site stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/agent-write-access-to-a-live-site stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/ten-years-on-cloudflare stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/site-search-on-d1 stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/posts-in-git-served-from-d1 stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/color-palette-the-build-can-check stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/blog-reading-without-javascript stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search stored HTML from render version 22; the pipeline is at 23"
-      },
-      {
-       "severity": "error",
-       "check": "writing-render-version",
-       "detail": "https://dustinedwards.info/writing/where-should-a-blog-store-its-words stored HTML from render version 22; the pipeline is at 23"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "germomics": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 5
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "julieedwards-info": {
-     "status": "partial",
-     "reason": "live check clean on 1 page; the repository was not available, and earlier notes say it has its own section grammar rather than Prelum",
-     "evidence": [
-      "https://julieedwards.info/"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "txasm": {
-     "status": "partial",
-     "reason": "checked on the workers.dev address: 41 pages, 0 errors; /award-nominations has no data-render-version wrapper",
-     "evidence": [
-      "https://txasm.org/award-nominations"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "bsw": {
-     "status": "partial",
-     "reason": "11 pages with h3 after h1 (heading order)",
-     "evidence": [
-      "https://bsw.dustin-edwards.workers.dev/cookie-policy"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "foxing": {
-     "status": "partial",
-     "reason": "/books has h3 after h1",
-     "evidence": [
-      "https://foxing.app/books"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "carrel": {
-     "status": "partial",
-     "reason": "live check clean on 2 pages; the Carrel repository was not available to this verifier, and earlier notes say Carrel books still use a regex renderer",
-     "evidence": [
-      "https://carrel.dustinedwards.info/"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "enarratio": {
-     "status": "partial",
-     "reason": "live check clean on 5 pages; its source was not available to this verifier, so use of Prelum and absence of a second renderer is not proven",
-     "evidence": [
-      "https://enarratio.dustinedwards.info/"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsomer": {
-     "status": "partial",
-     "reason": "the live check is clean, but the showcase still renders Markdown with its own regex renderer (site/markdown.ts, used by home, views and main), so there is more than one renderer",
-     "evidence": [
-      "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "prelum": {
-     "status": "partial",
-     "reason": "specimen renders writing with no data-render-version wrapper",
-     "evidence": [
-      "https://prelum.dustinedwards.info/"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsid": {
-     "status": "complete",
-     "reason": "prelum-content: 117 pages, 0 errors, 0 warnings; one h1, no skipped level; the explorer pins Prelum and carries no second Markdown renderer",
-     "evidence": [
-      "https://capsid.dustinedwards.info/",
-      "https://github.com/DrDustinEdwards/capsid/blob/master/explorer/package.json"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2154,22 +681,22 @@
     },
     "dustinedwards-info": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log",
      "findings": []
     },
     "germomics": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log",
      "findings": []
     },
     "julieedwards-info": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log",
      "findings": []
     },
     "txasm": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log",
      "findings": []
     },
     "bsw": {
@@ -2178,12 +705,12 @@
     },
     "foxhound": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log",
      "findings": []
     },
     "foxing": {
      "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log",
+     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log",
      "findings": []
     },
     "carrel": {
@@ -2262,9 +789,30 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 5
+     "status": "missing",
+     "reason": "site-runtime-images: 4 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "A12",
+       "detail": "https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.webp?v=a4b25f040616&w=320 asked a second time it is cf-cache-status BYPASS, not a HIT"
+      },
+      {
+       "severity": "error",
+       "check": "A12",
+       "detail": "https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.webp?v=a4b25f040616&w=640 asked a second time it is cf-cache-status BYPASS, not a HIT"
+      },
+      {
+       "severity": "error",
+       "check": "A12",
+       "detail": "https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.avif?v=a4b25f040616&w=320 asked a second time it is cf-cache-status BYPASS, not a HIT"
+      },
+      {
+       "severity": "error",
+       "check": "A12",
+       "detail": "https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.avif?v=a4b25f040616&w=640 asked a second time it is cf-cache-status BYPASS, not a HIT"
+      }
+     ]
     },
     "germomics": {
      "status": "partial",
@@ -2272,7 +820,7 @@
      "evidence": [
       "https://germomics.com/a-boy-named-flu"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2281,7 +829,7 @@
       "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "txasm": {
      "status": "partial",
@@ -2290,7 +838,7 @@
       "https://txasm.org/og-card.png",
       "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "bsw": {
      "status": "missing",
@@ -2314,7 +862,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxing": {
      "status": "missing",
@@ -2348,17 +896,17 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "enarratio": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 7
+     "clean_days": 8
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 5
+     "clean_days": 6
     },
     "prelum": {
      "status": "partial",
@@ -2366,7 +914,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "capsid": {
      "status": "partial",
@@ -2374,7 +922,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2495,56 +1043,19 @@
      ]
     },
     "txasm": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D1",
-       "detail": "https://txasm.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "A3",
-       "detail": "https://txasm.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "A3",
-       "detail": "https://txasm.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
+     "findings": []
     },
     "bsw": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D1",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "A3",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "A3",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
+     "findings": []
     },
     "foxhound": {
      "status": "unmeasured",
      "reason": "site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "F2",
-       "detail": "https://foxhoundapp.com/?speedcheck=vwbl23wb an uncached render took 737 ms to the first byte (bar 600 ms)"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2558,14 +1069,9 @@
      ]
     },
     "foxing": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://foxing.app/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxing.app/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxing.app/authors/a-e-w-mason not from the edge on the second request: cf-cache-status MISS (first none), cache-control public, max-age=0, colo ? then ATL"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2750,7 +1256,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "bsw": {
      "status": "missing",
@@ -2823,7 +1329,7 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.foxhoundapp.com/health serves 67281eba9244ab3eb1b5401c4451e08749d07bbb, not the branch head ea5476c52b3055b9154d860fbe7bf1249ad4d299 (https://github.com/DrDustinEdwards/foxhound/commit/ea5476c52b3055b9154d860fbe7bf1249ad4d299), committed 4250 minutes ago"
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves 943fe2bc1f10b77d876157aa3d211d96913102bc, not the branch head e007f9dc1fb6af625bf00ebf8fb4bdaed97c6f56 (https://github.com/DrDustinEdwards/foxhound/commit/e007f9dc1fb6af625bf00ebf8fb4bdaed97c6f56), committed 940 minutes ago"
       }
      ]
     },
@@ -2834,19 +1340,19 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.dustinedwards.info/health serves b58d526305fa4d8a1a29497092695dbc28a7040d, not the branch head 292398c27926bab4a98be902f9c97144d2e940c8 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/292398c27926bab4a98be902f9c97144d2e940c8), committed 347 minutes ago"
+       "detail": "https://admin-mcp.dustinedwards.info/health serves e5ece858d84a60ba1d9d61520d9f00b5b477b2ac, not the branch head 6bd3dba327d35fcdf880cc5737fff13dd5cc1f64 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/6bd3dba327d35fcdf880cc5737fff13dd5cc1f64), committed 92 minutes ago"
       }
      ]
     },
     "carrel-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsid-portal": {
      "status": "n/a",
@@ -2877,18 +1383,129 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 6
-    },
-    "germomics": {
      "status": "missing",
-     "reason": "devkit-a11y: 11 errors",
+     "reason": "devkit-a11y: 22 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://germomics.com/ no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
+       "detail": "https://dustinedwards.info/ focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/no-such-page-devkit-a11y no visible focus on 1 of 40 stops: `input#_R_1cct5_-control`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/no-such-page-devkit-a11y focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/about focus hidden under sticky `html > body > header.cap-site-header` on 2 stops: `html > body > a.cap-skip`, `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/about animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/contact focus hidden under sticky `html > body > header.cap-site-header` on 2 stops: `html > body > a.cap-skip`, `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/contact animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/research/publications focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/research/publications animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/writing no visible focus on 1 of 40 stops: `input#_R_1al5_-control`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/writing focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/writing animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/teaching/phage-discovery focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/teaching/phage-discovery animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/site-map focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/site-map animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/software/foxhound focus hidden under sticky `html > body > header.cap-site-header` on 2 stops: `html > body > a.cap-skip`, `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/software/foxhound animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/colophon focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://dustinedwards.info/colophon animations still running with reduced motion: cap-fade-start-in on `nav#site-nav`, cap-fade-end-out on `nav#site-nav`"
+      }
+     ]
+    },
+    "germomics": {
+     "status": "missing",
+     "reason": "devkit-a11y: 5 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://germomics.com/ no visible focus on 9 of 40 stops: `article.cap-card.gap-x-4:nth-of-type(2) > header > h3.mt-1.font-display > a.cap-card-link.text-ink`, `article.cap-card.gap-x-4:nth-of-type(3) > header > h3.mt-1.font-display > a.cap-card-link.text-ink`, `article.cap-card.gap-x-4:nth-of-type(4) > header > h3.mt-1.font-display > a.cap-card-link.text-ink` and 6 more"
       },
       {
        "severity": "error",
@@ -2903,54 +1520,34 @@
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://germomics.com/about no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
+       "detail": "https://germomics.com/episodes no visible focus on 10 of 40 stops: `article.cap-card.gap-x-4:nth-of-type(1) > header > h3.mt-1.font-display > a.cap-card-link.text-ink`, `article.cap-card.gap-x-4:nth-of-type(2) > header > h3.mt-1.font-display > a.cap-card-link.text-ink`, `article.cap-card.gap-x-4:nth-of-type(3) > header > h3.mt-1.font-display > a.cap-card-link.text-ink` and 7 more"
       },
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://germomics.com/contact no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
+       "detail": "https://germomics.com/season/1 no visible focus on 10 of 40 stops: `article.cap-card.gap-x-4:nth-of-type(1) > header > h2.mt-1.font-display > a.cap-card-link.text-ink`, `article.cap-card.gap-x-4:nth-of-type(2) > header > h2.mt-1.font-display > a.cap-card-link.text-ink`, `article.cap-card.gap-x-4:nth-of-type(3) > header > h2.mt-1.font-display > a.cap-card-link.text-ink` and 7 more"
       },
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://germomics.com/about/dustin-edwards no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://germomics.com/episodes no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://germomics.com/season/1 no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://germomics.com/writing no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://germomics.com/archive no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://germomics.com/archive no visible focus on 1 of 40 stops: `div.mb-6.flex:nth-of-type(1) > form.flex.items-center > div.flex.items-center > input.w-40.bg-transparent`"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://germomics.com/data no skip link to main as the first Tab stop (first stop `body > header.sticky.top-0 > div.mx-auto.flex > a.flex.items-center` \"germomics\")"
+       "detail": "https://germomics.com/archive no visible focus on 11 of 40 stops: `div.mb-6.flex:nth-of-type(1) > form.flex.items-center > div.flex.items-center > input.w-40.bg-transparent`, `article.cap-card.gap-x-4:nth-of-type(1) > header > h2.mt-1.font-display > a.cap-card-link.text-ink`, `article.cap-card.gap-x-4:nth-of-type(2) > header > h2.mt-1.font-display > a.cap-card-link.text-ink` and 8 more"
       }
      ]
     },
     "julieedwards-info": {
      "status": "missing",
-     "reason": "devkit-a11y: 6 errors",
+     "reason": "devkit-a11y: 9 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://julieedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://julieedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
       {
        "severity": "error",
        "check": "L1",
@@ -3005,13 +1602,23 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://julieedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://julieedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "txasm": {
      "status": "missing",
-     "reason": "devkit-a11y: 2 errors",
+     "reason": "devkit-a11y: 10 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
+      },
       {
        "severity": "error",
        "check": "L2",
@@ -3024,8 +1631,43 @@
       },
       {
        "severity": "error",
-       "check": "L1",
-       "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter axe aria-prohibited-attr (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.pdf-viewer-page`"
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/contact animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/archive/abstract-books animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/meetings animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/meetings/spring-2026/program animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/awardees animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/awards/thomas-s-matney-award animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/award-nominations animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
@@ -3035,13 +1677,13 @@
      "findings": [
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.psms-section > div.psms-container > div.cap-tabs.psms-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
       },
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `section:nth-of-type(2) > div.page-prose.mx-auto > p.mt-8:nth-of-type(2) > a.btn.btn-blue` \"Go to the home page\")"
+       "detail": "https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `main#main > div.cap-error-page-body > div.cap-empty-content > a.cap-btn` \"Go to the home page\")"
       },
       {
        "severity": "warning",
@@ -3050,50 +1692,55 @@
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/about-us animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/contact-us no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/contact-us animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/manuscript-editing no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/manuscript-editing animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/visual-design no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/visual-design animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/language-support no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/language-support animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/career-development no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/career-development animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://bsw.dustin-edwards.workers.dev/editing-process no skip link to main as the first Tab stop (first stop `div.flex.min-h-screen > header.sticky.top-0 > div.mx-auto.flex:nth-of-type(1) > a.shrink-0` \"BioScience Writers home\")"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/editing-process animations still running with reduced motion: cap-fade-start-in on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.flex.min-h-screen > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "foxhound": {
      "status": "missing",
-     "reason": "devkit-a11y: 2 errors",
+     "reason": "devkit-a11y: 11 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://foxhoundapp.com/ no visible focus on 3 of 40 stops: `input#mrr-slider`, `input#failure-share-slider`, `input#recovery-share-slider`"
+      },
       {
        "severity": "warning",
        "check": "L2",
@@ -3101,29 +1748,69 @@
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop `body.min-h-full > div.fh-cap.fh-error-page > header.fh-error-bar.flex > a.no-underline` \"foxhound\")"
-      },
-      {
-       "severity": "warning",
-       "check": "S2",
-       "detail": "https://foxhoundapp.com/no-such-page-devkit-a11y landmarks: main 1, header 1, nav 0, footer 1; each page needs one main and a header, nav and footer"
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/ animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what `section.mb-10:nth-of-type(4) > ul.m-0.flex > li.overflow-hidden.rounded-lg:nth-of-type(1) > button.flex.w-full` opened"
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/about animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/contact animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/product/audit animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/pricing animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/blog/archive animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/products animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/docs/platform animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxhoundapp.com/features animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "foxing": {
      "status": "missing",
-     "reason": "devkit-a11y: 2 errors",
+     "reason": "devkit-a11y: 11 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://foxing.app/ no visible focus on 1 of 40 stops: `input#q`"
+       "detail": "https://foxing.app/ no visible focus on 1 of 40 stops: `input#_R_e2j5_-control`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -3134,13 +1821,68 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://foxing.app/no-such-page-devkit-a11y landmarks: main 1, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/about animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/journal/archive animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/books animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/books/813-leblanc animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/awards animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/authors/a-a-milne animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/picks animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://foxing.app/awards/james-tait-black animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "carrel": {
      "status": "missing",
-     "reason": "devkit-a11y: 6 errors",
+     "reason": "devkit-a11y: 9 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://carrel.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://carrel.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://carrel.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
       {
        "severity": "error",
        "check": "L1",
@@ -3201,12 +1943,17 @@
     "enarratio": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "clean_days": 5
     },
     "capsomer": {
      "status": "missing",
-     "reason": "devkit-a11y: 4 errors",
+     "reason": "devkit-a11y: 13 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
       {
        "severity": "error",
        "check": "L2",
@@ -3216,6 +1963,36 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://capsomer.dustinedwards.info/no-such-page-devkit-a11y landmarks: main 1, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
+      },
+      {
+       "severity": "warning",
+       "check": "L1",
+       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 4 elements, first `#main`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
+      },
+      {
+       "severity": "warning",
+       "check": "L1",
+       "detail": "https://capsomer.dustinedwards.info/make/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.cap-panel[aria-labelledby=\"mk-l-tbl\"]`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://capsomer.dustinedwards.info/make/ no visible focus on 1 of 40 stops: `input#mk-radius`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/make/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `figure.make-pane:nth-of-type(1) > div.make-pane-body > div.cap-tabs:nth-of-type(7) > div.cap-tabs-list:nth-of-type(1)` and 5 more"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/accessibility/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "warning",
@@ -3233,14 +2010,29 @@
        "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `header`"
       },
       {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
+      },
+      {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/make/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.cap-panel[aria-labelledby=\"mk-l-tbl\"]`"
+       "detail": "https://capsomer.dustinedwards.info/components/ai-engine-settings/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 3 elements, first `#main`"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://capsomer.dustinedwards.info/make/ no visible focus on 1 of 40 stops: `input#mk-radius`"
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-engine-settings/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
+      },
+      {
+       "severity": "warning",
+       "check": "L1",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-job-buttons/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `#main`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-job-buttons/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
       },
       {
        "severity": "warning",
@@ -3253,31 +2045,41 @@
        "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ no skip link to main as the first Tab stop (first stop `input#side-find` \"\")"
       },
       {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `iframe[data-fk=\"attention-list/example/s-mixed\"] #att-mixed-h`"
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
       },
       {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 8 elements, first `#main`"
+       "detail": "https://capsomer.dustinedwards.info/components/annotated-figure/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `#main`"
       },
       {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/authorship/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `#main`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 9 elements, first `#main`"
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/components/annotated-figure/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
       }
      ]
     },
     "prelum": {
      "status": "missing",
-     "reason": "devkit-a11y: 6 errors",
+     "reason": "devkit-a11y: 9 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://prelum.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.pair:nth-of-type(1) > div:nth-of-type(2) > div.output.prose > div.table-scroll` and 1 more"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://prelum.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://prelum.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
       {
        "severity": "error",
        "check": "L1",
@@ -3337,17 +2139,67 @@
     },
     "capsid": {
      "status": "missing",
-     "reason": "devkit-a11y: 1 errors",
+     "reason": "devkit-a11y: 11 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/s/capsid/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
       {
        "severity": "error",
        "check": "L2",
        "detail": "https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 18 more"
       },
       {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/systems/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `figure#family > div.cap-tabs.cap-system-map-views > div.cap-tabs-list.cap-system-map-switch:nth-of-type(1)` and 1 more"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/flows/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_start_session/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
        "severity": "warning",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 2 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(8) > rect:nth-of-type(3)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(1) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(1) > svg > g:nth-of-type(9) > circle:nth-of-type(1)`"
+       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 3 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > rect:nth-of-type(3)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(1)`, `figure#waits-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(8) > line`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/numbers/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/code/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/tools/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
@@ -3398,26 +2250,14 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth an SVG chart drawn outside Enarratio: \"The MCP server holds no policy. It verifies identity, then m\" (12 lines)"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "germomics": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: \"A schematic of that path, not a measurement from one patient\" (6 dots)"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -3432,555 +2272,39 @@
      "reason": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://foxhoundapp.com/blog/dunning-email-sequence an SVG chart drawn outside Enarratio: \"an svg\" (17 dots)"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "foxing": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: G: https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.; could not run: timed out after 20 minutes: ::notice title=G::https://foxing.app/books/the-merchant-of-venice-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed ::notice title=G::https://foxing.app/books/the-mercy-of-allah-belloc could not measure: the browser ",
-     "findings": [
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-p-herbert could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-w-tozer could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/abu-al-ala-al-maarri could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/ada-elizabeth-chesterton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/adam-mickiewicz could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/adam-smith could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aeschylus could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aesop could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/agatha-christie could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/akutagawa-ryunosuke could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alain-rene-lesage could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alan-sullivan could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aldous-huxley could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aleksandr-kuprin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexander-berkman could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexander-hamilton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexander-mackenzie could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexander-pushkin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexandre-dumas could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alfred-lord-tennyson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/algernon-blackwood could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/algis-budrys could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/ambrose-bierce could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/ameen-rihani could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anatole-france could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/andre-gide could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/andre-norton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/angela-brazil could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anita-loos could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/ann-radcliffe could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anna-julia-cooper could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anna-katharine-green could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anna-sewell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anne-bronte could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anne-parrish could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anthony-berkeley could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anthony-hope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anthony-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anton-chekhov could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/apollonius-of-rhodes could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/apsley-cherry-garrard could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/apuleius could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/archibald-alexander could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aristotle could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arnold-bennett could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arthur-conan-doyle could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arthur-machen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arthur-quiller-couch could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arthur-ransome could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arthur-w-pinero could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/august-strindberg could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/mystery-at-lynden-sands-connington could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/narrative-of-the-life-of-frederick-douglass-douglass could not measure: the browser could not open it: page.goto: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/national-avenue-tarkington could not measure: the browser could not open it: page.evaluate: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/new-grub-street-gissing could not measure: the browser could not open it: page.goto: net::ERR_ABORTED at https://foxing.app/books/new-grub-street-gissing"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/new-hampshire-frost could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/news-from-nowhere-morris could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/nicholas-nickleby-dickens could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Not supported"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/nicomachean-ethics-aristotle could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/niels-lyhne-jacobsen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/night-and-day-woolf could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/nightmare-abbey-peacock could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/no-more-parades-ford could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/no-name-collins could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/no-treason-spooner could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/noli-me-tangere-rizal could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/nonsense-books-lear could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/nordenholts-million-connington could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/north-and-south-gaskell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/north-of-boston-frost could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/northanger-abbey-austen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/nostromo-conrad could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/not-without-laughter-hughes could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/notes-from-underground-dostoevsky could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/notre-dame-de-paris-hugo could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/now-it-can-be-told-gibbs could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/o-pioneers-cather could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/oedipus-at-colonus-sophocles could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/oedipus-rex-sophocles could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/of-human-bondage-maugham could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/oil-sinclair could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/old-indian-legends-zitkala-sa could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/oliver-twist-dickens could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/olney-hymns-newton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/omega-flammarion could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/on-a-chinese-screen-maugham could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/on-a-pincushion-morgan could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/on-liberty-mill could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/on-the-art-of-reading-quiller-couch could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/on-the-art-of-writing-quiller-couch could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/on-the-eve-turgenev could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/one-of-ours-cather could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/orlando-furioso-ariosto could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/orlando-woolf could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/orley-farm-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/orthodoxy-chesterton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      }
-     ]
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "carrel": {
-     "status": "partial",
-     "reason": "no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json",
-     "evidence": [
-      "https://carrel.dustinedwards.info/"
-     ],
-     "clean_days": 11
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "enarratio": {
-     "status": "complete",
-     "reason": "chart-audit 5 Nov: 127 charts on 4 pages, no findings",
-     "evidence": [
-      "https://enarratio.dustinedwards.info/"
-     ],
-     "clean_days": 9
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsomer": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 5
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "prelum": {
-     "status": "complete",
-     "reason": "chart-audit 5 Nov: 4 charts, no findings",
-     "evidence": [
-      "https://prelum.dustinedwards.info/"
-     ],
-     "clean_days": 10
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsid": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 4
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -4003,23 +2327,14 @@
      "reason": "no check for a worker"
     },
     "capsid-portal": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://portal.dustinedwards.info/demos/packages at 320 px, charts shift the page by 0.395 (layout shift); largest 0.395, div.enarratio-frame.enarratio-frame-wide +425 px, height +152"
-      }
-     ]
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     },
     "carrel-desk": {
-     "status": "partial",
-     "reason": "chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov",
-     "evidence": [
-      "https://desk.dustinedwards.info/demos/progress"
-     ],
-     "clean_days": 7
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log",
+     "findings": []
     }
    }
   },
@@ -4050,7 +2365,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/lib/search/ask.server.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "germomics": {
      "status": "partial",
@@ -4058,7 +2373,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "julieedwards-info": {
      "status": "partial",
@@ -4066,7 +2381,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "txasm": {
      "status": "partial",
@@ -4074,7 +2389,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "bsw": {
      "status": "complete",
@@ -4083,12 +2398,12 @@
       "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
       "https://github.com/DrDustinEdwards/bsw"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxing": {
      "status": "partial",
@@ -4097,7 +2412,7 @@
       "https://foxing.app/",
       "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "carrel": {
      "status": "partial",
@@ -4105,7 +2420,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "enarratio": {
      "status": "complete",
@@ -4114,7 +2429,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/enarratio"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "capsomer": {
      "status": "complete",
@@ -4123,7 +2438,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsomer"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "prelum": {
      "status": "complete",
@@ -4132,7 +2447,7 @@
       "https://prelum.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/prelum"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "capsid": {
      "status": "partial",
@@ -4140,12 +2455,133 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
      ],
-     "clean_days": 11
+     "clean_days": 12
     },
     "capsid-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 5
+     "status": "missing",
+     "reason": "site-runtime-ai-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_start_session: inputSchema.thread is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.glob is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.query is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.paths[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.query is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path_prefix is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.base is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.head is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.job is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.step is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.probe is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.query_contains is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page_contains is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.since is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.id is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_status: inputSchema.package is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp no --tools-hash pinned; the test grant's list hashes to 14e0c8de0da7391dba25070e533c1f6183047f83fc177171f206ce6d72662a04"
+      },
+      {
+       "severity": "warning",
+       "check": "P3",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 3 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream)"
+      },
+      {
+       "severity": "error",
+       "check": "P3",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless passed 24/25 (failing: sep-2575-server-no-log-without-loglevel)"
+      }
+     ]
     },
     "foxhound-mcp": {
      "status": "missing",
@@ -4204,7 +2640,7 @@
       {
        "severity": "warning",
        "check": "T12",
-       "detail": "https://admin-mcp.foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to 5116042493cf3d5eed9032cbab09f7da36d4970ea12f01806aa79bcfeee963fe"
+       "detail": "https://admin-mcp.foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to 3127cf413f9e14f86649ad76299ee0331d7cc60055dda0849b59bb67afc24417"
       },
       {
        "severity": "warning",
@@ -4221,17 +2657,183 @@
     "dustinedwards-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 5
+     "clean_days": 6
     },
     "carrel-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 5
+     "status": "missing",
+     "reason": "site-runtime-ai-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.q is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.kind is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.cursor is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.item is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_voice_brief: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.source is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.sources[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.item is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.item is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.source is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.item is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.q is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.cursor is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.q is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.item is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.cursor is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_book_files: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.project is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.source is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to b1e3e0a0f77789a2c66a5ce7097eb7a7797fdec1c02b50bda3cbbcfe1afb79d9"
+      },
+      {
+       "severity": "warning",
+       "check": "P3",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+      },
+      {
+       "severity": "warning",
+       "check": "P7",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching: 1 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints)"
+      },
+      {
+       "severity": "error",
+       "check": "P7",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching passed 5/6 (failing: sep-2549-resources-read-caching-hints)"
+      }
+     ]
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid-portal": {
      "status": "n/a",

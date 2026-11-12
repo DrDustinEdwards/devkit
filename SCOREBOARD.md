@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-10 15:48 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-12 15:52 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,17 +8,17 @@ Newest run 2026-11-10 15:48 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | ❔ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
-| 4. Writing and rendering | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
+| 4. Writing and rendering | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | ❔ | ❔ | ❔ | ❔ | · | ❔ | ❔ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
-| 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❌ | ❌ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
+| 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
-| 9. Accessibility and components | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | ❔ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
+| 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
+| 10. Charts | ❌ | ❔ | ❔ | · | · | · | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | ❔ | ❔ | +33215 | −9539 |
+| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 ## Why a cell is not complete
@@ -28,32 +28,18 @@ Newest run 2026-11-10 15:48 UTC. Filled only from the live checks and the verifi
 Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❔ dustinedwards.info: prelum-audit could not measure: fetch-failed: https://dustinedwards.info/writing/tags/security/rss.xml could not measure: no answer (fetch failed), so the page was not audited
-- 🟡 Germomics: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod
-- 🟡 julieedwards.info: no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
-- ❌ TXASM: prelum-audit: 165 errors
-  - robots-blocks-all: https://txasm.org/robots.txt robots.txt disallows the home page to Googlebot, so no page is crawled
-  - sitemap-blocked: https://txasm.org the sitemap lists a URL robots.txt disallows
-  - sitemap-blocked: https://txasm.org/meetings the sitemap lists a URL robots.txt disallows
-  - sitemap-blocked: https://txasm.org/awardees the sitemap lists a URL robots.txt disallows
-  - sitemap-blocked: https://txasm.org/award-nominations the sitemap lists a URL robots.txt disallows
-- ❌ BSW: prelum-audit: 20 errors
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/ the sitemap lists a noindex page
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/grant-proposal-support the sitemap lists a noindex page
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
-- 🟡 Foxhound: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects
-- ❌ Foxing: prelum-audit: 3018 errors
-  - link-redirect: https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
-  - link-redirect: https://foxing.app/ links to https://foxing.app/people, which redirects to /login
-  - link-redirect: https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
-  - link-redirect: https://foxing.app/books links to https://foxing.app/people, which redirects to /login
-  - link-redirect: https://foxing.app/awards links to https://foxing.app/clubs, which redirects to /login?redirect=/clubs
-- 🟡 Carrel: no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404
-- 🟡 Enarratio: checks pass; no verifier yet
-- 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Capsid explorer: no Markdown twin: /&lt;page&gt;.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404
+- ❔ dustinedwards.info: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Germomics: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ julieedwards.info: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ TXASM: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ BSW: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Foxhound: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Foxing: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Carrel: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Enarratio: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Capsomer: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Prelum specimen: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Capsid explorer: prelum-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
 
 ### 2. Security headers and CSP
 
@@ -88,41 +74,41 @@ Builder: Complete shared sign-in and access. Verifier: Verify shared sign-in and
 Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: prelum-content: 61 errors
-  - writing-render-version: https://dustinedwards.info/about stored HTML from render version 22; the pipeline is at 23
-  - writing-render-version: https://dustinedwards.info/research stored HTML from render version 22; the pipeline is at 23
-  - writing-render-version: https://dustinedwards.info/research/retroviruses stored HTML from render version 22; the pipeline is at 23
-  - writing-render-version: https://dustinedwards.info/research/retroviruses/human stored HTML from render version 22; the pipeline is at 23
-  - writing-render-version: https://dustinedwards.info/research/retroviruses/avian stored HTML from render version 22; the pipeline is at 23
-- 🟡 Germomics: checks pass; no verifier yet
-- 🟡 julieedwards.info: live check clean on 1 page; the repository was not available, and earlier notes say it has its own section grammar rather than Prelum
-- 🟡 TXASM: checked on the workers.dev address: 41 pages, 0 errors; /award-nominations has no data-render-version wrapper
-- 🟡 BSW: 11 pages with h3 after h1 (heading order)
-- 🟡 Foxhound: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Foxing: /books has h3 after h1
-- 🟡 Carrel: live check clean on 2 pages; the Carrel repository was not available to this verifier, and earlier notes say Carrel books still use a regex renderer
-- 🟡 Enarratio: live check clean on 5 pages; its source was not available to this verifier, so use of Prelum and absence of a second renderer is not proven
-- 🟡 Capsomer: the live check is clean, but the showcase still renders Markdown with its own regex renderer (site/markdown.ts, used by home, views and main), so there is more than one renderer
-- 🟡 Prelum specimen: specimen renders writing with no data-render-version wrapper
+- ❔ dustinedwards.info: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Germomics: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ julieedwards.info: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ TXASM: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ BSW: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Foxhound: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Foxing: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Carrel: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Enarratio: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Capsomer: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Prelum specimen: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Capsid explorer: prelum-content could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
 
 ### 5. Carrel editing contract
 
 Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editing contract.
 
 - 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
-- ❔ dustinedwards.info: site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log
-- ❔ Germomics: site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log
-- ❔ julieedwards.info: site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log
-- ❔ TXASM: site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log
-- ❔ Foxhound: site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log
-- ❔ Foxing: site-api-live could not measure: could not run: could not install site-api#v0.35.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-10T15_02_25_838Z-debug-0.log
+- ❔ dustinedwards.info: site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log
+- ❔ Germomics: site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log
+- ❔ julieedwards.info: site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log
+- ❔ TXASM: site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log
+- ❔ Foxhound: site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log
+- ❔ Foxing: site-api-live could not measure: could not run: could not install site-api#v0.40.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_12_096Z-debug-0.log
 
 ### 6. Images and media
 
 Builder: Complete shared images and media. Verifier: Verify area 6 images and media.
 
 - 🟡 Package: uploads built (HEIC, GPS strip, placeholder); a replace keeps the immutable size URL; pictureProps carries no placeholder; Prelum picture drops source media (GIF never moves) and counts priority per render; unsized diagram img; credit/license never reach the renderer; no 1.91:1 cover crop, no 16:9/4:3/1:1 set, no og:video; respond sets no CORP; AVIF not stripped; images check skips A6 and C9 and never runs on the Portal
-- 🟡 dustinedwards.info: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
+- ❌ dustinedwards.info: site-runtime-images: 4 errors
+  - A12: https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.webp?v=a4b25f040616&amp;w=320 asked a second time it is cf-cache-status BYPASS, not a HIT
+  - A12: https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.webp?v=a4b25f040616&amp;w=640 asked a second time it is cf-cache-status BYPASS, not a HIT
+  - A12: https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.avif?v=a4b25f040616&amp;w=320 asked a second time it is cf-cache-status BYPASS, not a HIT
+  - A12: https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.avif?v=a4b25f040616&amp;w=640 asked a second time it is cf-cache-status BYPASS, not a HIT
 - 🟡 Germomics: episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper
 - 🟡 julieedwards.info: profile photo 884 KB, 2048 px, unsized, no srcset, 3.1x at 670 px, cached 4 h, other host without preconnect; must go into the library; fallback img unsized
 - 🟡 TXASM: og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap
@@ -154,13 +140,10 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
   - C2: https://germomics.com/fonts/space-grotesk-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
   - C2: https://germomics.com/fonts/fraunces-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
 - ❔ julieedwards.info: site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❌ TXASM: site-runtime-speed: 1 errors
-  - D1: https://txasm.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain
-- ❌ BSW: site-runtime-speed: 1 errors
-  - D1: https://bsw.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain
+- ❔ TXASM: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
+- ❔ BSW: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
 - ❔ Foxhound: site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❌ Foxing: site-runtime-speed: 1 errors
-  - B1: https://foxing.app/authors/a-e-w-mason not from the edge on the second request: cf-cache-status MISS (first none), cache-control public, max-age=0, colo ? then ATL
+- ❔ Foxing: site-runtime-speed could not measure: A3: https://foxing.app/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxing.app/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Carrel: site-runtime-speed-static could not measure: A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Enarratio: site-runtime-speed-static could not measure: A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Capsomer: site-runtime-speed-static could not measure: A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
@@ -188,9 +171,9 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 67281eba9244ab3eb1b5401c4451e08749d07bbb, not the branch head ea5476c52b3055b9154d860fbe7bf1249ad4d299 (https://github.com/DrDustinEdwards/foxhound/commit/ea5476c52b3055b9154d860fbe7bf1249ad4d299), committed 4250 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 943fe2bc1f10b77d876157aa3d211d96913102bc, not the branch head e007f9dc1fb6af625bf00ebf8fb4bdaed97c6f56 (https://github.com/DrDustinEdwards/foxhound/commit/e007f9dc1fb6af625bf00ebf8fb4bdaed97c6f56), committed 940 minutes ago
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves b58d526305fa4d8a1a29497092695dbc28a7040d, not the branch head 292398c27926bab4a98be902f9c97144d2e940c8 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/292398c27926bab4a98be902f9c97144d2e940c8), committed 347 minutes ago
+  - H4: https://admin-mcp.dustinedwards.info/health serves e5ece858d84a60ba1d9d61520d9f00b5b477b2ac, not the branch head 6bd3dba327d35fcdf880cc5737fff13dd5cc1f64 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/6bd3dba327d35fcdf880cc5737fff13dd5cc1f64), committed 92 minutes ago
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
@@ -199,54 +182,73 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: checks pass; no verifier yet
-- ❌ Germomics: devkit-a11y: 11 errors
-  - L2: https://germomics.com/ no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
+- ❌ dustinedwards.info: devkit-a11y: 22 errors
+  - L2: https://dustinedwards.info/ focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
+  - L4: https://dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;nav#site-nav&#96;, cap-fade-end-out on &#96;nav#site-nav&#96;
+  - L2: https://dustinedwards.info/no-such-page-devkit-a11y no visible focus on 1 of 40 stops: &#96;input#_R_1cct5_-control&#96;
+  - L2: https://dustinedwards.info/no-such-page-devkit-a11y focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
+  - L4: https://dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;nav#site-nav&#96;, cap-fade-end-out on &#96;nav#site-nav&#96;
+- ❌ Germomics: devkit-a11y: 5 errors
+  - L2: https://germomics.com/ no visible focus on 9 of 40 stops: &#96;article.cap-card.gap-x-4:nth-of-type(2) &gt; header &gt; h3.mt-1.font-display &gt; a.cap-card-link.text-ink&#96;, &#96;article.cap-card.gap-x-4:nth-of-type(3) &gt; header &gt; h3.mt-1.font-display &gt; a.cap-card-link.text-ink&#96;, &#96;article.cap-card.gap-x-4:nth-of-type(4) &gt; header &gt; h3.mt-1.font-display &gt; a.cap-card-link.text-ink&#96; and 6 more
   - L2: https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
-  - L2: https://germomics.com/about no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
-  - L2: https://germomics.com/contact no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
-  - L2: https://germomics.com/about/dustin-edwards no skip link to main as the first Tab stop (first stop &#96;body &gt; header.sticky.top-0 &gt; div.mx-auto.flex &gt; a.flex.items-center&#96; "germomics")
-- ❌ julieedwards.info: devkit-a11y: 6 errors
+  - L2: https://germomics.com/episodes no visible focus on 10 of 40 stops: &#96;article.cap-card.gap-x-4:nth-of-type(1) &gt; header &gt; h3.mt-1.font-display &gt; a.cap-card-link.text-ink&#96;, &#96;article.cap-card.gap-x-4:nth-of-type(2) &gt; header &gt; h3.mt-1.font-display &gt; a.cap-card-link.text-ink&#96;, &#96;article.cap-card.gap-x-4:nth-of-type(3) &gt; header &gt; h3.mt-1.font-display &gt; a.cap-card-link.text-ink&#96; and 7 more
+  - L2: https://germomics.com/season/1 no visible focus on 10 of 40 stops: &#96;article.cap-card.gap-x-4:nth-of-type(1) &gt; header &gt; h2.mt-1.font-display &gt; a.cap-card-link.text-ink&#96;, &#96;article.cap-card.gap-x-4:nth-of-type(2) &gt; header &gt; h2.mt-1.font-display &gt; a.cap-card-link.text-ink&#96;, &#96;article.cap-card.gap-x-4:nth-of-type(3) &gt; header &gt; h2.mt-1.font-display &gt; a.cap-card-link.text-ink&#96; and 7 more
+  - L2: https://germomics.com/archive no visible focus on 11 of 40 stops: &#96;div.mb-6.flex:nth-of-type(1) &gt; form.flex.items-center &gt; div.flex.items-center &gt; input.w-40.bg-transparent&#96;, &#96;article.cap-card.gap-x-4:nth-of-type(1) &gt; header &gt; h2.mt-1.font-display &gt; a.cap-card-link.text-ink&#96;, &#96;article.cap-card.gap-x-4:nth-of-type(2) &gt; header &gt; h2.mt-1.font-display &gt; a.cap-card-link.text-ink&#96; and 8 more
+- ❌ julieedwards.info: devkit-a11y: 9 errors
+  - L4: https://julieedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://julieedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L1: https://julieedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
   - L1: https://julieedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
   - L2: https://julieedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop &#96;html &gt; body &gt; div.json-formatter-container&#96; "")
-  - L2: https://julieedwards.info/site.webmanifest no visible focus on 20 of 20 stops: &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96; and 17 more
-  - S2: https://julieedwards.info/site.webmanifest no lang on &lt;html&gt;
-- ❌ TXASM: devkit-a11y: 2 errors
+- ❌ TXASM: devkit-a11y: 10 errors
+  - L4: https://txasm.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L2: https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
-  - L1: https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter axe aria-prohibited-attr (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;.pdf-viewer-page&#96;
+  - L4: https://txasm.dustin-edwards.workers.dev/contact animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://txasm.dustin-edwards.workers.dev/archive/abstract-books animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://txasm.dustin-edwards.workers.dev/meetings animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
 - ❌ BSW: devkit-a11y: 10 errors
-  - L2: https://bsw.dustin-edwards.workers.dev/ no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
-  - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;section:nth-of-type(2) &gt; div.page-prose.mx-auto &gt; p.mt-8:nth-of-type(2) &gt; a.btn.btn-blue&#96; "Go to the home page")
-  - L2: https://bsw.dustin-edwards.workers.dev/about-us no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
-  - L2: https://bsw.dustin-edwards.workers.dev/contact-us no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
-  - L2: https://bsw.dustin-edwards.workers.dev/grant-proposal-support no skip link to main as the first Tab stop (first stop &#96;div.flex.min-h-screen &gt; header.sticky.top-0 &gt; div.mx-auto.flex:nth-of-type(1) &gt; a.shrink-0&#96; "BioScience Writers home")
-- ❌ Foxhound: devkit-a11y: 2 errors
-  - L2: https://foxhoundapp.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;body.min-h-full &gt; div.fh-cap.fh-error-page &gt; header.fh-error-bar.flex &gt; a.no-underline&#96; "foxhound")
-  - L2: https://foxhoundapp.com/decline-codes/insufficient_funds Escape did not close what &#96;section.mb-10:nth-of-type(4) &gt; ul.m-0.flex &gt; li.overflow-hidden.rounded-lg:nth-of-type(1) &gt; button.flex.w-full&#96; opened
-- ❌ Foxing: devkit-a11y: 2 errors
-  - L2: https://foxing.app/ no visible focus on 1 of 40 stops: &#96;input#q&#96;
+  - L4: https://bsw.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.flex.min-h-screen &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.flex.min-h-screen &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;div.psms-section &gt; div.psms-container &gt; div.cap-tabs.psms-tabs &gt; div.cap-tabs-list:nth-of-type(1)&#96; and 1 more
+  - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-error-page-body &gt; div.cap-empty-content &gt; a.cap-btn&#96; "Go to the home page")
+  - L4: https://bsw.dustin-edwards.workers.dev/about-us animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.flex.min-h-screen &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.flex.min-h-screen &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://bsw.dustin-edwards.workers.dev/contact-us animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.flex.min-h-screen &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.flex.min-h-screen &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://bsw.dustin-edwards.workers.dev/grant-proposal-support animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.flex.min-h-screen &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.flex.min-h-screen &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+- ❌ Foxhound: devkit-a11y: 11 errors
+  - L2: https://foxhoundapp.com/ no visible focus on 3 of 40 stops: &#96;input#mrr-slider&#96;, &#96;input#failure-share-slider&#96;, &#96;input#recovery-share-slider&#96;
+  - L4: https://foxhoundapp.com/ animations still running with reduced motion: cap-fade-start-in on &#96;div.flex.min-h-screen &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.flex.min-h-screen &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://foxhoundapp.com/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;div.flex.min-h-screen &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.flex.min-h-screen &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://foxhoundapp.com/about animations still running with reduced motion: cap-fade-start-in on &#96;div.flex.min-h-screen &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.flex.min-h-screen &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://foxhoundapp.com/contact animations still running with reduced motion: cap-fade-start-in on &#96;div.flex.min-h-screen &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.flex.min-h-screen &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+- ❌ Foxing: devkit-a11y: 11 errors
+  - L2: https://foxing.app/ no visible focus on 1 of 40 stops: &#96;input#_R_e2j5_-control&#96;
+  - L4: https://foxing.app/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L2: https://foxing.app/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
-- ❌ Carrel: devkit-a11y: 6 errors
+  - L4: https://foxing.app/about animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://foxing.app/journal/archive animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+- ❌ Carrel: devkit-a11y: 9 errors
+  - L4: https://carrel.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://carrel.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://carrel.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L1: https://carrel.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
   - L1: https://carrel.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
-  - L2: https://carrel.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop &#96;html &gt; body &gt; div.json-formatter-container&#96; "")
-  - L2: https://carrel.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96; and 17 more
-  - S2: https://carrel.dustinedwards.info/site.webmanifest no lang on &lt;html&gt;
 - 🟡 Enarratio: checks pass; no verifier yet
-- ❌ Capsomer: devkit-a11y: 4 errors
+- ❌ Capsomer: devkit-a11y: 13 errors
+  - L4: https://capsomer.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L2: https://capsomer.dustinedwards.info/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;body &gt; main &gt; p &gt; a&#96; "Go to Capsomer's front page")
-  - L1: https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first &#96;iframe[data-fk="admin-shell/only/tip"] a[aria-describedby="cap-popover-11"]&#96;
+  - L4: https://capsomer.dustinedwards.info/components/not-found-report/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;main#main &gt; section:nth-of-type(2) &gt; div.cap-tabs &gt; div.cap-tabs-list:nth-of-type(1)&#96; and 1 more
   - L2: https://capsomer.dustinedwards.info/make/ no visible focus on 1 of 40 stops: &#96;input#mk-radius&#96;
-  - L2: https://capsomer.dustinedwards.info/components/anchor-bar/ no skip link to main as the first Tab stop (first stop &#96;input#side-find&#96; "")
-- ❌ Prelum specimen: devkit-a11y: 6 errors
+  - L4: https://capsomer.dustinedwards.info/make/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;figure.make-pane:nth-of-type(1) &gt; div.make-pane-body &gt; div.cap-tabs:nth-of-type(7) &gt; div.cap-tabs-list:nth-of-type(1)&#96; and 5 more
+- ❌ Prelum specimen: devkit-a11y: 9 errors
+  - L4: https://prelum.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;div.pair:nth-of-type(1) &gt; div:nth-of-type(2) &gt; div.output.prose &gt; div.table-scroll&#96; and 1 more
+  - L4: https://prelum.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://prelum.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L1: https://prelum.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
   - L1: https://prelum.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
-  - L2: https://prelum.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop &#96;html &gt; body &gt; div.json-formatter-container&#96; "")
-  - L2: https://prelum.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96;, &#96;html &gt; body &gt; div.json-formatter-container&#96; and 17 more
-  - S2: https://prelum.dustinedwards.info/site.webmanifest no lang on &lt;html&gt;
-- ❌ Capsid explorer: devkit-a11y: 1 errors
+- ❌ Capsid explorer: devkit-a11y: 11 errors
+  - L4: https://capsid.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://capsid.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L4: https://capsid.dustinedwards.info/s/capsid/ animations still running with reduced motion: cap-fade-start-in on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(1)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(2)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(3)&#96; and 18 more
+  - L4: https://capsid.dustinedwards.info/systems/ animations still running with reduced motion: cap-fade-start-in on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;figure#family &gt; div.cap-tabs.cap-system-map-views &gt; div.cap-tabs-list.cap-system-map-switch:nth-of-type(1)&#96; and 1 more
 - Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
 ### 10. Charts
@@ -254,19 +256,17 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: chart-audit: 1 errors
-  - F: https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth an SVG chart drawn outside Enarratio: "The MCP server holds no policy. It verifies identity, then m" (12 lines)
-- ❌ Germomics: chart-audit: 1 errors
-  - F: https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: "A schematic of that path, not a measurement from one patient" (6 dots)
-- ❌ Foxhound: chart-audit: 1 errors
-  - F: https://foxhoundapp.com/blog/dunning-email-sequence an SVG chart drawn outside Enarratio: "an svg" (17 dots)
-- ❔ Foxing: chart-audit could not measure: G: https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.; could not run: timed out after 20 minutes: ::notice title=G::https://foxing.app/books/the-merchant-of-venice-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed ::notice title=G::https://foxing.app/books/the-mercy-of-allah-belloc could not measure: the browser 
-- 🟡 Carrel: no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json
-- 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Capsid explorer: checks pass; no verifier yet
-- ❌ Capsid Portal: chart-audit: 1 errors
-  - D5: https://portal.dustinedwards.info/demos/packages at 320 px, charts shift the page by 0.395 (layout shift); largest 0.395, div.enarratio-frame.enarratio-frame-wide +425 px, height +152
-- 🟡 Carrel Desk: chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov
+- ❔ dustinedwards.info: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Germomics: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Foxhound: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Foxing: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Carrel: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Enarratio: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Capsomer: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Prelum specimen: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Capsid explorer: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Capsid Portal: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
+- ❔ Carrel Desk: chart-audit could not measure: could not run: could not install prelum#v0.54.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-12T15_27_06_751Z-debug-0.log
 
 ### 11. AI and MCP
 
@@ -281,11 +281,13 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 - 🟡 Foxing: Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0
 - 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
 - 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
-- 🟡 Capsid MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
+- ❌ Capsid MCP: site-runtime-ai-audit: 1 errors
+  - P3: https://mcp.dustinedwards.info/ops/mcp conformance server-stateless passed 24/25 (failing: sep-2575-server-no-log-without-loglevel)
 - ❌ Foxhound admin MCP: site-runtime-ai-audit: 1 errors
   - T4: https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments does not set additionalProperties: false
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
-- 🟡 Carrel MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
+- ❌ Carrel MCP: site-runtime-ai-audit: 1 errors
+  - P7: https://carrel-mcp.dustinedwards.info/mcp conformance caching passed 5/6 (failing: sep-2549-resources-read-caching-hints)
 - 🟡 Foxing admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 
 ### 12. Checks and tooling
