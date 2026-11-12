@@ -20,7 +20,10 @@
 // a warning says so, since a repository that went private would then drop out of the count without any copy removed. The
 // token goes to git in its environment, never on a command line, and is never printed. The config:
 //
-//   { "baseline": 44, "names": 12, "packages": 12, "measured_at": "2026-11-06", "tool": "jscpd@4.3.0", "args": ["--min-lines", "10", "--min-tokens", "80"] }
+//   { "baseline": 44, "names": 12, "packages": 12, "measured_at": "2026-11-06", "tool": "jscpd@4.3.0" }
+//
+// jscpd's thresholds are COPY_ARGS (10 lines, 80 tokens), the ones no-bloat's "shared copies" uses on every pull request;
+// "args" in the config overrides them.
 //
 // Two more passes count beside jscpd's blocks. A .claude file jscpd does not read (an agent, a skill, a command) with the
 // same bytes in another repository is a copy too, counted in "baseline". And "names" ratchets the distinctive exported
@@ -38,10 +41,11 @@ import {
   mkdtempSync,
   readFileSync,
   readdirSync,
+  rmSync,
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
@@ -207,6 +211,92 @@ function gitAuthEnv(/** @type {string | undefined} */ token) {
   };
 }
 
+/**
+ * jscpd's settings for a copy, here and in no-bloat's "shared copies": a block of 10 lines and 80 tokens, and JavaScript read
+ * as TypeScript. jscpd compares files of one format only, so without the mapping a site's .ts copy of site-runtime's or
+ * Prelum's .mjs was never seen (checked with jscpd 4.3.0, 2026-11-12). JSX goes with TSX the same way.
+ */
+export const COPY_ARGS = [
+  "--min-lines",
+  "10",
+  "--min-tokens",
+  "80",
+  "--formats-exts",
+  "typescript:ts,mts,cts,js,mjs,cjs;tsx:tsx,jsx",
+];
+
+/** What a shared package ships that is not its source: nested installs, tests, fixtures, minified and declaration files. */
+const PACKAGE_SKIP =
+  /(?:^|\/)(?:node_modules|test|tests|__tests__|__mocks__|e2e|fixtures?)\/|\.(?:test|spec)\.[^/]+$|\.min\.[^/]+$|\.d\.[cm]?ts$/;
+
+/** Every file under a directory, as paths relative to it. */
+function walk(/** @type {string} */ dir, prefix = "") {
+  /** @type {string[]} */
+  const out = [];
+  for (const entry of readdirSync(join(dir, prefix), { withFileTypes: true })) {
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      if (entry.name !== "node_modules") out.push(...walk(dir, rel));
+    } else if (entry.isFile()) out.push(rel);
+  }
+  return out;
+}
+
+/**
+ * The blocks a repository copied from the shared packages it installs, found by their code, so a copy under a new name is
+ * caught on the pull request that adds it and not a day later in the network scan. jscpd reads the repository's tracked
+ * source (what isSource reads) and each package's shipped source together, with no config of the repository's, and every
+ * block with one place in the repository and the other in a package counts.
+ * @param {string} root the repository
+ * @param {string[]} paths the repository's files, from its root
+ * @param {{ repo: string, dir: string }[]} packages each installed shared package and its directory
+ * @param {(args: string[]) => void} run jscpd with these arguments, from any directory
+ * @returns {{ repo: string, path: string, start: number, end: number }[][]} each copy, the repository's place first
+ */
+export function packageCopies(root, paths, packages, run) {
+  if (packages.length === 0) return [];
+  const work = mkdtempSync(join(tmpdir(), "devkit-package-copies-"));
+  try {
+    const all = join(work, "all");
+    const put = (/** @type {string} */ from, /** @type {string} */ to) => {
+      mkdirSync(dirname(join(all, to)), { recursive: true });
+      copyFileSync(from, join(all, to));
+    };
+    // "+repo" cannot be a package's repository name, so the two sides never mix.
+    for (const path of paths.filter(isSource)) put(join(root, path), `+repo/${path}`);
+    for (const { repo, dir } of packages)
+      for (const path of walk(dir))
+        if (SOURCE.test(path) && !PACKAGE_SKIP.test(path)) put(join(dir, path), `${repo}/${path}`);
+    const config = join(work, "jscpd.json");
+    writeFileSync(config, "{}\n");
+    const out = join(work, "report");
+    run([
+      all,
+      ...COPY_ARGS,
+      "--config",
+      config,
+      "--reporters",
+      "json",
+      "--output",
+      out,
+      "--silent",
+    ]);
+    const report = JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8"));
+    // jscpd 4 names a file from the directory it ran in, jscpd 5 from the folder it scanned (both checked, 2026-11-12).
+    const inAll = (/** @type {string} */ name) => {
+      const from = relative(all, resolve(root, name));
+      return from.startsWith("..") || isAbsolute(from) ? name : from;
+    };
+    for (const d of report.duplicates)
+      for (const f of [d.firstFile, d.secondFile]) f.name = inAll(f.name);
+    return crossRepo(report)
+      .filter(({ a, b }) => (a.repo === "+repo") !== (b.repo === "+repo"))
+      .map(({ a, b }) => (a.repo === "+repo" ? [a, b] : [b, a]));
+  } finally {
+    rmSync(work, { recursive: true, force: true });
+  }
+}
+
 /** The source files that can export a name. */
 const CODE = /\.[cm]?[jt]sx?$/;
 
@@ -357,7 +447,7 @@ async function main() {
       "::warning title=devkit-copies::LIVE_GITHUB_TOKEN is not set, so only public repositories were read; a private one is left out of the count.",
     );
   }
-  const pairs = crossRepo(jscpd(all, config.tool, config.args));
+  const pairs = crossRepo(jscpd(all, config.tool, config.args ?? COPY_ARGS));
   const same = sameFiles(whole);
   // A file held by n repositories is n - 1 copies of it.
   const count =
