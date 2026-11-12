@@ -1534,10 +1534,15 @@ function ignoreEntries(/** @type {unknown} */ node, inIgnore = false) {
   return out;
 }
 
-/** The values of jscpd's `--ignore` and `--ignore-pattern` in a config's jscpd args. */
+/**
+ * The entries of jscpd's `--ignore` and `--ignore-pattern` in a config's jscpd args. jscpd splits both on commas, so
+ * each is its own entry: dropping one from the list is a wider measure, not a new value.
+ */
 function jscpdIgnores(/** @type {Config | null} */ config) {
   const args = config?.jscpd && typeof config.jscpd === "object" ? (config.jscpd.args ?? []) : [];
-  return flagValues(args, ["--ignore", "--ignore-pattern", "-i"]);
+  return flagValues(args, ["--ignore", "--ignore-pattern", "-i"])
+    .flatMap((v) => v.split(","))
+    .filter(Boolean);
 }
 
 /** The indexes of the lines of `now` that are not in `was`, by their longest common subsequence. */

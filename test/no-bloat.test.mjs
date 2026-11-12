@@ -1032,6 +1032,19 @@ test("a Knip config line, a skip tag or a jscpd marker needs a reason of its own
   assert.match(out[4], /a new `@beta` gives no reason/);
   assert.match(out[5], /a new `jscpd:ignore-start` gives no reason/);
   assert.match(out[6], /a new `@public` gives no reason/);
+  // jscpd splits --ignore on commas: dropping one glob widens the measure, adding one is new.
+  const jscpd = (/** @type {string} */ ignore) => ({
+    jscpd: { args: ["app", "--ignore", ignore] },
+  });
+  const none = { changed: [], before: () => null, now: () => null, added: [] };
+  assert.deepEqual(
+    unreasoned(none, jscpd("**/*.md,**/*.json"), jscpd("**/*.md,**/*.d.ts,**/*.json")),
+    [],
+  );
+  assert.match(
+    unreasoned(none, jscpd("**/*.md,**/x/**"), jscpd("**/*.md")).join("\n"),
+    /gain --ignore "\*\*\/x\/\*\*"/,
+  );
   assert.equal(isReason("x"), false);
   assert.equal(isReason("TODO: reason"), false);
   assert.equal(isReason("the fixture mirrors the API reply"), true);

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.42.1 (2026-11-12)
+
+- `devkit-no-bloat`: jscpd's `--ignore` and `--ignore-pattern` in the config's jscpd args are read glob by glob, split on commas as jscpd splits them. Before, the whole value was one entry, so dropping a glob from the list (a wider measure) was refused as a new ignore.
+
 ## 0.42.0 (2026-11-12)
 
 Closes the ways around the no-bloat ratchet that the 0.41.1 verifier found (capsid handoff/no-bloat-gaps-verify-0.41.md: H, I, J, K, B2 and knip with no lockfile). **Breaking**: jscpd's `unread` no longer counts a file shorter than jscpd's `minLines`, so a repository's count can fall and its bump PR runs `npx devkit-no-bloat --write-baseline` as before; and a pull request can no longer change the inputs of the job that runs the check.
