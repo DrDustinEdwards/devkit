@@ -56,20 +56,23 @@ export function propertyReads(sf, names) {
 }
 
 /**
- * The member names of every `interface NAME` in the file, merged as TypeScript merges them.
+ * The member names of every `interface NAME` in the file, merged as TypeScript merges them. An interface that extends
+ * another (`interface Env extends SiteSecrets {}`, the alias an import type or a package's export) also carries that
+ * type's members: TypeScript's own checker resolves them from the file on disk, with the packages it imports.
  *
  * @param {ts.SourceFile} sf
  * @param {string} interfaceName
- * @returns {{ found: boolean, members: Set<string> }}
+ * @returns {{ found: boolean, members: Set<string>, own: Set<string> }} `own`: the members the file itself writes.
  */
 export function interfaceMembers(sf, interfaceName) {
   /** @type {Set<string>} */
   const members = new Set();
-  let found = false;
+  /** @type {ts.InterfaceDeclaration[]} */
+  const found = [];
   /** @param {ts.Node} n */
   const visit = (n) => {
     if (ts.isInterfaceDeclaration(n) && n.name.text === interfaceName) {
-      found = true;
+      found.push(n);
       for (const m of n.members) {
         if (m.name && (ts.isIdentifier(m.name) || ts.isStringLiteralLike(m.name)))
           members.add(m.name.text);
@@ -78,7 +81,31 @@ export function interfaceMembers(sf, interfaceName) {
     ts.forEachChild(n, visit);
   };
   visit(sf);
-  return { found, members };
+  const own = new Set(members);
+  if (found.some((d) => d.heritageClauses?.length)) {
+    const program = ts.createProgram([sf.fileName], {
+      module: ts.ModuleKind.ESNext,
+      moduleResolution: ts.ModuleResolutionKind.Bundler,
+      target: ts.ScriptTarget.ESNext,
+      noEmit: true,
+      skipLibCheck: true,
+      types: [],
+    });
+    const checker = program.getTypeChecker();
+    const decl = program.getSourceFile(sf.fileName);
+    /** @param {ts.Node} n */
+    const inherit = (n) => {
+      if (ts.isInterfaceDeclaration(n) && n.name.text === interfaceName) {
+        const symbol = checker.getSymbolAtLocation(n.name);
+        if (symbol)
+          for (const p of checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)))
+            members.add(p.name);
+      }
+      ts.forEachChild(n, inherit);
+    };
+    if (decl) inherit(decl);
+  }
+  return { found: found.length > 0, members, own };
 }
 
 /** @param {ts.Node} node */

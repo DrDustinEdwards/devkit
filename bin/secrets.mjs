@@ -2,7 +2,8 @@
 // The secrets gate (from dustinedwards.info's check-secrets.mjs, item 51 of the 2026-11-11 shared-code audit). It proves,
 // from the repository's `.secrets.json`:
 //
-//   1. every secret the site names is declared on its Env interface (and, with "env_exact", nothing else is);
+//   1. every secret the site names is declared on its Env interface or a type it extends (and, with "env_exact",
+//      nothing else the file itself declares is);
 //   2. no secret is read outside the server boundary (a `*.server.*` module or workers/, by default), read off the syntax
 //      tree so `env.X`, `getEnv(c).X`, `env["X"]` and `const { X } = env` all count and a comment or a key does not;
 //   3. git itself ignores the credential files (`.dev.vars` always);
@@ -150,8 +151,10 @@ async function main() {
         env.members.has(name),
         "the site names it as a secret and the Env type does not carry it",
       );
+    // Only what the file itself declares: a shared type it extends (site-runtime's SiteSecrets) lists secrets a site
+    // may not hold.
     if (config.env_exact)
-      for (const name of env.members)
+      for (const name of env.own)
         ok(
           `${name} is a named secret`,
           secrets.includes(name),

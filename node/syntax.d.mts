@@ -11,11 +11,11 @@ export function propertyReads(
   names: ReadonlySet<string>,
 ): Array<{ name: string; line: number }>;
 
-/** The member names of every `interface NAME` in the file, merged. */
+/** The member names of every `interface NAME` in the file, merged, with the members of what it extends. */
 export function interfaceMembers(
   sf: ts.SourceFile,
   interfaceName: string,
-): { found: boolean; members: Set<string> };
+): { found: boolean; members: Set<string>; own: Set<string> };
 
 /** The exported `action` of a route module, or null. */
 export function findAction(sf: ts.SourceFile): ts.Node | null;
