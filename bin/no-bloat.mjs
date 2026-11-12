@@ -402,6 +402,8 @@ export function compare(baseline, counts, config = {}) {
   const warnings = [];
   /** @type {string[]} */
   const lowered = [];
+  /** @type {string[]} */
+  const unmeasured = [];
   const knipRuns = config.knip ?? [{ label: "knip" }];
   const before = (/** @type {string} */ tool) =>
     /** @type {Record<string, number> | null} */ (tool in baseline ? baseline[tool] : null);
@@ -455,7 +457,7 @@ export function compare(baseline, counts, config = {}) {
       "Each is a warning above with both places: import the shared one, delete the copy (SHARED.md).";
     // A repository that never measured them would pass any number, so no baseline here is an error, not a new row.
     if (!before("shared copies"))
-      errors.push(
+      unmeasured.push(
         "shared copies: the baseline has no count yet. Run `npx devkit-no-bloat --write-baseline` and commit the config.",
       );
     gate("shared copies", "clones", "clones", hint);
@@ -499,7 +501,7 @@ export function compare(baseline, counts, config = {}) {
       (key) =>
         `the baseline has "${key}", which no run in the config measures. Restore the run, or drop the entry with \`npx devkit-no-bloat --write-baseline\` in a reviewed change.`,
     );
-  return { rows, errors, warnings, lowered, stale };
+  return { rows, errors, warnings, lowered, stale: [...unmeasured, ...stale] };
 }
 
 /**
