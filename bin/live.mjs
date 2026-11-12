@@ -77,6 +77,7 @@ import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
 import { escapeAnnotation } from "./annotate.mjs";
+import { isMain } from "../node/index.mjs";
 
 /** @typedef {Record<string, any>} Json A site, area, check, verdict, run or cell: JSON the config and the runs hold. */
 
@@ -1145,7 +1146,7 @@ function readRuns(/** @type {string} */ dir) {
   return runs;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
+if (isMain(import.meta.url)) {
   const usage = (/** @type {string} */ why) => {
     console.error(
       `devkit-live: ${why}\nusage: devkit-live run --out run.json [--areas 1,2] [--sites id] | board --runs <dir> --out board.json [--md SCOREBOARD.md] | lint`,

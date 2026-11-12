@@ -34,7 +34,6 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
-  appendFileSync,
   copyFileSync,
   existsSync,
   mkdirSync,
@@ -46,11 +45,11 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, isAbsolute, join, relative, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { appendSummary, escapeAnnotation } from "./annotate.mjs";
 import { PACKAGES, distinctive, exportNames } from "./shared.mjs";
+import { isMain } from "../node/index.mjs";
 
 const OWNER = "DrDustinEdwards";
 const BUFFER = 256 * 1024 * 1024;
@@ -504,8 +503,7 @@ async function main() {
     console.log(
       `::warning title=devkit-copies::${escapeAnnotation(`${name} is defined in ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`)}`,
     );
-  if (process.env.GITHUB_STEP_SUMMARY)
-    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
+  appendSummary(lines.join("\n"));
   for (const { name, places } of overlap)
     console.log(
       `::warning title=devkit-copies::${escapeAnnotation(`${name} is exported by ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`)}`,
@@ -551,4 +549,4 @@ async function main() {
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) await main();
+if (isMain(import.meta.url)) await main();

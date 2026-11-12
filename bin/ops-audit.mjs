@@ -30,11 +30,10 @@
 // <title> and Capsomer's ErrorPage region (class `cap-error-page`, ERROR_PAGE_MARKER).
 
 import { randomUUID } from "node:crypto";
-import { realpathSync } from "node:fs";
-import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
 import { escapeAnnotation, escapeProperty } from "./annotate.mjs";
+import { isMain } from "../node/index.mjs";
 const TIMEOUT_MS = 15_000;
 const STATUSES = ["pass", "warn", "fail"];
 const BACKUP_MAX_HOURS = 26;
@@ -788,5 +787,4 @@ async function bindingCheck({ repo, branch, path, health, healthUrl, findings, u
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  await main();
+if (isMain(import.meta.url)) await main();

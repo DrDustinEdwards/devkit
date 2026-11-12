@@ -79,18 +79,11 @@
 // file, "waive" for a feature or workflow.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import {
-  appendFileSync,
-  existsSync,
-  readFileSync,
-  readdirSync,
-  statSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { escapeAnnotation, escapeProperty } from "./annotate.mjs";
+import { appendSummary, escapeAnnotation, escapeProperty } from "./annotate.mjs";
+import { isMain } from "../node/index.mjs";
 /** The shared packages: npm name, repository, and what a session should know them as. */
 export const PACKAGES = [
   { name: "@drdustinedwards/site-helpers", repo: "prelum", label: "Prelum" },
@@ -2397,8 +2390,7 @@ async function main(/** @type {string[]} */ argv) {
       ? `devkit-shared: ${errors.length} to fix (${counts}). What the packages export: npx devkit-shared list`
       : `devkit-shared: uses the shared code (${counts}).`,
   );
-  if (process.env.GITHUB_STEP_SUMMARY)
-    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Shared-code check\n\n${counts}\n`);
+  appendSummary(`### Shared-code check\n\n${counts}`);
   return errors.length ? 1 : 0;
 }
 
@@ -2414,5 +2406,4 @@ export async function cli(/** @type {string[]} */ argv) {
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
-  process.exitCode = await cli(process.argv.slice(2));
+if (isMain(import.meta.url)) process.exitCode = await cli(process.argv.slice(2));

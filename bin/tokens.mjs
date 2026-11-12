@@ -17,12 +17,11 @@
 // `#10003` is still reported. A px length is a violation only in a font-size context (`font-size:`, `fontSize:`, and in
 // .tsx a Tailwind `text-[...]`), so `padding: 10px` and `w-[680px]` stay legal; a px inside `clamp()` counts.
 
-import { existsSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { walkFiles } from "../node/index.mjs";
-import { escapeAnnotation } from "./annotate.mjs";
+import { isMain, walkFiles } from "../node/index.mjs";
+import { escapeAnnotation, fail } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
 
 const HEX_PATTERN = /#[0-9a-fA-F]{3,8}\b/g;
@@ -61,20 +60,15 @@ export function scanContent(rel, content, config = {}) {
 
 function main() {
   const { config, path: configPath } = readConfig(process.argv.slice(2), ".tokens.json", "tokens");
-  /** @param {string} m @returns {never} */
-  const fail = (m) => {
-    console.error(`::error::tokens: ${escapeAnnotation(m)}`);
-    process.exit(1);
-  };
   if (!Array.isArray(config.dirs) || config.dirs.length === 0)
-    fail(`${configPath} needs a non-empty "dirs" list`);
+    fail("tokens", `${configPath} needs a non-empty "dirs" list`);
   const root = process.cwd();
   const skip = new Set(config.skip_dirs ?? ["node_modules", "assets"]);
   const violations = [];
   let scanned = 0;
   for (const d of config.dirs) {
     const abs = resolve(root, d);
-    if (!existsSync(abs)) fail(`directory ${d} does not exist`);
+    if (!existsSync(abs)) fail("tokens", `directory ${d} does not exist`);
     for (const f of walkFiles(abs, {
       keep: (name) => /\.(tsx?|css)$/.test(name),
       skipDir: (name) => skip.has(name),
@@ -85,7 +79,7 @@ function main() {
     }
   }
   if (scanned === 0)
-    fail("no .ts, .tsx or .css file found; a gate that read nothing must not pass");
+    fail("tokens", "no .ts, .tsx or .css file found; a gate that read nothing must not pass");
   if (violations.length > 0) {
     for (const v of violations) console.error(`::error::tokens: ${escapeAnnotation(v)}`);
     console.error(`tokens: ${violations.length} violation(s)`);
@@ -94,5 +88,4 @@ function main() {
   console.log(`tokens: clean (${scanned} files)`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

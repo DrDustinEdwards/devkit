@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.39.0 (2026-11-12)
+
+The copies inside devkit are one each, the bolt-on sweep's rows for this repository. New exports below; no breaking change to a config.
+
+- New export `isMain(import.meta.url)` in `./node`: the entry guard (`realpath` plus `pathToFileURL`) that each bin, and two scripts, kept their own copy of. `bin/shared.mjs`, `live.mjs` and `copies.mjs` used a looser form without `realpath`; they now match through a symlink like the rest.
+- `bin/annotate.mjs` gains `fail(prefix, message)` (the `::error::` line and exit 1), `shortHead(root)` (the short commit id or today's date, from no-bloat and route-weight) and `appendSummary(text)` (the step-summary append, from console, copies, migrations, no-bloat, route-weight, shared and worker-size). `size-budget`, `worker-size`, `route-weight`, `css-vars`, `tokens`, `test-assertions`, `gates`, `destructive`, `secrets` and `readConfig` print their fatal error through `fail`. The text is the same with its `devkit-` or bin prefix; it is now on stdout, where `size-budget`, `css-vars`, `tokens`, `test-assertions`, `gates`, `destructive`, `secrets` and `readConfig` printed it on stderr.
+- `readConfig` takes `{ optional: true }` (a missing file is an empty config) and `devkit-no-bloat` and `devkit-route-weight` read their config through it. `devkit-destructive` and `devkit-secrets` read theirs through it too, so a config that is not JSON, or not an object, fails with the `::error::` line where it threw before; their missing-file message now names the path. `minimumChecks` in `bin/site-config.mjs` is their shared `minimum_checks` check.
+- `devkit-warm` reads sitemap `<loc>` values with `locs`, which `devkit-a11y` now imports from it instead of keeping its own: a URL with `&amp;` in its query string is fetched as `&`, as a11y already did.
+- `scripts/code-map.mjs` and `scripts/rollback-guard.mjs` keep their own entry guard and file walk: they are written into workflows that run without devkit checked out.
+
 ## 0.38.0 (2026-11-12)
 
 Closes five ways around the no-bloat ratchet that the 0.37.1 verifier found. **Breaking** for a local run with no `origin/HEAD`, `origin/main` or `origin/master` (pass `--lines-from <rev>`), and for a devkit bump that also changes code (split it: the bump alone may raise a baseline).

@@ -35,13 +35,13 @@
 // the caller deploys. It runs the repository's own wrangler (node_modules/.bin), else `npx wrangler`.
 
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, readdirSync, realpathSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { appendSummary, escapeAnnotation } from "./annotate.mjs";
 import { contractions, handOnly } from "./migration-scan.mjs";
+import { isMain } from "../node/index.mjs";
 
 export { contractions, handOnly };
 
@@ -272,8 +272,7 @@ function apply(
   const undo = `npx wrangler d1 time-travel restore ${database} --bookmark=${bookmark}`;
   const note = `D1 ${database} before applying ${before.pending.join(", ")}: bookmark ${bookmark}. To undo:\n\n    ${undo}\n`;
   console.log(note);
-  if (process.env.GITHUB_STEP_SUMMARY)
-    writeFileSync(process.env.GITHUB_STEP_SUMMARY, `${note}\n`, { flag: "a" });
+  appendSummary(note);
 
   const applied = wrangler(["d1", "migrations", "apply", database, "--remote", ...extra]);
   const after = list();
@@ -365,5 +364,4 @@ async function main() {
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  await main();
+if (isMain(import.meta.url)) await main();

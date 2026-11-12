@@ -30,12 +30,12 @@
 //     "minimum_checks": 81
 //   }
 
-import { existsSync, readFileSync, readdirSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { escapeAnnotation } from "./annotate.mjs";
-import { createTally, walkFiles } from "../node/index.mjs";
+import { fail } from "./annotate.mjs";
+import { minimumChecks, readConfig } from "./site-config.mjs";
+import { createTally, isMain, walkFiles } from "../node/index.mjs";
 import {
   bindingUses,
   findAction,
@@ -79,17 +79,12 @@ const explained = (reason) => typeof reason === "string" && reason.length > 3;
 
 function main() {
   const argv = process.argv.slice(2);
-  const at = argv.indexOf("--config");
-  const configPath = resolve(at >= 0 ? argv[at + 1] : ".destructive.json");
-  /** @param {string} m @returns {never} */
-  const die = (m) => {
-    console.error(`::error::destructive: ${escapeAnnotation(m)}`);
-    process.exit(1);
-  };
-  if (!existsSync(configPath)) die(`no ${relative(process.cwd(), configPath)}; refusing to pass`);
-  const config = JSON.parse(readFileSync(configPath, "utf8"));
+  const { config } = readConfig(argv, ".destructive.json", "destructive");
   if (!config.intents && !config.tools && !(config.bindings ?? []).length)
-    die("the config names no intents, tools or bindings, so nothing would be examined");
+    fail(
+      "destructive",
+      "the config names no intents, tools or bindings, so nothing would be examined",
+    );
   const root = process.cwd();
   const tally = createTally({ blankLine: true });
   const { ok } = tally;
@@ -98,7 +93,7 @@ function main() {
   if (config.intents) {
     const c = config.intents;
     const dir = resolve(c.routes ?? "app/routes");
-    if (!existsSync(dir)) die(`${c.routes} is missing`);
+    if (!existsSync(dir)) fail("destructive", `${c.routes} is missing`);
     const predicate = c.predicate ?? "confirmationSatisfied";
     const destructive = new Set(/** @type {string[]} */ (c.destructive ?? []));
     /** @type {Record<string, string>} */
@@ -166,7 +161,7 @@ function main() {
   if (config.tools) {
     const c = config.tools;
     const path = resolve(c.file);
-    if (!existsSync(path)) die(`${c.file} is missing`);
+    if (!existsSync(path)) fail("destructive", `${c.file} is missing`);
     const tree = parseSource(path, readFileSync(path, "utf8"));
     const names = stringArrayConst(tree, c.list ?? "TOOLS");
     ok(
@@ -252,7 +247,7 @@ function main() {
 
     for (const { binding, rule, passed_to: passedTo = {}, callees = {} } of bindings) {
       if (rule !== "no-delete" && rule !== "d1-dump")
-        die(`${binding}: rule "${rule}" is not no-delete or d1-dump`);
+        fail("destructive", `${binding}: rule "${rule}" is not no-delete or d1-dump`);
       // A matcher that cannot see the violation agrees with every file, so each is proven on planted code first.
       ok(
         `${binding}: the scan sees a direct delete`,
@@ -325,14 +320,11 @@ function main() {
     }
   }
 
-  const minimum = Number(config.minimum_checks);
-  if (!Number.isInteger(minimum) || minimum < 1) die('"minimum_checks" must be a positive integer');
-  tally.floor("devkit-destructive", "checks", minimum);
+  tally.floor("devkit-destructive", "checks", minimumChecks("destructive", config));
   console.log(
     `\n${tally.checks} checks, ${tally.failures} failure${tally.failures === 1 ? "" : "s"}\n`,
   );
   process.exit(tally.failures > 0 ? 1 : 0);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

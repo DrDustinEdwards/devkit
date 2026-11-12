@@ -20,12 +20,11 @@
 // A helper from another file with another name that throws on failure is invisible here: name it for what it does, or put
 // the assertion in the test.
 
-import { existsSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { walkFiles } from "../node/index.mjs";
-import { escapeAnnotation } from "./annotate.mjs";
+import { isMain, walkFiles } from "../node/index.mjs";
+import { escapeAnnotation, fail } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
 
 const ASSERTING =
@@ -139,13 +138,8 @@ function main() {
     ".test-assertions.json",
     "test-assertions",
   );
-  /** @param {string} m @returns {never} */
-  const fail = (m) => {
-    console.error(`::error::test-assertions: ${escapeAnnotation(m)}`);
-    process.exit(1);
-  };
   if (!Array.isArray(config.dirs) || config.dirs.length === 0)
-    fail(`${path} needs a non-empty "dirs" list`);
+    fail("test-assertions", `${path} needs a non-empty "dirs" list`);
   const enforce = config.enforce !== false;
   const root = process.cwd();
   let scanned = 0;
@@ -153,7 +147,7 @@ function main() {
   /** @type {string[]} */
   const problems = [];
   for (const d of config.dirs) {
-    if (!existsSync(join(root, d))) fail(`directory ${d} does not exist`);
+    if (!existsSync(join(root, d))) fail("test-assertions", `directory ${d} does not exist`);
     for (const file of walkFiles(join(root, d), {
       keep: (name) => /\.test\.(?:[cm]?[jt]sx?)$/.test(name),
       skipDir: (name) => name === "node_modules",
@@ -169,9 +163,11 @@ function main() {
   }
   if (typeof config.floor === "number" && scanned < config.floor)
     fail(
+      "test-assertions",
       `${scanned} test calls scanned, under the floor of ${config.floor}: the scan read less than it should`,
     );
-  if (scanned === 0) fail("no test call found; a gate that read nothing must not pass");
+  if (scanned === 0)
+    fail("test-assertions", "no test call found; a gate that read nothing must not pass");
   const level = enforce ? "error" : "warning";
   for (const p of problems) console.error(`::${level}::test-assertions: ${escapeAnnotation(p)}`);
   if (problems.length > 0 && enforce) {
@@ -183,5 +179,4 @@ function main() {
   );
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

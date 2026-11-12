@@ -17,12 +17,11 @@
 // `--available-height`, Shiki's `--shiki-*`): exact, or a prefix ending in `*`. `skip_dirs` (default `node_modules`, `assets`) names directory names the walk
 // of `dirs` does not enter.
 
-import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { walkFiles } from "../node/index.mjs";
-import { escapeAnnotation } from "./annotate.mjs";
+import { isMain, walkFiles } from "../node/index.mjs";
+import { escapeAnnotation, fail } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
 
 const CSS_DECLARATION = /(--[\w-]+)\s*:/g;
@@ -73,19 +72,14 @@ function main() {
     ".css-vars.json",
     "css-vars",
   );
-  /** @param {string} m @returns {never} */
-  const fail = (m) => {
-    console.error(`::error::css-vars: ${escapeAnnotation(m)}`);
-    process.exit(1);
-  };
   if (!Array.isArray(config.dirs) || config.dirs.length === 0)
-    fail(`${configPath} needs a non-empty "dirs" list`);
+    fail("css-vars", `${configPath} needs a non-empty "dirs" list`);
   const root = process.cwd();
   const skip = new Set(config.skip_dirs ?? ["node_modules", "assets"]);
   const declared = new Set();
   for (const d of config.declared_in ?? []) {
     const abs = resolve(root, d);
-    if (!existsSync(abs)) fail(`declared_in ${d} does not exist (is it installed?)`);
+    if (!existsSync(abs)) fail("css-vars", `declared_in ${d} does not exist (is it installed?)`);
     for (const f of filesAt(abs, new Set(), DECLARING))
       for (const n of declarations(readFileSync(f, "utf8"))) declared.add(n);
   }
@@ -93,7 +87,7 @@ function main() {
   const files = [];
   for (const d of config.dirs) {
     const abs = resolve(root, d);
-    if (!existsSync(abs)) fail(`directory ${d} does not exist`);
+    if (!existsSync(abs)) fail("css-vars", `directory ${d} does not exist`);
     for (const f of filesAt(abs, skip, CHECKED)) {
       const content = readFileSync(f, "utf8");
       files.push({ rel: f.slice(root.length + 1).replace(/\\/g, "/"), content });
@@ -101,7 +95,7 @@ function main() {
     }
   }
   if (files.length === 0)
-    fail("no .ts, .tsx or .css file found; a gate that read nothing must not pass");
+    fail("css-vars", "no .ts, .tsx or .css file found; a gate that read nothing must not pass");
   /** @type {string[]} */
   const external = config.external ?? [];
   /** @param {string} name */
@@ -122,5 +116,4 @@ function main() {
   console.log(`css-vars: clean (${files.length} files, ${declared.size} properties declared)`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();
