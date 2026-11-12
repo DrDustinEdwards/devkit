@@ -1407,11 +1407,11 @@ test(
         checkoutProblems(dir, sha).join(),
         /HEAD is [0-9a-f]{7}, not [0-9a-f]{7}, the commit this run is for/,
       );
-      // The bin fails on it before it counts, and outside Actions it counts the working tree as before.
+      // The bin fails on it before it counts, and with no commit to hold to (outside Actions) it counts the working tree.
       const r = runBin(dir, ["--lines-from", "main"], { GITHUB_SHA: sha });
       assert.equal(r.status, 1);
       assert.match(r.stdout, /::error::HEAD is/);
-      assert.deepEqual(checkoutProblems(dir, undefined), []);
+      assert.deepEqual(checkoutProblems(dir, ""), []);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
