@@ -14,14 +14,20 @@ import {
   classify,
   compare,
   countFiles,
+  hiddenFiles,
+  isReason,
   knipCounts,
   lineChanges,
   measure,
+  narrowed,
   npxArgs,
+  raised,
   render,
   renderLines,
   scan,
   testCases,
+  unreadFiles,
+  unreasoned,
 } from "../bin/no-bloat.mjs";
 
 const BIN = fileURLToPath(new URL("../bin/no-bloat.mjs", import.meta.url));
@@ -90,7 +96,7 @@ test("with no config: one knip run, jscpd on the root unless the repository has 
   const bare = fakeRun();
   assert.deepEqual(measure({}, bare.run, false).counts, {
     knip: { files: 2, exports: 3 },
-    jscpd: { clones: 4, lines: 40, percentage: 1.23 },
+    jscpd: { clones: 4, lines: 40, percentage: 1.23, unread: 0 },
     "shared copies": { clones: 0, lines: 0 },
     tests: { files: 0, cases: 0 },
     comments: { lines: 0, code: 0, percentage: 0 },
@@ -539,7 +545,7 @@ test(
       const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
       assert.deepEqual(config.knip, [{ label: "knip (root)" }]);
       assert.deepEqual(config.baseline["knip (root)"], { files: 2, exports: 3 });
-      assert.deepEqual(config.baseline.jscpd, { clones: 4, lines: 30, percentage: 2.5 });
+      assert.deepEqual(config.baseline.jscpd, { clones: 4, lines: 30, percentage: 2.5, unread: 0 });
       assert.deepEqual(config.baseline.tests, { files: 0, cases: 0 });
       // No commit yet: the day.
       assert.match(config.baseline.measured_at, /^\d{4}-\d{2}-\d{2}$/);
@@ -720,9 +726,30 @@ test(
         join(dir, "package.json"),
         JSON.stringify({ name: "x", devDependencies: { a: "2.0.0" } }),
       );
-      writeFileSync(join(dir, "package-lock.json"), "{}");
+      // The installed tools must be npm's own: a lockfile that installs another program as knip makes it unable to run.
+      const lock = (/** @type {string} */ knip) =>
+        JSON.stringify({
+          packages: {
+            "node_modules/knip": { resolved: knip },
+            "node_modules/jscpd": {
+              resolved: "https://registry.npmjs.org/jscpd/-/jscpd-4.4.0.tgz",
+            },
+          },
+        });
+      writeFileSync(join(dir, "package-lock.json"), lock("git+ssh://git@github.com/x/knip.git#1"));
       git(dir, "add", "-A");
       git(dir, "commit", "-qm", "Bump");
+      const fake = runBin(dir, ["--lines-from", "main"]);
+      assert.equal(fake.status, 1, fake.stdout);
+      assert.match(
+        fake.stdout,
+        /::error::knip could not run: node_modules\/\.bin\/knip is not npm's knip/,
+      );
+      writeFileSync(
+        join(dir, "package-lock.json"),
+        lock("https://registry.npmjs.org/knip/-/knip-6.45.1.tgz"),
+      );
+      git(dir, "commit", "-qam", "Lock");
       assert.equal(runBin(dir, ["--lines-from", "main"]).status, 0);
       writeFileSync(
         join(dir, "package.json"),
@@ -772,16 +799,16 @@ test(
       assert.match(r.stdout, /::error::knip: this change raises the baseline's files from 0 to 2/);
       assert.match(
         r.stdout,
-        /::error::knip\.json: the ignore entry "a" is new and says nothing about why/,
+        /::error::knip\.json line 5 \("a",\) is new and says nothing about why/,
       );
-      assert.doesNotMatch(r.stdout, /ignore entry "(?:gen\/\*\*|b|old\/\*\*)"/);
+      assert.doesNotMatch(r.stdout, /knip\.json line [346] /);
       assert.match(r.stdout, /::error::\.jscpd\.json: the ignore entry "copy\/\*\*" is new/);
       assert.match(
         r.stdout,
-        /::error::a new `jscpd:ignore-start` gives no reason \(\/\/ jscpd:ignore-start\)/,
+        /::error::b\.mjs: a new `jscpd:ignore-start` gives no reason \(\/\/ jscpd:ignore-start\)/,
       );
-      assert.equal(r.stdout.match(/::error::a new `jscpd:ignore-start`/g)?.length, 1);
-      assert.equal(r.stdout.match(/::error::a new `@public` gives no reason/g)?.length, 1);
+      assert.equal(r.stdout.match(/::error::b\.mjs: a new `jscpd:ignore-start`/g)?.length, 1);
+      assert.equal(r.stdout.match(/::error::b\.mjs: a new `@public` gives no reason/g)?.length, 1);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -861,9 +888,13 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     back: [
       "@dustinedwards/devkit github:DrDustinEdwards/devkit#v0.38.0 to github:DrDustinEdwards/devkit#v0.37.1",
     ],
+    refused: [],
   });
-  // A baseline and lockfile change alone moves nothing the counts read.
-  files[".no-bloat.json"] = ['{"baseline":{}}', '{"baseline":{"a":1},"tools":{"knip":"knip@7"}}'];
+  // A baseline and lockfile change alone moves nothing the counts read; a tool must be npm's at x.y.z, never older.
+  files[".no-bloat.json"] = [
+    '{"baseline":{},"tools":{"jscpd":"jscpd@5.4.0"}}',
+    '{"baseline":{"a":1},"tools":{"knip":"knip@7.0.0","jscpd":"jscpd@5.4.0"}}',
+  ];
   // A workspace package's manifest and lockfile are read like the root's.
   files["mcp/package.json"] = [
     JSON.stringify({ name: "m", dependencies: { a: "1.0.0" } }),
@@ -873,12 +904,53 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     classify(
       change([".no-bloat.json", "package-lock.json", "mcp/package.json", "mcp/package-lock.json"]),
     ),
-    {
-      code: false,
-      definition: [],
-      workflow: [],
-      back: [],
-    },
+    { code: false, definition: [], workflow: [], back: [], refused: [] },
+  );
+  files[".no-bloat.json"][1] =
+    '{"baseline":{},"tools":{"knip":"file:./fake","jscpd":"jscpd@4.3.0"}}';
+  assert.deepEqual(classify(change([".no-bloat.json"])).refused, [
+    'tools.knip is "file:./fake". The check runs knip from npm at an exact version, "knip@x.y.z".',
+    "tools.jscpd moves from jscpd@5.4.0 to jscpd@4.3.0, an older release. Keep each tool at its version or newer.",
+  ]);
+
+  // Moving only the devkit pin of a workflow that runs the check (the rollout's and Renovate's bump) is no code and no
+  // change of measure; a workflow that does not run the check is never code.
+  const sha = (/** @type {string} */ c) => c.repeat(40);
+  files[".github/workflows/checks.yml"] = [
+    `uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${sha("a")} # v0.40.0`,
+    `uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${sha("b")} # v0.41.0`,
+  ];
+  assert.deepEqual(
+    classify(change([".github/workflows/checks.yml", ".github/workflows/deploy.yml"])),
+    { code: false, definition: [], workflow: [], back: [], refused: [] },
+  );
+
+  // devkit installed from anywhere but its own release tag, or overridden, runs another check.
+  for (const pin of [
+    "github:evil/devkit#v0.41.0",
+    "file:./vendor/devkit",
+    "^0.40.0",
+    "github:DrDustinEdwards/devkit#main",
+  ]) {
+    files["mcp/package.json"] = [
+      JSON.stringify({
+        devDependencies: { "@dustinedwards/devkit": "github:DrDustinEdwards/devkit#v0.40.0" },
+      }),
+      JSON.stringify({ devDependencies: { "@dustinedwards/devkit": pin } }),
+    ];
+    assert.match(
+      classify(change(["mcp/package.json"])).refused.join("\n"),
+      /mcp\/package\.json devDependencies has @dustinedwards\/devkit at ".+"\. Pin devkit to a release tag/,
+      pin,
+    );
+  }
+  files["package.json"] = [
+    JSON.stringify({ name: "x" }),
+    JSON.stringify({ name: "x", overrides: { "@dustinedwards/devkit": "file:./vendor/devkit" } }),
+  ];
+  assert.match(
+    classify(change(["package.json"])).refused[0],
+    /package\.json "overrides" names @dustinedwards\/devkit/,
   );
 });
 
@@ -930,6 +1002,155 @@ test(
       assert.match(
         n.stdout,
         /::error::knip: this change of how it is counted \(knip\.ts\) lowers files from 2 to 0/,
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test("a Knip config line, a skip tag or a jscpd marker needs a reason of its own, in words; a comment it would inherit is not one", () => {
+  const files = /** @type {Record<string, [string | null, string | null]>} */ ({
+    "knip.jsonc": [
+      '{\n  // Generated by the build, read by nothing in this repository.\n  "ignore": [\n    "gen/**"\n  ]\n}\n',
+      '{\n  // Generated by the build, read by nothing in this repository.\n  "ignore": [\n    "gen/**",\n    "src/hidden/**"\n  ],\n  "rules": { "types": "off", "unlisted": "off" },\n  // x\n  "ignoreDependencies": ["a"],\n  "ignoreBinaries": ["b"] // the deploy script runs it from the shell\n}\n',
+    ],
+    "dashboard/knip.ts": [null, "export default {};\n"],
+  });
+  const change = {
+    changed: Object.keys(files),
+    before: (/** @type {string} */ p) => files[p]?.[0] ?? null,
+    now: (/** @type {string} */ p) => files[p]?.[1] ?? null,
+    added: [
+      { path: "src/a.ts", text: "/** @beta */" },
+      { path: "src/a.ts", text: "/** @alias the old name the CLI still imports */" },
+      { path: "src/a.ts", text: "// jscpd:ignore-start x" },
+      { path: "src/a.ts", text: "/** @public */ export const keep = 1;" },
+      { path: "README.md", text: "`@beta` hides an export." },
+    ],
+  };
+  const out = unreasoned(change, {}, {});
+  assert.deepEqual(
+    out.map((m) => m.slice(0, m.indexOf(" is new") > 0 ? m.indexOf(" is new") : m.indexOf(":"))),
+    [
+      'knip.jsonc line 5 ("src/hidden/**")',
+      'knip.jsonc line 7 ("rules": { "types": "off", "unlisted": "off" },)',
+      'knip.jsonc line 9 ("ignoreDependencies": ["a"],)',
+      "dashboard/knip.ts",
+      "src/a.ts",
+      "src/a.ts",
+      "src/a.ts",
+    ],
+  );
+  assert.match(out[4], /a new `@beta` gives no reason/);
+  assert.match(out[5], /a new `jscpd:ignore-start` gives no reason/);
+  assert.match(out[6], /a new `@public` gives no reason/);
+  assert.equal(isReason("x"), false);
+  assert.equal(isReason("TODO: reason"), false);
+  assert.equal(isReason("the fixture mirrors the API reply"), true);
+});
+
+test("jscpd: a narrower measure is refused, a path is judged by the files it leaves unread beside files it reads, and a knip run's args cannot change", () => {
+  const files = /** @type {Record<string, [string | null, string | null]>} */ ({
+    ".jscpd.json": [
+      '{ "path": ["src"], "minLines": 5 }',
+      '{ "path": ["src/a.ts"], "minLines": 20, "gitignore": true }',
+    ],
+  });
+  const change = {
+    before: (/** @type {string} */ p) => files[p]?.[0] ?? null,
+    now: (/** @type {string} */ p) => files[p]?.[1] ?? null,
+  };
+  const out = narrowed(
+    change,
+    {
+      knip: [{ label: "knip", args: ["--exclude", "types"] }],
+      jscpd: { args: ["--format", "javascript"] },
+    },
+    { knip: [{ label: "knip" }], jscpd: { args: [] } },
+  );
+  assert.deepEqual(
+    out.map((m) => /\(([^)]*)\)|run "knip"/.exec(m)?.[0]),
+    [
+      "(minLines from 5 to 20)",
+      "(format from every format to javascript)",
+      "(gitignore turned on)",
+      'run "knip"',
+    ],
+  );
+  assert.deepEqual(narrowed({ before: () => null, now: () => null }, {}, {}), []);
+  // src/a.ts is read; src/b.ts beside it is not; scripts/ and tests are never read and not counted.
+  assert.equal(
+    unreadFiles(
+      {},
+      ["src/a.ts", "src/b.ts", "src/b.test.ts", "scripts/x.ts"],
+      [{ sources: { "src/a.ts": {} } }],
+      "/r",
+    ),
+    1,
+  );
+});
+
+test("a pin-only workflow change passes alone; any other change to the workflow that runs the check may not lower a count", () => {
+  const base = { baseline: { knip: { files: 2 } } };
+  assert.deepEqual(raised(base, base, { code: false, definition: [], workflow: [], back: [] }), []);
+  assert.match(
+    raised({ baseline: { knip: { files: 0 } } }, base, {
+      code: false,
+      definition: [],
+      workflow: [".github/workflows/ci.yml"],
+      back: [],
+    })[0],
+    /this change of how it is counted \(\.github\/workflows\/ci\.yml\) lowers files from 2 to 0/,
+  );
+});
+
+test(
+  "end to end: a tracked file a .gitignore hides from Knip fails, whether the file or the hiding line is new; a workflow pin bump alone passes",
+  { skip: process.platform === "win32" },
+  () => {
+    const dir = scratch();
+    try {
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify({ shared: false }));
+      assert.equal(runBin(dir, ["--write-baseline"]).status, 0);
+      mkdirSync(join(dir, ".github", "workflows"), { recursive: true });
+      const caller = (/** @type {string} */ c) =>
+        `jobs:\n  checks:\n    uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${c.repeat(40)} # v0.40.0\n`;
+      writeFileSync(join(dir, ".github", "workflows", "ci.yml"), caller("a"));
+      mkdirSync(join(dir, "src", "old"), { recursive: true });
+      writeFileSync(join(dir, "src", "old", "o.mjs"), "export const o = 1;\n");
+      git(dir, "add", "-A");
+      git(dir, "commit", "-qm", "Base");
+      git(dir, "checkout", "-qb", "change");
+
+      writeFileSync(join(dir, ".github", "workflows", "ci.yml"), caller("b"));
+      git(dir, "commit", "-qam", "Bump the pin");
+      const pin = runBin(dir, ["--lines-from", "main"]);
+      assert.equal(pin.status, 0, pin.stdout);
+
+      writeFileSync(join(dir, ".gitignore"), "node_modules/\nsummary.md\nsrc/bloat/\nsrc/old/\n");
+      mkdirSync(join(dir, "src", "bloat"));
+      writeFileSync(join(dir, "src", "bloat", "b.mjs"), "export const b = 1;\n");
+      git(dir, "add", "-A");
+      git(dir, "add", "-f", "src/bloat/b.mjs");
+      git(dir, "commit", "-qm", "Hide");
+      const r = runBin(dir, ["--lines-from", "main"]);
+      assert.equal(r.status, 1, r.stdout);
+      assert.match(
+        r.stdout,
+        /::error::src\/bloat\/b\.mjs is tracked, but \.gitignore line 3 \(src\/bloat\/\) hides it from Knip/,
+      );
+      assert.match(
+        r.stdout,
+        /::error::src\/old\/o\.mjs is tracked, but \.gitignore line 4 \(src\/old\/\) hides it/,
+      );
+      assert.deepEqual(
+        hiddenFiles(
+          [{ source: ".gitignore", line: "1", pattern: "dist/", path: "dist/x.js" }],
+          [],
+          () => "dist/\n",
+        ),
+        [],
       );
     } finally {
       rmSync(dir, { recursive: true, force: true });

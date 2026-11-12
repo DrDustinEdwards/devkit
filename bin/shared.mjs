@@ -5,7 +5,8 @@
 //              rather than a release tag (a pin behind the newest release is a warning: Renovate opens that bump, and
 //              failing on it turned every repository red each time a package released), and a site-runtime pin behind
 //              the newest minor released FRESH_DAYS ago or more (its header registry is what the live check grades, so
-//              a site that drifts further builds one set of headers and is graded against another);
+//              a site that drifts further builds one set of headers and is graded against another), and a devkit pin
+//              behind a minor out two days (its no-bloat check runs from the caller's pin, so an old pin is an old check);
 //   copies     a local definition with the name of something a shared package exports (or a known alias), or text only a
 //              shared builder should write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation
 //              rules, a Cloudflare Images resize, an island loader, JSON-LD, a hex or base64url encoder, a pre-paint theme
@@ -590,9 +591,11 @@ export function lsRemoteTags(/** @type {string} */ repo) {
 /**
  * The packages a pin may not stay behind for long, and the days a new minor release gets before a pin behind it fails.
  * site-runtime releases many minors a day, so the window is time, not a count of minors: a pin fails once it is behind
- * a minor that has been out FRESH_DAYS days, and a minor younger than that is the usual warning.
+ * a minor that has been out FRESH_DAYS days, and a minor younger than that is the usual warning. devkit is here because
+ * its no-bloat check runs from the caller's own pins: a pin left behind (or moved back) runs an older check that lets
+ * more in, so it fails once a newer minor has been out two days.
  */
-export const FRESH = /** @type {Record<string, number>} */ ({ "site-runtime": 3 });
+export const FRESH = /** @type {Record<string, number>} */ ({ "site-runtime": 3, devkit: 2 });
 const DAY_MS = 86_400_000;
 
 /**
