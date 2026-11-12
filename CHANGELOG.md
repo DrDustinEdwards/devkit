@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.37.1 (2026-11-12)
+
+- `devkit-no-bloat`: a baseline with no `"shared copies"` yet is reported like a stale entry, without the "Remove what was added" line, which only applies to a count that grew.
+
 ## 0.37.0 (2026-11-12)
 
 How the network stops bolt-on code (a parallel helper, wrapper or stylesheet beside code that already does the job, Dustin 2026-11-12). **Breaking** for every caller: each needs `"shared copies"` in its `.no-bloat.json` baseline (`npx devkit-no-bloat --write-baseline`), and a caller of pr.yml or no-bloat.yml that passes `no-bloat-warn-only` or `warn-only` must drop it.
