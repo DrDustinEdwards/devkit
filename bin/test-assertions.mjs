@@ -20,10 +20,11 @@
 // A helper from another file with another name that throws on failure is invisible here: name it for what it does, or put
 // the assertion in the test.
 
-import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { join, relative } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { walkFiles } from "../node/index.mjs";
 import { escapeAnnotation } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
 
@@ -132,17 +133,6 @@ export function testsWithoutAssertions(source) {
   return found;
 }
 
-/** @param {string} dir @param {string[]} [out] @returns {string[]} */
-function testFiles(dir, out = []) {
-  for (const e of readdirSync(dir, { withFileTypes: true })) {
-    const full = join(dir, e.name);
-    if (e.isDirectory()) {
-      if (e.name !== "node_modules") testFiles(full, out);
-    } else if (/\.test\.(?:[cm]?[jt]sx?)$/.test(e.name)) out.push(full);
-  }
-  return out;
-}
-
 function main() {
   const { config, path } = readConfig(
     process.argv.slice(2),
@@ -164,7 +154,10 @@ function main() {
   const problems = [];
   for (const d of config.dirs) {
     if (!existsSync(join(root, d))) fail(`directory ${d} does not exist`);
-    for (const file of testFiles(join(root, d))) {
+    for (const file of walkFiles(join(root, d), {
+      keep: (name) => /\.test\.(?:[cm]?[jt]sx?)$/.test(name),
+      skipDir: (name) => name === "node_modules",
+    })) {
       files++;
       const source = readFileSync(file, "utf8");
       scanned += (source.match(/(?<![\w.$])(?:test|it)\s*\(/g) ?? []).length;

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.37.2 (2026-11-12)
+
+- `devkit-tokens`, `devkit-css-vars` and `devkit-test-assertions` list files with `walkFiles` from `./node` instead of each keeping its own recursive walk. The files they scan and what they report are unchanged.
+
 ## 0.37.1 (2026-11-12)
 
 - `devkit-no-bloat`: a baseline with no `"shared copies"` yet is reported like a stale entry, without the "Remove what was added" line, which only applies to a count that grew.
