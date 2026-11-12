@@ -89,7 +89,13 @@ export function knipCounts(/** @type {string} */ text) {
   /** @type {{ issues?: Array<Record<string, unknown>> }} */
   let report;
   try {
-    report = JSON.parse(text);
+    // A Knip plugin can print a warning on stdout before the report (Astro's "[WARN] Missing pages directory"), and the
+    // report is one line, so it is the last line that is a JSON object.
+    const line = text
+      .split("\n")
+      .map((l) => l.trim())
+      .findLast((l) => l.startsWith("{"));
+    report = JSON.parse(line ?? text);
   } catch {
     // Output this cannot read is a format that changed, not a clean run.
     throw new Error(`knip printed no report this reads: ${text.trim().slice(0, 200)}`);

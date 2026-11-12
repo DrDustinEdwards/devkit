@@ -77,6 +77,11 @@ test("knipCounts counts each issue in Knip's JSON report, not each file, and ref
     { dependencies: 2 },
   );
   assert.deepEqual(knipCounts('{"issues":[]}'), {});
+  // A plugin's warning on stdout before the report is not the report.
+  assert.deepEqual(knipCounts(`[WARN] Missing pages directory: src/pages\n${KNIP}\n`), {
+    files: 2,
+    exports: 3,
+  });
   for (const text of ["", "Unused files (2)\nsrc/a.ts\n", "{}"])
     assert.throws(() => knipCounts(text), /knip printed no report this reads/);
 });

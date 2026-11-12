@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.40.1 (2026-11-12)
+
+- `devkit-no-bloat`: Knip's report is read from its last JSON line, so a plugin warning printed on stdout before it (Astro's `[WARN] Missing pages directory`) no longer stops the run with "knip printed no report this reads".
+
 ## 0.40.0 (2026-11-12)
 
 Closes the eight ways around the no-bloat ratchet that the 0.38.0 verifier found (capsid handoff/no-bloat-gaps-verify.md). **Breaking**: every Knip baseline is re-keyed, so each repository's bump PR runs `npx devkit-no-bloat --write-baseline`, as a change of its own (the bump alone may raise or lower). A repository that drops `--warn-only` from its workflow does that in a PR before the bump, since a workflow that runs the check no longer goes in a change with anything but itself.
