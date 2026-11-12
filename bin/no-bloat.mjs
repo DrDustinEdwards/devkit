@@ -792,19 +792,73 @@ export function runnerIn(
 }
 
 /**
- * Throws unless an installed tool is npm's own package: with package-lock.json, its entry must resolve from the npm
- * registry under the tool's name, so a lockfile change cannot install another program as knip or jscpd. (pnpm's lock is
- * not read.)
+ * Throws unless an installed tool is npm's own package, read from the lockfile the install used: in package-lock.json its
+ * entry must resolve from the npm registry under the tool's name; in pnpm-lock.yaml (pnpmProblem) the root importer must
+ * pin it at a bare version whose package resolves by integrity. So a lockfile change cannot install another program as
+ * knip or jscpd: an alias, a git or tarball source, a link or a path.
  */
 function installedFromNpm(/** @type {string} */ root, /** @type {string} */ name) {
-  const lockfile = join(root, "package-lock.json");
-  if (!existsSync(lockfile)) return;
-  const entry = JSON.parse(readFileSync(lockfile, "utf8")).packages?.[`node_modules/${name}`];
-  const from = `https://registry.npmjs.org/${name}/-/${name}-`;
-  if (!entry?.resolved?.startsWith(from))
+  const npmLock = join(root, "package-lock.json");
+  const pnpmLock = join(root, "pnpm-lock.yaml");
+  let problem = null;
+  if (existsSync(npmLock)) {
+    const entry = JSON.parse(readFileSync(npmLock, "utf8")).packages?.[`node_modules/${name}`];
+    if (!entry?.resolved?.startsWith(`https://registry.npmjs.org/${name}/-/${name}-`))
+      problem = `package-lock.json resolves it from ${entry?.resolved ?? "nowhere"}`;
+  } else if (existsSync(pnpmLock)) problem = pnpmProblem(readFileSync(pnpmLock, "utf8"), name);
+  if (problem)
     throw new Error(
-      `node_modules/.bin/${name} is not npm's ${name}: package-lock.json resolves it from ${entry?.resolved ?? "nowhere"}. Install ${name} from npm, or leave it out and the check runs it at the config's tools version.`,
+      `node_modules/.bin/${name} is not npm's ${name}: ${problem}. Install ${name} from npm, or leave it out and the check runs it at the config's tools version.`,
     );
+}
+
+/**
+ * Why pnpm-lock.yaml does not install npm's own `name` at the root, or null when it does: the root importer (`.`) must
+ * list it at a bare version (an alias reads `other@1.0.0`, a git, tarball, link or file source reads as its URL or path),
+ * and its package entry must resolve by `integrity` alone, as a registry package does (a git source resolves by commit,
+ * a tarball by URL). Read line by line, as pnpm writes lockfile v6 and v9. Pure.
+ */
+export function pnpmProblem(/** @type {string} */ text, /** @type {string} */ name) {
+  const lines = text.split("\n");
+  const unquote = (/** @type {string} */ v) => v.trim().replace(/^['"]|['"]$/g, "");
+  const indent = (/** @type {string} */ l) => l.length - l.trimStart().length;
+  const top = (/** @type {string} */ key) => lines.findIndex((l) => l === `${key}:`);
+  // The root importer's block, or the file's top-level dependency lists in a lockfile with no importers.
+  let i = top("importers");
+  let end = lines.length;
+  if (i >= 0) {
+    i = lines.findIndex((l, k) => k > i && /^ {2}['"]?\.['"]?:\s*$/.test(l));
+    if (i < 0) return "pnpm-lock.yaml has no root importer";
+    end = lines.findIndex((l, k) => k > i && l.trim() && indent(l) <= 2);
+    if (end < 0) end = lines.length;
+  } else i = 0;
+  let version = null;
+  for (let k = i; k < end && version === null; k++)
+    if (unquote(lines[k].replace(/:\s*$/, "")) === name && /:\s*$/.test(lines[k]))
+      for (let j = k + 1; j < end && indent(lines[j]) > indent(lines[k]); j++) {
+        const m = /^\s*version:\s*(.+)$/.exec(lines[j]);
+        if (m) version = unquote(m[1]);
+      }
+  if (version === null) return "pnpm-lock.yaml's root importer does not list it";
+  const bare = /^(\d+\.\d+\.\d+(?:-[\w.-]+)?)(?:\(.*\))?$/.exec(version);
+  if (!bare) return `pnpm-lock.yaml installs it as ${version}`;
+  const packages = top("packages");
+  const key = lines.findIndex(
+    (l, k) =>
+      k > packages &&
+      packages >= 0 &&
+      indent(l) === 2 &&
+      unquote(l.replace(/:\s*$/, "")).replace(/^\//, "") === `${name}@${bare[1]}`,
+  );
+  const resolution =
+    key < 0 ? undefined : lines.slice(key + 1).find((l) => /^\s+resolution:/.test(l));
+  if (
+    !resolution ||
+    !/\bintegrity:/.test(resolution) ||
+    /\b(?:tarball|commit|repo|type|directory):/.test(resolution)
+  )
+    return `pnpm-lock.yaml resolves ${name}@${bare[1]} by ${resolution?.trim() ?? "nothing"}`;
+  return null;
 }
 
 function messageOf(/** @type {unknown} */ error) {
