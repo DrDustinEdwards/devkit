@@ -294,13 +294,14 @@ export function intentBranches(action, predicate) {
 }
 
 /**
- * The initializer of a property in an exported object literal, e.g. `TOOL_DESCRIPTORS.decide_mention`.
+ * The initializer of `const NAME = ...` in the file, unwrapped from `as`, `satisfies` and parentheses; null when there is
+ * no such const.
  *
  * @param {ts.SourceFile} sf
  * @param {string} constName
- * @returns {ts.ObjectLiteralExpression | null}
+ * @returns {ts.Expression | null}
  */
-export function objectConst(sf, constName) {
+function constInit(sf, constName) {
   for (const stmt of sf.statements) {
     if (!ts.isVariableStatement(stmt)) continue;
     for (const decl of stmt.declarationList.declarations) {
@@ -311,13 +312,24 @@ export function objectConst(sf, constName) {
         ts.isAsExpression(init) ||
         ts.isSatisfiesExpression(init) ||
         ts.isParenthesizedExpression(init)
-      ) {
+      )
         init = init.expression;
-      }
-      return ts.isObjectLiteralExpression(init) ? init : null;
+      return init;
     }
   }
   return null;
+}
+
+/**
+ * The initializer of a property in an exported object literal, e.g. `TOOL_DESCRIPTORS.decide_mention`.
+ *
+ * @param {ts.SourceFile} sf
+ * @param {string} constName
+ * @returns {ts.ObjectLiteralExpression | null}
+ */
+export function objectConst(sf, constName) {
+  const init = constInit(sf, constName);
+  return init && ts.isObjectLiteralExpression(init) ? init : null;
 }
 
 /**
@@ -328,18 +340,10 @@ export function objectConst(sf, constName) {
  * @returns {string[] | null}
  */
 export function stringArrayConst(sf, constName) {
-  for (const stmt of sf.statements) {
-    if (!ts.isVariableStatement(stmt)) continue;
-    for (const decl of stmt.declarationList.declarations) {
-      if (!ts.isIdentifier(decl.name) || decl.name.text !== constName || !decl.initializer)
-        continue;
-      let init = decl.initializer;
-      while (ts.isAsExpression(init) || ts.isParenthesizedExpression(init)) init = init.expression;
-      if (!ts.isArrayLiteralExpression(init)) return null;
-      return init.elements.filter(ts.isStringLiteralLike).map((e) => e.text);
-    }
-  }
-  return null;
+  const init = constInit(sf, constName);
+  return init && ts.isArrayLiteralExpression(init)
+    ? init.elements.filter(ts.isStringLiteralLike).map((e) => e.text)
+    : null;
 }
 
 /**

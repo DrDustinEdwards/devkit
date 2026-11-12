@@ -4,14 +4,23 @@
 
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+  chmodSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
-  callerJobs,
+  checkTools,
+  checkoutProblems,
   classify,
   compare,
   countFiles,
@@ -19,6 +28,7 @@ import {
   isReason,
   knipCounts,
   lineChanges,
+  knipPluginFiles,
   lockfileProblems,
   measure,
   narrowed,
@@ -27,7 +37,6 @@ import {
   renderLines,
   scan,
   testCases,
-  toolRunner,
   unreadAdded,
   unreadFiles,
   unreasoned,
@@ -35,6 +44,8 @@ import {
 } from "../bin/no-bloat.mjs";
 
 const BIN = fileURLToPath(new URL("../bin/no-bloat.mjs", import.meta.url));
+const YAML_DIR = fileURLToPath(new URL("../node_modules/yaml", import.meta.url));
+const { parse: parseYaml } = await import("yaml");
 
 const KNIP = JSON.stringify({
   issues: [
@@ -56,7 +67,16 @@ const fakeRun = ({ knip = KNIP, clones = 4, percentage = 1.234, sources = 9 } = 
     writeFileSync(
       join(out, "jscpd-report.json"),
       JSON.stringify({
-        statistics: { total: { clones, duplicatedLines: 40, percentage, sources } },
+        statistics: {
+          total: { clones, duplicatedLines: 40, percentage, sources },
+          formats: {
+            javascript: {
+              sources: Object.fromEntries(
+                Array.from({ length: sources }, (_, i) => [`f${i}.js`, {}]),
+              ),
+            },
+          },
+        },
       }),
     );
     return "";
@@ -100,12 +120,12 @@ test("with no config: one knip run, jscpd on the root unless the repository has 
   ]);
   assert.deepEqual(
     bare.calls[1][1].filter((a) => !a.includes("jscpd-")),
-    [".", "--reporters", "json", "--output", "--silent"],
+    [".", "--absolute", "--reporters", "json", "--output", "--silent"],
   );
 
   const configured = fakeRun();
   measure({}, configured.run);
-  assert.equal(configured.calls[1][1][0], "--reporters");
+  assert.equal(configured.calls[1][1][0], "--absolute");
 });
 
 test("each knip run is labeled and passes its own arguments; jscpd's arguments come before the report flags", () => {
@@ -497,9 +517,17 @@ function scratch({ knip = KNIP, clones = 4, jscpdFails = false } = {}) {
     mkdirSync(join(dir, "node_modules", ".tools", "node_modules", name), { recursive: true });
     writeFileSync(
       join(dir, "node_modules", ".tools", "node_modules", name, "package.json"),
-      JSON.stringify({ name, bin: { [name]: "bin.mjs" } }),
+      JSON.stringify({ name, type: "module", bin: { [name]: "bin.mjs" } }),
     );
   }
+  // The real YAML parser, and a Knip plugin list of one: Mocha's config files.
+  symlinkSync(YAML_DIR, join(dir, "node_modules", ".tools", "node_modules", "yaml"), "dir");
+  const plugins = join(dir, "node_modules", ".tools", "node_modules", "knip", "dist", "plugins");
+  mkdirSync(plugins, { recursive: true });
+  writeFileSync(
+    join(plugins, "index.js"),
+    'export const Plugins = { mocha: { config: [".mocharc.{js,cjs,mjs,json}", "package.json"] } };\n',
+  );
   writeFileSync(
     tool(dir, "knip"),
     `if (process.argv.includes("--fail")) { console.error("knip: boom"); process.exit(2); }\nprocess.stdout.write(${JSON.stringify(knip)});\n`,
@@ -508,7 +536,8 @@ function scratch({ knip = KNIP, clones = 4, jscpdFails = false } = {}) {
     tool(dir, "jscpd"),
     jscpdFails
       ? 'console.error("jscpd: boom");\nprocess.exit(3);\n'
-      : `import { writeFileSync } from "node:fs";\nconst out = process.argv[process.argv.indexOf("--output") + 1];\nwriteFileSync(out + "/jscpd-report.json", '{"statistics":{"total":{"clones":${clones},"duplicatedLines":30,"percentage":2.5,"sources":3}}}');\n`,
+      : // It reads every file git lists, so none is unread.
+        `import { execFileSync } from "node:child_process";\nimport { writeFileSync } from "node:fs";\nconst out = process.argv[process.argv.indexOf("--output") + 1];\nconst sources = Object.fromEntries(execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard"], { encoding: "utf8" }).split("\\n").filter(Boolean).map((p) => [p, {}]));\nwriteFileSync(out + "/jscpd-report.json", JSON.stringify({ statistics: { total: { clones: ${clones}, duplicatedLines: 30, percentage: 2.5, sources: Object.keys(sources).length }, formats: { javascript: { sources } } } }));\n`,
   );
   return dir;
 }
@@ -538,6 +567,8 @@ const runBin = (/** @type {string} */ cwd, /** @type {string[]} */ args = [], en
       ...process.env,
       GITHUB_STEP_SUMMARY: "",
       GITHUB_ACTIONS: "true",
+      // A scratch repository is counted as its working tree, not as the commit of the run these tests run in.
+      GITHUB_SHA: "",
       DEVKIT_NO_BLOAT_TOOLS: join(cwd, "node_modules", ".tools"),
       ...env,
     },
@@ -700,7 +731,7 @@ test(
       // A copy and the raise that would let it in, with the tools moved too.
       writeFileSync(join(dir, "copy.mjs"), "export const a = 1;\n");
       const grown = tool(dir, "jscpd");
-      writeFileSync(grown, readFileSync(grown, "utf8").replace('"clones":4', '"clones":5'));
+      writeFileSync(grown, readFileSync(grown, "utf8").replace("clones: 4", "clones: 5"));
       const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
       config.tools = { jscpd: "jscpd@4.4.0" };
       writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
@@ -866,13 +897,14 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     ],
     ".github/workflows/deploy.yml": ["on: push", "on: [push]"],
   });
+  const classifyYaml = (/** @type {Parameters<typeof classify>[0]} */ c) => classify(c, parseYaml);
   const change = (/** @type {string[]} */ changed) => ({
     changed,
     configPath: ".no-bloat.json",
     before: (/** @type {string} */ p) => files[p]?.[0] ?? null,
     now: (/** @type {string} */ p) => files[p]?.[1] ?? null,
   });
-  assert.deepEqual(classify(change(Object.keys(files))), {
+  assert.deepEqual(classifyYaml(change(Object.keys(files))), {
     code: true,
     definition: [".no-bloat.json (outside baseline and tools)", "knip.ts", 'package.json "knip"'],
     workflow: [".github/workflows/checks.yml"],
@@ -892,14 +924,14 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     JSON.stringify({ name: "m", dependencies: { a: "1.1.0" } }),
   ];
   assert.deepEqual(
-    classify(
+    classifyYaml(
       change([".no-bloat.json", "package-lock.json", "mcp/package.json", "mcp/package-lock.json"]),
     ),
     { code: false, definition: [], workflow: [], back: [], refused: [] },
   );
   files[".no-bloat.json"][1] =
     '{"baseline":{},"tools":{"knip":"file:./fake","jscpd":"jscpd@4.3.0"}}';
-  assert.deepEqual(classify(change([".no-bloat.json"])).refused, [
+  assert.deepEqual(classifyYaml(change([".no-bloat.json"])).refused, [
     'tools.knip is "file:./fake". The check runs knip from npm at an exact version, "knip@x.y.z".',
     "tools.jscpd moves from jscpd@5.4.0 to jscpd@4.3.0, an older release. Keep each tool at its version or newer.",
   ]);
@@ -912,7 +944,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     `uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${sha("b")} # v0.41.0`,
   ];
   assert.deepEqual(
-    classify(change([".github/workflows/checks.yml", ".github/workflows/deploy.yml"])),
+    classifyYaml(change([".github/workflows/checks.yml", ".github/workflows/deploy.yml"])),
     { code: false, definition: [], workflow: [], back: [], refused: [] },
   );
 
@@ -930,7 +962,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
       JSON.stringify({ devDependencies: { "@dustinedwards/devkit": pin } }),
     ];
     assert.match(
-      classify(change(["mcp/package.json"])).refused.join("\n"),
+      classifyYaml(change(["mcp/package.json"])).refused.join("\n"),
       /mcp\/package\.json devDependencies has @dustinedwards\/devkit at ".+"\. Pin devkit to a release tag/,
       pin,
     );
@@ -940,7 +972,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     JSON.stringify({ name: "x", overrides: { "@dustinedwards/devkit": "file:./vendor/devkit" } }),
   ];
   assert.match(
-    classify(change(["package.json"])).refused[0],
+    classifyYaml(change(["package.json"])).refused[0],
     /package\.json "overrides" names @dustinedwards\/devkit/,
   );
 });
@@ -1050,7 +1082,7 @@ test("a Knip config line, a skip tag or a jscpd marker needs a reason of its own
   assert.equal(isReason("the fixture mirrors the API reply"), true);
 });
 
-test("jscpd: a narrower measure or path is refused, a new file it skips beside files it reads fails, and a knip run's args cannot change", () => {
+test("jscpd: a narrower measure or path is refused, a new file it skips anywhere fails, and a knip run's args cannot change", () => {
   const files = /** @type {Record<string, [string | null, string | null]>} */ ({
     ".jscpd.json": [
       '{ "path": ["src"], "minLines": 5 }',
@@ -1087,16 +1119,17 @@ test("jscpd: a narrower measure or path is refused, a new file it skips beside f
     [],
   );
   assert.deepEqual(narrowed({ before: () => null, now: () => null }, {}, {}), []);
-  // src/a.ts is read; src/b.ts beside it is not; a file under minLines holds no copy; scripts/ and tests are never read.
+  // src/a.ts is read; src/b.ts beside it and scripts/x.ts outside its path are not; a file under minLines holds no copy,
+  // and tests are never counted.
   const unread = unreadFiles(
     {},
     ["src/a.ts", "src/b.ts", "src/tiny.ts", "src/b.test.ts", "scripts/x.ts"],
-    [{ sources: { "src/a.ts": {} } }],
+    ["/r/src/a.ts"],
     "/r",
     (p) => (p === "src/tiny.ts" ? "export {};\n" : "a\nb\nc\nd\ne\n"),
     5,
   );
-  assert.deepEqual(unread, ["src/b.ts"]);
+  assert.deepEqual(unread, ["src/b.ts", "scripts/x.ts"]);
   // The count can stay level when another file starts being read, so a new skipped file fails by name.
   assert.match(
     unreadAdded(unread, ["src/b.ts"]).join(),
@@ -1175,7 +1208,7 @@ test(
 test("the tools are the check's own install at exact versions, and a second lockfile beside one fails", () => {
   // A range or tag would measure with whatever it resolves to, so the check refuses before it installs anything.
   assert.throws(
-    () => toolRunner(".", { knip: "knip@6", jscpd: "jscpd@4.3.0" }, "")("knip", []),
+    () => checkTools(".", { knip: "knip@6", jscpd: "jscpd@4.3.0" }, "").run("knip", []),
     /tools\.knip is "knip@6", and the check runs only npm's knip at an exact version/,
   );
   assert.deepEqual(
@@ -1191,39 +1224,91 @@ test("the tools are the check's own install at exact versions, and a second lock
   );
 });
 
-test("a workflow change that turns the check off or changes what runs before it is refused; an install script is a change of measure", () => {
-  const caller = (/** @type {string} */ extra = "", /** @type {string} */ job = "") =>
-    `jobs:\n  checks:\n${job}    uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${"a".repeat(40)} # v1.0.0\n    with:\n      review: false\n${extra}`;
-  const base = caller("      no-bloat-prepare: >-\n        npm run gen\n");
-  assert.deepEqual(callerJobs(base).checks.inputs, { "no-bloat-prepare": ">-\nnpm run gen" });
-  // Moving the pin, or an input the check does not depend on, is no such change.
-  assert.deepEqual(
-    workflowInputs(
-      "c.yml",
-      base,
-      base.replace("a".repeat(40), "b".repeat(40)).replace("review: false", "review: true"),
-    ),
-    [],
-  );
+test("a workflow change that turns the check off or changes what runs before it is refused, in any YAML spelling; an install script is a change of measure", () => {
+  const pin = (/** @type {string} */ c) =>
+    `DrDustinEdwards/devkit/.github/workflows/pr.yml@${c.repeat(40)} # v1.0.0`;
+  const base = `on:\n  pull_request:\njobs:\n  checks:\n    uses: ${pin("a")}\n    with:\n      review: false\n      no-bloat-prepare: >-\n        npm run gen\n`;
+  const check = (/** @type {string} */ now) =>
+    workflowInputs("c.yml", base, now, parseYaml).join("\n");
+  // Moving the pin, an input the check does not depend on, or the same data in another spelling is no such change.
+  for (const same of [
+    base.replace("a".repeat(40), "b".repeat(40)).replace("review: false", "review: true"),
+    base.replace(/\n/g, "\r\n"),
+    `"on": { pull_request: null }\njobs:\n  checks: { uses: "${pin("b")}", with: { review: true, "no-bloat-prepare": npm run gen } }\n`,
+  ])
+    assert.equal(check(same), "");
+  const add = (/** @type {string} */ lines) =>
+    base.replace("      review: false\n", `      review: false\n${lines}`);
   for (const [now, what] of [
+    [base.replace("npm run gen", "npm run gen && rm src/copy.ts"), /changes no-bloat-prepare/],
+    [add("      no-bloat: false\n"), /changes no-bloat from "\(default\)" to "false"/],
+    // Each spelling the line reader missed (devkit 0.42.0): CRLF, a comment or anchor after with:, flow style, a quoted
+    // or upper-case key, an expression.
+    [add("      no-bloat: false\n").replace(/\n/g, "\r\n"), /changes no-bloat from/],
+    [base.replace("with:\n", "with: # inputs\n      no-bloat: false\n"), /changes no-bloat from/],
+    [base.replace("with:\n", "with: &inputs\n      no-bloat: false\n"), /changes no-bloat from/],
     [
-      caller("      no-bloat-prepare: >-\n        npm run gen && rm src/copy.ts\n"),
-      /changes no-bloat-prepare/,
+      base.replace(
+        /    with:[^]*$/,
+        "    with: { review: false, no-bloat: false, no-bloat-prepare: npm run gen }\n",
+      ),
+      /changes no-bloat from/,
+    ],
+    [add('      "no-bloat": false\n'), /changes no-bloat from/],
+    [add("      No-Bloat: false\n"), /changes no-bloat from/],
+    [
+      add("      no-bloat: ${{ false }}\n"),
+      /changes no-bloat from "\(default\)" to "\$\{\{ false \}\}"/,
+    ],
+    [add("      no-bloat: true\n      No-Bloat: false\n"), /names no-bloat twice/],
+    [base.replace("    uses:", "    if: false\n    uses:"), /changes the job "checks"'s if/],
+    // A job it waits for that is skipped skips it; the triggers decide whether it runs at all.
+    [
+      base
+        .replace(
+          "jobs:\n",
+          "jobs:\n  gate:\n    if: false\n    runs-on: ubuntu-latest\n    steps: [{ run: echo }]\n",
+        )
+        .replace("    uses:", "    needs: gate\n    uses:"),
+      /changes the job "checks"'s needs[^]*changes the job "gate" that "checks" waits for/,
     ],
     [
-      caller("      no-bloat-prepare: >-\n        npm run gen\n      no-bloat: false\n"),
-      /changes no-bloat from "\(default\)" to "false"/,
+      base.replace("  pull_request:\n", "  pull_request:\n    paths-ignore: ['**']\n"),
+      /changes its top-level "on"/,
     ],
     [
-      caller("      no-bloat-prepare: >-\n        npm run gen\n", "    if: false\n"),
-      /changes the job "checks"'s if/,
+      base.replace("pr.yml@", "no-bloat.yml@"),
+      /moves the job "checks" from pr\.yml to no-bloat\.yml/,
     ],
     ["jobs: {}\n", /drops the job "checks"/],
+    [`${base}jobs: {}\n`, /no longer parses as YAML/],
   ])
-    assert.match(
-      workflowInputs("c.yml", base, /** @type {string} */ (now)).join(),
-      /** @type {RegExp} */ (what),
+    assert.match(check(/** @type {string} */ (now)), /** @type {RegExp} */ (what));
+  // A job the caller waits for is held as it was, and one it does not is free.
+  const gated = base
+    .replace(
+      "jobs:\n",
+      "jobs:\n  gate:\n    runs-on: ubuntu-latest\n    steps: [{ run: echo }]\n  other:\n    runs-on: ubuntu-latest\n    steps: [{ run: echo }]\n",
+    )
+    .replace("    uses:", "    needs: [gate]\n    uses:");
+  const changed = (/** @type {string} */ job) =>
+    workflowInputs(
+      "c.yml",
+      gated,
+      gated.replace(
+        `  ${job}:\n    runs-on: ubuntu-latest`,
+        `  ${job}:\n    if: false\n    runs-on: ubuntu-latest`,
+      ),
+      parseYaml,
     );
+  assert.match(changed("gate").join(), /changes the job "gate" that "checks" waits for/);
+  assert.deepEqual(changed("other"), []);
+  // A workflow that calls neither, or is new, ran no check at the base.
+  assert.deepEqual(
+    workflowInputs("c.yml", "jobs:\n  a:\n    runs-on: x\n", "jobs: {}\n", parseYaml),
+    [],
+  );
+  assert.deepEqual(workflowInputs("c.yml", "", base, parseYaml), []);
 
   const manifest = (/** @type {object} */ scripts) =>
     JSON.stringify({ name: "x", scripts: { test: "node --test", ...scripts } });
@@ -1245,3 +1330,90 @@ test("a workflow change that turns the check off or changes what runs before it 
     "patches/knip@6.45.1.patch",
   ]);
 });
+
+test("a Knip plugin's config, and what a config in code imports, is a change of how Knip counts", () => {
+  const files = {
+    ".mocharc.cjs": 'const spec = require("./test/spec.cjs");\nmodule.exports = { spec };\n',
+    "test/spec.cjs": 'module.exports = require("../tools/list");\n',
+    "tools/list.ts": "export default [];\n",
+    "apps/web/vite.config.ts":
+      'import plugin from "./plugin.js";\nexport default { plugins: [plugin] };\n',
+    "apps/web/plugin.ts": "export default {};\n",
+    "tsconfig.json": "{}\n",
+    "src/a.ts": 'import "./b";\n',
+    "src/b.ts": "",
+    "package.json": "{}",
+    ".github/workflows/ci.yml": "",
+  };
+  const patterns = [
+    ".mocharc.{js,cjs,json}",
+    "vite.config.{js,ts}",
+    "tsconfig.json",
+    "package.json",
+    ".github/workflows/*.yml",
+  ];
+  assert.deepEqual(
+    knipPluginFiles(
+      Object.keys(files),
+      patterns,
+      (p) => files[/** @type {keyof typeof files} */ (p)],
+    ).sort(),
+    [
+      ".mocharc.cjs",
+      "apps/web/plugin.ts",
+      "apps/web/vite.config.ts",
+      "test/spec.cjs",
+      "tools/list.ts",
+      "tsconfig.json",
+    ],
+  );
+  // Beside code, the config is refused as a change of measure.
+  const kind = classify({
+    changed: [".mocharc.cjs", "src/a.ts"],
+    configPath: ".no-bloat.json",
+    plugins: [".mocharc.cjs"],
+    before: () => "",
+    now: () => "x",
+  });
+  assert.deepEqual([kind.code, kind.definition], [true, [".mocharc.cjs"]]);
+});
+
+test(
+  "end to end in Actions: the check counts the commit the run is for, so an install that moves HEAD or resets a file fails",
+  { skip: process.platform === "win32" },
+  () => {
+    const dir = scratch();
+    try {
+      writeFileSync(join(dir, "a.mjs"), "export const a = 1;\n");
+      git(dir, "add", "-A");
+      git(dir, "commit", "-qm", "Base");
+      const sha = git(dir, "rev-parse", "HEAD").trim();
+      assert.deepEqual(checkoutProblems(dir, sha), []);
+      // What a postinstall that puts the base back would leave: a tracked file changed, or hidden from git status.
+      writeFileSync(join(dir, "a.mjs"), "");
+      assert.match(
+        checkoutProblems(dir, sha).join(),
+        /a\.mjs differs from [0-9a-f]{7}, the commit this run is for/,
+      );
+      git(dir, "update-index", "--skip-worktree", "a.mjs");
+      assert.match(
+        checkoutProblems(dir, sha).join(),
+        /a\.mjs is marked assume-unchanged or skip-worktree/,
+      );
+      git(dir, "update-index", "--no-skip-worktree", "a.mjs");
+      git(dir, "checkout", "--", "a.mjs");
+      git(dir, "commit", "-q", "--allow-empty", "-m", "Elsewhere");
+      assert.match(
+        checkoutProblems(dir, sha).join(),
+        /HEAD is [0-9a-f]{7}, not [0-9a-f]{7}, the commit this run is for/,
+      );
+      // The bin fails on it before it counts, and outside Actions it counts the working tree as before.
+      const r = runBin(dir, ["--lines-from", "main"], { GITHUB_SHA: sha });
+      assert.equal(r.status, 1);
+      assert.match(r.stdout, /::error::HEAD is/);
+      assert.deepEqual(checkoutProblems(dir, undefined), []);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);

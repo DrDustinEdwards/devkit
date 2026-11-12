@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.43.0 (2026-11-12)
+
+Closes the ways around the no-bloat ratchet that the 0.42.0 verifier found (capsid handoff/no-bloat-gaps-verify-0.42.md: J1, L, M and B2a). **Breaking**: jscpd's `unread` now counts every source file jscpd skips, not only those beside files it reads, and on jscpd 5 it counted nothing before (its report lists no files), so a repository's bump PR widens jscpd's path in a change of its own first, or re-writes its baseline; a change to a file a Knip plugin reads as its config (`vite.config.ts`, `tsconfig.json`, `.mocharc.cjs`) now comes in a change of its own, without code; and a caller workflow can change nothing but its pin and the inputs the check does not depend on.
+
+- J1: the caller workflow is read with a YAML parser (`yaml` 2.9.1, a devDependency here and installed by the check beside knip and jscpd, never the repository's), not line by line. CRLF line ends, `with: # comment`, `with: &anchor`, a flow map, a quoted or mixed-case input name and `${{ false }}` are read as GitHub reads them. A change is refused when it touches anything in a caller job but its pin and the inputs outside the watched ones (`if`, `needs`, the workflow it calls), a job the caller waits for (`needs` on a job that is skipped), anything outside `jobs` (`on` with `paths-ignore`, `branches` or `types`, `concurrency`, `permissions`), names a watched input twice, or no longer parses. `callerJobs` is deleted. `--inputs-from` reads the caller from the commit, not the disk.
+- L: in Actions the check counts the commit the run is for (`GITHUB_SHA`): HEAD moved, a tracked file that differs from it, or one marked assume-unchanged or skip-worktree fails before anything is counted (`checkoutProblems`), so an install script or prepare step that puts the base back is caught. git runs with no `GIT_*` variable of an earlier step, no replace refs and no fsmonitor, and the tools without the proxy and certificate variables, which an earlier step's GITHUB_ENV line could set.
+- M: a file a Knip plugin reads as its config, from Knip's own plugin list at the tool's version, and the local modules a config in code imports, is a change of measure (`knipPluginFiles`). Knip imports such a config, so one could print a report of its own.
+- B2a: `unread` counts a source file jscpd skips anywhere, so a copy in a directory outside jscpd's path is counted and a new one fails by name. A file with fewer tokens than jscpd's `minTokens` is left out, like one under `minLines`. On jscpd 5 the files it read come from `--summary`, and a report whose list does not match its count fails.
+- `toolRunner` is `checkTools` (`run`, `parseYaml`, `knipConfigs`). node/syntax.mjs's `objectConst` and `stringArrayConst` share one reader of a const's initializer, and `stringArrayConst` unwraps `satisfies` too.
+
 ## 0.42.1 (2026-11-12)
 
 - `devkit-no-bloat`: jscpd's `--ignore` and `--ignore-pattern` in the config's jscpd args are read glob by glob, split on commas as jscpd splits them. Before, the whole value was one entry, so dropping a glob from the list (a wider measure) was refused as a new ignore.

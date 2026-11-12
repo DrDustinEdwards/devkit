@@ -14,10 +14,12 @@
 // of measure comes alone and may not lower a count, so a narrower measure cannot hide what it stops reading; a version
 // bump alone (tools, a lockfile, dependency versions forward, a new shared package) may raise or lower. What would hide
 // the next change's code is refused even when it hides nothing yet: every new line of a Knip config needs its own reason,
-// a narrower jscpd measure fails, jscpd's `unread` counts the files it skips beside files it reads, a tracked file a
+// a narrower jscpd measure fails, jscpd's `unread` counts the source files it skips, a tracked file a
 // .gitignore hides from Knip fails, a new file jscpd skips fails, and the tools must be npm's at x.y.z and devkit a
 // DrDustinEdwards/devkit tag. No change may drop or turn off the job that runs the check, or change the inputs that
-// decide what runs before it (workflowInputs); install scripts and patches are a change of measure. A real
+// decide what runs before it (workflowInputs, which reads the workflow with a YAML parser); install scripts, patches and
+// a Knip plugin's config files are a change of measure. In Actions the check counts the commit the run is for
+// (checkoutProblems). A real
 // exception goes in knip.jsonc with a comment saying why, behind `jscpd:ignore-start` and its reason, or after `@public`,
 // `@beta` or `@alias` with who uses it; one added with no reason in words (isReason) fails, and so does any entry added
 // to .jscpd.json or the config's jscpd --ignore, which are strict JSON and cannot hold one. Adding a test is a raise:
@@ -57,7 +59,7 @@
 // and strings; `describe`, hooks and Playwright's runtime `test.skip(condition)` are not cases. A case made in a loop counts
 // once.
 //
-// knip and jscpd are npm's, at the exact versions in `tools`, installed by the check itself (toolRunner), never the
+// knip and jscpd are npm's, at the exact versions in `tools`, installed by the check itself (checkTools), never the
 // repository's own install.
 
 import { execFileSync, spawnSync } from "node:child_process";
@@ -71,9 +73,10 @@ import {
   rmSync,
   writeFileSync,
 } from "node:fs";
+import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, isAbsolute, join, posix, relative, sep } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { appendSummary, escapeAnnotation, shortHead } from "./annotate.mjs";
 import { packageCopies } from "./copies.mjs";
@@ -340,32 +343,25 @@ export function countFiles(config, paths, read) {
 }
 
 /**
- * The source files jscpd skips in a directory where it reads a file of the same extension: a path narrowed to today's
- * files, or a pattern, leaves the next file beside them unread. A file shorter than jscpd's minLines (its lines as jscpd
- * counts them, newline-split) is left out, since it can hold no copy and jscpd skips it by design; one longer than
- * maxLines is not, since a copy in it is never seen. Test files are left out (tests rise by design), and so are
- * directories jscpd never reads.
+ * The source files jscpd skips, wherever they are: a path narrowed to today's files or directories, or a pattern, leaves
+ * the next file outside it unread, and a copy there is never counted. A file shorter than jscpd's minLines (its lines as
+ * jscpd counts them, newline-split) is left out, since it can hold no copy and jscpd skips it by design (one under its
+ * minTokens is left out by measure, which asks jscpd); one longer than maxLines or larger than maxSize is not, since a
+ * copy in it is never seen. Test files are left out (tests rise by design).
  * @param {Config} config @param {string[]} paths
- * @param {Array<{ sources?: Record<string, unknown> }>} formats jscpd's report, statistics.formats
+ * @param {string[]} scanned the files jscpd read, from its report (measure)
  * @param {string} root
  * @param {(path: string) => string} [read] each file, to tell a short one
  * @param {number} [minLines] jscpd's minLines (jscpdOptions)
  * @returns {string[]}
  */
-export function unreadFiles(config, paths, formats, root, read = () => "", minLines = 0) {
+export function unreadFiles(config, paths, scanned, root, read = () => "", minLines = 0) {
   const { isTest, isSource } = globs(config);
   const norm = (/** @type {string} */ p) =>
     posix.normalize((isAbsolute(p) ? relative(root, p) : p).split(sep).join("/"));
-  const seen = new Set(formats.flatMap((f) => Object.keys(f.sources ?? {})).map(norm));
-  const place = (/** @type {string} */ p) => `${posix.dirname(p)}\0${posix.extname(p)}`;
-  const places = new Set([...seen].map(place));
+  const seen = new Set(scanned.map(norm));
   return paths.filter(
-    (p) =>
-      isSource(p) &&
-      !isTest(p) &&
-      !seen.has(p) &&
-      places.has(place(p)) &&
-      read(p).split("\n").length >= minLines,
+    (p) => isSource(p) && !isTest(p) && !seen.has(p) && read(p).split("\n").length >= minLines,
   );
 }
 
@@ -410,19 +406,84 @@ export function measure(
     // jscpd with no path and no config of its own scans nothing; the repository root is the honest default.
     const paths = own.length === 0 && !jscpdConfigured ? ["."] : [];
     const out = mkdtempSync(join(tmpdir(), "jscpd-"));
+    // jscpd 4 lists the files it read under each format; jscpd 5 lists none there, only in its summary, by absolute path.
+    const major = Number(/@(\d+)\./.exec(config.tools?.jscpd ?? DEFAULT_TOOLS.jscpd)?.[1] ?? 0);
+    const listed = major >= 5 ? ["--summary", "--summary-top", "1000000000"] : [];
     try {
-      run("jscpd", [...own, ...paths, "--reporters", "json", "--output", out, "--silent"]);
-      const { statistics } = JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8"));
-      const total = statistics.total;
+      run("jscpd", [
+        ...own,
+        ...paths,
+        ...listed,
+        "--absolute",
+        "--reporters",
+        "json",
+        "--output",
+        out,
+        "--silent",
+      ]);
+      const report = JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8"));
+      const total = report.statistics.total;
       if (!total.sources) throw new Error("it read no files; check its paths, format and ignore");
+      /** @type {string[]} */
+      const scanned =
+        major >= 5
+          ? (report.summary?.files ?? []).map((/** @type {{ path: string }} */ f) => f.path)
+          : Object.values(report.statistics.formats ?? {}).flatMap(
+              (/** @type {{ sources?: object }} */ f) => Object.keys(f.sources ?? {}),
+            );
+      if (scanned.length !== total.sources)
+        throw new Error(
+          `its report lists ${scanned.length} files it read, not the ${total.sources} it counted, so the files it skips cannot be told`,
+        );
+      const options = jscpdOptions(jscpdFile(source), config);
       unread = unreadFiles(
         config,
         source.list(),
-        Object.values(statistics.formats ?? {}),
+        scanned,
         shared.root,
         source.read,
-        Number(jscpdOptions(jscpdFile(source), config).minLines),
+        Number(options.minLines),
       );
+      // A file under jscpd's minTokens can hold no copy either. jscpd itself says which: it reads the files it skipped,
+      // with only its thresholds and mode (an empty config of its own), and what it still skips is too small.
+      if (unread.length) {
+        const probe = join(out, "probe");
+        writeFileSync(join(out, "empty.json"), "{}");
+        run("jscpd", [
+          ...unread.map((p) => join(shared.root, p)),
+          ...listed,
+          "--config",
+          join(out, "empty.json"),
+          "--min-lines",
+          String(options.minLines),
+          "--min-tokens",
+          String(options.minTokens),
+          "--mode",
+          String(options.mode),
+          "--absolute",
+          "--reporters",
+          "json",
+          "--output",
+          probe,
+          "--silent",
+        ]);
+        let read = /** @type {string[]} */ ([]);
+        try {
+          const r = JSON.parse(readFileSync(join(probe, "jscpd-report.json"), "utf8"));
+          read =
+            major >= 5
+              ? (r.summary?.files ?? []).map((/** @type {{ path: string }} */ f) => f.path)
+              : Object.values(r.statistics.formats ?? {}).flatMap(
+                  (/** @type {{ sources?: object }} */ f) => Object.keys(f.sources ?? {}),
+                );
+        } catch {
+          // No report: it read none of them, so every one is too small to hold a copy.
+        }
+        const big = new Set(
+          read.map((p) => posix.normalize(relative(shared.root, p).split(sep).join("/"))),
+        );
+        unread = unread.filter((p) => big.has(p));
+      }
       counts.jscpd = {
         clones: total.clones,
         lines: total.duplicatedLines,
@@ -545,8 +606,8 @@ export function compare(baseline, counts, config = {}) {
       gate(
         "jscpd",
         "unread",
-        "files it skips beside files it reads",
-        "A new file in a directory jscpd reads is not read: widen jscpd's path in a change of its own, or move the file.",
+        "source files it skips",
+        "A source file jscpd does not read can hold a copy nobody counts: widen jscpd's path in a change of its own, or move the file where it reads.",
         true,
       );
     rows.push([
@@ -778,31 +839,45 @@ function gitLines(
   return renderLines(totals, base);
 }
 
-/** Environment variables that load code into a node or npm process, or point npm somewhere else. */
+/**
+ * Environment variables that load code into a node, npm or git process, or point one somewhere else. In Actions, where an
+ * earlier step's GITHUB_ENV line (an install script's, the prepare's) sets them, the proxy and certificate ones too, so a
+ * proxy that step started cannot serve another knip; a local run keeps them, for a network behind a proxy.
+ */
 const INJECTING =
-  /^(?:NODE_OPTIONS|NODE_PATH|NODE_REPL_EXTERNAL_MODULE|LD_PRELOAD|LD_LIBRARY_PATH|DYLD_\w+|npm_config_\w+|DEVKIT_NO_BLOAT_TOOLS)$/i;
+  /^(?:NODE_OPTIONS|NODE_PATH|NODE_REPL_EXTERNAL_MODULE|LD_PRELOAD|LD_LIBRARY_PATH|DYLD_\w+|npm_config_\w+|GIT_\w+|DEVKIT_NO_BLOAT_TOOLS)$/i;
+const IN_ACTIONS =
+  /^(?:HTTPS?_PROXY|ALL_PROXY|NO_PROXY|NODE_EXTRA_CA_CERTS|NODE_TLS_REJECT_UNAUTHORIZED|SSL_CERT_FILE|SSL_CERT_DIR)$/i;
 
-/** The environment with nothing that injects code: an earlier step's GITHUB_ENV line cannot reach the tools. Pure. */
+/** The environment with nothing that injects code (INJECTING), for the tools. Pure. */
 export function cleanEnv(/** @type {NodeJS.ProcessEnv} */ env) {
-  return Object.fromEntries(Object.entries(env).filter(([k]) => !INJECTING.test(k)));
+  const actions = env.GITHUB_ACTIONS === "true";
+  return Object.fromEntries(
+    Object.entries(env).filter(([k]) => !INJECTING.test(k) && !(actions && IN_ACTIONS.test(k))),
+  );
 }
 
+/** The YAML parser the workflows are read with: the version devkit's own lockfile installs and its tests run. */
+const YAML = `yaml@${JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).devDependencies.yaml}`;
+
 /**
- * Runs knip and jscpd from an install this check makes for itself, never the repository's: a fresh directory and npm cache
- * in the system temp, npm's registry named outright, no user, global or project npmrc, and no install scripts, at the
- * exact versions in `tools`. So nothing the repository installs, patches, links or locks (a postinstall rewriting
- * node_modules/knip, a pnpm patch, a shrinkwrap or second lockfile, a hand-made node_modules) is the program that counts.
- * Each tool runs on this node, with cleanEnv. `DEVKIT_NO_BLOAT_TOOLS` names an install to use instead, for this bin's
- * own tests; the workflows strip it.
- * @param {string} root @param {{ knip: string, jscpd: string }} tools
- * @param {string} [given] an install whose node_modules holds the tools
+ * knip, jscpd and the YAML parser from an install this check makes for itself, never the repository's: a fresh directory
+ * and npm cache in the system temp, npm's registry named outright, no user, global or project npmrc, and no install
+ * scripts, at exact versions. So nothing the repository installs, patches, links or locks (a postinstall rewriting
+ * node_modules/knip, a pnpm patch, a shrinkwrap or second lockfile, a hand-made node_modules) is the program that counts
+ * or reads a workflow. Each tool runs on this node, with cleanEnv. Nothing is installed until a tool is first used.
+ * `DEVKIT_NO_BLOAT_TOOLS` names an install to use instead, for this bin's own tests; the workflows strip it.
+ * @param {string} root @param {Partial<Record<"knip" | "jscpd", string>>} tools the config's `tools`, with the defaults
+ * @param {string} [given] an install whose node_modules holds them
+ * @returns {{ run: Runner, parseYaml: (text: string) => unknown, knipConfigs: () => string[], dir: () => string }}
  */
-export function toolRunner(root, tools, given = process.env.DEVKIT_NO_BLOAT_TOOLS) {
+export function checkTools(root, tools, given = process.env.DEVKIT_NO_BLOAT_TOOLS) {
   /** @type {string | undefined} */
-  let dir = given || undefined;
+  let at = given || undefined;
   const install = () => {
-    const problems = Object.entries(tools)
-      .filter(([name, spec]) => !new RegExp(`^${name}@\\d+\\.\\d+\\.\\d+$`).test(spec))
+    const specs = [...Object.entries(tools), ["yaml", YAML]];
+    const problems = specs
+      .filter(([name, spec]) => !new RegExp(`^${name}@\\d+\\.\\d+\\.\\d+$`).test(spec ?? ""))
       .map(
         ([name, spec]) =>
           `tools.${name} is "${spec}", and the check runs only npm's ${name} at an exact version, "${name}@x.y.z"`,
@@ -848,32 +923,62 @@ export function toolRunner(root, tools, given = process.env.DEVKIT_NO_BLOAT_TOOL
         global,
         "--cache",
         join(made, "cache"),
-        ...Object.values(tools),
+        ...specs.map(([, spec]) => /** @type {string} */ (spec)),
       ],
       { cwd: made, encoding: "utf8", env: cleanEnv(process.env), maxBuffer: BUFFER },
     );
     if (r.error || r.status !== 0)
       throw new Error(
-        `npm could not install ${Object.values(tools).join(" ")}: ${(r.error?.message ?? r.stderr ?? "").trim().slice(-400)}`,
+        `npm could not install ${specs.map(([, s]) => s).join(" ")}: ${(r.error?.message ?? r.stderr ?? "").trim().slice(-400)}`,
       );
     return join(made, "tools");
   };
-  /** @type {Runner} */
-  return (name, args) => {
-    dir ??= install();
-    const pkg = join(dir, "node_modules", name);
-    const { bin } = JSON.parse(readFileSync(join(pkg, "package.json"), "utf8"));
-    const file = join(pkg, typeof bin === "string" ? bin : bin[name]);
-    const r = spawnSync(process.execPath, [file, ...args], {
-      cwd: root,
-      encoding: "utf8",
-      env: cleanEnv(process.env),
-      maxBuffer: BUFFER,
-    });
-    if (r.error) throw r.error;
-    if (r.status !== 0)
-      throw new Error(`${name} exited ${r.status}: ${(r.stderr || r.stdout).trim().slice(0, 400)}`);
-    return r.stdout;
+  const dir = () => (at ??= install());
+  /** @type {((text: string) => unknown) | undefined} */
+  let parse;
+  return {
+    dir,
+    run: (name, args) => {
+      const pkg = join(dir(), "node_modules", name);
+      const { bin } = JSON.parse(readFileSync(join(pkg, "package.json"), "utf8"));
+      const file = join(pkg, typeof bin === "string" ? bin : bin[name]);
+      const r = spawnSync(process.execPath, [file, ...args], {
+        cwd: root,
+        encoding: "utf8",
+        env: cleanEnv(process.env),
+        maxBuffer: BUFFER,
+      });
+      if (r.error) throw r.error;
+      if (r.status !== 0)
+        throw new Error(
+          `${name} exited ${r.status}: ${(r.stderr || r.stdout).trim().slice(0, 400)}`,
+        );
+      return r.stdout;
+    },
+    // Knip's plugins at this version, each with the config files it reads (knip.dev, "Plugins"), read by a node of its own.
+    knipConfigs: () => {
+      const index = pathToFileURL(
+        join(dir(), "node_modules", "knip", "dist", "plugins", "index.js"),
+      );
+      const r = spawnSync(
+        process.execPath,
+        [
+          "--input-type=module",
+          "-e",
+          `const { Plugins } = await import(${JSON.stringify(index.href)}); process.stdout.write(JSON.stringify(Object.values(Plugins).flatMap((p) => (Array.isArray(p.config) ? p.config : []).filter((c) => typeof c === "string"))));`,
+        ],
+        { encoding: "utf8", env: cleanEnv(process.env), maxBuffer: BUFFER },
+      );
+      if (r.status !== 0)
+        throw new Error(`Knip's plugin list could not be read: ${r.stderr.trim().slice(0, 300)}`);
+      return /** @type {string[]} */ (JSON.parse(r.stdout));
+    },
+    // YAML 1.2, as GitHub reads a workflow (`on` is a key, not true); a key written twice fails rather than one winning.
+    parseYaml: (text) => {
+      parse ??= (t) =>
+        createRequire(join(dir(), "node_modules", "_.js"))("yaml").parse(t, { uniqueKeys: true });
+      return parse(text);
+    },
   };
 }
 
@@ -903,6 +1008,75 @@ function installedPackages(/** @type {string} */ root) {
     else if (name in wanted) missing.push(name);
   }
   return { root, packages, missing };
+}
+
+/**
+ * Makes every git call of this run read the repository as committed, whatever an earlier step's GITHUB_ENV line set: no
+ * GIT_DIR, GIT_INDEX_FILE or GIT_CONFIG_* of its own, no replace refs, and no fsmonitor hook answering for the files.
+ * In Actions only: a local run inside a git hook needs its GIT_ variables.
+ */
+function hardenGit(/** @type {NodeJS.ProcessEnv} */ env) {
+  for (const k of Object.keys(env)) if (/^GIT_/i.test(k)) delete env[k];
+  Object.assign(env, {
+    GIT_NO_REPLACE_OBJECTS: "1",
+    GIT_CONFIG_COUNT: "2",
+    GIT_CONFIG_KEY_0: "core.fsmonitor",
+    GIT_CONFIG_VALUE_0: "false",
+    GIT_CONFIG_KEY_1: "core.untrackedCache",
+    GIT_CONFIG_VALUE_1: "false",
+  });
+}
+
+/**
+ * In Actions, what keeps the check from counting the commit the run is for (GITHUB_SHA, which no step can change): HEAD
+ * moved, a tracked file marked so git does not look at it, or a tracked file that differs from the commit. The install
+ * and the prepare step run the repository's code before the check, and a script that resets the tree to the base would
+ * otherwise have the base counted. Untracked files are counted as part of the change, so making one hides nothing.
+ * Empty outside Actions, where a local run counts the working tree on purpose.
+ * @param {string} root
+ * @param {string} [sha]
+ */
+export function checkoutProblems(
+  root,
+  sha = process.env.GITHUB_ACTIONS === "true" ? process.env.GITHUB_SHA : undefined,
+) {
+  if (!sha) return [];
+  const git = (/** @type {string[]} */ args) =>
+    execFileSync("git", ["-c", "core.quotePath=false", ...args], {
+      cwd: root,
+      encoding: "utf8",
+      maxBuffer: BUFFER,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+  const fix =
+    "Nothing that runs before the check (an install script, the prepare step) may change the checkout: generate into ignored files.";
+  const head = git(["rev-parse", "HEAD"]).trim();
+  if (head !== sha)
+    return [
+      `HEAD is ${head.slice(0, 7)}, not ${sha.slice(0, 7)}, the commit this run is for, so the check would count another commit. ${fix}`,
+    ];
+  const list = (/** @type {string[]} */ paths) =>
+    `${paths.slice(0, 3).join(", ")}${paths.length > 3 ? ` and ${paths.length - 3} more` : ""}`;
+  /** @type {string[]} */
+  const out = [];
+  // `git ls-files -v`: a lower-case tag is assume-unchanged, S is skip-worktree; git status skips both.
+  const hidden = git(["ls-files", "-v", "-z"])
+    .split("\0")
+    .filter((l) => /^(?:[a-z]|S) /.test(l))
+    .map((l) => l.slice(2));
+  if (hidden.length)
+    out.push(
+      `${list(hidden)} ${hidden.length === 1 ? "is" : "are"} marked assume-unchanged or skip-worktree, so git does not show a change to them. ${fix}`,
+    );
+  const changed = git(["status", "--porcelain=v1", "-z", "--untracked-files=no"])
+    .split("\0")
+    .filter((l) => /^.. /.test(l))
+    .map((l) => l.slice(3));
+  if (changed.length)
+    out.push(
+      `${list(changed)} ${changed.length === 1 ? "differs" : "differ"} from ${sha.slice(0, 7)}, the commit this run is for, after the install and the prepare step. ${fix}`,
+    );
+  return out;
 }
 
 /** The default branch a run is checked against when `--lines-from` is not given, the first that resolves. */
@@ -1128,7 +1302,7 @@ export function hiddenFiles(ignored, changed, before) {
 }
 
 /**
- * The files a change creates that jscpd skips beside files it reads (unreadFiles): a copy there is never counted. The
+ * The files a change creates that jscpd skips (unreadFiles): a copy there is never counted. The
  * count alone misses one when another file starts being read in the same change. Pure.
  * @param {string[]} unread @param {string[]} created
  */
@@ -1138,7 +1312,7 @@ export function unreadAdded(unread, created) {
     .filter((p) => fresh.has(p))
     .map(
       (p) =>
-        `${p} is new, and jscpd does not read it though it reads the files beside it, so a copy in it is never counted. Widen jscpd's path in a change of its own, or move the file where jscpd reads.`,
+        `${p} is new, and jscpd does not read it, so a copy in it is never counted. Widen jscpd's path in a change of its own, or move the file where jscpd reads.`,
     );
 }
 
@@ -1200,14 +1374,15 @@ const DEPENDENCY_FIELDS = [
  * What a change does to the counts, from the files it touches. `code`: it changes something the counts read (anything
  * but the config's `baseline` and `tools`, a lockfile, a definition, and in package.json dependency versions moved
  * forward or a new shared package). `definition`: what it changes in how Knip or jscpd counts (their config files in any
- * format, a Knip config a run names with --config, package.json's `knip` or `jscpd`, the no-bloat config outside
- * `baseline` and `tools`). `workflow`: the workflows it changes that run the check, other than moving their devkit pins
+ * format, a Knip config a run names with --config, a Knip plugin's config and what it imports (`plugins`,
+ * knipPluginFiles), package.json's `knip` or `jscpd`, the no-bloat config outside `baseline` and `tools`). `workflow`: the workflows it changes that run the check, other than moving their devkit pins
  * (a workflow is no file the counts read, so it is never code). `back`: the shared packages it moves to an older release.
  * `refused`: what no change may do to the tools that measure: a `tools` entry that is not `<tool>@x.y.z` or is older than
  * the base's, and a devkit dependency that is not a DrDustinEdwards/devkit release tag or is overridden. Pure.
- * @param {{ changed: string[], configPath: string, definitions?: string[], before: (path: string) => string | null, now: (path: string) => string | null }} change
+ * @param {{ changed: string[], configPath: string, definitions?: string[], plugins?: string[], before: (path: string) => string | null, now: (path: string) => string | null }} change
+ * @param {(text: string) => unknown} [parseYaml] for the workflows (checkTools)
  */
-export function classify(change) {
+export function classify(change, parseYaml = noYaml) {
   const { changed, configPath } = change;
   /** @type {string[]} */
   const definition = [];
@@ -1248,7 +1423,8 @@ export function classify(change) {
       DEFINITIONS.test(name) ||
       INSTALL_FILES.test(name) ||
       /(?:^|\/)patches\//.test(p) ||
-      change.definitions?.includes(p)
+      change.definitions?.includes(p) ||
+      change.plugins?.includes(p)
     ) {
       definition.push(p);
       continue;
@@ -1312,13 +1488,65 @@ export function classify(change) {
       const [was, is] = [change.before(p) ?? "", change.now(p) ?? ""];
       const pinless = (/** @type {string} */ t) => t.replace(DEVKIT_USES, "$1@<pin>");
       if (pinless(was) !== pinless(is) && RUNS_CHECK.test(`${was}\n${is}`)) workflow.push(p);
-      refused.push(...workflowInputs(p, was, is));
+      refused.push(...workflowInputs(p, was, is, parseYaml));
       continue;
     }
     code = true;
   }
   return { code, definition, workflow, back, refused };
 }
+
+/** A Knip plugin config in code, which Knip runs in its own process, and the extensions its local imports resolve to. */
+const CODE_CONFIG = /\.(?:[cm]?[jt]sx?)$/;
+const IMPORT_EXTS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx", ".json"];
+
+/**
+ * The repository's files that a Knip plugin reads as its config (`patterns`, Knip's own list at the tool's version,
+ * checkTools knipConfigs), at the root or in a workspace, and the local modules a config in code imports, followed
+ * through literal relative specifiers. Knip imports a config in code (.mocharc.cjs, vite.config.ts), so one can print a
+ * report of its own or patch Knip; a config in data (tsconfig.json, .mocharc.json) can make any file an entry, whose
+ * exports Knip then never reports. Either is a change of how Knip counts. package.json and the workflows are judged on
+ * their own (classify). Pure.
+ * @param {string[]} paths @param {string[]} patterns @param {(path: string) => string} read
+ */
+export function knipPluginFiles(paths, patterns, read) {
+  const own = patterns.filter((g) => !g.startsWith("package.") && !g.startsWith(".github/"));
+  const isConfig = (/** @type {string} */ p) =>
+    own.some((g) => posix.matchesGlob(p, g) || posix.matchesGlob(p, `**/${g}`));
+  const files = new Set(paths);
+  const out = new Set(paths.filter(isConfig));
+  const queue = [...out].filter((p) => CODE_CONFIG.test(p));
+  while (queue.length) {
+    const p = /** @type {string} */ (queue.pop());
+    let text = "";
+    try {
+      text = read(p);
+    } catch {
+      continue;
+    }
+    for (const m of text.matchAll(
+      /(?:\bfrom\s*|\bimport\s*\(\s*|\brequire\s*\(\s*|\bimport\s+)["'`](\.{1,2}\/[^"'`]+)["'`]/g,
+    )) {
+      const to = posix.normalize(posix.join(posix.dirname(p), m[1]));
+      const bare = to.replace(/\.[cm]?jsx?$/, "");
+      const hit = [
+        to,
+        ...IMPORT_EXTS.map((e) => bare + e),
+        ...IMPORT_EXTS.map((e) => `${to}/index${e}`),
+      ].find((c) => files.has(c));
+      if (hit && !out.has(hit)) {
+        out.add(hit);
+        if (CODE_CONFIG.test(hit)) queue.push(hit);
+      }
+    }
+  }
+  return [...out];
+}
+
+/** A parser for a change that has no workflow to read. */
+const noYaml = () => {
+  throw new Error("no YAML parser was given");
+};
 
 /** The inputs of devkit's pr.yml and no-bloat.yml that say whether the check runs, on what install, and what runs first. */
 const CHECK_INPUTS = {
@@ -1333,97 +1561,143 @@ const CHECK_INPUTS = {
   ],
   "no-bloat": ["node-version-file", "package-manager", "install", "prepare", "config"],
 };
+/** A job's `uses` that calls devkit's pr.yml or no-bloat.yml, at any pin. */
+const CALLS = /^DrDustinEdwards\/devkit\/\.github\/workflows\/(pr|no-bloat)\.yml@/i;
 
-/**
- * Each job of a workflow that calls devkit's pr.yml or no-bloat.yml, by job id: which one, its `if`, and the CHECK_INPUTS
- * it passes, each as its lines as written (a block value's lines included). Read line by line, as a caller is written:
- * the job's `uses` and `with` at one indent, the inputs one level in. Pure.
- */
-export function callerJobs(/** @type {string} */ text) {
-  const lines = text.split("\n");
-  const indent = (/** @type {string} */ l) => l.length - l.trimStart().length;
-  const content = (/** @type {string} */ l) => l.trim() && !l.trim().startsWith("#");
-  /** @type {Record<string, { workflow: string, if: string, inputs: Record<string, string> }>} */
-  const jobs = {};
-  lines.forEach((line, u) => {
-    const m =
-      /^(\s*)uses:\s*["']?DrDustinEdwards\/devkit\/\.github\/workflows\/(pr|no-bloat)\.yml@/i.exec(
-        line,
-      );
-    if (!m) return;
-    const at = m[1].length;
-    let j = u - 1;
-    while (j >= 0 && !(content(lines[j]) && indent(lines[j]) < at)) j--;
-    if (j < 0) return;
-    const id = lines[j].trim().replace(/:\s*$/, "");
-    let end = j + 1;
-    while (end < lines.length && !(content(lines[end]) && indent(lines[end]) <= indent(lines[j])))
-      end++;
-    /** @type {{ workflow: string, if: string, inputs: Record<string, string> }} */
-    const job = { workflow: m[2].toLowerCase(), if: "", inputs: {} };
-    const watched = CHECK_INPUTS[/** @type {"pr"} */ (job.workflow)];
-    let inWith = false;
-    /** @type {number | null} */
-    let child = null;
-    /** @type {string | null} */
-    let key = null;
-    for (let k = j + 1; k < end; k++) {
-      const l = lines[k];
-      if (!content(l)) continue;
-      if (indent(l) <= at) {
-        inWith = /^\s*with:\s*$/.test(l);
-        child = key = null;
-        const cond = /^\s*if:\s*(.*)$/.exec(l);
-        if (cond && indent(l) === at) job.if = cond[1].trim();
-      } else if (inWith) {
-        child ??= indent(l);
-        // An input starts at the inputs' indent; a deeper line belongs to the one above (a block value).
-        const kv = indent(l) === child ? /^\s*([\w-]+):\s*(.*)$/.exec(l) : null;
-        if (kv) {
-          key = watched.includes(kv[1]) ? kv[1] : null;
-          if (key) job.inputs[key] = kv[2].trim();
-        } else if (key) job.inputs[key] += `\n${l.trim()}`;
-      }
-    }
-    jobs[id] = job;
-  });
-  return jobs;
+/** A parsed value with its keys sorted, as JSON: two parses compare equal whatever order or style the YAML wrote. */
+function canonical(/** @type {unknown} */ value) {
+  /** @param {unknown} v @returns {unknown} */
+  const sort = (v) =>
+    Array.isArray(v)
+      ? v.map(sort)
+      : v && typeof v === "object"
+        ? Object.fromEntries(
+            Object.keys(v)
+              .sort()
+              .map((k) => [k, sort(/** @type {Record<string, unknown>} */ (v)[k])]),
+          )
+        : v;
+  return JSON.stringify(sort(value)) ?? "undefined";
 }
 
 /**
- * What a change to a workflow does to the check itself, which no pull request may do: drop a job that calls pr.yml or
- * no-bloat.yml, give it an `if`, or change an input that turns the check off or decides what runs before it (the
- * install, the prepare step, the config, the Node). The run that judges such a change is the change's own, with its
- * inputs, so a check it turns off never runs to refuse it; so it is refused here whenever it does run, pr.yml refuses
- * the rest (`--inputs-from`), and Capsid's nightly watch reports any that merged. Pure.
+ * The part of a parsed job that decides whether it runs the check: the job, with its `uses` as the workflow it calls (the
+ * pin left out) and its `with` cut to the CHECK_INPUTS, each named in lower case, as GitHub reads input names. Null for
+ * a job that calls neither workflow.
+ * @param {unknown} job
+ * @returns {{ job: Record<string, unknown>, workflow: "pr" | "no-bloat", inputs: Record<string, unknown>, twice: string[] } | null}
  */
-export function workflowInputs(
-  /** @type {string} */ path,
-  /** @type {string} */ was,
-  /** @type {string} */ is,
-) {
-  const [a, b] = [callerJobs(was), callerJobs(is)];
+function checkPart(job) {
+  if (!job || typeof job !== "object") return null;
+  const j = /** @type {Record<string, unknown>} */ (job);
+  const m = typeof j.uses === "string" ? CALLS.exec(j.uses.trim()) : null;
+  if (!m) return null;
+  const workflow = /** @type {"pr" | "no-bloat"} */ (m[1].toLowerCase());
+  /** @type {Record<string, unknown>} */
+  const inputs = {};
+  const twice = [];
+  const given = j.with;
+  if (given && typeof given === "object" && !Array.isArray(given))
+    for (const [k, v] of Object.entries(given)) {
+      const key = k.toLowerCase();
+      if (!CHECK_INPUTS[workflow].includes(key)) continue;
+      if (key in inputs) twice.push(key);
+      inputs[key] = v;
+    }
+  // A `with` that is not a map is kept whole: GitHub refuses it, and so does the comparison.
+  const rest = { ...j, uses: workflow, with: given && typeof given === "object" ? null : given };
+  return { job: rest, workflow, inputs, twice };
+}
+
+/** The jobs `id` waits for in `jobs`, directly or through another. */
+function needsOf(/** @type {Record<string, any>} */ jobs, /** @type {string} */ id) {
+  /** @type {Set<string>} */
+  const seen = new Set();
+  const walk = (/** @type {string} */ j) => {
+    const n = jobs[j]?.needs;
+    for (const d of typeof n === "string" ? [n] : Array.isArray(n) ? n : [])
+      if (typeof d === "string" && !seen.has(d)) {
+        seen.add(d);
+        walk(d);
+      }
+  };
+  walk(id);
+  return seen;
+}
+
+/**
+ * What a change to a workflow does to the check itself, which no pull request may do. The workflow is parsed as YAML,
+ * as GitHub reads it (a flow map, a quoted or upper-case key, an anchor, CRLF line ends are the same data), and for each
+ * job that calls pr.yml or no-bloat.yml at the base it refuses: dropping the job; any change to the job but its pin and
+ * the inputs that are not CHECK_INPUTS (its `if`, `needs`, `strategy`, the workflow it calls); a change to an input that
+ * turns the check off or decides what runs before it (the install, the prepare step, the config, the Node); any change to
+ * a job it waits for (`needs`, which a skipped job skips too); and any change outside `jobs` (`on`, whose filters stop the
+ * workflow running at all, `concurrency`, `permissions`). A file that no longer parses is refused too. The run that judges
+ * such a change is the change's own, with its inputs, so a check it turns off never runs to refuse it; so it is refused
+ * here whenever it does run, pr.yml refuses the rest (`--inputs-from`), and Capsid's nightly watch reports any that
+ * merged. Pure, given the parser.
+ * @param {string} path @param {string} was @param {string} is @param {(text: string) => unknown} parseYaml
+ */
+export function workflowInputs(path, was, is, parseYaml) {
+  const read = (/** @type {string} */ text) => {
+    try {
+      const doc = parseYaml(text);
+      return /** @type {Record<string, any>} */ (doc && typeof doc === "object" ? doc : {});
+    } catch (error) {
+      return error instanceof Error ? error : new Error(String(error));
+    }
+  };
   /** @type {string[]} */
   const out = [];
-  for (const [id, job] of Object.entries(a)) {
-    const now = b[id];
-    const what = !now
-      ? `drops the job "${id}" that runs it`
-      : now.workflow !== job.workflow
-        ? `moves the job "${id}" from ${job.workflow}.yml to ${now.workflow}.yml`
-        : now.if !== job.if
-          ? `changes the job "${id}"'s if from ${JSON.stringify(job.if)} to ${JSON.stringify(now.if)}`
-          : CHECK_INPUTS[/** @type {"pr"} */ (job.workflow)]
-              .filter((k) => (job.inputs[k] ?? "") !== (now.inputs[k] ?? ""))
-              .map(
-                (k) =>
-                  `changes ${k} from ${JSON.stringify(job.inputs[k] ?? "(default)")} to ${JSON.stringify(now.inputs[k] ?? "(default)")}`,
-              )
-              .join(", ");
-    if (what)
-      out.push(
-        `${path} ${what}, which decides whether the no-bloat check runs and what runs before it. A pull request cannot change how it is itself checked: the owner makes that change past the check.`,
-      );
+  const say = (/** @type {string} */ what) =>
+    out.push(
+      `${path} ${what}, which decides whether the no-bloat check runs and what runs before it. A pull request cannot change how it is itself checked: the owner makes that change past the check.`,
+    );
+  const a = read(was);
+  if (a instanceof Error) {
+    // A base that names devkit's workflows and does not parse cannot be compared; one that names neither ran no check.
+    if (/DrDustinEdwards\/devkit\/\.github\/workflows\/(?:pr|no-bloat)\.ya?ml/i.test(was))
+      say(`could not be read as YAML at the base (${a.message.split("\n")[0]})`);
+    return out;
+  }
+  const jobsA = a.jobs && typeof a.jobs === "object" ? a.jobs : {};
+  const callers = Object.keys(jobsA).filter((id) => checkPart(jobsA[id]));
+  if (!callers.length) return out;
+  const b = read(is);
+  if (b instanceof Error) {
+    say(`no longer parses as YAML (${b.message.split("\n")[0]})`);
+    return out;
+  }
+  const jobsB = b.jobs && typeof b.jobs === "object" ? b.jobs : {};
+  for (const key of new Set([...Object.keys(a), ...Object.keys(b)]))
+    if (key !== "jobs" && canonical(a[key]) !== canonical(b[key]))
+      say(`changes its top-level "${key}"`);
+  const show = (/** @type {unknown} */ v) =>
+    JSON.stringify(v === undefined ? "(default)" : typeof v === "string" ? v : canonical(v));
+  for (const id of callers) {
+    const [then, now] = [checkPart(jobsA[id]), checkPart(jobsB[id])];
+    if (!then) continue;
+    if (!(id in jobsB)) say(`drops the job "${id}" that runs it`);
+    else if (!now)
+      say(`changes the job "${id}" so it no longer calls devkit's ${then.workflow}.yml`);
+    else {
+      if (now.twice.length) say(`names ${now.twice.join(", ")} twice in the job "${id}"`);
+      for (const key of new Set([...Object.keys(then.job), ...Object.keys(now.job)]))
+        if (canonical(then.job[key]) !== canonical(now.job[key]))
+          say(
+            key === "uses"
+              ? `moves the job "${id}" from ${then.workflow}.yml to ${now.workflow}.yml`
+              : key === "with"
+                ? `changes the job "${id}"'s with from a map`
+                : `changes the job "${id}"'s ${key} from ${show(then.job[key])} to ${show(now.job[key])}`,
+          );
+      for (const k of CHECK_INPUTS[then.workflow])
+        if (canonical(then.inputs[k]) !== canonical(now.inputs[k]))
+          say(`changes ${k} from ${show(then.inputs[k])} to ${show(now.inputs[k])}`);
+    }
+    for (const dep of new Set([...needsOf(jobsA, id), ...needsOf(jobsB, id)]))
+      if (canonical(jobsA[dep]) !== canonical(jobsB[dep]))
+        say(`changes the job "${dep}" that "${id}" waits for (needs)`);
   }
   return out;
 }
@@ -1920,6 +2194,7 @@ function devkitBlobs(/** @type {string} */ tag) {
 function main() {
   const argv = process.argv.slice(2);
   const root = process.cwd();
+  if (process.env.GITHUB_ACTIONS === "true") hardenGit(process.env);
   if (argv[0] === "--verify-install") {
     // Run from the workflow's own devkit, never the installed one it judges.
     const problems = installedRelease(
@@ -1943,8 +2218,21 @@ function main() {
     } catch {
       // A workflow new in the change: the base ran no check from it.
     }
-    const now = existsSync(join(root, path)) ? readFileSync(join(root, path), "utf8") : "";
-    const problems = workflowInputs(path, was, now);
+    // The file as committed, not as the install and the prepare step may have left it on disk.
+    let now = "";
+    try {
+      now = execFileSync("git", ["show", `${process.env.GITHUB_SHA || "HEAD"}:${path}`], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      });
+    } catch {
+      // Dropped in the change: every caller job the base had is gone.
+    }
+    const problems = [
+      ...checkoutProblems(root),
+      ...workflowInputs(path, was, now, checkTools(root, {}).parseYaml),
+    ];
     for (const p of problems) console.log(`::error::${escapeAnnotation(p)}`);
     if (!problems.length) console.log(`${path} runs the check as its base ${rev.slice(0, 7)} did.`);
     process.exit(problems.length ? 1 : 0);
@@ -1964,9 +2252,12 @@ function main() {
     readConfig(argv, ".no-bloat.json", "devkit-no-bloat", { optional: true })
   );
 
+  // Before anything reads the checkout: what an install script or the prepare step changed would be counted instead.
+  const checkout = checkoutProblems(root);
+  const tools = checkTools(root, { ...DEFAULT_TOOLS, ...config.tools });
   const measured = measure(
     config,
-    toolRunner(root, { ...DEFAULT_TOOLS, ...config.tools }),
+    tools.run,
     existsSync(join(root, ".jscpd.json")),
     gitSource(root),
     installedPackages(root),
@@ -1975,15 +2266,21 @@ function main() {
   // A raised baseline or an exception with no reason, against the branch the change goes into: on a pull request
   // (--lines-from) and in every local run, so neither the check nor --write-baseline can accept one quietly.
   /** @type {string[]} */
-  const refused = lockfileProblems(gitSource(root).list());
+  const refused = [...checkout, ...lockfileProblems(gitSource(root).list())];
   let ref = from;
   try {
     ref = baseRef(root, from) ?? undefined;
     if (ref) {
       const base = atBase(root, file, ref, config);
+      const files = [...new Set([...gitSource(root).list(), ...base.changed])];
+      const plugins = knipPluginFiles(
+        files,
+        tools.knipConfigs(),
+        (p) => base.now(p) ?? base.before(p) ?? "",
+      );
       const next = write ? { ...config, baseline: { ...measured.counts } } : config;
       refused.push(
-        ...raised(next, base.config, classify(base)),
+        ...raised(next, base.config, classify({ ...base, plugins }, tools.parseYaml)),
         ...unreasoned(base, config, base.config),
         ...narrowed(base, config, base.config),
         ...hiddenFiles(base.ignored, base.changed, base.before),
