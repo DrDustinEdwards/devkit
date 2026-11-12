@@ -87,7 +87,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.142.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.143.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -98,7 +98,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./csp-report`: `MAX_REPORT_BYTES`, `MAX_REPORTS`, `trimReportUrl`, `reportBodies`, `summarizeReport`, `summarizeVital`, `receiveCspReport`, `rateLimitAllow`
 - `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`, `multipartBoundary`, `readMultipart`, `partText`, `readJsonWith`
 - `./confirm`: `confirmationSatisfied`, `confirmationRequired`
-- `./html`: `escapeHtml`
+- `./html`: `escapeHtml`, `unescapeHtml`, `htmlAttributes`, `sitemapLocs`
 - `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `purgeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `browserCheck`, `aiCheck`, `isDatabaseDown`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`, `deployedAt`, `deployedSha`
 - `./deploy`: `deployedSha`, `deployedAt`
 - `./health-read`: `healthOf`, `parseHealth`, `failingCheckNames`, `healthChecks`
@@ -114,10 +114,10 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./share-card`: `SHARE_CARD_WIDTH`, `SHARE_CARD_HEIGHT`, `SHARE_CARD_TYPE`, `cardText`, `CARD_TITLE_MAX`, `CARD_DESCRIPTION_MAX`, `CARD_TITLE_SIZES`, `clampTitle`, `titleFontSize`, `cardKey`, `cardLayout`, `renderShareCard`, `googleFont`, `SHARE_CARD_HEADERS`, `shareCardResponse`
 - `./maintenance`: `MAINTENANCE_RETRY_AFTER`, `maintenanceOn`, `maintenanceResponse`
 - `./security-txt`: `SECURITY_CONTACT`, `SECURITY_TXT_EXPIRES`, `securityTxt`, `securityTxtResponse`
-- `./encoding`: `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `fromBase64Text`, `fromBase64urlText`, `pageCursor`, `readPageCursor`, `sha256Hex`, `hmacSha256Hex`, `fnv1a32`
+- `./encoding`: `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `fromBase64Text`, `fromBase64urlText`, `pageCursor`, `readPageCursor`, `sha256`, `sha256Hex`, `hmacSha256`, `hmacSha256Hex`, `crc32`, `canonicalJson`, `fnv1a32`
 - `./jwt`: `pkcs8FromPem`, `signJwt`, `githubAppJwt`
 - `./github`: `GITHUB_API`, `GITHUB_API_VERSION`, `githubHeaders`, `installationToken`, `readAllPages`, `githubJson`, `DISPATCH_PROBE_REF`, `canDispatch`, `PR_URL_SOURCE`, `parsePrUrl`
-- `./time`: `parseSqlTime`, `toDate`, `toMs`, `monthKey`
+- `./time`: `toSqlTime`, `parseSqlTime`, `toDate`, `toMs`, `monthKey`
 - `./google-service-account`: `GOOGLE_TOKEN_URL`, `parseServiceAccountKey`, `clearServiceAccountTokens`, `serviceAccountToken`
 - `./signed-token`: `signToken`, `readSignedToken`
 - `./turnstile`: `TURNSTILE_ORIGIN`, `mountTurnstile`, `SITEVERIFY_URL`, `verifyTurnstile`
@@ -143,7 +143,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./mcp-server`: `withMcpHeaders`, `routeMcpEra`, `ApiLegError`, `callApi`, `MCP_PER_MINUTE`, `checkRateLimit`, `refuse`, `unauthorized`, `audienceRefusal`, `mcpOriginRefusal`, `mcpScopes`, `callerName`, `toolScope`, `toolsForGrant`, `authorizeCall`, `toolScopeChallenge`, `invokeTool`, `registerTools`, `OUTSIDE_DATA_NOTICE`, `outsideResult`, `toolListProblems`, `toolListHash`, `mcpCacheHints`, `PROBE_METHODS`, `probeRefusal`, `probeDoor`
 - `./admin-mcp`: `ADMIN_MCP_ROUTE`, `ADMIN_MCP_OPERATOR_ROUTE`, `adminMcpJobs`, `ADMIN_MCP_ORIGINS`, `adminMcpOrigin`, `adminMcpWorker`
 - `./agent-keys`: `AGENT_KEY_PREFIX`, `bearerToken`, `agentPrincipal`, `agentKeyNames`, `agentScopes`, `agentCaller`, `PROBE_KEY_SECRET`, `PROBE_PRINCIPAL`, `isProbeKey`, `probeCaller`
-- `./owner-page`: `OWNER_PATH`, `OWNER_STYLE`, `listOwnerGrants`, `revokeOwnerGrant`, `readAuditLog`, `ownerPage`
+- `./owner-page`: `OWNER_PATH`, `OWNER_STYLE`, `listOwnerGrants`, `revokeOwnerGrant`, `readAuditLog`, `ownerPage`, `respond`, `originOf`
 - `./access`: `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `KEYS_MAX_AGE_MS`, `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminRoster`, `adminEmails`, `isAdminEmail`, `isMainAdmin`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`, `adminIdle`, `withAdminIdle`
 - `./access-sync`: `CAPSID_ORIGIN`, `postAccessSync`
 - `./members`: `PRIMARY_OWNER`, `OWNER`, `MANAGE_MEMBERS`, `REVIEW_DAYS`, `normalizeEmail`, `defineTitles`, `isExpired`, `reviewOpen`, `resolveActor`, `can`, `defaultEndDate`, `checkChange`, `auditRow`, `allowList`
@@ -166,7 +166,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./react-entry`: `streamTimeout`, `reactEntry`, `handleError`
 - `./deferred-scripts`: `routeHydrates`, `scriptJson`, `bootJson`, `HydrationScripts`, `StreamBuffer`
 - `./hydrate-on-intent`: `HOLDER_ID`, `HYDRATED_ATTRIBUTE`, `HYDRATED_EVENT`, `STREAM_BUFFER`, `STREAM_BUFFER_SCRIPT`, `isDeferred`, `isHydrated`, `markHydrated`, `hydrateNow`, `hydrateOnIntent`
-- `./http`: `OUTBOUND_TIMEOUT_MS`, `clientIp`, `ipBucket`, `isWrite`, `textResponse`, `jsonResponse`, `timedFetch`, `fetchUntil`, `isWorkerPreview`, `publicOrigin`
+- `./http`: `OUTBOUND_TIMEOUT_MS`, `clientIp`, `ipBucket`, `isWrite`, `textResponse`, `jsonResponse`, `redirectResponse`, `retryAfterSeconds`, `mediaType`, `timedFetch`, `fetchUntil`, `isWorkerPreview`, `publicOrigin`
 - `./sign-in-passkey`: `passkeyUserHandle`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`, `signInWithPasskey`, `canOfferPasskey`, `passkeySignIn`
 - `./sign-in-form`: `isDisposableEmail`, `refuseDisposable`, `safeNextPath`, `requestSignInLink`, `signInWithCode`, `SIGN_IN_INTENT`, `signInFormAction`, `startSocialSignIn`, `authHandler`, `accountOptions`, `ACCOUNT_INTENTS`, `accountFormAction`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `emailLinkWords`, `passkeyErrorWords`, `securityHistoryWords`, `signInErrorWords`
 - `./sign-in-words`: `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `DISPOSABLE_EMAIL`, `SIGN_IN_WORDS`, `ACCOUNT_WORDS`, `signInErrorWords`, `passkeyErrorWords`, `emailLinkWords`, `securityHistoryWords`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`
@@ -174,7 +174,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./csv`: `CSV_CONTENT_TYPE`, `guardFormula`, `csvCell`, `csvRow`, `toCsv`, `recordsCsv`, `parseCsv`, `csvResponse`
 - `./csv-client`: `downloadCsv`
 - `./worker`: `SECURITY_TXT_PATH`, `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`, `PREVIEW_TOKEN`, `tokenPattern`
-- `./inbox-report`: `INBOX_REPORT_PATH`, `CAPSID_ORIGIN`, `MAX_REPORT_ITEMS`, `MAX_REPORT_TITLE`, `MAX_INBOX_REPORT_BYTES`, `REPORT_TTL_SECONDS`, `capsidOrigin`, `reportInbox`
+- `./inbox-report`: `INBOX_REPORT_PATH`, `MAX_REPORT_ITEMS`, `MAX_REPORT_TITLE`, `MAX_INBOX_REPORT_BYTES`, `REPORT_TTL_SECONDS`, `capsidOrigin`, `reportInbox`
 - `./secret-box`: `keyring`, `keyringFromEnv`, `seal`, `keyIdOf`, `open`, `reseal`
 - `./http-errors`: `PROBLEM_TYPE`, `AppError`, `errors`, `problemResponse`, `isKnownError`, `errorResponse`, `schemaIssues`, `honoErrorHandler`, `readProblem`
 - `./confirm-token`: `CONFIRM_TTL_SECONDS`, `canonicalJson`, `mintConfirm`, `redeemConfirm`
