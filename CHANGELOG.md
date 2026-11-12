@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.41.2 (2026-11-12)
+
+- `devkit-secrets`: an Env interface that extends a shared type (`interface Env extends SiteSecrets {}`, site-runtime 0.144.0's standard secrets) carries that type's members, read with TypeScript's checker from the file and the packages it imports, so a site that moves onto `SiteSecrets` still passes "is declared". `env_exact` still checks only what the file itself declares. `interfaceMembers` (./node/syntax) returns `own` beside `members`.
+
 ## 0.41.1 (2026-11-12)
 
 - `devkit-no-bloat`: the check that an installed knip or jscpd is npm's own reads `pnpm-lock.yaml` too, when there is no `package-lock.json`. The root importer must list the tool at a bare version (an alias, a git or tarball source, a link or a path fails), and its package must resolve by `integrity` alone. Before, a pnpm repository's lockfile was not read, so it could install another program as knip.
