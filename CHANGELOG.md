@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.37.1 (2026-11-12)
+
+- `devkit-tokens`, `devkit-css-vars` and `devkit-test-assertions` list files with `walkFiles` from `./node` instead of each keeping its own recursive walk. The files they scan and what they report are unchanged.
+
 ## 0.37.0 (2026-11-12)
 
 How the network stops bolt-on code (a parallel helper, wrapper or stylesheet beside code that already does the job, Dustin 2026-11-12). **Breaking** for every caller: each needs `"shared copies"` in its `.no-bloat.json` baseline (`npx devkit-no-bloat --write-baseline`), and a caller of pr.yml or no-bloat.yml that passes `no-bloat-warn-only` or `warn-only` must drop it.

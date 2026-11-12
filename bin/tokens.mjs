@@ -17,10 +17,11 @@
 // `#10003` is still reported. A px length is a violation only in a font-size context (`font-size:`, `fontSize:`, and in
 // .tsx a Tailwind `text-[...]`), so `padding: 10px` and `w-[680px]` stay legal; a px inside `clamp()` counts.
 
-import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { walkFiles } from "../node/index.mjs";
 import { escapeAnnotation } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
 
@@ -58,17 +59,6 @@ export function scanContent(rel, content, config = {}) {
   return violations;
 }
 
-/** @param {string} dir @param {Set<string>} skip @param {string[]} [out] @returns {string[]} */
-function walk(dir, skip, out = []) {
-  for (const e of readdirSync(dir, { withFileTypes: true })) {
-    const full = `${dir}/${e.name}`;
-    if (e.isDirectory()) {
-      if (!skip.has(e.name)) walk(full, skip, out);
-    } else if (/\.(tsx?|css)$/.test(e.name)) out.push(full);
-  }
-  return out;
-}
-
 function main() {
   const { config, path: configPath } = readConfig(process.argv.slice(2), ".tokens.json", "tokens");
   /** @param {string} m @returns {never} */
@@ -85,7 +75,10 @@ function main() {
   for (const d of config.dirs) {
     const abs = resolve(root, d);
     if (!existsSync(abs)) fail(`directory ${d} does not exist`);
-    for (const f of walk(abs, skip)) {
+    for (const f of walkFiles(abs, {
+      keep: (name) => /\.(tsx?|css)$/.test(name),
+      skipDir: (name) => skip.has(name),
+    })) {
       scanned++;
       const rel = f.slice(root.length + 1).replace(/\\/g, "/");
       violations.push(...scanContent(rel, readFileSync(f, "utf8"), config));
