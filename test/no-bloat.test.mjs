@@ -337,14 +337,14 @@ test("a test added without a raise fails; the comment share warns past its toler
     comments: { lines: 130, code: 900, percentage: 12.62 },
   });
   assert.deepEqual(grown.errors, [
-    "tests: test cases went from 10 to 11. A new test needs a reviewed raise of the baseline.",
+    "tests: test cases went from 10 to 11. A new test is recorded with `npx devkit-no-bloat --write-baseline` in the same change.",
   ]);
   assert.deepEqual(grown.rows.slice(2), [
     ["comments", "comment lines", 100, 130],
     ["comments", "share of lines % (tolerance 1)", 10, 12.62],
   ]);
   assert.deepEqual(compare(baseline, { tests: { files: 3, cases: 10 } }).errors, [
-    "tests: test files went from 2 to 3. A new test file needs a reviewed raise of the baseline.",
+    "tests: test files went from 2 to 3. A new test file is recorded with `npx devkit-no-bloat --write-baseline` in the same change.",
   ]);
   assert.match(
     grown.warnings[0],
@@ -505,7 +505,7 @@ const runBin = (/** @type {string} */ cwd, /** @type {string[]} */ args = [], en
   spawnSync(process.execPath, [BIN, ...args], {
     cwd,
     encoding: "utf8",
-    env: { ...process.env, GITHUB_STEP_SUMMARY: "", ...env },
+    env: { ...process.env, GITHUB_STEP_SUMMARY: "", GITHUB_ACTIONS: "true", ...env },
   });
 
 test(
@@ -649,33 +649,121 @@ test(
 );
 
 test(
-  "end to end: a pull request that raises the jscpd baseline fails, unless it also moves the tools to another version",
+  "end to end: a raised baseline fails on a pull request and in a local run, a tools change does not excuse it, and only a change that moves no code may raise",
   { skip: process.platform === "win32" },
   () => {
     const dir = scratch();
     try {
       assert.equal(runBin(dir, ["--write-baseline"]).status, 0);
+      writeFileSync(
+        join(dir, "package.json"),
+        JSON.stringify({ name: "x", devDependencies: { a: "1.0.0" } }),
+      );
       git(dir, "add", "-A");
       git(dir, "commit", "-qm", "Base");
       git(dir, "checkout", "-qb", "change");
-      const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
-      config.baseline.jscpd.clones = 5;
-      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
-      git(dir, "commit", "-qam", "Raise");
+      // A copy and the raise that would let it in, with the tools moved too.
+      writeFileSync(join(dir, "copy.mjs"), "export const a = 1;\n");
       const grown = join(dir, "node_modules", ".bin", "jscpd");
       writeFileSync(grown, readFileSync(grown, "utf8").replace('"clones":4', '"clones":5'));
+      const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
+      config.tools = { jscpd: "jscpd@4.4.0" };
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
+      const refused = runBin(dir, ["--write-baseline"], { GITHUB_ACTIONS: "" });
+      // A local run with no remote names what to pass.
+      assert.equal(refused.status, 1);
+      assert.match(refused.stderr, /none of origin\/HEAD, origin\/main, origin\/master resolves/);
+      git(dir, "update-ref", "refs/remotes/origin/main", "main");
+      const w = runBin(dir, ["--write-baseline"], { GITHUB_ACTIONS: "" });
+      assert.equal(w.status, 1, w.stderr);
+      assert.match(w.stderr, /jscpd: this change raises the baseline's clones from 4 to 5/);
+      assert.match(w.stderr, /the baseline was not written/);
+      config.baseline.jscpd.clones = 5;
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
+      git(dir, "add", "-A");
+      git(dir, "commit", "-qm", "Raise");
+      const pr = runBin(dir, ["--lines-from", "main"]);
+      assert.equal(pr.status, 1, pr.stdout);
+      assert.match(
+        pr.stdout,
+        /::error::jscpd: this change raises the baseline's clones from 4 to 5/,
+      );
+      const local = runBin(dir, [], { GITHUB_ACTIONS: "" });
+      assert.equal(local.status, 1, local.stdout);
+      assert.match(local.stdout, /::error::jscpd: this change raises the baseline's clones/);
+      // A run on the default branch in Actions has nothing to compare.
+      assert.equal(runBin(dir).status, 0);
+
+      // The same raise with no code moved (a tool bump: config, lockfile, versions) passes; a new library does not.
+      git(dir, "rm", "-q", "copy.mjs");
+      writeFileSync(
+        join(dir, "package.json"),
+        JSON.stringify({ name: "x", devDependencies: { a: "2.0.0" } }),
+      );
+      writeFileSync(join(dir, "package-lock.json"), "{}");
+      git(dir, "add", "-A");
+      git(dir, "commit", "-qm", "Bump");
+      assert.equal(runBin(dir, ["--lines-from", "main"]).status, 0);
+      writeFileSync(
+        join(dir, "package.json"),
+        JSON.stringify({ name: "x", devDependencies: { a: "2.0.0", unused: "1.0.0" } }),
+      );
+      git(dir, "commit", "-qam", "Add a library");
+      assert.equal(runBin(dir, ["--lines-from", "main"]).status, 1);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test(
+  "end to end: a baseline count new in the change is raised from 0, and an exception added without a reason fails",
+  { skip: process.platform === "win32" },
+  () => {
+    const dir = scratch();
+    try {
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify({ shared: false }));
+      assert.equal(runBin(dir, ["--write-baseline"]).status, 0);
+      const config = JSON.parse(readFileSync(join(dir, ".no-bloat.json"), "utf8"));
+      delete config.baseline.knip;
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
+      writeFileSync(join(dir, "knip.json"), '{\n  "ignore": ["old/**"]\n}\n');
+      writeFileSync(join(dir, ".jscpd.json"), '{ "ignore": ["**/node_modules/**"] }\n');
+      git(dir, "add", "-A");
+      git(dir, "commit", "-qm", "Base");
+      git(dir, "checkout", "-qb", "change");
+      writeFileSync(join(dir, "a.mjs"), "export const a = 1;\n");
+      assert.equal(runBin(dir, ["--write-baseline"], { GITHUB_ACTIONS: "" }).status, 1);
+      config.baseline.knip = { "Unused files": 2, "Unused exports": 3 };
+      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
+      writeFileSync(
+        join(dir, "knip.json"),
+        '{\n  // Generated by the build, read by nothing here.\n  "ignore": ["old/**", "gen/**"],\n  "ignoreDependencies": [\n    "a",\n    "b" // used by the deploy script\n  ]\n}\n',
+      );
+      writeFileSync(join(dir, ".jscpd.json"), '{ "ignore": ["**/node_modules/**", "copy/**"] }\n');
+      writeFileSync(
+        join(dir, "b.mjs"),
+        "// jscpd:ignore-start\nexport const b = 1;\n// jscpd:ignore-end\n// jscpd:ignore-start the fixture mirrors the API reply\n",
+      );
+      git(dir, "add", "-A");
+      git(dir, "commit", "-qm", "Change");
       const r = runBin(dir, ["--lines-from", "main"]);
       assert.equal(r.status, 1, r.stdout);
       assert.match(
         r.stdout,
-        /::error::jscpd: this change raises the baseline's clones from 4 to 5/,
+        /::error::knip: this change raises the baseline's Unused files from 0 to 2/,
       );
-      // Without --lines-from (a run on main) the raised baseline is the count.
-      assert.equal(runBin(dir).status, 0);
-      config.tools = { jscpd: "jscpd@4.4.0" };
-      writeFileSync(join(dir, ".no-bloat.json"), JSON.stringify(config));
-      git(dir, "commit", "-qam", "New jscpd");
-      assert.equal(runBin(dir, ["--lines-from", "main"]).status, 0);
+      assert.match(
+        r.stdout,
+        /::error::knip\.json: the ignore entry "a" is new and says nothing about why/,
+      );
+      assert.doesNotMatch(r.stdout, /ignore entry "(?:gen\/\*\*|b|old\/\*\*)"/);
+      assert.match(r.stdout, /::error::\.jscpd\.json: the ignore entry "copy\/\*\*" is new/);
+      assert.match(
+        r.stdout,
+        /::error::a new `jscpd:ignore-start` gives no reason \(\/\/ jscpd:ignore-start\)/,
+      );
+      assert.equal(r.stdout.match(/::error::a new `jscpd:ignore-start`/g)?.length, 1);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
