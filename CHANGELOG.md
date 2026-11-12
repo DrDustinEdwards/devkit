@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.38.0 (2026-11-12)
+
+Closes five ways around the no-bloat ratchet that the 0.37.1 verifier found. **Breaking** for a local run with no `origin/HEAD`, `origin/main` or `origin/master` (pass `--lines-from <rev>`), and for a devkit bump that also changes code (split it: the bump alone may raise a baseline).
+
+- A change to `tools` no longer excuses a raised baseline. Only a change that moves no code may raise one: it touches only the config, a lockfile, `.github/workflows/`, and in `package.json` only dependency versions or a new shared package. This replaces both 0.37's `tools` exemption and its shared-package bump exemption for the shared copies.
+- A local run checks the raise too, against the default branch (`origin/HEAD`, then `origin/main`, then `origin/master`), and `--write-baseline` refuses to record a raise the check would refuse. Before, only a pull request run with `--lines-from` gated it. A run in Actions without `--lines-from` (the default branch, a merge queue) has no base, as before.
+- The error for a new copy no longer names `--write-baseline`. The command is named only for a new test, the one count it raises.
+- A baseline count the base did not have (a new knip run label, a key dropped and put back) is raised from 0, and so is every count when the base had no baseline. Before, it skipped the raise check.
+- An exception needs its reason. An entry added to a Knip config's ignore lists (`knip.json`, `knip.jsonc`, `.knip.json`, `.knip.jsonc` or a run's `--config`; every key starting `ignore`) fails without a comment on its line, directly above it, or above its list. An entry added to `.jscpd.json`'s ignore or to the config's jscpd `--ignore` fails outright, since strict JSON cannot hold a reason: mark the block with `jscpd:ignore-start` and the reason after it. A `jscpd:ignore-start` added with nothing after it fails.
+
 ## 0.37.2 (2026-11-12)
 
 - `devkit-tokens`, `devkit-css-vars` and `devkit-test-assertions` list files with `walkFiles` from `./node` instead of each keeping its own recursive walk. The files they scan and what they report are unchanged.

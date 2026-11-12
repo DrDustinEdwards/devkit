@@ -4,10 +4,15 @@
 // under a new name is caught too), and a static count of test files and test cases, each compared with the repository's
 // own baseline. The baseline is the count exactly: one above it fails the run (exit 1, an ::error:: line per count), and so
 // does one below it, until the baseline is lowered in the same change, so the room a removal leaves can never let a new
-// copy back in (the ratchet of ESLint's bulk suppressions and Betterer's ci mode). On a pull request (`--lines-from`) a
-// baseline raised for Knip, jscpd or the shared copies fails too, unless the change also moves `tools` to another version:
-// a copy or unused export is removed, never accepted by raising the number, and a real exception goes in knip.json's or
-// .jscpd.json's ignore list, where the reviewer reads why. Adding a test is a raise: `--write-baseline` in the same change,
+// copy back in (the ratchet of ESLint's bulk suppressions and Betterer's ci mode). Against the branch the change goes into
+// (`--lines-from` on a pull request; locally the first of origin/HEAD, origin/main, origin/master) a baseline raised for
+// Knip, jscpd or the shared copies fails too, a count new to the baseline raised from 0, and `--write-baseline` refuses
+// to record one: a copy or unused export is removed, never accepted by raising the number. Only a change that moves what
+// is measured and no code may raise one (the config, a lockfile, the workflows, and in package.json only dependency
+// versions or a new shared package: a tool, devkit or shared package bump alone). A real exception goes in knip.json's
+// ignore list with a comment saying why, or behind `jscpd:ignore-start` and its reason in the source; an ignore entry
+// added with no reason fails, and so does any added to .jscpd.json or the config's jscpd --ignore, which are strict JSON
+// and cannot hold one. Adding a test is a raise: `--write-baseline` in the same change,
 // so the diff shows it. The share of source lines that are comments is recorded too, and a rise of more than `tolerance`
 // points (with more comment lines than the baseline) is a warning, or an error with `"fail": true`. A tool that cannot run
 // fails the run too (an ::error:: naming its error): a count nobody measured is not a pass, and neither is a baseline entry
@@ -16,7 +21,7 @@
 //   npx devkit-no-bloat                      check against .no-bloat.json (no file: one knip run, jscpd on its own config)
 //   npx devkit-no-bloat --config <file>      another config
 //   npx devkit-no-bloat --write-baseline     measure and record the counts as the config's baseline
-//   npx devkit-no-bloat --lines-from <rev>   a pull request against <rev>: refuse a raised baseline (above), and report the
+//   npx devkit-no-bloat --lines-from <rev>   a pull request against <rev>: the base for the raise check (above), and report the
 //                                            lines added and removed since the merge base, as code, tests, comments, docs
 //                                            and other (pr.yml and no-bloat.yml pass it on a pull request)
 //
@@ -61,7 +66,7 @@ import { pathToFileURL } from "node:url";
 
 import { escapeAnnotation } from "./annotate.mjs";
 import { packageCopies } from "./copies.mjs";
-import { PACKAGES } from "./shared.mjs";
+import { PACKAGES, blankComments } from "./shared.mjs";
 export const DEFAULT_TOOLS = { knip: "knip@6.45.1", jscpd: "jscpd@4.3.0" };
 const TESTS = ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const SOURCE = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"];
@@ -465,8 +470,18 @@ export function compare(baseline, counts, config = {}) {
   }
 
   if (counts.tests) {
-    gate("tests", "files", "test files", "A new test file needs a reviewed raise of the baseline.");
-    gate("tests", "cases", "test cases", "A new test needs a reviewed raise of the baseline.");
+    gate(
+      "tests",
+      "files",
+      "test files",
+      "A new test file is recorded with `npx devkit-no-bloat --write-baseline` in the same change.",
+    );
+    gate(
+      "tests",
+      "cases",
+      "test cases",
+      "A new test is recorded with `npx devkit-no-bloat --write-baseline` in the same change.",
+    );
   }
 
   if (counts.comments) {
@@ -747,9 +762,16 @@ function installedPackages(/** @type {string} */ root) {
   return { root, packages, missing };
 }
 
+/** The default branch a local run is checked against when `--lines-from` is not given, the first that resolves. */
+const UPSTREAMS = ["origin/HEAD", "origin/main", "origin/master"];
+
+/** Where a reason for an exception can be written: Knip's config reads comments (these names, or a run's --config); jscpd's .jscpd.json is strict JSON. */
+const KNIP_CONFIGS = ["knip.json", "knip.jsonc", ".knip.json", ".knip.jsonc"];
+const JSCPD_CONFIG = ".jscpd.json";
+
 /**
- * The config at the merge base of `from` and HEAD (null when the file did not exist there), and whether the change moves a
- * shared package's pin in the root package.json.
+ * The change against the merge base of `from` with the working tree (so a local run sees what is not committed yet): the
+ * config there (null when the file did not exist), the files it changes, and each file at the base and now.
  */
 function atBase(
   /** @type {string} */ root,
@@ -757,59 +779,240 @@ function atBase(
   /** @type {string} */ from,
 ) {
   const git = (/** @type {string[]} */ args) =>
-    execFileSync("git", args, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    execFileSync("git", ["-c", "core.quotePath=false", ...args], {
+      cwd: root,
+      encoding: "utf8",
+      maxBuffer: BUFFER,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
   const base = git(["merge-base", from, "HEAD"]).trim();
-  const read = (/** @type {string} */ path) =>
+  const before = (/** @type {string} */ path) =>
     git(["ls-tree", "--name-only", base, "--", path]).trim()
-      ? JSON.parse(git(["show", `${base}:${path}`]))
+      ? git(["show", `${base}:${path}`])
       : null;
-  const pins = (/** @type {any} */ m) =>
-    JSON.stringify(
-      PACKAGES.map((p) => m?.dependencies?.[p.name] ?? m?.devDependencies?.[p.name] ?? null),
-    );
-  const manifest = existsSync(join(root, "package.json"))
-    ? JSON.parse(readFileSync(join(root, "package.json"), "utf8"))
-    : null;
+  const now = (/** @type {string} */ path) =>
+    existsSync(join(root, path)) ? readFileSync(join(root, path), "utf8") : null;
+  const untracked = git(["ls-files", "--others", "--exclude-standard", "-z"])
+    .split("\0")
+    .filter(Boolean);
+  const configPath = posix.normalize(relative(root, file).split(sep).join("/"));
+  const old = before(configPath);
   return {
-    config: /** @type {Config | null} */ (
-      read(posix.normalize(relative(root, file).split(sep).join("/")))
-    ),
-    bumped: pins(read("package.json")) !== pins(manifest),
+    config: /** @type {Config | null} */ (old === null ? null : JSON.parse(old)),
+    configPath,
+    changed: [
+      ...git(["diff", "--name-only", "-z", base]).split("\0").filter(Boolean),
+      ...untracked,
+    ],
+    // Every line the change adds, as `git diff -U0` prints it, untracked files whole.
+    added: [
+      ...git(["diff", "-U0", "--no-color", "--no-ext-diff", base])
+        .split("\n")
+        .filter((l) => l.startsWith("+") && !l.startsWith("+++"))
+        .map((l) => l.slice(1)),
+      ...untracked.flatMap((p) =>
+        lstatSync(join(root, p)).isFile() ? (now(p) ?? "").split("\n") : [],
+      ),
+    ],
+    before,
+    now,
   };
+}
+
+/** The base a run checks the baseline against: `--lines-from`, else (outside Actions) the default branch, else none. */
+function baseRef(/** @type {string} */ root, /** @type {string | undefined} */ from) {
+  if (from) return from;
+  // In Actions a run without --lines-from is the default branch itself, or a merge queue whose pull request ran it.
+  if (process.env.GITHUB_ACTIONS === "true") return null;
+  for (const ref of UPSTREAMS)
+    try {
+      execFileSync("git", ["rev-parse", "--verify", "--quiet", `${ref}^{commit}`], {
+        cwd: root,
+        stdio: "ignore",
+      });
+      return ref;
+    } catch {}
+  throw new Error(
+    `none of ${UPSTREAMS.join(", ")} resolves, so a raised baseline cannot be told from the count. Pass --lines-from <rev> (the branch the change goes into).`,
+  );
+}
+
+/**
+ * Whether a change only moves what is measured, never the code measured: it touches nothing but the config, a lockfile,
+ * the workflows, and in package.json only dependency versions or a new shared package. Such a change may raise a
+ * baseline, since a new tool, devkit or shared release counts what the repository already had. Pure.
+ * @param {string[]} changed @param {string} configPath
+ * @param {string | null} manifestBefore package.json at the base @param {string | null} manifestNow package.json now
+ */
+export function measurementOnly(changed, configPath, manifestBefore, manifestNow) {
+  return changed.every(
+    (p) =>
+      p === configPath ||
+      /^(?:package-lock\.json|npm-shrinkwrap\.json|pnpm-lock\.yaml)$/.test(p) ||
+      /^\.github\/workflows\/[^/]+\.ya?ml$/.test(p) ||
+      (p === "package.json" && pinsOnly(manifestBefore, manifestNow)),
+  );
+}
+
+const DEPENDENCY_FIELDS = [
+  "dependencies",
+  "devDependencies",
+  "optionalDependencies",
+  "peerDependencies",
+];
+
+/** package.json changed only in dependency versions, or by adding a shared package (an added library can be unused). */
+function pinsOnly(/** @type {string | null} */ before, /** @type {string | null} */ now) {
+  if (before === null || now === null) return false;
+  const [a, b] = [JSON.parse(before), JSON.parse(now)];
+  const rest = (/** @type {Record<string, unknown>} */ m) =>
+    JSON.stringify(
+      Object.fromEntries(Object.entries(m).filter(([k]) => !DEPENDENCY_FIELDS.includes(k))),
+    );
+  if (rest(a) !== rest(b)) return false;
+  const shared = new Set(PACKAGES.map((p) => p.name));
+  return DEPENDENCY_FIELDS.every((field) => {
+    const [was, is] = [a[field] ?? {}, b[field] ?? {}];
+    return (
+      Object.keys(was).every((name) => name in is) &&
+      Object.keys(is).every((name) => name in was || shared.has(name))
+    );
+  });
 }
 
 /**
  * Each Knip, jscpd or shared-copies count the change raised in the baseline: a copy or unused code accepted by moving the
- * number instead of removing it. A change that moves `tools` to another version may raise them, since the new version
- * counts differently, and one that bumps a shared package may raise the shared copies, since the new release can ship
- * what the repository already had (a copy older than the change, each one still a warning). Tests may rise: a new test is
- * how they do. Pure.
+ * number instead of removing it. A count the base did not have is raised from 0, and so is every count when the base had
+ * no baseline. Only a change that moves what is measured and no code (`measurementOnly`) may raise one. Tests may rise:
+ * a new test is how they do. Pure.
  * @param {Config} config @param {Config | null} base the config at the pull request's base
- * @param {boolean} [bumped] whether the change moves a shared package's pin
+ * @param {boolean} [measuring] whether the change is `measurementOnly`
  */
-export function raised(config, base, bumped = false) {
-  if (!base?.baseline || JSON.stringify(config.tools ?? {}) !== JSON.stringify(base.tools ?? {}))
-    return [];
-  const now = config.baseline ?? {};
-  const was = base.baseline;
+export function raised(config, base, measuring = false) {
+  if (measuring) return [];
+  const was = base?.baseline ?? {};
   /** @type {string[]} */
   const out = [];
-  for (const [tool, counts] of Object.entries(now)) {
+  for (const [tool, counts] of Object.entries(config.baseline ?? {})) {
     if (
       ["measured_at", "tests", "comments"].includes(tool) ||
       !counts ||
       typeof counts !== "object"
     )
       continue;
-    if (tool === "shared copies" && bumped) continue;
-    const before = /** @type {Record<string, number> | undefined} */ (was[tool]);
-    if (!before) continue;
+    const before = /** @type {Record<string, number>} */ (was[tool] ?? {});
     for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
       if (key !== "percentage" && typeof n === "number" && n > (before[key] ?? 0))
         out.push(
-          `${tool}: this change raises the baseline's ${key} from ${before[key] ?? 0} to ${n}. A raise lets the new copy or unused code in: remove it instead, and put a real exception in knip.json's or .jscpd.json's ignore list with its reason.`,
+          `${tool}: this change raises the baseline's ${key} from ${before[key] ?? 0} to ${n}. A raise lets the new copy or unused code in: remove it instead, and put a real exception in knip.json's ignore list with a comment saying why. Only a change that moves no code (a tool, devkit or shared package bump alone) may raise it.`,
         );
   }
+  return out;
+}
+
+/** Every string in an ignore list (a key starting "ignore", at any depth), and the keys of an ignore map such as ignoreIssues. */
+function ignoreEntries(/** @type {unknown} */ node, inIgnore = false) {
+  /** @type {string[]} */
+  const out = [];
+  if (typeof node === "string") {
+    if (inIgnore) out.push(node);
+  } else if (Array.isArray(node)) {
+    for (const v of node) out.push(...ignoreEntries(v, inIgnore));
+  } else if (node && typeof node === "object")
+    for (const [k, v] of Object.entries(node)) {
+      const ignoring = inIgnore || /^ignore/i.test(k);
+      if (ignoring && inIgnore === false && v && typeof v === "object" && !Array.isArray(v))
+        out.push(...Object.keys(v));
+      out.push(...ignoreEntries(v, ignoring));
+    }
+  return out;
+}
+
+/** JSON with comments and trailing commas, as Knip reads its config. */
+function parseJsonc(/** @type {string} */ text) {
+  return JSON.parse(blankComments(text).replace(/,(\s*[}\]])/g, "$1"));
+}
+
+/** The values of jscpd's `--ignore` and `--ignore-pattern` in a config's jscpd args. */
+function jscpdIgnores(/** @type {Config | null} */ config) {
+  const args = config?.jscpd && typeof config.jscpd === "object" ? (config.jscpd.args ?? []) : [];
+  return args.filter((_, i) => /^(?:--ignore|--ignore-pattern|-i)$/.test(args[i - 1] ?? ""));
+}
+
+/**
+ * Whether the entry at `line` of a Knip config carries a reason: a comment on its line, or directly above it or above the
+ * list it is in (the entries between are the list's own).
+ */
+function reasoned(/** @type {string[]} */ lines, /** @type {number} */ line) {
+  const kinds = scan(lines.join("\n")).kinds;
+  const commentOn = (/** @type {number} */ i) => blankComments(lines[i]) !== lines[i];
+  if (commentOn(line)) return true;
+  let i = line;
+  // Up through the list's other entries to its key.
+  if (!/"\s*:/.test(lines[i])) {
+    i--;
+    while (i >= 0 && kinds[i] !== "comment" && /^\s*"/.test(lines[i]) && !/"\s*:/.test(lines[i]))
+      i--;
+    if (i >= 0 && kinds[i] === "comment") return true;
+    if (i < 0) return false;
+    if (commentOn(i)) return true;
+  }
+  return i > 0 && kinds[i - 1] === "comment";
+}
+
+/**
+ * The exceptions a change adds with no reason: an entry new to a Knip config's ignore lists without a comment saying why,
+ * one new to .jscpd.json or to the config's jscpd `--ignore` (strict JSON, so no reason can be written there), and a
+ * `jscpd:ignore-start` marker with nothing after it. A reason is what the reviewer reads; an exception without one is a
+ * bolt-on let in quietly. Pure.
+ * @param {{ before: (path: string) => string | null, now: (path: string) => string | null, added: string[] }} change
+ * @param {Config} config @param {Config | null} base
+ */
+export function unreasoned(change, config, base) {
+  /** @type {string[]} */
+  const out = [];
+  const fresh = (/** @type {string[]} */ was, /** @type {string[]} */ is) =>
+    [...new Set(is)].filter((e) => !was.includes(e));
+  // The default names, and any a knip run in the config names with --config.
+  const knipArgs = (config.knip ?? []).flatMap((r) => r.args ?? []);
+  const named = knipArgs.filter((_, i) => /^(?:--config|-c)$/.test(knipArgs[i - 1] ?? ""));
+  for (const path of new Set([...KNIP_CONFIGS, ...named])) {
+    const now = change.now(path);
+    if (now === null) continue;
+    const was = change.before(path);
+    const lines = now.split("\n");
+    for (const entry of fresh(
+      was === null ? [] : ignoreEntries(parseJsonc(was)),
+      ignoreEntries(parseJsonc(now)),
+    )) {
+      const quoted = JSON.stringify(entry);
+      const at = lines.flatMap((l, i) => (l.includes(quoted) ? [i] : []));
+      if (!at.some((i) => reasoned(lines, i)))
+        out.push(
+          `${path}: the ignore entry ${quoted} is new and says nothing about why. Remove what it hides, or put a comment on its line or above it giving the reason.`,
+        );
+    }
+  }
+  const jscpdNow = change.now(JSCPD_CONFIG);
+  if (jscpdNow !== null) {
+    const jscpdWas = change.before(JSCPD_CONFIG);
+    for (const entry of fresh(
+      jscpdWas === null ? [] : ignoreEntries(JSON.parse(jscpdWas)),
+      ignoreEntries(JSON.parse(jscpdNow)),
+    ))
+      out.push(
+        `${JSCPD_CONFIG}: the ignore entry ${JSON.stringify(entry)} is new, and the file is strict JSON, so it cannot say why. Remove the copy it hides, or mark the block in its source with \`jscpd:ignore-start\` followed by the reason.`,
+      );
+  }
+  for (const entry of fresh(jscpdIgnores(base), jscpdIgnores(config)))
+    out.push(
+      `the config's jscpd args gain --ignore ${JSON.stringify(entry)}, which cannot say why. Remove the copy it hides, or mark the block in its source with \`jscpd:ignore-start\` followed by the reason.`,
+    );
+  for (const line of change.added)
+    if (/jscpd:ignore-start(?:\s*(?:\*\/|-->)?\s*)$/.test(line))
+      out.push(
+        `a new \`jscpd:ignore-start\` gives no reason (${line.trim()}). Write why after the marker on the same line, or remove the copy.`,
+      );
   return out;
 }
 
@@ -848,7 +1051,37 @@ function main() {
     installedPackages(root),
   );
 
+  // A raised baseline or an exception with no reason, against the branch the change goes into: on a pull request
+  // (--lines-from) and in every local run, so neither the check nor --write-baseline can accept one quietly.
+  /** @type {string[]} */
+  const refused = [];
+  let ref = from;
+  try {
+    ref = baseRef(root, from) ?? undefined;
+    if (ref) {
+      const base = atBase(root, file, ref);
+      const measuring = measurementOnly(
+        base.changed,
+        base.configPath,
+        base.before("package.json"),
+        base.now("package.json"),
+      );
+      const next = write ? { ...config, baseline: { ...measured.counts } } : config;
+      refused.push(
+        ...raised(next, base.config, measuring),
+        ...unreasoned(base, config, base.config),
+      );
+    }
+  } catch (error) {
+    refused.push(`The baseline at ${ref ?? "the base"} could not be read: ${messageOf(error)}`);
+  }
+
   if (write) {
+    if (refused.length) {
+      for (const r of refused) console.error(`devkit-no-bloat: ${r}`);
+      console.error("devkit-no-bloat: the baseline was not written.");
+      process.exit(1);
+    }
     if (measured.warnings.length) {
       for (const w of measured.warnings) console.error(`devkit-no-bloat: ${w}`);
       console.error("devkit-no-bloat: the baseline was not written, because a tool could not run.");
@@ -867,7 +1100,7 @@ function main() {
   );
   if (errors.length) {
     errors.push(
-      "Remove what was added: change the code that already does it, or import the shared one, and delete the copy (SHARED.md). A real exception goes in knip.json's or .jscpd.json's ignore list with its reason. Only a new test raises the baseline (`npx devkit-no-bloat --write-baseline`).",
+      "Remove what was added: change the code that already does it, or import the shared one, and delete the copy (SHARED.md). A real exception goes in knip.json's ignore list with a comment saying why, or behind `jscpd:ignore-start` and its reason in the source.",
     );
   }
   // The room a removal leaves is where the next copy would go: a count below its baseline fails until it is lowered.
@@ -875,14 +1108,7 @@ function main() {
     errors.push(
       `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config in this change.`,
     );
-  if (from) {
-    try {
-      const base = atBase(root, file, from);
-      errors.push(...raised(config, base.config, base.bumped));
-    } catch (error) {
-      errors.push(`The baseline at ${from} could not be read: ${messageOf(error)}`);
-    }
-  }
+  errors.push(...refused);
   errors.unshift(...measured.warnings, ...stale);
   // No baseline is a ratchet that passes everything: a missing config, or one whose baseline counts nothing, fails.
   const counted = Object.keys(config.baseline ?? {}).filter((key) => key !== "measured_at");
