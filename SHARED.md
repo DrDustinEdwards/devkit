@@ -87,7 +87,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.144.1 (DrDustinEdwards/site-runtime)
+## site-runtime 0.145.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -171,6 +171,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./sign-in-form`: `isDisposableEmail`, `refuseDisposable`, `safeNextPath`, `requestSignInLink`, `signInWithCode`, `SIGN_IN_INTENT`, `signInFormAction`, `startSocialSignIn`, `authHandler`, `accountOptions`, `ACCOUNT_INTENTS`, `accountFormAction`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `emailLinkWords`, `passkeyErrorWords`, `securityHistoryWords`, `signInErrorWords`
 - `./sign-in-words`: `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `DISPOSABLE_EMAIL`, `SIGN_IN_WORDS`, `ACCOUNT_WORDS`, `signInErrorWords`, `passkeyErrorWords`, `emailLinkWords`, `securityHistoryWords`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`
 - `./d1`: `inList`, `notInList`, `D1_MAX_BOUND_PARAMS`, `IN_LIST_CHUNK`, `chunked`, `inChunks`, `rowsPerInsert`, `escapeLike`, `likeContains`, `likeStartsWith`, `encodeCursor`, `decodeCursor`, `olderThan`
+- `./drizzle`: `cronRuns`, `page404Daily`, `alertsSent`, `authEvents`
 - `./csv`: `CSV_CONTENT_TYPE`, `guardFormula`, `csvCell`, `csvRow`, `toCsv`, `recordsCsv`, `parseCsv`, `csvResponse`
 - `./csv-client`: `downloadCsv`
 - `./worker`: `SECURITY_TXT_PATH`, `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`, `PREVIEW_TOKEN`, `tokenPattern`
@@ -210,7 +211,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`, `createSiteBackup`
 - bins: `d1-dump`
 
-## devkit 0.42.0 (DrDustinEdwards/devkit)
+## devkit 0.42.1 (DrDustinEdwards/devkit)
 
 - `./node`: `assertFloor`, `createTally`, `walkFiles`, `readDevVar`, `isMain`
 - `./node/syntax`: `parseSource`, `propertyReads`, `interfaceMembers`, `findAction`, `intentBranches`, `objectConst`, `stringArrayConst`, `propertyValue`, `isLiteralString`, `bindingUses`, `ts`
