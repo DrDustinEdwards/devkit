@@ -920,8 +920,10 @@ export function classify(change) {
   const without = (/** @type {any} */ o, /** @type {string[]} */ keys) =>
     JSON.stringify(Object.fromEntries(Object.entries(o ?? {}).filter(([k]) => !keys.includes(k))));
   for (const p of changed) {
-    if (LOCKFILES.test(p)) continue;
-    if (DEFINITIONS.test(p)) {
+    // A workspace has a manifest and a lockfile per package, so each is read by its name in any directory.
+    const name = posix.basename(p);
+    if (LOCKFILES.test(name)) continue;
+    if (DEFINITIONS.test(name)) {
       definition.push(p);
       continue;
     }
@@ -933,7 +935,7 @@ export function classify(change) {
         definition.push(`${p} (outside baseline and tools)`);
       continue;
     }
-    if (p === "package.json") {
+    if (name === "package.json") {
       const [a, b] = [json(change.before(p)), json(change.now(p))];
       if (!a || !b) {
         code = true;

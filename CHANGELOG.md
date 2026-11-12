@@ -3,6 +3,7 @@
 ## 0.40.1 (2026-11-12)
 
 - `devkit-no-bloat`: Knip's report is read from its last JSON line, so a plugin warning printed on stdout before it (Astro's `[WARN] Missing pages directory`) no longer stops the run with "knip printed no report this reads".
+- `devkit-no-bloat`: a workspace package's `package.json` and lockfile (`mcp/package.json`, `apps/web/package-lock.json`) count as a version bump the way the root's do, and a Knip config or `.jscpd.json` in a package directory as a change of measure. Before, a pin bump across a workspace was read as code, so its Knip re-key was refused as a raise.
 
 ## 0.40.0 (2026-11-12)
 
