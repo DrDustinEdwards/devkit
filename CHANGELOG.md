@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.41.0 (2026-11-12)
+
+Closes the ways around the no-bloat ratchet that the 0.40.0 verifier found (capsid handoff/no-bloat-gaps-verify-0.40.md, gaps A to G). **Breaking**: jscpd's baseline gains `unread`, so each repository's bump PR runs `npx devkit-no-bloat --write-baseline` as before; a Knip config in code (`knip.ts`, `knip.config.js`) can no longer change (write it as `knip.jsonc`); and a devkit pin behind a minor out two days now fails `devkit-shared`.
+
+- A: a change that moves only the devkit pins of a workflow (`pr.yml@<sha> # vX.Y.Z`, the rollout's and Renovate's bump) is no code and no change of measure, so it passes alone. A workflow is never code; any other edit to one that runs the check is a change of measure, refused beside code and unable to lower a count alone.
+- B: what would hide the next change's code is refused even when it hides nothing yet. Every line a change adds to a Knip config needs its own reason, on the line or in a new comment block directly above it, so a rule turned off, a narrower `project` or an entry appended under an old comment fails. jscpd may not be narrowed (larger minimums, smaller maximums, fewer formats, a mode other than strict, a changed pattern, extension map or config path, `gitignore`, `skipLocal` or `noSymlinks` on). jscpd's new `unread` count, gated, is the source files it skips beside files it reads, so a path narrowed to today's file list catches the next file. A knip run's args in `.no-bloat.json` cannot change.
+- C: `@beta` and `@alias` need a reason after them, like `@public`: Knip skips the exports all three tag.
+- D: `tools` must be `knip@x.y.z` and `jscpd@x.y.z`, never older than the base's. An installed knip or jscpd must resolve from the npm registry in `package-lock.json`, or it cannot run. devkit must be pinned to `github:DrDustinEdwards/devkit#vX.Y.Z` in every package.json, with no `overrides` or `resolutions` naming it. `--verify-install <dir>`, which the no-bloat action now runs from the workflow's own devkit before the caller's bin, fails unless the installed devkit is an exact x.y.z no older than the workflow's and every file is byte for byte the file at that release's tag (a fork, a `file:` path, a lockfile resolving elsewhere, an install script rewriting the bin). It replaces the action's version guard, which passed `0.40.0+x` and `0.40`.
+- E: a tracked file a `.gitignore` hides from Knip fails, when the file is in the change or the line hiding it is new.
+- F: `devkit-shared` fails a devkit pin, in package.json or a workflow, behind a minor out two days (`FRESH`), so a pin left behind or moved back stops being a warning. A pull request that rolls both pins back to 0.40.x or older still runs only that old code: closing that needs base-side enforcement, which a personal account's rulesets cannot require.
+- G: a reason must be words (`isReason`): three or more, fifteen letters in all, not a placeholder. `// x` and `jscpd:ignore-start x` fail. A marker or tag counts only in a comment, never in a string or regular expression that mentions it.
+
 ## 0.40.1 (2026-11-12)
 
 - `devkit-no-bloat`: Knip's report is read from its last JSON line, so a plugin warning printed on stdout before it (Astro's `[WARN] Missing pages directory`) no longer stops the run with "knip printed no report this reads".

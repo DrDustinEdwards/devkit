@@ -42,14 +42,8 @@ runs:
           echo "::error::@dustinedwards/devkit is not installed. Add it to devDependencies at a tag (see the devkit README)."
           exit 1
         fi
-        # The bin is the caller's own install, so a change could pin an older devkit whose check lets more in. It may
-        # not be older than the devkit this workflow runs from.
-        node -e '
-          const [mine, ours] = process.argv.slice(1).map((f) => require(f).version.split(".").map(Number));
-          const behind = mine[0] - ours[0] || mine[1] - ours[1] || mine[2] - ours[2];
-          if (behind < 0) {
-            console.log(`::error::@dustinedwards/devkit ${mine.join(".")} is installed, older than the ${ours.join(".")} this workflow runs. Move devkit forward, never back.`);
-            process.exit(1);
-          }
-        ' "$PWD/node_modules/@dustinedwards/devkit/package.json" "$GITHUB_ACTION_PATH/../../../package.json"
+        # The bin is the caller's own install, so a change could install an older devkit, a fork or a rewritten bin whose
+        # check lets more in. The workflow's own devkit checks it first: an x.y.z no older than its own, every file the
+        # file at that release's tag.
+        node "$GITHUB_ACTION_PATH/../../../bin/no-bloat.mjs" --verify-install "$PWD/node_modules/@dustinedwards/devkit"
         node "$bin" --config "$CONFIG" ${LINES_FROM:+--lines-from "$LINES_FROM"}
