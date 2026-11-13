@@ -13,6 +13,8 @@ on:
 
 permissions: {}
 
+# One release run at a time. GitHub keeps one waiting run and cancels an older pending one when a newer arrives; release.yml
+# releases every untagged bump, so a canceled run's version is tagged by the next.
 concurrency:
   group: release
   cancel-in-progress: false

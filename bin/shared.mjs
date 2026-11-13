@@ -5,7 +5,8 @@
 //              rather than a release tag (a pin behind the newest release is a warning: Renovate opens that bump, and
 //              failing on it turned every repository red each time a package released), and a site-runtime pin behind
 //              the newest minor released FRESH_DAYS ago or more (its header registry is what the live check grades, so
-//              a site that drifts further builds one set of headers and is graded against another);
+//              a site that drifts further builds one set of headers and is graded against another), and a devkit pin
+//              behind a minor out two days (its no-bloat check runs from the caller's pin, so an old pin is an old check);
 //   copies     a local definition with the name of something a shared package exports (or a known alias), or text only a
 //              shared builder should write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation
 //              rules, a Cloudflare Images resize, an island loader, JSON-LD, a hex or base64url encoder, a pre-paint theme
@@ -23,7 +24,8 @@
 //              workflow-audit and dependencies everywhere, worker-size and worker-deploy for an app with a wrangler
 //              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package,
 //              conformance where an MCP server is (a source file importing site-runtime ./mcp-server or ./mcp-login),
-//              scorecard in a public repository;
+//              scorecard in a public repository, and devkit-css-vars (pr.yml's css-vars, with a .css-vars.json)
+//              in a repository with stylesheets;
 //   fakes      a test fake of its own where devkit has one: a GitHub API fake, an Access key pair and key set, a fetch
 //              that refuses every URL, a list of DELETE FROMs (./github, ./access, ./network, ./d1);
 //   ai         a model call or AI prompt that skips the shared pieces (area 11): Anthropic called outside site-runtime
@@ -78,18 +80,11 @@
 // file, "waive" for a feature or workflow.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import {
-  appendFileSync,
-  existsSync,
-  readFileSync,
-  readdirSync,
-  statSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { escapeAnnotation, escapeProperty } from "./annotate.mjs";
+import { appendSummary, escapeAnnotation, escapeProperty } from "./annotate.mjs";
+import { isMain } from "../node/index.mjs";
 /** The shared packages: npm name, repository, and what a session should know them as. */
 export const PACKAGES = [
   { name: "@drdustinedwards/site-helpers", repo: "prelum", label: "Prelum" },
@@ -113,8 +108,9 @@ export const FEATURES = {
   },
   aiTxt: {
     kinds: SITE,
-    find: /\baiTxt(Response)?\b/,
-    use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt)",
+    // standardFiles serves ai.txt when it is given `ai`.
+    find: /\baiTxt(Response)?\b|\bstandardFiles\(\{[^]*?\bai:/,
+    use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt), or ./files standardFiles with `ai`",
   },
   tdm: {
     kinds: SITE,
@@ -139,13 +135,15 @@ export const FEATURES = {
   schema: { kinds: SITE, find: /site-helpers\/schema["']/, use: "Prelum ./schema (JSON-LD)" },
   indexnow: {
     kinds: SITE,
-    find: /site-helpers\/indexnow["']|prelum-indexnow/,
+    // site-api's standardSiteApi sends IndexNow when it is given `indexNow`.
+    find: /site-helpers\/indexnow["']|prelum-indexnow|\bstandardSiteApi\(\{[^]*?\bindexNow:/,
     use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)",
   },
   securityTxt: {
     kinds: SITE,
-    find: /site-runtime\/security-txt["']/,
-    use: "site-runtime ./security-txt (/.well-known/security.txt)",
+    // site-runtime ./worker's gateway answers /.well-known/security.txt on every site.
+    find: /site-runtime\/(security-txt|worker)["']/,
+    use: "site-runtime ./security-txt (/.well-known/security.txt), or ./worker's gateway",
   },
   // A registry entry (./sites) counts for both: staticSite({ site }) and site-runtime-headers build a static site's set
   // and page policy from it with buildSecurityHeaders and buildContentSecurityPolicy.
@@ -161,8 +159,8 @@ export const FEATURES = {
   },
   cspReport: {
     kinds: PUBLIC_OR_PRIVATE,
-    find: /site-runtime\/(csp-report|static-site)["']/,
-    use: "site-runtime ./csp-report receiveCspReport (./static-site staticSite receives them for a static site)",
+    find: /site-runtime\/(csp-report|static-site|worker)["']/,
+    use: "site-runtime ./csp-report receiveCspReport (./worker's gateway and ./static-site staticSite receive them)",
   },
   health: {
     kinds: ["site", "private"],
@@ -593,9 +591,11 @@ export function lsRemoteTags(/** @type {string} */ repo) {
 /**
  * The packages a pin may not stay behind for long, and the days a new minor release gets before a pin behind it fails.
  * site-runtime releases many minors a day, so the window is time, not a count of minors: a pin fails once it is behind
- * a minor that has been out FRESH_DAYS days, and a minor younger than that is the usual warning.
+ * a minor that has been out FRESH_DAYS days, and a minor younger than that is the usual warning. devkit is here because
+ * its no-bloat check runs from the caller's own pins: a pin left behind (or moved back) runs an older check that lets
+ * more in, so it fails once a newer minor has been out two days.
  */
-export const FRESH = /** @type {Record<string, number>} */ ({ "site-runtime": 3 });
+export const FRESH = /** @type {Record<string, number>} */ ({ "site-runtime": 3, devkit: 2 });
 const DAY_MS = 86_400_000;
 
 /**
@@ -1413,7 +1413,7 @@ export function checkWorkflows(tree, config, repo = {}) {
     if (
       !why ||
       called.has(name) ||
-      runs.some((bin) => reaches(text, bin)) ||
+      runs.some((bin) => reaches(name === "no-bloat" ? gating(text) : text, bin)) ||
       excused(config, "waive", `workflow:${name}`)
     )
       continue;
@@ -1426,6 +1426,23 @@ export function checkWorkflows(tree, config, repo = {}) {
       failsFrom,
       message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .shared.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
     });
+  }
+  // A stylesheet's var(--x) that nothing declares resolves to nothing, and only devkit-css-vars notices (second shared-code
+  // audit, 2026-11-11: Foxing's --fx-shadow-md, 14 uses). pr.yml runs it when the repository has a .css-vars.json.
+  const sheets = tree.files.some((f) => f.endsWith(".css") && !NOT_SOURCE.test(f));
+  if (sheets && !excused(config, "waive", "workflow:css-vars")) {
+    const runsIt =
+      covered.has("css-vars") ||
+      reaches(text, "devkit-css-vars") ||
+      (repo.self === "devkit" && reaches(text, "bin/css-vars.mjs"));
+    const configured = tree.files.includes(".css-vars.json");
+    if (!configured || !runsIt)
+      found.push({
+        check: "workflows",
+        file: configured ? ".github/workflows" : ".css-vars.json",
+        failsFrom: CSS_VARS_FAILS_FROM,
+        message: `a repository with stylesheets runs devkit-css-vars: ${configured ? "turn on pr.yml's css-vars input (it is off here, or no workflow calls pr.yml)" : 'add .css-vars.json ({ "dirs": [...], "declared_in": ["node_modules/capsomer"] }, see bin/css-vars.mjs), which pr.yml reads'}, or say why in .shared.json "waive" "workflow:css-vars"`,
+      });
   }
   // A separate caller that still runs on pull requests beside pr.yml runs the same check twice, a runner each time.
   for (const { file, text: body } of workflowFiles) {
@@ -1448,8 +1465,29 @@ export function checkWorkflows(tree, config, repo = {}) {
   return found;
 }
 
+/**
+ * A workflow's text without the steps that cannot fail their job (`continue-on-error: true`): no-bloat run that way is a
+ * report, and a report lets every new copy merge (germomics and Enarratio ran it so before 0.37.0).
+ */
+export function gating(/** @type {string} */ text) {
+  return text
+    .split(/\n(?=\s*-\s+(?:name|run|uses|id|if):)/)
+    .filter((step) => !/^\s*continue-on-error:\s*["']?true["']?\s*$/m.test(step))
+    .join("\n");
+}
+
 /** The checks pr.yml runs in its one job; a call of it counts as each one its inputs leave on. */
-const PR_CHECKS = ["checks", "review", "dependencies", "workflow-audit", "no-bloat", "worker-size"];
+const PR_CHECKS = [
+  "checks",
+  "review",
+  "dependencies",
+  "workflow-audit",
+  "no-bloat",
+  "worker-size",
+  "css-vars",
+];
+/** The release from which a repository with stylesheets and no css-vars run fails; a warning before it. */
+const CSS_VARS_FAILS_FROM = "0.34.0";
 
 /** A workflow's `on:` block, or its whole text when it has none at the top level. @param {string} body */
 function onBlock(body) {
@@ -1459,7 +1497,7 @@ function onBlock(body) {
 
 /**
  * The checks the repository's calls of pr.yml cover, read from each call's `with:` inputs (a boolean input set to false
- * turns its check off; `node: false` turns off no-bloat and worker-size, which run from the install).
+ * turns its check off; `node: false` turns off no-bloat, worker-size and css-vars, which run from the install).
  * @param {{ file: string, text: string }[]} files @param {boolean} self devkit, which calls it by path
  * @returns {Set<string>}
  */
@@ -1476,7 +1514,7 @@ export function prCovers(files, self) {
     for (const name of PR_CHECKS) {
       const input = name === "checks" ? null : name;
       if (input && off(input)) continue;
-      if ((name === "no-bloat" || name === "worker-size") && off("node")) continue;
+      if (["no-bloat", "worker-size", "css-vars"].includes(name) && off("node")) continue;
       covered.add(name);
     }
   }
@@ -2355,8 +2393,7 @@ async function main(/** @type {string[]} */ argv) {
       ? `devkit-shared: ${errors.length} to fix (${counts}). What the packages export: npx devkit-shared list`
       : `devkit-shared: uses the shared code (${counts}).`,
   );
-  if (process.env.GITHUB_STEP_SUMMARY)
-    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Shared-code check\n\n${counts}\n`);
+  appendSummary(`### Shared-code check\n\n${counts}`);
   return errors.length ? 1 : 0;
 }
 
@@ -2372,5 +2409,4 @@ export async function cli(/** @type {string[]} */ argv) {
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
-  process.exitCode = await cli(process.argv.slice(2));
+if (isMain(import.meta.url)) process.exitCode = await cli(process.argv.slice(2));

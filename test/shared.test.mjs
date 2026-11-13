@@ -743,6 +743,15 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
     }),
   };
   assert.deepEqual(missing(ci), ["worker-deploy"]);
+  // PLANT: a no-bloat step that cannot fail its job is a report, and a report lets a new copy merge.
+  const report = {
+    ...ci,
+    ".github/workflows/ci.yml": ci[".github/workflows/ci.yml"].replace(
+      "      - run: npm run check\n",
+      "      - name: Bloat\n        continue-on-error: true\n        run: npm run check\n      - run: npm test\n",
+    ),
+  };
+  assert.deepEqual(missing(report), ["worker-deploy", "no-bloat"]);
   assert.deepEqual(
     missing(ci, { waive: { "workflow:worker-deploy": "Workers Builds deploys it" } }),
     [],
@@ -817,6 +826,33 @@ test("PLANT: a pr.yml call counts as each pull request check its inputs leave on
   assert.deepEqual(
     twice.map((f) => `${f.file} ${isWarning(f, "0.26.0")} ${isWarning(f, "0.27.0")}`),
     [".github/workflows/no-bloat.yml true false"],
+  );
+});
+
+test("PLANT: a repository with stylesheets needs a .css-vars.json and pr.yml's css-vars left on", () => {
+  const pr = (/** @type {string} */ inputs) =>
+    `on:\n  pull_request:\njobs:\n  checks:\n    uses: DrDustinEdwards/devkit/.github/workflows/pr.yml@${SHA_V2}\n    with:\n${inputs}`;
+  const css = (/** @type {Record<string, string>} */ files, config = {}) =>
+    checkWorkflows(tree({ "app/app.css": "a { color: red }", ...files }), {
+      apps: { ".": "site" },
+      ...config,
+    })
+      .filter((f) => f.message.includes("css-vars"))
+      .map((f) => `${f.file} ${isWarning(f, "0.33.0")} ${isWarning(f, "0.34.0")}`);
+  const on = { ".github/workflows/checks.yml": pr("      review: true\n") };
+  assert.deepEqual(css(on), [".css-vars.json true false"]);
+  assert.deepEqual(css({ ...on, ".css-vars.json": "{}" }), []);
+  assert.deepEqual(
+    css({ ".github/workflows/checks.yml": pr("      css-vars: false\n"), ".css-vars.json": "{}" }),
+    [".github/workflows true false"],
+  );
+  assert.deepEqual(css(on, { waive: { "workflow:css-vars": "no custom properties" } }), []);
+  // A stylesheet under a test fixture is no stylesheet of the repository's.
+  assert.deepEqual(
+    checkWorkflows(tree({ "test/fixtures/a.css": "" }), { apps: { ".": "site" } }).filter((f) =>
+      f.message.includes("css-vars"),
+    ),
+    [],
   );
 });
 

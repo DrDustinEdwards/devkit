@@ -10,7 +10,7 @@ name: pr
 #   4. OSV-Scanner in pull request mode: only a vulnerability the change adds fails (dependencies.yml).
 #   5. actionlint and zizmor, only when the change touches .github/ (workflow-audit.yml).
 #   6. The no-bloat ratchet (no-bloat.yml) and 7. the Worker bundle size, one Worker or several (worker-size.yml), from
-#      the caller's own install.
+#      the caller's own install, and the CSS custom-property gate (bin/css-vars.mjs) where a .css-vars.json is.
 #   8. The automatic reviewer (review.yml) runs in a SECOND job, beside this one. It is the only job that holds
 #      `id-token: write` and `checks: write`: the first job installs and builds the caller's code (dependency lifecycle
 #      scripts, a prepare command), and a step that runs such code can read the OIDC request variables of any job that
@@ -24,7 +24,7 @@ name: pr
 # copy the standalone workflows above run too, read from devkit at the commit the caller pinned (job.workflow_sha).
 #
 # INPUTS TURN OFF WHAT A REPOSITORY DOES NOT HAVE: `node: false` for one with nothing to install (no no-bloat, no Worker
-# size), `worker-size: false` for one with no Worker, `no-bloat: false` for a private one (it runs no-bloat weekly).
+# size, no css-vars), `worker-size: false` for one with no Worker, `no-bloat: false` for a private one (it runs no-bloat weekly).
 # devkit-shared reads those inputs: a call of this workflow counts as each check it leaves on.
 #
 # THE CHECK NAME. The job is named "Repo checks", so a caller whose job id is `checks` (examples/pr-caller.yml) reports
@@ -83,11 +83,6 @@ on:
         required: false
         type: string
         default: .no-bloat.json
-      no-bloat-warn-only:
-        description: Report only (devkit-no-bloat --warn-only).
-        required: false
-        type: boolean
-        default: false
       worker-size:
         description: The Worker bundle size budget. False for a repository with no Worker.
         required: false
@@ -113,6 +108,11 @@ on:
         required: false
         type: string
         default: ""
+      css-vars:
+        description: devkit-css-vars, a var(--x) nothing declares, when the repository has a .css-vars.json. It runs from the install (declared_in reads installed packages such as Capsomer).
+        required: false
+        type: boolean
+        default: true
       dependencies:
         description: OSV-Scanner in pull request mode.
         required: false
@@ -250,7 +250,19 @@ jobs:
         with:
           prepare: ${{ inputs.no-bloat-prepare }}
           config: ${{ inputs.no-bloat-config }}
-          warn-only: ${{ inputs.no-bloat-warn-only }}
+
+      # A pull request that turns no-bloat off (no-bloat: false, node: false) skips the check that would refuse it, so
+      # devkit's own bin compares the caller's inputs with the base's whenever the check does not run.
+      - name: No-bloat stays on
+        id: no-bloat-on
+        if: ${{ !cancelled() && steps.repo.outcome == 'success' && github.event_name == 'pull_request' && !(inputs.node && inputs.no-bloat) }}
+        working-directory: repo
+        env:
+          WORKFLOW_REF: ${{ github.workflow_ref }}
+        run: |
+          set -euo pipefail
+          ref=${WORKFLOW_REF%%@*}
+          node "$GITHUB_WORKSPACE/.devkit/bin/no-bloat.mjs" --inputs-from "$BASE_SHA" "${ref#*/*/}"
 
       - name: Worker size
         id: worker-size
@@ -261,6 +273,16 @@ jobs:
           working-directory: ${{ inputs.working-directory }}
           config: ${{ inputs.worker-size-config }}
           workers: ${{ inputs.workers }}
+
+      # devkit's own file at the caller's pin, so a repository need not bump its devkit devDependency to get it.
+      - name: CSS variables
+        id: css-vars
+        if: ${{ !cancelled() && steps.install.outcome == 'success' && inputs.css-vars && hashFiles('repo/.css-vars.json') != '' }}
+        shell: bash
+        working-directory: repo
+        run: |
+          echo "## CSS variables" >> "$GITHUB_STEP_SUMMARY"
+          node "$GITHUB_WORKSPACE/.devkit/bin/css-vars.mjs" | tee -a "$GITHUB_STEP_SUMMARY"
 
       # Each check's outcome in one table, and the job fails if any failed. A check that could not start because what it
       # needs failed (the checkout, the install) is a failure too, never a pass. The reviewer is its own job and not listed.
@@ -276,7 +298,9 @@ jobs:
             Workflow-audit=${{ steps.touched.outcome == 'failure' && 'failure' || steps.workflow-audit.outcome }}
             Install=${{ steps.install.outcome }}
             No-bloat=${{ steps.no-bloat.outcome }}
+            No-bloat-on=${{ steps.no-bloat-on.outcome }}
             Worker-size=${{ steps.worker-size.outcome }}
+            CSS-variables=${{ steps.css-vars.outcome }}
         run: |
           set -euo pipefail
           failed=()
