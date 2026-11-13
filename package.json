@@ -101,9 +101,11 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "test": "node --test \"test/*.test.mjs\"",
-    "contract": "node scripts/fakes-contract.mjs"
+    "contract": "node scripts/fakes-contract.mjs",
+    "changeset": "changeset"
   },
   "devDependencies": {
+    "@changesets/cli": "3.0.3",
     "@types/node": "24.19.2",
     "oxfmt": "0.77.0",
     "oxlint": "1.92.0",

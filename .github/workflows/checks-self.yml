@@ -13,6 +13,10 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, edited, ready_for_review]
   workflow_dispatch:
+  # Once a day on the default branch: the shared-code check judges the repository's state there, which a pull request's
+  # run leaves to it (pr.yml, "THE CALLER"). A red run is Capsid's job for this repository.
+  schedule:
+    - cron: "59 5 * * *"
 
 permissions:
   contents: read
