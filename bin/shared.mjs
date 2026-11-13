@@ -1870,6 +1870,9 @@ const MODEL_CALL =
 
 /** A timeout within reach of a call that cannot take one through the shared caller. */
 const TIMEOUT = /AbortSignal\.timeout\(|\bsignal\s*:|\bsetTimeout\(|Promise\.race\(/;
+/** site-runtime's `withTimeout`: a call to it counts as a timeout only in a file that imports it from there. */
+const WITH_TIMEOUT = /\bwithTimeout\(/;
+const TIME_IMPORT = /["'`]@dustinedwards\/site-runtime\/time["'`]/;
 
 /**
  * The AI rules: each a pattern over a source file's code (comments blanked), what it means, and the checklist item it
@@ -1910,10 +1913,14 @@ export const AI_RULES = [
   {
     id: "C13",
     find: /\.(?:chatCompletions|aiSearch)\s*\(|\breranking\s*:\s*\{\s*enabled\s*:\s*true/g,
-    test: (code, m) =>
-      TIMEOUT.test(code.slice(Math.max(0, m.index - 1500), m.index + 800)) ? null : "a timeout",
+    test: (code, m) => {
+      const near = code.slice(Math.max(0, m.index - 1500), m.index + 800);
+      return TIMEOUT.test(near) || (WITH_TIMEOUT.test(near) && TIME_IMPORT.test(code))
+        ? null
+        : "a timeout";
+    },
     say: () =>
-      "calls an AI Search model (an answer or the reranker) with no timeout near it (C2, C13): race it against a deadline, as dustinedwards.info's askStream does",
+      "calls an AI Search model (an answer or the reranker) with no timeout near it (C2, C13): wrap it in site-runtime's withTimeout (./time) or race it against a deadline",
   },
   // JSON cut out of free text with a greedy regex, in a file that calls a model: ask for structured output instead.
   {
