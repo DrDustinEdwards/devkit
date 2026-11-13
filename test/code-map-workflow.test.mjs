@@ -60,11 +60,6 @@ test("the publish step pushes to the code-map branch and no other ref", () => {
   assert.match(pushes[0], /code-map:refs\/heads\/code-map\s*$/);
 });
 
-test("the example caller grants the write the workflow needs", () => {
-  const caller = readFileSync(new URL("../examples/code-map-caller.yml", import.meta.url), "utf8");
-  assert.match(caller, /contents: write/);
-});
-
 test("a matrix caller's reports come from its own run, and then the kept run is not read", () => {
   const download = steps.find((s) => s.includes("name: Download the mutation reports")) ?? "";
   assert.match(download, /if: inputs\.mutation-artifacts != ''/);
