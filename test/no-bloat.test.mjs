@@ -29,8 +29,11 @@ import {
   knipCounts,
   legacyCounts,
   lineChanges,
+  inputsNarrowed,
+  knipConfigInputs,
   knipCounted,
   knipPluginFiles,
+  pageScripts,
   lockfileProblems,
   measure,
   narrowed,
@@ -1480,6 +1483,39 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
     knipPluginFiles(Object.keys(site), patterns, (p) => read(p) ?? "", knipCounted(read)).sort(),
     ["site/pages.json", "site/vite.config.ts"],
   );
+  // A config Knip takes the same inputs from at the base and now is code, and so is what it imports.
+  assert.deepEqual(
+    knipPluginFiles(Object.keys(site), patterns, (p) => read(p) ?? "", knipCounted(read), [
+      "site/vite.config.ts",
+    ]),
+    [],
+  );
+  assert.deepEqual(
+    knipConfigInputs(
+      "[.] Inputs\n[\n  'binary:vite (package.json)',\n  'entry:site/vite.config.ts',\n  'entry:src/vite-env.d.ts (site/vite.config.ts)',\n  'dependency:@vitejs/plugin-react (site/vite.config.ts)'\n]\n",
+    ),
+    {
+      "package.json": ["binary:vite"],
+      "site/vite.config.ts": ["dependency:@vitejs/plugin-react", "entry:src/vite-env.d.ts"],
+    },
+  );
+  // Knip counts no less when the config only drops inputs, names pages the build writes, or loads a new page script;
+  // an entry that makes a file of the repository used is a wider measure.
+  const tracked = ["site/vite.config.ts", "site/page.ts", "site/dead.ts", "site/page.html"];
+  const was = ["deferResolveEntry:site/index.html", "entry:src/vite-env.d.ts"];
+  const scripts = pageScripts(["deferResolveEntry:site/gen/a.html"], (p) =>
+    p === "site/gen/a.html"
+      ? '<script src="/theme.js"></script><script type="module" src="/site/page.ts"></script><script src="https://x.example/a.js"></script>'
+      : null,
+  );
+  assert.deepEqual(scripts, ["theme.js", "site/page.ts"]);
+  const now = (/** @type {string[]} */ more) => ["entry:src/vite-env.d.ts", ...more];
+  const ok = (/** @type {string[]} */ more) =>
+    inputsNarrowed("site/vite.config.ts", was, now(more), tracked, tracked, scripts);
+  assert.equal(ok([]), true);
+  assert.equal(ok(["deferResolveEntry:site/gen/a.html", "deferResolveEntry:site/page.ts"]), true);
+  assert.equal(ok(["deferResolveEntry:site/dead.ts"]), false);
+  assert.equal(ok(["dependency:left-pad"]), false);
   // Dropping an entry makes Knip count more, so it is code; dropping a negation or anything else is a change of measure.
   const knip = (/** @type {string[]} */ entry, project = ["**/*.ts"]) =>
     JSON.stringify({ entry, project });
