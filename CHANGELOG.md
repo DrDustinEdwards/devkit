@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.48.1 (2026-11-13)
+
+- `devkit-shared`: the `[ai] C13` rule counts site-runtime's `withTimeout` (`@dustinedwards/site-runtime/time`) as the timeout near an AI Search call, in a file that imports it from there. Before, only `AbortSignal.timeout`, `signal:`, `setTimeout` and `Promise.race` counted, so a site that did what the `[copies]` rule asks (import `withTimeout`, not write its own) was flagged, and dustinedwards.info kept an inline `Promise.race`. A local function named `withTimeout` still does not count.
+
 ## 0.48.0 (2026-11-13)
 
 - `devkit-shared --base <sha>`: on a pull request the check also reads the base as its own checkout, with the same packages, and a failure the base already has becomes a warning ("already on the base branch"). A pull request fails only on what it adds. Before, a copy merged earlier, a pin a newer release left behind (S7, the pin-age rule) or a new rule turned every open pull request red at once: "Shared code" failed about 100 times each in carrel, capsid and foxing in the 48 hours to 2026-11-13. `pr.yml` and `checks.yml` pass the base.
