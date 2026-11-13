@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.44.0 (2026-11-13)
+
+- `devkit-no-bloat` runs Chrome's legacy scanner (`modern-web-guidance legacy-scan --json`, Modern Web Guidance 1.0.0, github.com/GoogleChrome/modern-web-guidance) and gates its matches per guide, as it gates Knip's issue types: `"legacy"` in the baseline, `"legacy": false` to turn it off, `legacy.args` for the paths (default the repository root; the scanner skips docs, examples and tests). The check installs it like knip and jscpd (`tools["modern-web-guidance"]`, exact version, its own install). Item 22 of the Modern Web Guidance review. **Breaking** for every caller: like any measured count, `legacy` needs its baseline entry, so the devkit bump runs `npx devkit-no-bloat --write-baseline` and commits `.no-bloat.json` (a bump alone may raise a count). After that a code change that adds a match fails.
+
 ## 0.43.1 (2026-11-13)
 
 - `devkit-no-bloat`: a dependency removed beside a change of measure, such as a Vite plugin taken out of `vite.config.ts` with the library it loads, is part of that change of measure, not code, so the pair passes in one change. Before, the plugin alone left its library unused, and the library alone or with the plugin counted as code beside a definition, so no change could remove both. Such a change may not raise Knip's `unlisted` or `unresolved`, so an import left behind still fails. A dependency removed alone or beside code is still code.

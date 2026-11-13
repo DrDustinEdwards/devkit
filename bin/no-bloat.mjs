@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // The no-bloat ratchet. Knip for unused files, exports and dependencies, jscpd for duplicated blocks, jscpd again for the
 // blocks copied from the shared packages the repository installs ("shared copies", copies.mjs packageCopies, so a copy
-// under a new name is caught too), and a static count of test files and test cases, each compared with the repository's
+// under a new name is caught too), Chrome's legacy scanner for old web platform patterns ("legacy", Modern Web
+// Guidance), and a static count of test files and test cases, each compared with the repository's
 // own baseline. The baseline is the count exactly: one above it fails the run (exit 1, an ::error:: line per count), and so
 // does one below it, until the baseline is lowered in the same change, so the room a removal leaves can never let a new
 // copy back in (the ratchet of ESLint's bulk suppressions and Betterer's ci mode). Knip counts each issue (its JSON
@@ -45,13 +46,18 @@
 //     "tests": { "files": ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"], "ignore": [] },
 //     "comments": { "files": ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"], "ignore": ["**/*.min.*", "**/worker-configuration.d.ts"],
 //                   "tolerance": 1, "fail": false },
-//     "tools": { "knip": "knip@6.45.1", "jscpd": "jscpd@4.3.0" },
+//     "tools": { "knip": "knip@6.45.1", "jscpd": "jscpd@4.3.0", "modern-web-guidance": "modern-web-guidance@1.0.0" },
 //     "baseline": { "measured_at": "036d615", "knip (Worker)": { "Unused exports": 12 }, "jscpd": { "clones": 23, "lines": 410,
-//       "percentage": 0.59 }, "shared copies": { "clones": 0, "lines": 0 }, "tests": { "files": 40, "cases": 312 },
+//       "percentage": 0.59 }, "shared copies": { "clones": 0, "lines": 0 }, "legacy": { "dark-mode": 1 }, "tests": { "files": 40, "cases": 312 },
 //       "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
 //   }
 //
-// `"jscpd": false`, `"shared": false`, `"tests": false` or `"comments": false` turns one off. jscpd's clones and duplicated
+// `"jscpd": false`, `"shared": false`, `"legacy": false`, `"tests": false` or `"comments": false` turns one off. `legacy`
+// is Chrome's Modern Web Guidance scanner (`modern-web-guidance legacy-scan`, github.com/GoogleChrome/modern-web-guidance):
+// a static match of about 35 legacy patterns (a dialog built by hand, `100vh`, Enter that ignores an IME, `resize:
+// none`...), counted per guide, over the repository root unless `legacy.args` names the paths; it skips docs, examples and
+// tests itself. A match is a lead, not a verdict: the guide (`npx modern-web-guidance retrieve <guide>`) says when one may
+// stay, and one kept on purpose stays in the baseline. jscpd's clones and duplicated
 // lines are gated; its percentage is shown, not gated, since deleting code that is not duplicated raises it. The shared
 // copies read every shared package (shared.mjs PACKAGES) installed in node_modules, the repository's own excepted; each copy
 // is an ::warning:: line with both places. Test cases are counted from the source, never by running a runner: each `test(`
@@ -83,7 +89,11 @@ import { packageCopies } from "./copies.mjs";
 import { PACKAGES, blankComments } from "./shared.mjs";
 import { readConfig } from "./site-config.mjs";
 import { isMain } from "../node/index.mjs";
-export const DEFAULT_TOOLS = { knip: "knip@6.45.1", jscpd: "jscpd@4.3.0" };
+export const DEFAULT_TOOLS = {
+  knip: "knip@6.45.1",
+  jscpd: "jscpd@4.3.0",
+  "modern-web-guidance": "modern-web-guidance@1.0.0",
+};
 const TESTS = ["**/*.{test,spec}.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"];
 const SOURCE = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"];
 const GENERATED = ["**/*.min.*", "**/worker-configuration.d.ts"];
@@ -93,13 +103,33 @@ const BUFFER = 64 * 1024 * 1024;
 /**
  * @typedef {{ label: string, args?: string[] }} KnipRun
  * @typedef {{ files?: string[], ignore?: string[] }} Files
- * @typedef {{ knip?: KnipRun[], jscpd?: { args?: string[] } | false, shared?: false, tests?: Files | false,
- *   comments?: Files & { tolerance?: number, fail?: boolean } | false, tools?: { knip?: string, jscpd?: string },
+ * @typedef {{ knip?: KnipRun[], jscpd?: { args?: string[] } | false, shared?: false, legacy?: { args?: string[] } | false,
+ *   tests?: Files | false, comments?: Files & { tolerance?: number, fail?: boolean } | false,
+ *   tools?: { knip?: string, jscpd?: string, "modern-web-guidance"?: string },
  *   baseline?: Record<string, unknown> & { measured_at?: string } }} Config
- * @typedef {(name: "knip" | "jscpd", args: string[]) => string} Runner
+ * @typedef {(name: "knip" | "jscpd" | "modern-web-guidance", args: string[]) => string} Runner
  * @typedef {{ list: () => string[], read: (path: string) => string }} Source
  * @typedef {Record<string, Record<string, number>>} Counts
  */
+
+/**
+ * The legacy scanner's JSON report as counts per guide, e.g. { "dark-mode": 1 }. Its total must match the guides' sum, so
+ * a report this reads wrongly fails rather than counting nothing.
+ */
+export function legacyCounts(/** @type {string} */ text) {
+  const report = JSON.parse(text);
+  if (!report || typeof report.totalFindings !== "number" || !Array.isArray(report.guides))
+    throw new Error(`legacy-scan printed no report this reads: ${text.trim().slice(0, 200)}`);
+  /** @type {Record<string, number>} */
+  const counts = {};
+  for (const guide of report.guides) counts[String(guide.guideId)] = Number(guide.count);
+  const sum = Object.values(counts).reduce((a, b) => a + b, 0);
+  if (sum !== report.totalFindings)
+    throw new Error(
+      `legacy-scan counted ${report.totalFindings} findings but its guides add to ${sum}`,
+    );
+  return counts;
+}
 
 /**
  * Knip's JSON report as counts per issue type, e.g. { exports: 12 }: each unused export, dependency or file is one, so a
@@ -514,6 +544,16 @@ export function measure(
     }
   }
 
+  if (config.legacy !== false) {
+    try {
+      counts.legacy = legacyCounts(
+        run("modern-web-guidance", ["legacy-scan", ...(config.legacy?.args ?? ["."]), "--json"]),
+      );
+    } catch (error) {
+      warnings.push(`legacy-scan could not run: ${messageOf(error)}`);
+    }
+  }
+
   if (config.tests !== false || config.comments !== false) {
     try {
       Object.assign(counts, countFiles(config, source.list(), source.read));
@@ -583,7 +623,7 @@ export function compare(baseline, counts, config = {}) {
       );
 
   for (const [tool, now] of Object.entries(counts)) {
-    if (["jscpd", "shared copies", "tests", "comments"].includes(tool)) continue;
+    if (["jscpd", "shared copies", "legacy", "tests", "comments"].includes(tool)) continue;
     const was = before(tool);
     const keys = [...new Set([...Object.keys(was ?? {}), ...Object.keys(now)])];
     // A clean run is a row too, so the table shows the tool ran.
@@ -616,6 +656,20 @@ export function compare(baseline, counts, config = {}) {
       before("jscpd")?.percentage ?? null,
       counts.jscpd.percentage,
     ]);
+  }
+
+  if (counts.legacy) {
+    const was = before("legacy");
+    const keys = [...new Set([...Object.keys(was ?? {}), ...Object.keys(counts.legacy)])];
+    if (keys.length === 0) rows.push(["legacy", "findings", was ? 0 : null, 0]);
+    for (const key of keys)
+      gate(
+        "legacy",
+        key,
+        key,
+        `Run \`npx modern-web-guidance@1.0.0 legacy-scan\` to see where, and \`npx modern-web-guidance@1.0.0 retrieve ${key}\` for the fix and when a match may stay.`,
+        true,
+      );
   }
 
   if (counts["shared copies"]) {
@@ -666,6 +720,7 @@ export function compare(baseline, counts, config = {}) {
   for (const tool of ["jscpd", "tests", "comments"])
     if (config[/** @type {"jscpd"} */ (tool)] !== false) measured.add(tool);
   if (config.shared !== false) measured.add("shared copies");
+  if (config.legacy !== false) measured.add("legacy");
   const stale = Object.keys(baseline)
     .filter((key) => !measured.has(key))
     .map(
@@ -867,7 +922,7 @@ const YAML = `yaml@${JSON.parse(readFileSync(new URL("../package.json", import.m
  * node_modules/knip, a pnpm patch, a shrinkwrap or second lockfile, a hand-made node_modules) is the program that counts
  * or reads a workflow. Each tool runs on this node, with cleanEnv. Nothing is installed until a tool is first used.
  * `DEVKIT_NO_BLOAT_TOOLS` names an install to use instead, for this bin's own tests; the workflows strip it.
- * @param {string} root @param {Partial<Record<"knip" | "jscpd", string>>} tools the config's `tools`, with the defaults
+ * @param {string} root @param {Partial<Record<"knip" | "jscpd" | "modern-web-guidance", string>>} tools the config's `tools`, with the defaults
  * @param {string} [given] an install whose node_modules holds them
  * @returns {{ run: Runner, parseYaml: (text: string) => unknown, knipConfigs: () => string[], dir: () => string }}
  */
