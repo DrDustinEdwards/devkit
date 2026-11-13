@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.28.0 (2026-11-13)
 
 - `devkit-no-bloat` runs Chrome's legacy scanner (`modern-web-guidance legacy-scan --json`, Modern Web Guidance 1.0.0, github.com/GoogleChrome/modern-web-guidance) and gates its matches per guide, as it gates Knip's headings: a guide whose count rises fails; a guide with no baseline is a row, not an error, until `--write-baseline` records it. `"legacy": false` turns it off and `legacy.args` names the paths (default the repository root; the scanner skips docs, examples and tests). The tool is `modern-web-guidance@1.0.0` in `tools`, run through npx when not installed. Every repository on `pr.yml` or `no-bloat.yml` gets it with no workflow change. **New failure** once a repository's baseline has a `legacy` entry and a change adds a match.
 
