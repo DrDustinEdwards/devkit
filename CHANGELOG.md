@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.45.2 (2026-11-13)
+
+- The fakes-contract fixture (`test/fixtures/fakes-contract.json`) writes a field list once when two GitHub operations allow the same fields (`git/create-commit` names `git/get-commit`, `git/update-ref` names `git/get-ref`, via `sameFieldsAs`), so jscpd's baseline is back to 0 clones (0.43.0 let one in). `scripts/fakes-contract.mjs` writes it that way and `test/testing-contract.test.mjs` reads it. No change to what devkit ships.
+
 ## 0.45.1 (2026-11-13)
 
 - `devkit-shared`: a static build that writes its stylesheet with Capsomer's `capsomerStylesheet` (`capsomer/build`, Capsomer 0.123.0) counts as using Capsomer, since that helper always writes base.css. Before, Capsid's explorer, moved onto it from its own inlineCss and minifyCss, failed with "static explorer has no capsomer".
