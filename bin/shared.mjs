@@ -96,6 +96,33 @@ export const PACKAGES = [
   { name: "enarratio", repo: "enarratio", label: "Enarratio" },
 ];
 
+/**
+ * Whether `text` calls `fn({ ... })` with `key` among the object's own keys. The object is read character by character
+ * to its closing brace, past strings, comments and nested brackets, so a key in a nested object or in code after the call
+ * is not the call's, and the read is linear whatever the text.
+ */
+function callWithKey(
+  /** @type {string} */ text,
+  /** @type {string} */ fn,
+  /** @type {string} */ key,
+) {
+  const named = new RegExp(String.raw`(?<![\w$.])${key}\s*:`, "y");
+  for (const m of text.matchAll(new RegExp(String.raw`\b${fn}\(\{`, "g")))
+    for (let i = m.index + m[0].length, depth = 1; i < text.length && depth > 0; i++) {
+      const c = text[i];
+      if (c === '"' || c === "'" || c === "`") {
+        while (++i < text.length && text[i] !== c) if (text[i] === "\\") i++;
+      } else if (c === "/" && (text[i + 1] === "/" || text[i + 1] === "*")) {
+        const close = text[i + 1] === "/" ? "\n" : "*/";
+        const end = text.indexOf(close, i + 2);
+        i = end < 0 ? text.length : end + close.length - 1;
+      } else if ("({[".includes(c)) depth++;
+      else if (")}]".includes(c)) depth--;
+      else if (depth === 1 && ((named.lastIndex = i), named.test(text))) return true;
+    }
+  return false;
+}
+
 const SITE = ["site", "static"];
 const PUBLIC_OR_PRIVATE = ["site", "static", "private"];
 
@@ -109,7 +136,10 @@ export const FEATURES = {
   aiTxt: {
     kinds: SITE,
     // standardFiles serves ai.txt when it is given `ai`.
-    find: /\baiTxt(Response)?\b|\bstandardFiles\(\{[^]*?\bai:/,
+    find: {
+      test: (/** @type {string} */ text) =>
+        /\baiTxt(Response)?\b/.test(text) || callWithKey(text, "standardFiles", "ai"),
+    },
     use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt), or ./files standardFiles with `ai`",
   },
   tdm: {
@@ -136,7 +166,11 @@ export const FEATURES = {
   indexnow: {
     kinds: SITE,
     // site-api's standardSiteApi sends IndexNow when it is given `indexNow`.
-    find: /site-helpers\/indexnow["']|prelum-indexnow|\bstandardSiteApi\(\{[^]*?\bindexNow:/,
+    find: {
+      test: (/** @type {string} */ text) =>
+        /site-helpers\/indexnow["']|prelum-indexnow/.test(text) ||
+        callWithKey(text, "standardSiteApi", "indexNow"),
+    },
     use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)",
   },
   securityTxt: {
@@ -172,7 +206,7 @@ export const FEATURES = {
   // helper, whose capsomerStylesheet always writes base.css (Carrel's www, Prelum's specimen, Capsid's explorer).
   capsomer: {
     kinds: PUBLIC_OR_PRIVATE,
-    find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']|["']capsomer\/build["'][^]*\bcapsomerStylesheet\s*\(/,
+    find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']|\bimport\s*\{[^{}]*\bcapsomerStylesheet\b[^{}]*\}\s*from\s*["']capsomer\/build["']/,
     use: "Capsomer's capsomer/base.css (tokens, element styles, the site layer), then its components",
   },
 };

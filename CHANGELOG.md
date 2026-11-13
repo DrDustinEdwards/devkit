@@ -3,6 +3,7 @@
 ## 0.46.0 (2026-11-13)
 
 - `devkit-no-bloat`: a `legacy-scan:keep` names the guide whose rubric drops the match before its reason (`legacy-scan:keep ime-safe-enter-submit isImeEnter checks isComposing and keyCode 229`), and keeps only that guide's match. Before, any three words after the marker kept every match on the line or the next, whatever the guide, so one marker could hide a second legacy pattern beside the one it was written for. **Breaking** for a repository with markers written the 0.45.0 way (Capsomer's five Enter handlers): each gains `ime-safe-enter-submit` after `legacy-scan:keep` in the devkit bump, or its matches count again. A new marker with no guide or no reason fails (`unreasoned`).
+- `devkit-shared`: the aiTxt and indexnow features read a `standardFiles({ ... })` or `standardSiteApi({ ... })` call's own top-level keys (`ai`, `indexNow`), by reading the object to its closing brace past strings, comments and nested brackets, in linear time. Before, a lazy `[^]*?` ran from the call to any later `ai:` or `indexNow:` in all the app's files joined, so a key in another object or file counted, and a long text with no key could backtrack at length. The capsomer feature's `capsomer/build` case reads the import of `capsomerStylesheet` from it, not any later call in the joined text.
 
 ## 0.45.2 (2026-11-13)
 

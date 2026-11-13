@@ -7,6 +7,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
+  FEATURES,
   FORMAT_CHECK_SCRIPT,
   LINT_SCRIPT,
   WORKFLOWS,
@@ -391,6 +392,21 @@ test("each app is checked for its kind's features, files belong to the deepest a
       ". has a send_email binding and sends without site-runtime ./email sendEmail",
     ],
   );
+});
+
+test("a standardFiles or standardSiteApi call counts by its own top-level key, never one nested in it or in code after it", () => {
+  const ai = (/** @type {string} */ text) => FEATURES.aiTxt.find.test(text);
+  const indexNow = (/** @type {string} */ text) => FEATURES.indexnow.find.test(text);
+  assert.equal(ai('standardFiles({ origin, // it\'s ours\n  ai: { name: "A}" } })'), true);
+  assert.equal(
+    indexNow(
+      "standardSiteApi({ adapter: a({ ...(k ? { f: () => g({ h: { i } }) } : {}) }), indexNow: { key } })",
+    ),
+    true,
+  );
+  assert.equal(ai("standardFiles({ robots: { ai: 1 } })"), false);
+  assert.equal(ai("standardFiles({ origin /* } */ });\nconst policy = { ai: true };"), false);
+  assert.equal(indexNow("standardSiteApi({ db });\nlater({ indexNow: 1 });"), false);
 });
 
 test("PLANT: a React Router app without a year on its hashed files fails, and passes once _headers gives them one", () => {
