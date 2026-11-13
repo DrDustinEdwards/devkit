@@ -37,11 +37,11 @@ test("PLANT: a class whose stylesheet nothing imports is found; one an imported 
     }),
   );
   writeFileSync(join(pkgDir, "css", "all.css"), '@import "./stack.css";\n@import "./grid.css";');
-  writeFileSync(join(pkgDir, "css", "stack.css"), "@layer u { .cap-stack { display: flex; } }\n.cap-panes > .cap-x {}");
   writeFileSync(
-    join(pkgDir, "css", "grid.css"),
-    ".cap-grid { display: grid; }",
+    join(pkgDir, "css", "stack.css"),
+    "@layer u { .cap-stack { display: flex; } }\n.cap-panes > .cap-x {}",
   );
+  writeFileSync(join(pkgDir, "css", "grid.css"), ".cap-grid { display: grid; }");
   writeFileSync(join(pkgDir, "css", "text.css"), ".cap-text, :is(.cap-title)[data-size] {}");
   const files = [
     { rel: "src/root.tsx", content: 'import "kit/all.css";\nimport "kit/text.css";' },
