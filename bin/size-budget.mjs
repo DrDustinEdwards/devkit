@@ -6,6 +6,7 @@
 //
 //   initial JS (the heaviest page's)              <= initial_js_kb gzip
 //   each other chunk (loaded when a part opens)   <= lazy_chunk_kb gzip
+//   all JS (every page's and every chunk)         <= total_js_kb gzip, together, when set
 //   initial CSS (the heaviest page's)             <= css_kb gzip
 //   lazy CSS (every stylesheet no page loads)     <= lazy_css_kb gzip, together
 //   fonts                                         reported, not budgeted
@@ -13,12 +14,13 @@
 //   npx devkit-size-budget                     check against .size-budget.json
 //   npx devkit-size-budget --config <file>     another budget file
 //
-// The budget file (all four limits required):
+// The budget file (the four limits required, `total_js_kb` optional):
 //
-//   { "initial_js_kb": 205, "lazy_chunk_kb": 40, "css_kb": 39, "lazy_css_kb": 12,
+//   { "initial_js_kb": 205, "lazy_chunk_kb": 40, "css_kb": 39, "lazy_css_kb": 12, "total_js_kb": 400,
 //     "client": "build/client", "server": "build/server/index.js" }
 //
-// `client` and `server` are relative to the working directory (defaults above). It differs from devkit-route-weight, which
+// Each chunk under lazy_chunk_kb says nothing of how many there are, so code split into more chunks passes it;
+// `total_js_kb` budgets them together. Unset, the total is reported, not budgeted. `client` and `server` are relative to the working directory (defaults above). It differs from devkit-route-weight, which
 // reports every route and warns; this gates the heaviest page and the chunks that load later. Raise a limit in a reviewed
 // change that says why.
 
@@ -46,11 +48,17 @@ async function main() {
   for (const k of LIMITS)
     if (typeof config[k] !== "number" || !(config[k] > 0))
       fail("size-budget", `${configPath} needs a positive number for ${k}`);
+  if (
+    config.total_js_kb !== undefined &&
+    (typeof config.total_js_kb !== "number" || !(config.total_js_kb > 0))
+  )
+    fail("size-budget", `${configPath} needs a positive number for total_js_kb, or none`);
   const budget = {
     initialJs: config.initial_js_kb * KB,
     lazyChunk: config.lazy_chunk_kb * KB,
     css: config.css_kb * KB,
     lazyCss: config.lazy_css_kb * KB,
+    totalJs: config.total_js_kb === undefined ? null : config.total_js_kb * KB,
   };
   const client = resolve(config.client ?? "build/client");
   const server = resolve(config.server ?? "build/server/index.js");
@@ -129,6 +137,16 @@ async function main() {
     if (s.gz > budget.lazyChunk)
       problems.push(`chunk ${f} is ${fmt(s.gz)} gzip, over ${fmt(budget.lazyChunk)}`);
   }
+  const totalJsGz = gz(new Set([...heaviest.js, ...files.filter((f) => f.endsWith(".js"))]));
+  rows.push([
+    "all js",
+    "TOTAL",
+    null,
+    totalJsGz,
+    budget.totalJs === null ? "reported" : `<= ${fmt(budget.totalJs)}`,
+  ]);
+  if (budget.totalJs !== null && totalJsGz > budget.totalJs)
+    problems.push(`all JS is ${fmt(totalJsGz)} gzip, over ${fmt(budget.totalJs)}`);
 
   const cssGz = gz(heaviestCss.css);
   let lazyCssGz = 0;

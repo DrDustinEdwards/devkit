@@ -184,7 +184,8 @@ test("jscpd, the shared copies, the legacy scan, tests and comments each turn of
     () => legacyCounts('{"totalFindings":2,"guides":[{"guideId":"dialog","count":1}]}'),
     /counted 2 findings but its guides add to 1/,
   );
-  // A match with `legacy-scan:keep` and a reason on its line or the line above is not counted; one with no reason is.
+  // A match with `legacy-scan:keep`, its guide and a reason on its line or the line above is not counted; one whose marker
+  // names another guide is.
   const scan = JSON.stringify({
     targetDir: "src",
     totalFindings: 3,
@@ -198,12 +199,12 @@ test("jscpd, the shared copies, the legacy scan, tests and comments each turn of
   });
   const body = [
     "",
-    "// legacy-scan:keep isImeEnter guards it, from Capsomer's shortcuts",
+    "// legacy-scan:keep ime-safe-enter-submit isImeEnter guards it, from Capsomer's shortcuts",
     'if (e.key === "Enter" && !isImeEnter(e)) go();',
     "",
-    'if (e.key === "Enter" && !isImeEnter(e)) go(); // legacy-scan:keep the shared helper checks composition',
+    'if (e.key === "Enter" && !isImeEnter(e)) go(); // legacy-scan:keep ime-safe-enter-submit the shared helper checks composition',
     "",
-    "// legacy-scan:keep",
+    "// legacy-scan:keep dialog the dialog guide's rubric drops this one",
     'if (e.key === "Enter") go();',
   ].join("\n");
   assert.deepEqual(
@@ -1122,6 +1123,10 @@ test("a Knip config line, a skip tag, a jscpd marker or a legacy-scan keep needs
         path: "src/b.ts",
         text: "// legacy-scan:keep isImeEnter guards it, in Capsomer's shortcuts",
       },
+      {
+        path: "src/b.ts",
+        text: "// legacy-scan:keep ime-safe-enter-submit isImeEnter guards it, in Capsomer's shortcuts",
+      },
     ],
   };
   const out = unreasoned(change, {}, {});
@@ -1136,9 +1141,10 @@ test("a Knip config line, a skip tag, a jscpd marker or a legacy-scan keep needs
       "src/a.ts",
       "src/a.ts",
       "src/b.ts",
+      "src/b.ts",
     ],
   );
-  assert.match(out[7], /a new `legacy-scan:keep` gives no reason/);
+  assert.match(out[7], /a new `legacy-scan:keep` names no guide or gives no reason/);
   assert.match(out[4], /a new `@beta` gives no reason/);
   assert.match(out[5], /a new `jscpd:ignore-start` gives no reason/);
   assert.match(out[6], /a new `@public` gives no reason/);
