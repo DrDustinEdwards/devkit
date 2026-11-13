@@ -27,8 +27,9 @@
 //
 // `package` is the installed package's directory; `dirs` (default: the top-level `dirs`) are where its classes are used
 // and its stylesheets imported. A stylesheet styles a class when the class is in the first compound of one of its
-// top-level selectors (`.cap-stack`, `:is(.cap-stack, .cap-grid)[data-gap="2"]`), not after a combinator or inside
-// `:not()` or `:has()`; the stylesheets are the package's `exports` ending in `.css` and the files they import. A class
+// top-level selectors (`.cap-stack`, `.cap-stack[data-gap="2"]`), not after a combinator or inside `:is()`, `:where()`,
+// `:not()` or `:has()`: a sheet that lists a class among others (Capsomer's layout-gap.css, `:is(.cap-stack,
+// .cap-panes)[data-gap]`) only adjusts it, so loading it does not stand in for the class's own sheet. The stylesheets are the package's `exports` ending in `.css` and the files they import. A class
 // built at run time, or written only by the package's own components, is not seen.
 
 import { existsSync, readFileSync, statSync } from "node:fs";
@@ -95,7 +96,7 @@ function splitTop(text, sep) {
 
 /**
  * The classes with `prefix` a stylesheet styles: those in the first compound of a selector at its top level (inside
- * at-rules, not nested in another rule), leaving out `:not()` and `:has()`.
+ * at-rules, not nested in another rule), leaving out `:is()`, `:where()`, `:not()` and `:has()`.
  * @param {string} css
  * @param {string} prefix
  * @returns {Set<string>}
@@ -113,11 +114,11 @@ export function styledClasses(css, prefix) {
       if (!atRule && blocks.every(Boolean))
         for (const sel of splitTop(prelude, /,/)) {
           let compound = splitTop(sel.trim(), /[\s>+~]/)[0];
-          // Drop :not(...) and :has(...), their parentheses balanced.
+          // Drop :is(...), :where(...), :not(...) and :has(...), their parentheses balanced.
           for (
-            let i = compound.search(/:(not|has)\(/);
+            let i = compound.search(/:(is|where|not|has)\(/);
             i >= 0;
-            i = compound.search(/:(not|has)\(/)
+            i = compound.search(/:(is|where|not|has)\(/)
           ) {
             let depth = 0;
             let j = compound.indexOf("(", i);
