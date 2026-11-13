@@ -912,6 +912,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
       "@dustinedwards/devkit github:DrDustinEdwards/devkit#v0.38.0 to github:DrDustinEdwards/devkit#v0.37.1",
     ],
     refused: [],
+    removed: [],
   });
   // A baseline and lockfile change alone moves nothing the counts read; a tool must be npm's at x.y.z, never older.
   files[".no-bloat.json"] = [
@@ -927,8 +928,28 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     classifyYaml(
       change([".no-bloat.json", "package-lock.json", "mcp/package.json", "mcp/package-lock.json"]),
     ),
-    { code: false, definition: [], workflow: [], back: [], refused: [] },
+    { code: false, definition: [], workflow: [], back: [], refused: [], removed: [] },
   );
+  // Removing a build plugin and its library is one change of measure, which may not leave an import unlisted; removing a
+  // library alone, or beside code, is code.
+  files["vite.config.ts"] = ["export default { plugins: [tw()] }", "export default {}"];
+  files["package.json"] = [
+    JSON.stringify({ name: "x", devDependencies: { "@tailwindcss/vite": "4.3.3", vite: "8.0.0" } }),
+    JSON.stringify({ name: "x", devDependencies: { vite: "8.0.0" } }),
+  ];
+  const drop = classifyYaml({
+    ...change(["vite.config.ts", "package.json"]),
+    plugins: ["vite.config.ts"],
+  });
+  assert.deepEqual(
+    [drop.code, drop.definition],
+    [false, ["vite.config.ts", "package.json devDependencies removes @tailwindcss/vite"]],
+  );
+  const knip = (/** @type {number} */ unlisted) => ({ baseline: { knip: { unlisted } } });
+  assert.deepEqual(raised(knip(0), knip(0), drop), []);
+  assert.match(raised(knip(1), knip(0), drop).join(), /raises unlisted from 0 to 1/);
+  const alone = classifyYaml(change(["package.json"]));
+  assert.deepEqual([alone.code, alone.removed], [true, []]);
   files[".no-bloat.json"][1] =
     '{"baseline":{},"tools":{"knip":"file:./fake","jscpd":"jscpd@4.3.0"}}';
   assert.deepEqual(classifyYaml(change([".no-bloat.json"])).refused, [
@@ -945,7 +966,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
   ];
   assert.deepEqual(
     classifyYaml(change([".github/workflows/checks.yml", ".github/workflows/deploy.yml"])),
-    { code: false, definition: [], workflow: [], back: [], refused: [] },
+    { code: false, definition: [], workflow: [], back: [], refused: [], removed: [] },
   );
 
   // devkit installed from anywhere but its own release tag, or overridden, runs another check.

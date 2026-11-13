@@ -1393,6 +1393,8 @@ export function classify(change, parseYaml = noYaml) {
   const workflow = [];
   /** @type {string[]} */
   const refused = [];
+  /** @type {string[]} */
+  const removed = [];
   const json = (/** @type {string | null} */ text) => {
     try {
       return text === null ? null : JSON.parse(text);
@@ -1469,8 +1471,10 @@ export function classify(change, parseYaml = noYaml) {
           refused.push(
             `${p} ${field} has ${DEVKIT} at "${is[DEVKIT]}". Pin devkit to a release tag of its own repository, "github:DrDustinEdwards/devkit#vX.Y.Z", so the check that runs is the one released.`,
           );
-        // An added library can be unused, and a removed one can leave an import unlisted.
-        if (!Object.keys(was).every((n) => n in is)) code = true;
+        // An added library can be unused. A removed one turns off the Knip plugins its name enabled, so it changes how
+        // Knip counts, and it can leave an import unlisted, which Knip's unlisted and unresolved counts read (raised).
+        const gone = Object.keys(was).filter((n) => !(n in is));
+        if (gone.length) removed.push(`${p} ${field} removes ${gone.join(", ")}`);
         if (!Object.keys(is).every((n) => n in was || shared.has(n))) code = true;
         for (const name of Object.keys(is)) {
           const [x, y] = [pinVersion(was[name]), pinVersion(is[name])];
@@ -1493,7 +1497,14 @@ export function classify(change, parseYaml = noYaml) {
     }
     code = true;
   }
-  return { code, definition, workflow, back, refused };
+  // A removed dependency beside a change of measure (the plugin's config it no longer needs) is that change of measure.
+  // Beside code, or alone, it is code: removing a library may lower a count, as deleting the code that used it does.
+  if (removed.length && !code && definition.length) definition.push(...removed);
+  else if (removed.length) {
+    code = true;
+    removed.length = 0;
+  }
+  return { code, definition, workflow, back, refused, removed };
 }
 
 /** A Knip plugin config in code, which Knip runs in its own process, and the extensions its local imports resolve to. */
@@ -1778,6 +1789,17 @@ export function raised(config, base, kind) {
       );
   } else if (kind.definition.length || kind.workflow.length) {
     const what = [...kind.definition, ...kind.workflow].join(", ");
+    // A removed dependency may not leave an import behind it.
+    if (kind.removed?.length) {
+      const [before, after] = [was.knip ?? {}, now.knip ?? {}].map(
+        (c) => /** @type {Record<string, number>} */ (c),
+      );
+      for (const key of ["unlisted", "unresolved"])
+        if ((after[key] ?? 0) > (before[key] ?? 0))
+          out.push(
+            `knip: this change removes a dependency (${kind.removed.join("; ")}) and raises ${key} from ${before[key] ?? 0} to ${after[key]}. Remove the import that still needs it, or keep the dependency.`,
+          );
+    }
     for (const [tool, counts] of Object.entries(was)) {
       if (skip(tool, counts)) continue;
       const after = /** @type {Record<string, number>} */ (now[tool] ?? {});
