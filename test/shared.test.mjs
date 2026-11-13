@@ -698,9 +698,12 @@ test("an admin or login route warns without noindex in a file that names it, a s
     "docs/src/feed.ts":
       'return new Response(xml, { headers: { "Content-Type": "application/atom+xml" } });\n// <link rel="alternate" type="application/atom+xml">',
     "docs/src/root.ts": 'import "capsomer/base.css";',
+    "specimen/build.mjs":
+      'import { capsomerStylesheet } from "capsomer/build";\nwriteFileSync(out, capsomerStylesheet({ family: "teal" }));',
+    "specimen/test/a11y.test.ts": 'import AxeBuilder from "@axe-core/playwright";',
   };
   const found = checkFeatures(tree(files), {
-    apps: { ".": "site", blog: "site", news: "static", docs: "static" },
+    apps: { ".": "site", blog: "site", news: "static", docs: "static", specimen: "static" },
   }).filter((f) => /noindex|createSiteApi|accessibility|feed|D1|no capsomer/.test(f.message));
   assert.deepEqual(
     found.map((f) => `${f.warn ?? false} ${f.message.split(":")[0]}`),
