@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.151.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.152.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -180,7 +180,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./inbox-report`: `INBOX_REPORT_PATH`, `MAX_REPORT_ITEMS`, `MAX_REPORT_TITLE`, `MAX_INBOX_REPORT_BYTES`, `REPORT_TTL_SECONDS`, `capsidOrigin`, `reportInbox`
 - `./secret-box`: `keyring`, `keyringFromEnv`, `seal`, `keyIdOf`, `open`, `reseal`
 - `./http-errors`: `PROBLEM_TYPE`, `AppError`, `errors`, `problemResponse`, `isKnownError`, `errorResponse`, `schemaIssues`, `honoErrorHandler`, `readProblem`
-- `./confirm-token`: `CONFIRM_TTL_SECONDS`, `canonicalJson`, `mintConfirm`, `redeemConfirm`
+- `./confirm-token`: `CONFIRM_TTL_SECONDS`, `mintConfirm`, `redeemConfirm`
 - `./hono`: `operatorBearer`, `honoRateLimit`
 - `./web-push`: `subscriptionProblem`, `readVapidKey`, `encryptPayload`, `vapidJwt`, `sendPush`
 - `./cron-lock`: `TICKER_INTERVAL_MS`, `withLease`, `armIfIdle`, `tick`, `ensureTickerArmed`, `decideAcquire`, `decideRelease`, `lockHealth`
@@ -195,10 +195,10 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./newsletter`: `SUBSCRIBERS_SQL`, `newsletter`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
-## site-api 0.41.0 (DrDustinEdwards/site-api)
+## site-api 0.42.0 (DrDustinEdwards/site-api)
 
 - `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `ROUTES`, `schemaHash`, `capabilitiesOf`, `hasContentTrash`, `contentFiltersOf`, `contentVersion`, `transcriptVersion`, `VersionConflictError`, `NotFoundError`, `MediaInUseError`, `describeUses`, `RefusedError`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `HOOK_BACKOFF_MINUTES`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `readEmbedded`, `stripMetadata`, `duplicateKey`, `placeholderAndColor`, `fileNameFor`, `prepareUpload`, `PICTURE_TYPES`, `pictureLimits`, `PICTURE_RESIZE`, `extensionFor`, `datedKey`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `siteApiStep`, `standardSiteApi`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `tombstoneResponse`, `gonePath`, `tombstoned`, `PREVIEW_LINK_PATH`
-- `./admin`: `readPostQuery`, `loadPosts`, `scheduleLabel`, `liveSaveWarning`, `loadScheduledUpdate`, `runPostsIntent`, `readMediaQuery`, `loadMedia`, `loadMediaChanges`, `parseMediaTags`, `runMediaIntent`, `MENTION_FILTERS`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `localClient`, `askFirst`
+- `./admin`: `readPostQuery`, `loadPosts`, `liveSaveWarning`, `loadScheduledUpdate`, `runPostsIntent`, `readMediaQuery`, `loadMedia`, `loadMediaChanges`, `runMediaIntent`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `localClient`, `askFirst`
 - `./client`: `SiteApiError`, `createSiteClient`, `localClient`
 - `./frontmatter`: `tagsOf`, `setTags`, `SEARCH_FIELDS`, `searchFieldsOf`, `setSearchFields`, `POST_FIELDS`, `postFieldsOf`, `setPostFields`, `missingAltFields`, `JsonSourceError`, `jsonSource`
 - `./schedules`: `SCHEDULED_UPDATES_SQL`, `utc`, `d1ScheduledUpdates`
@@ -209,7 +209,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./testing`: `MEMORY_MEDIA_LIMITS`, `memoryAdapter`
 - bins: `site-api-live`
 
-## d1-dump 0.16.0 (DrDustinEdwards/d1-dump)
+## d1-dump 0.16.1 (DrDustinEdwards/d1-dump)
 
 - `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`, `createSiteBackup`
 - bins: `d1-dump`
@@ -232,7 +232,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.137.0 (DrDustinEdwards/capsomer)
+## Capsomer 0.139.0 (DrDustinEdwards/capsomer)
 
 - `./token-check`: `stripCss`, `flattenMix`, `mediaBlock`, `readDeclarations`, `firstValues`, `THEME_SELECTORS`, `readThemeBlocks`, `resolveToken`, `unresolved`, `verifyFallbacks`, `checkPairs`, `unmeasured`, `opacityDeclarations`, `apca`, `contrast`
 - `./build`: `CAPSOMER_ROOT`, `inlineCss`, `capsomerStylesheet`, `copyFonts`, `minifyCss`, `bundleScript`
