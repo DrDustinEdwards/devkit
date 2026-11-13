@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.45.0 (2026-11-13)
+
+- `devkit-no-bloat`: a legacy-scan match kept on purpose carries `legacy-scan:keep` and its reason in a comment on its line or the line above, and is not counted, so a baseline can be zero when every match left is one the guide's own rubric drops. The scanner sees only a literal `isComposing` or `keyCode === 229`, so each Enter handler guarded by Capsomer's shared `isImeEnter` is such a match (7 across Capsomer, dustinedwards.info and Carrel). A guide with no count left is left out of the counts. A marker added with no reason fails (`unreasoned`), as a `jscpd:ignore-start` does.
+
 ## 0.44.0 (2026-11-13)
 
 - `devkit-no-bloat` runs Chrome's legacy scanner (`modern-web-guidance legacy-scan --json`, Modern Web Guidance 1.0.0, github.com/GoogleChrome/modern-web-guidance) and gates its matches per guide, as it gates Knip's issue types: `"legacy"` in the baseline, `"legacy": false` to turn it off, `legacy.args` for the paths (default the repository root; the scanner skips docs, examples and tests). The check installs it like knip and jscpd (`tools["modern-web-guidance"]`, exact version, its own install). Item 22 of the Modern Web Guidance review. **Breaking** for every caller: like any measured count, `legacy` needs its baseline entry, so the devkit bump runs `npx devkit-no-bloat --write-baseline` and commits `.no-bloat.json` (a bump alone may raise a count). After that a code change that adds a match fails.

@@ -57,7 +57,8 @@
 // a static match of about 35 legacy patterns (a dialog built by hand, `100vh`, Enter that ignores an IME, `resize:
 // none`...), counted per guide, over the repository root unless `legacy.args` names the paths; it skips docs, examples and
 // tests itself. A match is a lead, not a verdict: the guide (`npx modern-web-guidance retrieve <guide>`) says when one may
-// stay, and one kept on purpose stays in the baseline. jscpd's clones and duplicated
+// stay. One kept on purpose carries `legacy-scan:keep` and its reason on its line or the line above, and is not counted;
+// a marker added with no reason fails, as a jscpd marker does. jscpd's clones and duplicated
 // lines are gated; its percentage is shown, not gated, since deleting code that is not duplicated raises it. The shared
 // copies read every shared package (shared.mjs PACKAGES) installed in node_modules, the repository's own excepted; each copy
 // is an ::warning:: line with both places. Test cases are counted from the source, never by running a runner: each `test(`
@@ -116,20 +117,55 @@ const BUFFER = 64 * 1024 * 1024;
  * The legacy scanner's JSON report as counts per guide, e.g. { "dark-mode": 1 }. Its total must match the guides' sum, so
  * a report this reads wrongly fails rather than counting nothing.
  */
-export function legacyCounts(/** @type {string} */ text) {
+export function legacyCounts(
+  /** @type {string} */ text,
+  /** @type {(path: string) => string} */ read = () => "",
+) {
   const report = JSON.parse(text);
   if (!report || typeof report.totalFindings !== "number" || !Array.isArray(report.guides))
     throw new Error(`legacy-scan printed no report this reads: ${text.trim().slice(0, 200)}`);
   /** @type {Record<string, number>} */
   const counts = {};
-  for (const guide of report.guides) counts[String(guide.guideId)] = Number(guide.count);
-  const sum = Object.values(counts).reduce((a, b) => a + b, 0);
+  /** @type {Map<string, string[]>} */
+  const files = new Map();
+  const lines = (/** @type {string} */ file) => {
+    if (!files.has(file)) {
+      let body = "";
+      try {
+        body = read(file);
+      } catch {}
+      files.set(file, body.split("\n"));
+    }
+    return /** @type {string[]} */ (files.get(file));
+  };
+  let sum = 0;
+  for (const guide of report.guides) {
+    sum += Number(guide.count);
+    /** @type {Array<{ file: string, line: number }>} */
+    const findings = (guide.rules ?? []).flatMap(
+      (/** @type {{ findings?: Array<{ file: string, line: number }> }} */ r) => r.findings ?? [],
+    );
+    // A match kept on purpose (the guide's rubric drops it, as for a guard in a shared helper the scanner cannot
+    // follow) carries `legacy-scan:keep` and its reason on its line or the line above, and is not counted.
+    const kept = findings.filter((f) => {
+      // The scanner names each file from the directory it scanned.
+      const at = lines(posix.join(String(report.targetDir ?? "."), f.file));
+      return [at[f.line - 1], at[f.line - 2]].some((l) =>
+        isReason((LEGACY_KEEP.exec(l ?? "")?.[1] ?? "").split(/\*\/|-->/)[0]),
+      );
+    }).length;
+    const left = Number(guide.count) - kept;
+    if (left > 0) counts[String(guide.guideId)] = left;
+  }
   if (sum !== report.totalFindings)
     throw new Error(
       `legacy-scan counted ${report.totalFindings} findings but its guides add to ${sum}`,
     );
   return counts;
 }
+
+/** The marker that keeps a legacy-scan match on purpose, on its line or the line above: `legacy-scan:keep <reason>`. */
+const LEGACY_KEEP = /(?<!`)legacy-scan:keep(?!`)(.*)$/;
 
 /**
  * Knip's JSON report as counts per issue type, e.g. { exports: 12 }: each unused export, dependency or file is one, so a
@@ -548,6 +584,7 @@ export function measure(
     try {
       counts.legacy = legacyCounts(
         run("modern-web-guidance", ["legacy-scan", ...(config.legacy?.args ?? ["."]), "--json"]),
+        source.read,
       );
     } catch (error) {
       warnings.push(`legacy-scan could not run: ${messageOf(error)}`);
@@ -2167,6 +2204,7 @@ export function unreasoned(change, config, base) {
     // A mention in backticks is prose about the marker or tag, not one.
     const marker = /(?<!`)jscpd:ignore-start(?!`)(.*)$/.exec(said);
     const tag = TAGGED.test(path) ? SKIP_TAGS.exec(said) : null;
+    const keep = LEGACY_KEEP.exec(said);
     // The reason is what follows inside the comment, never the code after it closes.
     if (marker && !isReason(marker[1].split(/\*\/|-->/)[0]))
       out.push(
@@ -2176,6 +2214,10 @@ export function unreasoned(change, config, base) {
     else if (tag && !isReason(tag[2].split("*/")[0]))
       out.push(
         `${path}: a new \`@${tag[1]}\` gives no reason (${text.trim()}). Knip skips the export it tags: write who uses it after the tag, or remove the export.`,
+      );
+    else if (keep && !isReason(keep[1].split(/\*\/|-->/)[0]))
+      out.push(
+        `${path}: a new \`legacy-scan:keep\` gives no reason (${text.trim()}). Write after it why the match stays (the guide's rubric drops it, or the old pattern is the fallback), or apply the guide's fix.`,
       );
   }
   return out;
