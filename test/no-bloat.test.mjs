@@ -29,6 +29,7 @@ import {
   knipCounts,
   legacyCounts,
   lineChanges,
+  knipEntries,
   knipPluginFiles,
   lockfileProblems,
   measure,
@@ -1450,6 +1451,23 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
       "tools/list.ts",
       "tsconfig.json",
     ],
+  );
+  // An import that reaches one of the repository's Knip entries stops there: Knip counts an entry the same whoever
+  // imports it (Capsomer's docs site renders pages from its components).
+  const site = {
+    "site/vite.config.ts":
+      'import { render } from "./home.ts";\nexport default { plugins: [render] };\n',
+    "site/home.ts":
+      'import { open } from "../components/dialog/dialog.ts";\nexport const render = open;\n',
+    "components/dialog/dialog.ts": 'import "./dialog-drag.ts";\nexport const open = 1;\n',
+    "components/dialog/dialog-drag.ts": "",
+    "knip.jsonc": '{\n  // why\n  "entry": ["components/*/*.ts", "!x"],\n}\n',
+  };
+  const read = (/** @type {string} */ p) => site[/** @type {keyof typeof site} */ (p)] ?? null;
+  assert.deepEqual(knipEntries(read), ["components/*/*.ts"]);
+  assert.deepEqual(
+    knipPluginFiles(Object.keys(site), patterns, (p) => read(p) ?? "", knipEntries(read)).sort(),
+    ["site/home.ts", "site/vite.config.ts"],
   );
   // Beside code, the config is refused as a change of measure.
   const kind = classify({

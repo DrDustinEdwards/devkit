@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.47.0 (2026-11-13)
+
+- `devkit-no-bloat`: a local import that a Knip plugin's config in code reaches stops at a file the repository's Knip config names as an entry (`entry` in knip.json or knip.jsonc, at the root and in each workspace, as it reads both at the base and now). Knip counts an entry the same whoever imports it, so importing it changes nothing about the measure. Before, Capsomer's docs site, whose Vite config renders pages from the components, made almost every component a config: any change that added a module beside one was refused as moving code and its measure together (capsomer #405, #416). A file the config reaches that is not an entry (the docs site's own render code) is still a change of measure, as in 0.43.0.
+
 ## 0.46.0 (2026-11-13)
 
 - `devkit-no-bloat`: a `legacy-scan:keep` names the guide whose rubric drops the match before its reason (`legacy-scan:keep ime-safe-enter-submit isImeEnter checks isComposing and keyCode 229`), and keeps only that guide's match. Before, any three words after the marker kept every match on the line or the next, whatever the guide, so one marker could hide a second legacy pattern beside the one it was written for. **Breaking** for a repository with markers written the 0.45.0 way (Capsomer's five Enter handlers): each gains `ime-safe-enter-submit` after `legacy-scan:keep` in the devkit bump, or its matches count again. A new marker with no guide or no reason fails (`unreasoned`).
