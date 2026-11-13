@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.43.1 (2026-11-13)
+
+- `devkit-no-bloat`: a dependency removed beside a change of measure, such as a Vite plugin taken out of `vite.config.ts` with the library it loads, is part of that change of measure, not code, so the pair passes in one change. Before, the plugin alone left its library unused, and the library alone or with the plugin counted as code beside a definition, so no change could remove both. Such a change may not raise Knip's `unlisted` or `unresolved`, so an import left behind still fails. A dependency removed alone or beside code is still code.
+
 ## 0.43.0 (2026-11-12)
 
 Closes the ways around the no-bloat ratchet that the 0.42.0 verifier found (capsid handoff/no-bloat-gaps-verify-0.42.md: J1, L, M and B2a). **Breaking**: jscpd's `unread` now counts every source file jscpd skips, not only those beside files it reads, and on jscpd 5 it counted nothing before (its report lists no files), so a repository's bump PR widens jscpd's path in a change of its own first, or re-writes its baseline; a change to a file a Knip plugin reads as its config (`vite.config.ts`, `tsconfig.json`, `.mocharc.cjs`) now comes in a change of its own, without code; and a caller workflow can change nothing but its pin and the inputs the check does not depend on.
