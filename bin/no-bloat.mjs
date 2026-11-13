@@ -1623,10 +1623,14 @@ const IMPORT_EXTS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx
  * through literal relative specifiers. Knip imports a config in code (.mocharc.cjs, vite.config.ts), so one can print a
  * report of its own or patch Knip; a config in data (tsconfig.json, .mocharc.json) can make any file an entry, whose
  * exports Knip then never reports. Either is a change of how Knip counts. package.json and the workflows are judged on
- * their own (classify). Pure.
+ * their own (classify). An import that reaches one of the repository's own Knip entries (`entries`, its Knip config's
+ * `entry` globs) stops there: Knip reads an entry as one whatever imports it, so a config importing it changes nothing
+ * about how it is counted, and a site's Vite config that renders pages from the components (Capsomer's docs site) does
+ * not make every component a config. Pure.
  * @param {string[]} paths @param {string[]} patterns @param {(path: string) => string} read
+ * @param {string[]} [entries]
  */
-export function knipPluginFiles(paths, patterns, read) {
+export function knipPluginFiles(paths, patterns, read, entries = []) {
   const own = patterns.filter((g) => !g.startsWith("package.") && !g.startsWith(".github/"));
   const isConfig = (/** @type {string} */ p) =>
     own.some((g) => posix.matchesGlob(p, g) || posix.matchesGlob(p, `**/${g}`));
@@ -1651,13 +1655,41 @@ export function knipPluginFiles(paths, patterns, read) {
         ...IMPORT_EXTS.map((e) => bare + e),
         ...IMPORT_EXTS.map((e) => `${to}/index${e}`),
       ].find((c) => files.has(c));
-      if (hit && !out.has(hit)) {
+      if (hit && !out.has(hit) && !entries.some((g) => posix.matchesGlob(hit, g))) {
         out.add(hit);
         if (CODE_CONFIG.test(hit)) queue.push(hit);
       }
     }
   }
   return [...out];
+}
+
+/**
+ * The `entry` globs of the repository's Knip config in data (knip.json or knip.jsonc, at the root, and each workspace's
+ * with its directory in front), read with `read`; none when there is no such config or it does not parse. Pure.
+ * @param {(path: string) => string | null} read @returns {string[]}
+ */
+export function knipEntries(read) {
+  for (const path of ["knip.json", "knip.jsonc", ".knip.json", ".knip.jsonc"]) {
+    const text = read(path);
+    if (text === null || text === undefined) continue;
+    /** @type {{ entry?: string | string[], workspaces?: Record<string, { entry?: string | string[] }> }} */
+    let config;
+    try {
+      config = JSON.parse(blankComments(text).replace(/,(\s*[\]}])/g, "$1"));
+    } catch {
+      return [];
+    }
+    const list = (/** @type {string | string[] | undefined} */ e) =>
+      e === undefined ? [] : [e].flat();
+    return [
+      ...list(config.entry),
+      ...Object.entries(config.workspaces ?? {}).flatMap(([dir, w]) =>
+        list(w.entry).map((g) => posix.join(dir, g)),
+      ),
+    ].filter((g) => !g.startsWith("!"));
+  }
+  return [];
 }
 
 /** A parser for a change that has no workflow to read. */
@@ -2410,10 +2442,13 @@ function main() {
     if (ref) {
       const base = atBase(root, file, ref, config);
       const files = [...new Set([...gitSource(root).list(), ...base.changed])];
+      // The entries the Knip config names both at the base and now, so a change cannot exempt a file by adding it.
+      const [entriesBefore, entriesNow] = [knipEntries(base.before), knipEntries(base.now)];
       const plugins = knipPluginFiles(
         files,
         tools.knipConfigs(),
         (p) => base.now(p) ?? base.before(p) ?? "",
+        entriesNow.filter((g) => entriesBefore.includes(g)),
       );
       const next = write ? { ...config, baseline: { ...measured.counts } } : config;
       refused.push(
