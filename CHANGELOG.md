@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.48.0 (2026-11-13)
+
+- `devkit-shared --base <sha>`: on a pull request the check also reads the base as its own checkout, with the same packages, and a failure the base already has becomes a warning ("already on the base branch"). A pull request fails only on what it adds. Before, a copy merged earlier, a pin a newer release left behind (S7, the pin-age rule) or a new rule turned every open pull request red at once: "Shared code" failed about 100 times each in carrel, capsid and foxing in the 48 hours to 2026-11-13. `pr.yml` and `checks.yml` pass the base.
+- `pr.yml` runs its checks on a `schedule` event too, with no base, so a caller's daily run judges the default branch's state, and a red run is Capsid's job for that repository. `examples/pr-caller.yml` gains the daily schedule.
+- `devkit-no-bloat`: a `schedule` added to a caller's `on`, with nothing else there changed, is no change to the check (it only adds runs), so the caller can gain the daily run in a pull request.
+
 ## 0.47.1 (2026-11-13)
 
 - `devkit-no-bloat`: a local import that a Knip plugin's config in code reaches stops at any code file the repository's Knip config counts (its `entry` and `project` globs, root and workspaces, or Knip's default project), as both the base and the change read them. 0.47.0 stopped only at entries, so Capsomer's docs site, whose Vite config imports its own render modules (`site/themes.ts`, `site/content.ts`, `bin/parts.mjs`), still made a change to them a change of measure (capsomer #405). A data file a config imports (`.json`) is still followed, and the config file itself is still one.

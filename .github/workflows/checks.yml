@@ -85,3 +85,5 @@ jobs:
       - name: Uses the shared code
         if: env.CODE == 'true'
         uses: ./.devkit/.github/actions/shared
+        with:
+          base-sha: ${{ github.event.pull_request.base.sha }}

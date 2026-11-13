@@ -1320,6 +1320,8 @@ test("a workflow change that turns the check off or changes what runs before it 
     base.replace("a".repeat(40), "b".repeat(40)).replace("review: false", "review: true"),
     base.replace(/\n/g, "\r\n"),
     `"on": { pull_request: null }\njobs:\n  checks: { uses: "${pin("b")}", with: { review: true, "no-bloat-prepare": npm run gen } }\n`,
+    // A schedule only adds runs (the daily shared-code run on the default branch).
+    base.replace("  pull_request:\n", "  pull_request:\n  schedule:\n    - cron: '17 5 * * *'\n"),
   ])
     assert.equal(check(same), "");
   const add = (/** @type {string} */ lines) =>
@@ -1359,6 +1361,10 @@ test("a workflow change that turns the check off or changes what runs before it 
     ],
     [
       base.replace("  pull_request:\n", "  pull_request:\n    paths-ignore: ['**']\n"),
+      /changes its top-level "on"/,
+    ],
+    [
+      base.replace("  pull_request:\n", "  schedule:\n    - cron: '17 5 * * *'\n"),
       /changes its top-level "on"/,
     ],
     [
