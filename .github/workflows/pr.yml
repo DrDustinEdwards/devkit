@@ -40,7 +40,11 @@ name: pr
 # mostly waits on the model. The first job is no slower than before.
 #
 # THE CALLER (examples/pr-caller.yml) runs on pull_request and merge_group, never on a push to the default branch: the
-# merge was checked as a pull request, and the rulesets allow no other way onto it. Its concurrency group is the pull
+# merge was checked as a pull request, and the rulesets allow no other way onto it. It also runs once a day on the default
+# branch (schedule). On a pull request the shared-code check fails only on what the change adds: a failure the base already
+# has (a copy merged earlier, a pin a newer release left behind, a new devkit rule) is a warning there. The daily run has no
+# base, so it judges the repository's state, goes red on what is owed, and Capsid's watcher opens one job for that
+# repository (ci-red-<namespace>). Before 2026-11-13 each such failure turned every open pull request red at once. Its concurrency group is the pull
 # request, so a newer push (a Renovate branch moved by the next release) cancels the older run. It grants contents read,
 # pull-requests write (the footer), id-token write and checks write (the reviewer), because a called workflow holds no more
 # than its caller gives it, and pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
@@ -150,7 +154,7 @@ jobs:
       contents: read
       pull-requests: write
     env:
-      CODE: ${{ github.event_name == 'push' || github.event_name == 'merge_group' || github.event_name == 'pull_request' }}
+      CODE: ${{ github.event_name == 'push' || github.event_name == 'merge_group' || github.event_name == 'pull_request' || github.event_name == 'schedule' }}
       FOOTER: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'synchronize' && github.event.pull_request.head.repo.full_name == github.repository) }}
       NODE: ${{ inputs.node && (inputs.no-bloat || inputs.worker-size) }}
       BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
@@ -199,6 +203,8 @@ jobs:
         id: shared
         if: ${{ !cancelled() && steps.repo.outcome == 'success' }}
         uses: ./.devkit/.github/actions/shared
+        with:
+          base-sha: ${{ env.BASE_SHA }}
 
       - name: Dependencies
         id: dependencies

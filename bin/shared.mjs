@@ -48,6 +48,7 @@
 //   npx devkit-shared                    the check, against .shared.json (no file: one site at the root)
 //   npx devkit-shared --fix-spelling     rewrite the British spellings in place, then run the check
 //   npx devkit-shared list               the generated list of every shared package's exports and every shared feature
+//   --base <sha>                         a pull request: check the base as well, and a failure it already has is a warning
 //   --from <dir>                         read the packages from checkouts named by repository (dir/prelum, dir/site-runtime...)
 //                                        instead of node_modules; a checkout missing there stops the check (exit 2)
 //
@@ -80,7 +81,15 @@
 // file, "waive" for a feature or workflow.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join, posix } from "node:path";
 
 import { appendSummary, escapeAnnotation, escapeProperty } from "./annotate.mjs";
@@ -2308,18 +2317,13 @@ function peersOf(locate) {
   return peers;
 }
 
-async function main(/** @type {string[]} */ argv) {
-  const root = process.cwd();
-  const from = argv.includes("--from") ? argv[argv.indexOf("--from") + 1] : null;
-  // Installed packages by default; --from reads checkouts named by repository, for a tree with nothing installed.
-  const locate = (/** @type {string} */ name, /** @type {string} */ repo) => {
-    const dir = from ? join(from, repo) : join(root, "node_modules", name);
-    return existsSync(join(dir, "package.json")) ? dir : null;
-  };
-  if (argv[0] === "list") {
-    process.stdout.write(listMarkdown(readCatalog(locate).packages));
-    return 0;
-  }
+/**
+ * Every finding for the checkout at `root`, with packages read through `locate`. The base of a pull request is checked by
+ * the same code, so the two runs differ only in the tree.
+ * @param {string} root @param {(name: string, repo: string) => string | null} locate @param {boolean} from @param {boolean} fix
+ * @returns {Promise<Finding[]>}
+ */
+async function findingsAt(root, locate, from, fix) {
   const configFile = existsSync(join(root, ".shared.json")) ? ".shared.json" : null;
   /** @type {Config} */
   const config = configFile ? JSON.parse(readFileSync(join(root, configFile), "utf8")) : {};
@@ -2341,8 +2345,7 @@ async function main(/** @type {string[]} */ argv) {
   const missing = PACKAGES.filter((p) => p.repo !== self?.repo && !locate(p.name, p.repo)).map(
     (p) => p.repo,
   );
-  if (from && missing.length)
-    throw new Error(`--from ${from} has no checkout of ${missing.join(", ")}`);
+  if (from && missing.length) throw new Error(`--from has no checkout of ${missing.join(", ")}`);
   const { catalog } = readCatalog((name, repo) =>
     repo === self?.repo ? null : locate(name, repo),
   );
@@ -2380,7 +2383,7 @@ async function main(/** @type {string[]} */ argv) {
     ...(self?.repo === "capsomer"
       ? []
       : checkTokens(tree, capsomerTokens(locate("capsomer", "capsomer")), config)),
-    ...checkSpelling(root, config, argv.includes("--fix-spelling"), !self),
+    ...checkSpelling(root, config, fix, !self),
     ...checkWorkflows(tree, config, { self: self?.repo, private: event.repository?.private }),
     ...checkFakes(tree, config, self?.label),
     ...checkAi(tree, config, self?.label),
@@ -2397,6 +2400,50 @@ async function main(/** @type {string[]} */ argv) {
     });
   } else {
     findings.push(...staleExceptions(config));
+  }
+  return findings;
+}
+
+/** What makes two findings the same one, on two trees: a line number moves with any edit above it. @param {Finding} f */
+const findingKey = (f) => `${f.check}\u0000${f.file ?? ""}\u0000${f.message}`;
+
+/**
+ * A pull request's findings, judged against its base: a failure the base already has is the repository's state, not the
+ * change's, so it is a warning here and the daily run on the default branch reports it (README, "The shared checks").
+ * @param {Finding[]} head @param {Finding[]} base @returns {Finding[]}
+ */
+export function againstBase(head, base) {
+  const before = new Set(base.filter((f) => !isWarning(f)).map(findingKey));
+  return head.map((f) =>
+    !isWarning(f) && before.has(findingKey(f))
+      ? { ...f, warn: true, message: `${f.message} (already on the base branch)` }
+      : f,
+  );
+}
+
+async function main(/** @type {string[]} */ argv) {
+  const root = process.cwd();
+  const from = argv.includes("--from") ? argv[argv.indexOf("--from") + 1] : null;
+  const base = argv.includes("--base") ? argv[argv.indexOf("--base") + 1] : null;
+  // Installed packages by default; --from reads checkouts named by repository, for a tree with nothing installed.
+  const locate = (/** @type {string} */ name, /** @type {string} */ repo) => {
+    const dir = from ? join(from, repo) : join(root, "node_modules", name);
+    return existsSync(join(dir, "package.json")) ? dir : null;
+  };
+  if (argv[0] === "list") {
+    process.stdout.write(listMarkdown(readCatalog(locate).packages));
+    return 0;
+  }
+  let findings = await findingsAt(root, locate, !!from, argv.includes("--fix-spelling"));
+  if (base) {
+    // The base as its own checkout, read by the same packages, so only the change differs.
+    const dir = mkdtempSync(join(tmpdir(), "devkit-shared-base-"));
+    execFileSync("git", ["worktree", "add", "--detach", "--quiet", dir, base], { cwd: root });
+    try {
+      findings = againstBase(findings, await findingsAt(dir, locate, !!from, false));
+    } finally {
+      execFileSync("git", ["worktree", "remove", "--force", dir], { cwd: root });
+    }
   }
   const errors = findings.filter((f) => !isWarning(f));
   for (const f of findings) {

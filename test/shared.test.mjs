@@ -24,6 +24,7 @@ import {
   checkSpelling,
   checkTokens,
   checkWorkflows,
+  againstBase,
   isWarning,
   newest,
   respell,
@@ -1250,4 +1251,30 @@ test("PLANT: an MCP tool for a job another owner holds fails, renamed or not; th
     checkJobs(tree(files), { copies: { "mcp/src/tools.ts#site_save_post": "why" } }, "site").length,
     2,
   );
+});
+
+test("PLANT: on a pull request a failure the base already has is a warning, and one the change adds still fails", () => {
+  const old = {
+    check: "copies",
+    file: "app/a.ts",
+    line: 3,
+    message: "escapeHtml copies site-runtime ./html",
+  };
+  const added = {
+    check: "copies",
+    file: "app/b.ts",
+    line: 9,
+    message: "escapeHtml copies site-runtime ./html",
+  };
+  const judged = againstBase([{ ...old, line: 7 }, added], [old]);
+  assert.deepEqual(
+    judged.map((f) => [f.file, isWarning(f)]),
+    [
+      ["app/a.ts", true],
+      ["app/b.ts", false],
+    ],
+  );
+  assert.match(judged[0].message, /already on the base branch/);
+  // A warning on the base excuses nothing: only a failure there is the repository's state.
+  assert.equal(isWarning(againstBase([added], [{ ...added, warn: true }])[0]), false);
 });

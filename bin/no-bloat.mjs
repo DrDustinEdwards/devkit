@@ -1843,7 +1843,7 @@ function needsOf(/** @type {Record<string, any>} */ jobs, /** @type {string} */ 
  * the inputs that are not CHECK_INPUTS (its `if`, `needs`, `strategy`, the workflow it calls); a change to an input that
  * turns the check off or decides what runs before it (the install, the prepare step, the config, the Node); any change to
  * a job it waits for (`needs`, which a skipped job skips too); and any change outside `jobs` (`on`, whose filters stop the
- * workflow running at all, `concurrency`, `permissions`). A file that no longer parses is refused too. The run that judges
+ * workflow running at all, `concurrency`, `permissions`), except a `schedule` added to `on`, which only adds runs. A file that no longer parses is refused too. The run that judges
  * such a change is the change's own, with its inputs, so a check it turns off never runs to refuse it; so it is refused
  * here whenever it does run, pr.yml refuses the rest (`--inputs-from`), and Capsid's nightly watch reports any that
  * merged. Pure, given the parser.
@@ -1880,8 +1880,20 @@ export function workflowInputs(path, was, is, parseYaml) {
     return out;
   }
   const jobsB = b.jobs && typeof b.jobs === "object" ? b.jobs : {};
+  // A schedule added to `on`, and nothing else changed there, only adds runs: it stops none (the daily shared-code run on
+  // the default branch, README "The shared checks").
+  const addsOnlySchedule = (/** @type {any} */ was, /** @type {any} */ is) => {
+    if (!is || typeof is !== "object" || Array.isArray(is) || !("schedule" in is)) return false;
+    if (was && typeof was === "object" && "schedule" in was) return false;
+    const { schedule: _, ...rest } = is;
+    return canonical(was) === canonical(rest);
+  };
   for (const key of new Set([...Object.keys(a), ...Object.keys(b)]))
-    if (key !== "jobs" && canonical(a[key]) !== canonical(b[key]))
+    if (
+      key !== "jobs" &&
+      canonical(a[key]) !== canonical(b[key]) &&
+      !(key === "on" && addsOnlySchedule(a.on, b.on))
+    )
       say(`changes its top-level "${key}"`);
   const show = (/** @type {unknown} */ v) =>
     JSON.stringify(v === undefined ? "(default)" : typeof v === "string" ? v : canonical(v));
