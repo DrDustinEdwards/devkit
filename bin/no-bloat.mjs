@@ -19,7 +19,8 @@
 // .gitignore hides from Knip fails, a new file jscpd skips fails, and the tools must be npm's at x.y.z and devkit a
 // DrDustinEdwards/devkit tag. No change may drop or turn off the job that runs the check, or change the inputs that
 // decide what runs before it (workflowInputs, which reads the workflow with a YAML parser); install scripts, patches and
-// a Knip plugin's config files are a change of measure. In Actions the check counts the commit the run is for
+// a Knip plugin's config files are a change of measure, except a config in code Knip counts no less from at the base and
+// now (settledConfigs: its inputs in `knip --debug`, less pages the build writes and the scripts its pages load). In Actions the check counts the commit the run is for
 // (checkoutProblems). A real
 // exception goes in knip.jsonc with a comment saying why, behind `jscpd:ignore-start` and its reason, or after `@public`,
 // `@beta` or `@alias` with who uses it; one added with no reason in words (isReason) fails, and so does any entry added
@@ -78,6 +79,7 @@ import {
   readdirSync,
   readFileSync,
   rmSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
@@ -108,7 +110,7 @@ const BUFFER = 64 * 1024 * 1024;
  *   tests?: Files | false, comments?: Files & { tolerance?: number, fail?: boolean } | false,
  *   tools?: { knip?: string, jscpd?: string, "modern-web-guidance"?: string },
  *   baseline?: Record<string, unknown> & { measured_at?: string } }} Config
- * @typedef {(name: "knip" | "jscpd" | "modern-web-guidance", args: string[]) => string} Runner
+ * @typedef {(name: "knip" | "jscpd" | "modern-web-guidance", args: string[], cwd?: string) => string} Runner
  * @typedef {{ list: () => string[], read: (path: string) => string }} Source
  * @typedef {Record<string, Record<string, number>>} Counts
  */
@@ -1044,12 +1046,12 @@ export function checkTools(root, tools, given = process.env.DEVKIT_NO_BLOAT_TOOL
   let parse;
   return {
     dir,
-    run: (name, args) => {
+    run: (name, args, cwd = root) => {
       const pkg = join(dir(), "node_modules", name);
       const { bin } = JSON.parse(readFileSync(join(pkg, "package.json"), "utf8"));
       const file = join(pkg, typeof bin === "string" ? bin : bin[name]);
       const r = spawnSync(process.execPath, [file, ...args], {
-        cwd: root,
+        cwd,
         encoding: "utf8",
         env: cleanEnv(process.env),
         maxBuffer: BUFFER,
@@ -1364,6 +1366,7 @@ function atBase(
       ignored.push({ source: f[i], line: f[i + 1], pattern: f[i + 2], path: f[i + 3] });
   }
   return {
+    base,
     config,
     configPath,
     changed,
@@ -1633,13 +1636,15 @@ const IMPORT_EXTS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx
  * a config importing it changes nothing about how it is counted, and a site's Vite config that renders pages from the
  * components and its own render modules (Capsomer's docs site) does not make them configs. A data file it reaches
  * (.json) is still followed, and a code file outside the project, which Knip never reads as code, is still a config's.
- * Pure.
+ * A config in code in `settled` is left out with what it imports: Knip counts no less from it now than at the base
+ * (settledConfigs), so its body changed what the config does, not what Knip counts. Pure.
  * @param {string[]} paths @param {string[]} patterns @param {(path: string) => string} read
- * @param {string[]} [counted]
+ * @param {string[]} [counted] @param {string[]} [settled]
  */
-export function knipPluginFiles(paths, patterns, read, counted = []) {
+export function knipPluginFiles(paths, patterns, read, counted = [], settled = []) {
   const own = patterns.filter((g) => !g.startsWith("package.") && !g.startsWith(".github/"));
   const isConfig = (/** @type {string} */ p) =>
+    !settled.includes(p) &&
     own.some((g) => posix.matchesGlob(p, g) || posix.matchesGlob(p, `**/${g}`));
   const files = new Set(paths);
   const out = new Set(paths.filter(isConfig));
@@ -1673,6 +1678,127 @@ export function knipPluginFiles(paths, patterns, read, counted = []) {
     }
   }
   return [...out];
+}
+
+/**
+ * The inputs Knip takes from each plugin config, by the config's path, read from `knip --debug`, which lists every input
+ * with the file it came from (`'entry:src/vite-env.d.ts (site/vite.config.ts)'`), each list sorted. A config Knip loads
+ * and takes nothing from has no key. Pure.
+ * @param {string} debug @returns {Record<string, string[]>}
+ */
+export function knipConfigInputs(debug) {
+  /** @type {Record<string, string[]>} */
+  const out = {};
+  // oxlint-disable-next-line no-control-regex -- the color codes Knip may print around each string
+  const plain = debug.replace(/\u001b\[[0-9;]*m/g, "");
+  for (const m of plain.matchAll(/'([A-Za-z]+:[^'\n]*?) \(([^'()\n]+)\)'/g))
+    (out[m[2]] ??= []).push(m[1]);
+  for (const list of Object.values(out)) list.sort();
+  return out;
+}
+
+/**
+ * Whether Knip counts no less from a config now than at the base: every input it takes now it took at the base too. An
+ * entry naming a file the repository does not have at that side (a page the build writes, which is not in git) reads
+ * nothing and is left out, at the base against `filesBefore` and now against `filesNow`; a relative entry is read from
+ * the config's folder and from the root. Dropping an input is a stricter count, as dropping an entry from knip.json is
+ * (onlyDropsEntries). A script a page among the config's inputs loads (`pageScripts`, an HTML file's `<script src>`, as
+ * Knip's Vite plugin reads it) is that page's code, as an import is, so it may be new. Pure.
+ * @param {string} config @param {string[]} before @param {string[]} now
+ * @param {string[]} filesBefore @param {string[]} filesNow @param {string[]} [pageScripts]
+ */
+export function inputsNarrowed(config, before, now, filesBefore, filesNow, pageScripts = []) {
+  const real = (/** @type {string[]} */ list, /** @type {Set<string>} */ files) =>
+    list.filter((input) => {
+      const [type, spec] = [
+        input.slice(0, input.indexOf(":")),
+        input.slice(input.indexOf(":") + 1),
+      ];
+      if (!/entry/i.test(type) || /[*?{[(!$]/.test(spec)) return true;
+      return [spec, posix.join(posix.dirname(config), spec)].some((p) =>
+        files.has(posix.normalize(p)),
+      );
+    });
+  const was = new Set(real(before, new Set(filesBefore)));
+  return real(now, new Set(filesNow)).every(
+    (input) => was.has(input) || pageScripts.includes(input.slice(input.indexOf(":") + 1)),
+  );
+}
+
+/**
+ * The scripts the HTML pages among a config's inputs load, by repository path: each `<script src>` that is not a URL,
+ * read from the folder of its page. A page the build writes is read where it is now. `read` is null for a page that
+ * is not there. Pure.
+ * @param {string[]} inputs @param {(path: string) => string | null} read @returns {string[]}
+ */
+export function pageScripts(inputs, read) {
+  return inputs.flatMap((input) => {
+    const page = posix.normalize(input.slice(input.indexOf(":") + 1));
+    const html = page.endsWith(".html") ? read(page) : null;
+    if (html === null) return [];
+    return [...html.matchAll(/<script\b[^>]*?\ssrc=["']([^"']+)["']/gi)]
+      .map((m) => m[1])
+      .filter((src) => !/^[a-z]+:|^\/\//i.test(src))
+      .map((src) =>
+        posix.normalize(src.startsWith("/") ? src.slice(1) : posix.join(posix.dirname(page), src)),
+      );
+  });
+}
+
+/**
+ * The configs in code among `roots` that Knip counts no less from now than at `base`, for every Knip run
+ * (inputsNarrowed): a change to such a config's body, or to what it imports, changes what the config does, not what Knip
+ * counts. The base is checked out on its own, beside this checkout's node_modules, and read by the same Knip. When
+ * either side cannot be read, none is settled and every change to a config stays a change of measure. Knip runs a config
+ * in code to read it, so a config could still patch Knip itself; the counts the run reports are the guard there.
+ * @param {string} root @param {string} base a commit @param {string[]} roots @param {string[]} files now
+ * @param {(args: string[], cwd?: string) => string} knip @param {string[][]} runs each Knip run's own arguments
+ * @returns {string[]}
+ */
+function settledConfigs(root, base, roots, files, knip, runs) {
+  if (!roots.length) return [];
+  const git = (/** @type {string[]} */ args) =>
+    execFileSync("git", args, {
+      cwd: root,
+      encoding: "utf8",
+      maxBuffer: BUFFER,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+  const dir = mkdtempSync(join(tmpdir(), "no-bloat-base-"));
+  try {
+    git(["worktree", "add", "--detach", "--quiet", dir, base]);
+    if (existsSync(join(root, "node_modules")))
+      symlinkSync(join(root, "node_modules"), join(dir, "node_modules"), "dir");
+    const filesBefore = git(["ls-tree", "-r", "-z", "--name-only", base]).split("\0");
+    const debug = ["--debug", "--no-exit-code", "--no-progress", "--no-config-hints"];
+    const same = new Set(roots);
+    for (const args of runs) {
+      const [was, is] = [dir, root].map((cwd) => knipConfigInputs(knip([...args, ...debug], cwd)));
+      for (const r of roots)
+        if (
+          !inputsNarrowed(
+            r,
+            was[r] ?? [],
+            is[r] ?? [],
+            filesBefore,
+            files,
+            pageScripts(is[r] ?? [], (p) =>
+              existsSync(join(root, p)) ? readFileSync(join(root, p), "utf8") : null,
+            ),
+          )
+        )
+          same.delete(r);
+    }
+    return [...same];
+  } catch {
+    return [];
+  } finally {
+    try {
+      git(["worktree", "remove", "--force", dir]);
+    } catch {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  }
 }
 
 /** Knip's default `project`: every source file it reads as code (knip.dev, "Configuration"). */
@@ -2514,12 +2640,25 @@ function main() {
       const files = [...new Set([...gitSource(root).list(), ...base.changed])];
       // The code the Knip config counts both at the base and now, so a change cannot exempt a file by adding it.
       const [countedBefore, countedNow] = [knipCounted(base.before), knipCounted(base.now)];
-      const plugins = knipPluginFiles(
-        files,
-        tools.knipConfigs(),
-        (p) => base.now(p) ?? base.before(p) ?? "",
-        countedNow.filter((g) => countedBefore.includes(g)),
-      );
+      const patterns = tools.knipConfigs();
+      const read = (/** @type {string} */ p) => base.now(p) ?? base.before(p) ?? "";
+      const counted = countedNow.filter((g) => countedBefore.includes(g));
+      let plugins = knipPluginFiles(files, patterns, read, counted);
+      // A config in code that moved, alone or through what it imports, is judged by the inputs Knip takes from it, not its body.
+      if (plugins.some((p) => base.changed.includes(p))) {
+        const roots = plugins.filter(
+          (p) => CODE_CONFIG.test(p) && knipPluginFiles([p], patterns, () => "").length,
+        );
+        const settled = settledConfigs(
+          root,
+          base.base,
+          roots,
+          files,
+          (args, cwd) => tools.run("knip", args, cwd),
+          (config.knip ?? [{ label: "knip" }]).map((r) => r.args ?? []),
+        );
+        if (settled.length) plugins = knipPluginFiles(files, patterns, read, counted, settled);
+      }
       const next = write ? { ...config, baseline: { ...measured.counts } } : config;
       refused.push(
         ...raised(next, base.config, classify({ ...base, plugins }, tools.parseYaml)),
