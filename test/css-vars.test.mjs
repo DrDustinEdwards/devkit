@@ -26,7 +26,7 @@ test("declarations: CSS, a style-object key and setProperty", () => {
   assert.deepEqual([...found].sort(), ["--h", "--shadow-m", "--w"]);
 });
 
-test("PLANT: a class whose stylesheet nothing imports is found; one an imported sheet loads through @import is not", () => {
+test("PLANT: a class whose own stylesheet nothing imports is found, though a sheet that lists it in :is() is loaded", () => {
   const pkgDir = mkdtempSync(join(tmpdir(), "css-classes-"));
   mkdirSync(join(pkgDir, "css"));
   writeFileSync(
@@ -42,7 +42,8 @@ test("PLANT: a class whose stylesheet nothing imports is found; one an imported 
     "@layer u { .cap-stack { display: flex; } }\n.cap-panes > .cap-x {}",
   );
   writeFileSync(join(pkgDir, "css", "grid.css"), ".cap-grid { display: grid; }");
-  writeFileSync(join(pkgDir, "css", "text.css"), ".cap-text, :is(.cap-title)[data-size] {}");
+  writeFileSync(join(pkgDir, "css", "gap.css"), ':is(.cap-stack, .cap-grid)[data-gap="1"] {}');
+  writeFileSync(join(pkgDir, "css", "text.css"), ".cap-text, .cap-title[data-size] {}");
   const files = [
     { rel: "src/root.tsx", content: 'import "kit/all.css";\nimport "kit/text.css";' },
     {
@@ -51,7 +52,7 @@ test("PLANT: a class whose stylesheet nothing imports is found; one an imported 
     },
   ];
   assert.deepEqual(unloadedClasses({ pkgDir, prefix: "cap-", files }), []);
-  files[0].content = 'import "kit/stack.css";';
+  files[0].content = 'import "kit/stack.css";\nimport "kit/gap.css";';
   files[1].content += '\n<b className="cap-grid">';
   assert.deepEqual(unloadedClasses({ pkgDir, prefix: "cap-", files }), [
     "src/a.tsx:3: .cap-grid is styled in kit/grid.css, which nothing here imports",
