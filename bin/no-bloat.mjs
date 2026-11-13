@@ -1481,7 +1481,7 @@ const DEPENDENCY_FIELDS = [
  * but the config's `baseline` and `tools`, a lockfile, a definition, and in package.json dependency versions moved
  * forward or a new shared package). `definition`: what it changes in how Knip or jscpd counts (their config files in any
  * format, a Knip config a run names with --config, a Knip plugin's config and what it imports (`plugins`,
- * knipPluginFiles), package.json's `knip` or `jscpd`, the no-bloat config outside `baseline` and `tools`). `workflow`: the workflows it changes that run the check, other than moving their devkit pins
+ * knipPluginFiles; a Knip config in data that only drops entries is code, onlyDropsEntries), package.json's `knip` or `jscpd`, the no-bloat config outside `baseline` and `tools`). `workflow`: the workflows it changes that run the check, other than moving their devkit pins
  * (a workflow is no file the counts read, so it is never code). `back`: the shared packages it moves to an older release.
  * `refused`: what no change may do to the tools that measure: a `tools` entry that is not `<tool>@x.y.z` or is older than
  * the base's, and a devkit dependency that is not a DrDustinEdwards/devkit release tag or is overridden. Pure.
@@ -1527,6 +1527,11 @@ export function classify(change, parseYaml = noYaml) {
     // A workspace has a manifest and a lockfile per package, so each is read by its name in any directory.
     const name = posix.basename(p);
     if (LOCKFILES.test(name)) continue;
+    // Dropping an entry only makes Knip count more, so it is judged as code: a raise it causes is refused.
+    if (KNIP_DATA.test(name) && onlyDropsEntries(change.before(p), change.now(p))) {
+      code = true;
+      continue;
+    }
     if (
       DEFINITIONS.test(name) ||
       INSTALL_FILES.test(name) ||
@@ -1623,14 +1628,16 @@ const IMPORT_EXTS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx
  * through literal relative specifiers. Knip imports a config in code (.mocharc.cjs, vite.config.ts), so one can print a
  * report of its own or patch Knip; a config in data (tsconfig.json, .mocharc.json) can make any file an entry, whose
  * exports Knip then never reports. Either is a change of how Knip counts. package.json and the workflows are judged on
- * their own (classify). An import that reaches one of the repository's own Knip entries (`entries`, its Knip config's
- * `entry` globs) stops there: Knip reads an entry as one whatever imports it, so a config importing it changes nothing
- * about how it is counted, and a site's Vite config that renders pages from the components (Capsomer's docs site) does
- * not make every component a config. Pure.
+ * their own (classify). An import stops at a code file of the repository's own Knip project (`counted`, the `entry` and
+ * `project` globs of its Knip config, knipCounted): Knip reads that file as code like any other, whatever imports it, so
+ * a config importing it changes nothing about how it is counted, and a site's Vite config that renders pages from the
+ * components and its own render modules (Capsomer's docs site) does not make them configs. A data file it reaches
+ * (.json) is still followed, and a code file outside the project, which Knip never reads as code, is still a config's.
+ * Pure.
  * @param {string[]} paths @param {string[]} patterns @param {(path: string) => string} read
- * @param {string[]} [entries]
+ * @param {string[]} [counted]
  */
-export function knipPluginFiles(paths, patterns, read, entries = []) {
+export function knipPluginFiles(paths, patterns, read, counted = []) {
   const own = patterns.filter((g) => !g.startsWith("package.") && !g.startsWith(".github/"));
   const isConfig = (/** @type {string} */ p) =>
     own.some((g) => posix.matchesGlob(p, g) || posix.matchesGlob(p, `**/${g}`));
@@ -1655,7 +1662,11 @@ export function knipPluginFiles(paths, patterns, read, entries = []) {
         ...IMPORT_EXTS.map((e) => bare + e),
         ...IMPORT_EXTS.map((e) => `${to}/index${e}`),
       ].find((c) => files.has(c));
-      if (hit && !out.has(hit) && !entries.some((g) => posix.matchesGlob(hit, g))) {
+      if (
+        hit &&
+        !out.has(hit) &&
+        !(CODE_CONFIG.test(hit) && counted.some((g) => posix.matchesGlob(hit, g)))
+      ) {
         out.add(hit);
         if (CODE_CONFIG.test(hit)) queue.push(hit);
       }
@@ -1664,32 +1675,79 @@ export function knipPluginFiles(paths, patterns, read, entries = []) {
   return [...out];
 }
 
+/** Knip's default `project`: every source file it reads as code (knip.dev, "Configuration"). */
+const KNIP_PROJECT = "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}";
+
 /**
- * The `entry` globs of the repository's Knip config in data (knip.json or knip.jsonc, at the root, and each workspace's
- * with its directory in front), read with `read`; none when there is no such config or it does not parse. Pure.
- * @param {(path: string) => string | null} read @returns {string[]}
+ * The repository's Knip config in data (knip.json or knip.jsonc), parsed as Knip reads it (JSONC), read with `read`:
+ * undefined when there is none, null when it does not parse. Pure.
+ * @param {(path: string) => string | null} read @returns {any}
  */
-export function knipEntries(read) {
+function knipData(read) {
   for (const path of ["knip.json", "knip.jsonc", ".knip.json", ".knip.jsonc"]) {
     const text = read(path);
     if (text === null || text === undefined) continue;
-    /** @type {{ entry?: string | string[], workspaces?: Record<string, { entry?: string | string[] }> }} */
-    let config;
     try {
-      config = JSON.parse(blankComments(text).replace(/,(\s*[\]}])/g, "$1"));
+      return JSON.parse(blankComments(text).replace(/,(\s*[\]}])/g, "$1"));
     } catch {
-      return [];
+      return null;
     }
-    const list = (/** @type {string | string[] | undefined} */ e) =>
-      e === undefined ? [] : [e].flat();
-    return [
-      ...list(config.entry),
-      ...Object.entries(config.workspaces ?? {}).flatMap(([dir, w]) =>
-        list(w.entry).map((g) => posix.join(dir, g)),
-      ),
-    ].filter((g) => !g.startsWith("!"));
   }
-  return [];
+  return undefined;
+}
+
+/** A Knip config's `entry` or `project` globs, at the root and in each workspace with its directory in front. */
+const knipGlobs = (/** @type {any} */ config, /** @type {"entry" | "project"} */ key) => {
+  const list = (/** @type {string | string[] | undefined} */ e) =>
+    e === undefined ? [] : [e].flat();
+  return [
+    ...list(config?.[key]),
+    ...Object.entries(config?.workspaces ?? {}).flatMap(([dir, w]) =>
+      list(/** @type {any} */ (w)?.[key]).map((g) => posix.join(dir, g)),
+    ),
+  ];
+};
+
+/**
+ * The files the repository's Knip config in data reads as its own code: its `entry` and `project` globs (root and
+ * workspaces), or Knip's default project when it names none or there is no such config; none when it does not parse.
+ * Negated globs are left out. Pure.
+ * @param {(path: string) => string | null} read @returns {string[]}
+ */
+export function knipCounted(read) {
+  const config = knipData(read);
+  if (config === null) return [];
+  const project = knipGlobs(config, "project");
+  return [...knipGlobs(config, "entry"), ...(project.length ? project : [KNIP_PROJECT])].filter(
+    (g) => !g.startsWith("!"),
+  );
+}
+
+/**
+ * Whether a change to a Knip config in data only drops `entry` globs (root or workspace) that are not negations. Knip
+ * then reads fewer files as entries, so it reports more, never less: a stricter count, not a change of measure. Pure.
+ * @param {string | null} before @param {string | null} now
+ */
+function onlyDropsEntries(before, now) {
+  const [a, b] = [knipData(() => before), knipData(() => now)];
+  if (!a || !b) return false;
+  const rest = (/** @type {any} */ c) =>
+    JSON.stringify({
+      ...c,
+      entry: undefined,
+      workspaces: Object.fromEntries(
+        Object.entries(c.workspaces ?? {}).map(([k, w]) => [
+          k,
+          { .../** @type {any} */ (w), entry: undefined },
+        ]),
+      ),
+    });
+  const [was, is] = [knipGlobs(a, "entry"), knipGlobs(b, "entry")];
+  return (
+    rest(a) === rest(b) &&
+    is.every((g) => was.includes(g)) &&
+    was.filter((g) => !is.includes(g)).every((g) => !g.startsWith("!"))
+  );
 }
 
 /** A parser for a change that has no workflow to read. */
@@ -2442,13 +2500,13 @@ function main() {
     if (ref) {
       const base = atBase(root, file, ref, config);
       const files = [...new Set([...gitSource(root).list(), ...base.changed])];
-      // The entries the Knip config names both at the base and now, so a change cannot exempt a file by adding it.
-      const [entriesBefore, entriesNow] = [knipEntries(base.before), knipEntries(base.now)];
+      // The code the Knip config counts both at the base and now, so a change cannot exempt a file by adding it.
+      const [countedBefore, countedNow] = [knipCounted(base.before), knipCounted(base.now)];
       const plugins = knipPluginFiles(
         files,
         tools.knipConfigs(),
         (p) => base.now(p) ?? base.before(p) ?? "",
-        entriesNow.filter((g) => entriesBefore.includes(g)),
+        countedNow.filter((g) => countedBefore.includes(g)),
       );
       const next = write ? { ...config, baseline: { ...measured.counts } } : config;
       refused.push(

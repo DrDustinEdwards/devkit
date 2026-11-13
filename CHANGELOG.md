@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.47.1 (2026-11-13)
+
+- `devkit-no-bloat`: a local import that a Knip plugin's config in code reaches stops at any code file the repository's Knip config counts (its `entry` and `project` globs, root and workspaces, or Knip's default project), as both the base and the change read them. 0.47.0 stopped only at entries, so Capsomer's docs site, whose Vite config imports its own render modules (`site/themes.ts`, `site/content.ts`, `bin/parts.mjs`), still made a change to them a change of measure (capsomer #405). A data file a config imports (`.json`) is still followed, and the config file itself is still one.
+- `devkit-no-bloat`: a change to knip.json or knip.jsonc that only drops `entry` globs (not negations) is judged as code, not as a change of measure: Knip then reads fewer files as entries, so it can only report more, and a raise it causes is refused like any other.
+
 ## 0.47.0 (2026-11-13)
 
 - `devkit-no-bloat`: a local import that a Knip plugin's config in code reaches stops at a file the repository's Knip config names as an entry (`entry` in knip.json or knip.jsonc, at the root and in each workspace, as it reads both at the base and now). Knip counts an entry the same whoever imports it, so importing it changes nothing about the measure. Before, Capsomer's docs site, whose Vite config renders pages from the components, made almost every component a config: any change that added a module beside one was refused as moving code and its measure together (capsomer #405, #416). A file the config reaches that is not an entry (the docs site's own render code) is still a change of measure, as in 0.43.0.
