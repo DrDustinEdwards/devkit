@@ -463,3 +463,89 @@ export function bindingUses(sf, binding) {
   visit(sf);
   return { mentions, deletes, passedTo };
 }
+
+/**
+ * The relative modules a config in code (vite.config.ts) needs when it is loaded, as Knip loads it to read the config it
+ * exports: each relative `import`, `export ... from`, `import()` and `require()`, but not an import whose names the file
+ * uses only inside a plugin's hooks, nor a type-only import, which nothing loads. A hook is a function held in an
+ * object literal under one that has a `name` (the Rollup and Vite plugin shape): Vite calls it while it builds, and
+ * Knip, which calls only an exported config function and `test.projects` functions, never does. A name used anywhere
+ * else, or not at all, keeps its import, as does an import with no names. no-bloat's knipPluginFiles.
+ *
+ * @param {ts.SourceFile} sf
+ * @returns {string[]}
+ */
+export function loadImports(sf) {
+  /** @param {ts.Node | undefined} n */
+  const relative = (n) => !!n && ts.isStringLiteralLike(n) && /^\.{1,2}\//.test(n.text);
+  /** @param {ts.ObjectLiteralExpression} o */
+  const named = (o) =>
+    o.properties.some(
+      (p) =>
+        (ts.isPropertyAssignment(p) || ts.isShorthandPropertyAssignment(p)) &&
+        (ts.isIdentifier(p.name) || ts.isStringLiteralLike(p.name)) &&
+        p.name.text === "name",
+    );
+  /** @param {ts.Node} node */
+  const inHook = (node) => {
+    for (let n = node.parent; n; n = n.parent) {
+      const held =
+        ts.isMethodDeclaration(n) ||
+        ts.isAccessor(n) ||
+        ((ts.isArrowFunction(n) || ts.isFunctionExpression(n)) &&
+          ts.isPropertyAssignment(n.parent) &&
+          n.parent.initializer === n);
+      if (!held) continue;
+      for (let o = n.parent; o; o = o.parent)
+        if (ts.isObjectLiteralExpression(o) && named(o)) return true;
+    }
+    return false;
+  };
+  /** @type {Map<string, ts.Node[]>} */
+  const uses = new Map();
+  /** @type {Array<{ from: string, names: string[] }>} */
+  const imports = [];
+  /** @type {string[]} */
+  const out = [];
+  /** @param {ts.Node} n */
+  const visit = (n) => {
+    if (ts.isImportDeclaration(n)) {
+      if (relative(n.moduleSpecifier) && !n.importClause?.isTypeOnly) {
+        const c = n.importClause;
+        const bindings = c?.namedBindings;
+        const names = [
+          ...(c?.name ? [c.name.text] : []),
+          ...(bindings && ts.isNamespaceImport(bindings) ? [bindings.name.text] : []),
+          ...(bindings && ts.isNamedImports(bindings)
+            ? bindings.elements.filter((e) => !e.isTypeOnly).map((e) => e.name.text)
+            : []),
+        ];
+        const from = /** @type {ts.StringLiteral} */ (n.moduleSpecifier).text;
+        // `import { type A } from` names only types: nothing loads it.
+        if (c && !names.length) return;
+        imports.push({ from, names });
+      }
+      return;
+    }
+    if (ts.isExportDeclaration(n) && relative(n.moduleSpecifier) && !n.isTypeOnly)
+      out.push(/** @type {ts.StringLiteral} */ (n.moduleSpecifier).text);
+    if (
+      ts.isCallExpression(n) &&
+      (n.expression.kind === ts.SyntaxKind.ImportKeyword ||
+        (ts.isIdentifier(n.expression) && n.expression.text === "require")) &&
+      relative(n.arguments[0]) &&
+      !inHook(n)
+    )
+      out.push(/** @type {ts.StringLiteral} */ (n.arguments[0]).text);
+    if (ts.isIdentifier(n)) uses.set(n.text, [...(uses.get(n.text) ?? []), n]);
+    ts.forEachChild(n, visit);
+  };
+  visit(sf);
+  for (const { from, names } of imports)
+    if (
+      !names.length ||
+      names.some((name) => !uses.get(name)?.length || uses.get(name)?.some((u) => !inHook(u)))
+    )
+      out.push(from);
+  return [...new Set(out)];
+}

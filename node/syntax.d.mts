@@ -46,3 +46,6 @@ export function bindingUses(
   sf: ts.SourceFile,
   binding: string,
 ): { mentions: number; deletes: string[]; passedTo: string[] };
+
+/** The relative modules a config in code loads when Knip reads it: not an import used only in a plugin's hooks, nor a type-only one. */
+export function loadImports(sf: ts.SourceFile): string[];

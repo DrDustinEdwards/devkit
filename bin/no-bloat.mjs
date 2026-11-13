@@ -1626,11 +1626,14 @@ const IMPORT_EXTS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx
  * their own (classify). An import that reaches one of the repository's own Knip entries (`entries`, its Knip config's
  * `entry` globs) stops there: Knip reads an entry as one whatever imports it, so a config importing it changes nothing
  * about how it is counted, and a site's Vite config that renders pages from the components (Capsomer's docs site) does
- * not make every component a config. Pure.
+ * not make every component a config. `imports` gives a module's relative specifiers: by default every literal one,
+ * and from main, with TypeScript installed, syntax.mjs loadImports, which leaves out an import the module uses only in
+ * a plugin's hooks (render code a Vite config calls in transformIndexHtml or writeBundle), since Knip never runs a hook
+ * and so nothing it returns reaches what Knip reads. Pure.
  * @param {string[]} paths @param {string[]} patterns @param {(path: string) => string} read
- * @param {string[]} [entries]
+ * @param {string[]} [entries] @param {(path: string, text: string) => string[]} [imports]
  */
-export function knipPluginFiles(paths, patterns, read, entries = []) {
+export function knipPluginFiles(paths, patterns, read, entries = [], imports = literalImports) {
   const own = patterns.filter((g) => !g.startsWith("package.") && !g.startsWith(".github/"));
   const isConfig = (/** @type {string} */ p) =>
     own.some((g) => posix.matchesGlob(p, g) || posix.matchesGlob(p, `**/${g}`));
@@ -1645,10 +1648,8 @@ export function knipPluginFiles(paths, patterns, read, entries = []) {
     } catch {
       continue;
     }
-    for (const m of text.matchAll(
-      /(?:\bfrom\s*|\bimport\s*\(\s*|\brequire\s*\(\s*|\bimport\s+)["'`](\.{1,2}\/[^"'`]+)["'`]/g,
-    )) {
-      const to = posix.normalize(posix.join(posix.dirname(p), m[1]));
+    for (const spec of imports(p, text)) {
+      const to = posix.normalize(posix.join(posix.dirname(p), spec));
       const bare = to.replace(/\.[cm]?jsx?$/, "");
       const hit = [
         to,
@@ -1663,6 +1664,14 @@ export function knipPluginFiles(paths, patterns, read, entries = []) {
   }
   return [...out];
 }
+
+/** Every literal relative specifier a module imports, exports from, import()s or require()s, read as text. */
+const literalImports = (/** @type {string} */ _path, /** @type {string} */ text) =>
+  [
+    ...text.matchAll(
+      /(?:\bfrom\s*|\bimport\s*\(\s*|\brequire\s*\(\s*|\bimport\s+)["'`](\.{1,2}\/[^"'`]+)["'`]/g,
+    ),
+  ].map((m) => m[1]);
 
 /**
  * The `entry` globs of the repository's Knip config in data (knip.json or knip.jsonc, at the root, and each workspace's
@@ -2360,7 +2369,7 @@ function devkitBlobs(/** @type {string} */ tag) {
   }
 }
 
-function main() {
+async function main() {
   const argv = process.argv.slice(2);
   const root = process.cwd();
   if (process.env.GITHUB_ACTIONS === "true") hardenGit(process.env);
@@ -2436,6 +2445,11 @@ function main() {
   // (--lines-from) and in every local run, so neither the check nor --write-baseline can accept one quietly.
   /** @type {string[]} */
   const refused = [...checkout, ...lockfileProblems(gitSource(root).list())];
+  // TypeScript is devkit's optional peer. Without it a config's every local import counts as config, as before 0.48.0.
+  const syntax = await import("../node/syntax.mjs").catch((/** @type {any} */ error) => {
+    if (error?.code === "ERR_MODULE_NOT_FOUND" && /'typescript'/.test(error.message)) return null;
+    throw error;
+  });
   let ref = from;
   try {
     ref = baseRef(root, from) ?? undefined;
@@ -2449,6 +2463,7 @@ function main() {
         tools.knipConfigs(),
         (p) => base.now(p) ?? base.before(p) ?? "",
         entriesNow.filter((g) => entriesBefore.includes(g)),
+        syntax ? (p, text) => syntax.loadImports(syntax.parseSource(p, text)) : undefined,
       );
       const next = write ? { ...config, baseline: { ...measured.counts } } : config;
       refused.push(
@@ -2525,4 +2540,4 @@ function main() {
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (isMain(import.meta.url)) main();
+if (isMain(import.meta.url)) await main();

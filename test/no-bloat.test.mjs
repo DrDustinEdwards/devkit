@@ -44,6 +44,7 @@ import {
   unreasoned,
   workflowInputs,
 } from "../bin/no-bloat.mjs";
+import { loadImports, parseSource } from "../node/syntax.mjs";
 
 const BIN = fileURLToPath(new URL("../bin/no-bloat.mjs", import.meta.url));
 const YAML_DIR = fileURLToPath(new URL("../node_modules/yaml", import.meta.url));
@@ -1468,6 +1469,31 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
   assert.deepEqual(
     knipPluginFiles(Object.keys(site), patterns, (p) => read(p) ?? "", knipEntries(read)).sort(),
     ["site/home.ts", "site/vite.config.ts"],
+  );
+  // Read as syntax, an import the config uses only in a plugin's hooks is render code Knip never runs; one whose value
+  // builds the config (the pages it lists as inputs) still counts.
+  const vite = {
+    "site/vite.config.ts": [
+      'import { pages } from "./pages.ts";',
+      'import { renderMake } from "./make.ts";',
+      "export default {",
+      '  plugins: [{ name: "pages", transformIndexHtml: { handler: (html) => renderMake(html) } }],',
+      "  build: { rollupOptions: { input: pages() } },",
+      "};",
+    ].join("\n"),
+    "site/pages.ts": "export const pages = () => ({});\n",
+    "site/make.ts": 'import "./presets.ts";\nexport const renderMake = (h) => h;\n',
+    "site/presets.ts": "",
+  };
+  assert.deepEqual(
+    knipPluginFiles(
+      Object.keys(vite),
+      patterns,
+      (p) => vite[/** @type {keyof typeof vite} */ (p)],
+      [],
+      (p, text) => loadImports(parseSource(p, text)),
+    ).sort(),
+    ["site/pages.ts", "site/vite.config.ts"],
   );
   // Beside code, the config is refused as a change of measure.
   const kind = classify({
