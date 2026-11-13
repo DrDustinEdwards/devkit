@@ -1223,7 +1223,7 @@ test("jscpd: a narrower measure or path is refused, a new file it skips anywhere
   assert.deepEqual(unreadAdded(unread, ["src/a.ts"]), []);
 });
 
-test("a pin-only workflow change passes alone; any other change to the workflow that runs the check may not lower a count", () => {
+test("a pin-only workflow change passes alone; any other change to the workflow that runs the check may not lower a count, except the comment counts", () => {
   const base = { baseline: { knip: { files: 2 } } };
   assert.deepEqual(raised(base, base, { code: false, definition: [], workflow: [], back: [] }), []);
   assert.match(
@@ -1234,6 +1234,17 @@ test("a pin-only workflow change passes alone; any other change to the workflow 
       back: [],
     })[0],
     /this change of how it is counted \(\.github\/workflows\/ci\.yml\) lowers files from 2 to 0/,
+  );
+  // The comment counts drift with every code change and gate nothing, so they are not a lowered count.
+  const drifted = { baseline: { comments: { lines: 3611, code: 42997, percentage: 7.75 } } };
+  assert.deepEqual(
+    raised({ baseline: { comments: { lines: 3602, code: 42816, percentage: 7.76 } } }, drifted, {
+      code: false,
+      definition: [],
+      workflow: [".github/workflows/checks.yml"],
+      back: [],
+    }),
+    [],
   );
 });
 
