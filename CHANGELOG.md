@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.45.1 (2026-11-13)
+
+- `devkit-shared`: a static build that writes its stylesheet with Capsomer's `capsomerStylesheet` (`capsomer/build`, Capsomer 0.123.0) counts as using Capsomer, since that helper always writes base.css. Before, Capsid's explorer, moved onto it from its own inlineCss and minifyCss, failed with "static explorer has no capsomer".
+
 ## 0.45.0 (2026-11-13)
 
 - `devkit-no-bloat`: a legacy-scan match kept on purpose carries `legacy-scan:keep` and its reason in a comment on its line or the line above, and is not counted, so a baseline can be zero when every match left is one the guide's own rubric drops. The scanner sees only a literal `isComposing` or `keyCode === 229`, so each Enter handler guarded by Capsomer's shared `isImeEnter` is such a match (7 across Capsomer, dustinedwards.info and Carrel). A guide with no count left is left out of the counts. A marker added with no reason fails (`unreasoned`), as a `jscpd:ignore-start` does.

@@ -168,10 +168,11 @@ export const FEATURES = {
     use: "site-runtime ./health healthResponse (/health)",
   },
   // base.css, not just a token file: the element styles every page in the network shares. A build that copies it out of the
-  // package (Capsid's explorer: require.resolve("capsomer/package.json"), then "css/base.css") counts.
+  // package (require.resolve("capsomer/package.json"), then "css/base.css") counts, and so does Capsomer's own build
+  // helper, whose capsomerStylesheet always writes base.css (Carrel's www, Prelum's specimen, Capsid's explorer).
   capsomer: {
     kinds: PUBLIC_OR_PRIVATE,
-    find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']/,
+    find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']|["']capsomer\/build["'][^]*\bcapsomerStylesheet\s*\(/,
     use: "Capsomer's capsomer/base.css (tokens, element styles, the site layer), then its components",
   },
 };
