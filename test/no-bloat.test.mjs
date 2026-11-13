@@ -29,7 +29,7 @@ import {
   knipCounts,
   legacyCounts,
   lineChanges,
-  knipEntries,
+  knipCounted,
   knipPluginFiles,
   lockfileProblems,
   measure,
@@ -1452,23 +1452,42 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
       "tsconfig.json",
     ],
   );
-  // An import that reaches one of the repository's Knip entries stops there: Knip counts an entry the same whoever
-  // imports it (Capsomer's docs site renders pages from its components).
+  // An import stops at code the repository's Knip project counts: Knip reads it the same whoever imports it (Capsomer's
+  // docs site renders pages from its components and its own render modules). Data it imports is still followed.
   const site = {
     "site/vite.config.ts":
-      'import { render } from "./home.ts";\nexport default { plugins: [render] };\n',
+      'import { render } from "./home.ts";\nimport data from "./pages.json";\nexport default { plugins: [render] };\n',
     "site/home.ts":
       'import { open } from "../components/dialog/dialog.ts";\nexport const render = open;\n',
-    "components/dialog/dialog.ts": 'import "./dialog-drag.ts";\nexport const open = 1;\n',
-    "components/dialog/dialog-drag.ts": "",
-    "knip.jsonc": '{\n  // why\n  "entry": ["components/*/*.ts", "!x"],\n}\n',
+    "site/pages.json": "[]\n",
+    "components/dialog/dialog.ts": "export const open = 1;\n",
+    "knip.jsonc":
+      '{\n  // why\n  "entry": ["components/*/*.ts", "!x"],\n  "project": ["**/*.{ts,mjs}"],\n}\n',
   };
   const read = (/** @type {string} */ p) => site[/** @type {keyof typeof site} */ (p)] ?? null;
-  assert.deepEqual(knipEntries(read), ["components/*/*.ts"]);
+  assert.deepEqual(knipCounted(read), ["components/*/*.ts", "**/*.{ts,mjs}"]);
   assert.deepEqual(
-    knipPluginFiles(Object.keys(site), patterns, (p) => read(p) ?? "", knipEntries(read)).sort(),
-    ["site/home.ts", "site/vite.config.ts"],
+    knipCounted(() => null),
+    ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"],
   );
+  assert.deepEqual(
+    knipPluginFiles(Object.keys(site), patterns, (p) => read(p) ?? "", knipCounted(read)).sort(),
+    ["site/pages.json", "site/vite.config.ts"],
+  );
+  // Dropping an entry makes Knip count more, so it is code; dropping a negation or anything else is a change of measure.
+  const knip = (/** @type {string[]} */ entry, project = ["**/*.ts"]) =>
+    JSON.stringify({ entry, project });
+  const drop = (/** @type {string} */ was, /** @type {string} */ is) =>
+    classify({
+      changed: ["knip.json"],
+      configPath: ".no-bloat.json",
+      before: () => was,
+      now: () => is,
+    });
+  const dropped = drop(knip(["a.ts", "b.ts"]), knip(["a.ts"]));
+  assert.deepEqual([dropped.code, dropped.definition], [true, []]);
+  assert.deepEqual(drop(knip(["a.ts", "!b.ts"]), knip(["a.ts"])).definition, ["knip.json"]);
+  assert.deepEqual(drop(knip(["a.ts"]), knip(["a.ts"], ["src/**"])).definition, ["knip.json"]);
   // Beside code, the config is refused as a change of measure.
   const kind = classify({
     changed: [".mocharc.cjs", "src/a.ts"],
