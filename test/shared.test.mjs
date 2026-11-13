@@ -892,6 +892,9 @@ test("PLANT: a model call or prompt that skips the shared pieces is flagged with
       "const a = await env.AI.run(MODEL, { messages, max_tokens: 300 }, { gateway, signal: AbortSignal.timeout(30_000) });",
     "app/ask.ts":
       "const late = new Promise((_, no) => setTimeout(no, 5000));\nexport const ask = (env) => Promise.race([env.AI_SEARCH.chatCompletions({ messages }), late]);",
+    // site-runtime's withTimeout counts as the deadline.
+    "app/ask-late.ts":
+      'import { withTimeout } from "@dustinedwards/site-runtime/time";\nexport const ask = (env) => withTimeout(env.AI_SEARCH.chatCompletions({ messages }), 5000);',
     // A regex over a tool's output, in a file with no model call, and a comment naming the dash rule.
     "scripts/read.mjs": "const rows = JSON.parse(out.match(/\\[[\\s\\S]*\\]/)[0]);",
     "app/prompt.ts":
