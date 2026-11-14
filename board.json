@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-13T15:07:10.972Z",
+ "as_of": "2026-11-14T14:04:38.979Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -118,62 +118,62 @@
     },
     "dustinedwards-info": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "germomics": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "julieedwards-info": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "txasm": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "bsw": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "foxhound": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "foxing": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "carrel": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "enarratio": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsomer": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "prelum": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsid": {
      "status": "unmeasured",
-     "reason": "prelum-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsid-mcp": {
@@ -235,12 +235,12 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 10
+     "clean_days": 11
     },
     "julieedwards-info": {
      "status": "complete",
@@ -248,7 +248,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "txasm": {
      "status": "complete",
@@ -256,7 +256,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "bsw": {
      "status": "complete",
@@ -264,7 +264,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxhound": {
      "status": "partial",
@@ -272,7 +272,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxing": {
      "status": "complete",
@@ -280,7 +280,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "carrel": {
      "status": "complete",
@@ -288,7 +288,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "enarratio": {
      "status": "complete",
@@ -296,12 +296,12 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 7
+     "clean_days": 8
     },
     "prelum": {
      "status": "partial",
@@ -309,7 +309,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "capsid": {
      "status": "complete",
@@ -317,7 +317,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "capsid-mcp": {
      "status": "complete",
@@ -325,7 +325,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -333,7 +333,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -341,7 +341,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "carrel-mcp": {
      "status": "complete",
@@ -349,7 +349,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxing-mcp": {
      "status": "partial",
@@ -357,7 +357,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "capsid-portal": {
      "status": "complete",
@@ -366,7 +366,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "carrel-desk": {
      "status": "missing",
@@ -410,7 +410,7 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier",
-     "clean_days": 8
+     "clean_days": 9
     },
     "germomics": {
      "status": "partial",
@@ -418,7 +418,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -451,7 +451,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
       "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxing": {
      "status": "partial",
@@ -460,7 +460,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "carrel": {
      "status": "n/a",
@@ -484,7 +484,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "capsid-mcp": {
      "status": "complete",
@@ -493,7 +493,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -502,7 +502,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -511,7 +511,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "carrel-mcp": {
      "status": "complete",
@@ -520,7 +520,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxing-mcp": {
      "status": "partial",
@@ -528,7 +528,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "capsid-portal": {
      "status": "complete",
@@ -537,7 +537,7 @@
       "https://portal.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/portal-auth.ts"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "carrel-desk": {
      "status": "partial",
@@ -545,7 +545,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 12
+     "clean_days": 13
     }
    }
   },
@@ -567,62 +567,62 @@
     },
     "dustinedwards-info": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "germomics": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "julieedwards-info": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "txasm": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "bsw": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "foxhound": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "foxing": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "carrel": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "enarratio": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsomer": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "prelum": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsid": {
      "status": "unmeasured",
-     "reason": "prelum-content could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsid-mcp": {
@@ -680,38 +680,38 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.41.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_34_752Z-debug-0.log",
-     "findings": []
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "germomics": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.41.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_34_752Z-debug-0.log",
-     "findings": []
+     "status": "partial",
+     "reason": "failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "julieedwards-info": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.41.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_34_752Z-debug-0.log",
-     "findings": []
+     "status": "partial",
+     "reason": "failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "txasm": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.41.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_34_752Z-debug-0.log",
-     "findings": []
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "bsw": {
      "status": "n/a",
      "reason": "no Carrel site API: its content is not edited through Carrel"
     },
     "foxhound": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.41.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_34_752Z-debug-0.log",
-     "findings": []
+     "status": "partial",
+     "reason": "failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "foxing": {
-     "status": "unmeasured",
-     "reason": "site-api-live could not measure: could not run: could not install site-api#v0.41.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_34_752Z-debug-0.log",
-     "findings": []
+     "status": "partial",
+     "reason": "failed on 2026-11-05, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "carrel": {
      "status": "n/a",
@@ -820,7 +820,7 @@
      "evidence": [
       "https://germomics.com/a-boy-named-flu"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "julieedwards-info": {
      "status": "partial",
@@ -829,7 +829,7 @@
       "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "txasm": {
      "status": "partial",
@@ -838,7 +838,7 @@
       "https://txasm.org/og-card.png",
       "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "bsw": {
      "status": "missing",
@@ -863,7 +863,7 @@
       {
        "severity": "error",
        "check": "A6",
-       "detail": "https://foxhoundapp.com/contact /favicon.svg is loading=\"lazy\" above the fold (y≈719 at 390, y≈616 at 1440), so it waits for layout"
+       "detail": "https://foxhoundapp.com/contact /favicon.svg is loading=\"lazy\" above the fold (y≈735 at 390, y≈632 at 1440), so it waits for layout"
       }
      ]
     },
@@ -899,17 +899,17 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "enarratio": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 9
+     "clean_days": 10
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 7
+     "clean_days": 8
     },
     "prelum": {
      "status": "partial",
@@ -917,7 +917,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "capsid": {
      "status": "partial",
@@ -925,7 +925,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1005,8 +1005,108 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "site-runtime-speed: 2 errors",
+     "reason": "site-runtime-speed: 22 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/episodes not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/writing not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/archive not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/data not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/games not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/subscribe not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/about not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/privacy not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/terms not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/accessibility not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/contact not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/txasm not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/season/1 not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/antitoxin-togo-please not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/hell-on-weils not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/rabies-day-out not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/a-boy-named-flu not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/theres-something-about-typhoid-mary not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/its-on-the-syphilis not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
       {
        "severity": "error",
        "check": "C2",
@@ -1088,14 +1188,9 @@
      ]
     },
     "carrel": {
-     "status": "missing",
-     "reason": "site-runtime-speed-static: 1 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed-static could not measure: A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B5",
-       "detail": "https://carrel.dustinedwards.info/?utm_source=speedcheck-h8qo5li9 a campaign link missed the stored home page: cf-cache-status MISS"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1125,14 +1220,9 @@
      ]
     },
     "capsomer": {
-     "status": "missing",
-     "reason": "site-runtime-speed-static: 1 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed-static could not measure: A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://capsomer.dustinedwards.info/components/breadcrumb/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, must-revalidate, colo ATL then ATL"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1162,14 +1252,9 @@
      ]
     },
     "capsid": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://capsid.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://capsid.dustinedwards.info/numbers/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=300, must-revalidate, colo ATL then ATL"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1239,6 +1324,11 @@
      "reason": "ops-audit: 1 errors",
      "findings": [
       {
+       "severity": "warning",
+       "check": "C2",
+       "detail": "https://dustinedwards.info/health the cron check is warn: check-publications failed"
+      },
+      {
        "severity": "error",
        "check": "H5",
        "detail": "https://dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason"
@@ -1274,7 +1364,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "bsw": {
      "status": "missing",
@@ -1302,6 +1392,11 @@
      "status": "missing",
      "reason": "ops-audit: 1 errors",
      "findings": [
+      {
+       "severity": "warning",
+       "check": "H4",
+       "detail": "https://foxing.app/health serves 454831f0713a07582f0a0a0e061c01d2871c5f44, not the branch head d53d293e194816f8f8c18b0a7c3f316a0b398fb2 (https://github.com/DrDustinEdwards/foxing/commit/d53d293e194816f8f8c18b0a7c3f316a0b398fb2), committed 4 minutes ago"
+      },
       {
        "severity": "error",
        "check": "R1",
@@ -1347,24 +1442,30 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.foxhoundapp.com/health serves 73249ae05c1a4b414275dc49270036137339d31a, not the branch head e007f9dc1fb6af625bf00ebf8fb4bdaed97c6f56 (https://github.com/DrDustinEdwards/foxhound/commit/e007f9dc1fb6af625bf00ebf8fb4bdaed97c6f56), committed 2336 minutes ago"
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves 1a9f91cf87f64200a92996303f32330701004d2c, not the branch head 643ae4be67ecf716cdff1b3d5647569581c1096a (https://github.com/DrDustinEdwards/foxhound/commit/643ae4be67ecf716cdff1b3d5647569581c1096a), committed 447 minutes ago"
       }
      ]
     },
     "dustinedwards-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "H4",
+       "detail": "https://admin-mcp.dustinedwards.info/health serves 1887889410792b1bd6a41428736c091a72b39b02, not the branch head f2ba3031fb0a61ebd67a33a9486dd3298a240a60 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/f2ba3031fb0a61ebd67a33a9486dd3298a240a60), committed 480 minutes ago"
+      }
+     ]
     },
     "carrel-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 7
+     "clean_days": 8
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "capsid-portal": {
      "status": "n/a",
@@ -1512,12 +1613,17 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "devkit-a11y: 5 errors",
+     "reason": "devkit-a11y: 13 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/ no visible focus on 9 of 40 stops: `article.cap-card.gm-post-card:nth-of-type(2) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(3) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(4) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link` and 6 more"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://germomics.com/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -1531,35 +1637,65 @@
       },
       {
        "severity": "error",
+       "check": "L4",
+       "detail": "https://germomics.com/about animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://germomics.com/contact animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "warning",
+       "check": "L2",
+       "detail": "https://germomics.com/data/cholera-soho-1854 focused element covered by another on 2 stops: `figure#cholera-soho-1854-map > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > span:nth-of-type(1)` by `div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > svg > g:nth-of-type(2) > circle:nth-of-type(130)`, `figure#cholera-soho-1854-timeline > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(2)`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://germomics.com/data/cholera-soho-1854 animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/episodes no visible focus on 10 of 40 stops: `article.cap-card.gm-post-card:nth-of-type(1) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(2) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(3) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link` and 7 more"
       },
       {
        "severity": "error",
-       "check": "L2",
-       "detail": "https://germomics.com/season/1 no visible focus on 10 of 40 stops: `article.cap-card.gm-post-card:nth-of-type(1) > header > h2.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(2) > header > h2.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(3) > header > h2.gm-post-card-title > a.cap-card-link.gm-post-card-link` and 7 more"
+       "check": "L4",
+       "detail": "https://germomics.com/episodes animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://germomics.com/games/phage-defense animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://germomics.com/writing animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://germomics.com/about/dustin-edwards animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/archive no visible focus on 11 of 40 stops: `div.gm-archive-bar:nth-of-type(1) > form.gm-archive-form > div.gm-archive-field > input.gm-archive-input`, `article.cap-card.gm-post-card:nth-of-type(1) > header > h2.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(2) > header > h2.gm-post-card-title > a.cap-card-link.gm-post-card-link` and 8 more"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://germomics.com/archive animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "julieedwards-info": {
      "status": "missing",
-     "reason": "devkit-a11y: 11 errors",
+     "reason": "devkit-a11y: 9 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://julieedwards.info/ scrolls sideways at 320 px: scrollWidth 384"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://julieedwards.info/ 200% zoom proxy (a 720 px viewport, not browser zoom): scrolls sideways, scrollWidth 784"
-      },
       {
        "severity": "error",
        "check": "L4",
@@ -1569,6 +1705,11 @@
        "severity": "error",
        "check": "L4",
        "detail": "https://julieedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://julieedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -1624,11 +1765,6 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://julieedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://julieedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
@@ -1700,7 +1836,7 @@
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.psms-section > div.psms-container > div.cap-tabs.psms-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
+       "detail": "https://bsw.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -1766,62 +1902,62 @@
       {
        "severity": "warning",
        "check": "L2",
-       "detail": "https://foxhoundapp.com/ focused element covered by another on 1 stops: `fieldset.cap-seg > div.cap-seg-options > label:nth-of-type(1) > input` by `div.cap-seg-options > label:nth-of-type(1) > span.block.text-caption > span.mt-0\\.5.block:nth-of-type(2)`"
+       "detail": "https://foxhoundapp.com/ focused element covered by another on 1 stops: `fieldset.cap-seg > div.cap-seg-options > label:nth-of-type(1) > input` by `div.cap-seg-options > label:nth-of-type(1) > span.fh-line.fh-caption > span.fh-sample-label-2.fh-line:nth-of-type(2)`"
       },
       {
        "severity": "error",
        "check": "L3",
-       "detail": "https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest `div.grid.grid-cols-1:nth-of-type(1) > div.animate-fade-in.delay-320:nth-of-type(2) > div.w-full > p.sr-only` reaches 1319 px"
+       "detail": "https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest `section.cap-hero.fh-home-hero > div.cap-hero-aside:nth-of-type(2) > div.fh-queue-block-3 > p.cap-sr-only` reaches 1320 px"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/ animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/ animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/about animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/about animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/contact animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/contact animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/product/audit animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/product/audit animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/pricing animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/pricing animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/blog/archive animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/blog/archive animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/products animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/products animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/docs/platform animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/docs/platform animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://foxhoundapp.com/features animations still running with reduced motion: cap-fade-start-in on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.flex.min-h-screen > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://foxhoundapp.com/features animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.fh-features-grid:nth-of-type(2) > aside.fh-features-aside > nav.cap-anchors > ul.cap-anchors-list` and 1 more"
       }
      ]
     },
@@ -1832,7 +1968,7 @@
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://foxing.app/ no visible focus on 1 of 40 stops: `input#_R_e2j5_-control`"
+       "detail": "https://foxing.app/ no visible focus on 1 of 40 stops: `input#_R_dmij5_-control`"
       },
       {
        "severity": "error",
@@ -1968,18 +2104,54 @@
      ]
     },
     "enarratio": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 6
-    },
-    "capsomer": {
      "status": "missing",
-     "reason": "devkit-a11y: 12 errors",
+     "reason": "devkit-a11y: 6 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://enarratio.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://enarratio.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://enarratio.dustinedwards.info/example animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://enarratio.dustinedwards.info/capsomer animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "warning",
+       "check": "L2",
+       "detail": "https://enarratio.dustinedwards.info/astro focused element covered by another on 1 stops: `figure#tickets-by-team > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `svg > g:nth-of-type(6) > g:nth-of-type(1) > path:nth-of-type(1)`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://enarratio.dustinedwards.info/astro animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://enarratio.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      }
+     ]
+    },
+    "capsomer": {
+     "status": "missing",
+     "reason": "devkit-a11y: 10 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.th-board-grid > div.th-tile:nth-of-type(2) > div.cap-tabs:nth-of-type(1) > div.cap-tabs-list:nth-of-type(1)` and 1 more"
       },
       {
        "severity": "error",
@@ -1994,42 +2166,47 @@
       {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/contact-card/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `iframe[title=\"Contact card: Cards\"] #cc-cards > .cap-contact-card:nth-child(1) > h3`"
+       "detail": "https://capsomer.dustinedwards.info/components/contact-card/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `iframe[title=\"Contact card: Cards\"] #cc-cards > .cap-card.cap-contact-card:nth-child(1) > h3`"
       },
       {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/contact-card/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `#main`"
+       "detail": "https://capsomer.dustinedwards.info/components/contact-card/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#main`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/components/contact-card/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
+       "detail": "https://capsomer.dustinedwards.info/components/contact-card/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(1) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/themes/color/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.th-board-grid > div.th-tile:nth-of-type(2) > div.cap-tabs:nth-of-type(1) > div.cap-tabs-list:nth-of-type(1)` and 1 more"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/icons/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "warning",
        "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 4 elements, first `#main`"
+       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#main`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/make/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.cap-panel[aria-labelledby=\"mk-l-tbl\"]`"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://capsomer.dustinedwards.info/make/ no visible focus on 1 of 40 stops: `input#mk-radius`"
+       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(1) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/make/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `figure.make-pane:nth-of-type(1) > div.make-pane-body > div.cap-tabs:nth-of-type(7) > div.cap-tabs-list:nth-of-type(1)` and 5 more"
+       "detail": "https://capsomer.dustinedwards.info/colors/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsomer.dustinedwards.info/primitives/data/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2037,54 +2214,9 @@
        "detail": "https://capsomer.dustinedwards.info/accessibility/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `#ex-collapsed-tip`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe label-content-name-mismatch (serious, WCAG) at 1440-light, 1440-dark: 1 element, first `iframe[data-fk=\"admin-shell/only/tip\"] a[aria-describedby=\"cap-popover-11\"]`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `header`"
-      },
-      {
        "severity": "error",
        "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/ai-engine-settings/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 3 elements, first `#main`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/components/ai-engine-settings/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/ai-job-buttons/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 6 elements, first `#main`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/components/ai-job-buttons/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://capsomer.dustinedwards.info/components/ai-sample/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 2 elements, first `#main`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/components/ai-sample/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(2) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
+       "detail": "https://capsomer.dustinedwards.info/themes/typography/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.th-board-grid > div.th-tile:nth-of-type(2) > div.cap-tabs:nth-of-type(1) > div.cap-tabs-list:nth-of-type(1)` and 1 more"
       }
      ]
     },
@@ -2166,7 +2298,7 @@
     },
     "capsid": {
      "status": "missing",
-     "reason": "devkit-a11y: 11 errors",
+     "reason": "devkit-a11y: 13 errors",
      "findings": [
       {
        "severity": "error",
@@ -2182,6 +2314,11 @@
        "severity": "error",
        "check": "L4",
        "detail": "https://capsid.dustinedwards.info/s/capsid/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/s/capsid/ axe target-size (serious, WCAG) only in forced colors: first `a[data-devkit-tab=\"16\"]`"
       },
       {
        "severity": "error",
@@ -2211,7 +2348,7 @@
       {
        "severity": "warning",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 3 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > rect:nth-of-type(5)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(1)`, `figure#waits-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(8) > line`"
+       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 3 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > rect:nth-of-type(3)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(1)`, `figure#waits-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(8) > line`"
       },
       {
        "severity": "error",
@@ -2222,6 +2359,11 @@
        "severity": "error",
        "check": "L4",
        "detail": "https://capsid.dustinedwards.info/code/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://capsid.dustinedwards.info/code/ axe target-size (serious, WCAG) only in forced colors: first `a[data-devkit-tab=\"19\"]`"
       },
       {
        "severity": "error",
@@ -2278,12 +2420,12 @@
     },
     "dustinedwards-info": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "germomics": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "julieedwards-info": {
@@ -2300,37 +2442,37 @@
     },
     "foxhound": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "foxing": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "carrel": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "enarratio": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsomer": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "prelum": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsid": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "capsid-mcp": {
@@ -2355,12 +2497,12 @@
     },
     "capsid-portal": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     },
     "carrel-desk": {
      "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: could not install prelum#v0.56.0: npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-11-13T14_43_30_465Z-debug-0.log",
+     "reason": "chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1",
      "findings": []
     }
    }
@@ -2392,7 +2534,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/lib/search/ask.server.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "germomics": {
      "status": "partial",
@@ -2400,7 +2542,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2408,7 +2550,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "txasm": {
      "status": "partial",
@@ -2416,7 +2558,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "bsw": {
      "status": "complete",
@@ -2425,12 +2567,12 @@
       "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
       "https://github.com/DrDustinEdwards/bsw"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 7
+     "clean_days": 8
     },
     "foxing": {
      "status": "partial",
@@ -2439,7 +2581,7 @@
       "https://foxing.app/",
       "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "carrel": {
      "status": "partial",
@@ -2447,7 +2589,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "enarratio": {
      "status": "complete",
@@ -2456,7 +2598,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/enarratio"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "capsomer": {
      "status": "complete",
@@ -2465,7 +2607,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsomer"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "prelum": {
      "status": "complete",
@@ -2474,7 +2616,7 @@
       "https://prelum.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/prelum"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "capsid": {
      "status": "partial",
@@ -2482,12 +2624,12 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
      ],
-     "clean_days": 13
+     "clean_days": 14
     },
     "capsid-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxhound-mcp": {
      "status": "missing",
@@ -2563,7 +2705,7 @@
     "dustinedwards-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 7
+     "clean_days": 8
     },
     "carrel-mcp": {
      "status": "missing",
@@ -2716,8 +2858,23 @@
       },
       {
        "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.doc is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.tab is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.heading is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
        "check": "T12",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to b1e3e0a0f77789a2c66a5ce7097eb7a7797fdec1c02b50bda3cbbcfe1afb79d9"
+       "detail": "https://carrel-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to 3390157d196f73afe5677b3cd94eea2665819b4fb17d9013273194ca5856747b"
       },
       {
        "severity": "warning",
@@ -2739,7 +2896,7 @@
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 7
+     "clean_days": 8
     },
     "capsid-portal": {
      "status": "n/a",
