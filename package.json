@@ -86,6 +86,10 @@
       "types": "./vite/dev-toolbar.d.mts",
       "default": "./vite/dev-toolbar.mjs"
     },
+    "./vite/native-builtins": {
+      "types": "./vite/native-builtins.d.mts",
+      "default": "./vite/native-builtins.mjs"
+    },
     "./stryker": {
       "types": "./stryker/chunked.d.mts",
       "default": "./stryker/chunked.mjs"
