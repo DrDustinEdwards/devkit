@@ -27,7 +27,7 @@ runs:
   steps:
     # pnpm/action-setup v4 is an annotated tag; the sha pinned is the commit it dereferences to (as in foxing's CI).
     - if: inputs.package-manager == 'pnpm'
-      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
       with:
         package_json_file: ${{ inputs.path }}/package.json
 
