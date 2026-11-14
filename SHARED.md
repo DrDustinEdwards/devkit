@@ -233,7 +233,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.152.1 (DrDustinEdwards/capsomer)
+## Capsomer 0.152.2 (DrDustinEdwards/capsomer)
 
 - `./token-check`: `stripCss`, `readDeclarations`, `resolveToken`, `tokenScale`, `rawValues`, `invalidValues`, `fixCss`
 - `./build`: `CAPSOMER_ROOT`, `inlineCss`, `capsomerStylesheet`, `copyFonts`, `minifyCss`, `bundleScript`
@@ -362,7 +362,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/share-preview`: `SERP_LIMITS`, `serpTextWidth`, `serpReading`
 - `./behavior/share-row`: `SHARE_NAMES`, `shareHref`
 - `./behavior/shell`: `DEFAULT_PREF`, `setRail`, `toggleRail`, `openMore`, `closeMore`, `DENSITY_PREF`, `readDensity`, `applyDensity`, `applyStoredDensity`, `enhance`
-- `./behavior/shortcuts`: `SINGLE_KEYS_PREF`, `SINGLE_KEYS_NOTE`, `SEQUENCE_MS`, `isMac`, `isSingleKey`, `singleKeysOn`, `singleKeysOff`, `setSingleKeys`, `isImeEnter`, `isTyping`, `fire`, `start`, `modifiedShortcutFor`, `stop`, `register`, `list`, `grouped`, `capName`, `keyCaps`, `keysFragment`, `setSheetOpener`, `enhance`
+- `./behavior/shortcuts`: `SINGLE_KEYS_PREF`, `SINGLE_KEYS_NOTE`, `SEQUENCE_MS`, `isMac`, `isSingleKey`, `singleKeysOn`, `singleKeysOff`, `setSingleKeys`, `isImeEnter`, `isTyping`, `fire`, `start`, `modifiedShortcutFor`, `stop`, `register`, `registerKey`, `list`, `grouped`, `capName`, `keyCaps`, `keysFragment`, `setSheetOpener`, `enhance`
 - `./behavior/site-header`: `badgeText`, `HOVER_GRACE_MS`, `PHONE_QUERY`, `stepIndex`, `panelItems`, `isOpen`, `closePanels`, `placePanel`, `dismissOutside`, `wirePanel`, `guardForms`, `wireThemeKey`, `SCROLLED_AFTER_PX`, `wireScrolled`, `openSheet`, `closeSheet`, `enhance`, `wireSearchOnDemand`, `searchHtml`, `letterheadHtml`
 - `./behavior/sortable-list`: `moveId`, `indexAtPoint`, `locate`, `moveBetween`, `keyMove`, `sortText`, `keyTarget`, `DRAG_THRESHOLD`, `moveNode`, `startPointerDrag`, `announcer`, `groupOf`, `placeItem`, `placeIn`, `createSortableList`, `enhance`
 - `./behavior/sse`: `parseEvent`, `takeEvents`, `readSse`, `jsonData`
