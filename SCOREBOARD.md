@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-14 14:04 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-15 14:29 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -137,12 +137,9 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
 - ❔ dustinedwards.info: site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❌ Germomics: site-runtime-speed: 22 errors
-  - B1: https://germomics.com/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B1: https://germomics.com/episodes not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B1: https://germomics.com/writing not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B1: https://germomics.com/archive not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B1: https://germomics.com/data not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
+- ❌ Germomics: site-runtime-speed: 2 errors
+  - C2: https://germomics.com/fonts/space-grotesk-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
+  - C2: https://germomics.com/fonts/fraunces-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
 - ❔ julieedwards.info: site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ TXASM: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
 - ❔ BSW: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
@@ -162,22 +159,22 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - ❌ dustinedwards.info: ops-audit: 1 errors
   - H5: https://dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Germomics: ops-audit: 1 errors
-  - R1: https://github.com/DrDustinEdwards/germomics/actions/runs/42475475140 the newest restore drill ended failure
+  - R1: https://github.com/DrDustinEdwards/germomics/actions/runs/43711795352 the newest restore drill ended failure
 - ❌ julieedwards.info: ops-audit: 1 errors
   - H5: https://julieedwards.info/health no check on /health probes RATE_LIMITER (durable_object), declared in https://github.com/DrDustinEdwards/julieedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
 - ❌ BSW: ops-audit: 1 errors
   - H5: https://bsw.dustin-edwards.workers.dev/health no check on /health probes RATE_LIMITER (durable_object), declared in https://github.com/DrDustinEdwards/bsw/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound: ops-audit: 1 errors
-  - R1: https://github.com/DrDustinEdwards/foxhound/actions/runs/42475542149 the newest restore drill ended failure
+  - R1: https://github.com/DrDustinEdwards/foxhound/actions/runs/43711914717 the newest restore drill ended failure
 - ❌ Foxing: ops-audit: 1 errors
-  - R1: https://github.com/DrDustinEdwards/foxing/actions/runs/42475538189 the newest restore drill ended failure
+  - R1: https://github.com/DrDustinEdwards/foxing/actions/runs/43711942341 the newest restore drill ended failure
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 1a9f91cf87f64200a92996303f32330701004d2c, not the branch head 643ae4be67ecf716cdff1b3d5647569581c1096a (https://github.com/DrDustinEdwards/foxhound/commit/643ae4be67ecf716cdff1b3d5647569581c1096a), committed 447 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves be28473acb18287fe54ce207979b150962f3a40d, not the branch head 643ae4be67ecf716cdff1b3d5647569581c1096a (https://github.com/DrDustinEdwards/foxhound/commit/643ae4be67ecf716cdff1b3d5647569581c1096a), committed 1913 minutes ago
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves 1887889410792b1bd6a41428736c091a72b39b02, not the branch head f2ba3031fb0a61ebd67a33a9486dd3298a240a60 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/f2ba3031fb0a61ebd67a33a9486dd3298a240a60), committed 480 minutes ago
+  - H4: https://admin-mcp.dustinedwards.info/health serves 1887889410792b1bd6a41428736c091a72b39b02, not the branch head f2ba3031fb0a61ebd67a33a9486dd3298a240a60 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/f2ba3031fb0a61ebd67a33a9486dd3298a240a60), committed 1946 minutes ago
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
