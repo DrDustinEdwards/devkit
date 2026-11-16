@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-15 14:29 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-16 16:29 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -10,7 +10,7 @@ Newest run 2026-11-15 14:29 UTC. Filled only from the live checks and the verifi
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
 | 1. Search, sharing and AI answers | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
-| 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
+| 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | ? | ? |
 | 4. Writing and rendering | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
@@ -172,9 +172,9 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves be28473acb18287fe54ce207979b150962f3a40d, not the branch head 643ae4be67ecf716cdff1b3d5647569581c1096a (https://github.com/DrDustinEdwards/foxhound/commit/643ae4be67ecf716cdff1b3d5647569581c1096a), committed 1913 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 486c504198d80c9bcfc3d986f20637d6afd92bee, not the branch head 643ae4be67ecf716cdff1b3d5647569581c1096a (https://github.com/DrDustinEdwards/foxhound/commit/643ae4be67ecf716cdff1b3d5647569581c1096a), committed 3472 minutes ago
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves 1887889410792b1bd6a41428736c091a72b39b02, not the branch head f2ba3031fb0a61ebd67a33a9486dd3298a240a60 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/f2ba3031fb0a61ebd67a33a9486dd3298a240a60), committed 1946 minutes ago
+  - H4: https://admin-mcp.dustinedwards.info/health serves 07ee881ca589c20846ae8b4956d6bb7978406da8, not the branch head f2ba3031fb0a61ebd67a33a9486dd3298a240a60 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/f2ba3031fb0a61ebd67a33a9486dd3298a240a60), committed 3506 minutes ago
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
