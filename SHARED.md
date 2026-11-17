@@ -44,10 +44,10 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.61.0 (DrDustinEdwards/prelum)
+## Prelum 0.62.0 (DrDustinEdwards/prelum)
 
-- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `PUBLISHED_STATUS`, `isPubliclyVisible`, `ZERO_RESULT_MAX_LENGTH`, `normalizeZeroResultQuery`, `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `uniqueSlug`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
-- `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `jsonLdText`, `mathToTex`, `documentResponse`
+- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `PUBLISHED_STATUS`, `isPubliclyVisible`, `ZERO_RESULT_MAX_LENGTH`, `normalizeZeroResultQuery`, `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `uniqueSlug`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
+- `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
 - `./slug`: `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `uniqueSlug`
 - `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`, `hasWideDash`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
 - `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`
@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.159.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.164.1 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `cookiePairs`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -99,8 +99,8 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./csp-report`: `MAX_REPORT_BYTES`, `MAX_REPORTS`, `trimReportUrl`, `reportBodies`, `summarizeReport`, `summarizeVital`, `receiveCspReport`, `rateLimitAllow`
 - `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`, `multipartBoundary`, `readMultipart`, `partText`, `readJsonWith`
 - `./confirm`: `confirmationSatisfied`, `confirmationRequired`
-- `./html`: `escapeHtml`, `unescapeHtml`, `htmlAttributes`, `sitemapLocs`
-- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `purgeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `browserCheck`, `aiCheck`, `isDatabaseDown`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`
+- `./html`: `escapeHtml`, `unescapeHtml`, `htmlAttributes`, `sitemapLocs`, `scriptJson`
+- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `purgeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `browserCheck`, `aiCheck`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`, `isDatabaseDown`
 - `./deploy`: `deployedSha`, `deployedAt`
 - `./health-read`: `healthOf`, `parseHealth`, `failingCheckNames`, `healthChecks`
 - `./image`: `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `IMAGE_FORMATS`, `IMAGE_QUALITY`, `RASTER_TYPES`, `RASTER_PATH`, `FOCUS_METADATA`, `SHARE_IMAGE`, `ARTICLE_IMAGE_RATIOS`, `imageVersion`, `originalKey`, `focusOf`, `IMMUTABLE_CACHE`, `versionedCache`, `assetsObject`, `mediaKey`, `keyOfAddress`, `keysAtAddresses`, `focalPosition`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `pictureHtml`, `imagePreload`, `editImage`
@@ -113,6 +113,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./static-site`: `staticHeaders`, `staticSite`
 - `./sri`: `writeIntegrity`, `subresourceIntegrity`
 - `./share-card`: `SHARE_CARD_WIDTH`, `SHARE_CARD_HEIGHT`, `SHARE_CARD_TYPE`, `cardText`, `CARD_TITLE_MAX`, `CARD_DESCRIPTION_MAX`, `CARD_TITLE_SIZES`, `clampTitle`, `titleFontSize`, `cardKey`, `cardLayout`, `renderShareCard`, `googleFont`, `SHARE_CARD_HEADERS`, `shareCardResponse`
+- `./share-card-draw`: `drawShareCard`
 - `./maintenance`: `MAINTENANCE_RETRY_AFTER`, `maintenanceOn`, `maintenanceResponse`
 - `./security-txt`: `SECURITY_CONTACT`, `SECURITY_TXT_EXPIRES`, `securityTxt`, `securityTxtResponse`
 - `./encoding`: `concatBytes`, `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `fromBase64Text`, `fromBase64urlText`, `pageCursor`, `readPageCursor`, `sha256`, `sha256Hex`, `hmacSha256`, `hmacSha256Hex`, `crc32`, `canonicalJson`, `fnv1a32`
@@ -129,7 +130,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./page-client`: `startPage`
 - `./zod-jitless`: (no named exports)
 - `./apple-secret`: `appleClientSecret`
-- `./email`: `sendEmail`, `redact`, `isEmail`
+- `./email`: `sendEmail`, `RECIPIENT_SUPPRESSED`, `EmailNotSent`, `isRecipientSuppressed`, `redact`, `isEmail`
 - `./compare`: `safeEqual`
 - `./money`: `currencyExponent`, `currencyDigits`, `toMajorUnits`, `fromMajorUnits`, `formatMoney`, `formatMoneyShort`, `moneyInputValue`, `parseMoneyInput`
 - `./check`: `parsePolicy`, `checkSecurityHeaders`, `failures`, `checkSecurityTxt`, `declined`
@@ -157,7 +158,8 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./draft-gate`: `draftGate`, `draftRobots`
 - `./origin`: `ORIGIN_REFUSAL`, `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`
 - `./url`: `redirectStatus`, `isHttpUrl`, `isSameOriginPath`, `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
-- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`, `PREVIEW_TOKEN`, `tokenPattern`, `serverErrorHandler`, `handleServerError`, `errorMessage`, `handleError`
+- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`, `PREVIEW_TOKEN`, `tokenPattern`, `serverErrorHandler`, `handleServerError`, `DATABASE_DOWN_RETRY_AFTER`, `databaseDownStatus`, `errorMessage`, `reportErrorLines`, `isDatabaseDown`, `handleError`
+- `./sentry`: `sentryOptions`, `withSiteSentry`, `withSentryRequest`
 - `./redact`: `SECRET_SHAPES`, `redact`, `redactText`
 - `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `pruneNotFoundJob`, `notFoundReport`, `REDIRECTS_SQL`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`
 - `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_LOG_SQL`, `CRON_EVENT_WINDOW_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `backupStatusTool`, `describeRuns`, `runsSucceeded`, `operatorJobTools`, `DAILY_MINUTES`, `carrelSchedulesJob`, `backupJob`, `cronFindings`, `readCronRuns`, `cronStates`, `cronCheck`
@@ -165,12 +167,12 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `ADMIN_LIST_PATH`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`
 - `./nonce`: `NonceContext`, `useNonce`
 - `./react-entry`: `streamTimeout`, `reactEntry`, `handleError`
-- `./deferred-scripts`: `routeHydrates`, `scriptJson`, `bootJson`, `HydrationScripts`, `StreamBuffer`
+- `./deferred-scripts`: `routeHydrates`, `bootJson`, `HydrationScripts`, `StreamBuffer`
 - `./hydrate-on-intent`: `HOLDER_ID`, `HYDRATED_ATTRIBUTE`, `HYDRATED_EVENT`, `STREAM_BUFFER`, `STREAM_BUFFER_SCRIPT`, `isDeferred`, `isHydrated`, `markHydrated`, `hydrateNow`, `hydrateOnIntent`
 - `./http`: `OUTBOUND_TIMEOUT_MS`, `clientIp`, `ipBucket`, `isWrite`, `textResponse`, `jsonResponse`, `redirectResponse`, `retryAfterSeconds`, `mediaType`, `acceptedEncoding`, `timedFetch`, `fetchUntil`, `isWorkerPreview`, `publicOrigin`
 - `./sign-in-passkey`: `passkeyUserHandle`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`, `signInWithPasskey`, `canOfferPasskey`, `passkeySignIn`
 - `./sign-in-form`: `isDisposableEmail`, `refuseDisposable`, `safeNextPath`, `requestSignInLink`, `signInWithCode`, `SIGN_IN_INTENT`, `signInFormAction`, `startSocialSignIn`, `authHandler`, `accountOptions`, `ACCOUNT_INTENTS`, `accountFormAction`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `emailLinkWords`, `passkeyErrorWords`, `securityHistoryWords`, `signInErrorWords`
-- `./sign-in-words`: `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `DISPOSABLE_EMAIL`, `SIGN_IN_WORDS`, `ACCOUNT_WORDS`, `signInErrorWords`, `passkeyErrorWords`, `emailLinkWords`, `securityHistoryWords`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`
+- `./sign-in-words`: `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `DISPOSABLE_EMAIL`, `SIGN_IN_WORDS`, `ACCOUNT_WORDS`, `signInErrorWords`, `passkeyErrorWords`, `emailLinkWords`, `securityHistoryWords`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `UNDELIVERABLE_EMAIL`
 - `./d1`: `inList`, `notInList`, `D1_MAX_BOUND_PARAMS`, `IN_LIST_CHUNK`, `chunked`, `rowsPerInsert`, `escapeLike`, `likeContains`, `likeStartsWith`, `encodeCursor`, `decodeCursor`, `olderThan`
 - `./drizzle`: `cronRuns`, `cronRunLog`, `page404Daily`, `alertsSent`, `authEvents`
 - `./drizzle-check`: `assertMirror`
@@ -233,7 +235,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.154.1 (DrDustinEdwards/capsomer)
+## Capsomer 0.157.0 (DrDustinEdwards/capsomer)
 
 - `./token-check`: `stripCss`, `readDeclarations`, `resolveToken`, `tokenScale`, `rawValues`, `invalidValues`, `fixCss`
 - `./build`: `CAPSOMER_ROOT`, `inlineCss`, `capsomerStylesheet`, `copyFonts`, `minifyCss`, `bundleScript`
@@ -283,7 +285,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/chart-frame`: `frameHtml`, `noDataHtml`, `WIDE_REM`, `NARROW_WIDTH`, `shownHeight`, `drawWith`, `narrowRedraw`, `describeSeries`, `chartViewBox`
 - `./behavior/checklist-run`: `start`, `enhance`
 - `./behavior/chips`: `EVENT`, `valueOf`, `pressedValues`, `syncClear`, `ensureChips`, `setPressed`, `readParam`, `writeParam`, `setCount`, `toggle`, `clearAll`, `enhance`
-- `./behavior/collab-editor`: `FRAGMENT`, `isSeeded`, `loadMarkdown`, `markdownOf`, `markSaved`, `META`, `patchMarkdown`, `readMeta`, `roomJson`, `roomMarkdown`, `roomSchema`, `listSuggestions`, `settle`, `suggestionCounts`, `suggestingDispatch`, `suggestionPlugins`
+- `./behavior/collab-editor`: `anchorAt`, `FRAGMENT`, `isSeeded`, `loadMarkdown`, `markdownOf`, `markSaved`, `META`, `patchMarkdown`, `readMeta`, `roomJson`, `roomMarkdown`, `roomSchema`, `listSuggestions`, `settle`, `suggestionCounts`, `suggestingDispatch`, `suggestionPlugins`
 - `./behavior/command-menu`: `navCommands`, `markQuery`, `RECENT_MAX`, `readRecent`, `rememberRecent`, `STOP_GROUP`, `STOP_HINTS`, `stopCommand`, `matchesQuery`, `filterCommands`, `step`, `groupCommands`, `emptyText`, `SEARCHING`, `ANSWER_LABEL`, `startAnswer`, `focusAnswer`, `markSnippet`, `buildMenu`, `attach`, `openCommandMenu`, `createCommandMenu`, `enhance`
 - `./behavior/confirm-dialog`: `wordPattern`, `reasonOf`, `setBusy`, `showError`, `showReasonError`, `clearError`, `bindPerform`, `openConfirm`, `wasPerformed`, `wire`, `buildConfirm`, `confirm`, `confirmSubmit`, `enhance`
 - `./behavior/content`: `nounsOf`, `countText`, `queryHref`, `intentForm`, `outcomesOf`
