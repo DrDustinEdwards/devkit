@@ -968,6 +968,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     ],
     refused: [],
     removed: [],
+    entries: {},
   });
   // A baseline, lockfile and changeset change alone moves nothing the counts read; a tool must be npm's at x.y.z, never older.
   files[".no-bloat.json"] = [
@@ -990,7 +991,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
         ".changeset/config.json",
       ]),
     ),
-    { code: false, definition: [], workflow: [], back: [], refused: [], removed: [] },
+    { code: false, definition: [], workflow: [], back: [], refused: [], removed: [], entries: {} },
   );
   // Removing a build plugin and its library is one change of measure, which may not leave an import unlisted; removing a
   // library alone, or beside code, is code.
@@ -1028,7 +1029,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
   ];
   assert.deepEqual(
     classifyYaml(change([".github/workflows/checks.yml", ".github/workflows/deploy.yml"])),
-    { code: false, definition: [], workflow: [], back: [], refused: [], removed: [] },
+    { code: false, definition: [], workflow: [], back: [], refused: [], removed: [], entries: {} },
   );
 
   // devkit installed from anywhere but its own release tag, or overridden, runs another check.
@@ -1537,6 +1538,25 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
   assert.deepEqual([dropped.code, dropped.definition], [true, []]);
   assert.deepEqual(drop(knip(["a.ts", "!b.ts"]), knip(["a.ts"])).definition, ["knip.json"]);
   assert.deepEqual(drop(knip(["a.ts"]), knip(["a.ts"], ["src/**"])).definition, ["knip.json"]);
+  // Adding entries is a change of measure that may lower Knip's unused files by the files it names, and nothing else.
+  const add = drop(knip(["a.ts"]), knip(["a.ts", "app/site.ts", "app/islands/*.ts"]));
+  assert.deepEqual(
+    [add.code, add.definition, add.entries],
+    [false, ["knip.json"], { "knip.json": ["app/site.ts", "app/islands/*.ts"] }],
+  );
+  const tree = ["a.ts", "app/site.ts", "app/islands/tabs.ts", "app/lib/x.ts"];
+  const counts = (/** @type {number} */ files, exports = 3) => ({
+    baseline: { knip: { files, exports } },
+  });
+  assert.deepEqual(raised(counts(0), counts(2), add, tree), []);
+  assert.match(raised(counts(0), counts(3), add, tree).join(), /lowers files from 3 to 0/);
+  assert.match(raised(counts(0, 2), counts(2), add, tree).join(), /lowers exports from 3 to 2/);
+  // Beside another change of measure, or with a negation, nothing may drop.
+  assert.match(
+    raised(counts(0), counts(2), { ...add, definition: ["knip.json", ".jscpd.json"] }, tree).join(),
+    /lowers files from 2 to 0/,
+  );
+  assert.deepEqual(drop(knip(["a.ts"]), knip(["a.ts", "!b.ts"])).entries, {});
   // Beside code, the config is refused as a change of measure.
   const kind = classify({
     changed: [".mocharc.cjs", "src/a.ts"],
