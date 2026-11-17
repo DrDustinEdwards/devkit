@@ -969,7 +969,7 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
     refused: [],
     removed: [],
   });
-  // A baseline and lockfile change alone moves nothing the counts read; a tool must be npm's at x.y.z, never older.
+  // A baseline, lockfile and changeset change alone moves nothing the counts read; a tool must be npm's at x.y.z, never older.
   files[".no-bloat.json"] = [
     '{"baseline":{},"tools":{"jscpd":"jscpd@5.4.0"}}',
     '{"baseline":{"a":1},"tools":{"knip":"knip@7.0.0","jscpd":"jscpd@5.4.0"}}',
@@ -981,7 +981,14 @@ test("classify: what counts as code, a change of measure, a workflow that runs t
   ];
   assert.deepEqual(
     classifyYaml(
-      change([".no-bloat.json", "package-lock.json", "mcp/package.json", "mcp/package-lock.json"]),
+      change([
+        ".no-bloat.json",
+        "package-lock.json",
+        "mcp/package.json",
+        "mcp/package-lock.json",
+        ".changeset/a-change.md",
+        ".changeset/config.json",
+      ]),
     ),
     { code: false, definition: [], workflow: [], back: [], refused: [], removed: [] },
   );

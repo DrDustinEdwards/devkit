@@ -1530,6 +1530,8 @@ export function classify(change, parseYaml = noYaml) {
     // A workspace has a manifest and a lockfile per package, so each is read by its name in any directory.
     const name = posix.basename(p);
     if (LOCKFILES.test(name)) continue;
+    // A changeset is release metadata, not code and not a change of measure.
+    if (/^\.changeset\/(?:[^/]+\.md|config\.json)$/.test(p)) continue;
     // Dropping an entry only makes Knip count more, so it is judged as code: a raise it causes is refused.
     if (KNIP_DATA.test(name) && onlyDropsEntries(change.before(p), change.now(p))) {
       code = true;
