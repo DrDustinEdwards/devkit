@@ -1486,7 +1486,7 @@ const DEPENDENCY_FIELDS = [
  * format, a Knip config a run names with --config, a Knip plugin's config and what it imports (`plugins`,
  * knipPluginFiles; a Knip config in data that only drops entries is code, onlyDropsEntries), package.json's `knip` or `jscpd`, the no-bloat config outside `baseline` and `tools`). `workflow`: the workflows it changes that run the check, other than moving their devkit pins
  * (a workflow is no file the counts read, so it is never code). `back`: the shared packages it moves to an older release.
- * `refused`: what no change may do to the tools that measure: a `tools` entry that is not `<tool>@x.y.z` or is older than
+ * `entries`: per Knip config in data whose only change adds `entry` globs, the globs it adds (addedEntries). `refused`: what no change may do to the tools that measure: a `tools` entry that is not `<tool>@x.y.z` or is older than
  * the base's, and a devkit dependency that is not a DrDustinEdwards/devkit release tag or is overridden. Pure.
  * @param {{ changed: string[], configPath: string, definitions?: string[], plugins?: string[], before: (path: string) => string | null, now: (path: string) => string | null }} change
  * @param {(text: string) => unknown} [parseYaml] for the workflows (checkTools)
@@ -1504,6 +1504,8 @@ export function classify(change, parseYaml = noYaml) {
   const refused = [];
   /** @type {string[]} */
   const removed = [];
+  /** @type {Record<string, string[]>} */
+  const entries = {};
   const json = (/** @type {string | null} */ text) => {
     try {
       return text === null ? null : JSON.parse(text);
@@ -1537,6 +1539,9 @@ export function classify(change, parseYaml = noYaml) {
       code = true;
       continue;
     }
+    // Adding entries is a change of measure, and the only one that may lower Knip's unused files: by the files it names.
+    if (KNIP_DATA.test(name) && addedEntries(change.before(p), change.now(p)).length)
+      entries[p] = addedEntries(change.before(p), change.now(p));
     if (
       DEFINITIONS.test(name) ||
       INSTALL_FILES.test(name) ||
@@ -1620,7 +1625,7 @@ export function classify(change, parseYaml = noYaml) {
     code = true;
     removed.length = 0;
   }
-  return { code, definition, workflow, back, refused, removed };
+  return { code, definition, workflow, back, refused, removed, entries };
 }
 
 /** A Knip plugin config in code, which Knip runs in its own process, and the extensions its local imports resolve to. */
@@ -1852,13 +1857,15 @@ export function knipCounted(read) {
 }
 
 /**
- * Whether a change to a Knip config in data only drops `entry` globs (root or workspace) that are not negations. Knip
- * then reads fewer files as entries, so it reports more, never less: a stricter count, not a change of measure. Pure.
+ * How a change to a Knip config in data moves its `entry` globs (root or workspace), when it moves nothing else:
+ * `dropped`, the globs it no longer has, and `added`, the ones it gains. Null when the config changes in any other way or
+ * either side does not parse. Pure.
  * @param {string | null} before @param {string | null} now
+ * @returns {{ dropped: string[], added: string[] } | null}
  */
-function onlyDropsEntries(before, now) {
+function entryChange(before, now) {
   const [a, b] = [knipData(() => before), knipData(() => now)];
-  if (!a || !b) return false;
+  if (!a || !b) return null;
   const rest = (/** @type {any} */ c) =>
     JSON.stringify({
       ...c,
@@ -1870,12 +1877,32 @@ function onlyDropsEntries(before, now) {
         ]),
       ),
     });
+  if (rest(a) !== rest(b)) return null;
   const [was, is] = [knipGlobs(a, "entry"), knipGlobs(b, "entry")];
-  return (
-    rest(a) === rest(b) &&
-    is.every((g) => was.includes(g)) &&
-    was.filter((g) => !is.includes(g)).every((g) => !g.startsWith("!"))
-  );
+  return { dropped: was.filter((g) => !is.includes(g)), added: is.filter((g) => !was.includes(g)) };
+}
+
+/**
+ * Whether a change to a Knip config in data only drops `entry` globs that are not negations. Knip then reads fewer files
+ * as entries, so it reports more, never less: a stricter count, not a change of measure. Pure.
+ * @param {string | null} before @param {string | null} now
+ */
+function onlyDropsEntries(before, now) {
+  const moved = entryChange(before, now);
+  return Boolean(moved && !moved.added.length && moved.dropped.every((g) => !g.startsWith("!")));
+}
+
+/**
+ * The `entry` globs a change to a Knip config in data adds, when it changes nothing else and adds no negation; none
+ * otherwise. Such a change is a change of measure: Knip reads the files the globs name as entries, and follows their
+ * imports, so it reads more, but no longer counts those files as unused (raised allows that drop and no other). Pure.
+ * @param {string | null} before @param {string | null} now
+ */
+function addedEntries(before, now) {
+  const moved = entryChange(before, now);
+  return moved && !moved.dropped.length && moved.added.every((g) => !g.startsWith("!"))
+    ? moved.added
+    : [];
 }
 
 /** A parser for a change that has no workflow to read. */
@@ -2088,12 +2115,14 @@ function toolSpecs(was, is) {
  * or shared-copies count (a count the base lacked is raised from 0, and every count when the base had no baseline), nor
  * change how a count is measured, nor the workflows that run the check, nor move a shared package back. A change of what
  * is measured comes on its own, and may raise but not lower or drop a count: a narrower measure would hide what it no
- * longer reads. Only a version bump alone may lower one. No change drops a count from the baseline. Tests may rise: a
- * new test is how they do. Pure.
+ * longer reads. Only a version bump alone may lower one, with one exception: a change whose only change of measure adds
+ * `entry` globs to a Knip config (kind.entries) may lower a Knip run's unused files by as many of the repository's
+ * `files` as those globs name, since each of them is now an entry, and lower nothing else. No change drops a count from
+ * the baseline. Tests may rise: a new test is how they do. Pure.
  * @param {Config} config @param {Config | null} base the config at the pull request's base
- * @param {ReturnType<typeof classify>} kind
+ * @param {ReturnType<typeof classify>} kind @param {string[]} [files] the repository's files now
  */
-export function raised(config, base, kind) {
+export function raised(config, base, kind, files = []) {
   const was = base?.baseline ?? {};
   const now = config.baseline ?? {};
   /** @type {string[]} */
@@ -2136,11 +2165,23 @@ export function raised(config, base, kind) {
             `knip: this change removes a dependency (${kind.removed.join("; ")}) and raises ${key} from ${before[key] ?? 0} to ${after[key]}. Remove the import that still needs it, or keep the dependency.`,
           );
     }
+    // The files the added entries name: Knip reads each as an entry now, so none of them is an unused file any more.
+    const added = Object.values(kind.entries ?? {}).flat();
+    const entriesOnly =
+      added.length &&
+      !kind.workflow.length &&
+      kind.definition.every((d) => d in (kind.entries ?? {}));
+    const named = entriesOnly
+      ? files.filter((f) => added.some((g) => posix.matchesGlob(f, g))).length
+      : 0;
     for (const [tool, counts] of Object.entries(was)) {
       if (skip(tool, counts)) continue;
       const after = /** @type {Record<string, number>} */ (now[tool] ?? {});
+      const knip = tool === "knip" || tool.startsWith("knip ");
       for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
-        if (key !== "percentage" && typeof n === "number" && (after[key] ?? 0) < n)
+        if (knip && key === "files" && typeof n === "number" && n - (after[key] ?? 0) <= named)
+          continue;
+        else if (key !== "percentage" && typeof n === "number" && (after[key] ?? 0) < n)
           out.push(
             `${tool}: this change of how it is counted (${what}) lowers ${key} from ${n} to ${after[key] ?? 0}, so the narrower measure hides what it no longer reads. Measure as much as before; an exception goes in knip.json's ignore list with its reason.`,
           );
@@ -2663,7 +2704,7 @@ function main() {
       }
       const next = write ? { ...config, baseline: { ...measured.counts } } : config;
       refused.push(
-        ...raised(next, base.config, classify({ ...base, plugins }, tools.parseYaml)),
+        ...raised(next, base.config, classify({ ...base, plugins }, tools.parseYaml), files),
         ...unreasoned(base, config, base.config),
         ...narrowed(base, config, base.config),
         ...hiddenFiles(base.ignored, base.changed, base.before),
