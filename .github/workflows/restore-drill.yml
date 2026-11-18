@@ -10,8 +10,7 @@ name: restore-drill
 #
 # THE FILES DRILL (R3) follows: `d1-dump drill-files` restores a sample of each files backup in the bucket (files/<name>/)
 # with restoreFiles into a scratch directory and checks the restored bytes against the copies and their etags. It runs the
-# d1-dump release named in D1_DUMP_FILES_REF below (the first with drill-files), so every caller gets it with its devkit pin;
-# a bucket with no files backup passes with nothing to drill.
+# same d1-dump release as the dump drill; a bucket with no files backup passes with nothing to drill.
 #
 # A FAILURE REACHES DUSTIN on the scoreboard as well as GitHub's mail: devkit-ops-audit's R1 reads this workflow's newest
 # run for every site in live/areas.json each day, and the board shows the site red until a drill passes.
@@ -19,7 +18,8 @@ name: restore-drill
 # EXIT 0 PASSED, 1 THE DRILL REFUSED THE DUMP, 3 COULD NOT RUN. Either failure fails the job; the annotation says which.
 #
 # A CALLER (examples/restore-drill-caller.yml) pins a full 40-character sha; scripts/check-callers.mjs fails on anything else.
-# It pins d1-dump too: `d1-dump-ref` has no default, so a d1-dump release reaches the drill through a reviewed change.
+# THE d1-dump RELEASE is the one the caller's package.json pins (`@dustinedwards/d1-dump`, a tag or a full sha), the same one
+# its nightly dump runs, so the drill cannot drift from it; a d1-dump release reaches the drill through the caller's own bump.
 
 on:
   workflow_call:
@@ -28,10 +28,11 @@ on:
         description: The R2 bucket the nightly dump writes to (the BACKUPS binding's bucket name).
         required: true
         type: string
-      d1-dump-ref:
-        description: The d1-dump release tag the drill runs, such as v0.7.0.
-        required: true
+      package-json:
+        description: The caller's package.json that pins @dustinedwards/d1-dump, relative to its root.
+        required: false
         type: string
+        default: package.json
       files-sample:
         description: How many copies of each files backup the files drill restores and checks.
         required: false
@@ -51,9 +52,6 @@ on:
 permissions:
   contents: read
 
-env:
-  D1_DUMP_FILES_REF: v0.11.0
-
 jobs:
   drill:
     name: restore drill
@@ -62,6 +60,12 @@ jobs:
     permissions:
       contents: read
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: ${{ inputs.package-json }}
+          sparse-checkout-cone-mode: false
+
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: ${{ inputs.node-version }}
@@ -70,14 +74,17 @@ jobs:
       - name: Restore the newest complete dump and check it
         env:
           BUCKET: ${{ inputs.bucket }}
-          D1_DUMP_REF: ${{ inputs.d1-dump-ref }}
+          PACKAGE_JSON: ${{ inputs.package-json }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
+          D1_DUMP_REF=$(node -e 'const p=require("./"+process.env.PACKAGE_JSON);const v=(p.dependencies||{})["@dustinedwards/d1-dump"]||(p.devDependencies||{})["@dustinedwards/d1-dump"]||"";process.stdout.write(v.split("#")[1]||"")')
           if ! printf '%s' "$D1_DUMP_REF" | grep -Eq '^(v[0-9]+\.[0-9]+\.[0-9]+|[0-9a-f]{40})$'; then
-            echo "::error::d1-dump-ref \"$D1_DUMP_REF\" is neither a release tag (vX.Y.Z) nor a full 40-character commit sha; a branch moves under a run that holds the Cloudflare credentials."
+            echo "::error::${PACKAGE_JSON} pins @dustinedwards/d1-dump at \"$D1_DUMP_REF\", which is neither a release tag (vX.Y.Z) nor a full 40-character commit sha; a branch moves under a run that holds the Cloudflare credentials."
             exit 2
           fi
+          echo "D1_DUMP_REF=$D1_DUMP_REF" >> "$GITHUB_ENV"
+          echo "d1-dump $D1_DUMP_REF (from ${PACKAGE_JSON})" >> "$GITHUB_STEP_SUMMARY"
           set +e
           # No --ignore-scripts here: d1-dump builds itself in `prepare`, so the ref is what is held fixed.
           npx --yes "github:DrDustinEdwards/d1-dump#${D1_DUMP_REF}" drill --bucket "$BUCKET" --backend sqlite 2>&1 | tee "$RUNNER_TEMP/drill.txt"
@@ -100,7 +107,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set +e
-          npx --yes "github:DrDustinEdwards/d1-dump#${D1_DUMP_FILES_REF}" drill-files --bucket "$BUCKET" --sample "$SAMPLE" 2>&1 | tee "$RUNNER_TEMP/files.txt"
+          npx --yes "github:DrDustinEdwards/d1-dump#${D1_DUMP_REF}" drill-files --bucket "$BUCKET" --sample "$SAMPLE" 2>&1 | tee "$RUNNER_TEMP/files.txt"
           code=${PIPESTATUS[0]}
           { echo '```'; cat "$RUNNER_TEMP/files.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           if [ "$code" = "1" ]; then
