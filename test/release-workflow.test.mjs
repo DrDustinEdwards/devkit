@@ -206,17 +206,21 @@ test(
   },
 );
 
-test("workflows that moved with a later version bump fail loudly instead of tagging the wrong code", BASH, () => {
-  const r = run({
-    commits: [
-      { version: "0.1.0", tag: "v0.1.0", workflow: "a" },
-      { version: "0.2.0", workflow: "a" },
-      { version: "0.3.0", workflow: "b" },
-    ],
-  });
-  assert.notEqual(r.status, 0);
-  assert.equal(r.calls, "");
-});
+test(
+  "workflows that moved with a later version bump fail loudly instead of tagging the wrong code",
+  BASH,
+  () => {
+    const r = run({
+      commits: [
+        { version: "0.1.0", tag: "v0.1.0", workflow: "a" },
+        { version: "0.2.0", workflow: "a" },
+        { version: "0.3.0", workflow: "b" },
+      ],
+    });
+    assert.notEqual(r.status, 0);
+    assert.equal(r.calls, "");
+  },
+);
 
 test("an existing tag releases nothing and moves nothing", BASH, () => {
   const r = run({
