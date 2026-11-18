@@ -44,7 +44,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.62.0 (DrDustinEdwards/prelum)
+## Prelum 0.63.1 (DrDustinEdwards/prelum)
 
 - `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `PUBLISHED_STATUS`, `isPubliclyVisible`, `ZERO_RESULT_MAX_LENGTH`, `normalizeZeroResultQuery`, `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `uniqueSlug`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
 - `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.164.1 (DrDustinEdwards/site-runtime)
+## site-runtime 0.167.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `cookiePairs`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -139,14 +139,14 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./rate-limit`: `hitRules`, `peekRules`, `secondsLeft`, `assertRules`, `idleDeadline`, `purgeExpired`, `limit`, `limitedResponse`, `mustStop`, `ipKey`, `emailKey`, `matchRule`, `normalizePath`
 - `./rate-limit/durable-object`: `RateLimiter`
 - `./doc-room`: `DocRoom`, `DOC_ROOM_VIEWER_HEADER`, `ROLE_RECHECK_MS`, `MAX_SUGGESTION`, `MAX_EDIT`, `MAX_COMMENT`, `MAX_QUOTE`, `MAX_ANCHOR`, `viewerRequest`, `readViewer`, `withinLimit`, `suggestOnly`, `applyComment`
-- `./access-login`: `accessSaas`, `newSignIn`, `authorizationUrl`, `forgetKeys`, `remoteKeys`, `verifyJwt`, `verifyIdToken`, `finishSignIn`
+- `./access-login`: `accessSaas`, `newSignIn`, `authorizationUrl`, `forgetKeys`, `KEYS_MAX_AGE_MS`, `remoteKeys`, `verifyJwt`, `verifyIdToken`, `finishSignIn`
 - `./mcp-login`: `describeRedirect`, `CONSENT_STYLE`, `loginHandler`, `isAdminUser`, `DCR_CALLBACKS`, `allowedRedirects`, `registrationRefusal`, `registrationLimited`
 - `./audit-log`: `auditChainKey`, `ToolCallLog`, `verifyAuditChain`, `AUDIT_KEEP_DAYS`, `exportAuditLog`, `auditLogCheck`, `correlationId`, `loggedArgs`, `loggedResult`, `appendAudit`, `recordAudit`
 - `./mcp-server`: `withMcpHeaders`, `routeMcpEra`, `ApiLegError`, `callApi`, `MCP_PER_MINUTE`, `checkRateLimit`, `refuse`, `unauthorized`, `audienceRefusal`, `mcpOriginRefusal`, `mcpScopes`, `callerName`, `toolScope`, `toolsForGrant`, `authorizeCall`, `toolScopeChallenge`, `invokeTool`, `registerTools`, `OUTSIDE_DATA_NOTICE`, `outsideResult`, `toolListProblems`, `toolListHash`, `mcpCacheHints`, `PROBE_METHODS`, `probeRefusal`, `probeDoor`
 - `./admin-mcp`: `ADMIN_MCP_ROUTE`, `ADMIN_MCP_OPERATOR_ROUTE`, `adminMcpJobs`, `ADMIN_MCP_ORIGINS`, `adminMcpOrigin`, `adminMcpWorker`
 - `./agent-keys`: `AGENT_KEY_PREFIX`, `bearerToken`, `agentPrincipal`, `agentKeyNames`, `agentScopes`, `agentCaller`, `PROBE_KEY_SECRET`, `PROBE_PRINCIPAL`, `isProbeKey`, `probeCaller`
 - `./owner-page`: `OWNER_PATH`, `OWNER_STYLE`, `listOwnerGrants`, `revokeOwnerGrant`, `readAuditLog`, `ownerPage`, `respond`, `originOf`
-- `./access`: `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `KEYS_MAX_AGE_MS`, `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminRoster`, `adminEmails`, `isAdminEmail`, `isMainAdmin`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`, `adminIdle`, `withAdminIdle`
+- `./access`: `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminRoster`, `adminEmails`, `isAdminEmail`, `isMainAdmin`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`, `adminIdle`, `withAdminIdle`
 - `./access-sync`: `CAPSID_ORIGIN`, `postAccessSync`
 - `./members`: `PRIMARY_OWNER`, `OWNER`, `MANAGE_MEMBERS`, `REVIEW_DAYS`, `normalizeEmail`, `defineTitles`, `isExpired`, `reviewOpen`, `resolveActor`, `can`, `defaultEndDate`, `checkChange`, `auditRow`, `allowList`
 - `./prose`: `SIGNS`, `NOT_JUST`, `TELLS`, `PATTERNS`, `WRITING_RULES`, `checkProse`, `profileOf`, `distanceFrom`, `nearestPassages`, `VOICE_THRESHOLD`, `thresholdFor`, `copiedRuns`, `describeFeature`, `OUT_OF_PLACE`, `sentenceSpread`, `slopScan`, `instructionFor`, `voiceExcerpts`
@@ -197,7 +197,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./newsletter`: `SUBSCRIBERS_SQL`, `newsletter`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
-## site-api 0.43.0 (DrDustinEdwards/site-api)
+## site-api 0.45.0 (DrDustinEdwards/site-api)
 
 - `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `ROUTES`, `schemaHash`, `capabilitiesOf`, `hasContentTrash`, `contentFiltersOf`, `contentVersion`, `transcriptVersion`, `VersionConflictError`, `NotFoundError`, `MediaInUseError`, `describeUses`, `RefusedError`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `HOOK_BACKOFF_MINUTES`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `readEmbedded`, `stripMetadata`, `duplicateKey`, `placeholderAndColor`, `fileNameFor`, `prepareUpload`, `PICTURE_TYPES`, `pictureLimits`, `PICTURE_RESIZE`, `extensionFor`, `datedKey`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `siteApiStep`, `standardSiteApi`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `tombstoneResponse`, `gonePath`, `tombstoned`, `PREVIEW_LINK_PATH`
 - `./admin`: `readPostQuery`, `loadPosts`, `liveSaveWarning`, `loadScheduledUpdate`, `runPostsIntent`, `readMediaQuery`, `loadMedia`, `loadMediaChanges`, `runMediaIntent`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `localClient`, `askFirst`
@@ -235,7 +235,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.157.0 (DrDustinEdwards/capsomer)
+## Capsomer 0.159.0 (DrDustinEdwards/capsomer)
 
 - `./token-check`: `stripCss`, `readDeclarations`, `resolveToken`, `tokenScale`, `rawValues`, `invalidValues`, `fixCss`
 - `./build`: `CAPSOMER_ROOT`, `inlineCss`, `capsomerStylesheet`, `copyFonts`, `minifyCss`, `bundleScript`
@@ -285,7 +285,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/chart-frame`: `frameHtml`, `noDataHtml`, `WIDE_REM`, `NARROW_WIDTH`, `shownHeight`, `drawWith`, `narrowRedraw`, `describeSeries`, `chartViewBox`
 - `./behavior/checklist-run`: `start`, `enhance`
 - `./behavior/chips`: `EVENT`, `valueOf`, `pressedValues`, `syncClear`, `ensureChips`, `setPressed`, `readParam`, `writeParam`, `setCount`, `toggle`, `clearAll`, `enhance`
-- `./behavior/collab-editor`: `anchorAt`, `FRAGMENT`, `isSeeded`, `loadMarkdown`, `markdownOf`, `markSaved`, `META`, `patchMarkdown`, `readMeta`, `roomJson`, `roomMarkdown`, `roomSchema`, `listSuggestions`, `settle`, `suggestionCounts`, `suggestingDispatch`, `suggestionPlugins`
+- `./behavior/collab-editor`: `anchorAt`, `FRAGMENT`, `isSeeded`, `loadMarkdown`, `markdownOf`, `markSaved`, `META`, `patchMarkdown`, `readMeta`, `roomJson`, `roomMarkdown`, `roomSchema`, `listSuggestions`, `settle`, `suggestingDispatch`, `suggestions`, `suggestionPlugins`
 - `./behavior/command-menu`: `navCommands`, `markQuery`, `RECENT_MAX`, `readRecent`, `rememberRecent`, `STOP_GROUP`, `STOP_HINTS`, `stopCommand`, `matchesQuery`, `filterCommands`, `step`, `groupCommands`, `emptyText`, `SEARCHING`, `ANSWER_LABEL`, `startAnswer`, `focusAnswer`, `markSnippet`, `buildMenu`, `attach`, `openCommandMenu`, `createCommandMenu`, `enhance`
 - `./behavior/confirm-dialog`: `wordPattern`, `reasonOf`, `setBusy`, `showError`, `showReasonError`, `clearError`, `bindPerform`, `openConfirm`, `wasPerformed`, `wire`, `buildConfirm`, `confirm`, `confirmSubmit`, `enhance`
 - `./behavior/content`: `nounsOf`, `countText`, `queryHref`, `intentForm`, `outcomesOf`
@@ -331,7 +331,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/menu`: `stepIndex`, `enhance`
 - `./behavior/message`: `CLEARS_AFTER_MS`, `newMessage`, `lasting`, `withMessage`, `undoneText`, `undoErrorText`, `resolveFocus`, `isUndoKey`, `currentUndo`, `GLYPHS`, `glyphSvg`, `messageKind`, `say`, `fail`, `dismiss`, `runUndo`, `ensureRegion`, `enhance`
 - `./behavior/meter`: `percent`, `ratio`, `toneFor`, `setBar`, `update`, `enhance`
-- `./behavior/moderation-queue`: `mentionOf`, `refresh`, `syncSelection`, `decideRows`, `run`, `setView`, `QUEUE_SHORTCUTS`, `enhance`, `VIEWS`, `VIEW_LABEL`, `STATE_LABEL`, `ACTIONS`, `ACTION_KEY`, `DELETE_KEY`, `decide`, `actionsFor`, `bulkActionsFor`, `inView`, `countStates`, `summaryText`, `statusOf`, `ACTION_LABEL`, `decidedText`, `undoneText`, `undoAction`, `NO_UNDO_TEXT`, `undoStack`, `sweepLines`, `mentionsWord`, `EMPTY_TEXT`, `statusEl`, `actionButton`, `isTypingKey`
+- `./behavior/moderation-queue`: `mentionOf`, `refresh`, `syncSelection`, `decideRows`, `run`, `setView`, `QUEUE_SHORTCUTS`, `enhance`, `VIEWS`, `VIEW_LABEL`, `STATE_LABEL`, `ACTIONS`, `ACTION_KEY`, `DELETE_KEY`, `decide`, `actionsFor`, `bulkActionsFor`, `inView`, `countStates`, `summaryText`, `statusOf`, `ACTION_LABEL`, `decidedText`, `undoneText`, `undoAction`, `NO_UNDO_TEXT`, `undoStack`, `sweepLines`, `mentionsWord`, `EMPTY_TITLE`, `statusEl`, `actionButton`, `isTypingKey`
 - `./behavior/not-found-report`: `referrerLine`, `hitsWord`, `windowOf`, `probesLine`
 - `./behavior/offline-keep`: `DEFAULT_CACHE`, `keepSupported`, `workerUrl`, `filesOfPage`, `isKept`, `keep`, `remove`, `enhance`
 - `./behavior/pagination`: `pageItems`, `showingRange`, `statusText`, `pageCountOf`, `parsePage`, `pageEnvelope`, `pageHref`, `pageRelLinks`, `render`, `setPage`, `enhance`
@@ -347,7 +347,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/range-slider`: `COMMIT_DELAY_MS`, `COMMIT_EVENT`, `rangeFill`, `clampPair`, `trackPick`, `formatValue`, `paint`, `enhance`
 - `./behavior/repeater-field`: `rowFieldName`, `rowsFromForm`
 - `./behavior/rich-editor`: `BLOCK_TYPES`, `fingerprints`, `fromDoc`, `pastedBlocks`, `sameBlock`, `toDoc`, `writeChecked`, `baseExtensions`, `editorSchema`, `SourceBlock`, `SourceInline`, `SUGGESTION_BLOCKS`
-- `./behavior/rich-text-field`: `RICH_TEXT_TAGS`, `decodeEntities`, `parseRichText`, `serializeRichText`, `sanitizeRichText`, `richTextPlain`, `richTextWords`, `isEmptyRichText`, `richTextNodes`, `tagsAround`, `toggleTag`, `insertNodes`
+- `./behavior/rich-text-field`: `RICH_TEXT_TAGS`, `decodeEntities`, `RICH_TEXT_MAX_INPUT`, `parseRichText`, `serializeRichText`, `sanitizeRichText`, `richTextPlain`, `richTextWords`, `isEmptyRichText`, `richTextNodes`, `tagsAround`, `toggleTag`, `insertNodes`
 - `./behavior/route-splash`: `normalPath`, `shouldShowRouteSplash`
 - `./behavior/router`: `onlyParamsChanged`
 - `./behavior/row-list`: `rowTargets`, `moveRowFocus`, `isTypingKey`, `listOwnsKeys`, `queueKey`, `attachRowList`, `enhance`, `singleKeysOff`
