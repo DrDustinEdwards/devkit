@@ -1,9 +1,9 @@
 /**
  * Source read as a TypeScript syntax tree, for gates that must not be fooled by a comment, a string, or an apostrophe in
  * JSX text the way a regex over raw text is. From dustinedwards.info's scripts/lib/syntax.mjs and destructive-scan.mjs
- * (item 51 of the 2026-11-11 shared-code audit). Needs `typescript`, which every site already installs.
+ * (item 51 of the 2026-11-11 shared-code audit). Reads through `@typescript/typescript6` (devkit's own dependency): TypeScript 7 is the native compiler and ships no JavaScript compiler API, so a site on 7 cannot serve these readers.
  */
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 export { ts };
 

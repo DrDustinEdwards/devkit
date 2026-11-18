@@ -137,7 +137,7 @@
       "groupName": "React Router"
     },
     {
-      "description": "The Oxc tools move as ONE update (lint unification, 2026-11-06). oxlint and oxlint-tsgolint release together and every repository pins both exactly at devkit's peerDependencies (README, \"The shared lint config\"), so a separate PR for each would lint with a tsgolint the oxlint beside it was not built against; oxfmt joins them if it becomes the formatter. Automerge is unchanged: minor and patch on green CI, where a new finding fails the Lint step and holds the PR.",
+      "description": "The Oxc tools move as ONE update (lint unification, 2026-11-06). oxlint and oxlint-tsgolint release together and every repository pins both exactly, inside the ranges devkit's peerDependencies allow (README, \"The shared lint config\"), so an Oxc bump is never a peer conflict, so a separate PR for each would lint with a tsgolint the oxlint beside it was not built against; oxfmt joins them if it becomes the formatter. Automerge is unchanged: minor and patch on green CI, where a new finding fails the Lint step and holds the PR.",
       "matchPackageNames": ["oxlint", "oxlint-tsgolint", "oxfmt"],
       "groupName": "Oxc"
     },
