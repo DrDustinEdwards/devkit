@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-17 16:42 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-18 16:14 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -13,9 +13,9 @@ Newest run 2026-11-17 16:42 UTC. Filled only from the live checks and the verifi
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
-| 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
+| 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
+| 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 8. Running and recovery | 🟡 | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | ❌ | 🟡 | 🟡 | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❔ | ❔ | · | · | · | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | ❔ | ❔ | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | · | · | +52017 | −7048 |
@@ -116,13 +116,8 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
   - A12: https://bsw.dustin-edwards.workers.dev/media/uploads/2026/11/grant-review-6b238865.webp.webp?w=512 Cache-Control is "public, max-age=86400", not immutable
   - A12: https://bsw.dustin-edwards.workers.dev/media/uploads/2026/11/grant-review-6b238865.webp.avif?w=512 Cache-Control is "public, max-age=86400", not immutable
 - ❌ Foxhound: site-runtime-images: 1 errors
-  - A6: https://foxhoundapp.com/contact /favicon.svg is loading="lazy" above the fold (y≈735 at 390, y≈632 at 1440), so it waits for layout
-- ❌ Foxing: site-runtime-images: 8 errors
-  - A6: https://foxing.app/books /media/covers/a-country-gentleman-and-his-family-oliphant.jpg.webp?w=240 is below the fold (y≈2063 at 390, y≈1161 at 1440) and loading="eager"
-  - A6: https://foxing.app/books /media/covers/a-cycle-of-the-west-neihardt.jpg.webp?w=240 is below the fold (y≈2063 at 390, y≈1161 at 1440) and loading="eager"
-  - A6: https://foxing.app/books /media/covers/a-damsel-in-distress-wodehouse.jpg.webp?w=240 is below the fold (y≈2558 at 390, y≈1161 at 1440) and loading="eager"
-  - A6: https://foxing.app/books /media/covers/a-daughter-of-eve-balzac.jpg.webp?w=240 is below the fold (y≈2558 at 390, y≈1161 at 1440) and loading="eager"
-  - A12: https://foxing.app/media/covers/a-connecticut-yankee-in-king-arthurs-court-twain.jpg.avif?w=240 asked a second time it is not marked by the edge cache (no cf-cache-status), not a HIT
+  - A6: https://foxhoundapp.com/contact /favicon.svg is loading="lazy" above the fold (y≈627 at 390, y≈546 at 1440), so it waits for layout
+- 🟡 Foxing: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Carrel: images check passes; share card answers CORP same-origin
 - 🟡 Enarratio: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Capsomer: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
@@ -137,12 +132,7 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- ❌ dustinedwards.info: site-runtime-speed: 14 errors
-  - B1: https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SJC then SJC
-  - B1: https://dustinedwards.info/writing/carrel-one-api-for-every-site not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SJC then SJC
-  - B1: https://dustinedwards.info/writing/carrel-a-writing-desk-apart-from-the-site not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SJC then SJC
-  - B1: https://dustinedwards.info/writing/observable-plot-inside-a-worker not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SJC then SJC
-  - B1: https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SJC then SJC
+- ❔ dustinedwards.info: site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❌ Germomics: site-runtime-speed: 2 errors
   - C2: https://germomics.com/fonts/space-grotesk-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
   - C2: https://germomics.com/fonts/fraunces-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
@@ -164,7 +154,8 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
 - ❌ dustinedwards.info: ops-audit: 1 errors
   - H5: https://dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Germomics: ops-audit: 1 errors
+- ❌ Germomics: ops-audit: 2 errors
+  - H4: https://germomics.com/health serves 386a99f52768f1a6bca88e0595ab6fb2fdf86aa6, not the branch head da932e1134380a7a48637881742dea428814b4e4 (https://github.com/DrDustinEdwards/germomics/commit/da932e1134380a7a48637881742dea428814b4e4), committed 171 minutes ago
   - R1: https://github.com/DrDustinEdwards/germomics/actions/runs/43711795352 the newest restore drill ended failure
 - ❌ julieedwards.info: ops-audit: 1 errors
   - H5: https://julieedwards.info/health no check on /health probes RATE_LIMITER (durable_object), declared in https://github.com/DrDustinEdwards/julieedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
@@ -178,9 +169,8 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 53dabc22c21e14ef2f72b5149dcdbc648209eeb8, not the branch head f8d1371af7d3bbf2223c3dd486e8e891670f5949 (https://github.com/DrDustinEdwards/foxhound/commit/f8d1371af7d3bbf2223c3dd486e8e891670f5949), committed 110 minutes ago
-- ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves 0d51d4e3aa9f8597ce7c15c35e19a693ce0b74af, not the branch head ded9ac74b3944c73ba9d9fe47132b3f4088d9d44 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/ded9ac74b3944c73ba9d9fe47132b3f4088d9d44), committed 103 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 14c72e52f2171b480f2e6e2ca2e32bd60449e438, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 566 minutes ago
+- 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
@@ -226,7 +216,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L4: https://foxhoundapp.com/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L4: https://foxhoundapp.com/about animations still running with reduced motion: cap-fade-start-in on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
 - ❌ Foxing: devkit-a11y: 11 errors
-  - L2: https://foxing.app/ no visible focus on 1 of 40 stops: &#96;input#_R_1mqaj5_-control&#96;
+  - L2: https://foxing.app/ no visible focus on 1 of 40 stops: &#96;input#_R_1maaj5_-control&#96;
   - L4: https://foxing.app/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L2: https://foxing.app/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
   - L4: https://foxing.app/about animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
@@ -294,7 +284,7 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 - 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
 - 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
 - ❌ Capsid MCP: site-runtime-ai-audit: 1 errors
-  - P3: https://mcp.dustinedwards.info/ops/mcp conformance server-stateless passed 22/25 (failing: sep-2575-server-no-log-without-loglevel, sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
+  - P3: https://mcp.dustinedwards.info/ops/mcp conformance server-stateless passed 24/25 (failing: sep-2575-http-server-no-independent-requests-on-stream)
 - ❌ Foxhound admin MCP: site-runtime-ai-audit: 1 errors
   - T4: https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments does not set additionalProperties: false
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
