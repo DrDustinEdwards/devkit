@@ -36,7 +36,11 @@ test("the GitHub fake answers each operation with GitHub's status and only field
       init && { ...init, body: JSON.stringify(init.body) },
     );
     const body = await response.json();
-    const { status, fields } = contract.github.operations[operationId];
+    const operation = contract.github.operations[operationId];
+    const { status } = operation;
+    const { fields } = operation.fields
+      ? operation
+      : contract.github.operations[operation.sameFieldsAs];
     assert.equal(response.status, status, `${operationId}: ${JSON.stringify(body)}`);
     const unknown = [...fieldPaths(body)].filter((field) => !fields.includes(field));
     assert.deepEqual(unknown, [], `${operationId} answers fields GitHub does not`);

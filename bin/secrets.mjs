@@ -2,7 +2,8 @@
 // The secrets gate (from dustinedwards.info's check-secrets.mjs, item 51 of the 2026-11-11 shared-code audit). It proves,
 // from the repository's `.secrets.json`:
 //
-//   1. every secret the site names is declared on its Env interface (and, with "env_exact", nothing else is);
+//   1. every secret the site names is declared on its Env interface or a type it extends (and, with "env_exact",
+//      nothing else the file itself declares is);
 //   2. no secret is read outside the server boundary (a `*.server.*` module or workers/, by default), read off the syntax
 //      tree so `env.X`, `getEnv(c).X`, `env["X"]` and `const { X } = env` all count and a comment or a key does not;
 //   3. git itself ignores the credential files (`.dev.vars` always);
@@ -31,12 +32,13 @@
 //   }
 
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 
-import { escapeAnnotation } from "./annotate.mjs";
-import { createTally, readDevVar, walkFiles } from "../node/index.mjs";
+import { fail } from "./annotate.mjs";
+import { minimumChecks, readConfig } from "./site-config.mjs";
+import { createTally, isMain, readDevVar, walkFiles } from "../node/index.mjs";
 
 /**
  * Shapes of live credentials that never belong in git, whatever the site. Each needs enough length after its prefix that a
@@ -94,15 +96,7 @@ function gitIgnores(root, path) {
 
 async function main() {
   const argv = process.argv.slice(2);
-  const at = argv.indexOf("--config");
-  const configPath = resolve(at >= 0 ? argv[at + 1] : ".secrets.json");
-  /** @param {string} m @returns {never} */
-  const die = (m) => {
-    console.error(`::error::secrets: ${escapeAnnotation(m)}`);
-    process.exit(1);
-  };
-  if (!existsSync(configPath)) die(`no ${relative(process.cwd(), configPath)}; refusing to pass`);
-  const config = JSON.parse(readFileSync(configPath, "utf8"));
+  const { config } = readConfig(argv, ".secrets.json", "secrets");
   const root = process.cwd();
 
   /** @type {string[]} */
@@ -111,9 +105,10 @@ async function main() {
     const [file, name = "REQUIRED_SECRETS"] = String(config.secrets_module).split("#");
     secrets = (await import(pathToFileURL(resolve(file)).href))[name];
   }
-  if (!Array.isArray(secrets)) die('name the secrets with "secrets" or "secrets_module"');
+  if (!Array.isArray(secrets))
+    fail("secrets", 'name the secrets with "secrets" or "secrets_module"');
   const roots = /** @type {Record<string, number>} */ (config.roots ?? {});
-  if (Object.keys(roots).length === 0) die('"roots" names no directory to scan');
+  if (Object.keys(roots).length === 0) fail("secrets", '"roots" names no directory to scan');
   /** @type {RegExp[]} */
   const serverOnly = (config.server_only ?? ["^workers/", "\\.server\\.(ts|tsx|mjs|js)$"]).map(
     (/** @type {string} */ p) => new RegExp(p),
@@ -142,7 +137,7 @@ async function main() {
     const { interfaceMembers, parseSource } = await import("../node/syntax.mjs");
     const envPath = resolve(config.env_types);
     if (!existsSync(envPath))
-      die(`${config.env_types} is missing; the declaration check cannot run`);
+      fail("secrets", `${config.env_types} is missing; the declaration check cannot run`);
     const iface = config.env_interface ?? "Env";
     const env = interfaceMembers(parseSource(envPath, readFileSync(envPath, "utf8")), iface);
     ok(
@@ -156,8 +151,10 @@ async function main() {
         env.members.has(name),
         "the site names it as a secret and the Env type does not carry it",
       );
+    // Only what the file itself declares: a shared type it extends (site-runtime's SiteSecrets) lists secrets a site
+    // may not hold.
     if (config.env_exact)
-      for (const name of env.members)
+      for (const name of env.own)
         ok(
           `${name} is a named secret`,
           secrets.includes(name),
@@ -226,7 +223,7 @@ async function main() {
 
   // 4. Every tracked file under 2 MB, for credential shapes and for the verbatim .dev.vars values.
   const ls = spawnSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" });
-  if (ls.status !== 0) die(`git ls-files could not answer (status ${ls.status})`);
+  if (ls.status !== 0) fail("secrets", `git ls-files could not answer (status ${ls.status})`);
   const tracked = ls.stdout.split("\0").filter(Boolean);
   ok(
     "the tracked-file scan has a non-empty scope",
@@ -291,9 +288,7 @@ async function main() {
     `  ${secrets.length} secret(s), ${files.length} source file(s), ${reads} read(s), ${scanned} tracked file(s) scanned, ` +
       `.dev.vars ${values.length > 0 ? "present" : "absent"}`,
   );
-  const minimum = Number(config.minimum_checks);
-  if (!Number.isInteger(minimum) || minimum < 1) die('"minimum_checks" must be a positive integer');
-  tally.floor("devkit-secrets", "checks", minimum);
+  tally.floor("devkit-secrets", "checks", minimumChecks("secrets", config));
   if (tally.failures > 0) {
     console.log(`\n${tally.failures} FAILED of ${tally.checks} checks\n`);
     process.exit(1);
@@ -301,5 +296,4 @@ async function main() {
   console.log(`\n${tally.checks} checks, 0 failures\n`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  await main();
+if (isMain(import.meta.url)) await main();

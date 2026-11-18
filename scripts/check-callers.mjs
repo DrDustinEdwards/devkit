@@ -10,7 +10,7 @@
 // Exit 0 when every call is pinned, 1 when any is not, 2 when a file is unreadable or names no call at all.
 
 import { readFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { isMain } from "../node/index.mjs";
 
 // A quoted value is the same value to YAML, so a quote around it is read through.
 const SHARED =
@@ -49,7 +49,7 @@ export function callerProblems(text) {
   return problems;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (isMain(import.meta.url)) {
   const files = process.argv.slice(2);
   if (files.length === 0) {
     console.error("usage: check-callers.mjs <workflow file>...");

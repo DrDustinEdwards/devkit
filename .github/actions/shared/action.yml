@@ -9,6 +9,12 @@ inputs:
     description: The caller's checkout, relative to the workspace.
     required: false
     default: repo
+  base-sha:
+    description: >-
+      A pull request's base commit. Given, a failure the base already has is a warning (the change did not make it); the
+      daily run on the default branch, with no base, reports the repository's state.
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -27,4 +33,6 @@ runs:
     - name: Uses the shared code
       shell: bash
       working-directory: ${{ inputs.path }}
-      run: node "$GITHUB_ACTION_PATH/../../../bin/shared.mjs" --from "$RUNNER_TEMP/packages"
+      env:
+        BASE: ${{ inputs.base-sha }}
+      run: node "$GITHUB_ACTION_PATH/../../../bin/shared.mjs" --from "$RUNNER_TEMP/packages" ${BASE:+--base "$BASE"}

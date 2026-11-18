@@ -20,11 +20,11 @@
 // A helper from another file with another name that throws on failure is invisible here: name it for what it does, or put
 // the assertion in the test.
 
-import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { isMain, walkFiles } from "../node/index.mjs";
+import { escapeAnnotation, fail } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
 
 const ASSERTING =
@@ -132,30 +132,14 @@ export function testsWithoutAssertions(source) {
   return found;
 }
 
-/** @param {string} dir @param {string[]} [out] @returns {string[]} */
-function testFiles(dir, out = []) {
-  for (const e of readdirSync(dir, { withFileTypes: true })) {
-    const full = join(dir, e.name);
-    if (e.isDirectory()) {
-      if (e.name !== "node_modules") testFiles(full, out);
-    } else if (/\.test\.(?:[cm]?[jt]sx?)$/.test(e.name)) out.push(full);
-  }
-  return out;
-}
-
 function main() {
   const { config, path } = readConfig(
     process.argv.slice(2),
     ".test-assertions.json",
     "test-assertions",
   );
-  /** @param {string} m @returns {never} */
-  const fail = (m) => {
-    console.error(`::error::test-assertions: ${escapeAnnotation(m)}`);
-    process.exit(1);
-  };
   if (!Array.isArray(config.dirs) || config.dirs.length === 0)
-    fail(`${path} needs a non-empty "dirs" list`);
+    fail("test-assertions", `${path} needs a non-empty "dirs" list`);
   const enforce = config.enforce !== false;
   const root = process.cwd();
   let scanned = 0;
@@ -163,8 +147,11 @@ function main() {
   /** @type {string[]} */
   const problems = [];
   for (const d of config.dirs) {
-    if (!existsSync(join(root, d))) fail(`directory ${d} does not exist`);
-    for (const file of testFiles(join(root, d))) {
+    if (!existsSync(join(root, d))) fail("test-assertions", `directory ${d} does not exist`);
+    for (const file of walkFiles(join(root, d), {
+      keep: (name) => /\.test\.(?:[cm]?[jt]sx?)$/.test(name),
+      skipDir: (name) => name === "node_modules",
+    })) {
       files++;
       const source = readFileSync(file, "utf8");
       scanned += (source.match(/(?<![\w.$])(?:test|it)\s*\(/g) ?? []).length;
@@ -176,9 +163,11 @@ function main() {
   }
   if (typeof config.floor === "number" && scanned < config.floor)
     fail(
+      "test-assertions",
       `${scanned} test calls scanned, under the floor of ${config.floor}: the scan read less than it should`,
     );
-  if (scanned === 0) fail("no test call found; a gate that read nothing must not pass");
+  if (scanned === 0)
+    fail("test-assertions", "no test call found; a gate that read nothing must not pass");
   const level = enforce ? "error" : "warning";
   for (const p of problems) console.error(`::${level}::test-assertions: ${escapeAnnotation(p)}`);
   if (problems.length > 0 && enforce) {
@@ -190,5 +179,4 @@ function main() {
   );
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

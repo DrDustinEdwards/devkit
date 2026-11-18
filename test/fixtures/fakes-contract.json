@@ -216,48 +216,13 @@
         "method": "POST",
         "path": "/repos/{owner}/{repo}/git/commits",
         "status": 201,
-        "fields": [
-          "author",
-          "author.date",
-          "author.email",
-          "author.name",
-          "committer",
-          "committer.date",
-          "committer.email",
-          "committer.name",
-          "html_url",
-          "message",
-          "node_id",
-          "parents",
-          "parents[].html_url",
-          "parents[].sha",
-          "parents[].url",
-          "sha",
-          "tree",
-          "tree.sha",
-          "tree.url",
-          "url",
-          "verification",
-          "verification.payload",
-          "verification.reason",
-          "verification.signature",
-          "verification.verified",
-          "verification.verified_at"
-        ]
+        "sameFieldsAs": "git/get-commit"
       },
       "git/update-ref": {
         "method": "PATCH",
         "path": "/repos/{owner}/{repo}/git/refs/{ref}",
         "status": 200,
-        "fields": [
-          "node_id",
-          "object",
-          "object.sha",
-          "object.type",
-          "object.url",
-          "ref",
-          "url"
-        ]
+        "sameFieldsAs": "git/get-ref"
       }
     }
   },

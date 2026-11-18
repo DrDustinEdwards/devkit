@@ -11,8 +11,7 @@
 // unpinned one that applies migrations to production.
 
 import { spawnSync } from "node:child_process";
-import { realpathSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { isMain } from "../node/index.mjs";
 
 /**
  * The npx arguments, or an error message.
@@ -67,5 +66,4 @@ function main() {
   process.exit(r.status ?? 1);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

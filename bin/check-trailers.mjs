@@ -24,8 +24,8 @@
 // a pass, and so is an event it does not know.
 
 import { execFileSync } from "node:child_process";
-import { readFileSync, realpathSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { readFileSync } from "node:fs";
+import { isMain } from "../node/index.mjs";
 
 // The three named forms, matched at the start of any line of the message.
 const NAMED = [
@@ -210,5 +210,4 @@ function main() {
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

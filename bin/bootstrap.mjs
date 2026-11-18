@@ -14,10 +14,10 @@
 // WRANGLER_ENTRY stands a stub in for wrangler (the tests).
 
 import { spawnSync } from "node:child_process";
-import { constants, copyFileSync, readFileSync, readdirSync, realpathSync } from "node:fs";
+import { constants, copyFileSync, readFileSync, readdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { isMain } from "../node/index.mjs";
 
 /** The examples at `root` whose real file is missing, as [example, target]. */
 export function missingConfigs(/** @type {string} */ root) {
@@ -84,5 +84,4 @@ function main() {
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main();
+if (isMain(import.meta.url)) main();

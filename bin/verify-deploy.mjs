@@ -19,8 +19,7 @@
 // carries a cache-busting query and `cache-control: no-cache`, so no edge copy answers for the Worker; EXPECT_SHA, when set,
 // makes the query unique per run.
 
-import { realpathSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { isMain } from "../node/index.mjs";
 
 /** @typedef {{ status: number, text: string, error: string }} Read */
 
@@ -150,5 +149,4 @@ async function main() {
   process.exit(result.code);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  await main();
+if (isMain(import.meta.url)) await main();

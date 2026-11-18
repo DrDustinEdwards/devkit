@@ -148,12 +148,13 @@ test("size-budget: passes within the limits and fails over one, on a missing bui
       "build/client/assets/lazy.js": "l",
     };
   };
-  const cfg = (/** @type {number} */ js) =>
+  const cfg = (/** @type {number} */ js, /** @type {number=} */ total) =>
     JSON.stringify({
       initial_js_kb: js,
       lazy_chunk_kb: 1,
       css_kb: 1,
       lazy_css_kb: 1,
+      total_js_kb: total,
       server: "build/server/index.mjs",
     });
   const ok = run("size-budget", [], { ".size-budget.json": cfg(5), ...build(2000) });
@@ -162,6 +163,10 @@ test("size-budget: passes within the limits and fails over one, on a missing bui
   const over = run("size-budget", [], { ".size-budget.json": cfg(1), ...build(20000) });
   assert.equal(over.status, 1);
   assert.match(over.out, /initial JS of routes\/home/);
+  // Every page and chunk together, when the budget sets it.
+  const total = run("size-budget", [], { ".size-budget.json": cfg(5, 1), ...build(2000) });
+  assert.equal(total.status, 1);
+  assert.match(total.out, /all JS is .* over 1\.0 KB/);
   assert.equal(run("size-budget", [], { ".size-budget.json": cfg(5) }).status, 1);
   assert.equal(run("size-budget", [], build(10)).status, 1);
   const { "build/client/assets/home.js": _gone, ...missing } = build(10);

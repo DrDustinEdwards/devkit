@@ -157,3 +157,13 @@ test("--write refuses a recorded migration that is gone from disk, unless --forc
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test("statements splits on `;` outside strings and comments, with strings blanked", async () => {
+  const { statements } = await import("../bin/migration-scan.mjs");
+  assert.deepEqual(
+    statements(
+      "CREATE TABLE t (a text DEFAULT ';'); -- note; DROP TABLE x\nCREATE INDEX i ON t(a);",
+    ),
+    ["CREATE TABLE t (a text DEFAULT _ )", "CREATE INDEX i ON t(a)"],
+  );
+});

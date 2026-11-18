@@ -1,14 +1,14 @@
 name: release
 
-# A release is the merge of its version bump: when the caller's package.json version on its default branch has no
-# v<version> tag yet, this tags that commit and publishes a GitHub release whose notes are the version's own CHANGELOG
+# A release is the merge of its version bump: when a package.json version on the caller's default branch has no
+# v<version> tag yet, this tags the commit that set it and publishes a GitHub release whose notes are the version's own CHANGELOG
 # section (a "## 0.19.0 (date)" or "## [0.19.0]" heading down to the next "## "), or GitHub's generated notes when the
 # CHANGELOG has none. Nobody pushes a tag by hand, and a session that cannot push tags can still release by merging.
 # It is the release job, once, for every package repository installed by git tag.
 #
 # BUILD. A package that ships built files (Capsomer's dist/) passes `build: true`: the job runs `npm ci` (whose prepare
 # script builds), drops the prepare script, commits the built files on top of the merged commit and tags that commit, which
-# is on no branch. An app installing github:DrDustinEdwards/<package>#vX.Y.Z then gets the package as built, with no build
+# is on no branch (one such commit for each version it releases). An app installing github:DrDustinEdwards/<package>#vX.Y.Z then gets the package as built, with no build
 # and none of the package's devDependencies at install time.
 #
 # PROVENANCE (checklist C7). Each new release packs the tagged tree with `npm pack --ignore-scripts`, attests the tarball
@@ -16,6 +16,13 @@ name: release
 # run) and attaches it to the release, so anyone can check a release came from this workflow:
 #   gh release download vX.Y.Z -R DrDustinEdwards/<package> -p '*.tgz'
 #   gh attestation verify <package>-X.Y.Z.tgz -R DrDustinEdwards/<package>
+#
+# CATCH-UP. A caller's concurrency group runs one release at a time and keeps only ONE waiting run (GitHub's concurrency
+# docs: a newer pending run cancels the older pending one, whatever cancel-in-progress says), so two version-bump merges
+# that land while a run is going leave one bump without a run. Each run therefore releases every untagged bump, not only
+# the one it started on: the commits on the default branch's first-parent line since the tenth newest tag that changed
+# package.json's version, oldest first, each tagged on its own commit with its own CHANGELOG section. A bump that was
+# skipped is released by the next run; no tag is ever moved or replaced (a tag that exists is left alone).
 #
 # A tag made with the workflow's own token starts no other workflow (GitHub's rule against loops), so the caller runs
 # bump-consumers.yml after this when `created` is true (examples/release-caller.yml). Run the caller by hand to release a
@@ -68,6 +75,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+          fetch-tags: true
 
       - if: inputs.build
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
@@ -75,89 +84,142 @@ jobs:
           node-version-file: ${{ inputs.node-version-file }}
           package-manager-cache: false
 
-      # Reads only: the default-branch guard, the version, whether the tag exists and the notes. The build below runs the
-      # package's own code (its prepare script and, through npm ci, its dependencies), so it holds no token.
+      # Reads only: the default-branch guard, then the list of versions to release in $RUNNER_TEMP/releases.tsv (tag and
+      # commit, oldest first) and each one's CHANGELOG section in $RUNNER_TEMP/notes/. The build below runs the package's
+      # own code (its prepare script and, through npm ci, its dependencies), so it holds no token.
       - id: release
         env:
-          GH_TOKEN: ${{ github.token }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           if [ "$GITHUB_REF" != "refs/heads/$DEFAULT_BRANCH" ]; then
             echo "::error::release runs only on the default branch ($DEFAULT_BRANCH), not $GITHUB_REF."
             exit 1
           fi
+          semver='^[0-9]+\.[0-9]+\.[0-9]+$'
           version="$(jq -r .version package.json)"
-          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+          if ! printf '%s' "$version" | grep -Eq "$semver"; then
             echo "::error::package.json version \"$version\" is not X.Y.Z."
             exit 1
           fi
-          tag="v$version"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$tag" >/dev/null 2>&1; then
-            echo "$tag already exists; nothing to release."
+          head_tag="v$version"
+          echo "tag=$head_tag" >> "$GITHUB_OUTPUT"
+          tags="$RUNNER_TEMP/tags.txt"
+          git tag -l 'v[0-9]*.[0-9]*.[0-9]*' > "$tags"
+          releases="$RUNNER_TEMP/releases.tsv"
+          : > "$releases"
+          # The bumps since the tenth newest tag, so a bump skipped between two tags is found too. A build release's tag is
+          # on a commit off the branch, so its anchor is its parent.
+          newest="$(sort -V "$tags" | tail -n 10 | head -n 1)"
+          anchor=""
+          if [ -n "$newest" ]; then
+            anchor="$(git rev-parse "$newest^{commit}")"
+            if ! git merge-base --is-ancestor "$anchor" HEAD; then
+              anchor="$(git rev-parse "$anchor^" 2>/dev/null || true)"
+            fi
+            if [ -z "$anchor" ] || ! git merge-base --is-ancestor "$anchor" HEAD; then
+              echo "::warning::$newest is not on $DEFAULT_BRANCH; releasing only package.json's version."
+              anchor=""
+            fi
+          fi
+          if [ -n "$anchor" ]; then
+            prev="$(git show "$anchor:package.json" | jq -r .version)"
+            while read -r -u 3 sha; do
+              v="$(git show "$sha:package.json" 2>/dev/null | jq -r .version 2>/dev/null || true)"
+              printf '%s' "$v" | grep -Eq "$semver" || continue
+              [ "$v" = "$prev" ] && continue
+              prev="$v"
+              grep -qx "v$v" "$tags" && continue
+              printf 'v%s\t%s\n' "$v" "$sha" >> "$releases"
+            done 3< <(git rev-list --first-parent --reverse "$anchor..HEAD" -- package.json)
+          fi
+          # The version at HEAD is always considered, for a first release or a run by hand.
+          if ! grep -qx "$head_tag" "$tags" && ! cut -f1 "$releases" | grep -qx "$head_tag"; then
+            printf '%s\t%s\n' "$head_tag" "$(git rev-parse HEAD)" >> "$releases"
+          fi
+          if [ ! -s "$releases" ]; then
+            echo "$head_tag already exists; nothing to release."
             echo "created=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           echo "new=true" >> "$GITHUB_OUTPUT"
-          if [ -f CHANGELOG.md ]; then
-            awk -v v="$version" '
+          mkdir -p "$RUNNER_TEMP/notes"
+          while IFS=$'\t' read -r -u 3 tag sha; do
+            echo "release $tag at $sha"
+            git show "$sha:CHANGELOG.md" 2>/dev/null | awk -v v="${tag#v}" '
               index($0, "## " v " ") == 1 || $0 == "## " v || index($0, "## [" v "]") == 1 { on = 1; next }
               on && /^## / { exit }
               on { print }
-            ' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
-          fi
+            ' > "$RUNNER_TEMP/notes/$tag.md" || true
+          done 3< "$releases"
 
-      # npm ci installs without lifecycle scripts; the package's own prepare script then builds.
+      # npm ci installs without lifecycle scripts; the package's own prepare script then builds. Each version is built
+      # on its own commit and committed and tagged locally; releases.tsv then names the release commits.
       - name: Build the package
         if: steps.release.outputs.new == 'true' && inputs.build
         run: |
-          npm ci --ignore-scripts
-          npm run prepare
-
-      - id: publish
-        name: Tag and publish the release
-        if: steps.release.outputs.new == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ steps.release.outputs.tag }}
-          BUILD: ${{ inputs.build }}
-        run: |
-          tag="$TAG"
-          if [ "$BUILD" = "true" ]; then
+          built="$RUNNER_TEMP/releases.built.tsv"
+          : > "$built"
+          while IFS=$'\t' read -r -u 3 tag sha; do
+            git checkout -q --force "$sha"
+            git clean -ffdxq
+            npm ci --ignore-scripts
+            npm run prepare
             # The release commit holds the built files and no prepare script.
             node -e 'const fs = require("node:fs"); const p = JSON.parse(fs.readFileSync("package.json", "utf8")); delete p.scripts.prepare; fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n")'
             git add -f dist package.json
             git -c user.name="github-actions[bot]" -c user.email="41898341+github-actions[bot]@users.noreply.github.com" commit -q -m "Release $tag: the built package"
             git tag "$tag"
-            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/$tag"
-          else
-            gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$tag" -f sha="$GITHUB_SHA" >/dev/null
-          fi
-          if [ -s "$RUNNER_TEMP/notes.md" ]; then
-            gh release create "$tag" --verify-tag --title "$tag" --notes-file "$RUNNER_TEMP/notes.md"
-          else
-            gh release create "$tag" --verify-tag --title "$tag" --generate-notes
-          fi
+            printf '%s\t%s\n' "$tag" "$(git rev-parse HEAD)" >> "$built"
+          done 3< "$RUNNER_TEMP/releases.tsv"
+          mv "$built" "$RUNNER_TEMP/releases.tsv"
+
+      - id: publish
+        name: Tag and publish the releases
+        if: steps.release.outputs.new == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD: ${{ inputs.build }}
+        run: |
+          while IFS=$'\t' read -r -u 3 tag sha; do
+            if [ "$BUILD" = "true" ]; then
+              git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/$tag"
+            else
+              gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$tag" -f sha="$sha" >/dev/null
+            fi
+            # A backfilled version older than the newest tag is not the latest release.
+            latest="--latest"
+            top="$(printf '%s\n%s\n' "$tag" "$(sort -V "$RUNNER_TEMP/tags.txt" | tail -n 1)" | sort -V | tail -n 1)"
+            [ "$top" = "$tag" ] || latest="--latest=false"
+            if [ -s "$RUNNER_TEMP/notes/$tag.md" ]; then
+              gh release create "$tag" "$latest" --verify-tag --title "$tag" --notes-file "$RUNNER_TEMP/notes/$tag.md"
+            else
+              gh release create "$tag" "$latest" --verify-tag --title "$tag" --generate-notes
+            fi
+          done 3< "$RUNNER_TEMP/releases.tsv"
           echo "created=true" >> "$GITHUB_OUTPUT"
 
       - id: pack
-        name: Pack the release
+        name: Pack the releases
         if: steps.publish.outputs.created == 'true'
         run: |
           mkdir -p "$RUNNER_TEMP/pack"
-          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/pack" >/dev/null
-          echo "tarball=$(ls "$RUNNER_TEMP"/pack/*.tgz)" >> "$GITHUB_OUTPUT"
+          while IFS=$'\t' read -r -u 3 _ sha; do
+            git checkout -q --force "$sha"
+            npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/pack" >/dev/null
+          done 3< "$RUNNER_TEMP/releases.tsv"
 
-      - name: Attest the release's provenance
+      - name: Attest the releases' provenance
         if: steps.publish.outputs.created == 'true'
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
-          subject-path: ${{ steps.pack.outputs.tarball }}
+          subject-path: ${{ runner.temp }}/pack/*.tgz
 
-      - name: Attach the tarball to the release
+      - name: Attach each tarball to its release
         if: steps.publish.outputs.created == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ steps.release.outputs.tag }}
-          TARBALL: ${{ steps.pack.outputs.tarball }}
-        run: gh release upload "$TAG" "$TARBALL" -R "$GITHUB_REPOSITORY"
+        run: |
+          while IFS=$'\t' read -r -u 3 tag _; do
+            tarball="$(ls "$RUNNER_TEMP"/pack/*-"${tag#v}".tgz)"
+            gh release upload "$tag" "$tarball" -R "$GITHUB_REPOSITORY"
+          done 3< "$RUNNER_TEMP/releases.tsv"

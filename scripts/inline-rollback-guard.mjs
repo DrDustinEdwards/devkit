@@ -9,7 +9,7 @@
 // block. test/worker-deploy-workflow.test.mjs and test/code-map-workflow.test.mjs fail when a pair disagrees.
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { isMain } from "../node/index.mjs";
 
 const ROOT = new URL("..", import.meta.url);
 const INDENT = " ".repeat(10);
@@ -56,7 +56,7 @@ function inline(workflow, guard, marker = "ROLLBACK_GUARD") {
   return workflow.slice(0, from) + block + workflow.slice(end);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (isMain(import.meta.url)) {
   for (const { workflow, script, marker } of PAIRS) {
     const file = new URL(workflow, ROOT);
     writeFileSync(

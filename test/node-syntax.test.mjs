@@ -200,3 +200,21 @@ await test("interface members survive a nested type and merge across declaration
   assert.equal(found, true);
   assert.deepEqual([...members].sort(), ["A", "B", "C", "NESTED"]);
 });
+
+await test("interface members include what the interface extends, through an import type alias", async () => {
+  const { mkdtempSync, writeFileSync } = await import("node:fs");
+  const { tmpdir } = await import("node:os");
+  const { join } = await import("node:path");
+  const dir = mkdtempSync(join(tmpdir(), "devkit-env-"));
+  writeFileSync(
+    join(dir, "shared.d.ts"),
+    "type Admin = { ADMIN_EMAIL?: string };\nexport interface SiteSecrets extends Admin, Partial<{ ACCESS_AUD: string }> { OPERATOR_TOKEN?: string }\n",
+  );
+  const file = join(dir, "env.d.ts");
+  const src =
+    'type SiteSecrets = import("./shared").SiteSecrets;\ninterface Env extends SiteSecrets { OWN: string }\n';
+  writeFileSync(file, src);
+  const { found, members } = interfaceMembers(parseSource(file, src), "Env");
+  assert.equal(found, true);
+  assert.deepEqual([...members].sort(), ["ACCESS_AUD", "ADMIN_EMAIL", "OPERATOR_TOKEN", "OWN"]);
+});

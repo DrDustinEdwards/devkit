@@ -28,6 +28,7 @@ import { join } from "node:path";
 import { parseArgs } from "node:util";
 
 import { WCAG_TAGS, annotation, judgeSite, pickPages } from "./a11y-judge.mjs";
+import { locs } from "./warm.mjs";
 
 const VIEWS = [
   { width: 1440, height: 900, scheme: "light" },
@@ -87,9 +88,6 @@ async function fetchText(/** @type {string} */ url) {
     return { status: 0, text: "", error: /** @type {Error} */ (error).message };
   }
 }
-
-const locs = (/** @type {string} */ xml) =>
-  [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1].replace(/&amp;/g, "&"));
 
 /** The sitemap's URLs (a sitemap index followed to its first five children), moved from origin to base. */
 async function sitemapUrls(/** @type {string} */ origin, /** @type {string} */ base) {

@@ -45,11 +45,13 @@ export function crap(/** @type {number} */ cc, /** @type {number | null} */ cove
  */
 export function loadTypeScript(/** @type {string} */ root) {
   for (const base of [join(root, "package.json"), import.meta.url]) {
-    try {
-      const ts = createRequire(base)("typescript");
-      if (typeof ts.createSourceFile === "function") return ts;
-    } catch {
-      // Try the next place.
+    for (const name of ["typescript", "@typescript/typescript6"]) {
+      try {
+        const ts = createRequire(base)(name);
+        if (typeof ts.createSourceFile === "function") return ts;
+      } catch {
+        // Try the next place.
+      }
     }
   }
   throw new Error(

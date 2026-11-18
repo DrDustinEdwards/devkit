@@ -5,7 +5,8 @@
 //              rather than a release tag (a pin behind the newest release is a warning: Renovate opens that bump, and
 //              failing on it turned every repository red each time a package released), and a site-runtime pin behind
 //              the newest minor released FRESH_DAYS ago or more (its header registry is what the live check grades, so
-//              a site that drifts further builds one set of headers and is graded against another);
+//              a site that drifts further builds one set of headers and is graded against another), and a devkit pin
+//              behind a minor out two days (its no-bloat check runs from the caller's pin, so an old pin is an old check);
 //   copies     a local definition with the name of something a shared package exports (or a known alias), or text only a
 //              shared builder should write (a robots.txt "User-agent:", a sitemap "<urlset", an IndexNow POST, speculation
 //              rules, a Cloudflare Images resize, an island loader, JSON-LD, a hex or base64url encoder, a pre-paint theme
@@ -47,6 +48,7 @@
 //   npx devkit-shared                    the check, against .shared.json (no file: one site at the root)
 //   npx devkit-shared --fix-spelling     rewrite the British spellings in place, then run the check
 //   npx devkit-shared list               the generated list of every shared package's exports and every shared feature
+//   --base <sha>                         a pull request: check the base as well, and a failure it already has is a warning
 //   --from <dir>                         read the packages from checkouts named by repository (dir/prelum, dir/site-runtime...)
 //                                        instead of node_modules; a checkout missing there stops the check (exit 2)
 //
@@ -80,17 +82,18 @@
 
 import { execFileSync, spawnSync } from "node:child_process";
 import {
-  appendFileSync,
   existsSync,
+  mkdtempSync,
   readFileSync,
   readdirSync,
   statSync,
   writeFileSync,
 } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join, posix } from "node:path";
-import { pathToFileURL } from "node:url";
 
-import { escapeAnnotation, escapeProperty } from "./annotate.mjs";
+import { appendSummary, escapeAnnotation, escapeProperty } from "./annotate.mjs";
+import { isMain } from "../node/index.mjs";
 /** The shared packages: npm name, repository, and what a session should know them as. */
 export const PACKAGES = [
   { name: "@drdustinedwards/site-helpers", repo: "prelum", label: "Prelum" },
@@ -101,6 +104,33 @@ export const PACKAGES = [
   { name: "capsomer", repo: "capsomer", label: "Capsomer" },
   { name: "enarratio", repo: "enarratio", label: "Enarratio" },
 ];
+
+/**
+ * Whether `text` calls `fn({ ... })` with `key` among the object's own keys. The object is read character by character
+ * to its closing brace, past strings, comments and nested brackets, so a key in a nested object or in code after the call
+ * is not the call's, and the read is linear whatever the text.
+ */
+function callWithKey(
+  /** @type {string} */ text,
+  /** @type {string} */ fn,
+  /** @type {string} */ key,
+) {
+  const named = new RegExp(String.raw`(?<![\w$.])${key}\s*:`, "y");
+  for (const m of text.matchAll(new RegExp(String.raw`\b${fn}\(\{`, "g")))
+    for (let i = m.index + m[0].length, depth = 1; i < text.length && depth > 0; i++) {
+      const c = text[i];
+      if (c === '"' || c === "'" || c === "`") {
+        while (++i < text.length && text[i] !== c) if (text[i] === "\\") i++;
+      } else if (c === "/" && (text[i + 1] === "/" || text[i + 1] === "*")) {
+        const close = text[i + 1] === "/" ? "\n" : "*/";
+        const end = text.indexOf(close, i + 2);
+        i = end < 0 ? text.length : end + close.length - 1;
+      } else if ("({[".includes(c)) depth++;
+      else if (")}]".includes(c)) depth--;
+      else if (depth === 1 && ((named.lastIndex = i), named.test(text))) return true;
+    }
+  return false;
+}
 
 const SITE = ["site", "static"];
 const PUBLIC_OR_PRIVATE = ["site", "static", "private"];
@@ -115,7 +145,10 @@ export const FEATURES = {
   aiTxt: {
     kinds: SITE,
     // standardFiles serves ai.txt when it is given `ai`.
-    find: /\baiTxt(Response)?\b|\bstandardFiles\(\{[^]*?\bai:/,
+    find: {
+      test: (/** @type {string} */ text) =>
+        /\baiTxt(Response)?\b/.test(text) || callWithKey(text, "standardFiles", "ai"),
+    },
     use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt), or ./files standardFiles with `ai`",
   },
   tdm: {
@@ -142,7 +175,11 @@ export const FEATURES = {
   indexnow: {
     kinds: SITE,
     // site-api's standardSiteApi sends IndexNow when it is given `indexNow`.
-    find: /site-helpers\/indexnow["']|prelum-indexnow|\bstandardSiteApi\(\{[^]*?\bindexNow:/,
+    find: {
+      test: (/** @type {string} */ text) =>
+        /site-helpers\/indexnow["']|prelum-indexnow/.test(text) ||
+        callWithKey(text, "standardSiteApi", "indexNow"),
+    },
     use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)",
   },
   securityTxt: {
@@ -174,10 +211,11 @@ export const FEATURES = {
     use: "site-runtime ./health healthResponse (/health)",
   },
   // base.css, not just a token file: the element styles every page in the network shares. A build that copies it out of the
-  // package (Capsid's explorer: require.resolve("capsomer/package.json"), then "css/base.css") counts.
+  // package (require.resolve("capsomer/package.json"), then "css/base.css") counts, and so does Capsomer's own build
+  // helper, whose capsomerStylesheet always writes base.css (Carrel's www, Prelum's specimen, Capsid's explorer).
   capsomer: {
     kinds: PUBLIC_OR_PRIVATE,
-    find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']/,
+    find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']|\bimport\s*\{[^{}]*\bcapsomerStylesheet\b[^{}]*\}\s*from\s*["']capsomer\/build["']/,
     use: "Capsomer's capsomer/base.css (tokens, element styles, the site layer), then its components",
   },
 };
@@ -597,9 +635,11 @@ export function lsRemoteTags(/** @type {string} */ repo) {
 /**
  * The packages a pin may not stay behind for long, and the days a new minor release gets before a pin behind it fails.
  * site-runtime releases many minors a day, so the window is time, not a count of minors: a pin fails once it is behind
- * a minor that has been out FRESH_DAYS days, and a minor younger than that is the usual warning.
+ * a minor that has been out FRESH_DAYS days, and a minor younger than that is the usual warning. devkit is here because
+ * its no-bloat check runs from the caller's own pins: a pin left behind (or moved back) runs an older check that lets
+ * more in, so it fails once a newer minor has been out two days.
  */
-export const FRESH = /** @type {Record<string, number>} */ ({ "site-runtime": 3 });
+export const FRESH = /** @type {Record<string, number>} */ ({ "site-runtime": 3, devkit: 2 });
 const DAY_MS = 86_400_000;
 
 /**
@@ -1417,7 +1457,7 @@ export function checkWorkflows(tree, config, repo = {}) {
     if (
       !why ||
       called.has(name) ||
-      runs.some((bin) => reaches(text, bin)) ||
+      runs.some((bin) => reaches(name === "no-bloat" ? gating(text) : text, bin)) ||
       excused(config, "waive", `workflow:${name}`)
     )
       continue;
@@ -1467,6 +1507,17 @@ export function checkWorkflows(tree, config, repo = {}) {
     });
   }
   return found;
+}
+
+/**
+ * A workflow's text without the steps that cannot fail their job (`continue-on-error: true`): no-bloat run that way is a
+ * report, and a report lets every new copy merge (germomics and Enarratio ran it so before 0.37.0).
+ */
+export function gating(/** @type {string} */ text) {
+  return text
+    .split(/\n(?=\s*-\s+(?:name|run|uses|id|if):)/)
+    .filter((step) => !/^\s*continue-on-error:\s*["']?true["']?\s*$/m.test(step))
+    .join("\n");
 }
 
 /** The checks pr.yml runs in its one job; a call of it counts as each one its inputs leave on. */
@@ -1819,6 +1870,9 @@ const MODEL_CALL =
 
 /** A timeout within reach of a call that cannot take one through the shared caller. */
 const TIMEOUT = /AbortSignal\.timeout\(|\bsignal\s*:|\bsetTimeout\(|Promise\.race\(/;
+/** site-runtime's `withTimeout`: a call to it counts as a timeout only in a file that imports it from there. */
+const WITH_TIMEOUT = /\bwithTimeout\(/;
+const TIME_IMPORT = /["'`]@dustinedwards\/site-runtime\/time["'`]/;
 
 /**
  * The AI rules: each a pattern over a source file's code (comments blanked), what it means, and the checklist item it
@@ -1859,10 +1913,14 @@ export const AI_RULES = [
   {
     id: "C13",
     find: /\.(?:chatCompletions|aiSearch)\s*\(|\breranking\s*:\s*\{\s*enabled\s*:\s*true/g,
-    test: (code, m) =>
-      TIMEOUT.test(code.slice(Math.max(0, m.index - 1500), m.index + 800)) ? null : "a timeout",
+    test: (code, m) => {
+      const near = code.slice(Math.max(0, m.index - 1500), m.index + 800);
+      return TIMEOUT.test(near) || (WITH_TIMEOUT.test(near) && TIME_IMPORT.test(code))
+        ? null
+        : "a timeout";
+    },
     say: () =>
-      "calls an AI Search model (an answer or the reranker) with no timeout near it (C2, C13): race it against a deadline, as dustinedwards.info's askStream does",
+      "calls an AI Search model (an answer or the reranker) with no timeout near it (C2, C13): wrap it in site-runtime's withTimeout (./time) or race it against a deadline",
   },
   // JSON cut out of free text with a greedy regex, in a file that calls a model: ask for structured output instead.
   {
@@ -2266,18 +2324,13 @@ function peersOf(locate) {
   return peers;
 }
 
-async function main(/** @type {string[]} */ argv) {
-  const root = process.cwd();
-  const from = argv.includes("--from") ? argv[argv.indexOf("--from") + 1] : null;
-  // Installed packages by default; --from reads checkouts named by repository, for a tree with nothing installed.
-  const locate = (/** @type {string} */ name, /** @type {string} */ repo) => {
-    const dir = from ? join(from, repo) : join(root, "node_modules", name);
-    return existsSync(join(dir, "package.json")) ? dir : null;
-  };
-  if (argv[0] === "list") {
-    process.stdout.write(listMarkdown(readCatalog(locate).packages));
-    return 0;
-  }
+/**
+ * Every finding for the checkout at `root`, with packages read through `locate`. The base of a pull request is checked by
+ * the same code, so the two runs differ only in the tree.
+ * @param {string} root @param {(name: string, repo: string) => string | null} locate @param {boolean} from @param {boolean} fix
+ * @returns {Promise<Finding[]>}
+ */
+async function findingsAt(root, locate, from, fix) {
   const configFile = existsSync(join(root, ".shared.json")) ? ".shared.json" : null;
   /** @type {Config} */
   const config = configFile ? JSON.parse(readFileSync(join(root, configFile), "utf8")) : {};
@@ -2299,8 +2352,7 @@ async function main(/** @type {string[]} */ argv) {
   const missing = PACKAGES.filter((p) => p.repo !== self?.repo && !locate(p.name, p.repo)).map(
     (p) => p.repo,
   );
-  if (from && missing.length)
-    throw new Error(`--from ${from} has no checkout of ${missing.join(", ")}`);
+  if (from && missing.length) throw new Error(`--from has no checkout of ${missing.join(", ")}`);
   const { catalog } = readCatalog((name, repo) =>
     repo === self?.repo ? null : locate(name, repo),
   );
@@ -2338,7 +2390,7 @@ async function main(/** @type {string[]} */ argv) {
     ...(self?.repo === "capsomer"
       ? []
       : checkTokens(tree, capsomerTokens(locate("capsomer", "capsomer")), config)),
-    ...checkSpelling(root, config, argv.includes("--fix-spelling"), !self),
+    ...checkSpelling(root, config, fix, !self),
     ...checkWorkflows(tree, config, { self: self?.repo, private: event.repository?.private }),
     ...checkFakes(tree, config, self?.label),
     ...checkAi(tree, config, self?.label),
@@ -2355,6 +2407,50 @@ async function main(/** @type {string[]} */ argv) {
     });
   } else {
     findings.push(...staleExceptions(config));
+  }
+  return findings;
+}
+
+/** What makes two findings the same one, on two trees: a line number moves with any edit above it. @param {Finding} f */
+const findingKey = (f) => `${f.check}\u0000${f.file ?? ""}\u0000${f.message}`;
+
+/**
+ * A pull request's findings, judged against its base: a failure the base already has is the repository's state, not the
+ * change's, so it is a warning here and the daily run on the default branch reports it (README, "The shared checks").
+ * @param {Finding[]} head @param {Finding[]} base @returns {Finding[]}
+ */
+export function againstBase(head, base) {
+  const before = new Set(base.filter((f) => !isWarning(f)).map(findingKey));
+  return head.map((f) =>
+    !isWarning(f) && before.has(findingKey(f))
+      ? { ...f, warn: true, message: `${f.message} (already on the base branch)` }
+      : f,
+  );
+}
+
+async function main(/** @type {string[]} */ argv) {
+  const root = process.cwd();
+  const from = argv.includes("--from") ? argv[argv.indexOf("--from") + 1] : null;
+  const base = argv.includes("--base") ? argv[argv.indexOf("--base") + 1] : null;
+  // Installed packages by default; --from reads checkouts named by repository, for a tree with nothing installed.
+  const locate = (/** @type {string} */ name, /** @type {string} */ repo) => {
+    const dir = from ? join(from, repo) : join(root, "node_modules", name);
+    return existsSync(join(dir, "package.json")) ? dir : null;
+  };
+  if (argv[0] === "list") {
+    process.stdout.write(listMarkdown(readCatalog(locate).packages));
+    return 0;
+  }
+  let findings = await findingsAt(root, locate, !!from, argv.includes("--fix-spelling"));
+  if (base) {
+    // The base as its own checkout, read by the same packages, so only the change differs.
+    const dir = mkdtempSync(join(tmpdir(), "devkit-shared-base-"));
+    execFileSync("git", ["worktree", "add", "--detach", "--quiet", dir, base], { cwd: root });
+    try {
+      findings = againstBase(findings, await findingsAt(dir, locate, !!from, false));
+    } finally {
+      execFileSync("git", ["worktree", "remove", "--force", dir], { cwd: root });
+    }
   }
   const errors = findings.filter((f) => !isWarning(f));
   for (const f of findings) {
@@ -2386,8 +2482,7 @@ async function main(/** @type {string[]} */ argv) {
       ? `devkit-shared: ${errors.length} to fix (${counts}). What the packages export: npx devkit-shared list`
       : `devkit-shared: uses the shared code (${counts}).`,
   );
-  if (process.env.GITHUB_STEP_SUMMARY)
-    appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Shared-code check\n\n${counts}\n`);
+  appendSummary(`### Shared-code check\n\n${counts}`);
   return errors.length ? 1 : 0;
 }
 
@@ -2403,5 +2498,4 @@ export async function cli(/** @type {string[]} */ argv) {
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
-  process.exitCode = await cli(process.argv.slice(2));
+if (isMain(import.meta.url)) process.exitCode = await cli(process.argv.slice(2));

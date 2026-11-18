@@ -7,7 +7,7 @@ name: checks
 # Replace the sha with the commit of devkit that holds the reviewed pr.yml, and keep it a full sha:
 # scripts/check-callers.mjs fails on anything else.
 #
-# NO PUSH TO THE DEFAULT BRANCH. A merge was checked as a pull request, and the rulesets let nothing else onto main, so a
+# NO PUSH TO THE DEFAULT BRANCH, but a daily scheduled run there. A merge was checked as a pull request, and the rulesets let nothing else onto main, so a
 # second run on the merge commit only repeats it. What a merge must still start (the deploy and the tests it needs, a
 # release) stays in the repository's own workflows; dependencies' daily schedule stays in examples/dependencies-caller.yml.
 #
@@ -19,6 +19,10 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, edited, ready_for_review]
   merge_group:
+  # Once a day on the default branch: the shared-code check judges the repository's state there, which a pull request's
+  # run leaves to it (pr.yml, "THE CALLER"). A red run is Capsid's job for this repository. Pick a minute of your own.
+  schedule:
+    - cron: "17 5 * * *"
   # Run by hand once to clean the footer from every past pull request.
   workflow_dispatch:
 

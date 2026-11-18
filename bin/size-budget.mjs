@@ -6,6 +6,7 @@
 //
 //   initial JS (the heaviest page's)              <= initial_js_kb gzip
 //   each other chunk (loaded when a part opens)   <= lazy_chunk_kb gzip
+//   all JS (every page's and every chunk)         <= total_js_kb gzip, together, when set
 //   initial CSS (the heaviest page's)             <= css_kb gzip
 //   lazy CSS (every stylesheet no page loads)     <= lazy_css_kb gzip, together
 //   fonts                                         reported, not budgeted
@@ -13,31 +14,27 @@
 //   npx devkit-size-budget                     check against .size-budget.json
 //   npx devkit-size-budget --config <file>     another budget file
 //
-// The budget file (all four limits required):
+// The budget file (the four limits required, `total_js_kb` optional):
 //
-//   { "initial_js_kb": 205, "lazy_chunk_kb": 40, "css_kb": 39, "lazy_css_kb": 12,
+//   { "initial_js_kb": 205, "lazy_chunk_kb": 40, "css_kb": 39, "lazy_css_kb": 12, "total_js_kb": 400,
 //     "client": "build/client", "server": "build/server/index.js" }
 //
-// `client` and `server` are relative to the working directory (defaults above). It differs from devkit-route-weight, which
+// Each chunk under lazy_chunk_kb says nothing of how many there are, so code split into more chunks passes it;
+// `total_js_kb` budgets them together. Unset, the total is reported, not budgeted. `client` and `server` are relative to the working directory (defaults above). It differs from devkit-route-weight, which
 // reports every route and warns; this gates the heaviest page and the chunks that load later. Raise a limit in a reviewed
 // change that says why.
 
-import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
 
-import { escapeAnnotation } from "./annotate.mjs";
+import { escapeAnnotation, fail } from "./annotate.mjs";
 import { readConfig } from "./site-config.mjs";
+import { isMain } from "../node/index.mjs";
 
 const KB = 1024;
 const LIMITS = ["initial_js_kb", "lazy_chunk_kb", "css_kb", "lazy_css_kb"];
-
-/** @param {string} msg @returns {never} */
-function fail(msg) {
-  console.error(`::error::size-budget: ${escapeAnnotation(msg)}`);
-  process.exit(1);
-}
 
 /** @param {number} n */
 const fmt = (n) => `${(n / KB).toFixed(1)} KB`;
@@ -50,31 +47,42 @@ async function main() {
   );
   for (const k of LIMITS)
     if (typeof config[k] !== "number" || !(config[k] > 0))
-      fail(`${configPath} needs a positive number for ${k}`);
+      fail("size-budget", `${configPath} needs a positive number for ${k}`);
+  if (
+    config.total_js_kb !== undefined &&
+    (typeof config.total_js_kb !== "number" || !(config.total_js_kb > 0))
+  )
+    fail("size-budget", `${configPath} needs a positive number for total_js_kb, or none`);
   const budget = {
     initialJs: config.initial_js_kb * KB,
     lazyChunk: config.lazy_chunk_kb * KB,
     css: config.css_kb * KB,
     lazyCss: config.lazy_css_kb * KB,
+    totalJs: config.total_js_kb === undefined ? null : config.total_js_kb * KB,
   };
   const client = resolve(config.client ?? "build/client");
   const server = resolve(config.server ?? "build/server/index.js");
-  if (!existsSync(client) || !existsSync(server)) fail("no build; run the build first");
+  if (!existsSync(client) || !existsSync(server))
+    fail("size-budget", "no build; run the build first");
 
   /** @type {{ entry?: { module: string, imports?: string[], css?: string[] }, url: string, routes: Record<string, { id: string, parentId?: string, module?: string, imports?: string[], css?: string[], clientLoaderModule?: string }> }} */
   let assets;
   try {
     ({ assets } = await import(pathToFileURL(server).href));
   } catch (e) {
-    return fail(`the server build is unreadable: ${e instanceof Error ? e.message : String(e)}`);
+    return fail(
+      "size-budget",
+      `the server build is unreadable: ${e instanceof Error ? e.message : String(e)}`,
+    );
   }
-  if (!assets?.entry?.module) fail("the manifest names no entry");
+  if (!assets?.entry?.module) fail("size-budget", "the manifest names no entry");
   const entry = assets.entry;
 
   const file = (/** @type {string} */ url) => url.replace(/^\//, "").replace(/#$/, "");
   const sizeOf = (/** @type {string} */ rel) => {
     const p = join(client, rel);
-    if (!existsSync(p)) fail(`the manifest names ${rel}, which is not in the client build`);
+    if (!existsSync(p))
+      fail("size-budget", `the manifest names ${rel}, which is not in the client build`);
     const buf = readFileSync(p);
     return { raw: buf.length, gz: gzipSync(buf, { level: 9 }).length };
   };
@@ -83,7 +91,7 @@ async function main() {
   /** @type {(r: (typeof routes)[number] | undefined) => typeof routes} */
   const chain = (r) => (r ? [...chain(assets.routes[r.parentId ?? ""]), r] : []);
   const leaves = routes.filter((r) => r.parentId && !routes.some((c) => c.parentId === r.id));
-  if (leaves.length === 0) fail("the manifest names no page");
+  if (leaves.length === 0) fail("size-budget", "the manifest names no page");
 
   const pages = leaves.map((leaf) => {
     const js = new Set([file(assets.url), file(entry.module), ...(entry.imports ?? []).map(file)]);
@@ -129,6 +137,16 @@ async function main() {
     if (s.gz > budget.lazyChunk)
       problems.push(`chunk ${f} is ${fmt(s.gz)} gzip, over ${fmt(budget.lazyChunk)}`);
   }
+  const totalJsGz = gz(new Set([...heaviest.js, ...files.filter((f) => f.endsWith(".js"))]));
+  rows.push([
+    "all js",
+    "TOTAL",
+    null,
+    totalJsGz,
+    budget.totalJs === null ? "reported" : `<= ${fmt(budget.totalJs)}`,
+  ]);
+  if (budget.totalJs !== null && totalJsGz > budget.totalJs)
+    problems.push(`all JS is ${fmt(totalJsGz)} gzip, over ${fmt(budget.totalJs)}`);
 
   const cssGz = gz(heaviestCss.css);
   let lazyCssGz = 0;
@@ -137,7 +155,7 @@ async function main() {
     if (!anyPage.has(f)) lazyCssGz += s.gz;
     rows.push([heaviestCss.css.has(f) ? "css" : "lazy css", f, s.raw, s.gz, ""]);
   }
-  if (cssGz === 0) fail("no initial CSS found through the manifest");
+  if (cssGz === 0) fail("size-budget", "no initial CSS found through the manifest");
   rows.push(["css", `TOTAL (${heaviestCss.id})`, null, cssGz, `<= ${fmt(budget.css)}`]);
   rows.push(["lazy css", "TOTAL", null, lazyCssGz, `<= ${fmt(budget.lazyCss)}`]);
   if (cssGz > budget.css)
@@ -178,5 +196,4 @@ async function main() {
   console.log("size-budget: pass");
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  await main();
+if (isMain(import.meta.url)) await main();

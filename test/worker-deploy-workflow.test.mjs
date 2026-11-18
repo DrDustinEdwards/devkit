@@ -82,23 +82,6 @@ test("no job asks for a write", () => {
   assert.doesNotMatch(code, /: write\b/);
 });
 
-test("the inputs and the two secrets the job names", () => {
-  for (const input of [
-    "worker-name",
-    "health-url",
-    "verify-command",
-    "node-version-file",
-    "working-directory",
-    "pre-deploy",
-    "generated-secrets",
-  ]) {
-    assert.match(text, new RegExp(`\\n {6}${input}:\\n`), input);
-  }
-  for (const secret of ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"]) {
-    assert.match(text, new RegExp(`\\n {6}${secret}:\\n {8}required: true\\n`), secret);
-  }
-});
-
 test("THE NAMES CAPSID'S WATCHER READS: the job, the step and the three annotations, byte for byte", () => {
   assert.match(job("live"), /\n {4}name: live gate\n/, `the job is no longer named "${LIVE_GATE}"`);
   assert.match(

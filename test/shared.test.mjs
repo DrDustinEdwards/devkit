@@ -7,6 +7,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
+  FEATURES,
   FORMAT_CHECK_SCRIPT,
   LINT_SCRIPT,
   WORKFLOWS,
@@ -23,6 +24,7 @@ import {
   checkSpelling,
   checkTokens,
   checkWorkflows,
+  againstBase,
   isWarning,
   newest,
   respell,
@@ -393,6 +395,21 @@ test("each app is checked for its kind's features, files belong to the deepest a
   );
 });
 
+test("a standardFiles or standardSiteApi call counts by its own top-level key, never one nested in it or in code after it", () => {
+  const ai = (/** @type {string} */ text) => FEATURES.aiTxt.find.test(text);
+  const indexNow = (/** @type {string} */ text) => FEATURES.indexnow.find.test(text);
+  assert.equal(ai('standardFiles({ origin, // it\'s ours\n  ai: { name: "A}" } })'), true);
+  assert.equal(
+    indexNow(
+      "standardSiteApi({ adapter: a({ ...(k ? { f: () => g({ h: { i } }) } : {}) }), indexNow: { key } })",
+    ),
+    true,
+  );
+  assert.equal(ai("standardFiles({ robots: { ai: 1 } })"), false);
+  assert.equal(ai("standardFiles({ origin /* } */ });\nconst policy = { ai: true };"), false);
+  assert.equal(indexNow("standardSiteApi({ db });\nlater({ indexNow: 1 });"), false);
+});
+
 test("PLANT: a React Router app without a year on its hashed files fails, and passes once _headers gives them one", () => {
   const app = {
     "react-router.config.ts": "export default {};",
@@ -698,9 +715,12 @@ test("an admin or login route warns without noindex in a file that names it, a s
     "docs/src/feed.ts":
       'return new Response(xml, { headers: { "Content-Type": "application/atom+xml" } });\n// <link rel="alternate" type="application/atom+xml">',
     "docs/src/root.ts": 'import "capsomer/base.css";',
+    "specimen/build.mjs":
+      'import { capsomerStylesheet } from "capsomer/build";\nwriteFileSync(out, capsomerStylesheet({ family: "teal" }));',
+    "specimen/test/a11y.test.ts": 'import AxeBuilder from "@axe-core/playwright";',
   };
   const found = checkFeatures(tree(files), {
-    apps: { ".": "site", blog: "site", news: "static", docs: "static" },
+    apps: { ".": "site", blog: "site", news: "static", docs: "static", specimen: "static" },
   }).filter((f) => /noindex|createSiteApi|accessibility|feed|D1|no capsomer/.test(f.message));
   assert.deepEqual(
     found.map((f) => `${f.warn ?? false} ${f.message.split(":")[0]}`),
@@ -743,6 +763,15 @@ test("PLANT: a repository missing the devkit workflows its kinds need is told wh
     }),
   };
   assert.deepEqual(missing(ci), ["worker-deploy"]);
+  // PLANT: a no-bloat step that cannot fail its job is a report, and a report lets a new copy merge.
+  const report = {
+    ...ci,
+    ".github/workflows/ci.yml": ci[".github/workflows/ci.yml"].replace(
+      "      - run: npm run check\n",
+      "      - name: Bloat\n        continue-on-error: true\n        run: npm run check\n      - run: npm test\n",
+    ),
+  };
+  assert.deepEqual(missing(report), ["worker-deploy", "no-bloat"]);
   assert.deepEqual(
     missing(ci, { waive: { "workflow:worker-deploy": "Workers Builds deploys it" } }),
     [],
@@ -863,6 +892,9 @@ test("PLANT: a model call or prompt that skips the shared pieces is flagged with
       "const a = await env.AI.run(MODEL, { messages, max_tokens: 300 }, { gateway, signal: AbortSignal.timeout(30_000) });",
     "app/ask.ts":
       "const late = new Promise((_, no) => setTimeout(no, 5000));\nexport const ask = (env) => Promise.race([env.AI_SEARCH.chatCompletions({ messages }), late]);",
+    // site-runtime's withTimeout counts as the deadline.
+    "app/ask-late.ts":
+      'import { withTimeout } from "@dustinedwards/site-runtime/time";\nexport const ask = (env) => withTimeout(env.AI_SEARCH.chatCompletions({ messages }), 5000);',
     // A regex over a tool's output, in a file with no model call, and a comment naming the dash rule.
     "scripts/read.mjs": "const rows = JSON.parse(out.match(/\\[[\\s\\S]*\\]/)[0]);",
     "app/prompt.ts":
@@ -1222,4 +1254,30 @@ test("PLANT: an MCP tool for a job another owner holds fails, renamed or not; th
     checkJobs(tree(files), { copies: { "mcp/src/tools.ts#site_save_post": "why" } }, "site").length,
     2,
   );
+});
+
+test("PLANT: on a pull request a failure the base already has is a warning, and one the change adds still fails", () => {
+  const old = {
+    check: "copies",
+    file: "app/a.ts",
+    line: 3,
+    message: "escapeHtml copies site-runtime ./html",
+  };
+  const added = {
+    check: "copies",
+    file: "app/b.ts",
+    line: 9,
+    message: "escapeHtml copies site-runtime ./html",
+  };
+  const judged = againstBase([{ ...old, line: 7 }, added], [old]);
+  assert.deepEqual(
+    judged.map((f) => [f.file, isWarning(f)]),
+    [
+      ["app/a.ts", true],
+      ["app/b.ts", false],
+    ],
+  );
+  assert.match(judged[0].message, /already on the base branch/);
+  // A warning on the base excuses nothing: only a failure there is the repository's state.
+  assert.equal(isWarning(againstBase([added], [{ ...added, warn: true }])[0]), false);
 });

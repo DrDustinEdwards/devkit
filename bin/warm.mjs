@@ -9,20 +9,21 @@
 //                                                        for a deploy that goes live after the command returns
 //                                                        (Workers Builds, or a rollout still reaching every colo)
 
-import { realpathSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { isMain } from "../node/index.mjs";
 
 const MAX_PAGES = 1000;
 const WORKERS = 4;
 const TIMEOUT_MS = 30_000;
 
-/** The <loc> values of a sitemap, or none when it does not answer 200. */
-async function locs(/** @type {string} */ url) {
+/** The <loc> values of a sitemap's text, with the XML `&amp;` of a query string undone. */
+export const locs = (/** @type {string} */ xml) =>
+  [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1].replace(/&amp;/g, "&"));
+
+/** The <loc> values of the sitemap at `url`, or none when it does not answer 200. */
+async function fetchLocs(/** @type {string} */ url) {
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS) });
-    return res.ok
-      ? [...(await res.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1])
-      : [];
+    return res.ok ? locs(await res.text()) : [];
   } catch {
     return [];
   }
@@ -39,10 +40,10 @@ const onOrigin = (/** @type {string} */ url, /** @type {string} */ origin) => {
 
 /** Every page the sitemap names on this origin, an index followed one level, at most MAX_PAGES. */
 export async function sitemapPages(/** @type {string} */ origin) {
-  const top = await locs(`${origin}/sitemap.xml`);
+  const top = await fetchLocs(`${origin}/sitemap.xml`);
   const pages = top.filter((u) => !/\.xml(\?|$)/.test(u));
   for (const index of top.filter((u) => /\.xml(\?|$)/.test(u) && onOrigin(u, origin)))
-    pages.push(...(await locs(index)));
+    pages.push(...(await fetchLocs(index)));
   return [...new Set(pages)].filter((u) => onOrigin(u, origin)).slice(0, MAX_PAGES);
 }
 
@@ -109,7 +110,7 @@ async function main(/** @type {string[]} */ argv) {
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
+if (isMain(import.meta.url)) {
   main(process.argv.slice(2)).then(
     (code) => process.exit(code),
     (error) => {

@@ -1,6 +1,6 @@
 {
   "name": "@dustinedwards/devkit",
-  "version": "0.34.0",
+  "version": "0.53.0",
   "private": true,
   "description": "Shared tooling for the Dustin Edwards repositories. As a package: the shared test helpers and the shared checks, installed by git tag. The Renovate policy and the reusable workflows in this repository are not part of the package.",
   "license": "MIT",
@@ -86,9 +86,17 @@
       "types": "./vite/dev-toolbar.d.mts",
       "default": "./vite/dev-toolbar.mjs"
     },
+    "./vite/native-builtins": {
+      "types": "./vite/native-builtins.d.mts",
+      "default": "./vite/native-builtins.mjs"
+    },
     "./stryker": {
       "types": "./stryker/chunked.d.mts",
       "default": "./stryker/chunked.mjs"
+    },
+    "./migration-scan": {
+      "types": "./bin/migration-scan.d.mts",
+      "default": "./bin/migration-scan.mjs"
     }
   },
   "scripts": {
@@ -97,26 +105,28 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "test": "node --test \"test/*.test.mjs\"",
-    "contract": "node scripts/fakes-contract.mjs"
+    "contract": "node scripts/fakes-contract.mjs",
+    "changeset": "changeset"
+  },
+  "dependencies": {
+    "@typescript/typescript6": "6.0.2"
   },
   "devDependencies": {
+    "@changesets/cli": "3.0.3",
     "@types/node": "24.19.2",
-    "oxfmt": "0.77.0",
-    "oxlint": "1.92.0",
-    "oxlint-tsgolint": "7.0.2006",
-    "typescript": "5.9.3",
-    "vite": "8.3.6"
+    "oxfmt": "0.78.0",
+    "oxlint": "1.93.0",
+    "oxlint-tsgolint": "7.0.2007",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "yaml": "2.9.1"
   },
   "peerDependencies": {
-    "oxfmt": "0.77.0",
-    "oxlint": "1.92.0",
-    "oxlint-tsgolint": "7.0.2006",
-    "typescript": ">=5.9"
+    "oxfmt": ">=0.77.0 <1",
+    "oxlint": ">=1.92.0 <2",
+    "oxlint-tsgolint": ">=7.0.2006 <8"
   },
   "peerDependenciesMeta": {
-    "typescript": {
-      "optional": true
-    },
     "oxfmt": {
       "optional": true
     },

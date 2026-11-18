@@ -1,5 +1,214 @@
 # Changelog
 
+## 0.53.0
+
+### Minor Changes
+
+- The restore drill reads the d1-dump release from the caller's package.json (`package-json` input, default `package.json`) instead of a `d1-dump-ref` input, so it cannot drift from the release the nightly dump runs. The files drill uses the same release. Breaking: remove `d1-dump-ref` from each caller's `with:`.
+
+## 0.52.0
+
+### Minor Changes
+
+- devkit's peer ranges for Oxlint, oxlint-tsgolint and Oxfmt are open (`>=1.92.0 <2`, `>=7.0.2006 <8`, `>=0.77.0 <1`), so a Renovate bump of an Oxc tool in a repository is no longer a peer conflict that leaves its lockfile stale. The syntax-tree readers (`./node/syntax`, `devkit-destructive`, `devkit-secrets`) read through `@typescript/typescript6`, a dependency of devkit, and `typescript` is no longer a peer: TypeScript 7 has no JavaScript compiler API, so a repository on 7 failed them. devkit itself moves to TypeScript 7.0.2.
+
+## 0.51.2
+
+### Patch Changes
+
+- The no-bloat check lets a change that only adds `entry` globs to a Knip config in data lower Knip's unused `files` by as many tracked files as the new globs name, and nothing else. Before, naming siteScript's `app/site.ts` and `app/islands/*.ts` as entries was refused as a narrower measure, though Knip then reads those files and what they import. A drop past the files named, a drop in any other count, a negation or any other change beside it is still refused.
+
+## 0.51.1
+
+### Patch Changes
+
+- The no-bloat check no longer counts `.changeset/*.md` or `.changeset/config.json` as code, so a change of measure (a Knip plugin's config such as `wrangler.jsonc`) and the changeset the changeset gate demands can land in one pull request.
+
+## 0.51.0
+
+### Minor Changes
+
+- `nativeBuiltins()` (`@dustinedwards/devkit/vite/native-builtins`), a Vite plugin that swaps a polyfill for the platform function it fills in. `@ungap/structured-clone`, which mdast-util-to-hast imports in every site that renders Markdown through Prelum, becomes the global `structuredClone`: Workers and every supported browser have it, and a bundler cannot drop the polyfill's serialize and deserialize on its own. On Foxing's web Worker this takes 2.96 KiB raw and 0.87 KiB gzip off. Put it first in `plugins`. `@ungap`'s `json` and `lossy` options are not supported.
+
+## 0.50.1
+
+### Patch Changes
+
+- `devkit-css-vars` `classes`: a stylesheet that lists a class only inside `:is()` or `:where()` no longer counts as styling it. Capsomer's `layout-gap.css` lists every layout in `:is(.cap-stack, .cap-panes, ...)[data-gap]`, so loading it passed a Portal that had dropped `layout-panes.css`; now that fails.
+
+## 0.50.0
+
+### Minor Changes
+
+- `devkit-css-vars` takes an optional `classes` list in `.css-vars.json`: `[{ "package": "dashboard/node_modules/capsomer", "dirs": ["dashboard/src"], "prefix": "cap-" }]`. It fails on a class with the prefix that a `.ts` or `.tsx` file under `dirs` writes, when one of the package's stylesheets (its `exports` ending in `.css` and the files they `@import`) styles the class and nothing under `dirs` imports that stylesheet. A stylesheet styles a class when the class is in the first compound of one of its top-level selectors. New exports from `bin/css-vars.mjs`: `styledClasses(css, prefix)` and `unloadedClasses({ pkgDir, prefix, files })`. Without `classes` nothing changes.
+
+## 0.49.0
+
+### Minor Changes
+
+- devkit-no-bloat judges a Knip plugin config in code (a Vite config) by the inputs Knip takes from it, not by its body. When Knip takes nothing new from the config at the base and now, a change to the config or to the modules it imports counts as code, not as a change of measure. The inputs come from `knip --debug`, with the base checked out beside the change. Pages the build writes and the scripts those pages load don't count as new inputs. A config that adds an entry or a dependency is still a change of measure. This lets a site's docs rebuild (Capsomer #405) go through without a bypass.
+
+## 0.48.1 (2026-11-13)
+
+- `devkit-shared`: the `[ai] C13` rule counts site-runtime's `withTimeout` (`@dustinedwards/site-runtime/time`) as the timeout near an AI Search call, in a file that imports it from there. Before, only `AbortSignal.timeout`, `signal:`, `setTimeout` and `Promise.race` counted, so a site that did what the `[copies]` rule asks (import `withTimeout`, not write its own) was flagged, and dustinedwards.info kept an inline `Promise.race`. A local function named `withTimeout` still does not count.
+
+## 0.48.0 (2026-11-13)
+
+- `devkit-shared --base <sha>`: on a pull request the check also reads the base as its own checkout, with the same packages, and a failure the base already has becomes a warning ("already on the base branch"). A pull request fails only on what it adds. Before, a copy merged earlier, a pin a newer release left behind (S7, the pin-age rule) or a new rule turned every open pull request red at once: "Shared code" failed about 100 times each in carrel, capsid and foxing in the 48 hours to 2026-11-13. `pr.yml` and `checks.yml` pass the base.
+- `pr.yml` runs its checks on a `schedule` event too, with no base, so a caller's daily run judges the default branch's state, and a red run is Capsid's job for that repository. `examples/pr-caller.yml` gains the daily schedule.
+- `devkit-no-bloat`: a `schedule` added to a caller's `on`, with nothing else there changed, is no change to the check (it only adds runs), so the caller can gain the daily run in a pull request.
+
+## 0.47.1 (2026-11-13)
+
+- `devkit-no-bloat`: a local import that a Knip plugin's config in code reaches stops at any code file the repository's Knip config counts (its `entry` and `project` globs, root and workspaces, or Knip's default project), as both the base and the change read them. 0.47.0 stopped only at entries, so Capsomer's docs site, whose Vite config imports its own render modules (`site/themes.ts`, `site/content.ts`, `bin/parts.mjs`), still made a change to them a change of measure (capsomer #405). A data file a config imports (`.json`) is still followed, and the config file itself is still one.
+- `devkit-no-bloat`: a change to knip.json or knip.jsonc that only drops `entry` globs (not negations) is judged as code, not as a change of measure: Knip then reads fewer files as entries, so it can only report more, and a raise it causes is refused like any other.
+
+## 0.47.0 (2026-11-13)
+
+- `devkit-no-bloat`: a local import that a Knip plugin's config in code reaches stops at a file the repository's Knip config names as an entry (`entry` in knip.json or knip.jsonc, at the root and in each workspace, as it reads both at the base and now). Knip counts an entry the same whoever imports it, so importing it changes nothing about the measure. Before, Capsomer's docs site, whose Vite config renders pages from the components, made almost every component a config: any change that added a module beside one was refused as moving code and its measure together (capsomer #405, #416). A file the config reaches that is not an entry (the docs site's own render code) is still a change of measure, as in 0.43.0.
+
+## 0.46.0 (2026-11-13)
+
+- `devkit-no-bloat`: a `legacy-scan:keep` names the guide whose rubric drops the match before its reason (`legacy-scan:keep ime-safe-enter-submit isImeEnter checks isComposing and keyCode 229`), and keeps only that guide's match. Before, any three words after the marker kept every match on the line or the next, whatever the guide, so one marker could hide a second legacy pattern beside the one it was written for. **Breaking** for a repository with markers written the 0.45.0 way (Capsomer's five Enter handlers): each gains `ime-safe-enter-submit` after `legacy-scan:keep` in the devkit bump, or its matches count again. A new marker with no guide or no reason fails (`unreasoned`).
+- `devkit-shared`: the aiTxt and indexnow features read a `standardFiles({ ... })` or `standardSiteApi({ ... })` call's own top-level keys (`ai`, `indexNow`), by reading the object to its closing brace past strings, comments and nested brackets, in linear time. Before, a lazy `[^]*?` ran from the call to any later `ai:` or `indexNow:` in all the app's files joined, so a key in another object or file counted, and a long text with no key could backtrack at length. The capsomer feature's `capsomer/build` case reads the import of `capsomerStylesheet` from it, not any later call in the joined text.
+- `devkit-size-budget`: an optional `total_js_kb` in `.size-budget.json` budgets all the JS together, every page's and every lazy chunk, gzip. Each chunk under `lazy_chunk_kb` said nothing of how many there are, so moving code into more lazy chunks passed the budget. Unset, the total is reported, not budgeted, so no repository fails on this release; one sets it to gate the total.
+
+## 0.45.2 (2026-11-13)
+
+- The fakes-contract fixture (`test/fixtures/fakes-contract.json`) writes a field list once when two GitHub operations allow the same fields (`git/create-commit` names `git/get-commit`, `git/update-ref` names `git/get-ref`, via `sameFieldsAs`), so jscpd's baseline is back to 0 clones (0.43.0 let one in). `scripts/fakes-contract.mjs` writes it that way and `test/testing-contract.test.mjs` reads it. No change to what devkit ships.
+
+## 0.45.1 (2026-11-13)
+
+- `devkit-shared`: a static build that writes its stylesheet with Capsomer's `capsomerStylesheet` (`capsomer/build`, Capsomer 0.123.0) counts as using Capsomer, since that helper always writes base.css. Before, Capsid's explorer, moved onto it from its own inlineCss and minifyCss, failed with "static explorer has no capsomer".
+
+## 0.45.0 (2026-11-13)
+
+- `devkit-no-bloat`: a legacy-scan match kept on purpose carries `legacy-scan:keep` and its reason in a comment on its line or the line above, and is not counted, so a baseline can be zero when every match left is one the guide's own rubric drops. The scanner sees only a literal `isComposing` or `keyCode === 229`, so each Enter handler guarded by Capsomer's shared `isImeEnter` is such a match (7 across Capsomer, dustinedwards.info and Carrel). A guide with no count left is left out of the counts. A marker added with no reason fails (`unreasoned`), as a `jscpd:ignore-start` does.
+
+## 0.44.0 (2026-11-13)
+
+- `devkit-no-bloat` runs Chrome's legacy scanner (`modern-web-guidance legacy-scan --json`, Modern Web Guidance 1.0.0, github.com/GoogleChrome/modern-web-guidance) and gates its matches per guide, as it gates Knip's issue types: `"legacy"` in the baseline, `"legacy": false` to turn it off, `legacy.args` for the paths (default the repository root; the scanner skips docs, examples and tests). The check installs it like knip and jscpd (`tools["modern-web-guidance"]`, exact version, its own install). Item 22 of the Modern Web Guidance review. **Breaking** for every caller: like any measured count, `legacy` needs its baseline entry, so the devkit bump runs `npx devkit-no-bloat --write-baseline` and commits `.no-bloat.json` (a bump alone may raise a count). After that a code change that adds a match fails.
+
+## 0.43.1 (2026-11-13)
+
+- `devkit-no-bloat`: a dependency removed beside a change of measure, such as a Vite plugin taken out of `vite.config.ts` with the library it loads, is part of that change of measure, not code, so the pair passes in one change. Before, the plugin alone left its library unused, and the library alone or with the plugin counted as code beside a definition, so no change could remove both. Such a change may not raise Knip's `unlisted` or `unresolved`, so an import left behind still fails. A dependency removed alone or beside code is still code.
+
+## 0.43.0 (2026-11-12)
+
+Closes the ways around the no-bloat ratchet that the 0.42.0 verifier found (capsid handoff/no-bloat-gaps-verify-0.42.md: J1, L, M and B2a). **Breaking**: jscpd's `unread` now counts every source file jscpd skips, not only those beside files it reads, and on jscpd 5 it counted nothing before (its report lists no files), so a repository's bump PR widens jscpd's path in a change of its own first, or re-writes its baseline; a change to a file a Knip plugin reads as its config (`vite.config.ts`, `tsconfig.json`, `.mocharc.cjs`) now comes in a change of its own, without code; and a caller workflow can change nothing but its pin and the inputs the check does not depend on.
+
+- J1: the caller workflow is read with a YAML parser (`yaml` 2.9.1, a devDependency here and installed by the check beside knip and jscpd, never the repository's), not line by line. CRLF line ends, `with: # comment`, `with: &anchor`, a flow map, a quoted or mixed-case input name and `${{ false }}` are read as GitHub reads them. A change is refused when it touches anything in a caller job but its pin and the inputs outside the watched ones (`if`, `needs`, the workflow it calls), a job the caller waits for (`needs` on a job that is skipped), anything outside `jobs` (`on` with `paths-ignore`, `branches` or `types`, `concurrency`, `permissions`), names a watched input twice, or no longer parses. `callerJobs` is deleted. `--inputs-from` reads the caller from the commit, not the disk.
+- L: in Actions the check counts the commit the run is for (`GITHUB_SHA`): HEAD moved, a tracked file that differs from it, or one marked assume-unchanged or skip-worktree fails before anything is counted (`checkoutProblems`), so an install script or prepare step that puts the base back is caught. git runs with no `GIT_*` variable of an earlier step, no replace refs and no fsmonitor, and the tools without the proxy and certificate variables, which an earlier step's GITHUB_ENV line could set.
+- M: a file a Knip plugin reads as its config, from Knip's own plugin list at the tool's version, and the local modules a config in code imports, is a change of measure (`knipPluginFiles`). Knip imports such a config, so one could print a report of its own.
+- B2a: `unread` counts a source file jscpd skips anywhere, so a copy in a directory outside jscpd's path is counted and a new one fails by name. A file with fewer tokens than jscpd's `minTokens` is left out, like one under `minLines`. On jscpd 5 the files it read come from `--summary`, and a report whose list does not match its count fails.
+- `toolRunner` is `checkTools` (`run`, `parseYaml`, `knipConfigs`). node/syntax.mjs's `objectConst` and `stringArrayConst` share one reader of a const's initializer, and `stringArrayConst` unwraps `satisfies` too.
+
+## 0.42.1 (2026-11-12)
+
+- `devkit-no-bloat`: jscpd's `--ignore` and `--ignore-pattern` in the config's jscpd args are read glob by glob, split on commas as jscpd splits them. Before, the whole value was one entry, so dropping a glob from the list (a wider measure) was refused as a new ignore.
+
+## 0.42.0 (2026-11-12)
+
+Closes the ways around the no-bloat ratchet that the 0.41.1 verifier found (capsid handoff/no-bloat-gaps-verify-0.41.md: H, I, J, K, B2 and knip with no lockfile). **Breaking**: jscpd's `unread` no longer counts a file shorter than jscpd's `minLines`, so a repository's count can fall and its bump PR runs `npx devkit-no-bloat --write-baseline` as before; and a pull request can no longer change the inputs of the job that runs the check.
+
+- H, I, K, no lockfile: knip and jscpd are never the repository's own. The check installs them itself (`toolRunner`), at the exact `tools` versions, into a fresh directory and npm cache, from registry.npmjs.org named outright, with no user, global or project npmrc and no install scripts, and runs them on its own node with no variable that loads code (`NODE_OPTIONS`, `LD_PRELOAD`, `npm_config_*`). A postinstall or a pnpm patch that rewrites node_modules/knip, an npm-shrinkwrap.json or a second lockfile, and a hand-made node_modules with no lockfile no longer change what counts, and a `tools` entry that is not `<tool>@x.y.z` cannot run. The lockfile provenance check (`installedFromNpm`, `pnpmProblem`) and the npx path (`runnerIn`, `npxArgs`) are gone. The no-bloat action runs the bin without `NODE_OPTIONS`, `NODE_PATH`, `LD_PRELOAD` and `LD_LIBRARY_PATH`.
+- H: what an install runs or patches is a change of measure, so it comes in a change of its own: package.json's install scripts (`preinstall`, `install`, `postinstall`, `prepare` and the rest) and `pnpm.patchedDependencies`, `.npmrc`, `.pnpmfile.cjs`, `pnpm-workspace.yaml` and `patches/`.
+- I: a directory with two lockfiles fails.
+- J: no change may drop the job that calls `pr.yml` or `no-bloat.yml`, give it an `if`, or change an input that turns the check off or decides what runs before it (`node`, `node-version-file`, `package-manager`, `install`, `no-bloat`, `no-bloat-prepare`, `no-bloat-config`; no-bloat.yml's `prepare` and `config`). A pull request that turns no-bloat off never runs it, so pr.yml's new "No-bloat stays on" step runs `--inputs-from <base> <caller>` from its own devkit whenever no-bloat does not run on a pull request. Such a change is the owner's, made past the check. A workflow counts as one that runs the check only when a job calls the workflow or a step runs the bin, not when it names them (devkit's own pr.yml).
+- B2: a jscpd path may widen but never stop covering one it read (`["src"]` to the current file list fails), and a file the change creates that jscpd skips beside files it reads fails by name, so the count no longer misses one when another file starts being read in the same change.
+
+## 0.41.2 (2026-11-12)
+
+- `devkit-secrets`: an Env interface that extends a shared type (`interface Env extends SiteSecrets {}`, site-runtime 0.144.0's standard secrets) carries that type's members, read with TypeScript's checker from the file and the packages it imports, so a site that moves onto `SiteSecrets` still passes "is declared". `env_exact` still checks only what the file itself declares. `interfaceMembers` (./node/syntax) returns `own` beside `members`.
+
+## 0.41.1 (2026-11-12)
+
+- `devkit-no-bloat`: the check that an installed knip or jscpd is npm's own reads `pnpm-lock.yaml` too, when there is no `package-lock.json`. The root importer must list the tool at a bare version (an alias, a git or tarball source, a link or a path fails), and its package must resolve by `integrity` alone. Before, a pnpm repository's lockfile was not read, so it could install another program as knip.
+
+## 0.41.0 (2026-11-12)
+
+Closes the ways around the no-bloat ratchet that the 0.40.0 verifier found (capsid handoff/no-bloat-gaps-verify-0.40.md, gaps A to G). **Breaking**: jscpd's baseline gains `unread`, so each repository's bump PR runs `npx devkit-no-bloat --write-baseline` as before; a Knip config in code (`knip.ts`, `knip.config.js`) can no longer change (write it as `knip.jsonc`); and a devkit pin behind a minor out two days now fails `devkit-shared`.
+
+- A: a change that moves only the devkit pins of a workflow (`pr.yml@<sha> # vX.Y.Z`, the rollout's and Renovate's bump) is no code and no change of measure, so it passes alone. A workflow is never code; any other edit to one that runs the check is a change of measure, refused beside code and unable to lower a count alone.
+- B: what would hide the next change's code is refused even when it hides nothing yet. Every line a change adds to a Knip config needs its own reason, on the line or in a new comment block directly above it, so a rule turned off, a narrower `project` or an entry appended under an old comment fails. jscpd may not be narrowed (larger minimums, smaller maximums, fewer formats, a mode other than strict, a changed pattern, extension map or config path, `gitignore`, `skipLocal` or `noSymlinks` on). jscpd's new `unread` count, gated, is the source files it skips beside files it reads, so a path narrowed to today's file list catches the next file. A knip run's args in `.no-bloat.json` cannot change.
+- C: `@beta` and `@alias` need a reason after them, like `@public`: Knip skips the exports all three tag.
+- D: `tools` must be `knip@x.y.z` and `jscpd@x.y.z`, never older than the base's. An installed knip or jscpd must resolve from the npm registry in `package-lock.json`, or it cannot run. devkit must be pinned to `github:DrDustinEdwards/devkit#vX.Y.Z` in every package.json, with no `overrides` or `resolutions` naming it. `--verify-install <dir>`, which the no-bloat action now runs from the workflow's own devkit before the caller's bin, fails unless the installed devkit is an exact x.y.z no older than the workflow's and every file is byte for byte the file at that release's tag (a fork, a `file:` path, a lockfile resolving elsewhere, an install script rewriting the bin). It replaces the action's version guard, which passed `0.40.0+x` and `0.40`.
+- E: a tracked file a `.gitignore` hides from Knip fails, when the file is in the change or the line hiding it is new.
+- F: `devkit-shared` fails a devkit pin, in package.json or a workflow, behind a minor out two days (`FRESH`), so a pin left behind or moved back stops being a warning. A pull request that rolls both pins back to 0.40.x or older still runs only that old code: closing that needs base-side enforcement, which a personal account's rulesets cannot require.
+- G: a reason must be words (`isReason`): three or more, fifteen letters in all, not a placeholder. `// x` and `jscpd:ignore-start x` fail. A marker or tag counts only in a comment, never in a string or regular expression that mentions it.
+
+## 0.40.1 (2026-11-12)
+
+- `devkit-no-bloat`: Knip's report is read from its last JSON line, so a plugin warning printed on stdout before it (Astro's `[WARN] Missing pages directory`) no longer stops the run with "knip printed no report this reads".
+- `devkit-no-bloat`: a workspace package's `package.json` and lockfile (`mcp/package.json`, `apps/web/package-lock.json`) count as a version bump the way the root's do, and a Knip config or `.jscpd.json` in a package directory as a change of measure. Before, a pin bump across a workspace was read as code, so its Knip re-key was refused as a raise.
+
+## 0.40.0 (2026-11-12)
+
+Closes the eight ways around the no-bloat ratchet that the 0.38.0 verifier found (capsid handoff/no-bloat-gaps-verify.md). **Breaking**: every Knip baseline is re-keyed, so each repository's bump PR runs `npx devkit-no-bloat --write-baseline`, as a change of its own (the bump alone may raise or lower). A repository that drops `--warn-only` from its workflow does that in a PR before the bump, since a workflow that runs the check no longer goes in a change with anything but itself.
+
+- Knip is read from `--reporter json`, one count per issue. Before, the compact report's heading counted files (and one per package.json), so a second unused export in a file with one, or a second unused dependency, passed. The baseline keys are Knip's issue types (`files`, `exports`, `dependencies`, `types`...) instead of its headings.
+- Every count the run measures needs its baseline entry, and a change that drops one fails. Before, deleting `baseline.knip` turned Knip's gate off.
+- A change that moves code may not also change how a count is measured: the no-bloat config outside `baseline` and `tools` (`"jscpd": false`, `"knip": []`, run arguments), a Knip config in any format (`knip.json`, `.jsonc`, `.ts`, `knip.config.*`), `.jscpd.json` (any key, not only `ignore`), or `package.json`'s `knip` or `jscpd`. A change of measure on its own may raise a count but not lower one, so narrowing what is read cannot hide code. Only a version bump alone may lower counts.
+- A new `@public` tag needs its reason after it: Knip never reports the export it tags.
+- `pr.yml` and `no-bloat.yml` fail when the installed devkit is older than the devkit the workflow runs from, and the bin refuses a change that moves a shared package to an older release.
+- `GITHUB_ACTIONS=true` no longer skips the base: the default branch is used whenever it resolves, and a `--lines-from` whose merge base is HEAD itself, while the default branch lacks HEAD, fails.
+- Workflows no longer count as "measurement only". A change to a workflow that runs the check (calls `pr.yml` or `no-bloat.yml`, or runs the bin) beside other code fails: a prepare step or a `config:` input could otherwise hide the change it ships with.
+- `--ignore=<glob>` and `--config=<file>` are read like their two-argument forms.
+
+## 0.39.0 (2026-11-12)
+
+The copies inside devkit are one each, the bolt-on sweep's rows for this repository. New exports below; no breaking change to a config.
+
+- New export `isMain(import.meta.url)` in `./node`: the entry guard (`realpath` plus `pathToFileURL`) that each bin, and two scripts, kept their own copy of. `bin/shared.mjs`, `live.mjs` and `copies.mjs` used a looser form without `realpath`; they now match through a symlink like the rest.
+- `bin/annotate.mjs` gains `fail(prefix, message)` (the `::error::` line and exit 1), `shortHead(root)` (the short commit id or today's date, from no-bloat and route-weight) and `appendSummary(text)` (the step-summary append, from console, copies, migrations, no-bloat, route-weight, shared and worker-size). `size-budget`, `worker-size`, `route-weight`, `css-vars`, `tokens`, `test-assertions`, `gates`, `destructive`, `secrets` and `readConfig` print their fatal error through `fail`. The text is the same with its `devkit-` or bin prefix; it is now on stdout, where `size-budget`, `css-vars`, `tokens`, `test-assertions`, `gates`, `destructive`, `secrets` and `readConfig` printed it on stderr.
+- `readConfig` takes `{ optional: true }` (a missing file is an empty config) and `devkit-no-bloat` and `devkit-route-weight` read their config through it. `devkit-destructive` and `devkit-secrets` read theirs through it too, so a config that is not JSON, or not an object, fails with the `::error::` line where it threw before; their missing-file message now names the path. `minimumChecks` in `bin/site-config.mjs` is their shared `minimum_checks` check.
+- `devkit-warm` reads sitemap `<loc>` values with `locs`, which `devkit-a11y` now imports from it instead of keeping its own: a URL with `&amp;` in its query string is fetched as `&`, as a11y already did.
+- `scripts/code-map.mjs` and `scripts/rollback-guard.mjs` keep their own entry guard and file walk: they are written into workflows that run without devkit checked out.
+
+## 0.38.0 (2026-11-12)
+
+Closes five ways around the no-bloat ratchet that the 0.37.1 verifier found. **Breaking** for a local run with no `origin/HEAD`, `origin/main` or `origin/master` (pass `--lines-from <rev>`), and for a devkit bump that also changes code (split it: the bump alone may raise a baseline).
+
+- A change to `tools` no longer excuses a raised baseline. Only a change that moves no code may raise one: it touches only the config, a lockfile, `.github/workflows/`, and in `package.json` only dependency versions or a new shared package. This replaces both 0.37's `tools` exemption and its shared-package bump exemption for the shared copies.
+- A local run checks the raise too, against the default branch (`origin/HEAD`, then `origin/main`, then `origin/master`), and `--write-baseline` refuses to record a raise the check would refuse. Before, only a pull request run with `--lines-from` gated it. A run in Actions without `--lines-from` (the default branch, a merge queue) has no base, as before.
+- The error for a new copy no longer names `--write-baseline`. The command is named only for a new test, the one count it raises.
+- A baseline count the base did not have (a new knip run label, a key dropped and put back) is raised from 0, and so is every count when the base had no baseline. Before, it skipped the raise check.
+- An exception needs its reason. An entry added to a Knip config's ignore lists (`knip.json`, `knip.jsonc`, `.knip.json`, `.knip.jsonc` or a run's `--config`; every key starting `ignore`) fails without a comment on its line, directly above it, or above its list. An entry added to `.jscpd.json`'s ignore or to the config's jscpd `--ignore` fails outright, since strict JSON cannot hold a reason: mark the block with `jscpd:ignore-start` and the reason after it. A `jscpd:ignore-start` added with nothing after it fails.
+
+## 0.37.2 (2026-11-12)
+
+- `devkit-tokens`, `devkit-css-vars` and `devkit-test-assertions` list files with `walkFiles` from `./node` instead of each keeping its own recursive walk. The files they scan and what they report are unchanged.
+
+## 0.37.1 (2026-11-12)
+
+- `devkit-no-bloat`: a baseline with no `"shared copies"` yet is reported like a stale entry, without the "Remove what was added" line, which only applies to a count that grew.
+
+## 0.37.0 (2026-11-12)
+
+How the network stops bolt-on code (a parallel helper, wrapper or stylesheet beside code that already does the job, Dustin 2026-11-12). **Breaking** for every caller: each needs `"shared copies"` in its `.no-bloat.json` baseline (`npx devkit-no-bloat --write-baseline`), and a caller of pr.yml or no-bloat.yml that passes `no-bloat-warn-only` or `warn-only` must drop it.
+
+- `devkit-no-bloat` holds the count exactly. A count below its baseline now fails until the change lowers the baseline, so the room a cleanup leaves cannot let the next copy in (the ratchet of ESLint's bulk suppressions, which fail on a suppression no longer needed, and Betterer's `ci` mode). Before, it was a warning and the room stayed.
+- On a pull request (`--lines-from`, which pr.yml and no-bloat.yml pass) a raised baseline for Knip, jscpd or the shared copies fails. Before, the error for a new copy told the author to run `--write-baseline` and commit, which raised the limit and passed the copy. The way out now is to remove it, or to put a real exception in `knip.json`'s or `.jscpd.json`'s ignore list with its reason. A change that moves `tools` may raise them, and one that bumps a shared package may raise the shared copies. Tests rise as before.
+- New gated count `shared copies`: jscpd over the repository's source and every shared package installed in `node_modules` (`packageCopies` in bin/copies.mjs), counting the blocks in both. A copy under a new name is caught on its pull request; devkit-shared's `copies` check matches only names, and the network scan in live.yml runs a day later. Each copy is a warning with both places. `"shared": false` turns it off.
+- jscpd reads JavaScript as TypeScript (`COPY_ARGS`, `--formats-exts`), in the shared copies and in the network scan: jscpd compares files of one format only, so a site's `.ts` copy of site-runtime's or Prelum's `.mjs` was never counted (checked with jscpd 4.3.0 and 5.4.0). The network scan's baseline is re-measured with it (live/copies.json, from this change's run over every repository): 65 copied blocks, 126 names, 7 package overlaps. Most of the rise is copies nobody removed, not the mapping (Carrel still holds its own copy of Capsomer's collaborative and rich editors, about 1,900 lines); the new baseline is today's debt, for the cleanup threads to lower.
+- `--warn-only` is removed from `devkit-no-bloat`, `no-bloat.yml` and pr.yml (`no-bloat-warn-only`): a report never stops a copy from merging, and Enarratio, germomics and txasm ran it so. The bin refuses the flag (exit 2). `devkit-shared` no longer counts a no-bloat step with `continue-on-error: true` as the check.
+
+## 0.36.0 (2026-11-11)
+
+- New export `./migration-scan` (`handOnly`, `contractions`, `statements`): the reader `devkit-migrations` uses, moved out of bin/migrations.mjs into a module with no node imports so a Worker can import it. `devkit-migrations` behaves as before. Capsid's gate policy now classifies a migration through `handOnly` and `statements` instead of its own copy, so the deploy check and the pre-approval cannot disagree about one file.
+
+## 0.35.2 (2026-11-11)
+
+- `devkit-no-bloat`: the npx fallback runs `knip@6.45.1`, not 6.44.0, which reported `cloudflare:workers` imports as an unlisted dependency `cloudflare` (site-runtime's baseline of 0 became 3). A repository with the same count can drop a `tools.knip` override.
+
+## 0.35.1 (2026-11-11)
+
+- `devkit-route-weight`: a manifest stylesheet named with React Router's trailing `#` (`/assets/x.css#`, a stylesheet a dynamic import also reaches) is the same file, counted once; before, the gate stopped with "the manifest names … which is not in build/client" (found moving Carrel onto Capsomer 0.93.0).
+
+## 0.35.0 (2026-11-11)
+
+- `release.yml`: a run releases every untagged version bump since the tenth newest tag, oldest first, each tagged on its own commit with its own CHANGELOG section and tarball (with `build: true`, each built on its own commit). Before, it tagged only the commit it started on. A caller's concurrency group keeps one waiting run and cancels an older pending one when a newer arrives (GitHub's concurrency docs, whatever `cancel-in-progress` says), so two bumps that merged close together left one without a tag: site-runtime's v0.121.0 and v0.122.0 were never tagged on their own commits. A tag that exists is never moved or replaced. **Behavior change:** the first run after this one backfills any bump that is newer than the newest tag and untagged.
+
 ## 0.34.0 (2026-11-11)
 
 - `pr.yml` runs `devkit-css-vars` after the install in every repository with a `.css-vars.json` (devkit's own file at the caller's pin, so no devDependency bump is needed); `css-vars: false` or `node: false` turns it off, and the Result table lists it as CSS-variables.
@@ -432,7 +641,7 @@ CI was slow because of the runner queue, not slow steps (measured 2026-11-06 ove
 - `.github/workflows/pr-footer.yml`: removes the "Generated by Claude Code" footer from pull request descriptions, on each opened or edited pull request and, by hand, over every past one. Ported from capsid's `pr-footer` job. `scripts/strip-pr-footer.mjs` is carried inline, so callers pin the merge commit's sha with no release; `examples/pr-footer-caller.yml` is the shape of a caller.
 - `scripts/inline-rollback-guard.mjs` writes both inline scripts.
 
-## [0.6.0]
+## 0.6.0
 
 - `.github/workflows/worker-deploy.yml`: the shared deploy, verify and rollback workflow for a Cloudflare Worker, ported from capsid's `deploy` and `live gate` jobs (capsid's merge pipeline design, section 6, PR 8). Jobs `deploy` and `live gate`, the step "Roll back the deploy this run shipped", and capsid's three rollback annotations byte for byte, so capsid's watcher records the deploy in `deploy_outcomes`. Wrangler 4.107.0, pinned. Callers pin this release's commit sha.
 - `scripts/rollback-guard.mjs`: capsid's rollback guard, byte for byte, inlined into the workflow by `scripts/inline-rollback-guard.mjs`. Its tests are ported and run in CI, with run cases that execute the live gate's steps against stubbed curl and wrangler.

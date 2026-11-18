@@ -1,12 +1,12 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { sharedNames } from "../bin/copies.mjs";
+import { packageCopies, sharedNames } from "../bin/copies.mjs";
 
 test("PLANT: a name two sites each define is counted; a re-export, a Drizzle table, a route export and a shared package's own are not", () => {
   const files = [
@@ -71,5 +71,49 @@ test("a config with no numeric baseline fails instead of passing every count", (
     assert.match(r.stdout, /has no numeric "baseline"/);
   } finally {
     rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("PLANT: a site's .ts copy of a shared package's .mjs is found under a new name; the package's tests and the site's own unique code are not", () => {
+  const body = Array.from(
+    { length: 14 },
+    (_, i) => `  const v${i} = input.slice(${i}, ${i + 3}).toUpperCase() + String(${i} * factor);`,
+  ).join("\n");
+  const root = mkdtempSync(join(tmpdir(), "package-copies-"));
+  try {
+    const put = (/** @type {string} */ path, /** @type {string} */ text) => {
+      mkdirSync(join(root, path, ".."), { recursive: true });
+      writeFileSync(join(root, path), text);
+    };
+    put(
+      "app/lib/format.ts",
+      `export function formatLocal(input, factor) {\n${body}\n  return v0;\n}\n`,
+    );
+    put("app/lib/own.ts", "export const own = 1;\n");
+    const pkg = "node_modules/@dustinedwards/site-runtime";
+    put(`${pkg}/package.json`, "{}");
+    put(`${pkg}/text.mjs`, `export function format(input, factor) {\n${body}\n  return v0;\n}\n`);
+    put(
+      `${pkg}/test/text.test.mjs`,
+      `export function t(input, factor) {\n${body}\n  return v0;\n}\n`,
+    );
+    const copies = packageCopies(
+      root,
+      ["app/lib/format.ts", "app/lib/own.ts"],
+      [{ repo: "site-runtime", dir: join(root, pkg) }],
+      (args) => {
+        const r = spawnSync("npx", ["--yes", "--package", "jscpd@4.3.0", "--", "jscpd", ...args], {
+          cwd: root,
+          encoding: "utf8",
+        });
+        assert.equal(r.status, 0, r.stderr);
+      },
+    );
+    assert.deepEqual(
+      copies.map(([mine, theirs]) => `${mine.path} ${theirs.repo}/${theirs.path}`),
+      ["app/lib/format.ts site-runtime/text.mjs"],
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
   }
 });

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Writes test/fixtures/fakes-contract.json: what the real services publish about the routes devkit's fakes serve. For
-// GitHub, each operation's success status and every field path its response schema allows, from GitHub's OpenAPI
+// GitHub, each operation's success status and every field path its response schema allows (once, when two operations allow the same), from GitHub's OpenAPI
 // description at a pinned commit. For Cloudflare Access, the application token's claims with their JSON types and the
 // certs endpoint's fields, from the example payloads in Cloudflare's docs. test/testing-contract.test.mjs holds the
 // fakes to it. Run by hand when either source moves: `npm run contract [-- <rest-api-description commit>]`.
@@ -55,24 +55,26 @@ function fieldPaths(/** @type {any} */ schema, prefix = "", depth = 0, out = new
   return out;
 }
 
-const operations = Object.fromEntries(
-  OPERATIONS.map(([method, path]) => {
-    const operation = spec.paths[path][method];
-    const status = /** @type {string} */ (
-      Object.keys(operation.responses).find((code) => code.startsWith("2"))
-    );
-    const schema = deref(operation.responses[status]).content["application/json"].schema;
-    return [
-      operation.operationId,
-      {
-        method: method.toUpperCase(),
-        path,
-        status: Number(status),
-        fields: [...fieldPaths(schema)].sort(),
-      },
-    ];
-  }),
-);
+/** @type {Record<string, { method: string, path: string, status: number, fields?: string[], sameFieldsAs?: string }>} */
+const operations = {};
+for (const [method, path] of OPERATIONS) {
+  const operation = spec.paths[path][method];
+  const status = /** @type {string} */ (
+    Object.keys(operation.responses).find((code) => code.startsWith("2"))
+  );
+  const schema = deref(operation.responses[status]).content["application/json"].schema;
+  const fields = [...fieldPaths(schema)].sort();
+  // An operation answering the same fields as an earlier one names it, so the list is written once.
+  const twin = Object.entries(operations).find(
+    ([, other]) => other.fields && other.fields.join() === fields.join(),
+  )?.[0];
+  operations[operation.operationId] = {
+    method: method.toUpperCase(),
+    path,
+    status: Number(status),
+    ...(twin ? { sameFieldsAs: twin } : { fields }),
+  };
+}
 
 /** The first JSON code block after `heading` in a docs page's Markdown. */
 async function example(/** @type {string} */ page, /** @type {string} */ heading) {
