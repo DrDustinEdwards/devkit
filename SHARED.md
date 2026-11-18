@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.167.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.168.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `cookiePairs`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -100,7 +100,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`, `multipartBoundary`, `readMultipart`, `partText`, `readJsonWith`
 - `./confirm`: `confirmationSatisfied`, `confirmationRequired`
 - `./html`: `escapeHtml`, `unescapeHtml`, `htmlAttributes`, `sitemapLocs`, `scriptJson`
-- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `purgeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `browserCheck`, `aiCheck`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`, `isDatabaseDown`
+- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `r2Check`, `kvCheck`, `recordAiOutcome`, `aiOutcomeCheck`, `purgeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `browserCheck`, `aiCheck`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`, `isDatabaseDown`
 - `./deploy`: `deployedSha`, `deployedAt`
 - `./health-read`: `healthOf`, `parseHealth`, `failingCheckNames`, `healthChecks`
 - `./image`: `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `IMAGE_FORMATS`, `IMAGE_QUALITY`, `RASTER_TYPES`, `RASTER_PATH`, `FOCUS_METADATA`, `SHARE_IMAGE`, `ARTICLE_IMAGE_RATIOS`, `imageVersion`, `originalKey`, `focusOf`, `IMMUTABLE_CACHE`, `versionedCache`, `assetsObject`, `mediaKey`, `keyOfAddress`, `keysAtAddresses`, `focalPosition`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `pictureHtml`, `imagePreload`, `editImage`
@@ -123,8 +123,8 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./google-service-account`: `GOOGLE_TOKEN_URL`, `parseServiceAccountKey`, `clearServiceAccountTokens`, `serviceAccountToken`
 - `./signed-token`: `signToken`, `readSignedToken`
 - `./turnstile`: `TURNSTILE_ORIGIN`, `mountTurnstile`, `SITEVERIFY_URL`, `verifyTurnstile`
-- `./sign-in`: `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `pruneAuthEventsJob`, `pruneExpiredAuth`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
-- `./sign-in-client`: `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`
+- `./sign-in`: `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_PATH`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `pruneAuthEventsJob`, `pruneExpiredAuth`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
+- `./sign-in-client`: `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`, `CONFIRM_PATH`, `SIGN_IN_PATH`
 - `./vitals-client`: `inpEntry`, `reportInp`
 - `./trusted-types`: `REACT_SCRIPT_STUB`, `DOCUMENT_PARSE_SINK`, `allowDocumentParsing`, `TRUSTED_TYPES_NAMES`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`
 - `./page-client`: `startPage`
@@ -216,7 +216,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`, `createSiteBackup`
 - bins: `d1-dump`
 
-## devkit 0.51.2 (DrDustinEdwards/devkit)
+## devkit 0.52.0 (DrDustinEdwards/devkit)
 
 - `./node`: `assertFloor`, `createTally`, `walkFiles`, `readDevVar`, `isMain`
 - `./node/syntax`: `parseSource`, `propertyReads`, `interfaceMembers`, `findAction`, `intentBranches`, `objectConst`, `stringArrayConst`, `propertyValue`, `isLiteralString`, `bindingUses`, `ts`
