@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.168.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.169.1 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `cookiePairs`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -123,8 +123,9 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./google-service-account`: `GOOGLE_TOKEN_URL`, `parseServiceAccountKey`, `clearServiceAccountTokens`, `serviceAccountToken`
 - `./signed-token`: `signToken`, `readSignedToken`
 - `./turnstile`: `TURNSTILE_ORIGIN`, `mountTurnstile`, `SITEVERIFY_URL`, `verifyTurnstile`
+- `./sign-in-path`: `SIGN_IN_PATH`, `CONFIRM_PATH`
 - `./sign-in`: `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_PATH`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `pruneAuthEventsJob`, `pruneExpiredAuth`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
-- `./sign-in-client`: `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`, `CONFIRM_PATH`, `SIGN_IN_PATH`
+- `./sign-in-client`: `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`
 - `./vitals-client`: `inpEntry`, `reportInp`
 - `./trusted-types`: `REACT_SCRIPT_STUB`, `DOCUMENT_PARSE_SINK`, `allowDocumentParsing`, `TRUSTED_TYPES_NAMES`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`
 - `./page-client`: `startPage`
@@ -197,7 +198,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./newsletter`: `SUBSCRIBERS_SQL`, `newsletter`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
-## site-api 0.45.0 (DrDustinEdwards/site-api)
+## site-api 0.46.0 (DrDustinEdwards/site-api)
 
 - `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `ROUTES`, `schemaHash`, `capabilitiesOf`, `hasContentTrash`, `contentFiltersOf`, `contentVersion`, `transcriptVersion`, `VersionConflictError`, `NotFoundError`, `MediaInUseError`, `describeUses`, `RefusedError`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `HOOK_BACKOFF_MINUTES`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `readEmbedded`, `stripMetadata`, `duplicateKey`, `placeholderAndColor`, `fileNameFor`, `prepareUpload`, `PICTURE_TYPES`, `pictureLimits`, `PICTURE_RESIZE`, `extensionFor`, `datedKey`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `siteApiStep`, `standardSiteApi`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `tombstoneResponse`, `gonePath`, `tombstoned`, `PREVIEW_LINK_PATH`
 - `./admin`: `readPostQuery`, `loadPosts`, `liveSaveWarning`, `loadScheduledUpdate`, `runPostsIntent`, `readMediaQuery`, `loadMedia`, `loadMediaChanges`, `runMediaIntent`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `localClient`, `askFirst`
