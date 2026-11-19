@@ -24,6 +24,10 @@ name: release
 # package.json's version, oldest first, each tagged on its own commit with its own CHANGELOG section. A bump that was
 # skipped is released by the next run; no tag is ever moved or replaced (a tag that exists is left alone).
 #
+# WORKFLOW DRIFT. A tag on a commit whose .github/workflows differ from the tip's is refused to the workflow token (HTTP 403),
+# which happens when a bot's workflow-pin merge lands between the release merge and this job. Such a version is tagged on the tip
+# when the tip's package.json has the same version; otherwise the run fails with an error saying so.
+#
 # A tag made with the workflow's own token starts no other workflow (GitHub's rule against loops), so the caller runs
 # bump-consumers.yml after this when `created` is true (examples/release-caller.yml). Run the caller by hand to release a
 # version that merged without a tag.
@@ -141,6 +145,27 @@ jobs:
             echo "created=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          # THE TIP, WHEN WORKFLOWS MOVED. GitHub refuses a workflow token (HTTP 403, "Resource not accessible by integration")
+          # a tag on a commit whose .github/workflows differ from the default branch's tip: a bot's workflow-pin merge landing
+          # between the release merge and this job (the job can queue for minutes) is enough. The tag then goes on the tip
+          # instead, but only when the tip carries the same version, so it is still that version's code plus what merged
+          # since; any other state fails here, loudly, rather than tagging a version on the wrong code.
+          retargeted="$RUNNER_TEMP/releases.retargeted.tsv"
+          : > "$retargeted"
+          head_sha="$(git rev-parse HEAD)"
+          while IFS=$'\t' read -r -u 3 tag sha; do
+            if [ "$sha" != "$head_sha" ] && ! git diff --quiet "$sha" "$head_sha" -- .github/workflows; then
+              tip_version="$(git show "$head_sha:package.json" | jq -r .version)"
+              if [ "$tip_version" != "${tag#v}" ]; then
+                echo "::error::$tag's commit ${sha} and the tip ${head_sha} differ in .github/workflows, which GitHub refuses a workflow token a tag on, and the tip's version is ${tip_version}, not ${tag#v}; tag $tag by hand or release again from the tip."
+                exit 1
+              fi
+              echo "::warning::$tag's commit differs from the tip in .github/workflows; tagging the tip ${head_sha}, which has the same version."
+              sha="$head_sha"
+            fi
+            printf '%s\t%s\n' "$tag" "$sha" >> "$retargeted"
+          done 3< "$releases"
+          mv "$retargeted" "$releases"
           echo "new=true" >> "$GITHUB_OUTPUT"
           mkdir -p "$RUNNER_TEMP/notes"
           while IFS=$'\t' read -r -u 3 tag sha; do

@@ -33,7 +33,7 @@ const publishScript = block("- id: publish");
 const GIT = ["-c", "user.name=t", "-c", "user.email=t@example.com", "-c", "commit.gpgsign=false"];
 
 /**
- * Builds a repository from `commits` ({ version, changelog?, tag? } in order), runs the check step and, when it found
+ * Builds a repository from `commits` ({ version, changelog?, tag?, workflow? } in order), runs the check step and, when it found
  * something to release, the publish step. Returns the plan (tag and short commit subject), the gh calls and the outputs.
  */
 function run({ commits, ref = "refs/heads/main" } = {}) {
@@ -51,6 +51,10 @@ function run({ commits, ref = "refs/heads/main" } = {}) {
       writeFileSync(join(repo, "package.json"), JSON.stringify({ version: c.version }));
       if (c.changelog) writeFileSync(join(repo, "CHANGELOG.md"), c.changelog);
       writeFileSync(join(repo, "other.txt"), String(n));
+      if (c.workflow) {
+        mkdirSync(join(repo, ".github", "workflows"), { recursive: true });
+        writeFileSync(join(repo, ".github", "workflows", "w.yml"), c.workflow);
+      }
       git("add", "-A");
       git("commit", "-q", "-m", `c${n}`);
       shas.push(git("rev-parse", "HEAD").stdout.trim());
@@ -181,6 +185,40 @@ test(
     });
     assert.deepEqual(r.plan, [{ tag: "v0.1.0", commit: 1 }]);
     assert.equal(r.notes["v0.1.0"].trim(), "- Bracketed.");
+  },
+);
+
+test(
+  "a bump whose workflows differ from the tip's is tagged on the tip when the tip has its version",
+  BASH,
+  () => {
+    // A bot's workflow-pin merge landed after the release merge: GitHub refuses a workflow token a tag on the older commit.
+    const r = run({
+      commits: [
+        { version: "0.1.0", tag: "v0.1.0", workflow: "a" },
+        { version: "0.2.0", workflow: "a" },
+        { version: "0.2.0", workflow: "b" },
+      ],
+    });
+    assert.equal(r.status, 0);
+    assert.deepEqual(r.plan, [{ tag: "v0.2.0", commit: 2 }]);
+    assert.match(r.calls, new RegExp(`ref=refs/tags/v0\\.2\\.0 -f sha=${r.shas[2]}`));
+  },
+);
+
+test(
+  "workflows that moved with a later version bump fail loudly instead of tagging the wrong code",
+  BASH,
+  () => {
+    const r = run({
+      commits: [
+        { version: "0.1.0", tag: "v0.1.0", workflow: "a" },
+        { version: "0.2.0", workflow: "a" },
+        { version: "0.3.0", workflow: "b" },
+      ],
+    });
+    assert.notEqual(r.status, 0);
+    assert.equal(r.calls, "");
   },
 );
 
