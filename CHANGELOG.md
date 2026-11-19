@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.53.1
+
+### Patch Changes
+
+- Renovate moves vitest with its @vitest/* plugins, better-auth with its @better-auth/* plugins, and the Tiptap packages as one update each. Their packages pin each other exactly, so a separate PR for each failed `npm ci` with ERESOLVE (site-api, site-runtime, txasm, carrel).
+- The release workflow tags the tip of the default branch when a bot merged a workflow change after the release merge, so GitHub no longer refuses the tag (HTTP 403) for a release commit whose workflows differ from the tip; it fails with an error when the tip carries another version.
+
 ## 0.53.0
 
 ### Minor Changes
