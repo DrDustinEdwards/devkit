@@ -60,8 +60,26 @@ function documentTop(/** @type {HTMLElement} */ el) {
   return y;
 }
 
-async function bytesOf(/** @type {string} */ src) {
-  return (await (await fetch(src)).blob()).size;
+// The image's size from the request that loaded it, waiting for an eager or on-screen lazy image to finish; 0 when it
+// is unknown (an off-screen lazy image not loaded yet, or WebKit reporting no size for a lazy one). Never fetched again:
+// that froze an animated SVG's CSS animations in WebKit and downloaded images the page deferred (Astro 7.4.13).
+async function bytesOf(/** @type {HTMLImageElement} */ image) {
+  if (!image.complete) {
+    if (image.loading === "lazy" && !onScreen(image)) return 0;
+    await new Promise((resolve) => {
+      image.addEventListener("load", resolve, { once: true });
+      image.addEventListener("error", resolve, { once: true });
+    });
+  }
+  const entry = /** @type {PerformanceResourceTiming | undefined} */ (
+    performance.getEntriesByName(image.currentSrc, "resource").at(-1)
+  );
+  return entry?.decodedBodySize || entry?.encodedBodySize || entry?.transferSize || 0;
+}
+
+function onScreen(/** @type {Element} */ el) {
+  const r = el.getBoundingClientRect();
+  return r.bottom > 0 && r.right > 0 && r.top < window.innerHeight && r.left < window.innerWidth;
 }
 
 // Astro's performance rules, for a site whose images come from site-runtime's ./image.
@@ -87,7 +105,7 @@ const PERF_RULES = [
       if (!src || src.startsWith("data:") || el.closest("picture source[srcset]")) return false;
       if (src.endsWith(".svg")) return false;
       // Under 20 KB a srcset gains nothing; remote images are not fetched, as in Astro.
-      return EXTERNAL.test(src) || (await bytesOf(src)) >= 20480;
+      return EXTERNAL.test(src) || (await bytesOf(el)) >= 20480;
     },
   },
   {
@@ -112,8 +130,7 @@ const PERF_RULES = [
     message: "This GIF is over 100 KB; a video of it would be a fraction of the size.",
     selector: 'img[src$=".gif"]',
     match: async (el) =>
-      !EXTERNAL.test(el.getAttribute("src") ?? "") &&
-      (await bytesOf(/** @type {string} */ (el.getAttribute("src")))) >= 102400,
+      !EXTERNAL.test(el.getAttribute("src") ?? "") && (await bytesOf(el)) >= 102400,
   },
   {
     code: "perf-slow-island",
