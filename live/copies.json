@@ -1,7 +1,7 @@
 {
-  "baseline": 65,
-  "names": 126,
-  "measured_at": "2026-11-12",
+  "baseline": 15,
+  "names": 115,
+  "measured_at": "2026-11-20",
   "tool": "jscpd@4.3.0",
   "packages": 7,
   "packagesAccepted": {
