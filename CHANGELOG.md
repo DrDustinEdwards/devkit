@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.53.2
+
+### Patch Changes
+
+- The network copy scan holds its counts exactly, as no-bloat does: a count below its baseline fails until live/copies.json is lowered. The baseline had stayed at 65 copies and 126 names while the scan measured 15 and 115 (2026-11-20), so a new copy could have taken the room; both are lowered to today's counts. The package-overlap count (9 against a baseline of 7) is unchanged and still fails the job.
+- devkit-no-bloat reads the base's config against the base's own packages. A change that removes a package a Vite or other Knip config imports, and edits that config in the same change, left the base's config unloadable, so no config was settled and the edit was refused as a change of measure alongside code. When the lockfile differs from the base's, the base is now installed (`npm ci --ignore-scripts`) before its config is read.
+- The dev toolbar's performance audit reads an image's size from the request that loaded it instead of fetching the image again, which downloaded lazy images the page had deferred and froze an animated SVG's CSS animations in Safari. An off-screen lazy image that has not loaded is skipped. Astro 7.4.13 made the same fix.
+
 ## 0.53.1
 
 ### Patch Changes
