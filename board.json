@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-19T16:20:40.497Z",
+ "as_of": "2026-11-20T16:02:14.106Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -235,12 +235,12 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 16
+     "clean_days": 17
     },
     "julieedwards-info": {
      "status": "complete",
@@ -248,7 +248,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "txasm": {
      "status": "complete",
@@ -256,7 +256,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "bsw": {
      "status": "complete",
@@ -264,7 +264,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "foxhound": {
      "status": "partial",
@@ -272,7 +272,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "foxing": {
      "status": "complete",
@@ -280,7 +280,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "carrel": {
      "status": "complete",
@@ -288,7 +288,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "enarratio": {
      "status": "complete",
@@ -296,12 +296,12 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 13
+     "clean_days": 14
     },
     "prelum": {
      "status": "partial",
@@ -309,7 +309,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "capsid": {
      "status": "complete",
@@ -317,7 +317,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "capsid-mcp": {
      "status": "complete",
@@ -325,7 +325,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -333,7 +333,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -341,7 +341,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "carrel-mcp": {
      "status": "complete",
@@ -349,7 +349,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "foxing-mcp": {
      "status": "partial",
@@ -357,7 +357,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "capsid-portal": {
      "status": "complete",
@@ -366,7 +366,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "carrel-desk": {
      "status": "missing",
@@ -410,7 +410,7 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier",
-     "clean_days": 14
+     "clean_days": 15
     },
     "germomics": {
      "status": "partial",
@@ -418,7 +418,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -451,7 +451,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
       "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "foxing": {
      "status": "partial",
@@ -460,7 +460,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
       "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "carrel": {
      "status": "n/a",
@@ -484,7 +484,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "capsid-mcp": {
      "status": "complete",
@@ -493,7 +493,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -502,7 +502,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -511,7 +511,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "carrel-mcp": {
      "status": "complete",
@@ -520,7 +520,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "foxing-mcp": {
      "status": "partial",
@@ -528,7 +528,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "capsid-portal": {
      "status": "complete",
@@ -537,7 +537,7 @@
       "https://portal.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/portal-auth.ts"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "carrel-desk": {
      "status": "partial",
@@ -545,7 +545,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 18
+     "clean_days": 19
     }
    }
   },
@@ -682,22 +682,22 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "julieedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "txasm": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "bsw": {
      "status": "n/a",
@@ -706,12 +706,12 @@
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "foxing": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 5 Carrel editing contract signed; needs a fresh verifier",
-     "clean_days": 6
+     "clean_days": 7
     },
     "carrel": {
      "status": "n/a",
@@ -820,7 +820,7 @@
      "evidence": [
       "https://germomics.com/a-boy-named-flu"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "julieedwards-info": {
      "status": "partial",
@@ -829,7 +829,7 @@
       "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "txasm": {
      "status": "partial",
@@ -838,7 +838,7 @@
       "https://txasm.org/og-card.png",
       "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "bsw": {
      "status": "missing",
@@ -870,7 +870,7 @@
     "foxing": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "carrel": {
      "status": "partial",
@@ -878,17 +878,17 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "enarratio": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 15
+     "clean_days": 16
     },
     "capsomer": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier",
-     "clean_days": 13
+     "clean_days": 14
     },
     "prelum": {
      "status": "partial",
@@ -896,7 +896,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "capsid": {
      "status": "partial",
@@ -904,7 +904,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1012,11 +1012,6 @@
      "status": "unmeasured",
      "reason": "site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "F2",
-       "detail": "https://julieedwards.info/?speedcheck=cvc102dq an uncached render took 646 ms to the first byte (bar 600 ms)"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1208,11 +1203,6 @@
      "reason": "ops-audit: 1 errors",
      "findings": [
       {
-       "severity": "warning",
-       "check": "C2",
-       "detail": "https://dustinedwards.info/health the cron check is warn: check-publications failed"
-      },
-      {
        "severity": "error",
        "check": "H5",
        "detail": "https://dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason"
@@ -1222,7 +1212,7 @@
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "julieedwards-info": {
      "status": "missing",
@@ -1242,7 +1232,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "bsw": {
      "status": "missing",
@@ -1256,25 +1246,14 @@
      ]
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "ops-audit: 2 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "H4",
-       "detail": "https://foxhoundapp.com/health serves 680329ff1a179d660563dbc060f3568c20e5986b, not the branch head e2dc1bffbe358b59ccfc2a84856162b613b22afb (https://github.com/DrDustinEdwards/foxhound/commit/e2dc1bffbe358b59ccfc2a84856162b613b22afb), committed 589 minutes ago"
-      },
-      {
-       "severity": "error",
-       "check": "H5",
-       "detail": "https://foxhoundapp.com/health no check on /health probes APP_KV (kv), declared in https://github.com/DrDustinEdwards/foxhound/blob/main/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "foxing": {
      "status": "partial",
      "reason": "failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel": {
      "status": "n/a",
@@ -1319,7 +1298,7 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.foxhoundapp.com/health serves 680329ff1a179d660563dbc060f3568c20e5986b, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 2011 minutes ago"
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves 0eb6f8df98eb8079cfca11e6c5c0a537ba95f0cf, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 3434 minutes ago"
       }
      ]
     },
@@ -1330,19 +1309,19 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.dustinedwards.info/health serves ff08fc190a7947a760396df1857309421400d507, not the branch head 84e026efa21cc265917750d3d50ec1515f66ff92 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/84e026efa21cc265917750d3d50ec1515f66ff92), committed 668 minutes ago"
+       "detail": "https://admin-mcp.dustinedwards.info/health serves 7449ab86eeedf3e345b0c05122ca906d115b1437, not the branch head d926e1b97d8dfde2791017d5ae83d40b487df2fb (https://github.com/DrDustinEdwards/dustinedwards-info/commit/d926e1b97d8dfde2791017d5ae83d40b487df2fb), committed 1208 minutes ago"
       }
      ]
     },
     "carrel-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 12
+     "clean_days": 13
     },
     "capsid-portal": {
      "status": "n/a",
@@ -2240,7 +2219,7 @@
       {
        "severity": "warning",
        "check": "L2",
-       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 3 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > rect:nth-of-type(11)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(1)`, `figure#waits-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(7) > circle:nth-of-type(1)`"
+       "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 3 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > rect:nth-of-type(14)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(1)`, `figure#waits-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(7) > circle:nth-of-type(1)`"
       },
       {
        "severity": "error",
@@ -2426,7 +2405,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/lib/search/ask.server.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "germomics": {
      "status": "partial",
@@ -2434,7 +2413,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "julieedwards-info": {
      "status": "partial",
@@ -2442,7 +2421,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "txasm": {
      "status": "partial",
@@ -2450,7 +2429,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "bsw": {
      "status": "complete",
@@ -2459,12 +2438,12 @@
       "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
       "https://github.com/DrDustinEdwards/bsw"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 13
+     "clean_days": 14
     },
     "foxing": {
      "status": "partial",
@@ -2473,7 +2452,7 @@
       "https://foxing.app/",
       "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "carrel": {
      "status": "partial",
@@ -2481,7 +2460,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "enarratio": {
      "status": "complete",
@@ -2490,7 +2469,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/enarratio"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "capsomer": {
      "status": "complete",
@@ -2499,7 +2478,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsomer"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "prelum": {
      "status": "complete",
@@ -2508,7 +2487,7 @@
       "https://prelum.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/prelum"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "capsid": {
      "status": "partial",
@@ -2516,12 +2495,12 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "capsid-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxhound-mcp": {
      "status": "missing",
@@ -2597,7 +2576,7 @@
     "dustinedwards-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 13
+     "clean_days": 14
     },
     "carrel-mcp": {
      "status": "missing",
@@ -2793,7 +2772,7 @@
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 13
+     "clean_days": 14
     },
     "capsid-portal": {
      "status": "n/a",

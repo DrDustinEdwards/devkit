@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-19 16:20 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-20 16:02 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -15,7 +15,7 @@ Newest run 2026-11-19 16:20 UTC. Filled only from the live checks and the verifi
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | ❌ | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
+| 8. Running and recovery | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❔ | ❔ | · | · | · | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | ❔ | ❔ | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ❌ | 🟡 | ❌ | 🟡 | · | · | +52017 | −7048 |
@@ -160,16 +160,14 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
 - ❌ BSW: ops-audit: 1 errors
   - H5: https://bsw.dustin-edwards.workers.dev/health no check on /health probes RATE_LIMITER (durable_object), declared in https://github.com/DrDustinEdwards/bsw/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Foxhound: ops-audit: 2 errors
-  - H4: https://foxhoundapp.com/health serves 680329ff1a179d660563dbc060f3568c20e5986b, not the branch head e2dc1bffbe358b59ccfc2a84856162b613b22afb (https://github.com/DrDustinEdwards/foxhound/commit/e2dc1bffbe358b59ccfc2a84856162b613b22afb), committed 589 minutes ago
-  - H5: https://foxhoundapp.com/health no check on /health probes APP_KV (kv), declared in https://github.com/DrDustinEdwards/foxhound/blob/main/wrangler.jsonc; probe each, or name it in .ops-audit.json's unprobed with the reason
+- 🟡 Foxhound: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 680329ff1a179d660563dbc060f3568c20e5986b, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 2011 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 0eb6f8df98eb8079cfca11e6c5c0a537ba95f0cf, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 3434 minutes ago
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves ff08fc190a7947a760396df1857309421400d507, not the branch head 84e026efa21cc265917750d3d50ec1515f66ff92 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/84e026efa21cc265917750d3d50ec1515f66ff92), committed 668 minutes ago
+  - H4: https://admin-mcp.dustinedwards.info/health serves 7449ab86eeedf3e345b0c05122ca906d115b1437, not the branch head d926e1b97d8dfde2791017d5ae83d40b487df2fb (https://github.com/DrDustinEdwards/dustinedwards-info/commit/d926e1b97d8dfde2791017d5ae83d40b487df2fb), committed 1208 minutes ago
 - 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
