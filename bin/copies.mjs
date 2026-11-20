@@ -3,8 +3,8 @@
 // another under a new name slips past it; this scan reads the code itself. It shallow-clones every repository of the owner
 // it can read (no forks, nothing archived), gathers each one's tracked source (no tests, builds or vendored files, SOURCE
 // and SKIP below) into one folder, runs jscpd over all of it at once and counts the copied blocks whose two files sit in
-// different repositories. The count may only go down: above the baseline in live/copies.json it fails (exit 1); below it,
-// it passes and says to lower the baseline so the gain is kept.
+// different repositories. The count is held exactly: above the baseline in live/copies.json it fails (exit 1), and so does
+// a count below it, until the baseline is lowered so the gain is kept.
 //
 //   devkit-copies [--config live/copies.json] [--from <dir>]   the check; --from reads checkouts named by repository
 //                                                              (dir/prelum, dir/site-runtime...) instead of cloning
@@ -536,17 +536,21 @@ async function main() {
     );
     failed = true;
   }
+  // The count is held exactly, as no-bloat holds its own: below the baseline the room a cleanup left would let the next copy
+  // in, so it fails until the baseline is lowered. (The baseline stood at 65 while the count was 15.)
+  const lower = [];
+  if (count < config.baseline) lower.push(`${count} copies (baseline ${config.baseline})`);
+  if (config.names !== undefined && names.length < namesBaseline)
+    lower.push(`${names.length} names (baseline ${namesBaseline})`);
+  if (config.packages !== undefined && overlap.length < config.packages)
+    lower.push(`${overlap.length} package overlaps (baseline ${config.packages})`);
+  if (lower.length) {
+    console.log(
+      `::error title=devkit-copies::${lower.join(", ")}. The count went down, so lower the baseline to keep the gain: run \`node bin/copies.mjs --write-baseline\` and commit live/copies.json.`,
+    );
+    failed = true;
+  }
   if (failed) process.exit(1);
-  if (config.packages !== undefined && overlap.length < config.packages) {
-    console.log(
-      `::notice title=devkit-copies::${overlap.length} package overlaps (baseline ${config.packages}). Lower the baseline: run \`node bin/copies.mjs --write-baseline\` and commit live/copies.json.`,
-    );
-  }
-  if (count < config.baseline || (config.names !== undefined && names.length < namesBaseline)) {
-    console.log(
-      `::notice title=devkit-copies::${count} copies (baseline ${config.baseline}) and ${names.length} names (baseline ${namesBaseline}). Lower the baselines to keep the gain: run \`node bin/copies.mjs --write-baseline\` and commit live/copies.json.`,
-    );
-  }
 }
 
 if (isMain(import.meta.url)) await main();
