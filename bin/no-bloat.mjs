@@ -1774,7 +1774,20 @@ function settledConfigs(root, base, roots, files, knip, runs) {
   const dir = mkdtempSync(join(tmpdir(), "no-bloat-base-"));
   try {
     git(["worktree", "add", "--detach", "--quiet", dir, base]);
-    if (existsSync(join(root, "node_modules")))
+    // The base reads its config against the base's own packages: a change that removes one a config imports would otherwise
+    // leave the base unreadable, and none settled. With the same lockfile, this checkout's node_modules is the base's.
+    const lock = "package-lock.json";
+    if (
+      existsSync(join(dir, lock)) &&
+      (!existsSync(join(root, lock)) ||
+        readFileSync(join(dir, lock), "utf8") !== readFileSync(join(root, lock), "utf8"))
+    )
+      execFileSync("npm", ["ci", "--ignore-scripts", "--no-audit", "--no-fund"], {
+        cwd: dir,
+        stdio: "ignore",
+        maxBuffer: BUFFER,
+      });
+    else if (existsSync(join(root, "node_modules")))
       symlinkSync(join(root, "node_modules"), join(dir, "node_modules"), "dir");
     const filesBefore = git(["ls-tree", "-r", "-z", "--name-only", base]).split("\0");
     const debug = ["--debug", "--no-exit-code", "--no-progress", "--no-config-hints"];
