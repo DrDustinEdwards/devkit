@@ -151,8 +151,12 @@ function basics(/** @type {Page} */ page) {
 
 async function axe(/** @type {Page} */ AxeBuilder, /** @type {Page} */ page) {
   try {
+    // Only violations are read, so the passes are not built. A page with no frame in it is analyzed in the page itself
+    // (legacy mode): the partial-results route that reaches cross-origin frames takes 4x as long on a chart page.
     const { violations } = await new AxeBuilder({ page })
       .withTags([...WCAG_TAGS, "best-practice"])
+      .options({ resultTypes: ["violations"] })
+      .setLegacyMode(page.frames().length === 1)
       .analyze();
     return violations.map((/** @type {Page} */ v) => ({
       id: v.id,
