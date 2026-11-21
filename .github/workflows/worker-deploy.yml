@@ -313,7 +313,14 @@ jobs:
             echo "::error::the version uploaded, but wrangler's output file names no version id, so nothing was deployed."
             exit 1
           }
-          npx --yes "wrangler@${WRANGLER_VERSION}" versions deploy "${version}@${GRADUAL}%" "${previous}@$((100 - GRADUAL))%" --name "$WORKER" --message "${GITHUB_SHA} at ${GRADUAL}%" --yes
+          # A version a moment old can still be unknown to the API that deploys it (Cloudflare answers 100146, "requested Worker
+          # version could not be found", seconds after a successful upload), so that one answer is retried; any other failure stops.
+          for attempt in 1 2 3 4 5 6; do
+            if npx --yes "wrangler@${WRANGLER_VERSION}" versions deploy "${version}@${GRADUAL}%" "${previous}@$((100 - GRADUAL))%" --name "$WORKER" --message "${GITHUB_SHA} at ${GRADUAL}%" --yes 2>&1 | tee "$RUNNER_TEMP/versions-deploy.log"; then break; fi
+            if [ "$attempt" = 6 ] || ! grep -q '100146' "$RUNNER_TEMP/versions-deploy.log"; then exit 1; fi
+            echo "::warning::Cloudflare does not know version ${version} yet (100146); trying again in 10 seconds (attempt ${attempt} of 6)."
+            sleep 10
+          done
           # A version upload leaves the Worker's triggers as they were (Cloudflare Docs, "Deployment management"): routes,
           # custom domains and cron schedules apply only through `triggers deploy`, from the same config, so a changed
           # cron is never left behind the code that expects it.
