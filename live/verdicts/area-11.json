@@ -34,9 +34,7 @@
     },
     "julieedwards-info": {
       "verdict": "partial",
-      "evidence": [
-        "https://julieedwards.info/"
-      ],
+      "evidence": ["https://julieedwards.info/"],
       "note": "Live ai-audit: 0 errors, 0 warnings. The repo is not readable in this session, so the old gap (suggester on site-api v0.17.0, no timeout, JSON mode or prose check) could not be checked on current main. Open until its pin is read."
     },
     "txasm": {
@@ -49,9 +47,7 @@
     },
     "bsw": {
       "verdict": "complete",
-      "evidence": [
-        "https://bsw.dustin-edwards.workers.dev/"
-      ],
+      "evidence": ["https://bsw.dustin-edwards.workers.dev/"],
       "note": "Live ai-audit: 0 errors, 0 warnings, site kind. The repo is not readable in this session, so the claim of no model call or MCP server rests on the live probe and the earlier verdict."
     },
     "foxhound": {
@@ -82,23 +78,17 @@
     },
     "enarratio": {
       "verdict": "complete",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/"
-      ],
+      "evidence": ["https://enarratio.dustinedwards.info/"],
       "note": "Live ai-audit: 0 errors, 0 warnings, static kind. The repo is not readable in this session."
     },
     "capsomer": {
       "verdict": "complete",
-      "evidence": [
-        "https://capsomer.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsomer.dustinedwards.info/"],
       "note": "Live ai-audit: 0 errors, 0 warnings, static kind."
     },
     "prelum": {
       "verdict": "complete",
-      "evidence": [
-        "https://prelum.dustinedwards.info/"
-      ],
+      "evidence": ["https://prelum.dustinedwards.info/"],
       "note": "Live ai-audit: 0 errors, 0 warnings, static kind."
     },
     "capsid": {
