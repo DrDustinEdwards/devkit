@@ -123,7 +123,7 @@ test("fetch-fonts: keeps the subsets asked, reads each face, and refuses a face 
   );
 });
 
-test("size-budget: passes within the limits and fails over one, on a missing build or on a manifest naming a missing file", () => {
+test("size-budget: passes within the limits and fails over one, on a missing build or on a manifest naming a missing file; siteScript's build names its script by content and hashes every island", async () => {
   const build = (/** @type {number} */ jsBytes) => {
     const noise = randomBytes(jsBytes).toString("base64");
     const manifest = {
@@ -172,6 +172,58 @@ test("size-budget: passes within the limits and fails over one, on a missing bui
   assert.equal(run("size-budget", [], build(10)).status, 1);
   const { "build/client/assets/home.js": _gone, ...missing } = build(10);
   assert.equal(run("size-budget", [], { ".size-budget.json": cfg(5), ...missing }).status, 1);
+
+  // siteScript's build: /site.js is named by its content, and each island and chunk has its integrity in it.
+  const dir = mkdtempSync(join(tmpdir(), "site-script-"));
+  mkdirSync(join(dir, "islands"));
+  writeFileSync(join(dir, "shared.js"), "export const shared = () => document.title + 'shared';");
+  writeFileSync(
+    join(dir, "islands", "one.js"),
+    'import { shared } from "../shared.js"; export default (el) => { el.textContent = shared() + "one"; };',
+  );
+  writeFileSync(
+    join(dir, "islands", "two.js"),
+    'import { shared } from "../shared.js"; export default (el) => { el.textContent = shared() + "two"; };',
+  );
+  writeFileSync(
+    join(dir, "site.js"),
+    `import { startIslands } from ${JSON.stringify(fileURLToPath(new URL("../vite/islands.mjs", import.meta.url)))}; startIslands();`,
+  );
+  const plugin = /** @type {any} */ (
+    siteScript({ entry: join(dir, "site.js"), islands: join(dir, "islands") })
+  );
+  plugin.configResolved({ command: "build" });
+  /** @type {Array<{ fileName: string, source: string }>} */
+  const files = [];
+  await plugin.generateBundle.call({
+    environment: { name: "client" },
+    emitFile: (/** @type {any} */ file) => files.push(file),
+  });
+  const virtual = await plugin.load.call({ addWatchFile() {} }, "\0virtual:islands");
+  const script = JSON.parse(/^export const SITE_SCRIPT = (.*);$/m.exec(virtual)?.[1] ?? "null");
+
+  const site = files.find((f) => /^site-.+\.js$/.test(f.fileName));
+  assert.ok(site, "the entry is emitted as /site-<hash>.js");
+  assert.ok(!files.some((f) => f.fileName === "site.js"), "no fixed /site.js name is emitted");
+  const sha = (/** @type {string} */ code) =>
+    `sha384-${createHash("sha384").update(code).digest("base64")}`;
+  assert.deepEqual(script, {
+    src: `/${site.fileName}`,
+    integrity: sha(site.source),
+    crossOrigin: "anonymous",
+  });
+
+  // The built /site.js holds each file's integrity: every island and chunk, matched to the bytes emitted.
+  for (const file of files.filter((f) => f.fileName.startsWith("islands/"))) {
+    assert.ok(
+      site.source.includes(sha(file.source)),
+      `/site.js carries the integrity of ${file.fileName}`,
+    );
+  }
+  assert.ok(
+    files.some((f) => f.fileName.startsWith("islands/chunks/")),
+    "the shared code is one chunk",
+  );
 });
 
 test("test-assertions: flags a test that asserts nothing, accepts every assertion shape, holds the floor", () => {
@@ -250,57 +302,4 @@ test("verify-deploy: 0 on a served site, 1 on a refusal, 3 when it could not dec
     server.close();
   }
   assert.equal(await verify(["http://127.0.0.1:1"]), 3);
-});
-
-test("a built site names /site.js by its content and carries each island's integrity and imports", async () => {
-  const dir = mkdtempSync(join(tmpdir(), "site-script-"));
-  mkdirSync(join(dir, "islands"));
-  writeFileSync(join(dir, "shared.js"), "export const shared = () => document.title + 'shared';");
-  writeFileSync(
-    join(dir, "islands", "one.js"),
-    'import { shared } from "../shared.js"; export default (el) => { el.textContent = shared() + "one"; };',
-  );
-  writeFileSync(
-    join(dir, "islands", "two.js"),
-    'import { shared } from "../shared.js"; export default (el) => { el.textContent = shared() + "two"; };',
-  );
-  writeFileSync(
-    join(dir, "site.js"),
-    `import { startIslands } from ${JSON.stringify(fileURLToPath(new URL("../vite/islands.mjs", import.meta.url)))}; startIslands();`,
-  );
-  const plugin = /** @type {any} */ (
-    siteScript({ entry: join(dir, "site.js"), islands: join(dir, "islands") })
-  );
-  plugin.configResolved({ command: "build" });
-  /** @type {Array<{ fileName: string, source: string }>} */
-  const files = [];
-  await plugin.generateBundle.call({
-    environment: { name: "client" },
-    emitFile: (/** @type {any} */ file) => files.push(file),
-  });
-  const virtual = await plugin.load.call({ addWatchFile() {} }, "\0virtual:islands");
-  const script = JSON.parse(/^export const SITE_SCRIPT = (.*);$/m.exec(virtual)?.[1] ?? "null");
-
-  const site = files.find((f) => /^site-.+\.js$/.test(f.fileName));
-  assert.ok(site, "the entry is emitted as /site-<hash>.js");
-  assert.ok(!files.some((f) => f.fileName === "site.js"), "no fixed /site.js name is emitted");
-  const sha = (/** @type {string} */ code) =>
-    `sha384-${createHash("sha384").update(code).digest("base64")}`;
-  assert.deepEqual(script, {
-    src: `/${site.fileName}`,
-    integrity: sha(site.source),
-    crossOrigin: "anonymous",
-  });
-
-  // The built /site.js holds each file's integrity: every island and chunk, matched to the bytes emitted.
-  for (const file of files.filter((f) => f.fileName.startsWith("islands/"))) {
-    assert.ok(
-      site.source.includes(sha(file.source)),
-      `/site.js carries the integrity of ${file.fileName}`,
-    );
-  }
-  assert.ok(
-    files.some((f) => f.fileName.startsWith("islands/chunks/")),
-    "the shared code is one chunk",
-  );
 });
