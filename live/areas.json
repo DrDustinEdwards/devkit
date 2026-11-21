@@ -9,7 +9,8 @@
           "name": "prelum-audit",
           "repo": "prelum",
           "bin": "prelum-audit",
-          "kinds": ["site", "static"]
+          "kinds": ["site", "static"],
+          "site_args": { "foxing": ["--max-pages", "200"] }
         }
       ]
     },
