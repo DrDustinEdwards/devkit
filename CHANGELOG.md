@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.54.0
+
+### Minor Changes
+
+- `siteScript` gives every script it builds integrity, which Integrity-Policy needs of each one. The built entry is now named by its content, `/site-<hash>.js` (a page cached from an earlier build keeps a file that matches its hash, which a fixed `/site.js` could not), and `virtual:islands` exports `SITE_SCRIPT`, `{ src, integrity, crossOrigin }`, for the page's `<script>` tag (`{ src: "/site.js" }` in `vite dev`, null with no entry). `startIslands` preloads each island and the chunks it imports with their sha384 before the `import()`, so the browser takes them with their integrity. A site that wrote `<script src="/site.js">` by hand writes `<script {...SITE_SCRIPT} defer>` instead.
+
+### Patch Changes
+
+- The shared Renovate policy holds `@observablehq/plot` in every repository except Enarratio. Enarratio draws with Plot, so a Plot release that changes how it draws is accepted in Enarratio first, and a site takes the new Plot with the Enarratio release that carries it. A site that bumped Plot alone (carrel, dustinedwards-info and Prelum did on 2026-11-19) rendered charts differently from the Enarratio it pins.
+- devkit-live installs site-runtime beside Prelum when it runs Prelum's checks. Prelum stopped declaring site-runtime as a peer on 2026-11-13, so `prelum-audit`, `prelum-content` and `prelum-chart-audit` crashed with ERR_MODULE_NOT_FOUND on every site and areas 1, 4 and 10 of the scoreboard read "could not measure".
+
 ## 0.53.3
 
 ### Patch Changes
