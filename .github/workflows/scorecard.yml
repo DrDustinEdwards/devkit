@@ -6,7 +6,8 @@ name: scorecard
 #   before    reads the repository's last published score from api.securityscorecards.dev, before this run publishes.
 #   analysis  runs ossf/scorecard-action twice: once for JSON (the score this run gates on, kept as an artifact) and once
 #             for SARIF, which it publishes to the OpenSSF API (the public score and badge) and uploads to code scanning.
-#   gate      fails when this run's aggregate score is lower than the published one, and names each check that fell.
+#   gate      fails when this run's aggregate score is lower than the published one, and names each check that fell. A fall
+#             in Code-Review alone only warns.
 #
 # THE ANALYSIS JOB IS KEPT TO WHAT THE SCORECARD API ACCEPTS. With publish_results the API checks the job that ran the action
 # and refuses results from one with job-level env or defaults, a container, a non-Ubuntu runner, or a step outside its list
@@ -142,7 +143,11 @@ jobs:
             ($pub.checks | map({(.name): .score}) | add) as $old
             | .checks[] | select(($old[.name] // -1) > .score) | "\(.name) \($old[.name]) -> \(.score)"
           ' results.json)"
-          if awk -v now="$now" -v was="$was" -v tol="$TOLERANCE" 'BEGIN { exit !(now + tol < was) }'; then
+          # Code-Review counts how many of the last 30 changes another person approved. With one owner and Renovate's
+          # automerges it slides down as older reviewed changes leave the window, and no change to the code moves it back,
+          # so a fall in it alone warns (below) and never fails the gate.
+          other="$(printf '%s\n' "$fell" | grep -v '^Code-Review ' || true)"
+          if [ -n "$other" ] && awk -v now="$now" -v was="$was" -v tol="$TOLERANCE" 'BEGIN { exit !(now + tol < was) }'; then
             echo "::error title=Scorecard fell::$was -> $now (published $(printf '%s' "$PUBLISHED" | jq -r '.date') at $(printf '%s' "$PUBLISHED" | jq -r '.commit' | cut -c1-7)). Checks that fell: ${fell//$'\n'/; }"
             exit 1
           fi
