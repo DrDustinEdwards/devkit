@@ -195,6 +195,12 @@ test("PLANT: the bin fails with no build, a manifest naming a missing file, or a
     );
     assert.doesNotMatch(grown, /::warning title=Route weight::routes\/admin \(/);
 
+    // A build with a hashed /site-<hash>.js weighs a non-hydrating route as that script, not the React chain.
+    writeFileSync(join(dir, "web", "site-ab12cd.js"), "x");
+    const withSite = run(["--client", "web", "--config", "weight.json"]);
+    assert.ok(Number(/\| routes\/admin \| \/admin \| (\d+) \|/.exec(withSite)?.[1]) < 100);
+    rmSync(join(dir, "web", "site-ab12cd.js"));
+
     rmSync(join(dir, "web", "assets", "admin.js"));
     assert.match(
       run(["--client", "web", "--config", "weight.json"]),

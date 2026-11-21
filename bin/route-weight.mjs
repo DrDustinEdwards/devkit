@@ -9,8 +9,8 @@
 // that read nothing must not look like a clean one. The table goes to the job summary.
 //
 // A site that hydrates only the routes that ask (`export const handle = { hydrate: true }`, with devkit's siteScript
-// serving /site.js to every other page) is read as such when the build has a /site.js: a route whose chain declares
-// `hydrate: true` weighs as above, and any other route weighs /site.js and its chain's stylesheets, which is what its
+// serving /site-<hash>.js to every other page) is read as such when the build has one: a route whose chain declares
+// `hydrate: true` weighs as above, and any other route weighs that script and its chain's stylesheets, which is what its
 // page downloads. Islands load through import() and are not counted.
 //
 //   npx devkit-route-weight                     report against .route-weight.json (no file: the report alone)
@@ -64,7 +64,7 @@ export function parseManifest(/** @type {string} */ text) {
  * @param {(url: string) => Buffer} read the bytes of a file named as the manifest names it ("/assets/x.js")
  * @param {(bytes: Buffer) => number} gzip the compressed size
  * @param {boolean} [linkedCss] also count a stylesheet the counted JS names by URL
- * @param {string} [siteScript] the build's /site.js, when it has one: a route whose chain does not declare
+ * @param {string} [siteScript] the build's /site-<hash>.js, when it has one: a route whose chain does not declare
  *   `hydrate: true` loads it in place of React
  * @returns {Row[]}
  */
@@ -172,7 +172,8 @@ function main() {
     return readFileSync(path);
   };
   const gzip = (/** @type {Buffer} */ bytes) => gzipSync(bytes, { level: 9 }).length;
-  const siteScript = existsSync(join(client, "site.js")) ? "/site.js" : undefined;
+  const built = readdirSync(client).find((name) => /^site-[\w-]+\.js$/.test(name));
+  const siteScript = built ? `/${built}` : undefined;
   const rows = routeWeights(
     parseManifest(readFileSync(join(assets, manifestFile), "utf8")),
     read,
