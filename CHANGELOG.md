@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.55.10
+
+### Patch Changes
+
+- The ops audit's H4 passes when the live sha is a later commit that contains the newest commit touching the Worker's path, as it is for a Worker that deploys on every push.
+- The gradual deploy retries `wrangler versions deploy` when Cloudflare answers 100146 (the version it just uploaded is not found yet), six times ten seconds apart; any other failure still stops it.
+
 ## 0.55.9
 
 ### Patch Changes
