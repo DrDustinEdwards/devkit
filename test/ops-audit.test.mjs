@@ -135,6 +135,10 @@ test("H4 matches an abbreviated sha, waits 30 minutes for a deploy in flight; R1
     url: "https://github.com/x",
   });
   assert.deepEqual(shaFindings({ url, liveSha: "0123ABC", head: head(90), now }), []);
+  assert.deepEqual(
+    shaFindings({ url, liveSha: "fedcba9", head: head(900), liveContainsHead: true, now }),
+    [],
+  );
   assert.deepEqual(items(shaFindings({ url, liveSha: "fedcba9", head: head(10), now })), [
     "warning H4",
   ]);
