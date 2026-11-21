@@ -137,6 +137,9 @@ on:
         required: true
       CLOUDFLARE_ACCOUNT_ID:
         required: true
+      VERIFY_TOKEN:
+        description: A secret the verify command reads as $VERIFY_TOKEN, such as a key for a live call it makes. Never a Cloudflare token.
+        required: false
 
 permissions:
   contents: read
@@ -536,6 +539,7 @@ jobs:
           WORKER: ${{ inputs.worker-name }}
           VERSION_ID: ${{ needs.deploy.outputs.version-id }}
           GRADUAL_MINUTES: ${{ inputs.gradual-minutes }}
+          VERIFY_TOKEN: ${{ secrets.VERIFY_TOKEN }}
         run: |
           set +e
           code=0

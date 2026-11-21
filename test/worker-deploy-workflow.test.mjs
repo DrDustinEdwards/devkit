@@ -185,7 +185,11 @@ test("the Cloudflare secrets reach only the bookmark, the pre-deploy guard, the 
     "Preview build",
     PREVIEW,
   ]);
-  assert.doesNotMatch(step("verify:live"), /secrets\./);
+  // The verify command gets the caller's VERIFY_TOKEN and no other secret.
+  assert.deepEqual(
+    [...step("verify:live").matchAll(/secrets\.(\w+)/g)].map((m) => m[1]),
+    ["VERIFY_TOKEN"],
+  );
 });
 
 test("the deploy job publishes the attempt it shipped in, and never deploys a pull request", () => {
