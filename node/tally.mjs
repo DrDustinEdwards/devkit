@@ -25,8 +25,7 @@ export function assertFloor(gate, name, executed, minimum, why = "") {
  * The pass/fail counter every gate keeps. Label first, condition second: a string in the condition
  * slot is always truthy, so one argument order for every gate is what keeps a swapped call visible.
  *
- * The options only reproduce the report shapes the gates already print, so a gate's output did not
- * change when its own copy was replaced by this one.
+ * The options only reproduce the report shapes the gates already print.
  *
  * @param {{
  *   separator?: string,

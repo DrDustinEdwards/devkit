@@ -7,7 +7,7 @@
 //
 // The second check exists because a squash merge builds its message from the branch commits' AUTHORS: a clean message
 // authored as `Claude <noreply@anthropic.com>` comes out of the squash with `Co-authored-by: Claude <noreply@anthropic.com>`,
-// and the push run on the default branch then fails after the merge (capsid, 2026-10-04, PRs 233 to 236; deploy skipped for
+// and the push run on the default branch then fails after the merge (deploy skipped for
 // about ten hours). Catching the author on the pull request catches it before the merge. A push is checked on messages alone.
 //
 // Only the commits a push or pull request adds are checked; history is not rewritten.

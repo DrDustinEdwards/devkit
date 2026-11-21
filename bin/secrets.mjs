@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The secrets gate (from dustinedwards.info's check-secrets.mjs, item 51 of the 2026-11-11 shared-code audit). It proves,
+// The secrets gate. It proves,
 // from the repository's `.secrets.json`:
 //
 //   1. every secret the site names is declared on its Env interface or a type it extends (and, with "env_exact",

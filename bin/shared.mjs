@@ -19,7 +19,7 @@
 //   tokens     a site setting its own value for one of Capsomer's tokens (--page-max, --measure, --radius-m, --accent...),
 //              or loading its own files for the network's faces (Schibsted Grotesk, Martian Mono) instead of
 //              capsomer/fonts.css: a value the network shares is set once, in Capsomer, never per site;
-//   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere, Dustin 2026-10-25);
+//   spelling   British spelling, read by codespell's en-GB to en-US list (American English everywhere);
 //   workflows  a devkit workflow the repository's kinds need and no workflow calls: checks,
 //              workflow-audit and dependencies everywhere, worker-size and worker-deploy for an app with a wrangler
 //              config, no-bloat in a public repository with JavaScript or TypeScript, bump-consumers in a shared package,
@@ -1171,7 +1171,7 @@ export function checkTokens(tree, tokens, config) {
       });
     }
     // The network's faces come from capsomer/fonts.css, every weight in one file each, so a bold is the same bold on every
-    // site (Dustin, 2026-10-28: sites that picked their own weights drew the footer's name differently).
+    // site (sites that picked their own weights drew the footer's name differently).
     for (const m of code.matchAll(
       /@fontsource(?:-variable)?\/(?:schibsted-grotesk|martian-mono)\b|@font-face\s*\{[^}]*font-family:\s*["']?(?:Schibsted Grotesk|Martian Mono)/g,
     )) {
@@ -1350,7 +1350,7 @@ export const WORKFLOWS = [
   { name: "checks", needed: () => "every repository" },
   { name: "workflow-audit", needed: () => "every repository" },
   { name: "dependencies", needed: () => "every repository" },
-  // The automatic PR reviewer (D5, 2026-11-03): advisory, so it costs a repository nothing to call it.
+  // The automatic PR reviewer: advisory, so it costs a repository nothing to call it.
   { name: "review", failsFrom: "0.22.0", needed: () => "every repository" },
   {
     name: "worker-size",
@@ -1471,8 +1471,8 @@ export function checkWorkflows(tree, config, repo = {}) {
       message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .shared.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
     });
   }
-  // A stylesheet's var(--x) that nothing declares resolves to nothing, and only devkit-css-vars notices (second shared-code
-  // audit, 2026-11-11: Foxing's --fx-shadow-md, 14 uses). pr.yml runs it when the repository has a .css-vars.json.
+  // A stylesheet's var(--x) that nothing declares resolves to nothing, and only devkit-css-vars notices (Foxing's --fx-shadow-md,
+  // 14 uses). pr.yml runs it when the repository has a .css-vars.json.
   const sheets = tree.files.some((f) => f.endsWith(".css") && !NOT_SOURCE.test(f));
   if (sheets && !excused(config, "waive", "workflow:css-vars")) {
     const runsIt =
@@ -1725,7 +1725,7 @@ export function checkFakes(tree, config, self) {
 }
 
 /**
- * The agent jobs, each with its one owner (Dustin 2026-11-06: an agent tool lives in one place, never a per-site copy). A
+ * The agent jobs, each with its one owner (an agent tool lives in one place, never a per-site copy). A
  * site's MCP server that serves a tool for one of these is a second owner, so the check fails it, whatever the tool is
  * called and however its code is written: a tool is read by its name, its title and the operator call or API path it
  * makes, so a renamed copy (dei_sync_files titled "Back up the files now", calling "backup_media") is still found. The
