@@ -517,6 +517,13 @@ function newestTag(/** @type {string} */ repo) {
 }
 
 /**
+ * Packages a check's package imports but does not declare (Prelum's ruling of 2026-11-13: site-runtime is not a peer, since
+ * a peer range for a git-only package breaks every network lockfile update), installed in the same npm run at their newest
+ * release, as a site installs them.
+ */
+const BESIDE = /** @type {Record<string, string[]>} */ ({ prelum: ["site-runtime"] });
+
+/**
  * Installs a check's package once per repo and ref; returns the bin's path or the reason it cannot run. The newest tag
  * is read once per repository for the run, so every site's check runs the same release.
  */
@@ -525,21 +532,28 @@ function install(
   /** @type {Map<string, Json>} */ cache,
   /** @type {string} */ root,
 ) {
-  const tagKey = `tags:${check.repo}`;
-  if (check.ref === undefined && !cache.has(tagKey)) {
-    try {
-      const tag = newestTag(check.repo);
-      cache.set(tagKey, tag ? { ref: tag } : { error: `${check.repo} has no release tag` });
-    } catch {
-      cache.set(tagKey, { error: `could not read the tags of ${check.repo}` });
+  const tagFor = (/** @type {string} */ repo) => {
+    const tagKey = `tags:${repo}`;
+    if (!cache.has(tagKey)) {
+      try {
+        const tag = newestTag(repo);
+        cache.set(tagKey, tag ? { ref: tag } : { error: `${repo} has no release tag` });
+      } catch {
+        cache.set(tagKey, { error: `could not read the tags of ${repo}` });
+      }
     }
-  }
-  const tagged = /** @type {Json} */ (
-    check.ref === undefined ? cache.get(tagKey) : { ref: check.ref }
-  );
+    return /** @type {Json} */ (cache.get(tagKey));
+  };
+  const tagged = check.ref === undefined ? tagFor(check.repo) : { ref: check.ref };
   if (tagged.error) return { ref: null, error: tagged.error };
   const { ref } = tagged;
-  const key = `${check.repo}#${ref}`;
+  const beside = (BESIDE[check.repo] ?? []).map((/** @type {string} */ repo) => ({
+    repo,
+    ...tagFor(repo),
+  }));
+  const failed = beside.find((b) => b.error);
+  if (failed) return { ref, error: failed.error };
+  const key = [`${check.repo}#${ref}`, ...beside.map((b) => `${b.repo}#${b.ref}`)].join("+");
   if (!cache.has(key)) {
     const dir = join(root, key.replace(/[^A-Za-z0-9.-]/g, "_"));
     try {
@@ -554,6 +568,7 @@ function install(
           "--no-audit",
           "--no-fund",
           `github:${OWNER}/${check.repo}#${ref}`,
+          ...beside.map((b) => `github:${OWNER}/${b.repo}#${b.ref}`),
         ],
         { cwd: dir, stdio: "pipe", timeout: 300_000, env: toolEnv() },
       );
