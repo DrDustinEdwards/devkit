@@ -60,7 +60,7 @@ async function run(options, define) {
  * @param {string} entry
  * @param {"iife" | "es"} [format]
  * @param {Record<string, string>} [urls]
- * @param {Record<string, { integrity: string, imports: string[] }>} [modules]
+ * @param {Record<string, { integrity: string, imports: string[], lazy: string[] }>} [modules]
  */
 async function bundle(entry, format = "iife", urls, modules) {
   const output = await run(
@@ -117,20 +117,31 @@ function manifestOf(output) {
   const urls = {};
   /** @type {Record<string, number>} */
   const gzipBytes = {};
-  /** @type {Record<string, { integrity: string, imports: string[] }>} */
+  /** @type {Record<string, { integrity: string, imports: string[], lazy: string[] }>} */
   const modules = {};
-  const closure = (/** @type {string} */ file, /** @type {Set<string>} */ seen = new Set()) => {
-    for (const next of chunks.get(file)?.imports ?? []) {
+  // Every file reachable from `file` through its static imports, or through its import() calls too.
+  const closure = (
+    /** @type {string} */ file,
+    /** @type {boolean} */ dynamic,
+    /** @type {Set<string>} */ seen = new Set(),
+  ) => {
+    const chunk = chunks.get(file);
+    for (const next of [
+      ...(chunk?.imports ?? []),
+      ...(dynamic ? (chunk?.dynamicImports ?? []) : []),
+    ]) {
       if (seen.has(next)) continue;
       seen.add(next);
-      closure(next, seen);
+      closure(next, dynamic, seen);
     }
     return seen;
   };
   for (const [file, chunk] of chunks) {
+    const imports = closure(file, false);
     modules[`/${file}`] = {
       integrity: sha384(chunk.code),
-      imports: [...closure(file)].map((f) => `/${f}`),
+      imports: [...imports].map((f) => `/${f}`),
+      lazy: [...closure(file, true)].filter((f) => !imports.has(f)).map((f) => `/${f}`),
     };
   }
   for (const chunk of chunks.values()) {

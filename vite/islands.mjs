@@ -68,27 +68,31 @@ const started = new WeakSet();
 // bundled some other way, it is undefined and an island is /islands/<name>.js.
 /** @type {Record<string, string>} */
 const BUILT = typeof __DEVKIT_ISLANDS__ === "object" ? __DEVKIT_ISLANDS__ : {};
-/** @type {Record<string, { integrity: string, imports: string[] }>} */
+/** @type {Record<string, { integrity: string, imports: string[], lazy: string[] }>} */
 const MODULES = typeof __DEVKIT_MODULES__ === "object" ? __DEVKIT_MODULES__ : {};
 const islandUrl = (/** @type {string} */ name) =>
   Object.hasOwn(BUILT, name) ? BUILT[name] : `/islands/${name}.js`;
 
 /**
  * import() takes no integrity, which Integrity-Policy needs of every script, so a module the build hashed is
- * preloaded first with its integrity, along with the files it imports: the browser's module map then holds each
- * with its integrity, and the import and the imports inside take them. In `vite dev` nothing is hashed.
+ * preloaded first with its integrity, along with the files it imports and, at low priority, the files it import()s
+ * in turn: the browser's module map then holds each with its integrity, and the import and the imports inside take
+ * them. In `vite dev` nothing is hashed.
  * @param {string} url
  */
 function preload(url) {
-  for (const file of [url, ...(MODULES[url]?.imports ?? [])]) {
-    const integrity = MODULES[file]?.integrity;
+  const module = MODULES[url];
+  const files = [url, ...(module?.imports ?? [])].map((file) => [file, false]);
+  for (const [file, lazy] of [...files, ...(module?.lazy ?? []).map((file) => [file, true])]) {
+    const integrity = MODULES[String(file)]?.integrity;
     if (!integrity || preloaded.has(file)) continue;
     preloaded.add(file);
     const link = document.createElement("link");
     link.rel = "modulepreload";
-    link.href = file;
+    link.href = String(file);
     link.integrity = integrity;
     link.crossOrigin = "anonymous";
+    if (lazy) link.setAttribute("fetchpriority", "low");
     document.head.append(link);
   }
   return url;
