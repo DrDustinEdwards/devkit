@@ -60,7 +60,7 @@ async function run(options, define) {
  * @param {string} entry
  * @param {"iife" | "es"} [format]
  * @param {Record<string, string>} [urls]
- * @param {Record<string, { integrity: string, imports: string[], lazy: string[] }>} [modules]
+ * @param {Record<string, { integrity: string, imports: string[], lazy?: string[] }>} [modules]
  */
 async function bundle(entry, format = "iife", urls, modules) {
   const output = await run(
@@ -117,7 +117,7 @@ function manifestOf(output) {
   const urls = {};
   /** @type {Record<string, number>} */
   const gzipBytes = {};
-  /** @type {Record<string, { integrity: string, imports: string[], lazy: string[] }>} */
+  /** @type {Record<string, { integrity: string, imports: string[], lazy?: string[] }>} */
   const modules = {};
   // Every file reachable from `file` through its static imports, or through its import() calls too.
   const closure = (
@@ -137,11 +137,13 @@ function manifestOf(output) {
     return seen;
   };
   for (const [file, chunk] of chunks) {
-    const imports = closure(file, false);
+    // Only an island's own entry is ever preloaded with what it pulls in, so only it lists those files.
+    const imports = chunk.isEntry ? closure(file, false) : new Set();
+    const lazy = chunk.isEntry ? [...closure(file, true)].filter((f) => !imports.has(f)) : [];
     modules[`/${file}`] = {
       integrity: sha384(chunk.code),
       imports: [...imports].map((f) => `/${f}`),
-      lazy: [...closure(file, true)].filter((f) => !imports.has(f)).map((f) => `/${f}`),
+      ...(lazy.length ? { lazy: lazy.map((f) => `/${f}`) } : {}),
     };
   }
   for (const chunk of chunks.values()) {

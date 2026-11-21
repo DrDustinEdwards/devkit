@@ -5,7 +5,7 @@ declare const __DEVKIT_ISLANDS__: Record<string, string> | undefined;
 
 /** Each built file's sha384, the files it imports and the files only its import() calls reach, by URL, which siteScript writes into a built /site.js. */
 declare const __DEVKIT_MODULES__:
-  | Record<string, { integrity: string; imports: string[]; lazy: string[] }>
+  | Record<string, { integrity: string; imports: string[]; lazy?: string[] }>
   | undefined;
 
 /** The helpers bin/a11y.mjs injects into every page it measures (SELECTOR and STYLE), for the type check only. */
