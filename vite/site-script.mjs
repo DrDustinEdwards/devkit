@@ -10,10 +10,17 @@
 // map, which startIslands reads; `vite dev` serves /islands/<name>.js, the one asked for, whole. Chunks are
 // same-origin, so script-src 'self' still covers them.
 //
-// A server-rendered app reads the same map, and each island's gzip size, from `virtual:islands`:
-//   import { ISLAND_URLS, ISLAND_GZIP_BYTES } from "virtual:islands";
+// Integrity-Policy needs every script to carry integrity. The built /site.js is named by its content
+// (/site-<hash>.js, so a page cached from an earlier build keeps a file that matches its hash), and a server-rendered
+// app writes its tag from `SITE_SCRIPT` ({ src, integrity, crossOrigin }). The islands are loaded with import(), which
+// has no attribute, so /site.js carries each file's sha384 and the files it imports, and puts a modulepreload with that
+// integrity in the head before the import: the module map then holds the file with its integrity, and the import takes it.
+//
+// A server-rendered app reads the same map, each island's gzip size and its script tag from `virtual:islands`:
+//   import { ISLAND_URLS, ISLAND_GZIP_BYTES, SITE_SCRIPT } from "virtual:islands";
 import { readdirSync } from "node:fs";
 import { basename, extname, join } from "node:path";
+import { createHash } from "node:crypto";
 import { constants, gzipSync } from "node:zlib";
 import { build } from "vite";
 import { serveToolbar, TOOLBAR_LOADER } from "./dev-toolbar.mjs";
@@ -28,6 +35,11 @@ const VIRTUAL = "virtual:islands";
 const RESOLVED = `\0${VIRTUAL}`;
 /** Replaced in a built /site.js with the name to URL map; islands.mjs reads it, and in dev finds it undefined. */
 const MANIFEST_GLOBAL = "__DEVKIT_ISLANDS__";
+/** Replaced with each built file's `{ integrity, imports }` by its URL, which islands.mjs preloads before an import. */
+const MODULES_GLOBAL = "__DEVKIT_MODULES__";
+
+/** @param {string} code */
+const sha384 = (code) => `sha384-${createHash("sha384").update(code).digest("base64")}`;
 
 /** @typedef {import("vite").Rolldown.RolldownOutput["output"][number]} Output */
 
@@ -48,8 +60,9 @@ async function run(options, define) {
  * @param {string} entry
  * @param {"iife" | "es"} [format]
  * @param {Record<string, string>} [urls]
+ * @param {Record<string, { integrity: string, imports: string[] }>} [modules]
  */
-async function bundle(entry, format = "iife", urls) {
+async function bundle(entry, format = "iife", urls, modules) {
   const output = await run(
     format === "iife"
       ? {
@@ -65,7 +78,10 @@ async function bundle(entry, format = "iife", urls) {
             output: { format: "es", entryFileNames: "out.js", inlineDynamicImports: true },
           },
         },
-    urls && { [MANIFEST_GLOBAL]: JSON.stringify(urls) },
+    urls && {
+      [MANIFEST_GLOBAL]: JSON.stringify(urls),
+      [MODULES_GLOBAL]: JSON.stringify(modules ?? {}),
+    },
   );
   const [first] = output;
   if (first?.type !== "chunk") throw new Error("site-script: the bundle produced no script");
@@ -101,6 +117,22 @@ function manifestOf(output) {
   const urls = {};
   /** @type {Record<string, number>} */
   const gzipBytes = {};
+  /** @type {Record<string, { integrity: string, imports: string[] }>} */
+  const modules = {};
+  const closure = (/** @type {string} */ file, /** @type {Set<string>} */ seen = new Set()) => {
+    for (const next of chunks.get(file)?.imports ?? []) {
+      if (seen.has(next)) continue;
+      seen.add(next);
+      closure(next, seen);
+    }
+    return seen;
+  };
+  for (const [file, chunk] of chunks) {
+    modules[`/${file}`] = {
+      integrity: sha384(chunk.code),
+      imports: [...closure(file)].map((f) => `/${f}`),
+    };
+  }
   for (const chunk of chunks.values()) {
     if (!chunk.isEntry) continue;
     /** @type {Set<string>} */
@@ -119,7 +151,7 @@ function manifestOf(output) {
       0,
     );
   }
-  return { urls, gzipBytes };
+  return { urls, gzipBytes, modules };
 }
 
 /** The island modules under `dir`: name to file. A folder that does not exist has none. @param {string} dir @returns {Map<string, string>} */
@@ -168,6 +200,24 @@ export function siteScript({
     }
     return built;
   };
+  // The built /site.js, named by its content, once per build process like the islands.
+  /** @type {Promise<{ src: string, code: string, integrity: string }> | null} */
+  let site = null;
+  const siteBuild = () => {
+    if (!site) {
+      const pending = (async () => {
+        const output = islandFiles(islands).size ? await islandsBuild() : [];
+        const { urls, modules } = manifestOf(output);
+        const code = await bundle(/** @type {string} */ (entry), "iife", urls, modules);
+        const integrity = sha384(code);
+        const name = createHash("sha384").update(code).digest("base64url").slice(0, 10);
+        return { src: `/site-${name}.js`, code, integrity };
+      })();
+      pending.catch(() => site === pending && (site = null));
+      site = pending;
+    }
+    return site;
+  };
   return {
     name: "site-script",
     configResolved(config) {
@@ -186,7 +236,17 @@ export function siteScript({
       for (const out of output)
         if (out.type === "chunk")
           for (const file of out.moduleIds) if (!file.startsWith("\0")) this.addWatchFile(file);
-      return `export const ISLAND_URLS = ${JSON.stringify(urls)};\nexport const ISLAND_GZIP_BYTES = ${JSON.stringify(gzipBytes)};\n`;
+      // The tag a server-rendered page writes for /site.js; `vite dev` serves it whole at /site.js, with no integrity.
+      const script = !entry
+        ? null
+        : dev
+          ? { src: "/site.js" }
+          : await siteBuild().then(({ src, integrity }) => ({
+              src,
+              integrity,
+              crossOrigin: "anonymous",
+            }));
+      return `export const ISLAND_URLS = ${JSON.stringify(urls)};\nexport const ISLAND_GZIP_BYTES = ${JSON.stringify(gzipBytes)};\nexport const SITE_SCRIPT = ${JSON.stringify(script)};\n`;
     },
     configureServer(server) {
       if (toolbar) serveToolbar(server);
@@ -223,12 +283,10 @@ export function siteScript({
           source: out.type === "chunk" ? out.code : out.source,
         });
       }
-      if (entry)
-        this.emitFile({
-          type: "asset",
-          fileName: "site.js",
-          source: await bundle(entry, "iife", manifestOf(output).urls),
-        });
+      if (entry) {
+        const { src, code } = await siteBuild();
+        this.emitFile({ type: "asset", fileName: src.slice(1), source: code });
+      }
     },
   };
 }

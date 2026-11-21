@@ -68,8 +68,32 @@ const started = new WeakSet();
 // bundled some other way, it is undefined and an island is /islands/<name>.js.
 /** @type {Record<string, string>} */
 const BUILT = typeof __DEVKIT_ISLANDS__ === "object" ? __DEVKIT_ISLANDS__ : {};
+/** @type {Record<string, { integrity: string, imports: string[] }>} */
+const MODULES = typeof __DEVKIT_MODULES__ === "object" ? __DEVKIT_MODULES__ : {};
 const islandUrl = (/** @type {string} */ name) =>
   Object.hasOwn(BUILT, name) ? BUILT[name] : `/islands/${name}.js`;
+
+/**
+ * import() takes no integrity, which Integrity-Policy needs of every script, so a module the build hashed is
+ * preloaded first with its integrity, along with the files it imports: the browser's module map then holds each
+ * with its integrity, and the import and the imports inside take them. In `vite dev` nothing is hashed.
+ * @param {string} url
+ */
+function preload(url) {
+  for (const file of [url, ...(MODULES[url]?.imports ?? [])]) {
+    const integrity = MODULES[file]?.integrity;
+    if (!integrity || preloaded.has(file)) continue;
+    preloaded.add(file);
+    const link = document.createElement("link");
+    link.rel = "modulepreload";
+    link.href = file;
+    link.integrity = integrity;
+    link.crossOrigin = "anonymous";
+    document.head.append(link);
+  }
+  return url;
+}
+const preloaded = new Set();
 
 /**
  * Starts every island under `root` (the document by default). `load` imports an island's module; the default reads
@@ -79,7 +103,7 @@ const islandUrl = (/** @type {string} */ name) =>
  */
 export function startIslands({
   root = document,
-  load = (name) => import(/* @vite-ignore */ islandUrl(name)),
+  load = (name) => import(/* @vite-ignore */ preload(islandUrl(name))),
 } = {}) {
   for (const el of root.querySelectorAll("[data-island]")) {
     if (!(el instanceof HTMLElement) || started.has(el)) continue;
