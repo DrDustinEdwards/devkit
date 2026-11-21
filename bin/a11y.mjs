@@ -247,7 +247,13 @@ async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
         r.width === 0 || r.height === 0 || cx < 0 || cy < 0 || cx > innerWidth || cy > innerHeight;
       let covered = null;
       if (!offscreen) {
+        // elementFromPoint skips pointer-events:none, so a control that takes none (a chart's point buttons, drawn
+        // over the marks inside a pointer-less layer) would read as covered by whatever lies under it. Letting this
+        // one element take hits asks what is on top at its center by paint order.
+        const restore = el.style.pointerEvents;
+        el.style.pointerEvents = "auto";
         const hit = document.elementFromPoint(cx, cy);
+        el.style.pointerEvents = restore;
         if (hit && hit !== el && !el.contains(hit) && !hit.contains(el)) {
           let position = null;
           for (
