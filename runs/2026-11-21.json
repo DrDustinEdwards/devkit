@@ -1,5 +1,5 @@
 {
- "at": "2026-11-21T20:29:23.859Z",
+ "at": "2026-11-21T22:10:01.203Z",
  "public_token": false,
  "results": [
   {
@@ -554,7 +554,7 @@
      "detail": "https://capsomer.dustinedwards.info/icons/ \"Icons · Capsomer\" is on 2 pages"
     }
    ],
-   "seconds": 10
+   "seconds": 19
   },
   {
    "area": 1,
@@ -584,7 +584,7 @@
      "detail": "https://dustinedwards.info/sitemap.xml 27 of 204 sitemap URLs have no lastmod, e.g. https://dustinedwards.info/contact"
     }
    ],
-   "seconds": 129
+   "seconds": 93
   },
   {
    "area": 1,
@@ -1097,7 +1097,7 @@
      "detail": "https://enarratio.dustinedwards.info/radix?year=2008 no <meta name=\"text-scale\" content=\"scale\">, so a phone keeps the page at its default size and ignores the reader's system text size"
     }
    ],
-   "seconds": 8
+   "seconds": 7
   },
   {
    "area": 1,
@@ -1109,7 +1109,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 37
+   "seconds": 45
   },
   {
    "area": 1,
@@ -1121,19 +1121,45 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 84
+   "seconds": 91
   },
   {
    "area": 1,
    "site": "germomics",
    "check": "prelum-audit",
    "ref": "v0.63.7",
-   "status": "pass",
-   "errors": 0,
+   "status": "fail",
+   "errors": 5,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [],
-   "seconds": 8
+   "findings": [
+    {
+     "severity": "error",
+     "check": "link-broken",
+     "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-4a8b6f91-renamed, which answers 404"
+    },
+    {
+     "severity": "error",
+     "check": "link-broken",
+     "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-da5e5158-renamed, which answers 404"
+    },
+    {
+     "severity": "error",
+     "check": "link-broken",
+     "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-f908b11b-renamed, which answers 404"
+    },
+    {
+     "severity": "error",
+     "check": "link-broken",
+     "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-7e19650b-renamed, which answers 404"
+    },
+    {
+     "severity": "error",
+     "check": "link-broken",
+     "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-30b8b1fe-renamed, which answers 404"
+    }
+   ],
+   "seconds": 25
   },
   {
    "area": 1,
@@ -1170,8 +1196,8 @@
    "site": "txasm",
    "check": "prelum-audit",
    "ref": "v0.63.7",
-   "status": "fail",
-   "errors": 464,
+   "status": "pass",
+   "errors": 0,
    "warnings": 9,
    "unmeasured": 0,
    "findings": [
@@ -1181,508 +1207,53 @@
      "detail": "https://txasm.org/sitemap.xml 8 of 464 sitemap URLs have no lastmod, e.g. https://txasm.org/"
     },
     {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees"
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2026/abstracts/43 \"Elucidating the Genes Underlying Hydrocarbon Degradation in...\" is on 2 pages"
     },
     {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees"
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/82 \"Elucidating the Genes Underlying Hydrocarbon Degradation in...\" is on 2 pages"
     },
     {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees"
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2026/abstracts/53 \"The Effects of Historical Adaptation of Microbes in New Stressful...\" is on 2 pages"
     },
     {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/award-nominations links to https://txasm.org/awards, which redirects to /awardees"
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/fall-2025/abstracts/26 \"The Effects of Historical Adaptation of Microbes in New Stressful...\" is on 2 pages"
     },
     {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/branch-officers links to https://txasm.org/awards, which redirects to /awardees"
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/21 \"Coevolution of Pseudomonas aeruginosa and Drosophila...\" is on 2 pages"
     },
     {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/newsletters links to https://txasm.org/awards, which redirects to /awardees"
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/77 \"Coevolution of Pseudomonas aeruginosa and Drosophila...\" is on 2 pages"
     },
     {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/archive/abstract-books links to https://txasm.org/awards, which redirects to /awardees"
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/65 \"The Isolation and Characterization of the Bacteriophage...\" is on 2 pages"
     },
     {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/archive/programs links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/trail links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/sponsorship links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/contact links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/accessibility links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/program links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/fall-2025/program links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/fall-2025/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2025/program links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2025/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/fall-2024/program links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/fall-2024/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/1 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/2 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/3 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/4 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/5 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/6 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/7 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/8 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/9 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/10 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/11 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/12 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/13 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/14 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/15 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/16 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/17 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/18 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/19 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/20 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/21 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/22 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/23 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/24 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/25 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/26 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/27 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/28 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/29 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/30 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/31 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/32 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/33 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/34 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/35 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/36 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/37 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/38 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/39 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/40 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/41 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/42 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/43 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/44 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/45 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/46 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/47 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/48 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/49 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/50 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/51 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/52 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/53 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/54 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/55 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/56 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/57 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/58 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/59 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/60 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/61 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/62 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/63 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/64 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/65 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/66 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/67 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/68 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/69 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/70 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/71 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/72 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/73 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/74 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/75 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/76 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/77 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/78 links to https://txasm.org/awards, which redirects to /awardees"
-    },
-    {
-     "severity": "error",
-     "check": "link-redirect",
-     "detail": "https://txasm.org/meetings/spring-2026/abstracts/79 links to https://txasm.org/awards, which redirects to /awardees"
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/66 \"The Isolation and Characterization of the Bacteriophage...\" is on 2 pages"
     }
    ],
-   "seconds": 194
+   "seconds": 218
   },
   {
    "area": 2,
    "site": "bsw",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 6,
@@ -1691,7 +1262,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-3sUecl/8YTe/0oxkS3c1aQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-mXTejh2fIpdKu+uBahQSLQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     },
     {
      "severity": "warning",
@@ -1701,31 +1272,31 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-eUUDGZ+q81Q4hPRJae8axQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-nCqfpZf1AhX27gjsitlDxg==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/site-runtime-security-9bcb0732-c5b5-4443-a7f9-e3d1d82efdc2 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-pTjCnT/bkuA/7kwd6XDHPQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/site-runtime-security-73ca9792-5459-400d-a1f5-42d3bc2b05e4 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-iEGRaaepfo3kHO25xc+bAA==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-CFgjbNRcBkPkUZOxlMykVQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-D0y0sbKZiosr9+WmpUCZXQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-0+Fi7YrLrxorYNm1UJJ8SQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-SKiyk1ufhTL/z3WBLrm/+A==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     }
    ],
-   "seconds": 3
+   "seconds": 2
   },
   {
    "area": 2,
    "site": "capsid",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 4,
@@ -1744,7 +1315,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://capsid.dustinedwards.info/site-runtime-security-8b401adc-c49a-436f-8a71-8a6e23d71ef8 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://capsid.dustinedwards.info/site-runtime-security-e96c57cd-d0c5-4251-93b7-884374fea9fc (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1758,7 +1329,7 @@
    "area": 2,
    "site": "capsid-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -1770,7 +1341,7 @@
    "area": 2,
    "site": "capsid-portal",
    "check": "signed-in-security",
-   "ref": "capsid f762abe0fe1c",
+   "ref": "capsid 9b5b72ac2ec9",
    "status": "pass",
    "errors": 0,
    "warnings": 2,
@@ -1779,12 +1350,12 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://portal.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-8M9ODWNy0YWnUTnwSjEz4Q==' 'self')"
+     "detail": "https://portal.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-I+GsEZ9/eTyw1IVca5Qamg==' 'self')"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-Sw4P2y6uMDsO3rzPM0S5rg==' 'self')"
+     "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-pSm4rqvE6AacdYJ+pouG/Q==' 'self')"
     }
    ],
    "seconds": 0
@@ -1793,7 +1364,7 @@
    "area": 2,
    "site": "capsid-portal",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 1,
@@ -1811,7 +1382,7 @@
    "area": 2,
    "site": "capsomer",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 4,
@@ -1830,7 +1401,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://capsomer.dustinedwards.info/site-runtime-security-c4ffe91d-ee3a-4d3d-96e1-bf7b0fb59b27 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://capsomer.dustinedwards.info/site-runtime-security-ef509186-288c-40bf-adbd-090dde09efdb (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1844,7 +1415,7 @@
    "area": 2,
    "site": "carrel",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 4,
@@ -1863,7 +1434,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://carrel.dustinedwards.info/site-runtime-security-010a0d57-2e2b-49e0-9d5c-c2dbdcab839c (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://carrel.dustinedwards.info/site-runtime-security-e1077b86-cf80-4b91-96cd-7f672035b357 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -1877,7 +1448,7 @@
    "area": 2,
    "site": "carrel-desk",
    "check": "signed-in-security",
-   "ref": "carrel 5f1a8b5f5fd1",
+   "ref": "carrel 525a15eafccf",
    "status": "pass",
    "errors": 0,
    "warnings": 2,
@@ -1900,7 +1471,7 @@
    "area": 2,
    "site": "carrel-desk",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "fail",
    "errors": 1,
    "warnings": 1,
@@ -1923,19 +1494,19 @@
    "area": 2,
    "site": "carrel-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 0
   },
   {
    "area": 2,
    "site": "dustinedwards-info",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 5,
@@ -1944,48 +1515,48 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-ooJgzqi3+9dr+J2SwGaSpQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-gaF1X7IQPeUO7TZqoBIkrw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/about (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-fFeTrXSiI9KTDZQgmcxsjw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/about (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-7RGaYhGaNbKEu5aiBRLN0Q==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/site-runtime-security-afafc08d-d038-4ea8-8590-956a4980231c (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-hwcUMwA3CoTMsfU9PXsC4g==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/site-runtime-security-75db5ebe-13b6-46ca-a8e3-9d52d81f17aa (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-nCit3vqbvqPGXrQ978GBZw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-1ukXxk29vTicRd5iYIy8PA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-LnwZsK4wNXPWUTMFsNmogw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-FXXAWhtgeQhtcDNVa7CU3g==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-CsgyIferJuAeM45RZfH56g==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 5
+   "seconds": 2
   },
   {
    "area": 2,
    "site": "dustinedwards-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 2,
    "site": "enarratio",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 4,
@@ -2004,7 +1575,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://enarratio.dustinedwards.info/site-runtime-security-537a5839-460f-4a9b-a1d3-cd8f7e00b00b (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://enarratio.dustinedwards.info/site-runtime-security-3dc6350a-c3f1-44c2-9c91-ab6cfd578cb3 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -2018,7 +1589,7 @@
    "area": 2,
    "site": "foxhound",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 5,
@@ -2027,27 +1598,27 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-wnRjBFzVWqRFb3VLug3X5A==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-R9OXjp85JZZvVslPnrpXbQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-/wZ43JnDcDCMt0GHFiXT4g==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Kshq2KC9N0dXn2/0JfFBJw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/site-runtime-security-2cea7c87-546a-4450-ae7b-ca00b87aa7a1 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-KKCMujRlJvfnWghss8/H5A==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/site-runtime-security-ce17118f-fc4f-43a7-ae41-c6abeed3ec76 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-oyJvLf8Agi/OlDZ4KJATXg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-UupGs6A6FG+aPzJ+Tm6a+g==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-TYOeWbwx8IvDIwhST8rDXw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-K1hKpaV8+g4WFdWKkK+mCA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-qojWhdhbKemZQ02LGAtnWw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
    "seconds": 3
@@ -2056,7 +1627,7 @@
    "area": 2,
    "site": "foxhound-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2068,7 +1639,7 @@
    "area": 2,
    "site": "foxing",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 5,
@@ -2077,36 +1648,36 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-lbqbUlrbYmtd6QWdeEP8OQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Vrqalcms+4DpTkt4KqirYA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/books (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-R2KPMNNqTbluWcdImwBoqw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/books (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Werlcf1FF7uJ11cuj63hmg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/site-runtime-security-333b484d-2303-4848-b30a-5d3c16883847 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-xBFy7qwVoPuy0oskUCq0AA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/site-runtime-security-6e8ed1fe-4b2e-46a5-bb3d-7f49f3c4a722 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-ybTBx1kTk6ejceP0hvyg/Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-geOfuzrnhv7K3tiOUg9jXQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Q3TH7jUsIvXVbFMBCFrS1A==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-E2dlbhyQimWJKGoRP5nQgg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-SXx4MphadRGNZY5t2vycMw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 2,
    "site": "foxing-mcp",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2118,7 +1689,7 @@
    "area": 2,
    "site": "germomics",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 5,
@@ -2127,74 +1698,74 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-kwNa/EcHi6ZwzxWQpa3LaA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-lyUZewPen+JjAlEnDP7J+A==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-8I/FZknCjaID51dDJ4966Q==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Mlegb+6s0y4QF3Aqbk/MkA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/site-runtime-security-a627f515-a7c1-4e68-9717-92266433e2d5 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-OYDkSz0MzGVBJHazD351FA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/site-runtime-security-dafa2c75-04ef-46b1-affb-b2944dee3451 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-fhCk0BMxJIIkrbeHaTEWiw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-NGBFpD1UvBI3cDazn1pyxg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-gGzjBAaUKv2b7lEkQqt00g==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-alSmDqofaofUIDc56aWFNA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-    }
-   ],
-   "seconds": 3
-  },
-  {
-   "area": 2,
-   "site": "julieedwards-info",
-   "check": "site-runtime-security",
-   "ref": "v0.173.3",
-   "status": "pass",
-   "errors": 0,
-   "warnings": 5,
-   "unmeasured": 0,
-   "findings": [
-    {
-     "severity": "warning",
-     "check": "C3",
-     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-vUlOiW6pkeTvh2IZpiLaXw==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-    },
-    {
-     "severity": "warning",
-     "check": "C3",
-     "detail": "https://julieedwards.info/accessibility (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-2njUCyta8pp23Hil3vFTXQ==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-    },
-    {
-     "severity": "warning",
-     "check": "C3",
-     "detail": "https://julieedwards.info/site-runtime-security-dbae9894-0f05-4550-913a-1b01eeeba5e8 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-JKYPasv8AK7QzTB0yuf2Pg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-    },
-    {
-     "severity": "warning",
-     "check": "C3",
-     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-FeuyiXVb3U60XeW8f9mvpQ==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-    },
-    {
-     "severity": "warning",
-     "check": "C3",
-     "detail": "https://julieedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-HR2H+mNUaLZNqbZqTRwqUg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Olt7bMLRt71GSjqQFIJVUA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
    "seconds": 4
   },
   {
    "area": 2,
+   "site": "julieedwards-info",
+   "check": "site-runtime-security",
+   "ref": "v0.173.4",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 5,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-5b3gdipAlRqdOEBbNXaRAg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/accessibility (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-IK63n0DprlRVbjuXAXS2jQ==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/site-runtime-security-f8f571f2-a6d4-44c4-9f4e-03f2d377b7a5 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-V1o8iAF/L+BOlDUwEtybdQ==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-SJJZWE78sJLvpINHxeDVNQ==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-DsFjmUlWp019GgWq/NUGYg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 3
+  },
+  {
+   "area": 2,
    "site": "prelum",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 4,
@@ -2213,7 +1784,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://prelum.dustinedwards.info/site-runtime-security-10c43cce-33b6-45b0-92a1-7a5f3e6d03d3 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://prelum.dustinedwards.info/site-runtime-security-acb36a18-deba-47a3-b45b-970663e8e0dc (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -2227,7 +1798,7 @@
    "area": 2,
    "site": "txasm",
    "check": "site-runtime-security",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 5,
@@ -2236,36 +1807,36 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-EWBpUWrS8hyxmYnrNO6RPQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-fgdwPYIZn36GKjYOL7gITQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-hA9f3iAO/o+FCh20wHa4Wg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/meetings (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-SUuBwC99PxsmSofHZN8VSQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-f4a4f2e0-d232-49cc-8836-f33f7f245f32 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-VgEPlfOof4Bhyj0ttGKBVQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-fd6ea9f3-0a64-4feb-953b-728b9f6f9a2b (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-HfazYuBT2o4n97Y86CV3Hw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-JdND7zGKMfc1qJs8Cl3ZCw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-6oWB0arFjDY72u72TPFO2w==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-KJK9slmiL2StEfz19mDBAQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-2p6eCiZLg6XAfbVFKdqD6Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 3
+   "seconds": 2
   },
   {
    "area": 3,
    "site": "capsid",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2277,19 +1848,19 @@
    "area": 3,
    "site": "capsid-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 3,
    "site": "capsid-portal",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2301,7 +1872,7 @@
    "area": 3,
    "site": "carrel-desk",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2313,7 +1884,7 @@
    "area": 3,
    "site": "carrel-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2325,7 +1896,7 @@
    "area": 3,
    "site": "dustinedwards-info",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2337,7 +1908,7 @@
    "area": 3,
    "site": "dustinedwards-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2349,7 +1920,7 @@
    "area": 3,
    "site": "foxhound",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2361,7 +1932,7 @@
    "area": 3,
    "site": "foxhound-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2373,7 +1944,7 @@
    "area": 3,
    "site": "foxing",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2385,7 +1956,7 @@
    "area": 3,
    "site": "foxing-mcp",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2397,7 +1968,7 @@
    "area": 3,
    "site": "germomics",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2409,7 +1980,7 @@
    "area": 3,
    "site": "txasm",
    "check": "site-runtime-sign-in",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 2,
@@ -2426,7 +1997,7 @@
      "detail": "https://txasm.dustin-edwards.workers.dev/admin redirects to https://txasm.dustin-edwards.workers.dev/login, not Cloudflare Access"
     }
    ],
-   "seconds": 1
+   "seconds": 2
   },
   {
    "area": 4,
@@ -2438,7 +2009,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 4
   },
   {
    "area": 4,
@@ -2462,7 +2033,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 7
+   "seconds": 5
   },
   {
    "area": 4,
@@ -2486,7 +2057,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 20
+   "seconds": 4
   },
   {
    "area": 4,
@@ -2510,7 +2081,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 7
+   "seconds": 3
   },
   {
    "area": 4,
@@ -2522,7 +2093,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 31
+   "seconds": 4
   },
   {
    "area": 4,
@@ -2531,10 +2102,16 @@
    "ref": "v0.63.7",
    "status": "pass",
    "errors": 0,
-   "warnings": 0,
+   "warnings": 1,
    "unmeasured": 0,
-   "findings": [],
-   "seconds": 13
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "writing-img-size",
+     "detail": "https://germomics.com/carrel-conformance-66b48221-renamed image /conformance-probe.png has no width and height, so the page shifts as it loads"
+    }
+   ],
+   "seconds": 15
   },
   {
    "area": 4,
@@ -2597,25 +2174,31 @@
      "detail": "https://txasm.org/trail h3 follows h1"
     }
    ],
-   "seconds": 12
+   "seconds": 5
   },
   {
    "area": 5,
    "site": "dustinedwards-info",
    "check": "carrel-conformance",
    "ref": "site-api v0.46.1",
-   "status": "pass",
-   "errors": 0,
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [],
+   "findings": [
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed"
+    }
+   ],
    "seconds": 0
   },
   {
    "area": 5,
    "site": "dustinedwards-info",
    "check": "site-api-live",
-   "ref": "v0.46.1",
+   "ref": "v0.46.2",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2628,18 +2211,39 @@
    "site": "foxhound",
    "check": "carrel-conformance",
    "ref": "site-api v0.46.1",
-   "status": "pass",
-   "errors": 0,
+   "status": "fail",
+   "errors": 4,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [],
+   "findings": [
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed"
+    },
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed"
+    },
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a delete answers 410 on the old path failed"
+    },
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: cleaned up failed"
+    }
+   ],
    "seconds": 0
   },
   {
    "area": 5,
    "site": "foxhound",
    "check": "site-api-live",
-   "ref": "v0.46.1",
+   "ref": "v0.46.2",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2652,18 +2256,24 @@
    "site": "foxing",
    "check": "carrel-conformance",
    "ref": "site-api v0.46.1",
-   "status": "pass",
-   "errors": 0,
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [],
+   "findings": [
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://foxing.app/api/carrel/v1 probe post: created as a draft failed"
+    }
+   ],
    "seconds": 0
   },
   {
    "area": 5,
    "site": "foxing",
    "check": "site-api-live",
-   "ref": "v0.46.1",
+   "ref": "v0.46.2",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2676,18 +2286,34 @@
    "site": "germomics",
    "check": "carrel-conformance",
    "ref": "site-api v0.46.1",
-   "status": "pass",
-   "errors": 0,
+   "status": "fail",
+   "errors": 3,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [],
+   "findings": [
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed"
+    },
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://germomics.com/api/carrel/v1 probe post: a delete answers 410 on the old path failed"
+    },
+    {
+     "severity": "error",
+     "check": "M1",
+     "detail": "https://germomics.com/api/carrel/v1 probe post: cleaned up failed"
+    }
+   ],
    "seconds": 0
   },
   {
    "area": 5,
    "site": "germomics",
    "check": "site-api-live",
-   "ref": "v0.46.1",
+   "ref": "v0.46.2",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2711,7 +2337,7 @@
    "area": 5,
    "site": "julieedwards-info",
    "check": "site-api-live",
-   "ref": "v0.46.1",
+   "ref": "v0.46.2",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2735,55 +2361,55 @@
    "area": 5,
    "site": "txasm",
    "check": "site-api-live",
-   "ref": "v0.46.1",
+   "ref": "v0.46.2",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 6,
    "site": "bsw",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 4
+   "seconds": 2
   },
   {
    "area": 6,
    "site": "capsid",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 6,
    "site": "capsomer",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 6,
    "site": "carrel",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2795,7 +2421,7 @@
    "area": 6,
    "site": "dustinedwards-info",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2807,7 +2433,7 @@
    "area": 6,
    "site": "enarratio",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2819,7 +2445,7 @@
    "area": 6,
    "site": "foxhound",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2831,19 +2457,7 @@
    "area": 6,
    "site": "foxing",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
-   "status": "pass",
-   "errors": 0,
-   "warnings": 0,
-   "unmeasured": 0,
-   "findings": [],
-   "seconds": 11
-  },
-  {
-   "area": 6,
-   "site": "germomics",
-   "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2853,21 +2467,33 @@
   },
   {
    "area": 6,
-   "site": "julieedwards-info",
+   "site": "germomics",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 7
+   "seconds": 9
+  },
+  {
+   "area": 6,
+   "site": "julieedwards-info",
+   "check": "site-runtime-images",
+   "ref": "v0.173.4",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 3
   },
   {
    "area": 6,
    "site": "prelum",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -2879,19 +2505,19 @@
    "area": 6,
    "site": "txasm",
    "check": "site-runtime-images",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 7,
    "site": "bsw",
    "check": "site-runtime-speed",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 1,
@@ -2913,14 +2539,14 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 37,
+   "seconds": 35,
    "detail": "A3: https://bsw.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://bsw.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
    "area": 7,
    "site": "capsid",
    "check": "site-runtime-speed",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
@@ -2937,14 +2563,14 @@
      "detail": "https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 37,
+   "seconds": 35,
    "detail": "A3: https://capsid.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
    "area": 7,
    "site": "capsomer",
    "check": "site-runtime-speed-static",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
@@ -2961,14 +2587,14 @@
      "detail": "https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 38,
+   "seconds": 34,
    "detail": "A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
    "area": 7,
    "site": "carrel",
    "check": "site-runtime-speed-static",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
@@ -2985,64 +2611,19 @@
      "detail": "https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 32,
+   "seconds": 33,
    "detail": "A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
    "area": 7,
    "site": "dustinedwards-info",
    "check": "site-runtime-speed",
-   "ref": "v0.173.3",
-   "status": "fail",
-   "errors": 9,
+   "ref": "v0.173.4",
+   "status": "unmeasured",
+   "errors": 0,
    "warnings": 0,
    "unmeasured": 2,
    "findings": [
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://dustinedwards.info/writing/carrel-one-api-for-every-site not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://dustinedwards.info/research/retroviruses not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://dustinedwards.info/systems/site-runtime not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://dustinedwards.info/writing a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://dustinedwards.info/colophon a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://dustinedwards.info/privacy a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://dustinedwards.info/teaching/virus-isolation a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://dustinedwards.info/writing/carrel-a-writing-desk-apart-from-the-site a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker a conditional request with the page's own validator answered 200, not 304"
-    },
     {
      "severity": "unmeasured",
      "check": "A3",
@@ -3054,13 +2635,14 @@
      "detail": "https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 42
+   "seconds": 36,
+   "detail": "A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
    "area": 7,
    "site": "enarratio",
    "check": "site-runtime-speed-static",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
@@ -3084,7 +2666,7 @@
    "area": 7,
    "site": "foxhound",
    "check": "site-runtime-speed",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
@@ -3101,14 +2683,14 @@
      "detail": "https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 39,
+   "seconds": 35,
    "detail": "A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
    "area": 7,
    "site": "foxing",
    "check": "site-runtime-speed",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
@@ -3132,7 +2714,7 @@
    "area": 7,
    "site": "germomics",
    "check": "site-runtime-speed",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
@@ -3149,19 +2731,24 @@
      "detail": "https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 44,
+   "seconds": 56,
    "detail": "A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
    "area": 7,
    "site": "julieedwards-info",
    "check": "site-runtime-speed",
-   "ref": "v0.173.3",
-   "status": "unmeasured",
-   "errors": 0,
+   "ref": "v0.173.4",
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
    "unmeasured": 2,
    "findings": [
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://julieedwards.info/accessibility not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo PDX then PDX"
+    },
     {
      "severity": "unmeasured",
      "check": "A3",
@@ -3173,14 +2760,13 @@
      "detail": "https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 36,
-   "detail": "A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
+   "seconds": 35
   },
   {
    "area": 7,
    "site": "prelum",
    "check": "site-runtime-speed-static",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 0,
@@ -3204,7 +2790,7 @@
    "area": 7,
    "site": "txasm",
    "check": "site-runtime-speed",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "unmeasured",
    "errors": 0,
    "warnings": 1,
@@ -3226,7 +2812,7 @@
      "detail": "https://txasm.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
     }
    ],
-   "seconds": 38,
+   "seconds": 39,
    "detail": "A3: https://txasm.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://txasm.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
   },
   {
@@ -3248,10 +2834,16 @@
    "ref": "v0.55.10",
    "status": "pass",
    "errors": 0,
-   "warnings": 0,
+   "warnings": 1,
    "unmeasured": 0,
-   "findings": [],
-   "seconds": 4
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "H4",
+     "detail": "https://mcp.dustinedwards.info/health serves f59b21410c18c8a96ec80264d700ef1ffe6e6444, not the branch head 8892c823563e2c15c8c6c93900906c1e40617509 (https://github.com/DrDustinEdwards/capsid/commit/8892c823563e2c15c8c6c93900906c1e40617509), committed 5 minutes ago"
+    }
+   ],
+   "seconds": 5
   },
   {
    "area": 8,
@@ -3260,18 +2852,23 @@
    "ref": "v0.55.10",
    "status": "fail",
    "errors": 1,
-   "warnings": 1,
+   "warnings": 2,
    "unmeasured": 0,
    "findings": [
     {
      "severity": "error",
      "check": "B1",
-     "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 40.8 hours old, not under 26"
+     "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 42.5 hours old, not under 26"
     },
     {
      "severity": "warning",
      "check": "C2",
      "detail": "https://carrel-mcp.dustinedwards.info/health the cron check is warn: backup failed"
+    },
+    {
+     "severity": "warning",
+     "check": "H4",
+     "detail": "https://carrel-mcp.dustinedwards.info/health serves 525a15eafccffb72c68f3edf00c56f145180519c, not the branch head cedd8ed32241254756a6cd9d829114dc4197299c (https://github.com/DrDustinEdwards/carrel/commit/cedd8ed32241254756a6cd9d829114dc4197299c), committed 8 minutes ago"
     }
    ],
    "seconds": 2
@@ -3289,10 +2886,10 @@
     {
      "severity": "warning",
      "check": "H4",
-     "detail": "https://dustinedwards.info/health serves a326054f65ff149af6059818bcd39a1f1ac3f32e, not the branch head 576c326319633c6994dd05825f84c7b09d8c5ac8 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/576c326319633c6994dd05825f84c7b09d8c5ac8), committed 3 minutes ago"
+     "detail": "https://dustinedwards.info/health serves 4e860e28cee78ca4822efe8cd9963d9750ebf437, not the branch head 0633ab6ef49340893b15f434516f941cc304ea31 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/0633ab6ef49340893b15f434516f941cc304ea31), committed 5 minutes ago"
     }
    ],
-   "seconds": 5
+   "seconds": 4
   },
   {
    "area": 8,
@@ -3307,7 +2904,7 @@
     {
      "severity": "warning",
      "check": "H4",
-     "detail": "https://admin-mcp.dustinedwards.info/health serves a326054f65ff149af6059818bcd39a1f1ac3f32e, not the branch head 576c326319633c6994dd05825f84c7b09d8c5ac8 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/576c326319633c6994dd05825f84c7b09d8c5ac8), committed 3 minutes ago"
+     "detail": "https://admin-mcp.dustinedwards.info/health serves 4e860e28cee78ca4822efe8cd9963d9750ebf437, not the branch head 0633ab6ef49340893b15f434516f941cc304ea31 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/0633ab6ef49340893b15f434516f941cc304ea31), committed 5 minutes ago"
     }
    ],
    "seconds": 2
@@ -3322,7 +2919,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 8,
@@ -3343,10 +2940,16 @@
    "ref": "v0.55.10",
    "status": "pass",
    "errors": 0,
-   "warnings": 0,
+   "warnings": 1,
    "unmeasured": 0,
-   "findings": [],
-   "seconds": 2
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "H4",
+     "detail": "https://foxing.app/health serves 7e11977c64ce5bbd9b91d466d247909431b33444, not the branch head 98eee123d05e2e4b21cd28a3658608f93cb2fc41 (https://github.com/DrDustinEdwards/foxing/commit/98eee123d05e2e4b21cd28a3658608f93cb2fc41), committed 5 minutes ago"
+    }
+   ],
+   "seconds": 3
   },
   {
    "area": 8,
@@ -3379,9 +2982,15 @@
    "ref": "v0.55.10",
    "status": "pass",
    "errors": 0,
-   "warnings": 0,
+   "warnings": 1,
    "unmeasured": 0,
-   "findings": [],
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "H4",
+     "detail": "https://julieedwards.info/health serves 1615faca6d9144d57a28419ec847b6c78484271d, not the branch head cbeef6763950572d2d0cbf8778c09928692c1819 (https://github.com/DrDustinEdwards/julieedwards-info/commit/cbeef6763950572d2d0cbf8778c09928692c1819), committed 4 minutes ago"
+    }
+   ],
    "seconds": 2
   },
   {
@@ -3412,7 +3021,7 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y landmarks: main 1, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
     }
    ],
-   "seconds": 211
+   "seconds": 208
   },
   {
    "area": 9,
@@ -3430,7 +3039,7 @@
      "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 3 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > rect:nth-of-type(10)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(1)`, `figure#waits-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(7) > circle:nth-of-type(1)`"
     }
    ],
-   "seconds": 243
+   "seconds": 205
   },
   {
    "area": 9,
@@ -3463,7 +3072,7 @@
      "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#main`"
     }
    ],
-   "seconds": 210
+   "seconds": 204
   },
   {
    "area": 9,
@@ -3475,7 +3084,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 57
+   "seconds": 56
   },
   {
    "area": 9,
@@ -3487,7 +3096,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 228
+   "seconds": 225
   },
   {
    "area": 9,
@@ -3505,7 +3114,7 @@
      "detail": "https://enarratio.dustinedwards.info/astro focused element covered by another on 1 stops: `figure#tickets-by-team > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `svg > g:nth-of-type(6) > g:nth-of-type(1) > path:nth-of-type(1)`"
     }
    ],
-   "seconds": 246
+   "seconds": 226
   },
   {
    "area": 9,
@@ -3517,7 +3126,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 195
+   "seconds": 196
   },
   {
    "area": 9,
@@ -3558,7 +3167,7 @@
      "detail": "https://germomics.com/data/cholera-soho-1854 focused element covered by another on 2 stops: `figure#cholera-soho-1854-map > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > span:nth-of-type(1)` by `div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > svg > g:nth-of-type(2) > circle:nth-of-type(130)`, `figure#cholera-soho-1854-timeline > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(2)`"
     }
    ],
-   "seconds": 202
+   "seconds": 205
   },
   {
    "area": 9,
@@ -3570,7 +3179,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 68
+   "seconds": 58
   },
   {
    "area": 9,
@@ -3582,7 +3191,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 61
+   "seconds": 59
   },
   {
    "area": 9,
@@ -3632,7 +3241,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 96
+   "seconds": 80
   },
   {
    "area": 10,
@@ -3650,30 +3259,19 @@
      "detail": "https://portal.dustinedwards.info/demos/health?tab=backups at 320 px, charts shift the page by 0.024 (layout shift); largest 0.024, div.cap-chart +3 px, height +2"
     }
    ],
-   "seconds": 70
+   "seconds": 44
   },
   {
    "area": 10,
    "site": "capsomer",
    "check": "chart-audit",
    "ref": "v0.63.7",
-   "status": "fail",
-   "errors": 2,
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 1280 px, charts shift the page by 0.066 (layout shift); largest 0.066, figure.enarratio +0 px, height -68"
-    },
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, p.enarratio-source +891 px, height +9"
-    }
-   ],
-   "seconds": 222
+   "findings": [],
+   "seconds": 211
   },
   {
    "area": 10,
@@ -3685,7 +3283,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 5
+   "seconds": 3
   },
   {
    "area": 10,
@@ -3697,65 +3295,19 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 22
+   "seconds": 17
   },
   {
    "area": 10,
    "site": "dustinedwards-info",
    "check": "chart-audit",
    "ref": "v0.63.7",
-   "status": "fail",
-   "errors": 9,
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "C2",
-     "detail": "https://dustinedwards.info/cv \"Output by year\" (bar): no source line"
-    },
-    {
-     "severity": "error",
-     "check": "C2",
-     "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search \"Requests refused by the built-in rate-limiting binding, limi\" (bar): no source line"
-    },
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search at 320 px, charts shift the page by 0.056 (layout shift); largest 0.056, div.enarratio-caption +106 px"
-    },
-    {
-     "severity": "error",
-     "check": "C2",
-     "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker \"Worker bundle size by charting configuration\" (bar): no source line"
-    },
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker at 320 px, charts shift the page by 0.060 (layout shift); largest 0.060, div.enarratio-caption +106 px"
-    },
-    {
-     "severity": "error",
-     "check": "C2",
-     "detail": "https://dustinedwards.info/writing/posts-in-git-served-from-d1 \"Worker bundle size by highlighter configuration\" (bar): no source line"
-    },
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://dustinedwards.info/writing/posts-in-git-served-from-d1 at 320 px, charts shift the page by 0.057 (layout shift); largest 0.057, div.enarratio-caption +106 px"
-    },
-    {
-     "severity": "error",
-     "check": "C2",
-     "detail": "https://dustinedwards.info/writing/site-search-on-d1 \"RRF contribution by rank position, k = 60\" (line): no source line"
-    },
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://dustinedwards.info/writing/site-search-on-d1 at 320 px, charts shift the page by 0.059 (layout shift); largest 0.059, div.enarratio-caption +106 px"
-    }
-   ],
-   "seconds": 235
+   "findings": [],
+   "seconds": 190
   },
   {
    "area": 10,
@@ -3767,7 +3319,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 275
+   "seconds": 252
   },
   {
    "area": 10,
@@ -3779,7 +3331,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 122
+   "seconds": 112
   },
   {
    "area": 10,
@@ -3791,54 +3343,37 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 137
+   "seconds": 227
   },
   {
    "area": 10,
    "site": "germomics",
    "check": "chart-audit",
    "ref": "v0.63.7",
-   "status": "fail",
-   "errors": 2,
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://germomics.com/data/cholera-soho-1854 at 320 px, charts shift the page by 0.055 (layout shift); largest 0.055, p.enarratio-summary +109 px"
-    },
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://germomics.com/data/influenza-1918 at 320 px, charts shift the page by 0.063 (layout shift); largest 0.063, p.enarratio-summary +109 px"
-    }
-   ],
-   "seconds": 35
+   "findings": [],
+   "seconds": 49
   },
   {
    "area": 10,
    "site": "prelum",
    "check": "chart-audit",
    "ref": "v0.63.7",
-   "status": "fail",
-   "errors": 1,
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://prelum.dustinedwards.info/ at 320 px, charts shift the page by 0.160 (layout shift); largest 0.160, p.enarratio-summary +248 px"
-    }
-   ],
-   "seconds": 34
+   "findings": [],
+   "seconds": 36
   },
   {
    "area": 11,
    "site": "bsw",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3850,7 +3385,7 @@
    "area": 11,
    "site": "capsid",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -3862,7 +3397,7 @@
    "area": 11,
    "site": "capsid-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 23,
@@ -3984,13 +3519,13 @@
      "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
     }
    ],
-   "seconds": 264
+   "seconds": 263
   },
   {
    "area": 11,
    "site": "capsomer",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4002,7 +3537,7 @@
    "area": 11,
    "site": "carrel",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4014,7 +3549,7 @@
    "area": 11,
    "site": "carrel-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 35,
@@ -4196,13 +3731,13 @@
      "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching: 2 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-read-caching-hints)"
     }
    ],
-   "seconds": 260
+   "seconds": 258
   },
   {
    "area": 11,
    "site": "dustinedwards-info",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4214,7 +3749,7 @@
    "area": 11,
    "site": "dustinedwards-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 6,
@@ -4251,13 +3786,13 @@
      "detail": "https://admin-mcp.dustinedwards.info/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 258
+   "seconds": 255
   },
   {
    "area": 11,
    "site": "enarratio",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4269,7 +3804,7 @@
    "area": 11,
    "site": "foxhound",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 17,
@@ -4361,13 +3896,13 @@
      "detail": "https://foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 271
+   "seconds": 269
   },
   {
    "area": 11,
    "site": "foxhound-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 22,
@@ -4484,13 +4019,13 @@
      "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 256
+   "seconds": 255
   },
   {
    "area": 11,
    "site": "foxing",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4502,7 +4037,7 @@
    "area": 11,
    "site": "foxing-mcp",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 13,
@@ -4574,13 +4109,13 @@
      "detail": "https://admin-mcp.foxing.app/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 256
+   "seconds": 254
   },
   {
    "area": 11,
    "site": "germomics",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4592,7 +4127,7 @@
    "area": 11,
    "site": "julieedwards-info",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4604,7 +4139,7 @@
    "area": 11,
    "site": "prelum",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -4616,7 +4151,7 @@
    "area": 11,
    "site": "txasm",
    "check": "site-runtime-ai-audit",
-   "ref": "v0.173.3",
+   "ref": "v0.173.4",
    "status": "pass",
    "errors": 0,
    "warnings": 0,

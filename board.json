@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T20:29:23.859Z",
+ "as_of": "2026-11-21T22:10:01.203Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -134,15 +134,35 @@
      "clean_days": 1
     },
     "germomics": {
-     "status": "complete",
-     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (59 pages, no findings); all 28 sitemap URLs carry lastmod.",
-     "evidence": [
-      "https://germomics.com/llms.txt",
-      "https://germomics.com/llms-full.txt",
-      "https://germomics.com/sitemap.xml",
-      "https://germomics.com/index.md"
-     ],
-     "clean_days": 1
+     "status": "missing",
+     "reason": "prelum-audit: 5 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-4a8b6f91-renamed, which answers 404"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-da5e5158-renamed, which answers 404"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-f908b11b-renamed, which answers 404"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-7e19650b-renamed, which answers 404"
+      },
+      {
+       "severity": "error",
+       "check": "link-broken",
+       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-30b8b1fe-renamed, which answers 404"
+      }
+     ]
     },
     "julieedwards-info": {
      "status": "complete",
@@ -156,510 +176,14 @@
      "clean_days": 1
     },
     "txasm": {
-     "status": "missing",
-     "reason": "prelum-audit: 464 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "sitemap-lastmod-missing",
-       "detail": "https://txasm.org/sitemap.xml 8 of 464 sitemap URLs have no lastmod, e.g. https://txasm.org/"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/award-nominations links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/branch-officers links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/newsletters links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/archive/abstract-books links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/archive/programs links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/trail links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/sponsorship links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/contact links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/accessibility links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/program links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2025/program links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2025/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2025/program links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2025/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2024/program links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/fall-2024/abstracts links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/1 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/2 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/3 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/4 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/5 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/6 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/7 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/8 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/9 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/10 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/11 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/12 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/13 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/14 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/15 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/16 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/17 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/18 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/19 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/20 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/21 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/22 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/23 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/24 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/25 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/26 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/27 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/28 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/29 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/30 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/31 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/32 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/33 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/34 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/35 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/36 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/37 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/38 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/39 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/40 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/41 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/42 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/43 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/44 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/45 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/46 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/47 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/48 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/49 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/50 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/51 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/52 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/53 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/54 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/55 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/56 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/57 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/58 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/59 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/60 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/61 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/62 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/63 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/64 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/65 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/66 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/67 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/68 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/69 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/70 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/71 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/72 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/73 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/74 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/75 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/76 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/77 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/78 links to https://txasm.org/awards, which redirects to /awardees"
-      },
-      {
-       "severity": "error",
-       "check": "link-redirect",
-       "detail": "https://txasm.org/meetings/spring-2026/abstracts/79 links to https://txasm.org/awards, which redirects to /awardees"
-      }
-     ]
+     "status": "partial",
+     "reason": "Read from the workers.dev address (txasm.org untouched). prelum-audit: 0 errors on 482 pages (the awards links no longer redirect). Missing: no Markdown twin (/awardees.md and /index.md are 404 HTML, Accept: text/markdown returns text/html), llms-full.txt is 404, and 8 of 464 sitemap URLs have no lastmod (the home page among them). llms.txt, canonicals and Open Graph are present.",
+     "evidence": [
+      "https://txasm.dustin-edwards.workers.dev/llms.txt",
+      "https://txasm.dustin-edwards.workers.dev/awardees.md",
+      "https://txasm.dustin-edwards.workers.dev/sitemap.xml"
+     ],
+     "clean_days": 1
     },
     "bsw": {
      "status": "partial",
@@ -1317,29 +841,36 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "Closed: pins site-api v0.46.1, site-api-live and conformance pass, deleted post answers 410 through tombstones, admin mentions page now uses the shared kit and the shared mentions adapter, backdated publish is settable. Open: no postFields and no authors, and the author filter is not offered (FILTERS is kind, tag, published). Open: the list's q matches title and slug only, no total, sort ignored. Open: no setTags on the post handler. Open: savePost still runs its own purgePosts beside the shared purge hook.",
-     "evidence": [
-      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/carrel/content-kinds.server.ts",
-      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/carrel/site-adapter.server.ts",
-      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/workers/app.ts",
-      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/editor/publish.server.ts",
-      "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
-     ],
-     "clean_days": 8
+     "status": "missing",
+     "reason": "carrel-conformance: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed"
+      }
+     ]
     },
     "germomics": {
-     "status": "complete",
-     "reason": "All old gaps are closed: author filter and byline credit, series and seriesPart fields, setTags, 410 through tombstones, preview through the site's own route and layout, revision author from the actor, page history, and the admin edits only the plain-text pages. Conformance and site-api-live pass on v0.46.1. A header comment in adapter.server.ts still says v0.18.0, which is only a stale comment.",
-     "evidence": [
-      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/carrel/adapter.server.ts#L625-L628",
-      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/carrel/adapter.server.ts#L866",
-      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/carrel/adapter.server.ts#L1219-L1250",
-      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/workers/app.ts#L130",
-      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/routes/admin.content.$key.tsx",
-      "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
-     ],
-     "clean_days": 8
+     "status": "missing",
+     "reason": "carrel-conformance: 3 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed"
+      },
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://germomics.com/api/carrel/v1 probe post: a delete answers 410 on the old path failed"
+      },
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://germomics.com/api/carrel/v1 probe post: cleaned up failed"
+      }
+     ]
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1371,33 +902,41 @@
      "reason": "no Carrel site API: its content is not edited through Carrel"
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "Read main f0d1cb9. Closed: site-api v0.46.1 pin, trash then delete only from trash, rename with 301, schedule and scheduled update, tags, publishedAt, author filter, search fields, preview in the site's stylesheets, rate limiter fails closed. Still open: (1) saveDraft on a live post rewrites the live row at once, there is no hasDraft or pending draft (adapter.server.ts:397-403, 289-320); (2) delete leaves no tombstone, so a deleted post answers 404 not 410 (469-475, admin-queries.server.ts:189-197); (3) delete silently drops the post's blog_post_links rows, no backlink warning (admin-queries.server.ts:190-193); (4) revisions keep only title, excerpt and body, and the revision author is carrel:<changeId>, the actor is ignored (517-560, 298); (5) the author is a free-text front matter field, not an authors field, there is no cover image or series in the source (postFields is only excerpt, line 339; cover kept as is at 307-308); (6) the preview is a bare article with no site header or footer (632-643).",
-     "evidence": [
-      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/adapter.server.ts#L397-L403",
-      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/adapter.server.ts#L469-L475",
-      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/adapter.server.ts#L517-L560",
-      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/adapter.server.ts#L632-L643",
-      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/blog/admin-queries.server.ts#L189-L197",
-      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/handler.server.ts",
-      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/package.json#L36",
-      "https://foxhoundapp.com/api/carrel/v1/meta",
-      "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
-     ],
-     "clean_days": 8
+     "status": "missing",
+     "reason": "carrel-conformance: 4 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed"
+      },
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed"
+      },
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a delete answers 410 on the old path failed"
+      },
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: cleaned up failed"
+      }
+     ]
     },
     "foxing": {
-     "status": "complete",
-     "reason": "All old gaps are closed: author filter by credited name, series and seriesPart, pins site-api v0.46.1, 410 through tombstones, preview through the journal route, redirects removed when a post is deleted, revision authors are names. Conformance and site-api-live pass.",
-     "evidence": [
-      "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/carrel/journal-adapter.server.ts#L467-L468",
-      "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/carrel/journal-adapter.server.ts#L485-L494",
-      "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/carrel/journal-adapter.server.ts#L667-L697",
-      "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/workers/app.ts#L15",
-      "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/core/src/repositories/admin-journal.ts#L357",
-      "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
-     ],
-     "clean_days": 8
+     "status": "missing",
+     "reason": "carrel-conformance: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://foxing.app/api/carrel/v1 probe post: created as a draft failed"
+      }
+     ]
     },
     "carrel": {
      "status": "n/a",
@@ -1648,54 +1187,9 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 9 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://dustinedwards.info/writing/carrel-one-api-for-every-site not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://dustinedwards.info/research/retroviruses not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://dustinedwards.info/systems/site-runtime not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/writing a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/colophon a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/privacy a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/teaching/virus-isolation a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/writing/carrel-a-writing-desk-apart-from-the-site a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker a conditional request with the page's own validator answered 200, not 304"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1725,9 +1219,14 @@
      ]
     },
     "julieedwards-info": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 1 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://julieedwards.info/accessibility not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo PDX then PDX"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2027,12 +1526,17 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 40.8 hours old, not under 26"
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 42.5 hours old, not under 26"
       },
       {
        "severity": "warning",
        "check": "C2",
        "detail": "https://carrel-mcp.dustinedwards.info/health the cron check is warn: backup failed"
+      },
+      {
+       "severity": "warning",
+       "check": "H4",
+       "detail": "https://carrel-mcp.dustinedwards.info/health serves 525a15eafccffb72c68f3edf00c56f145180519c, not the branch head cedd8ed32241254756a6cd9d829114dc4197299c (https://github.com/DrDustinEdwards/carrel/commit/cedd8ed32241254756a6cd9d829114dc4197299c), committed 8 minutes ago"
       }
      ]
     },
@@ -2225,71 +1729,14 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "chart-audit: 9 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://dustinedwards.info/cv \"Output by year\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search \"Requests refused by the built-in rate-limiting binding, limi\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search at 320 px, charts shift the page by 0.056 (layout shift); largest 0.056, div.enarratio-caption +106 px"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker \"Worker bundle size by charting configuration\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker at 320 px, charts shift the page by 0.060 (layout shift); largest 0.060, div.enarratio-caption +106 px"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://dustinedwards.info/writing/posts-in-git-served-from-d1 \"Worker bundle size by highlighter configuration\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://dustinedwards.info/writing/posts-in-git-served-from-d1 at 320 px, charts shift the page by 0.057 (layout shift); largest 0.057, div.enarratio-caption +106 px"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://dustinedwards.info/writing/site-search-on-d1 \"RRF contribution by rank position, k = 60\" (line): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://dustinedwards.info/writing/site-search-on-d1 at 320 px, charts shift the page by 0.059 (layout shift); largest 0.059, div.enarratio-caption +106 px"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "germomics": {
-     "status": "missing",
-     "reason": "chart-audit: 2 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://germomics.com/data/cholera-soho-1854 at 320 px, charts shift the page by 0.055 (layout shift); largest 0.055, p.enarratio-summary +109 px"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://germomics.com/data/influenza-1918 at 320 px, charts shift the page by 0.063 (layout shift); largest 0.063, p.enarratio-summary +109 px"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -2324,31 +1771,14 @@
      "clean_days": 1
     },
     "capsomer": {
-     "status": "missing",
-     "reason": "chart-audit: 2 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 1280 px, charts shift the page by 0.066 (layout shift); largest 0.066, figure.enarratio +0 px, height -68"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, p.enarratio-source +891 px, height +9"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "prelum": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://prelum.dustinedwards.info/ at 320 px, charts shift the page by 0.160 (layout shift); largest 0.160, p.enarratio-summary +248 px"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "capsid": {
      "status": "partial",

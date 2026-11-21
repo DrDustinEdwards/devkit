@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 20:29 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 22:10 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,16 +8,16 @@ Newest run 2026-11-21 20:29 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ✅ | 🟡 | ✅ | ✅ | ❌ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ✅ | 🟡 | ❌ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | ✅ | ✅ | ✅ | · | 🟡 | · | 🟡 | ✅ | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | +67457 | −2968 |
 | 4. Writing and rendering | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
-| 5. Carrel editing contract | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | 🟡 | ✅ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
+| 5. Carrel editing contract | 🟡 | ❌ | ❌ | 🟡 | 🟡 | · | ❌ | ❌ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 7. Speed and caching | 🟡 | ❔ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ❌ | ❌ | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | 🟡 | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
 
@@ -28,12 +28,13 @@ Newest run 2026-11-21 20:29 UTC. Filled only from the live checks and the verifi
 Builder: Share SEO and other key site code. Verifier: Fresh verifier: re-sign of areas 1, 4 and 9.
 
 - 🟡 dustinedwards.info: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (563 pages). Gap: 27 of 204 sitemap URLs have no lastmod (contact, colophon, features and every /systems page).
-- ❌ TXASM: prelum-audit: 464 errors
-  - link-redirect: https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees
-  - link-redirect: https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees
-  - link-redirect: https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees
-  - link-redirect: https://txasm.org/award-nominations links to https://txasm.org/awards, which redirects to /awardees
-  - link-redirect: https://txasm.org/branch-officers links to https://txasm.org/awards, which redirects to /awardees
+- ❌ Germomics: prelum-audit: 5 errors
+  - link-broken: https://germomics.com/ links to https://germomics.com/carrel-conformance-4a8b6f91-renamed, which answers 404
+  - link-broken: https://germomics.com/ links to https://germomics.com/carrel-conformance-da5e5158-renamed, which answers 404
+  - link-broken: https://germomics.com/ links to https://germomics.com/carrel-conformance-f908b11b-renamed, which answers 404
+  - link-broken: https://germomics.com/ links to https://germomics.com/carrel-conformance-7e19650b-renamed, which answers 404
+  - link-broken: https://germomics.com/ links to https://germomics.com/carrel-conformance-30b8b1fe-renamed, which answers 404
+- 🟡 TXASM: Read from the workers.dev address (txasm.org untouched). prelum-audit: 0 errors on 482 pages (the awards links no longer redirect). Missing: no Markdown twin (/awardees.md and /index.md are 404 HTML, Accept: text/markdown returns text/html), llms-full.txt is 404, and 8 of 464 sitemap URLs have no lastmod (the home page among them). llms.txt, canonicals and Open Graph are present.
 - 🟡 BSW: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (20 pages). Gap: none of the 20 sitemap URLs has a lastmod. The site is a mockup on a workers.dev address.
 - 🟡 Enarratio: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (140 pages) and all 8 sitemap URLs carry lastmod. Gap: 140 of 140 pages have no &lt;meta name="text-scale" content="scale"&gt; (a prelum-audit warning).
 - 🟡 Capsomer: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (210 pages) and all 209 sitemap URLs carry lastmod. Gap: the title "Icons · Capsomer" is on two pages (/components/icons/ and /icons/), a prelum-audit warning.
@@ -76,10 +77,21 @@ Builder: Complete shared writing and rendering. Verifier: Fresh verifier: re-sig
 Builder: Complete Carrel editing contract. Verifier: Re-sign partial devkit areas.
 
 - 🟡 Package: Closed since 2026-10-31: schedule and unschedule events (path null for an unpublished post), unknown fields now 400 unknown-field, site-api-live honors --from, one DNS-resolving outbound guard, shared purge hook (schedulePurgeHook), feature image, excerpt, authors and series boxes in Carrel, merge panel for a diverged copy, backlinks warning on trash and delete, sort is a select so aria-sort does not apply. Open: the post-life probe (301, 410, trash, preview-link life, hooks, field round-trips) is off by default and Carrel's live run does not turn it on (health.server.ts runConformance has no probePosts), so no live site is checked for those. Open: Carrel has no way to list or revoke a preview link (site-api client has it, no Carrel screen uses it). Open: no width preview in the editor (PreviewPane is one iframe). Open: no hand a11y pass, and whether Carrel's README is now right, could not be proven by a script.
-- 🟡 dustinedwards.info: Closed: pins site-api v0.46.1, site-api-live and conformance pass, deleted post answers 410 through tombstones, admin mentions page now uses the shared kit and the shared mentions adapter, backdated publish is settable. Open: no postFields and no authors, and the author filter is not offered (FILTERS is kind, tag, published). Open: the list's q matches title and slug only, no total, sort ignored. Open: no setTags on the post handler. Open: savePost still runs its own purgePosts beside the shared purge hook.
+- ❌ dustinedwards.info: carrel-conformance: 1 errors
+  - M1: https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed
+- ❌ Germomics: carrel-conformance: 3 errors
+  - M1: https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed
+  - M1: https://germomics.com/api/carrel/v1 probe post: a delete answers 410 on the old path failed
+  - M1: https://germomics.com/api/carrel/v1 probe post: cleaned up failed
 - 🟡 julieedwards.info: Read main cf8ff79. Closed: site-api v0.46.1 pin; the webmention hook is wired (handler.server.ts) and sends the page itself on publish only; a save lands in a draft and never changes the live text; schedules and scheduled update; the unpublish, trash, rename and delete refusals are documented for a fixed set of sections. Still open: (1) a live section with a saved draft reads as status draft, not published with hasDraft (sections.server.ts:54-55); (2) revisions are capped at 50 and carry the literal author julieedwards, not the actor (sections.server.ts:234, 243); (3) no unpublish or delete by design (sections.server.ts:220-225), still wants a ruling recorded; (4) the preview is main plus HomeSections with no site header or footer (adapter.server.tsx:84-86).
 - 🟡 TXASM: Closed: site-api-live honors --from and passes against the workers.dev copy, IndexNow uses publicOrigin so Carrel publishes are sent, preview renders through the site's own route, revisions are not pruned and old ones open, media shrink exists. Open: no delete or unpublish (every page is a live route; needs Dustin's ruling, none found in Capsid). Open: revision author is hard-coded 'Dustin Edwards' instead of the actor. Pre-cutover limit: txasm.org is still WordPress, so the site is served from workers.dev and passkey rpId follows the host; that cannot change now.
-- 🟡 Foxhound: Read main f0d1cb9. Closed: site-api v0.46.1 pin, trash then delete only from trash, rename with 301, schedule and scheduled update, tags, publishedAt, author filter, search fields, preview in the site's stylesheets, rate limiter fails closed. Still open: (1) saveDraft on a live post rewrites the live row at once, there is no hasDraft or pending draft (adapter.server.ts:397-403, 289-320); (2) delete leaves no tombstone, so a deleted post answers 404 not 410 (469-475, admin-queries.server.ts:189-197); (3) delete silently drops the post's blog_post_links rows, no backlink warning (admin-queries.server.ts:190-193); (4) revisions keep only title, excerpt and body, and the revision author is carrel:&lt;changeId&gt;, the actor is ignored (517-560, 298); (5) the author is a free-text front matter field, not an authors field, there is no cover image or series in the source (postFields is only excerpt, line 339; cover kept as is at 307-308); (6) the preview is a bare article with no site header or footer (632-643).
+- ❌ Foxhound: carrel-conformance: 4 errors
+  - M1: https://foxhoundapp.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed
+  - M1: https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed
+  - M1: https://foxhoundapp.com/api/carrel/v1 probe post: a delete answers 410 on the old path failed
+  - M1: https://foxhoundapp.com/api/carrel/v1 probe post: cleaned up failed
+- ❌ Foxing: carrel-conformance: 1 errors
+  - M1: https://foxing.app/api/carrel/v1 probe post: created as a draft failed
 
 ### 6. Images and media
 
@@ -99,14 +111,10 @@ Builder: Complete shared images and media. Verifier: Re-sign partial devkit area
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- ❌ dustinedwards.info: site-runtime-speed: 9 errors
-  - B1: https://dustinedwards.info/writing/carrel-one-api-for-every-site not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD
-  - B1: https://dustinedwards.info/research/retroviruses not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD
-  - B1: https://dustinedwards.info/systems/site-runtime not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD
-  - B7: https://dustinedwards.info/writing a conditional request with the page's own validator answered 200, not 304
-  - B7: https://dustinedwards.info/colophon a conditional request with the page's own validator answered 200, not 304
+- ❔ dustinedwards.info: site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Germomics: site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❔ julieedwards.info: site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❌ julieedwards.info: site-runtime-speed: 1 errors
+  - B1: https://julieedwards.info/accessibility not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo PDX then PDX
 - ❔ TXASM: site-runtime-speed could not measure: A3: https://txasm.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://txasm.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ BSW: site-runtime-speed could not measure: A3: https://bsw.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://bsw.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Foxhound: site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
@@ -133,7 +141,7 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Foxhound admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 40.8 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 42.5 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
@@ -155,24 +163,14 @@ Builder: Complete accessibility and Capsomer components. Verifier: Fresh verifie
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: chart-audit: 9 errors
-  - C2: https://dustinedwards.info/cv "Output by year" (bar): no source line
-  - C2: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar): no source line
-  - D5: https://dustinedwards.info/writing/ai-answer-mode-on-site-search at 320 px, charts shift the page by 0.056 (layout shift); largest 0.056, div.enarratio-caption +106 px
-  - C2: https://dustinedwards.info/writing/observable-plot-inside-a-worker "Worker bundle size by charting configuration" (bar): no source line
-  - D5: https://dustinedwards.info/writing/observable-plot-inside-a-worker at 320 px, charts shift the page by 0.060 (layout shift); largest 0.060, div.enarratio-caption +106 px
-- ❌ Germomics: chart-audit: 2 errors
-  - D5: https://germomics.com/data/cholera-soho-1854 at 320 px, charts shift the page by 0.055 (layout shift); largest 0.055, p.enarratio-summary +109 px
-  - D5: https://germomics.com/data/influenza-1918 at 320 px, charts shift the page by 0.063 (layout shift); largest 0.063, p.enarratio-summary +109 px
+- 🟡 dustinedwards.info: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Germomics: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Foxhound: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Foxing: checks pass; no verifier yet
 - 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Enarratio: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ Capsomer: chart-audit: 2 errors
-  - D5: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 1280 px, charts shift the page by 0.066 (layout shift); largest 0.066, figure.enarratio +0 px, height -68
-  - D5: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, p.enarratio-source +891 px, height +9
-- ❌ Prelum specimen: chart-audit: 1 errors
-  - D5: https://prelum.dustinedwards.info/ at 320 px, charts shift the page by 0.160 (layout shift); largest 0.160, p.enarratio-summary +248 px
+- 🟡 Capsomer: checks pass; no verifier yet
+- 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Capsid explorer: checks pass; no verifier yet
 - ❌ Capsid Portal: chart-audit: 1 errors
   - D5: https://portal.dustinedwards.info/demos/health?tab=backups at 320 px, charts shift the page by 0.024 (layout shift); largest 0.024, div.cap-chart +3 px, height +2
