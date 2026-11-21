@@ -290,7 +290,21 @@
           "kinds": ["worker"],
           "args": ["--kind", "worker"],
           "grants": true,
-          "site_args": { "capsid-mcp": ["--grant-path", "/ops/mcp"] }
+          "site_args": {
+            "capsid-mcp": ["--grant-path", "/ops/mcp"],
+            "carrel-mcp": [
+              "--tools-hash",
+              "bd193813a768ae75a1d05c08f76b1dc0f72f25e661b5b749771ef970215b02c6"
+            ],
+            "foxing-mcp": [
+              "--tools-hash",
+              "4494b19d0efbadb2e2eb6c6929b487ba40ce662f0bc8753f73108631ebbbd0d3"
+            ],
+            "dustinedwards-mcp": [
+              "--tools-hash",
+              "060e3a5ae73daf539628c400d945819b23f2d972953f6680b277ede48baee565"
+            ]
+          }
         },
         {
           "name": "site-runtime-ai-audit",
