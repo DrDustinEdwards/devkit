@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 07:42 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 08:21 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,16 +8,16 @@ Newest run 2026-11-21 07:42 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
-| 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
+| 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30007 | −3470 |
+| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❔ | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
@@ -31,25 +31,15 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
 - 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Germomics: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 julieedwards.info: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ TXASM: prelum-audit: 124 errors
-  - robots-blocks-all: https://txasm.org/robots.txt robots.txt disallows the home page to Googlebot, so no page is crawled
-  - sitemap-blocked: https://txasm.org the sitemap lists a URL robots.txt disallows
-  - sitemap-blocked: https://txasm.org/meetings the sitemap lists a URL robots.txt disallows
-  - sitemap-blocked: https://txasm.org/awardees the sitemap lists a URL robots.txt disallows
-  - sitemap-blocked: https://txasm.org/award-nominations the sitemap lists a URL robots.txt disallows
-- ❌ BSW: prelum-audit: 20 errors
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/ the sitemap lists a noindex page
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/grant-proposal-support the sitemap lists a noindex page
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
-  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
+- ❌ TXASM: prelum-audit: 887 errors
+  - link-redirect: https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees
+  - link-redirect: https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees
+  - link-redirect: https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees
+  - link-redirect: https://txasm.org/award-nominations links to https://txasm.org/awards, which redirects to /awardees
+  - link-redirect: https://txasm.org/branch-officers links to https://txasm.org/awards, which redirects to /awardees
+- 🟡 BSW: checks pass; no verifier yet
 - 🟡 Foxhound: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ Foxing: prelum-audit: 3221 errors
-  - link-redirect: https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?next=%2Fclubs
-  - link-redirect: https://foxing.app/ links to https://foxing.app/people, which redirects to /login?next=%2Fpeople
-  - link-redirect: https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?next=%2Fclubs
-  - link-redirect: https://foxing.app/books links to https://foxing.app/people, which redirects to /login?next=%2Fpeople
-  - link-redirect: https://foxing.app/awards links to https://foxing.app/clubs, which redirects to /login?next=%2Fclubs
+- 🟡 Foxing: failed on 2026-11-07, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Enarratio: checks pass; no verifier yet
 - 🟡 Capsomer: checks pass; no verifier yet
@@ -63,32 +53,30 @@ Builder: Complete shared security headers and CSP. Verifier: Verify security hea
 - ❌ dustinedwards.info: site-runtime-security: 4 errors
   - S2: https://dustinedwards.info/ (200) Integrity-Policy is present: ABSENT
   - S2: https://dustinedwards.info/about (200) Integrity-Policy is present: ABSENT
-  - S2: https://dustinedwards.info/site-runtime-security-104a2058-69c2-45b0-b649-11fbfd571cff (404) Integrity-Policy is present: ABSENT
+  - S2: https://dustinedwards.info/site-runtime-security-8909ce2d-0e4e-4aa4-a6b1-90beb4500d8e (404) Integrity-Policy is present: ABSENT
   - S2: https://dustinedwards.info/ (405) Integrity-Policy is present: ABSENT
 - ❌ Germomics: site-runtime-security: 4 errors
   - S2: https://germomics.com/ (200) Integrity-Policy is present: ABSENT
   - S2: https://germomics.com/episodes (200) Integrity-Policy is present: ABSENT
-  - S2: https://germomics.com/site-runtime-security-b3dfda73-8670-4a8e-a3fc-ea62731b098a (404) Integrity-Policy is present: ABSENT
+  - S2: https://germomics.com/site-runtime-security-b1f8f6e9-9405-414b-bd6c-4e89cb0291bf (404) Integrity-Policy is present: ABSENT
   - S2: https://germomics.com/ (405) Integrity-Policy is present: ABSENT
 - ❌ julieedwards.info: site-runtime-security: 4 errors
   - S2: https://julieedwards.info/ (200) Integrity-Policy is present: ABSENT
   - S2: https://julieedwards.info/accessibility (200) Integrity-Policy is present: ABSENT
-  - S2: https://julieedwards.info/site-runtime-security-3428b5c1-2487-4cc7-b8fd-0fffabe968ff (404) Integrity-Policy is present: ABSENT
+  - S2: https://julieedwards.info/site-runtime-security-6d5d228d-4035-4d8e-b08d-25b7fda066ec (404) Integrity-Policy is present: ABSENT
   - S2: https://julieedwards.info/ (405) Integrity-Policy is present: ABSENT
-- ❌ TXASM: site-runtime-security: 4 errors
+- ❌ TXASM: site-runtime-security: 2 errors
   - S2: https://txasm.dustin-edwards.workers.dev/ (200) Integrity-Policy is present: ABSENT
-  - S2: https://txasm.dustin-edwards.workers.dev/meetings (200) Integrity-Policy is present: ABSENT
-  - S2: https://txasm.dustin-edwards.workers.dev/site-runtime-security-40be57a7-42ca-4912-a6a4-3de3332a29a6 (404) Integrity-Policy is present: ABSENT
-  - S2: https://txasm.dustin-edwards.workers.dev/ (405) Integrity-Policy is present: ABSENT
+  - S2: https://txasm.dustin-edwards.workers.dev/site-runtime-security-7cd8d7e2-7789-4b62-8516-2912397a3ec9 (404) Integrity-Policy is present: ABSENT
 - ❌ Foxhound: site-runtime-security: 4 errors
   - S2: https://foxhoundapp.com/ (200) Integrity-Policy is present: ABSENT
   - S2: https://foxhoundapp.com/pricing (200) Integrity-Policy is present: ABSENT
-  - S2: https://foxhoundapp.com/site-runtime-security-bfc82e35-4cde-4a6e-bb0a-06fd0acd50ad (404) Integrity-Policy is present: ABSENT
+  - S2: https://foxhoundapp.com/site-runtime-security-9436bf7c-7264-4d8b-a2cb-7930613e1172 (404) Integrity-Policy is present: ABSENT
   - S2: https://foxhoundapp.com/ (405) Integrity-Policy is present: ABSENT
 - ❌ Foxing: site-runtime-security: 4 errors
   - S2: https://foxing.app/ (200) Integrity-Policy is present: ABSENT
   - S2: https://foxing.app/books (200) Integrity-Policy is present: ABSENT
-  - S2: https://foxing.app/site-runtime-security-ad8e1434-a4e3-4690-a5db-1c0b5c979143 (404) Integrity-Policy is present: ABSENT
+  - S2: https://foxing.app/site-runtime-security-897a15af-3799-48b4-8162-f449ec6c638c (404) Integrity-Policy is present: ABSENT
   - S2: https://foxing.app/ (405) Integrity-Policy is present: ABSENT
 - 🟡 Capsomer: failed on 2026-11-01, after Verify security headers signed; needs a fresh verifier
 - 🟡 Prelum specimen: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3 (COEP enforced, not Report-Only). prelum #182 (v0.66.0) merged at 22:49Z but the live sha at 23:10Z was still ffbe359, so the deploy had not landed. It passes v0.65.0 with 0 errors. Re-check after the deploy.
@@ -146,27 +134,23 @@ Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editin
 Builder: Complete shared images and media. Verifier: Verify area 6 images and media.
 
 - 🟡 Package: uploads built (HEIC, GPS strip, placeholder); a replace keeps the immutable size URL; pictureProps carries no placeholder; Prelum picture drops source media (GIF never moves) and counts priority per render; unsized diagram img; credit/license never reach the renderer; no 1.91:1 cover crop, no 16:9/4:3/1:1 set, no og:video; respond sets no CORP; AVIF not stripped; images check skips A6 and C9 and never runs on the Portal
-- ❌ dustinedwards.info: site-runtime-images: 4 errors
-  - A12: https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.webp?v=a4b25f040616&amp;w=320 asked a second time it is cf-cache-status BYPASS, not a HIT
-  - A12: https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.webp?v=a4b25f040616&amp;w=640 asked a second time it is cf-cache-status BYPASS, not a HIT
-  - A12: https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.avif?v=a4b25f040616&amp;w=320 asked a second time it is cf-cache-status BYPASS, not a HIT
-  - A12: https://dustinedwards.info/media/dustin-edwards-headshot-a4b25f04061613b9-1365x2048.jpg.avif?v=a4b25f040616&amp;w=640 asked a second time it is cf-cache-status BYPASS, not a HIT
+- 🟡 dustinedwards.info: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Germomics: episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper
 - 🟡 julieedwards.info: profile photo 884 KB, 2048 px, unsized, no srcset, 3.1x at 670 px, cached 4 h, other host without preconnect; must go into the library; fallback img unsized
 - 🟡 TXASM: og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap
-- ❌ BSW: site-runtime-images: 2 errors
-  - A12: https://bsw.dustin-edwards.workers.dev/media/uploads/2026/11/grant-review-6b238865.webp.webp?w=512 Cache-Control is "public, max-age=86400", not immutable
-  - A12: https://bsw.dustin-edwards.workers.dev/media/uploads/2026/11/grant-review-6b238865.webp.avif?w=512 Cache-Control is "public, max-age=86400", not immutable
-- ❌ Foxhound: site-runtime-images: 1 errors
-  - A6: https://foxhoundapp.com/contact /favicon.svg is loading="lazy" above the fold (y≈627 at 390, y≈546 at 1440), so it waits for layout
+- 🟡 BSW: failed on 2026-11-03, after Verify area 6 images and media signed; needs a fresh verifier
+- ❌ Foxhound: site-runtime-images: 46 errors
+  - A6: https://foxhoundapp.com/ /favicon.svg is below the fold (y≈17112 at 390, y≈16865 at 1440) and not lazy (no loading attribute)
+  - A6: https://foxhoundapp.com/ preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈17112 at 390, y≈16865 at 1440), ahead of what the screen shows
+  - A6: https://foxhoundapp.com/pricing /favicon.svg is below the fold (y≈8170 at 390, y≈8271 at 1440) and not lazy (no loading attribute)
+  - A6: https://foxhoundapp.com/pricing preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈8170 at 390, y≈8271 at 1440), ahead of what the screen shows
+  - A6: https://foxhoundapp.com/products /favicon.svg is below the fold (y≈1589 at 390, y≈1715 at 1440) and not lazy (no loading attribute)
 - 🟡 Foxing: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Carrel: images check passes; share card answers CORP same-origin
 - 🟡 Enarratio: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Capsomer: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Prelum specimen: images check fails: unsized diagram SVGs, 3 fetchpriority=high, 48 px icon shown at 16 px; share card CORP same-origin
 - 🟡 Capsid explorer: images check passes; share card answers CORP same-origin
-- ❌ Capsid Portal: site-runtime-images: 1 errors
-  - C1: https://portal.dustinedwards.info/ sends a stranger to dustinedwards.cloudflareaccess.com before any page, so a shared link shows that host's card, not one of the site's own; nothing else is visible to check
 - Not checked, Capsid Portal and Carrel Desk pages behind sign-in: a stranger's crawl sees only the redirect to Access, so the images on the signed-in pages (Desk's media library, the Portal's views) are not checked live
 
 ### 7. Speed and caching
@@ -174,17 +158,34 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- ❔ dustinedwards.info: site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❌ Germomics: site-runtime-speed: 2 errors
-  - C2: https://germomics.com/fonts/space-grotesk-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
-  - C2: https://germomics.com/fonts/fraunces-latin.woff2 an unhashed file sent cache-control public, max-age=86400: browsers keep it over 300 s without asking, so a deploy reaches returning readers late; hash its name or revalidate
+- ❌ dustinedwards.info: site-runtime-speed: 6 errors
+  - B1: https://dustinedwards.info/site-map not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
+  - B7: https://dustinedwards.info/software a conditional request with the page's own validator answered 200, not 304
+  - B7: https://dustinedwards.info/writing/observable-plot-inside-a-worker a conditional request with the page's own validator answered 200, not 304
+  - B7: https://dustinedwards.info/systems/site-runtime a conditional request with the page's own validator answered 200, not 304
+  - B7: https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp a conditional request with the page's own validator answered 200, not 304
+- ❌ Germomics: site-runtime-speed: 5 errors
+  - B1: https://germomics.com/subscribe not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
+  - B7: https://germomics.com/terms a conditional request with the page's own validator answered 200, not 304
+  - B7: https://germomics.com/hell-on-weils a conditional request with the page's own validator answered 200, not 304
+  - B7: https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304
+  - B7: https://germomics.com/confessions-of-a-cholera-girl a conditional request with the page's own validator answered 200, not 304
 - ❌ julieedwards.info: site-runtime-speed: 1 errors
   - C1: https://julieedwards.info/site-n32F1S32ej.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable
 - ❔ TXASM: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
 - ❔ BSW: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Foxhound: site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❌ Foxing: site-runtime-speed: 1 errors
-  - C1: https://foxing.app/site-y5Ulz9Adj9.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable
+- ❌ Foxhound: site-runtime-speed: 9 errors
+  - B1: https://foxhoundapp.com/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
+  - B1: https://foxhoundapp.com/features not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
+  - B1: https://foxhoundapp.com/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
+  - B1: https://foxhoundapp.com/security not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
+  - B1: https://foxhoundapp.com/decline-codes not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
+- ❌ Foxing: site-runtime-speed: 7 errors
+  - B1: https://foxing.app/about not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
+  - B1: https://foxing.app/authors/a-w-tozer not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SEA then SEA
+  - B7: https://foxing.app/picks a conditional request with the page's own validator answered 200, not 304
+  - B7: https://foxing.app/picks/anthony-jeselnik a conditional request with the page's own validator answered 200, not 304
+  - B7: https://foxing.app/journal/moby-dick-whale-symbolism a conditional request with the page's own validator answered 200, not 304
 - ❔ Carrel: site-runtime-speed-static could not measure: A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Enarratio: site-runtime-speed-static could not measure: A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Capsomer: site-runtime-speed-static could not measure: A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
@@ -196,21 +197,18 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
-- ❌ dustinedwards.info: ops-audit: 1 errors
-  - H5: https://dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
+- 🟡 dustinedwards.info: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Germomics: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 julieedwards.info: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
 - 🟡 BSW: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxhound: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
-- ❌ Capsid MCP: ops-audit: 1 errors
-  - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
-- ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 0a1b5ac23651f5671105719a0dc1db60236987c2, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 4365 minutes ago
+- 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+- 🟡 Foxhound admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 27.9 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 28.5 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
@@ -309,7 +307,7 @@ Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign
   - F: https://germomics.com/antitoxin-togo-please an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
   - F: https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: "A schematic of that path, not a measurement from one patient" (6 dots)
   - F: https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
-- ❌ Foxhound: chart-audit: 16 errors
+- ❌ Foxhound: chart-audit: 21 errors
   - F: https://foxhoundapp.com/blog/dunning-email-sequence an SVG chart drawn outside Enarratio: "an svg" (17 dots)
   - F: https://foxhoundapp.com/blog/stripe-disputes-guide an SVG chart drawn outside Enarratio: "an svg" (7 dots)
   - C2: https://foxhoundapp.com/demos/dashboard "MRR trend" (area): no source line
@@ -317,7 +315,7 @@ Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign
   - C2: https://foxhoundapp.com/demos/dashboard "Customer cohorts still paying" (bar): no source line
 - 🟡 Foxing: checks pass; no verifier yet
 - 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ Enarratio: chart-audit: 482 errors
+- ❌ Enarratio: chart-audit: 265 errors
   - B1: https://enarratio.dustinedwards.info/ "Classified reads in one stool sample" (sunburst), light: 2 text under 4.5:1, lowest "Total" #57606a on #084fba at 1.16:1
   - B1: https://enarratio.dustinedwards.info/ "Moves between US regions in one year" (chord), light: 4 text under 4.5:1, lowest "West" #1b1e23 on #811736 at 1.68:1
   - B1: https://enarratio.dustinedwards.info/ "Moves between US regions in one year" (chord), light: 5 marks under 3:1, lowest &lt;path in ribbon&gt; #cbaf8c on #fefdfd at 2.06:1
@@ -329,17 +327,13 @@ Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign
   - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Queue by day" (area): no source line
   - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Actions minutes per day, last 7 days" (sparkline): no source line
   - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Uptime of example.edu" (uptime-strip): no source line
-- ❌ Prelum specimen: chart-audit: 3 errors
-  - C2: https://prelum.dustinedwards.info/ "Two series" (line): no source line
-  - C2: https://prelum.dustinedwards.info/ "Total over time" (area): no source line
-  - C2: https://prelum.dustinedwards.info/ "Dose and response" (scatter): no source line
-- ❌ Capsid explorer: chart-audit: 1 errors
-  - D5: https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.014 (layout shift); largest 0.014, div.cap-chart +0 px
+- 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Capsid explorer: checks pass; no verifier yet
 - ❌ Capsid Portal: chart-audit: 6 errors
+  - C12: https://portal.dustinedwards.info/demos/agents?tab=claims "What does the work cost?" (line), 320 px: the drawing is 480 px wide in a 231 px frame, so it scrolls sideways
   - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Daily" (heat-strip): no source line
   - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Weekly" (heat-strip): no source line
   - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Monthly" (heat-strip): no source line
-  - D5: https://portal.dustinedwards.info/demos/health?tab=backups at 320 px, charts shift the page by 0.059 (layout shift); largest 0.059, div.cap-chart +3 px, height +2
   - C2: https://portal.dustinedwards.info/demos/health?tab=ci "sample" (heat-strip): no source line
 - 🟡 Carrel Desk: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 
