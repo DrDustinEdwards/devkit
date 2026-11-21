@@ -3,6 +3,11 @@
 /** Each island's content-hashed URL, which siteScript writes into a built /site.js (vite/site-script.mjs, vite/islands.mjs). */
 declare const __DEVKIT_ISLANDS__: Record<string, string> | undefined;
 
+/** Each built file's sha384 and the files it imports, by URL, which siteScript writes into a built /site.js. */
+declare const __DEVKIT_MODULES__:
+  | Record<string, { integrity: string; imports: string[] }>
+  | undefined;
+
 /** The helpers bin/a11y.mjs injects into every page it measures (SELECTOR and STYLE), for the type check only. */
 interface Window {
   __sel(el: Element | null | undefined): string;
