@@ -157,6 +157,24 @@ test("each measurement is judged under its checklist item, WCAG as errors and be
   assert.match(findings.find((f) => /forced colors on/.test(f.detail)).detail, /`button\.menu`$/);
 });
 
+test("a page that redirected is not a duplicate title of its destination", () => {
+  const page = (url, landed) => ({
+    url,
+    landed,
+    why: "list",
+    status: 200,
+    basics: basics({ title: "Sign in" }),
+  });
+  const findings = judgeSite({
+    statement: { url: "https://a.example.com/accessibility", status: 200 },
+    pages: [
+      page("https://a.example.com/login", "https://a.example.com/login"),
+      page("https://a.example.com/my", "https://a.example.com/login"),
+    ],
+  });
+  assert.equal(findings.filter((f) => f.item === "S2" && /title/.test(f.detail)).length, 0);
+});
+
 test("pages are picked by type from the sitemap, never an asset", () => {
   const urls = [
     "/",
