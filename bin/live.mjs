@@ -517,7 +517,7 @@ function newestTag(/** @type {string} */ repo) {
 }
 
 /**
- * Packages a check's package imports but does not declare (Prelum's ruling of 2026-11-13: site-runtime is not a peer, since
+ * Packages a check's package imports but does not declare (site-runtime is not a peer, since
  * a peer range for a git-only package breaks every network lockfile update), installed in the same npm run at their newest
  * release, as a site installs them.
  */

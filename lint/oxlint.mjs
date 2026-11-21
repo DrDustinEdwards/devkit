@@ -9,7 +9,7 @@
 //     overrides: [{ files: ["scripts/**", "bin/**", "test/**"], ...node }],
 //   });
 //
-// Two Oxlint behaviors to know (oxlint 1.92, measured 2026-11-06): `ignorePatterns` in an extended config does not
+// Two Oxlint behaviors to know (oxlint 1.92): `ignorePatterns` in an extended config does not
 // carry over (`--print-config` shows it empty and dist/ is linted), so it is its own export the repository's config
 // sets itself; and an override that sets a plugin's rules lists that plugin in its own `plugins`
 // (`plugins: react.plugins`), or the rules do nothing.
@@ -28,12 +28,12 @@
  * https://developers.cloudflare.com/workers/best-practices/workers-best-practices/), and two of the three Biome rules astro
  * and foxing held (`noExplicitAny`, `useConst`). The third, `noNonNullAssertion`, is not here: typescript-eslint keeps
  * `no-non-null-assertion` out of `recommended` and in `strict` (https://typescript-eslint.io/rules/no-non-null-assertion/),
- * and on 2026-11-06 it made about 1,600 findings in capsid and site-api, mostly tests, every one rewritten into a
+ * and it made about 1,600 findings in capsid and site-api, mostly tests, every one rewritten into a
  * helper that throws, which is churn and a copied helper, not a better app.
  *
  * The type-aware correctness rules stay on, with four exceptions decided once here for every repository. They were
  * eight local offs in dustinedwards-info's .oxlintrc.json, with no reason recorded; a run of all eight over
- * dustinedwards-info and site-api (2026-11-06) decided which:
+ * dustinedwards-info and site-api decided which:
  * - Off: `no-base-to-string` (75 findings), `restrict-template-expressions` (24), `unbound-method` (25) and
  *   `require-array-sort-compare` (11). Every finding read was a value the checker could not narrow in checked
  *   JavaScript (a string array built from a Set, a `String(v)` of a parsed field, a method read as a boolean), not a
@@ -107,14 +107,14 @@ export const react = {
     "react/incompatible-library": "error",
     "react/unsupported-syntax": "error",
     // jsx-a11y's correctness rules stay on (Capsomer's axe checks are the runtime half), less three that flag correct
-    // markup, measured on dustinedwards-info's first run (2026-11-06): `prefer-tag-over-role` (22) asks for a tag where
+    // markup, measured on dustinedwards-info's first run: `prefer-tag-over-role` (22) asks for a tag where
     // the ARIA role is right, and no tag replaces `role="img"` on an SVG; `control-has-associated-label` (6) flagged a
     // table cell filled by dangerouslySetInnerHTML and a datalist option; `media-has-caption` flags audio, whose
     // accessible alternative is a transcript (WCAG 1.2.1), which the rule cannot see.
     "jsx-a11y/prefer-tag-over-role": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "jsx-a11y/media-has-caption": "off",
-    // Two options the rules already have, for markup that is right (measured on the first runs, 2026-11-06). A
+    // Two options the rules already have, for markup that is right (measured on the first runs). A
     // scrollable region needs `tabIndex={0}` so a keyboard can scroll it, and names itself with `role="region"` (axe's
     // scrollable-region-focusable; `tabpanel` is the rule's only default). Safari drops list semantics from a `ul` with
     // `list-style: none` unless it says `role="list"`, so `ul` and `ol` may state theirs.

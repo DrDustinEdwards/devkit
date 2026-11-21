@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // The custom-property gate: every `var(--x)` without a fallback names a property something declares. An undeclared one
 // resolves to the property's initial value, so a box-shadow or color silently disappears and no other check notices
-// (Foxing used `--fx-shadow-md` 14 times and declared it nowhere; second shared-code audit, 2026-11-11).
+// (Foxing used `--fx-shadow-md` 14 times and declared it nowhere).
 //
 //   npx devkit-css-vars                    check against .css-vars.json
 //   npx devkit-css-vars --config <file>    another config

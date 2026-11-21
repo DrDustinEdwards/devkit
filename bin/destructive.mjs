@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-// The destructive-action gate (from dustinedwards.info's check-destructive.mjs, item 51 of the 2026-11-11 shared-code
-// audit). Read off the TypeScript syntax tree, so a comment naming a guard never satisfies it. From `.destructive.json`:
+// The destructive-action gate. Read off the TypeScript syntax tree, so a comment naming a guard never satisfies it. From `.destructive.json`:
 //
 //   intents   every intent a route `action` branches on is classified destructive or reversible (with the reason), and
 //             each destructive branch calls the confirmation predicate inside the action: a guard in an onClick is gone

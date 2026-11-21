@@ -213,7 +213,7 @@ function gitAuthEnv(/** @type {string | undefined} */ token) {
 /**
  * jscpd's settings for a copy, here and in no-bloat's "shared copies": a block of 10 lines and 80 tokens, and JavaScript read
  * as TypeScript. jscpd compares files of one format only, so without the mapping a site's .ts copy of site-runtime's or
- * Prelum's .mjs was never seen (checked with jscpd 4.3.0, 2026-11-12). JSX goes with TSX the same way.
+ * Prelum's .mjs was never seen. JSX goes with TSX the same way.
  */
 export const COPY_ARGS = [
   "--min-lines",
@@ -281,7 +281,7 @@ export function packageCopies(root, paths, packages, run) {
       "--silent",
     ]);
     const report = JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8"));
-    // jscpd 4 names a file from the directory it ran in, jscpd 5 from the folder it scanned (both checked, 2026-11-12).
+    // jscpd 4 names a file from the directory it ran in, jscpd 5 from the folder it scanned.
     const inAll = (/** @type {string} */ name) => {
       const from = relative(all, resolve(root, name));
       return from.startsWith("..") || isAbsolute(from) ? name : from;
@@ -537,7 +537,7 @@ async function main() {
     failed = true;
   }
   // The count is held exactly, as no-bloat holds its own: below the baseline the room a cleanup left would let the next copy
-  // in, so it fails until the baseline is lowered. (The baseline stood at 65 while the count was 15.)
+  // in, so it fails until the baseline is lowered.
   const lower = [];
   if (count < config.baseline) lower.push(`${count} copies (baseline ${config.baseline})`);
   if (config.names !== undefined && names.length < namesBaseline)

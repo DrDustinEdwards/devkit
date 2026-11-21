@@ -6,7 +6,7 @@
 //   export default defineConfig({ ...format });
 //
 // Oxfmt is Oxlint's formatter (the same toolchain, Prettier's output: it is tested against Prettier's own test suite,
-// https://oxc.rs/docs/guide/usage/formatter.html), chosen for every repository by Dustin on 2026-11-06. Its defaults are
+// https://oxc.rs/docs/guide/usage/formatter.html), chosen for every repository. Its defaults are
 // the network's style (2 spaces, double quotes, semicolons, trailing commas, width 100, which is also what astro's and
 // foxing's Biome used), so nothing here restates a default; a repository adds only what its own files need (astro:
 // `astro: true` with @astrojs/compiler-rs). `oxfmt` is an optional peer dependency at the version this file is tested
