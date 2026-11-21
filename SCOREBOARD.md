@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 09:42 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 10:22 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -16,7 +16,7 @@ Newest run 2026-11-21 09:42 UTC. Filled only from the live checks and the verifi
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❔ | ❌ | ❌ | ❌ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | +28958 | −2924 |
-| 9. Accessibility and components | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | 🟡 | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
+| 9. Accessibility and components | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
@@ -31,7 +31,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
 - 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Germomics: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 julieedwards.info: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ TXASM: prelum-audit: 751 errors
+- ❌ TXASM: prelum-audit: 887 errors
   - link-redirect: https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees
@@ -159,11 +159,11 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves ebc1545b05a86853753d3986154a2a374d7dd4b5, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 122 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves ebc1545b05a86853753d3986154a2a374d7dd4b5, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 166 minutes ago
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves 0d1875e61d37723abef4f199ab3e08f04c69755f, not the branch head b7404a17da216179743491e569a420d55e0e1579 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/b7404a17da216179743491e569a420d55e0e1579), committed 92 minutes ago
+  - H4: https://admin-mcp.dustinedwards.info/health serves 0d1875e61d37723abef4f199ab3e08f04c69755f, not the branch head b7404a17da216179743491e569a420d55e0e1579 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/b7404a17da216179743491e569a420d55e0e1579), committed 136 minutes ago
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 29.9 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 30.7 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
@@ -171,17 +171,14 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: devkit-a11y: 12 errors
+- ❌ dustinedwards.info: devkit-a11y: 10 errors
   - L2: https://dustinedwards.info/ focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
-  - L2: https://dustinedwards.info/no-such-page-devkit-a11y no visible focus on 1 of 40 stops: &#96;input#_R_1cct5_-control&#96;
   - L2: https://dustinedwards.info/no-such-page-devkit-a11y focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
   - L2: https://dustinedwards.info/about focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 2 stops: &#96;html &gt; body &gt; a.cap-skip&#96;, &#96;html &gt; body &gt; a.cap-skip&#96;
   - L2: https://dustinedwards.info/contact focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 2 stops: &#96;html &gt; body &gt; a.cap-skip&#96;, &#96;html &gt; body &gt; a.cap-skip&#96;
-- ❌ Germomics: devkit-a11y: 4 errors
-  - L2: https://germomics.com/ no visible focus on 9 of 40 stops: &#96;article.cap-card.gm-post-card:nth-of-type(2) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(3) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(4) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96; and 6 more
+  - L2: https://dustinedwards.info/research/publications focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
+- ❌ Germomics: devkit-a11y: 1 errors
   - L2: https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
-  - L2: https://germomics.com/episodes no visible focus on 10 of 40 stops: &#96;article.cap-card.gm-post-card:nth-of-type(1) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(2) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(3) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96; and 7 more
-  - L2: https://germomics.com/archive no visible focus on 11 of 40 stops: &#96;div.gm-archive-bar:nth-of-type(1) &gt; form.gm-archive-form &gt; div.gm-archive-field &gt; input.gm-archive-input&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(1) &gt; header &gt; h2.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(2) &gt; header &gt; h2.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96; and 8 more
 - 🟡 julieedwards.info: checks pass; no verifier yet
 - ❌ TXASM: devkit-a11y: 1 errors
   - L2: https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
@@ -190,18 +187,14 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 - ❌ Foxhound: devkit-a11y: 2 errors
   - L2: https://foxhoundapp.com/ no visible focus on 3 of 40 stops: &#96;input#mrr-slider&#96;, &#96;input#failure-share-slider&#96;, &#96;input#recovery-share-slider&#96;
   - L3: https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest &#96;section.cap-hero.fh-home-hero &gt; div.cap-hero-aside:nth-of-type(2) &gt; div.fh-queue-block-3 &gt; p.cap-sr-only&#96; reaches 1320 px
-- ❌ Foxing: devkit-a11y: 2 errors
-  - L2: https://foxing.app/ no visible focus on 1 of 40 stops: &#96;input#_R_1maaj5_-control&#96;
+- ❌ Foxing: devkit-a11y: 1 errors
   - L2: https://foxing.app/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
 - 🟡 Carrel: checks pass; no verifier yet
 - 🟡 Enarratio: checks pass; no verifier yet
-- ❌ Capsomer: devkit-a11y: 1 errors
-  - L2: https://capsomer.dustinedwards.info/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;body &gt; main &gt; p &gt; a&#96; "Go to Capsomer's front page")
+- 🟡 Capsomer: checks pass; no verifier yet
 - 🟡 Prelum specimen: checks pass; no verifier yet
-- ❌ Capsid explorer: devkit-a11y: 3 errors
-  - L4: https://capsid.dustinedwards.info/s/capsid/ axe target-size (serious, WCAG) only in forced colors: first &#96;a[data-devkit-tab="16"]&#96;
+- ❌ Capsid explorer: devkit-a11y: 1 errors
   - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(1)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(2)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(3)&#96; and 18 more
-  - L4: https://capsid.dustinedwards.info/code/ axe target-size (serious, WCAG) only in forced colors: first &#96;a[data-devkit-tab="19"]&#96;
 - Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
 ### 10. Charts
