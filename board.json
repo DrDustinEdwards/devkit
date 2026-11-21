@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T14:04:29.793Z",
+ "as_of": "2026-11-21T15:17:00.019Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -133,7 +133,7 @@
     },
     "txasm": {
      "status": "missing",
-     "reason": "prelum-audit: 671 errors",
+     "reason": "prelum-audit: 887 errors",
      "findings": [
       {
        "severity": "warning",
@@ -1518,7 +1518,7 @@
       {
        "severity": "warning",
        "check": "F2",
-       "detail": "https://foxhoundapp.com/?speedcheck=3ikg1dxw an uncached render took 749 ms to the first byte (bar 600 ms)"
+       "detail": "https://foxhoundapp.com/?speedcheck=yrf3dq3t an uncached render took 816 ms to the first byte (bar 600 ms)"
       },
       {
        "severity": "unmeasured",
@@ -1756,7 +1756,7 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.foxhoundapp.com/health serves 7ef890a90c6cdd23621475d2a688c2526d35487d, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 387 minutes ago"
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves 7ef890a90c6cdd23621475d2a688c2526d35487d, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 460 minutes ago"
       }
      ]
     },
@@ -1772,7 +1772,7 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 34.4 hours old, not under 26"
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 35.6 hours old, not under 26"
       },
       {
        "severity": "warning",

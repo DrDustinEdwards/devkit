@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 14:04 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 15:17 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -31,7 +31,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
 - 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Germomics: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 julieedwards.info: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ TXASM: prelum-audit: 671 errors
+- ❌ TXASM: prelum-audit: 887 errors
   - link-redirect: https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees
@@ -159,10 +159,10 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 7ef890a90c6cdd23621475d2a688c2526d35487d, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 387 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 7ef890a90c6cdd23621475d2a688c2526d35487d, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 460 minutes ago
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 34.4 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 35.6 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
