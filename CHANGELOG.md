@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.55.3
+
+### Patch Changes
+
+- The module map in /site.js lists imports only for an island's own entry and omits an empty lazy list, so it weighs less.
+
 ## 0.55.2
 
 ### Patch Changes
