@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 10:22 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 11:50 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -15,8 +15,8 @@ Newest run 2026-11-21 10:22 UTC. Filled only from the live checks and the verifi
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❔ | ❌ | ❌ | ❌ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | +28958 | −2924 |
-| 9. Accessibility and components | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
+| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
+| 9. Accessibility and components | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
@@ -159,11 +159,10 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves ebc1545b05a86853753d3986154a2a374d7dd4b5, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 166 minutes ago
-- ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves 0d1875e61d37723abef4f199ab3e08f04c69755f, not the branch head b7404a17da216179743491e569a420d55e0e1579 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/b7404a17da216179743491e569a420d55e0e1579), committed 136 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves f2ee14022beae583ac7c8960f27b03cb14f4971a, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 254 minutes ago
+- 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 30.7 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 32.1 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
@@ -171,30 +170,21 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: devkit-a11y: 10 errors
-  - L2: https://dustinedwards.info/ focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
-  - L2: https://dustinedwards.info/no-such-page-devkit-a11y focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
-  - L2: https://dustinedwards.info/about focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 2 stops: &#96;html &gt; body &gt; a.cap-skip&#96;, &#96;html &gt; body &gt; a.cap-skip&#96;
-  - L2: https://dustinedwards.info/contact focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 2 stops: &#96;html &gt; body &gt; a.cap-skip&#96;, &#96;html &gt; body &gt; a.cap-skip&#96;
-  - L2: https://dustinedwards.info/research/publications focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
-- ❌ Germomics: devkit-a11y: 1 errors
-  - L2: https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
+- 🟡 dustinedwards.info: checks pass; no verifier yet
+- 🟡 Germomics: checks pass; no verifier yet
 - 🟡 julieedwards.info: checks pass; no verifier yet
-- ❌ TXASM: devkit-a11y: 1 errors
-  - L2: https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
+- 🟡 TXASM: checks pass; no verifier yet
 - ❌ BSW: devkit-a11y: 1 errors
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-error-page-body &gt; div.cap-empty-content &gt; a.cap-btn&#96; "Go to the home page")
 - ❌ Foxhound: devkit-a11y: 2 errors
   - L2: https://foxhoundapp.com/ no visible focus on 3 of 40 stops: &#96;input#mrr-slider&#96;, &#96;input#failure-share-slider&#96;, &#96;input#recovery-share-slider&#96;
   - L3: https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest &#96;section.cap-hero.fh-home-hero &gt; div.cap-hero-aside:nth-of-type(2) &gt; div.fh-queue-block-3 &gt; p.cap-sr-only&#96; reaches 1320 px
-- ❌ Foxing: devkit-a11y: 1 errors
-  - L2: https://foxing.app/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
+- 🟡 Foxing: checks pass; no verifier yet
 - 🟡 Carrel: checks pass; no verifier yet
 - 🟡 Enarratio: checks pass; no verifier yet
 - 🟡 Capsomer: checks pass; no verifier yet
 - 🟡 Prelum specimen: checks pass; no verifier yet
-- ❌ Capsid explorer: devkit-a11y: 1 errors
-  - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(1)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(2)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(3)&#96; and 18 more
+- 🟡 Capsid explorer: checks pass; no verifier yet
 - Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
 ### 10. Charts
@@ -202,12 +192,12 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: chart-audit: 13 errors
+- ❌ dustinedwards.info: chart-audit: 5 errors
   - C2: https://dustinedwards.info/cv "Output by year" (bar): no source line
-  - B3: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar): 2 text under 12 px, smallest "run" at 11.0 px
   - C2: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar): no source line
-  - C12: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar), 320 px: 2 text under 12 px, smallest "run" at 11.0 px
-  - B3: https://dustinedwards.info/writing/observable-plot-inside-a-worker "Worker bundle size by charting configuration" (bar): 2 text under 12 px, smallest "configuration" at 11.0 px
+  - C2: https://dustinedwards.info/writing/observable-plot-inside-a-worker "Worker bundle size by charting configuration" (bar): no source line
+  - C2: https://dustinedwards.info/writing/posts-in-git-served-from-d1 "Worker bundle size by highlighter configuration" (bar): no source line
+  - C2: https://dustinedwards.info/writing/site-search-on-d1 "RRF contribution by rank position, k = 60" (line): no source line
 - ❌ Germomics: chart-audit: 1 errors
   - D5: https://germomics.com/data/cholera-soho-1854 at 320 px, charts shift the page by 0.076 (layout shift); largest 0.076, p.enarratio-summary -228 px, height +22
 - ❌ Foxhound: chart-audit: 7 errors
@@ -219,7 +209,8 @@ Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign
 - 🟡 Foxing: checks pass; no verifier yet
 - 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Enarratio: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ Capsomer: chart-audit: 2 errors
+- ❌ Capsomer: chart-audit: 3 errors
+  - D5: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 1280 px, charts shift the page by 0.066 (layout shift); largest 0.066, figure.enarratio +0 px, height -68
   - D5: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, p.enarratio-source +891 px, height +9
   - B2: https://capsomer.dustinedwards.info/components/writing-progress/states?example=s-target "Words typed, the last 7 days" (bar): drawn only with scripts on, so there is no chart, text or table without them
 - 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
