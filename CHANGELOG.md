@@ -1,11 +1,5 @@
 # Changelog
 
-## 0.55.11
-
-### Patch Changes
-
-- devkit-a11y no longer reports a focused control as covered when it takes no pointer events itself, as the chart point buttons do inside Enarratio's pointer-less layer; the check now asks what is on top at the control's center by paint order.
-
 ## 0.55.10
 
 ### Patch Changes
