@@ -162,6 +162,7 @@ test("pages are picked by type from the sitemap, never an asset", () => {
     "/",
     "/assets/entry-Bx3k.js",
     "/feed.xml",
+    "/site.webmanifest",
     "/about",
     "/writing",
     "/writing/one",

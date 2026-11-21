@@ -35,7 +35,7 @@ export function pickPages(origin, urls, max) {
     }
     if (
       url.host.replace(/^www\./, "") !== host ||
-      /\.(?!html?$)[a-z0-9]{1,5}$/i.test(url.pathname) ||
+      /\.(?!html?$)[a-z0-9]{1,12}$/i.test(url.pathname) ||
       url.pathname.startsWith("/cdn-cgi/")
     )
       continue;
