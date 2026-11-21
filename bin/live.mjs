@@ -547,10 +547,9 @@ function install(
   const tagged = check.ref === undefined ? tagFor(check.repo) : { ref: check.ref };
   if (tagged.error) return { ref: null, error: tagged.error };
   const { ref } = tagged;
-  const beside = (BESIDE[check.repo] ?? []).map((/** @type {string} */ repo) => ({
-    repo,
-    ...tagFor(repo),
-  }));
+  const beside = /** @type {Json[]} */ (
+    (BESIDE[check.repo] ?? []).map((/** @type {string} */ repo) => ({ repo, ...tagFor(repo) }))
+  );
   const failed = beside.find((b) => b.error);
   if (failed) return { ref, error: failed.error };
   const key = [`${check.repo}#${ref}`, ...beside.map((b) => `${b.repo}#${b.ref}`)].join("+");
