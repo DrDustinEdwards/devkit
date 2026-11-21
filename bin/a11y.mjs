@@ -196,13 +196,11 @@ const isRange = (/** @type {Page} */ page) =>
       false,
   );
 
-/** A hash of the pixels around a range input (the focused one, or the one a Tab press tagged `key`), scrolled to the middle. */
-async function rangePixels(/** @type {Page} */ page, /** @type {number | undefined} */ key) {
-  const box = await page.evaluate((/** @type {number | undefined} */ k) => {
+/** A hash of the pixels around a range input (the focused one, or with a key the one a Tab press tagged), scrolled to the middle. */
+async function rangePixels(/** @type {Page} */ page, key = -1) {
+  const box = await page.evaluate((/** @type {number} */ k) => {
     const el =
-      k === undefined
-        ? document.activeElement
-        : document.querySelector('[data-devkit-tab="' + k + '"]');
+      k < 0 ? document.activeElement : document.querySelector('[data-devkit-tab="' + k + '"]');
     if (!el) return null;
     el.scrollIntoView({ block: "center" });
     const r = el.getBoundingClientRect();
