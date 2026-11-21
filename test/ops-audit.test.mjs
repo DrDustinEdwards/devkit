@@ -141,7 +141,10 @@ test("H4 matches an abbreviated sha, waits 30 minutes for a deploy in flight; R1
   assert.deepEqual(items(shaFindings({ url, liveSha: "fedcba9", head: head(31), now })), [
     "error H4",
   ]);
-  assert.deepEqual(shaFindings({ url, liveSha: "fedcba9", head: head(400), liveAhead: true, now }), []);
+  assert.deepEqual(
+    shaFindings({ url, liveSha: "fedcba9", head: head(400), liveAhead: true, now }),
+    [],
+  );
   const run = (days, conclusion = "success") => ({
     conclusion,
     created_at: new Date(now - days * 86_400_000).toISOString(),

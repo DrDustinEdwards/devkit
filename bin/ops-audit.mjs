@@ -661,7 +661,9 @@ async function main() {
         if (body && /^[0-9a-f]{7,40}$/i.test(String(body.sha ?? ""))) {
           let liveAhead = false;
           if (values.path && !head.body.sha.startsWith(body.sha)) {
-            const cmp = await github(`/repos/${values.repo}/compare/${head.body.sha}...${body.sha}`);
+            const cmp = await github(
+              `/repos/${values.repo}/compare/${head.body.sha}...${body.sha}`,
+            );
             liveAhead = !cmp.error && ["ahead", "identical"].includes(cmp.body.status);
           }
           findings.push(
