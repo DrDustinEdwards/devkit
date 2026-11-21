@@ -92,23 +92,17 @@
     },
     "enarratio": {
       "verdict": "complete",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/"
-      ],
+      "evidence": ["https://enarratio.dustinedwards.info/"],
       "note": "Live ai-audit: 0 errors, 0 warnings, static kind. The repo is not readable in this session."
     },
     "capsomer": {
       "verdict": "complete",
-      "evidence": [
-        "https://capsomer.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsomer.dustinedwards.info/"],
       "note": "Live ai-audit: 0 errors, 0 warnings, static kind."
     },
     "prelum": {
       "verdict": "complete",
-      "evidence": [
-        "https://prelum.dustinedwards.info/"
-      ],
+      "evidence": ["https://prelum.dustinedwards.info/"],
       "note": "Live ai-audit: 0 errors, 0 warnings, static kind."
     },
     "capsid": {
