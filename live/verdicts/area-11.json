@@ -1,141 +1,152 @@
 {
   "area": 11,
-  "verifier": "Verify area 11 AI and MCP",
-  "date": "2026-10-31",
+  "verifier": "Re-sign partial devkit areas",
+  "date": "2026-11-21",
   "cells": {
     "package": {
       "verdict": "partial",
       "evidence": [
-        "https://github.com/DrDustinEdwards/site-runtime/blob/main/bin/ai-audit.mjs",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/main/mcp-server.mjs",
-        "https://github.com/DrDustinEdwards/devkit/blob/main/bin/conformance.mjs"
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/bin/ai-audit.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/mcp-server.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/audit-log.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/routine.mjs",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/agent-keys.mjs",
+        "https://github.com/DrDustinEdwards/devkit/blob/c435e07bff5abe6b7826a0daaa21a8318a1248c3/.github/workflows/conformance.yml",
+        "https://github.com/DrDustinEdwards/devkit/blob/c435e07bff5abe6b7826a0daaa21a8318a1248c3/live/areas.json"
       ],
-      "note": "live check covers 7 of 89 items; conformance off Actions except Carrel; no static AI rules or pin comparison in devkit; toolsForGrant and fireOnce unused; no tool icons, tool-list pin, cancel on close; log has no export, retention, alert or Portal view; no shared agent keys; suggester metadata and Llama list"
+      "note": "Closed since 2026-10-31: toolsForGrant, icons, cancel on close and toolListHash exist and are used by Carrel, Foxing, Capsid and dustinedwards MCP; fireOnce is used by Carrel; the tool-call log has export, 90 day retention, a health alert and an owner page per server (linked from the Portal Agents view); shared agent keys exist in ./agent-keys; the suggester in site-api 0.46.1 has feature metadata, a timeout, a JSON schema, a prose check and leaves Llama out of the Claude-only prose checks; a reusable conformance workflow exists. Still open: devkit has no static AI rules and no tool-list pin comparison (areas.json passes no --tools-hash, so T12 only warns); the live check lists about 25 item ids but the old 89 item checklist could not be found, so coverage is not proven; the live tools/list, conformance and burst checks run only with a test grant, which this sandbox lacks."
     },
     "dustinedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/lib/search/ask.server.ts"
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/search/ask.server.ts",
+        "https://dustinedwards.info/"
       ],
-      "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. site-runtime-ai-audit: 0 errors, 0 warnings. Fixed and checked in code: a cut answer is never cached (finish_reason read), Ask's gateway tags use site-runtime's {app, feature}, suggester on site-api 0.21.0. Still open: the question is not wrapped in untrusted() (C10; the builder's note says wrapping breaks AI Search retrieval, which is a known limit, not a pass); site-api 0.22.0 is out and dei pins 0.21.0; that Ask's calls reach the gateway is configured on the AI Search instance and was not checked live."
+      "note": "Closed: site-api is pinned at 0.46.1 (current); a cut answer is never cached; gateway tags use {app, feature}; ai-audit live: 0 errors, 0 warnings. Still open: Ask's question is not wrapped in untrusted() (C10; wrapping breaks AI Search retrieval, so this is a known limit, not a pass); that Ask's calls reach the gateway is set on the AI Search instance and cannot be checked from here."
     },
     "germomics": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/germomics/blob/main/app/lib/media/suggest.server.ts"
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/media/suggest.server.ts",
+        "https://germomics.com/"
       ],
-      "note": "local style text instead of WRITING_RULES; suggester gaps from the package"
+      "note": "The suggester uses site-api 0.46.1 mediaSuggester and takes its dash rule from site-runtime WRITING_RULES. Live ai-audit: 0 errors, 0 warnings."
     },
     "julieedwards-info": {
       "verdict": "partial",
-      "evidence": [
-        "https://github.com/DrDustinEdwards/julieedwards-info/blob/main/app/lib/media/suggest.server.ts"
-      ],
-      "note": "suggester on site-api v0.17.0: no timeout, JSON mode or prose check"
+      "evidence": ["https://julieedwards.info/"],
+      "note": "Live ai-audit: 0 errors, 0 warnings. The repo is not readable in this session, so the old gap (suggester on site-api v0.17.0, no timeout, JSON mode or prose check) could not be checked on current main. Open until its pin is read."
     },
     "txasm": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/txasm/blob/main/app/lib/media/suggest.server.ts"
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/media/suggest.server.ts",
+        "https://txasm.dustin-edwards.workers.dev/"
       ],
-      "note": "suggester inherits the package gaps (feature metadata, Llama list)"
+      "note": "The suggester is site-api 0.46.1 mediaSuggester with feature metadata and the prose check. Live ai-audit on the workers.dev address: 0 errors, 0 warnings. txasm.org is still WordPress, so the audit runs against the stand-in address."
     },
     "bsw": {
       "verdict": "complete",
-      "evidence": [
-        "https://bsw.dustin-edwards.workers.dev/.well-known/oauth-protected-resource",
-        "https://github.com/DrDustinEdwards/bsw"
-      ],
-      "note": "no MCP server or model call on main; ai-audit 0/0"
+      "evidence": ["https://bsw.dustin-edwards.workers.dev/"],
+      "note": "Live ai-audit: 0 errors, 0 warnings, site kind. The repo is not readable in this session, so the claim of no model call or MCP server rests on the live probe and the earlier verdict."
     },
     "foxhound": {
       "verdict": "partial",
       "evidence": [
         "https://foxhoundapp.com/.well-known/oauth-authorization-server",
-        "https://github.com/DrDustinEdwards/foxhound/blob/main/app/lib/mcp/handler.server.ts"
+        "https://foxhoundapp.com/.well-known/oauth-protected-resource"
       ],
-      "note": "merchant MCP off the shared door: rate limit fails open, log after the call and fails open, open registration, own OAuth and era code, destructive tools unconfirmed, no outputSchema; local dash lines"
+      "note": "The repo is not readable in this session. Live: the merchant MCP at /mcp still serves its own OAuth with a registration_endpoint (open registration), its own scope names merchant.read and merchant.write, and ai-audit reports 0 errors but 1 not measured (no test grant for tools/list). The old gaps (rate limit fails open, log after the call, unconfirmed destructive tools, no outputSchema, local dash lines) could not be checked in code."
     },
     "foxing": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://foxing.app/",
-        "https://github.com/DrDustinEdwards/foxing/blob/main/packages/core/src/domain/recommendations.ts"
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/api/src/routes/companion.ts",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/core/src/domain/recommendations.ts",
+        "https://foxing.app/"
       ],
-      "note": "Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0"
+      "note": "The companion reply runs checkProse and logs the check names only, with no reader id; recommendation reasons run checkProse and wrap inputs in untrusted(); the suggester is on site-api 0.46.1. Live ai-audit: 0 errors, 0 warnings."
     },
     "carrel": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/social/queue.server.ts"
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/social/queue.server.ts",
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/social/routine.server.ts",
+        "https://carrel.dustinedwards.info/"
       ],
-      "note": "routine re-fire guard not atomic; shared fireOnce unused"
+      "note": "The routine guard is site-runtime fireOnce on a D1 store with an atomic add, used by the queue, alt text, AI write and episode drafts. Live ai-audit on the public page: 0 errors, 0 warnings."
     },
     "enarratio": {
       "verdict": "complete",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/enarratio"
-      ],
-      "note": "no MCP server or model call; ai-audit 0/0"
+      "evidence": ["https://enarratio.dustinedwards.info/"],
+      "note": "Live ai-audit: 0 errors, 0 warnings, static kind. The repo is not readable in this session."
     },
     "capsomer": {
       "verdict": "complete",
-      "evidence": [
-        "https://capsomer.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/capsomer"
-      ],
-      "note": "no MCP server or model call; ai-audit 0/0"
+      "evidence": ["https://capsomer.dustinedwards.info/"],
+      "note": "Live ai-audit: 0 errors, 0 warnings, static kind."
     },
     "prelum": {
       "verdict": "complete",
-      "evidence": [
-        "https://prelum.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/prelum"
-      ],
-      "note": "no MCP server or model call; ai-audit 0/0"
+      "evidence": ["https://prelum.dustinedwards.info/"],
+      "note": "Live ai-audit: 0 errors, 0 warnings, static kind."
     },
     "capsid": {
       "verdict": "partial",
-      "evidence": ["https://github.com/DrDustinEdwards/capsid/blob/master/src/doc-index.ts"],
-      "note": "AI Search reranker has no timeout or gateway and returns raw upstream errors"
+      "evidence": [
+        "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/doc-index.ts"
+      ],
+      "note": "Closed: the AI Search call is raced against an 8 s timeout and an upstream error goes to the log only, so the caller gets a fixed sentence. Still open: the gateway is attached only when the AI_GATEWAY_ID dashboard var is set, and whether it is set live cannot be checked from here."
     },
     "capsid-mcp": {
       "verdict": "partial",
       "evidence": [
         "https://mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp",
-        "https://github.com/DrDustinEdwards/capsid/blob/master/src/scope.ts"
+        "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/scope.ts",
+        "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/index.ts",
+        "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.conformance.json"
       ],
-      "note": "no insufficient_scope step-up; no shared audience check; own scope.ts; PRM lists read only; own routine guard; no conformance; KV capsid-oauth not capsid-mcp-oauth"
+      "note": "Closed: the metadata lists capsid.read and capsid.write; scopes come from site-runtime mcpScopes; the 403 insufficient_scope step-up uses toolScopeChallenge; audienceRefusal and mcpOriginRefusal are the shared ones; a conformance gate runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. The OAuth KV name (capsid-oauth, not capsid-mcp-oauth) is in the uncommitted wrangler.jsonc and could not be read."
     },
     "foxhound-mcp": {
       "verdict": "partial",
       "evidence": [
-        "https://admin-mcp.foxhoundapp.com/health",
-        "https://github.com/DrDustinEdwards/foxhound/blob/main/mcp/src/scopes.ts"
+        "https://admin-mcp.foxhoundapp.com/.well-known/oauth-protected-resource/mcp",
+        "https://admin-mcp.foxhoundapp.com/health"
       ],
-      "note": "own scope names; no Host check; no conformance; read grant sees write tools"
+      "note": "Closed live: scopes are foxhound.read and foxhound.write; /health passes with a sha and a passing tool-call-log check. The repo is not readable in this session, so the Host check, conformance in CI and the read grant not seeing write tools could not be checked in code. Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured."
     },
     "dustinedwards-mcp": {
       "verdict": "partial",
-      "evidence": ["https://admin-mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp"],
-      "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Live: site-runtime-ai-audit 0 errors; metadata names dei.read and dei.write; /health has a sha and a passing tool-call-log check; site-runtime v0.75.0; conformance runs in CI (baseline server-stateless 24 of 28). Not verified: the tools/list checks (T1 to T12, including the earlier T4 and T7 findings), the conformance scenarios and the rate-limit burst, because this sandbox has no test grant for the server."
+      "evidence": [
+        "https://admin-mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp",
+        "https://admin-mcp.dustinedwards.info/health",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp/.conformance.json",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp/src/mcp-handler.ts"
+      ],
+      "note": "Closed: tools go through registerTools and invokeTool; agent keys are site-runtime ./agent-keys; scopes dei.read and dei.write; /health has a sha and a passing tool-call-log check; conformance runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. The server has no test of its own that runs toolListProblems."
     },
     "carrel-mcp": {
       "verdict": "partial",
       "evidence": [
+        "https://carrel-mcp.dustinedwards.info/.well-known/oauth-protected-resource/mcp",
         "https://carrel-mcp.dustinedwards.info/health",
-        "https://github.com/DrDustinEdwards/carrel/blob/main/app/lib/mcp/scopes.ts"
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/mcp/server.ts",
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/mcp/scopes.ts",
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.conformance.json"
       ],
-      "note": "own scope names; write ticked by default; own agent keys; read grant sees write tools"
+      "note": "Closed: scopes are carrel.read and carrel.write; the write box starts ticked only when the client asked for write; the tool list uses toolsForGrant; agent keys use site-runtime agentPrincipal; conformance runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. Also /health shows warnings for backup, cron and alerts (area 8, not area 11)."
     },
     "foxing-mcp": {
       "verdict": "partial",
       "evidence": [
         "https://admin-mcp.foxing.app/health",
-        "https://github.com/DrDustinEdwards/foxing/blob/main/mcp/src/tools.ts"
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/src/tools.ts",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/src/mcp-handler.ts",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/src/api-client.ts",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/.conformance.json"
       ],
-      "note": "site-runtime v0.50.1; raw error text; three destructive tools unconfirmed; offset paging; no conformance"
+      "note": "Closed: site-runtime 0.173.1; errors are read as problem details; paging uses opaque cursors; destructive tools take a preview and confirm token (suspension uses the admin API's own step); registerTools lists only grantable tools; conformance runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. The server has no test of its own that runs toolListProblems."
     }
   }
 }

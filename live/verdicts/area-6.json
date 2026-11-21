@@ -1,96 +1,126 @@
 {
   "area": 6,
-  "verifier": "Verify area 6 images and media",
-  "date": "2026-10-31",
+  "verifier": "Re-sign partial devkit areas",
+  "date": "2026-11-21",
   "cells": {
     "package": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/site-runtime/blob/6a75dab/image.mjs#L140-L150",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/6a75dab/bin/images.mjs",
-        "https://github.com/DrDustinEdwards/site-api/blob/2f3b4b2/src/media-upload.ts#L329-L338",
-        "https://github.com/DrDustinEdwards/prelum/blob/c64508e/render-diagram.mjs#L79-L104",
-        "https://github.com/DrDustinEdwards/prelum/blob/c64508e/render-nomath.mjs#L376"
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/image.mjs#L72-L76",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/image.mjs#L855-L874",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/image.mjs#L166-L175",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/share-card.mjs#L40",
+        "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/render-diagram.mjs#L95-L104",
+        "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/head.mjs",
+        "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/schema.mjs#L82-L101",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/bin/images.mjs"
       ],
-      "note": "uploads built (HEIC, GPS strip, placeholder); a replace keeps the immutable size URL; pictureProps carries no placeholder; Prelum picture drops source media (GIF never moves) and counts priority per render; unsized diagram img; credit/license never reach the renderer; no 1.91:1 cover crop, no 16:9/4:3/1:1 set, no og:video; respond sets no CORP; AVIF not stripped; images check skips A6 and C9 and never runs on the Portal"
+      "note": "Share crop, 16:9/4:3/1:1 set, placeholder in the picture style, versioned immutable size URLs, CORP on cards and media, AVIF metadata strip, diagram sizes, credit and license in the renderer, og:video in Prelum head, and the images check with A6 and C9 are all on current main. The Portal and Desk are skipped by design (behind sign-in)."
     },
     "dustinedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://dustinedwards.info/media/phage-hunters/dustin-edwards-2025.webp?w=640",
-        "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp",
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/19ec1e6/scripts/build-og.mjs"
+        "https://dustinedwards.info/teaching/phage-discovery",
+        "https://dustinedwards.info/about",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/media/images.mjs#L15-L19",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/content/pipeline.mjs#L244"
       ],
-      "note": "phage-hunters /media sizes max-age=86400 not immutable; cards from its own satori script, cover shared uncropped; no Carrel share-image field; diagram img unsized with role=button; no placeholder; podcast has no transcript link"
+      "note": "Open: the cohort photos on /teaching/phage-discovery carry no placeholder (the library picture on /about does). Closed and seen live: size URLs immutable, sitemap image entries, own post cards, Carrel share-image field, diagram sizes wired, transcript link on the home audio. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings. No diagram image was live to see."
     },
     "germomics": {
       "verdict": "partial",
-      "evidence": ["https://germomics.com/a-boy-named-flu"],
-      "note": "episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper"
+      "evidence": [
+        "https://germomics.com/a-boy-named-flu",
+        "https://germomics.com/brand/germomics-card.jpg",
+        "https://germomics.com/sitemap.xml",
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/seo.ts#L23-L29",
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/images.ts#L61-L74"
+      ],
+      "note": "Open: no placeholder on live images (no style background on /a-boy-named-flu); no ImageObject in the page JSON-LD; a credit is stored but not shown. Closed: card is image/jpeg with CORP cross-origin, no fetchpriority issue, image sitemap has 10 entries, episodes use their own artwork when set (this episode has none, so the wordmark card shows), local reencode wrapper gone. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "julieedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://content.julieedwards.info/julie-edwards-bluff-dale-profile.jpg",
-        "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/components/Sections.tsx#L100"
+        "https://julieedwards.info/",
+        "https://julieedwards.info/media/uploads/2026/11/julie-edwards-bluff-dale-profile-a78445bc.jpg.webp?v=a78445bc0643&w=640",
+        "https://julieedwards.info/sitemap.xml"
       ],
-      "note": "profile photo 884 KB, 2048 px, unsized, no srcset, 3.1x at 670 px, cached 4 h, other host without preconnect; must go into the library; fallback img unsized"
+      "note": "Photo is now in the library with srcset, sizes, width and height, placeholder, immutable size URLs and a sitemap image entry. Open: the fallback img path in the repo could not be read (the repo is not reachable from this session), so its sizing is unverified. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "txasm": {
       "verdict": "partial",
       "evidence": [
-        "https://txasm.org/og-card.png",
-        "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/routes/admin.documents.tsx#L117-L147"
+        "https://txasm.dustin-edwards.workers.dev/og-card.png",
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/routes/admin.documents.tsx#L226-L256",
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/carrel/render.server.ts#L64"
       ],
-      "note": "og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap"
+      "note": "Open and cannot change now: og:image only resolves on workers.dev because txasm.org is still WordPress (Apache). Closed: brand-image upload goes through prepareUpload (byte check, GPS strip), card has CORP cross-origin, placeholder is passed from the library row. Unverified: credit and ImageObject (no content pictures on the live pages). Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "bsw": {
-      "verdict": "missing",
+      "verdict": "partial",
       "evidence": [
-        "https://bsw.dustin-edwards.workers.dev/services/grant-review.webp",
-        "https://github.com/DrDustinEdwards/bsw/blob/69daae0/app/routes/home.tsx#L108-L115"
+        "https://bsw.dustin-edwards.workers.dev/",
+        "https://bsw.dustin-edwards.workers.dev/sitemap.xml"
       ],
-      "note": "no image pipeline, /media, uploads or library; not a Carrel site; static files with a hand srcset; images check fails A2; logo 2.2x; only the logo card"
+      "note": "Now serves the logo through /media with srcset and sizes, has Carrel's API (401 without a key), 6 sitemap image entries, and the images check passes. Open: the repo is not reachable from this session, so uploads, the library and placeholder could not be read; the share card is still only the logo card. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "foxhound": {
       "verdict": "partial",
       "evidence": [
-        "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/components/blog/cover-picture.tsx"
+        "https://foxhoundapp.com/og/default",
+        "https://foxhoundapp.com/blog/stripe-billing-descriptor"
       ],
-      "note": "cover picture is its own code, not pictureProps; a cover outside the library is unsized; no placeholder, credit, ImageObject or image sitemap; footer SVG has no loading/decoding"
+      "note": "Closed live: footer SVG has loading and decoding, card has CORP cross-origin and a type. Open: the repo is not reachable from this session, so whether cover-picture.tsx now uses pictureProps could not be checked; no blog post with a cover was live; no image sitemap entries. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "foxing": {
       "verdict": "partial",
       "evidence": [
         "https://foxing.app/books",
-        "https://github.com/DrDustinEdwards/foxing/blob/6a2a21d/apps/web/app/lib/seo.ts#L33"
+        "https://foxing.app/og/site",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/journal-images.server.ts#L76-L120",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/package.json#L22"
       ],
-      "note": "site card has no og:image:type (9 pages); LCP cover lazy and 5 to 10 lazy covers above the fold; Journal body images have no srcset or AVIF; no Carrel share-image field; journalCovers drops focus; no placeholder or image sitemap"
+      "note": "Open: Journal body images get no placeholder (code comment says the site does not load picture.css) and drop GIF reduced-motion stills although Prelum 0.63.7 supports them. Closed: og:image:type present, LCP cover eager and high, covers carry focus and placeholder, body images get srcset and AVIF, 1434 sitemap image entries, share-image field exists in Carrel. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "carrel": {
-      "verdict": "partial",
-      "evidence": ["https://carrel.dustinedwards.info/"],
-      "note": "images check passes; share card answers CORP same-origin"
+      "verdict": "complete",
+      "evidence": [
+        "https://carrel.dustinedwards.info/",
+        "https://carrel.dustinedwards.info/og-card.png"
+      ],
+      "note": "Images check passes and the share card now answers Cross-Origin-Resource-Policy: cross-origin. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "enarratio": {
-      "verdict": "partial",
-      "evidence": ["https://enarratio.dustinedwards.info/"],
-      "note": "images check passes; share card answers CORP same-origin"
+      "verdict": "complete",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/",
+        "https://enarratio.dustinedwards.info/og-card.png"
+      ],
+      "note": "Images check passes and the share card now answers Cross-Origin-Resource-Policy: cross-origin. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "capsomer": {
-      "verdict": "partial",
-      "evidence": ["https://capsomer.dustinedwards.info/"],
-      "note": "images check passes; share card answers CORP same-origin"
+      "verdict": "complete",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/",
+        "https://capsomer.dustinedwards.info/og-card.png"
+      ],
+      "note": "Images check passes and the share card now answers Cross-Origin-Resource-Policy: cross-origin. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "prelum": {
-      "verdict": "partial",
-      "evidence": ["https://prelum.dustinedwards.info/"],
-      "note": "images check fails: unsized diagram SVGs, 3 fetchpriority=high, 48 px icon shown at 16 px; share card CORP same-origin"
+      "verdict": "complete",
+      "evidence": [
+        "https://prelum.dustinedwards.info/",
+        "https://prelum.dustinedwards.info/share-card.png"
+      ],
+      "note": "Images check passes (diagram, priority and icon findings gone) and the share card answers CORP cross-origin. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     },
     "capsid": {
-      "verdict": "partial",
-      "evidence": ["https://capsid.dustinedwards.info/"],
-      "note": "images check passes; share card answers CORP same-origin"
+      "verdict": "complete",
+      "evidence": [
+        "https://capsid.dustinedwards.info/",
+        "https://capsid.dustinedwards.info/assets/og-card.png"
+      ],
+      "note": "Images check passes and the share card now answers Cross-Origin-Resource-Policy: cross-origin. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings."
     }
   }
 }
