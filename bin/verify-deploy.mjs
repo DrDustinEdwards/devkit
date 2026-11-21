@@ -17,7 +17,8 @@
 // A refusal is a page that answers anything but 200 (a redirect counts, since no verify read follows one) or a /health
 // whose status is `fail` or missing. A read that could not be made at all (no answer, a timeout) is exit 3. Every read
 // carries a cache-busting query and `cache-control: no-cache`, so no edge copy answers for the Worker; EXPECT_SHA, when set,
-// makes the query unique per run.
+// makes the query unique per run. During a gradual rollout every read carries worker-deploy's WORKERS_VERSION_OVERRIDE as
+// Cloudflare-Workers-Version-Overrides, so it reaches the new version rather than whichever one the split picks.
 
 import { isMain } from "../node/index.mjs";
 
@@ -32,7 +33,13 @@ import { isMain } from "../node/index.mjs";
 async function read(origin, path, tag) {
   try {
     const res = await fetch(`${origin}${path}${path.includes("?") ? "&" : "?"}verify=${tag}`, {
-      headers: { "user-agent": "deploy-verify", "cache-control": "no-cache" },
+      headers: {
+        "user-agent": "deploy-verify",
+        "cache-control": "no-cache",
+        ...(process.env.WORKERS_VERSION_OVERRIDE
+          ? { "cloudflare-workers-version-overrides": process.env.WORKERS_VERSION_OVERRIDE }
+          : {}),
+      },
       redirect: "manual",
       signal: AbortSignal.timeout(20_000),
     });
