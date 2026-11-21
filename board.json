@@ -1221,10 +1221,14 @@
     },
     "julieedwards-info": {
      "status": "partial",
-     "reason": "The repo is not readable from this session (not in the allowed list), so the code gaps could not be re-checked: webmention pin (now v0.46.1 on the other sites), live section with a draft reading as draft, revisions capped at 50, no delete or unpublish (needs ruling), preview without page chrome. Live: conformance and site-api-live pass on site-api v0.46.1, and the meta answers 401 without the key.",
+     "reason": "Read main cf8ff79. Closed: site-api v0.46.1 pin; the webmention hook is wired (handler.server.ts) and sends the page itself on publish only; a save lands in a draft and never changes the live text; schedules and scheduled update; the unpublish, trash, rename and delete refusals are documented for a fixed set of sections. Still open: (1) a live section with a saved draft reads as status draft, not published with hasDraft (sections.server.ts:54-55); (2) revisions are capped at 50 and carry the literal author julieedwards, not the actor (sections.server.ts:234, 243); (3) no unpublish or delete by design (sections.server.ts:220-225), still wants a ruling recorded; (4) the preview is main plus HomeSections with no site header or footer (adapter.server.tsx:84-86).",
      "evidence": [
-      "https://carrel-mcp.dustinedwards.info/reports/conformance.json",
-      "https://julieedwards.info/api/carrel/v1/meta"
+      "https://github.com/DrDustinEdwards/julieedwards-info/blob/cf8ff797acc185851c9a7d44fecf520947fdbc38/package.json#L25",
+      "https://github.com/DrDustinEdwards/julieedwards-info/blob/cf8ff797acc185851c9a7d44fecf520947fdbc38/app/lib/carrel/sections.server.ts",
+      "https://github.com/DrDustinEdwards/julieedwards-info/blob/cf8ff797acc185851c9a7d44fecf520947fdbc38/app/lib/carrel/handler.server.ts",
+      "https://github.com/DrDustinEdwards/julieedwards-info/blob/cf8ff797acc185851c9a7d44fecf520947fdbc38/app/lib/carrel/adapter.server.tsx#L57-L90",
+      "https://julieedwards.info/api/carrel/v1/meta",
+      "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
      "clean_days": 8
     },
@@ -1246,10 +1250,17 @@
     },
     "foxhound": {
      "status": "partial",
-     "reason": "The repo is not readable from this session (not in the allowed list), so the code gaps could not be re-checked: a draft save on a live post going live at once (B3), 410 on delete, preview shell, own author key and no cover image or series, partial revisions, post links dropped silently on delete. Live: conformance and site-api-live pass on site-api v0.46.1, but those probes are the non-post-life ones.",
+     "reason": "Read main f0d1cb9. Closed: site-api v0.46.1 pin, trash then delete only from trash, rename with 301, schedule and scheduled update, tags, publishedAt, author filter, search fields, preview in the site's stylesheets, rate limiter fails closed. Still open: (1) saveDraft on a live post rewrites the live row at once, there is no hasDraft or pending draft (adapter.server.ts:397-403, 289-320); (2) delete leaves no tombstone, so a deleted post answers 404 not 410 (469-475, admin-queries.server.ts:189-197); (3) delete silently drops the post's blog_post_links rows, no backlink warning (admin-queries.server.ts:190-193); (4) revisions keep only title, excerpt and body, and the revision author is carrel:<changeId>, the actor is ignored (517-560, 298); (5) the author is a free-text front matter field, not an authors field, there is no cover image or series in the source (postFields is only excerpt, line 339; cover kept as is at 307-308); (6) the preview is a bare article with no site header or footer (632-643).",
      "evidence": [
-      "https://carrel-mcp.dustinedwards.info/reports/conformance.json",
-      "https://foxhoundapp.com/api/carrel/v1/meta"
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/adapter.server.ts#L397-L403",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/adapter.server.ts#L469-L475",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/adapter.server.ts#L517-L560",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/adapter.server.ts#L632-L643",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/blog/admin-queries.server.ts#L189-L197",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/carrel/handler.server.ts",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/package.json#L36",
+      "https://foxhoundapp.com/api/carrel/v1/meta",
+      "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
      "clean_days": 8
     },
@@ -2251,9 +2262,12 @@
      "clean_days": 21
     },
     "julieedwards-info": {
-     "status": "partial",
-     "reason": "Live ai-audit: 0 errors, 0 warnings. The repo is not readable in this session, so the old gap (suggester on site-api v0.17.0, no timeout, JSON mode or prose check) could not be checked on current main. Open until its pin is read.",
+     "status": "complete",
+     "reason": "Read main cf8ff79. The only model call is the media suggester, site-api mediaSuggester on the v0.46.1 pin: feature metadata, a 30 second timeout, structured output schema and checkProse on the alt (media-kit.ts:73, 75, 199, 210). It writes nothing, an editor accepts a suggestion in Carrel. No MCP route or server in the repo. The old v0.17.0 gap is gone.",
      "evidence": [
+      "https://github.com/DrDustinEdwards/julieedwards-info/blob/cf8ff797acc185851c9a7d44fecf520947fdbc38/app/lib/media/suggest.server.ts",
+      "https://github.com/DrDustinEdwards/julieedwards-info/blob/cf8ff797acc185851c9a7d44fecf520947fdbc38/package.json#L25",
+      "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
       "https://julieedwards.info/"
      ],
      "clean_days": 21
@@ -2269,18 +2283,25 @@
     },
     "bsw": {
      "status": "complete",
-     "reason": "Live ai-audit: 0 errors, 0 warnings, site kind. The repo is not readable in this session, so the claim of no model call or MCP server rests on the live probe and the earlier verdict.",
+     "reason": "Read main 979f963. The earlier note was wrong: bsw does make a model call. Its media suggester is site-api mediaSuggester on v0.46.1 (timeout, schema, prose check, feature metadata), editor-triggered, writes nothing. No other model call and no MCP server or route anywhere in app/ or workers/.",
      "evidence": [
+      "https://github.com/DrDustinEdwards/bsw/blob/979f9636e834eb04615fa4545b95fc7d4bc9fd89/app/lib/media/suggest.server.ts",
+      "https://github.com/DrDustinEdwards/bsw/blob/979f9636e834eb04615fa4545b95fc7d4bc9fd89/package.json#L29",
+      "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
       "https://bsw.dustin-edwards.workers.dev/"
      ],
      "clean_days": 21
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "The repo is not readable in this session. Live: the merchant MCP at /mcp still serves its own OAuth with a registration_endpoint (open registration), its own scope names merchant.read and merchant.write, and ai-audit reports 0 errors but 1 not measured (no test grant for tools/list). The old gaps (rate limit fails open, log after the call, unconfirmed destructive tools, no outputSchema, local dash lines) could not be checked in code.",
+     "status": "complete",
+     "reason": "Read main f0d1cb9 (PR #784 not needed: registration is already restricted on main). Registration is not open: every redirect URI must be on the shared allowlist (site-runtime registrationRefusal, provider.server.ts:181), 10 an hour per IP, and a live POST with https://evil.example.com/cb answered 400 invalid_redirect_uri. The registration_endpoint stays for Grok and Gemini (a MAY in the MCP authorization spec); Claude, Claude Code and ChatGPT use a client metadata document. Foxhound #784 moves the registration limit to site-runtime registrationLimited's numbers (5 an hour per address, 30 a day of allowlisted ones) and fails closed. Old gaps closed: MCP rate limit is site-runtime checkRateLimit, which fails closed (handler.server.ts:285); the call's started row is written before the tool runs and a failed write refuses the call (:313-337); both destructiveHint tools (settings overwrite, alert delete) need a signed confirm code (confirm.server.ts, tools.server.ts:1252, 1327); all 13 tools declare an outputSchema; no local dash lines. Scopes merchant.read and merchant.write come from site-runtime mcpScopes. Live tools/list not measured without a test grant.",
      "evidence": [
-      "https://foxhoundapp.com/.well-known/oauth-authorization-server",
-      "https://foxhoundapp.com/.well-known/oauth-protected-resource"
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/api/oauth-register.ts",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/oauth/provider.server.ts#L144-L205",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/mcp/handler.server.ts#L276-L385",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/mcp/confirm.server.ts",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/mcp/tools.server.ts#L1252-L1340",
+      "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
      "clean_days": 15
     },
@@ -2348,10 +2369,15 @@
      "clean_days": 3
     },
     "foxhound-mcp": {
-     "status": "partial",
-     "reason": "Closed live: scopes are foxhound.read and foxhound.write; /health passes with a sha and a passing tool-call-log check. The repo is not readable in this session, so the Host check, conformance in CI and the read grant not seeing write tools could not be checked in code. Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured.",
+     "status": "complete",
+     "reason": "Read main f0d1cb9. Host and Origin checks come from site-runtime adminMcpWorker (host mismatch is 403; a live request with a foreign Host got 403). The official MCP conformance suite runs in CI (check:conformance, .conformance.json). registerTools lists only tools the grant can call, so a read grant sees no write tool, and a test covers it. Every tool has an outputSchema, scopes are foxhound.read and foxhound.write. Live /health passes at sha f0d1cb9, the same as main. Not measured: live tools/list and rate-limit burst, which need a test grant.",
      "evidence": [
-      "https://admin-mcp.foxhoundapp.com/.well-known/oauth-protected-resource/mcp",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/mcp/src/index.ts",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/mcp/src/server.ts",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/.conformance.json",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/.github/workflows/ci.yml#L144-L149",
+      "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/test/admin-mcp-worker-mcp7.test.ts#L295-L299",
+      "https://github.com/DrDustinEdwards/site-runtime/blob/5a8c31f54da014747a09368050cdc9325b13bfca/admin-mcp.mjs#L337-L339",
       "https://admin-mcp.foxhoundapp.com/health"
      ],
      "clean_days": 1
