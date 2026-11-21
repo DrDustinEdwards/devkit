@@ -92,6 +92,12 @@
       "enabled": false
     },
     {
+      "description": "Plot follows Enarratio (2026-11-21). Enarratio draws with Plot, so a Plot release that changes how it draws (gaps, snapshots) has to be accepted in Enarratio first; a site that bumps Plot alone renders charts differently from the Enarratio it pins. Plot is held in every repository but Enarratio, and a site takes a new Plot with the Enarratio release that carries it, through the network packages group.",
+      "matchPackageNames": ["@observablehq/plot"],
+      "matchRepositories": ["!DrDustinEdwards/enarratio"],
+      "enabled": false
+    },
+    {
       "description": "pinning a range to the installed version changes no bytes",
       "matchUpdateTypes": ["pin"],
       "automerge": true
