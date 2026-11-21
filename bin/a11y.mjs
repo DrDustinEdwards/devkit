@@ -225,6 +225,11 @@ async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
       el.removeAttribute("data-devkit-tab");
     /** @type {HTMLElement | null} */ (document.activeElement)?.blur?.();
     window.scrollTo(0, 0);
+    // The click above set Tab's starting point where it landed (an error page's whole-screen main takes it): the first Tab starts from the top of the page.
+    document.body.setAttribute("tabindex", "-1");
+    document.body.focus();
+    document.body.removeAttribute("tabindex");
+    window.scrollTo(0, 0);
   });
   const presses = [];
   for (let i = 0; i < count; i++) {
