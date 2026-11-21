@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.55.7
+
+### Patch Changes
+
+- devkit-a11y: a stroke change on a link's first child (an svg cell's polygon) counts as visible focus.
+
 ## 0.55.6
 
 ### Patch Changes
