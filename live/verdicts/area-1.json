@@ -1,51 +1,136 @@
 {
   "area": 1,
-  "verifier": "Verify scoreboard cells awaiting sign-off",
-  "date": "2026-11-05",
+  "verifier": "Fresh verifier: re-sign of areas 1, 4 and 9",
+  "date": "2026-11-21",
   "cells": {
-    "prelum": {
+    "package": {
       "verdict": "complete",
       "evidence": [
-        "https://prelum.dustinedwards.info/",
-        "https://prelum.dustinedwards.info/sitemap.xml",
-        "https://prelum.dustinedwards.info/index.md"
+        "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/audit.mjs",
+        "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/markdown-files.mjs",
+        "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/llms.mjs",
+        "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/lastmod.mjs"
       ],
-      "note": "prelum-audit clean on 7 pages; Accept: text/markdown and .md answer text/markdown; canonical, Open Graph with image size and alt, max-image-preview, Content-Signal, llms.txt, favicon and manifest all present. Minor: /accessibility has no lastmod."
+      "note": "Prelum v0.63.7 ships the audit, the Markdown twin files, llms.txt and llms-full.txt, sitemap lastmod and the head tags; 10 of 12 sites show them working live. The gaps below are sites' own (TXASM has not adopted the twins), not missing code."
     },
     "dustinedwards-info": {
       "verdict": "partial",
-      "evidence": ["https://dustinedwards.info/llms.txt"],
-      "note": "llms.txt says every page has a .md twin, but /about.md and /writing.md are 404 and Accept: text/markdown returns HTML; 1 internal link goes through a redirect; 3 titles over 60 characters"
+      "evidence": [
+        "https://dustinedwards.info/llms.txt",
+        "https://dustinedwards.info/llms-full.txt",
+        "https://dustinedwards.info/sitemap.xml",
+        "https://dustinedwards.info/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (563 pages). Gap: 27 of 204 sitemap URLs have no lastmod (contact, colophon, features and every /systems page)."
     },
     "germomics": {
-      "verdict": "partial",
-      "evidence": ["https://germomics.com/sitemap.xml"],
-      "note": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 15 of 25 sitemap URLs have no lastmod"
+      "verdict": "complete",
+      "evidence": [
+        "https://germomics.com/llms.txt",
+        "https://germomics.com/llms-full.txt",
+        "https://germomics.com/sitemap.xml",
+        "https://germomics.com/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (59 pages, no findings); all 28 sitemap URLs carry lastmod."
     },
     "julieedwards-info": {
+      "verdict": "complete",
+      "evidence": [
+        "https://julieedwards.info/llms.txt",
+        "https://julieedwards.info/llms-full.txt",
+        "https://julieedwards.info/sitemap.xml",
+        "https://julieedwards.info/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (2 pages, no findings); both sitemap URLs carry lastmod."
+    },
+    "txasm": {
       "verdict": "partial",
-      "evidence": ["https://julieedwards.info/llms.txt"],
-      "note": "no Markdown twin: no .md route and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404"
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/llms.txt",
+        "https://txasm.dustin-edwards.workers.dev/awardees.md",
+        "https://txasm.dustin-edwards.workers.dev/sitemap.xml"
+      ],
+      "note": "Read from the workers.dev address (txasm.org untouched). prelum-audit: 0 errors on 482 pages (the awards links no longer redirect). Missing: no Markdown twin (/awardees.md and /index.md are 404 HTML, Accept: text/markdown returns text/html), llms-full.txt is 404, and 8 of 464 sitemap URLs have no lastmod (the home page among them). llms.txt, canonicals and Open Graph are present."
+    },
+    "bsw": {
+      "verdict": "partial",
+      "evidence": [
+        "https://bsw.dustin-edwards.workers.dev/llms.txt",
+        "https://bsw.dustin-edwards.workers.dev/llms-full.txt",
+        "https://bsw.dustin-edwards.workers.dev/sitemap.xml",
+        "https://bsw.dustin-edwards.workers.dev/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (20 pages). Gap: none of the 20 sitemap URLs has a lastmod. The site is a mockup on a workers.dev address."
     },
     "foxhound": {
-      "verdict": "partial",
-      "evidence": ["https://foxhoundapp.com/sitemap.xml"],
-      "note": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); 69 of 112 sitemap URLs have no lastmod; 12 internal links go through redirects"
+      "verdict": "complete",
+      "evidence": [
+        "https://foxhoundapp.com/llms.txt",
+        "https://foxhoundapp.com/llms-full.txt",
+        "https://foxhoundapp.com/sitemap.xml",
+        "https://foxhoundapp.com/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (122 pages, no findings); all 113 sitemap URLs carry lastmod."
     },
     "foxing": {
-      "verdict": "partial",
-      "evidence": ["https://foxing.app/sitemap.xml"],
-      "note": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); about 700 of 2,200 sitemap URLs have no lastmod; llms-full.txt is 404"
+      "verdict": "complete",
+      "evidence": [
+        "https://foxing.app/llms.txt",
+        "https://foxing.app/llms-full.txt",
+        "https://foxing.app/sitemap.xml",
+        "https://foxing.app/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (200 of 2,204 sitemap URLs crawled, --max-pages 200, no findings); all 2,204 carry lastmod."
     },
     "carrel": {
+      "verdict": "complete",
+      "evidence": [
+        "https://carrel.dustinedwards.info/llms.txt",
+        "https://carrel.dustinedwards.info/llms-full.txt",
+        "https://carrel.dustinedwards.info/sitemap.xml",
+        "https://carrel.dustinedwards.info/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (2 pages, no findings); both sitemap URLs carry lastmod. The public page is two pages."
+    },
+    "enarratio": {
       "verdict": "partial",
-      "evidence": ["https://carrel.dustinedwards.info/sitemap.xml"],
-      "note": "no Markdown twin (Accept: text/markdown returns HTML); no lastmod on either sitemap URL; llms-full.txt is 404"
+      "evidence": [
+        "https://enarratio.dustinedwards.info/llms.txt",
+        "https://enarratio.dustinedwards.info/llms-full.txt",
+        "https://enarratio.dustinedwards.info/sitemap.xml",
+        "https://enarratio.dustinedwards.info/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (140 pages) and all 8 sitemap URLs carry lastmod. Gap: 140 of 140 pages have no <meta name=\"text-scale\" content=\"scale\"> (a prelum-audit warning)."
+    },
+    "capsomer": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/llms.txt",
+        "https://capsomer.dustinedwards.info/llms-full.txt",
+        "https://capsomer.dustinedwards.info/sitemap.xml",
+        "https://capsomer.dustinedwards.info/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (210 pages) and all 209 sitemap URLs carry lastmod. Gap: the title \"Icons · Capsomer\" is on two pages (/components/icons/ and /icons/), a prelum-audit warning."
+    },
+    "prelum": {
+      "verdict": "partial",
+      "evidence": [
+        "https://prelum.dustinedwards.info/llms.txt",
+        "https://prelum.dustinedwards.info/llms-full.txt",
+        "https://prelum.dustinedwards.info/sitemap.xml",
+        "https://prelum.dustinedwards.info/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (7 pages). Gap, minor: /accessibility is in the sitemap with no lastmod (1 of 2 URLs)."
     },
     "capsid": {
       "verdict": "partial",
-      "evidence": ["https://capsid.dustinedwards.info/sitemap.xml"],
-      "note": "no Markdown twin: /<page>.md is 404 and Accept: text/markdown returns HTML (checked 5 Nov); llms-full.txt is 404"
+      "evidence": [
+        "https://capsid.dustinedwards.info/llms.txt",
+        "https://capsid.dustinedwards.info/llms-full.txt",
+        "https://capsid.dustinedwards.info/sitemap.xml",
+        "https://capsid.dustinedwards.info/index.md"
+      ],
+      "note": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (117 pages) and all 116 sitemap URLs carry lastmod. Gap: 116 of 117 pages have no <meta name=\"text-scale\" content=\"scale\"> (a prelum-audit warning)."
     }
   }
 }
