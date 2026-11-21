@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T22:44:33.923Z",
+ "as_of": "2026-11-21T23:18:32.402Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -988,25 +988,16 @@
      "clean_days": 1
     },
     "germomics": {
-     "status": "missing",
-     "reason": "site-runtime-images: 3 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "A4",
-       "detail": "https://germomics.com/writing /conformance-probe.png has no width attribute, so the page shifts as it loads"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://germomics.com/writing /conformance-probe.png is loading=\"lazy\" above the fold (y≈128 at 390, y≈162 at 1440), so it waits for layout"
-      },
-      {
-       "severity": "error",
-       "check": "C8",
-       "detail": "https://germomics.com/writing 1 content image on this page, and its sitemap entry has no image:image"
-      }
-     ]
+     "status": "partial",
+     "reason": "Open: no placeholder on live images (no style background on /a-boy-named-flu); no ImageObject in the page JSON-LD; a credit is stored but not shown. Closed: card is image/jpeg with CORP cross-origin, no fetchpriority issue, image sitemap has 10 entries, episodes use their own artwork when set (this episode has none, so the wordmark card shows), local reencode wrapper gone. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings.",
+     "evidence": [
+      "https://germomics.com/a-boy-named-flu",
+      "https://germomics.com/brand/germomics-card.jpg",
+      "https://germomics.com/sitemap.xml",
+      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/seo.ts#L23-L29",
+      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/images.ts#L61-L74"
+     ],
+     "clean_days": 21
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1172,44 +1163,9 @@
      ]
     },
     "germomics": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 7 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://germomics.com/data not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://germomics.com/games not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://germomics.com/rabies-day-out not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://germomics.com/a-boy-named-flu not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://germomics.com/on-the-right-taq not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://germomics.com/a-sky-full-of-sars not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://germomics.com/confessions-of-a-cholera-girl a conditional request with the page's own validator answered 200, not 304"
-      },
       {
        "severity": "warning",
        "check": "C2",
@@ -1244,9 +1200,39 @@
      ]
     },
     "txasm": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://txasm.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://txasm.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 6 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1988-newsletter not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SJC then SJC"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1971-newsletter not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SJC then SJC"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://txasm.dustin-edwards.workers.dev/archive/abstract-books a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://txasm.dustin-edwards.workers.dev/awards/samuel-kaplan-award a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://txasm.dustin-edwards.workers.dev/meetings/fall-2025/abstracts a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://txasm.dustin-edwards.workers.dev/meetings/spring-2026/abstracts/2 a conditional request with the page's own validator answered 200, not 304"
+      },
       {
        "severity": "warning",
        "check": "D1",
@@ -1289,11 +1275,6 @@
      "status": "unmeasured",
      "reason": "site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "F2",
-       "detail": "https://foxhoundapp.com/?speedcheck=nq8wmxze an uncached render took 1172 ms to the first byte (bar 600 ms)"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1535,7 +1516,7 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 43 hours old, not under 26"
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 43.6 hours old, not under 26"
       },
       {
        "severity": "warning",
@@ -1785,15 +1766,9 @@
      "clean_days": 1
     },
     "capsid": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.020 (layout shift); largest 0.020, div.cap-chart +0 px, height +195"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "capsid-mcp": {
      "status": "n/a",
