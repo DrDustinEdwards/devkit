@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.56.0
+
+### Minor Changes
+
+- `nativeBuiltins()` also drops React's legacy string renderer (`renderToString`, `renderToStaticMarkup`) from a production build: about 100 KB raw off every Worker that renders with `renderToReadableStream`. Both functions now throw.
+
 ## 0.55.11
 
 ### Patch Changes
