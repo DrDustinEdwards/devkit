@@ -1,7 +1,7 @@
 {
   "area": 2,
   "verifier": "Verify security headers",
-  "date": "2026-10-31",
+  "date": "2026-11-21",
   "cells": {
     "package": {
       "verdict": "complete",
@@ -86,34 +86,34 @@
       "note": "Complete apart from Dustin's step 5 (make /.well-known/security.txt public, the one live error, D1) and the steps in dustin-steps.md. Signed-in report https://carrel-mcp.dustinedwards.info/reports/signed-in-security.json at 2026-10-31T23:31:15Z (carrel 509f1b3): pass, only the R4 'not probed' warning. Carrel #251 crawls Desk in-process as the Owner on GET; the Access gate is unchanged."
     },
     "dustinedwards-info": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://dustinedwards.info/"],
-      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3: COEP is still enforced where an embedding site must keep it Report-Only. It passes v0.65.0 with 0 errors. Pin is v0.65.0 in package.json and mcp/package.json; a bump to v0.66.0 with the site's embeds change and a deploy fixes it. Re-check then."
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). Re-run live 21 Nov 2026 22:55 UTC with site-runtime 0.173.5 (`node bin/site-runtime-security.mjs --origin https://dustinedwards.info`): 0 errors. Live headers by `curl -sI https://dustinedwards.info`: CSP frame-src lists the embed hosts (C16) and COEP is Report-Only (credentialless) on this content site, on purpose (I3)."
     },
     "germomics": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://germomics.com/"],
-      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. Bump to v0.66.0 and deploy."
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). Re-run live 21 Nov 2026 22:55 UTC with site-runtime 0.173.5 (`node bin/site-runtime-security.mjs --origin https://germomics.com`): 0 errors. Live headers by `curl -sI https://germomics.com`: CSP frame-src lists the embed hosts (C16) and COEP is Report-Only (credentialless) on this content site, on purpose (I3)."
     },
     "foxhound": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://foxhoundapp.com/"],
-      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. foxhound #432 (v0.66.0) is open; re-check after it deploys."
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). Re-run live 21 Nov 2026 22:55 UTC with site-runtime 0.173.5 (`node bin/site-runtime-security.mjs --origin https://foxhoundapp.com`): 0 errors. Live headers by `curl -sI https://foxhoundapp.com`: CSP frame-src lists the embed hosts (C16) and COEP is Report-Only (credentialless) on this content site, on purpose (I3)."
     },
     "capsomer": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://capsomer.dustinedwards.info/"],
-      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. Pin is v0.62.1; bump to v0.66.0 and deploy."
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). Re-run live 21 Nov 2026 22:55 UTC with site-runtime 0.173.5 (`node bin/site-runtime-security.mjs --origin https://capsomer.dustinedwards.info`): 0 errors. Live headers by `curl -sI https://capsomer.dustinedwards.info`: CSP frame-src lists the embed hosts (C16) and COEP is Report-Only (credentialless) on this content site, on purpose (I3)."
     },
     "prelum": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://prelum.dustinedwards.info/"],
-      "note": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3 (COEP enforced, not Report-Only). prelum #182 (v0.66.0) merged at 22:49Z but the live sha at 23:10Z was still ffbe359, so the deploy had not landed. It passes v0.65.0 with 0 errors. Re-check after the deploy."
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). Re-run live 21 Nov 2026 22:55 UTC with site-runtime 0.173.5 (`node bin/site-runtime-security.mjs --origin https://prelum.dustinedwards.info`): 0 errors. Live headers by `curl -sI https://prelum.dustinedwards.info`: CSP frame-src lists the embed hosts (C16) and COEP is Report-Only (credentialless) on this content site, on purpose (I3)."
     },
     "foxing-mcp": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://admin-mcp.foxing.app/"],
-      "note": "0 errors, 0 warnings live (on Cloudflare since foxing #165), but mcp/package.json pins site-runtime v0.62.0, four minors behind v0.66.0. devkit's pin check (S7) wants every MCP server within one minor; it is a warning until devkit 0.21.0. Bump to the current release and redeploy."
+      "note": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). Re-run live 21 Nov 2026 22:55 UTC with site-runtime 0.173.5 (`node bin/site-runtime-security.mjs --origin https://admin-mcp.foxing.app`): 0 errors. Live headers by `curl -sI https://admin-mcp.foxing.app`: CSP frame-src lists the embed hosts (C16) and COEP is Report-Only (credentialless) on this content site, on purpose (I3). mcp/package.json pins site-runtime 0.173.4 on foxing main (within one minor, S7)."
     }
   }
 }
