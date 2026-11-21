@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.55.2
+
+### Patch Changes
+
+- An island's import()ed chunks are preloaded with their integrity too, so Integrity-Policy no longer blocks them.
+
 ## 0.55.1
 
 ### Patch Changes
