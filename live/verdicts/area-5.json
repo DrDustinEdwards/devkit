@@ -1,68 +1,83 @@
 {
   "area": 5,
-  "verifier": "Verify area 5 Carrel editing contract",
-  "date": "2026-10-31",
+  "verifier": "Re-sign partial devkit areas",
+  "date": "2026-11-21",
   "cells": {
     "package": {
       "verdict": "partial",
       "evidence": [
-        "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/server.ts",
-        "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/webmention.ts",
-        "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/bin/site-api-live.mjs",
-        "https://github.com/DrDustinEdwards/site-api/blob/v0.18.0/src/conformance.ts",
-        "https://github.com/DrDustinEdwards/carrel/blob/main/app/routes/editor.tsx",
-        "https://github.com/DrDustinEdwards/capsomer/blob/main/components/posts-list/posts-list.react.tsx"
+        "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/hooks.ts",
+        "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/outbound.ts",
+        "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/server/http.ts",
+        "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/conformance.ts",
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/health.server.ts",
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/components/editor/post-fields.tsx",
+        "https://github.com/DrDustinEdwards/capsomer/blob/aa5b42f74e0c42a26d8f2ce19ac70454743a595d/components/posts-list/posts-list.react.tsx",
+        "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
       ],
-      "note": "no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong"
+      "note": "Closed since 2026-10-31: schedule and unschedule events (path null for an unpublished post), unknown fields now 400 unknown-field, site-api-live honors --from, one DNS-resolving outbound guard, shared purge hook (schedulePurgeHook), feature image, excerpt, authors and series boxes in Carrel, merge panel for a diverged copy, backlinks warning on trash and delete, sort is a select so aria-sort does not apply. Open: the post-life probe (301, 410, trash, preview-link life, hooks, field round-trips) is off by default and Carrel's live run does not turn it on (health.server.ts runConformance has no probePosts), so no live site is checked for those. Open: Carrel has no way to list or revoke a preview link (site-api client has it, no Carrel screen uses it). Open: no width preview in the editor (PreviewPane is one iframe). Open: no hand a11y pass, and whether Carrel's README is now right, could not be proven by a script."
     },
     "dustinedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://dustinedwards.info/api/carrel/v1/meta",
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/19ec1e6/app/lib/carrel/site-api.server.ts",
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/19ec1e6/app/routes/blog.$slug.tsx"
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/carrel/content-kinds.server.ts",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/carrel/site-adapter.server.ts",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/workers/app.ts",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/editor/publish.server.ts",
+        "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
       ],
-      "note": "site-api-live red (private, no-store); no postFields or authors, author filter 501 though the page credits Dustin Edwards; deleted post 404 not 410; no mentions group, own admin.mentions.tsx remains; backdated publish reads back as today; q title+slug only, no total, sort ignored; no setTags; own purge in savePost; pins v0.17.0"
+      "note": "Closed: pins site-api v0.46.1, site-api-live and conformance pass, deleted post answers 410 through tombstones, admin mentions page now uses the shared kit and the shared mentions adapter, backdated publish is settable. Open: no postFields and no authors, and the author filter is not offered (FILTERS is kind, tag, published). Open: the list's q matches title and slug only, no total, sort ignored. Open: no setTags on the post handler. Open: savePost still runs its own purgePosts beside the shared purge hook."
     },
     "germomics": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://germomics.com/api/carrel/v1/meta",
-        "https://github.com/DrDustinEdwards/germomics/blob/f86a616/app/lib/carrel/adapter.server.ts"
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/carrel/adapter.server.ts#L625-L628",
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/carrel/adapter.server.ts#L866",
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/carrel/adapter.server.ts#L1219-L1250",
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/workers/app.ts#L130",
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/routes/admin.content.$key.tsx",
+        "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
       ],
-      "note": "author filter 501 though show.author is the byline; deleted post 404 not 410; preview is a hand-written shell; no series; no setTags; revisions author 'germomics', pages no history; admin.content.$key still writes pages outside Carrel"
+      "note": "All old gaps are closed: author filter and byline credit, series and seriesPart fields, setTags, 410 through tombstones, preview through the site's own route and layout, revision author from the actor, page history, and the admin edits only the plain-text pages. Conformance and site-api-live pass on v0.46.1. A header comment in adapter.server.ts still says v0.18.0, which is only a stale comment."
     },
     "julieedwards-info": {
       "verdict": "partial",
       "evidence": [
-        "https://julieedwards.info/api/carrel/v1/meta",
-        "https://github.com/DrDustinEdwards/julieedwards-info/blob/3447f2d/app/lib/carrel/sections.server.ts"
+        "https://carrel-mcp.dustinedwards.info/reports/conformance.json",
+        "https://julieedwards.info/api/carrel/v1/meta"
       ],
-      "note": "pins v0.17.0 so webmentions can read the stale edge copy, sent on publish only; live section with a draft reads as draft; revisions capped at 50; no delete or unpublish (needs ruling); preview without page chrome"
+      "note": "The repo is not readable from this session (not in the allowed list), so the code gaps could not be re-checked: webmention pin (now v0.46.1 on the other sites), live section with a draft reading as draft, revisions capped at 50, no delete or unpublish (needs ruling), preview without page chrome. Live: conformance and site-api-live pass on site-api v0.46.1, and the meta answers 401 without the key."
     },
     "txasm": {
       "verdict": "partial",
       "evidence": [
-        "https://txasm.dustin-edwards.workers.dev/api/carrel/v1/meta",
-        "https://github.com/DrDustinEdwards/txasm/blob/8ab6ef5/app/lib/site-meta.ts"
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/carrel/handler.server.ts",
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/carrel/adapter.server.ts",
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/data-access/pages.ts",
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/site-meta.ts",
+        "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
       ],
-      "note": "daily site-api-live probes txasm.org (bin ignores --from); IndexNow origin txasm.org so Carrel publishes are skipped; preview hand-written shell; revisions capped at 50, older unopenable; no delete or unpublish (needs ruling); no media shrink"
+      "note": "Closed: site-api-live honors --from and passes against the workers.dev copy, IndexNow uses publicOrigin so Carrel publishes are sent, preview renders through the site's own route, revisions are not pruned and old ones open, media shrink exists. Open: no delete or unpublish (every page is a live route; needs Dustin's ruling, none found in Capsid). Open: revision author is hard-coded 'Dustin Edwards' instead of the actor. Pre-cutover limit: txasm.org is still WordPress, so the site is served from workers.dev and passkey rpId follows the host; that cannot change now."
     },
     "foxhound": {
       "verdict": "partial",
       "evidence": [
-        "https://foxhoundapp.com/api/carrel/v1/meta",
-        "https://github.com/DrDustinEdwards/foxhound/blob/0a35ba2/app/lib/carrel/adapter.server.ts"
+        "https://carrel-mcp.dustinedwards.info/reports/conformance.json",
+        "https://foxhoundapp.com/api/carrel/v1/meta"
       ],
-      "note": "a draft save on a live post goes live at once (B3); deleted post 404 not 410; preview hand-written shell; own author key not authors, no cover image, no series; revisions partial and named by change id; delete drops post links silently"
+      "note": "The repo is not readable from this session (not in the allowed list), so the code gaps could not be re-checked: a draft save on a live post going live at once (B3), 410 on delete, preview shell, own author key and no cover image or series, partial revisions, post links dropped silently on delete. Live: conformance and site-api-live pass on site-api v0.46.1, but those probes are the non-post-life ones."
     },
     "foxing": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://foxing.app/api/carrel/v1/meta",
-        "https://github.com/DrDustinEdwards/foxing/blob/6a2a21d/apps/web/app/lib/carrel/journal-adapter.server.ts"
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/carrel/journal-adapter.server.ts#L467-L468",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/carrel/journal-adapter.server.ts#L485-L494",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/carrel/journal-adapter.server.ts#L667-L697",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/workers/app.ts#L15",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/core/src/repositories/admin-journal.ts#L357",
+        "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
       ],
-      "note": "author filter 501 though author_id exists and JSON-LD credits Foxing; pins v0.17.0 so webmentions can read the stale edge copy; deleted post 404 not 410; preview hand-written shell; no series; redirects not removed on delete (301 to 404); revision author raw id"
+      "note": "All old gaps are closed: author filter by credited name, series and seriesPart, pins site-api v0.46.1, 410 through tombstones, preview through the journal route, redirects removed when a post is deleted, revision authors are names. Conformance and site-api-live pass."
     }
   }
 }

@@ -1,110 +1,131 @@
 {
   "area": 3,
-  "verifier": "Verify shared sign-in and access",
-  "date": "2026-10-31",
+  "verifier": "Re-sign partial devkit areas",
+  "date": "2026-11-21",
   "cells": {
     "package": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in.mjs#L238",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in.mjs#L465",
-        "https://github.com/DrDustinEdwards/site-runtime/blob/87ccd8376617/sign-in-account.mjs#L21"
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/sign-in.mjs#L234",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/sign-in.mjs#L214",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/sign-in.mjs#L654",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/sign-in-account.mjs#L743",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/7ee0ae37b431ef34bbc4df762c348cbfa8a9bbdc/health.mjs#L323"
       ],
-      "note": "passkey delete and email change need no fresh sign-in; a new link resets the three tries; Turnstile off when a key is missing; no new-device or recovery notice, no security history, no spike alert"
+      "note": "Passkey delete and email change now need a sign-in in the last 10 minutes (FRESH_PATHS hook). Wrong codes are counted per address across links, so a new link brings no fresh tries. New-device and recovery notices, security history (auth_events) and the spike alert (authSpikeCheck) exist. Turnstile fails closed with no keys (503); the off-until-keys opt-in is not used by any site."
     },
     "dustinedwards-info": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/workers/app.ts#L212",
-        "https://dustinedwards.info/lab"
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/access.server.ts#L135",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/workers/app.ts#L124",
+        "https://dustinedwards.info/lab-bench",
+        "https://dustinedwards.info/admin"
       ],
-      "note": "/lab has no Access app in front (unsigned GET answers 503) and is outside the idle sign-out; admin refusals not logged"
+      "note": "/lab-bench now answers 302 to Access (own Access app dustinedwards-lab-login), is inside the idle sign-out, and admin and lab refusals write authz_fail lines. Live site-runtime-sign-in check: 0 errors, 0 warnings. A signed-in session was not exercised."
     },
     "germomics": {
-      "verdict": "partial",
-      "evidence": ["https://github.com/DrDustinEdwards/germomics/blob/cfb455e02c4f/workers/app.ts"],
-      "note": "admin items pass; the admin 403 is not logged and nothing alerts on spikes (F2, F3)"
+      "verdict": "complete",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/routes/admin.tsx#L56",
+        "https://germomics.com/admin"
+      ],
+      "note": "The admin 403 now writes an authz_fail line. Access-only site with no own sign-in, so the sign-in spike alert (F3) does not apply. Live check: 0 errors, 0 warnings. A signed-in session was not exercised."
     },
     "txasm": {
       "verdict": "partial",
       "evidence": [
-        "https://github.com/DrDustinEdwards/txasm/blob/743827a1f9db/app/routes/account.tsx",
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/routes/account.tsx",
+        "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/auth.server.ts#L50",
         "https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options"
       ],
-      "note": "rpId is the workers.dev host until cutover; no email change, delete account or two-ways nudge; package gaps"
+      "note": "Code gaps are closed: change email, delete account, second-passkey nudge, security notices, history and spike check exist. Still open, both pre-cutover and not changeable now: the passkey rpId is the workers.dev host until txasm.org moves, and mail (sign-in link and security notices) is dormant until cutover. Live check: 0 errors, 2 warnings (A1 rpId, G1 admin uses sign-in not Access)."
     },
     "foxhound": {
       "verdict": "partial",
       "evidence": [
-        "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/app/lib/oauth/metadata.ts",
-        "https://foxhoundapp.com/.well-known/oauth-authorization-server"
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/oauth/metadata.ts",
+        "https://foxhoundapp.com/.well-known/oauth-authorization-server",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/oauth/authorize.tsx",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/health.ts"
       ],
-      "note": "merchant MCP has no CIMD (fails H4 live), thin consent page, local call log; package gaps"
+      "note": "Merchant MCP now advertises CIMD live and passes H4; consent page uses the shared ConsentScreen with client name, publisher host and an Allow changes box; health has authSpikeCheck. Still open and unverified: whether the merchant MCP call log is shared or local (the repo tree could not be listed from here), and Foxhound's own sign-in wiring for the package features could not be read."
     },
     "foxing": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/workers/app.ts",
-        "https://github.com/DrDustinEdwards/foxing/blob/dc08c2c1fa83/apps/web/app/lib/email.server.ts"
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/workers/app.ts#L627",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/email.server.ts#L18",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/test/security-notice.integration.test.ts#L81",
+        "https://foxing.app/login"
       ],
-      "note": "idle sign-out skips /api/v1/admin and /api/v1/ops; change-email mail goes to the wrong address; raw send error rethrown; package gaps"
+      "note": "Idle sign-out now covers /api/v1/admin and /api/v1/ops (401 admin_idle on APIs). Change-email first mail goes to the current address (test), a send error throws EmailNotSent with a code only, and the package gaps are closed. Live check: 0 errors, 0 warnings. A signed-in session was not exercised."
     },
     "capsid": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/portal-auth.ts#L38"
+        "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L63",
+        "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L318",
+        "https://portal.dustinedwards.info/health"
       ],
-      "note": "Portal session is a 12-hour cookie with no 1-hour idle sign-out and no server-side revoke; Portal sign-ins not logged"
+      "note": "Portal session is 24 hours with an idle-hour sign-out, a server-side end list (portal_session_ends, migration 0055), and sign-in, sign-out and expiry events are logged. Live /health sha f762abe is master head. A signed-in session was not exercised."
     },
     "capsid-mcp": {
       "verdict": "complete",
       "evidence": [
         "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
-        "https://github.com/DrDustinEdwards/capsid/blob/8d4243534a94/src/index.ts"
+        "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/index.ts"
       ],
-      "note": "H1-H8 pass in code and live (shared consent, CIMD and registration, audit log)"
+      "note": "Live check passes with 0 errors; CIMD advertised; unauthenticated /mcp answers 401."
     },
     "foxhound-mcp": {
       "verdict": "complete",
       "evidence": [
         "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
-        "https://github.com/DrDustinEdwards/foxhound/blob/10a41e66b4d0/mcp/src/door.ts"
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/mcp/src/index.ts"
       ],
-      "note": "H1-H8 pass in code and live; the shared live check's list skips this host, so it was run by hand"
+      "note": "Live check passes with 0 errors; CIMD advertised; /mcp answers 401; uses the shared adminMcpWorker door and ToolCallLog."
     },
     "dustinedwards-mcp": {
       "verdict": "complete",
       "evidence": [
         "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/076ff254d40b/mcp"
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp"
       ],
-      "note": "H1-H8 pass in code and live"
+      "note": "Live check passes with 0 errors; CIMD advertised; /mcp answers 401."
     },
     "carrel-mcp": {
       "verdict": "complete",
       "evidence": [
         "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
-        "https://github.com/DrDustinEdwards/carrel/blob/5757429d63ec/app/lib/mcp/door.ts"
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/mcp/door.ts"
       ],
-      "note": "H1-H8 pass in code and live; MCP sign-ins are not in the call log, which H8 does not require"
+      "note": "Live check passes with 0 errors; CIMD advertised; /mcp answers 401. MCP sign-ins are not in the call log, which H8 does not require."
     },
     "foxing-mcp": {
-      "verdict": "partial",
-      "evidence": ["https://admin-mcp.foxing.app/.well-known/oauth-authorization-server"],
-      "note": "parked: the Worker has never been deployed, so the old server fails H4 live"
+      "verdict": "complete",
+      "evidence": [
+        "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server",
+        "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/src/index.ts"
+      ],
+      "note": "The Worker is now deployed on the shared adminMcpWorker door. Live check passes with 0 errors; CIMD advertised; /mcp answers 401; /health passes."
     },
     "capsid-portal": {
       "verdict": "complete",
       "evidence": [
         "https://portal.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/capsid/blob/master/src/portal-auth.ts"
+        "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L63"
       ],
-      "note": "Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. Portal sign-in is Access for SaaS (live 302 to Access, no-store, HSTS); portal-auth.ts now has a 24-hour session, an idle-hour sign-out, a server-side end list (portal_session_ends) and logged sign-in and expiry events, which closes the 31 Oct gap; live /health sha dc21c04 is master head. A signed-in session was not exercised."
+      "note": "Live 302 to Access for SaaS; 24-hour session, idle-hour sign-out, server-side end list and logged events in master, which is what is live. A signed-in session was not exercised."
     },
     "carrel-desk": {
-      "verdict": "partial",
-      "evidence": ["https://desk.dustinedwards.info/"],
-      "note": "Signed-out redirect to Access is correct, but the Carrel repository and a signed-in session were not available to this verifier, so session lifetime, idle sign-out and revoke are unchecked"
+      "verdict": "complete",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/workers/app.ts#L262",
+        "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/workers/gate.ts#L50",
+        "https://desk.dustinedwards.info/"
+      ],
+      "note": "Access app carrel-desk-login has a 24-hour session (read from the Cloudflare API); withAdminIdle covers every path with a one-hour idle sign-out that goes to Access logout, which revokes the session; refusals log authz_fail. Live check: 0 errors. A signed-in session was not exercised."
     }
   }
 }

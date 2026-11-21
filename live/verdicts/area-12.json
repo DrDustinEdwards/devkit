@@ -1,0 +1,245 @@
+{
+ "area": 12,
+ "verifier": "Re-sign partial devkit areas",
+ "date": "2026-11-21",
+ "cells": {
+  "package": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/devkit/blob/c435e07bff5abe6b7826a0daaa21a8318a1248c3/README.md",
+    "https://github.com/DrDustinEdwards/devkit/blob/c435e07bff5abe6b7826a0daaa21a8318a1248c3/.github/workflows/pr.yml",
+    "https://github.com/DrDustinEdwards/devkit/blob/c435e07bff5abe6b7826a0daaa21a8318a1248c3/.github/workflows/worker-deploy.yml",
+    "https://github.com/DrDustinEdwards/devkit/blob/c435e07bff5abe6b7826a0daaa21a8318a1248c3/.github/workflows/release.yml",
+    "https://github.com/DrDustinEdwards/devkit/actions/runs/44910841837"
+   ],
+   "note": "Newest checks-self on main (head 2dafea8, 0.55.9) is green; pr.yml, worker-deploy.yml, dependencies.yml, workflow-audit.yml, scorecard.yml, release.yml with build provenance, shared hooks all exist. Open: harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here (checklist 4.8 open); provenance (4.9) not verified by an attestation check on a release; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified). Main moved to c435e07 after that run; its run was not read."
+  },
+  "dustinedwards-info": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/renovate.json",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/.github/workflows/deploy.yml",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/44936702042",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/44914534469"
+   ],
+   "note": "Calls pr.yml, dependencies.yml, worker-deploy.yml at devkit v0.55.7 (one patch behind 0.55.9, same minor); verify skill and shared CLAUDE.md block present; only repo setting egress-policy block. Open: newest checks run on main (scheduled, 14:33Z, run 44914534469) FAILED at the Shared code step (cause not read); newest CI run is green. secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "dustinedwards-mcp": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/renovate.json",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/.github/workflows/deploy.yml",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/44936702042",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/44914534469",
+    "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp/.conformance.json"
+   ],
+   "note": "Same repo as dustinedwards.info: pr.yml workers list includes the mcp Worker, conformance suite configured (mcp/.conformance.json). Same open gaps: newest scheduled checks run on main failed at Shared code (cause not read); secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "germomics": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/renovate.json",
+    "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/germomics/actions/runs/44916331592",
+    "https://github.com/DrDustinEdwards/germomics/actions/runs/44896544567"
+   ],
+   "note": "Best of the set: devkit v0.55.9 (current), pr.yml (no-bloat run in ci.yml instead), worker-deploy, dependencies, verify skill, shared CLAUDE.md block; newest checks and CI runs green. Open: main is now a923b38 and its run was not seen (newest run read is 7e58f57); harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "txasm": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/renovate.json",
+    "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/.github/workflows/route-weight.yml",
+    "https://github.com/DrDustinEdwards/txasm/actions/runs/44915364174",
+    "https://github.com/DrDustinEdwards/txasm/actions/runs/44896548960"
+   ],
+   "note": "devkit v0.55.7, pr.yml with no-bloat and worker-size, worker-deploy, OSV, verify skill, shared CLAUDE.md; newest checks and CI runs green. Open: harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "foxing": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/renovate.json",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.github/workflows/ci-cf.yml",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/osv-scanner.toml",
+    "https://github.com/DrDustinEdwards/foxing/actions/runs/44936738703",
+    "https://github.com/DrDustinEdwards/foxing/actions/runs/44909727932"
+   ],
+   "note": "devkit v0.55.7, pr.yml with two Workers in worker-size, worker-deploy, OSV, verify skill, shared CLAUDE.md. Open: newest main run (CI cf rebuild, run 44936738703 on cc1f551) is RED: check job passed, deploy/Deploy step failed at 18:44Z (cause not read); earlier runs 44871865959 and 44869053096 also failed; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "foxing-mcp": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/renovate.json",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.github/workflows/ci-cf.yml",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/osv-scanner.toml",
+    "https://github.com/DrDustinEdwards/foxing/actions/runs/44936738703",
+    "https://github.com/DrDustinEdwards/foxing/actions/runs/44909727932",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/.conformance.json",
+    "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/.github/workflows/ci-mcp.yml"
+   ],
+   "note": "Admin MCP in the foxing repo: ci-mcp.yml (conformance, worker-deploy) and mcp/.conformance.json present; pr.yml lists the mcp Worker. Newest main run for the repo is red (CI cf rebuild deploy step, run 44936738703); CI (admin MCP) run 44896531557 was green. secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "carrel": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/renovate.json",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.conformance.json",
+    "https://github.com/DrDustinEdwards/carrel/actions/runs/44914387186",
+    "https://github.com/DrDustinEdwards/carrel/actions/runs/44896523143"
+   ],
+   "note": "devkit v0.55.7, pr.yml with no-bloat off there but devkit-no-bloat runs in ci.yml, worker-deploy, OSV, verify skill, shared CLAUDE.md. Open: main is now 5f1a8b5 and no completed run for it was seen (newest completed CI is f259f05, green); harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "carrel-mcp": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/renovate.json",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.conformance.json",
+    "https://github.com/DrDustinEdwards/carrel/actions/runs/44914387186",
+    "https://github.com/DrDustinEdwards/carrel/actions/runs/44896523143"
+   ],
+   "note": "Same repo as Carrel: .conformance.json and conformance in ci.yml present. Same open gaps as carrel (main head run not seen; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified))."
+  },
+  "carrel-desk": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/renovate.json",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.conformance.json",
+    "https://github.com/DrDustinEdwards/carrel/actions/runs/44914387186",
+    "https://github.com/DrDustinEdwards/carrel/actions/runs/44896523143"
+   ],
+   "note": "Same repo as Carrel; an app, so a11y matters: ci.yml runs npm run check:a11y (axe on every Desk screen). Same open gaps as carrel (main head run not seen; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified))."
+  },
+  "capsomer": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/capsomer/blob/aa5b42f74e0c42a26d8f2ce19ac70454743a595d/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/capsomer/blob/aa5b42f74e0c42a26d8f2ce19ac70454743a595d/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/capsomer/blob/aa5b42f74e0c42a26d8f2ce19ac70454743a595d/renovate.json",
+    "https://github.com/DrDustinEdwards/capsomer/blob/aa5b42f74e0c42a26d8f2ce19ac70454743a595d/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/capsomer/blob/aa5b42f74e0c42a26d8f2ce19ac70454743a595d/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/capsomer/blob/aa5b42f74e0c42a26d8f2ce19ac70454743a595d/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/capsomer/actions/runs/44934043393"
+   ],
+   "note": "pr.yml, no-bloat, dependencies, release with changesets, verify skill, shared CLAUDE.md present; newest CI on main (aa5b42f) green. Open: devkit pinned at v0.53.3 in workflows and package.json, two minors behind 0.55.9 (README: a pin behind a minor out two days fails devkit-shared); harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "prelum": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/renovate.json",
+    "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/prelum/blob/a3b71e9da3dc21847634e098de2d2cf5523b7dfa/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/prelum/actions/runs/44883477849"
+   ],
+   "note": "pr.yml (node: false), no-bloat in ci.yml, worker-deploy, OSV, release, shared CLAUDE.md; newest ci on main green. Open: devkit pinned v0.55.1 (eight patches behind, same minor); no .claude/skills/verify in the repo; harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "capsid": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/renovate.json",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.conformance.json",
+    "https://github.com/DrDustinEdwards/capsid/actions/runs/44934304059"
+   ],
+   "note": "Default branch is master. pr.yml with reviewer, worker-deploy, OSV, conformance, scorecard, verify skill, shared CLAUDE.md; newest CI on master (f762abe) green. Open: devkit v0.55.1 (same minor as current, eight patches behind); harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "capsid-mcp": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/renovate.json",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.conformance.json",
+    "https://github.com/DrDustinEdwards/capsid/actions/runs/44934304059"
+   ],
+   "note": "Same repo as Capsid: the Worker's conformance suite (.conformance.json, ci.yml) and worker-deploy are in place; CI green. Open: v0.55.1 pin; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "capsid-portal": {
+   "verdict": "partial",
+   "evidence": [
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/checks.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/dependencies.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/renovate.json",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/CLAUDE.md",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.claude/skills/verify/SKILL.md",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.github/workflows/ci.yml",
+    "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.conformance.json",
+    "https://github.com/DrDustinEdwards/capsid/actions/runs/44934304059"
+   ],
+   "note": "Same repo as Capsid. An app, but no accessibility scan of the Portal was found in CI or package scripts (axe-core appears only in explorer/package.json, the explorer). Open: a11y gate for the Portal; v0.55.1 pin; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)."
+  },
+  "foxhound": {
+   "verdict": "partial",
+   "evidence": [],
+   "note": "Not verified: the foxhound repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access."
+  },
+  "foxhound-mcp": {
+   "verdict": "partial",
+   "evidence": [],
+   "note": "Not verified: the foxhound repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access."
+  },
+  "bsw": {
+   "verdict": "partial",
+   "evidence": [],
+   "note": "Not verified: the bsw repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access."
+  },
+  "julieedwards-info": {
+   "verdict": "partial",
+   "evidence": [],
+   "note": "Not verified: the julieedwards repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access."
+  },
+  "enarratio": {
+   "verdict": "partial",
+   "evidence": [],
+   "note": "Not verified: the enarratio repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access."
+  }
+ }
+}
