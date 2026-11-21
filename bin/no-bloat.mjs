@@ -2188,7 +2188,9 @@ export function raised(config, base, kind, files = []) {
       ? files.filter((f) => added.some((g) => posix.matchesGlob(f, g))).length
       : 0;
     for (const [tool, counts] of Object.entries(was)) {
-      if (skip(tool, counts)) continue;
+      // The comment counts are recorded, not gated (only a rise in their share warns), and code changes move them
+      // without a baseline write, so their drift since the last write is not a narrower measure.
+      if (skip(tool, counts) || tool === "comments") continue;
       const after = /** @type {Record<string, number>} */ (now[tool] ?? {});
       const knip = tool === "knip" || tool.startsWith("knip ");
       for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
