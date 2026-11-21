@@ -10,16 +10,16 @@ Newest run 2026-11-21 15:17 UTC. Filled only from the live checks and the verifi
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
 | 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
-| 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | 🟡 | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
+| 3. Sign-in and access | ✅ | ✅ | ✅ | · | 🟡 | · | 🟡 | ✅ | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
-| 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
-| 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30007 | −3470 |
+| 5. Carrel editing contract | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | 🟡 | ✅ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
+| 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❔ | ❌ | ❌ | ❌ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
-| 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
+| 11. AI and MCP | 🟡 | 🟡 | ✅ | 🟡 | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
+| 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
 
 ## Why a cell is not complete
 
@@ -61,17 +61,10 @@ Builder: Complete shared security headers and CSP. Verifier: Verify security hea
 
 ### 3. Sign-in and access
 
-Builder: Complete shared sign-in and access. Verifier: Verify shared sign-in and access.
+Builder: Complete shared sign-in and access. Verifier: Re-sign partial devkit areas.
 
-- 🟡 Package: passkey delete and email change need no fresh sign-in; a new link resets the three tries; Turnstile off when a key is missing; no new-device or recovery notice, no security history, no spike alert
-- 🟡 dustinedwards.info: failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier
-- 🟡 Germomics: admin items pass; the admin 403 is not logged and nothing alerts on spikes (F2, F3)
-- 🟡 TXASM: failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier
-- 🟡 Foxhound: merchant MCP has no CIMD (fails H4 live), thin consent page, local call log; package gaps
-- 🟡 Foxing: idle sign-out skips /api/v1/admin and /api/v1/ops; change-email mail goes to the wrong address; raw send error rethrown; package gaps
-- 🟡 Capsid explorer: Portal session is a 12-hour cookie with no 1-hour idle sign-out and no server-side revoke; Portal sign-ins not logged
-- 🟡 Foxing admin MCP: parked: the Worker has never been deployed, so the old server fails H4 live
-- 🟡 Carrel Desk: Signed-out redirect to Access is correct, but the Carrel repository and a signed-in session were not available to this verifier, so session lifetime, idle sign-out and revoke are unchecked
+- 🟡 TXASM: Code gaps are closed: change email, delete account, second-passkey nudge, security notices, history and spike check exist. Still open, both pre-cutover and not changeable now: the passkey rpId is the workers.dev host until txasm.org moves, and mail (sign-in link and security notices) is dormant until cutover. Live check: 0 errors, 2 warnings (A1 rpId, G1 admin uses sign-in not Access).
+- 🟡 Foxhound: Merchant MCP now advertises CIMD live and passes H4; consent page uses the shared ConsentScreen with client name, publisher host and an Allow changes box; health has authSpikeCheck. Still open and unverified: whether the merchant MCP call log is shared or local (the repo tree could not be listed from here), and Foxhound's own sign-in wiring for the package features could not be read.
 
 ### 4. Writing and rendering
 
@@ -93,33 +86,25 @@ Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cell
 
 ### 5. Carrel editing contract
 
-Builder: Complete Carrel editing contract. Verifier: Verify area 5 Carrel editing contract.
+Builder: Complete Carrel editing contract. Verifier: Re-sign partial devkit areas.
 
-- 🟡 Package: no schedule/unschedule event for an unpublished post; unknown fields stripped with 200 (A8); site-api-live ignores --from; webmention SSRF guard hostname-only, two guards; no shared purge hook; no feature-image post field; conformance blind to 301, 410, trash expiry, preview-link life, hooks, field round-trips; Carrel: conflict discards text, no merge, no excerpt/authors/series/publishedAt boxes, no preview-link revoke, no inbound-link warning, no width preview; PostsList no aria-sort; no hand a11y pass; Carrel README wrong
-- 🟡 dustinedwards.info: failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
-- 🟡 Germomics: failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
-- 🟡 julieedwards.info: failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
-- 🟡 TXASM: failed on 2026-11-01, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
-- 🟡 Foxhound: failed on 2026-11-07, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
-- 🟡 Foxing: failed on 2026-11-05, after Verify area 5 Carrel editing contract signed; needs a fresh verifier
+- 🟡 Package: Closed since 2026-10-31: schedule and unschedule events (path null for an unpublished post), unknown fields now 400 unknown-field, site-api-live honors --from, one DNS-resolving outbound guard, shared purge hook (schedulePurgeHook), feature image, excerpt, authors and series boxes in Carrel, merge panel for a diverged copy, backlinks warning on trash and delete, sort is a select so aria-sort does not apply. Open: the post-life probe (301, 410, trash, preview-link life, hooks, field round-trips) is off by default and Carrel's live run does not turn it on (health.server.ts runConformance has no probePosts), so no live site is checked for those. Open: Carrel has no way to list or revoke a preview link (site-api client has it, no Carrel screen uses it). Open: no width preview in the editor (PreviewPane is one iframe). Open: no hand a11y pass, and whether Carrel's README is now right, could not be proven by a script.
+- 🟡 dustinedwards.info: Closed: pins site-api v0.46.1, site-api-live and conformance pass, deleted post answers 410 through tombstones, admin mentions page now uses the shared kit and the shared mentions adapter, backdated publish is settable. Open: no postFields and no authors, and the author filter is not offered (FILTERS is kind, tag, published). Open: the list's q matches title and slug only, no total, sort ignored. Open: no setTags on the post handler. Open: savePost still runs its own purgePosts beside the shared purge hook.
+- 🟡 julieedwards.info: The repo is not readable from this session (not in the allowed list), so the code gaps could not be re-checked: webmention pin (now v0.46.1 on the other sites), live section with a draft reading as draft, revisions capped at 50, no delete or unpublish (needs ruling), preview without page chrome. Live: conformance and site-api-live pass on site-api v0.46.1, and the meta answers 401 without the key.
+- 🟡 TXASM: Closed: site-api-live honors --from and passes against the workers.dev copy, IndexNow uses publicOrigin so Carrel publishes are sent, preview renders through the site's own route, revisions are not pruned and old ones open, media shrink exists. Open: no delete or unpublish (every page is a live route; needs Dustin's ruling, none found in Capsid). Open: revision author is hard-coded 'Dustin Edwards' instead of the actor. Pre-cutover limit: txasm.org is still WordPress, so the site is served from workers.dev and passkey rpId follows the host; that cannot change now.
+- 🟡 Foxhound: The repo is not readable from this session (not in the allowed list), so the code gaps could not be re-checked: a draft save on a live post going live at once (B3), 410 on delete, preview shell, own author key and no cover image or series, partial revisions, post links dropped silently on delete. Live: conformance and site-api-live pass on site-api v0.46.1, but those probes are the non-post-life ones.
 
 ### 6. Images and media
 
-Builder: Complete shared images and media. Verifier: Verify area 6 images and media.
+Builder: Complete shared images and media. Verifier: Re-sign partial devkit areas.
 
-- 🟡 Package: uploads built (HEIC, GPS strip, placeholder); a replace keeps the immutable size URL; pictureProps carries no placeholder; Prelum picture drops source media (GIF never moves) and counts priority per render; unsized diagram img; credit/license never reach the renderer; no 1.91:1 cover crop, no 16:9/4:3/1:1 set, no og:video; respond sets no CORP; AVIF not stripped; images check skips A6 and C9 and never runs on the Portal
-- 🟡 dustinedwards.info: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
-- 🟡 Germomics: episodes share the wordmark card, not their own picture; fetchpriority=high image eager and below the fold; card labeled image/jpeg but served WebP; card CORP same-origin; no placeholder, ImageObject or image sitemap; local reencode wrapper
-- 🟡 julieedwards.info: profile photo 884 KB, 2048 px, unsized, no srcset, 3.1x at 670 px, cached 4 h, other host without preconnect; must go into the library; fallback img unsized
-- 🟡 TXASM: og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap
-- 🟡 BSW: failed on 2026-11-03, after Verify area 6 images and media signed; needs a fresh verifier
-- 🟡 Foxhound: failed on 2026-11-13, after Verify area 6 images and media signed; needs a fresh verifier
-- 🟡 Foxing: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
-- 🟡 Carrel: images check passes; share card answers CORP same-origin
-- 🟡 Enarratio: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
-- 🟡 Capsomer: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
-- 🟡 Prelum specimen: images check fails: unsized diagram SVGs, 3 fetchpriority=high, 48 px icon shown at 16 px; share card CORP same-origin
-- 🟡 Capsid explorer: images check passes; share card answers CORP same-origin
+- 🟡 dustinedwards.info: Open: the cohort photos on /teaching/phage-discovery carry no placeholder (the library picture on /about does). Closed and seen live: size URLs immutable, sitemap image entries, own post cards, Carrel share-image field, diagram sizes wired, transcript link on the home audio. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings. No diagram image was live to see.
+- 🟡 Germomics: Open: no placeholder on live images (no style background on /a-boy-named-flu); no ImageObject in the page JSON-LD; a credit is stored but not shown. Closed: card is image/jpeg with CORP cross-origin, no fetchpriority issue, image sitemap has 10 entries, episodes use their own artwork when set (this episode has none, so the wordmark card shows), local reencode wrapper gone. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings.
+- 🟡 julieedwards.info: Photo is now in the library with srcset, sizes, width and height, placeholder, immutable size URLs and a sitemap image entry. Open: the fallback img path in the repo could not be read (the repo is not reachable from this session), so its sizing is unverified. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings.
+- 🟡 TXASM: Open and cannot change now: og:image only resolves on workers.dev because txasm.org is still WordPress (Apache). Closed: brand-image upload goes through prepareUpload (byte check, GPS strip), card has CORP cross-origin, placeholder is passed from the library row. Unverified: credit and ImageObject (no content pictures on the live pages). Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings.
+- 🟡 BSW: Now serves the logo through /media with srcset and sizes, has Carrel's API (401 without a key), 6 sitemap image entries, and the images check passes. Open: the repo is not reachable from this session, so uploads, the library and placeholder could not be read; the share card is still only the logo card. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings.
+- 🟡 Foxhound: Closed live: footer SVG has loading and decoding, card has CORP cross-origin and a type. Open: the repo is not reachable from this session, so whether cover-picture.tsx now uses pictureProps could not be checked; no blog post with a cover was live; no image sitemap entries. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings.
+- 🟡 Foxing: Open: Journal body images get no placeholder (code comment says the site does not load picture.css) and drop GIF reduced-motion stills although Prelum 0.63.7 supports them. Closed: og:image:type present, LCP cover eager and high, covers carry focus and placeholder, body images get srcset and AVIF, 1434 sitemap image entries, share-image field exists in Carrel. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings.
 - Not checked, Capsid Portal and Carrel Desk pages behind sign-in: a stranger's crawl sees only the redirect to Access, so the images on the signed-in pages (Desk's media library, the Portal's views) are not checked live
 
 ### 7. Speed and caching
@@ -219,44 +204,40 @@ Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign
 
 ### 11. AI and MCP
 
-Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
+Builder: Complete shared AI and MCP code. Verifier: Re-sign partial devkit areas.
 
-- 🟡 Package: live check covers 7 of 89 items; conformance off Actions except Carrel; no static AI rules or pin comparison in devkit; toolsForGrant and fireOnce unused; no tool icons, tool-list pin, cancel on close; log has no export, retention, alert or Portal view; no shared agent keys; suggester metadata and Llama list
-- 🟡 dustinedwards.info: Signed by Verify scoreboard cells awaiting sign-off, 2026-11-05. site-runtime-ai-audit: 0 errors, 0 warnings. Fixed and checked in code: a cut answer is never cached (finish_reason read), Ask's gateway tags use site-runtime's {app, feature}, suggester on site-api 0.21.0. Still open: the question is not wrapped in untrusted() (C10; the builder's note says wrapping breaks AI Search retrieval, which is a known limit, not a pass); site-api 0.22.0 is out and dei pins 0.21.0; that Ask's calls reach the gateway is configured on the AI Search instance and was not checked live.
-- 🟡 Germomics: local style text instead of WRITING_RULES; suggester gaps from the package
-- 🟡 julieedwards.info: suggester on site-api v0.17.0: no timeout, JSON mode or prose check
-- 🟡 TXASM: suggester inherits the package gaps (feature metadata, Llama list)
-- 🟡 Foxhound: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
-- 🟡 Foxing: Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0
-- 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
-- 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
-- 🟡 Capsid MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
-- 🟡 Foxhound admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
-- 🟡 Dustin Edwards admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
-- 🟡 Carrel MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
-- 🟡 Foxing admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
+- 🟡 Package: Closed since 2026-10-31: toolsForGrant, icons, cancel on close and toolListHash exist and are used by Carrel, Foxing, Capsid and dustinedwards MCP; fireOnce is used by Carrel; the tool-call log has export, 90 day retention, a health alert and an owner page per server (linked from the Portal Agents view); shared agent keys exist in ./agent-keys; the suggester in site-api 0.46.1 has feature metadata, a timeout, a JSON schema, a prose check and leaves Llama out of the Claude-only prose checks; a reusable conformance workflow exists. Still open: devkit has no static AI rules and no tool-list pin comparison (areas.json passes no --tools-hash, so T12 only warns); the live check lists about 25 item ids but the old 89 item checklist could not be found, so coverage is not proven; the live tools/list, conformance and burst checks run only with a test grant, which this sandbox lacks.
+- 🟡 dustinedwards.info: Closed: site-api is pinned at 0.46.1 (current); a cut answer is never cached; gateway tags use {app, feature}; ai-audit live: 0 errors, 0 warnings. Still open: Ask's question is not wrapped in untrusted() (C10; wrapping breaks AI Search retrieval, so this is a known limit, not a pass); that Ask's calls reach the gateway is set on the AI Search instance and cannot be checked from here.
+- 🟡 julieedwards.info: Live ai-audit: 0 errors, 0 warnings. The repo is not readable in this session, so the old gap (suggester on site-api v0.17.0, no timeout, JSON mode or prose check) could not be checked on current main. Open until its pin is read.
+- 🟡 Foxhound: The repo is not readable in this session. Live: the merchant MCP at /mcp still serves its own OAuth with a registration_endpoint (open registration), its own scope names merchant.read and merchant.write, and ai-audit reports 0 errors but 1 not measured (no test grant for tools/list). The old gaps (rate limit fails open, log after the call, unconfirmed destructive tools, no outputSchema, local dash lines) could not be checked in code.
+- 🟡 Capsid explorer: Closed: the AI Search call is raced against an 8 s timeout and an upstream error goes to the log only, so the caller gets a fixed sentence. Still open: the gateway is attached only when the AI_GATEWAY_ID dashboard var is set, and whether it is set live cannot be checked from here.
+- 🟡 Capsid MCP: Closed: the metadata lists capsid.read and capsid.write; scopes come from site-runtime mcpScopes; the 403 insufficient_scope step-up uses toolScopeChallenge; audienceRefusal and mcpOriginRefusal are the shared ones; a conformance gate runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. The OAuth KV name (capsid-oauth, not capsid-mcp-oauth) is in the uncommitted wrangler.jsonc and could not be read.
+- 🟡 Foxhound admin MCP: Closed live: scopes are foxhound.read and foxhound.write; /health passes with a sha and a passing tool-call-log check. The repo is not readable in this session, so the Host check, conformance in CI and the read grant not seeing write tools could not be checked in code. Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured.
+- 🟡 Dustin Edwards admin MCP: Closed: tools go through registerTools and invokeTool; agent keys are site-runtime ./agent-keys; scopes dei.read and dei.write; /health has a sha and a passing tool-call-log check; conformance runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. The server has no test of its own that runs toolListProblems.
+- 🟡 Carrel MCP: Closed: scopes are carrel.read and carrel.write; the write box starts ticked only when the client asked for write; the tool list uses toolsForGrant; agent keys use site-runtime agentPrincipal; conformance runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. Also /health shows warnings for backup, cron and alerts (area 8, not area 11).
+- 🟡 Foxing admin MCP: Closed: site-runtime 0.173.1; errors are read as problem details; paging uses opaque cursors; destructive tools take a preview and confirm token (suspension uses the admin API's own step); registerTools lists only grantable tools; conformance runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. The server has no test of its own that runs toolListProblems.
 
 ### 12. Checks and tooling
 
-Builder: Complete shared checks and tooling. Verifier: none yet.
+Builder: Complete shared checks and tooling. Verifier: Re-sign partial devkit areas.
 
-- ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: no live check; no verifier has checked it
-- ❌ Germomics: no live check; no verifier has checked it
-- ❌ julieedwards.info: no live check; no verifier has checked it
-- ❌ TXASM: no live check; no verifier has checked it
-- ❌ BSW: no live check; no verifier has checked it
-- ❌ Foxhound: no live check; no verifier has checked it
-- ❌ Foxing: no live check; no verifier has checked it
-- ❌ Carrel: no live check; no verifier has checked it
-- ❌ Enarratio: no live check; no verifier has checked it
-- ❌ Capsomer: no live check; no verifier has checked it
-- ❌ Prelum specimen: no live check; no verifier has checked it
-- ❌ Capsid explorer: no live check; no verifier has checked it
-- ❌ Capsid MCP: no live check; no verifier has checked it
-- ❌ Foxhound admin MCP: no live check; no verifier has checked it
-- ❌ Dustin Edwards admin MCP: no live check; no verifier has checked it
-- ❌ Carrel MCP: no live check; no verifier has checked it
-- ❌ Foxing admin MCP: no live check; no verifier has checked it
-- ❌ Capsid Portal: no live check; no verifier has checked it
-- ❌ Carrel Desk: no live check; no verifier has checked it
+- 🟡 Package: Newest checks-self on main (head 2dafea8, 0.55.9) is green; pr.yml, worker-deploy.yml, dependencies.yml, workflow-audit.yml, scorecard.yml, release.yml with build provenance, shared hooks all exist. Open: harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here (checklist 4.8 open); provenance (4.9) not verified by an attestation check on a release; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified). Main moved to c435e07 after that run; its run was not read.
+- 🟡 dustinedwards.info: Calls pr.yml, dependencies.yml, worker-deploy.yml at devkit v0.55.7 (one patch behind 0.55.9, same minor); verify skill and shared CLAUDE.md block present; only repo setting egress-policy block. Open: newest checks run on main (scheduled, 14:33Z, run 44914534469) FAILED at the Shared code step (cause not read); newest CI run is green. secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Germomics: Best of the set: devkit v0.55.9 (current), pr.yml (no-bloat run in ci.yml instead), worker-deploy, dependencies, verify skill, shared CLAUDE.md block; newest checks and CI runs green. Open: main is now a923b38 and its run was not seen (newest run read is 7e58f57); harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 julieedwards.info: Not verified: the julieedwards repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access.
+- 🟡 TXASM: devkit v0.55.7, pr.yml with no-bloat and worker-size, worker-deploy, OSV, verify skill, shared CLAUDE.md; newest checks and CI runs green. Open: harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 BSW: Not verified: the bsw repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access.
+- 🟡 Foxhound: Not verified: the foxhound repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access.
+- 🟡 Foxing: devkit v0.55.7, pr.yml with two Workers in worker-size, worker-deploy, OSV, verify skill, shared CLAUDE.md. Open: newest main run (CI cf rebuild, run 44936738703 on cc1f551) is RED: check job passed, deploy/Deploy step failed at 18:44Z (cause not read); earlier runs 44871865959 and 44869053096 also failed; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Carrel: devkit v0.55.7, pr.yml with no-bloat off there but devkit-no-bloat runs in ci.yml, worker-deploy, OSV, verify skill, shared CLAUDE.md. Open: main is now 5f1a8b5 and no completed run for it was seen (newest completed CI is f259f05, green); harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Enarratio: Not verified: the enarratio repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access.
+- 🟡 Capsomer: pr.yml, no-bloat, dependencies, release with changesets, verify skill, shared CLAUDE.md present; newest CI on main (aa5b42f) green. Open: devkit pinned at v0.53.3 in workflows and package.json, two minors behind 0.55.9 (README: a pin behind a minor out two days fails devkit-shared); harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Prelum specimen: pr.yml (node: false), no-bloat in ci.yml, worker-deploy, OSV, release, shared CLAUDE.md; newest ci on main green. Open: devkit pinned v0.55.1 (eight patches behind, same minor); no .claude/skills/verify in the repo; harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Capsid explorer: Default branch is master. pr.yml with reviewer, worker-deploy, OSV, conformance, scorecard, verify skill, shared CLAUDE.md; newest CI on master (f762abe) green. Open: devkit v0.55.1 (same minor as current, eight patches behind); harden-runner is audit by default (worker-deploy egress-policy default audit); no block mode here; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Capsid MCP: Same repo as Capsid: the Worker's conformance suite (.conformance.json, ci.yml) and worker-deploy are in place; CI green. Open: v0.55.1 pin; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Foxhound admin MCP: Not verified: the foxhound repo is not reachable from this session (GitHub access limited to 14 repos), so workflows, pins, skill, CLAUDE.md and the newest main run were not read. Needs a verifier with access.
+- 🟡 Dustin Edwards admin MCP: Same repo as dustinedwards.info: pr.yml workers list includes the mcp Worker, conformance suite configured (mcp/.conformance.json). Same open gaps: newest scheduled checks run on main failed at Shared code (cause not read); secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Carrel MCP: Same repo as Carrel: .conformance.json and conformance in ci.yml present. Same open gaps as carrel (main head run not seen; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)).
+- 🟡 Foxing admin MCP: Admin MCP in the foxing repo: ci-mcp.yml (conformance, worker-deploy) and mcp/.conformance.json present; pr.yml lists the mcp Worker. Newest main run for the repo is red (CI cf rebuild deploy step, run 44936738703); CI (admin MCP) run 44896531557 was green. secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Capsid Portal: Same repo as Capsid. An app, but no accessibility scan of the Portal was found in CI or package scripts (axe-core appears only in explorer/package.json, the explorer). Open: a11y gate for the Portal; v0.55.1 pin; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified).
+- 🟡 Carrel Desk: Same repo as Carrel; an app, so a11y matters: ci.yml runs npm run check:a11y (axe on every Desk screen). Same open gaps as carrel (main head run not seen; secret scanning and push protection settings are not readable from this session (earlier handoff says Dustin enabled them on 19 repos; unverified)).
