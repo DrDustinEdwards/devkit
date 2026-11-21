@@ -21,6 +21,7 @@
 // Playwright installed (PLAYWRIGHT_BROWSERS_PATH, else ~/.cache/ms-playwright), or DEVKIT_A11Y_CHROMIUM when set, and
 // says which; with none, every item is reported not measured, with the reason.
 
+import { createHash } from "node:crypto";
 import { existsSync, readdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import { homedir } from "node:os";
@@ -188,6 +189,34 @@ async function axe(/** @type {Page} */ AxeBuilder, /** @type {Page} */ page) {
   }
 }
 
+const isRange = (/** @type {Page} */ page) =>
+  page.evaluate(
+    () =>
+      /** @type {HTMLElement | null} */ (document.activeElement)?.matches?.("input[type=range]") ??
+      false,
+  );
+
+/** A hash of the pixels around a range input (the focused one, or with a key the one a Tab press tagged), scrolled to the middle. */
+async function rangePixels(/** @type {Page} */ page, key = -1) {
+  const box = await page.evaluate((/** @type {number} */ k) => {
+    const el =
+      k < 0 ? document.activeElement : document.querySelector('[data-devkit-tab="' + k + '"]');
+    if (!el) return null;
+    el.scrollIntoView({ block: "center" });
+    const r = el.getBoundingClientRect();
+    return {
+      x: Math.max(0, r.x - 8),
+      y: Math.max(0, r.y - 8),
+      width: r.width + 16,
+      height: r.height + 16,
+    };
+  }, key);
+  if (!box) return undefined;
+  await sleep(60);
+  const png = await page.screenshot({ clip: box }).catch(() => null);
+  return png ? createHash("sha1").update(png).digest("hex") : undefined;
+}
+
 /** Every Tab press from the top of the page: what took focus, how it looked, and what covered it. */
 async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
   await page.mouse.click(1, 1).catch(() => {});
@@ -201,79 +230,76 @@ async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
   for (let i = 0; i < count; i++) {
     await page.keyboard.press("Tab");
     await sleep(120);
-    presses.push(
-      await page.evaluate((/** @type {number} */ key) => {
-        const el = /** @type {HTMLElement | null} */ (document.activeElement);
-        if (!el || el === document.body || el === document.documentElement) return { body: true };
-        const same = el.getAttribute("data-devkit-tab") === String(key - 1);
-        el.setAttribute("data-devkit-tab", String(key));
-        const r = el.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const cy = r.top + r.height / 2;
-        const offscreen =
-          r.width === 0 ||
-          r.height === 0 ||
-          cx < 0 ||
-          cy < 0 ||
-          cx > innerWidth ||
-          cy > innerHeight;
-        let covered = null;
-        if (!offscreen) {
-          const hit = document.elementFromPoint(cx, cy);
-          if (hit && hit !== el && !el.contains(hit) && !hit.contains(el)) {
-            let position = null;
-            for (
-              let n = /** @type {Element | null} */ (hit);
-              n && n !== document.body && !position;
-              n = n.parentElement
-            ) {
-              const p = getComputedStyle(n).position;
-              if (p === "fixed" || p === "sticky") position = p;
-            }
-            covered = { by: window.__sel(hit), position };
+    const press = await page.evaluate((/** @type {number} */ key) => {
+      const el = /** @type {HTMLElement | null} */ (document.activeElement);
+      if (!el || el === document.body || el === document.documentElement) return { body: true };
+      const same = el.getAttribute("data-devkit-tab") === String(key - 1);
+      el.setAttribute("data-devkit-tab", String(key));
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const offscreen =
+        r.width === 0 || r.height === 0 || cx < 0 || cy < 0 || cx > innerWidth || cy > innerHeight;
+      let covered = null;
+      if (!offscreen) {
+        const hit = document.elementFromPoint(cx, cy);
+        if (hit && hit !== el && !el.contains(hit) && !hit.contains(el)) {
+          let position = null;
+          for (
+            let n = /** @type {Element | null} */ (hit);
+            n && n !== document.body && !position;
+            n = n.parentElement
+          ) {
+            const p = getComputedStyle(n).position;
+            if (p === "fixed" || p === "sticky") position = p;
           }
+          covered = { by: window.__sel(hit), position };
         }
-        let skipTargetsMain = false;
-        const href = el.getAttribute("href") || "";
-        if (el.localName === "a" && href.length > 1 && href.startsWith("#")) {
-          const target = document.getElementById(
-            (() => {
-              try {
-                return decodeURIComponent(href.slice(1));
-              } catch {
-                return href.slice(1); // a malformed escape (#%E0%A4%A) names the id as written
-              }
-            })(),
-          );
-          const main = document.querySelector("main, [role=main]");
-          skipTargetsMain = Boolean(
-            target &&
-            main &&
-            (target === main ||
-              main.contains(target) ||
-              target.contains(main) ||
-              target.nextElementSibling === main),
-          );
-        }
-        // A button that opens something (a menu, a dialog, the header sheet): the Escape test comes back to it.
-        if (
-          el.matches("button, [role=button]") &&
-          ["aria-expanded", "aria-haspopup", "popovertarget"].some((a) => el.hasAttribute(a))
-        )
-          el.setAttribute("data-devkit-opener", "");
-        const text = (el.innerText || el.getAttribute("aria-label") || "").trim().slice(0, 40);
-        return {
-          key,
-          sel: window.__sel(el),
-          text,
-          same,
-          focused: window.__style(el),
-          covered,
-          offscreen,
-          skipTargetsMain,
-        };
-      }, i),
-    );
+      }
+      let skipTargetsMain = false;
+      const href = el.getAttribute("href") || "";
+      if (el.localName === "a" && href.length > 1 && href.startsWith("#")) {
+        const target = document.getElementById(
+          (() => {
+            try {
+              return decodeURIComponent(href.slice(1));
+            } catch {
+              return href.slice(1); // a malformed escape (#%E0%A4%A) names the id as written
+            }
+          })(),
+        );
+        const main = document.querySelector("main, [role=main]");
+        skipTargetsMain = Boolean(
+          target &&
+          main &&
+          (target === main ||
+            main.contains(target) ||
+            target.contains(main) ||
+            target.nextElementSibling === main),
+        );
+      }
+      // A button that opens something (a menu, a dialog, the header sheet): the Escape test comes back to it.
+      if (
+        el.matches("button, [role=button]") &&
+        ["aria-expanded", "aria-haspopup", "popovertarget"].some((a) => el.hasAttribute(a))
+      )
+        el.setAttribute("data-devkit-opener", "");
+      const text = (el.innerText || el.getAttribute("aria-label") || "").trim().slice(0, 40);
+      return {
+        key,
+        sel: window.__sel(el),
+        text,
+        same,
+        focused: window.__style(el),
+        covered,
+        offscreen,
+        skipTargetsMain,
+      };
+    }, i);
+    // A range input draws its ring on its thumb, a shadow part getComputedStyle cannot read: compare what it looks like.
+    if (press.sel && press.focused && (await isRange(page)))
+      press.focused.pixels = await rangePixels(page);
+    presses.push(press);
   }
   await page.evaluate(() => /** @type {HTMLElement | null} */ (document.activeElement)?.blur?.());
   await sleep(150);
@@ -285,6 +311,11 @@ async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
       ]),
     ),
   );
+  for (const press of presses) {
+    if (!press.focused?.pixels || !unfocused.has(press.key)) continue;
+    const pixels = await rangePixels(page, press.key);
+    if (pixels) unfocused.get(press.key).pixels = pixels;
+  }
   // An element focused more than once carries its last press's key; its unfocused style is the same for every press.
   const bySel = new Map();
   for (const press of presses)
