@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T04:55:00.393Z",
+ "as_of": "2026-11-21T07:02:43.326Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -755,7 +755,7 @@
     },
     "foxing": {
      "status": "missing",
-     "reason": "prelum-audit: 4464 errors",
+     "reason": "prelum-audit: 664 errors",
      "findings": [
       {
        "severity": "error",
@@ -2092,8 +2092,48 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "site-runtime-speed: 2 errors",
+     "reason": "site-runtime-speed: 10 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/rabies-day-out not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/its-on-the-syphilis not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/confessions-of-a-cholera-girl not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/archive a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/games a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/season/1 a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/a-sky-full-of-sars a conditional request with the page's own validator answered 200, not 304"
+      },
       {
        "severity": "error",
        "check": "C2",
@@ -2117,9 +2157,14 @@
      ]
     },
     "julieedwards-info": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 1 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "C1",
+       "detail": "https://julieedwards.info/site-n32F1S32ej.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2143,9 +2188,34 @@
      "findings": []
     },
     "foxhound": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 5 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxhoundapp.com/pricing not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxhoundapp.com/compare/paddle-retain not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/decline-codes/insufficient_funds a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/decline-codes/transaction_not_allowed a conditional request with the page's own validator answered 200, not 304"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2159,9 +2229,54 @@
      ]
     },
     "foxing": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://foxing.app/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxing.app/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 9 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/journal/archive not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/journal/great-gatsby-green-light-meaning not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/authors/a-n-afanasyev not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxing.app/journal/moby-dick-whale-symbolism not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/about a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/guide a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/awards/nobel-literature a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/books/a-confession-tolstoy a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "C1",
+       "detail": "https://foxing.app/site-UqGHfkkKqT.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2239,14 +2354,9 @@
      ]
     },
     "capsid": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://capsid.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://capsid.dustinedwards.info/numbers/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=300, must-revalidate, colo SJC then SJC"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2318,7 +2428,7 @@
       {
        "severity": "warning",
        "check": "H4",
-       "detail": "https://dustinedwards.info/health serves 5348441bf85f5ee9d51b6b8738382735b367b9da, not the branch head 97b642d0dbbe10d6d7d5c135c47105884dbc317d (https://github.com/DrDustinEdwards/dustinedwards-info/commit/97b642d0dbbe10d6d7d5c135c47105884dbc317d), committed 9 minutes ago"
+       "detail": "https://dustinedwards.info/health serves e50adc8d6873eb2b5dd6f9f0dcb26163f2be4443, not the branch head 6b7700189313874f447c27faba138dc7c643aa3b (https://github.com/DrDustinEdwards/dustinedwards-info/commit/6b7700189313874f447c27faba138dc7c643aa3b), committed 9 minutes ago"
       },
       {
        "severity": "error",
@@ -2339,7 +2449,7 @@
       {
        "severity": "warning",
        "check": "H4",
-       "detail": "https://julieedwards.info/health serves d771cffbd4c7435f0bac2b9a8736d4dc71f8a031, not the branch head dfcc34a3694a84e0261f80dc37d306ff93f62ae9 (https://github.com/DrDustinEdwards/julieedwards-info/commit/dfcc34a3694a84e0261f80dc37d306ff93f62ae9), committed 1 minutes ago"
+       "detail": "https://julieedwards.info/health serves 5d399a816520e894bcf37d98cbff5975c086ca35, not the branch head d218cf5a21fb39563b22ce0c79cd2e1d98623c93 (https://github.com/DrDustinEdwards/julieedwards-info/commit/d218cf5a21fb39563b22ce0c79cd2e1d98623c93), committed 12 minutes ago"
       },
       {
        "severity": "error",
@@ -2361,11 +2471,6 @@
      "status": "missing",
      "reason": "ops-audit: 1 errors",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "H4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/health serves 84fc91ed42003b27dd076f959ef66e2dc4c7859d, not the branch head dedc8d48f9c980ce0befbb7f9d2968baf8ddc0b6 (https://github.com/DrDustinEdwards/bsw/commit/dedc8d48f9c980ce0befbb7f9d2968baf8ddc0b6), committed 10 minutes ago"
-      },
       {
        "severity": "error",
        "check": "H5",
@@ -2408,11 +2513,6 @@
      "reason": "ops-audit: 1 errors",
      "findings": [
       {
-       "severity": "warning",
-       "check": "H4",
-       "detail": "https://mcp.dustinedwards.info/health serves 9c261c5c096d25846eebabb61d83b33f9a3548ba, not the branch head d89a4692094544b44574b4a52891c0245e3920da (https://github.com/DrDustinEdwards/capsid/commit/d89a4692094544b44574b4a52891c0245e3920da), committed 10 minutes ago"
-      },
-      {
        "severity": "error",
        "check": "H5",
        "detail": "https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason"
@@ -2426,34 +2526,28 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.foxhoundapp.com/health serves 51debddadcdd2848e1ae7ed1243e7d2b60c339e6, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 4192 minutes ago"
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves e89b7014d520f5114b728e84a3c5de8e8a71f0bf, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 4324 minutes ago"
       }
      ]
     },
     "dustinedwards-mcp": {
-     "status": "missing",
-     "reason": "ops-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "H4",
-       "detail": "https://admin-mcp.dustinedwards.info/health serves d45e6dc1e418e905c967a24c2ff67c8b1e48bf7f, not the branch head 868e318b5046690336e355361bb56995fe67fd7b (https://github.com/DrDustinEdwards/dustinedwards-info/commit/868e318b5046690336e355361bb56995fe67fd7b), committed 83 minutes ago"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "carrel-mcp": {
      "status": "missing",
      "reason": "ops-audit: 1 errors",
      "findings": [
       {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 27.2 hours old, not under 26"
+      },
+      {
        "severity": "warning",
        "check": "C2",
        "detail": "https://carrel-mcp.dustinedwards.info/health the cron check is warn: backup failed"
-      },
-      {
-       "severity": "error",
-       "check": "H4",
-       "detail": "https://carrel-mcp.dustinedwards.info/health serves 33d24634e67a918cee4b54a1808a7a46a8532032, not the branch head e3be69ca3a59466e5f39f6be5e043f3c75c5e402 (https://github.com/DrDustinEdwards/carrel/commit/e3be69ca3a59466e5f39f6be5e043f3c75c5e402), committed 39 minutes ago"
       }
      ]
     },
@@ -2492,7 +2586,7 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "devkit-a11y: 22 errors",
+     "reason": "devkit-a11y: 24 errors",
      "findings": [
       {
        "severity": "error",
@@ -2587,7 +2681,17 @@
       {
        "severity": "error",
        "check": "L2",
-       "detail": "https://dustinedwards.info/software/foxhound focus hidden under sticky `html > body > header.cap-site-header` on 2 stops: `html > body > a.cap-skip`, `html > body > a.cap-skip`"
+       "detail": "https://dustinedwards.info/software/foxhound no visible focus on 1 of 39 stops: `div.cap-site-header-search > div.cap-site-header-search-panel > form > input`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/software/foxhound focus hidden under fixed `div.cap-site-header-search > div.cap-site-header-search-panel > form > input` on 2 stops: `html > body > a.cap-skip`, `html > body > a.cap-skip`"
+      },
+      {
+       "severity": "error",
+       "check": "L2",
+       "detail": "https://dustinedwards.info/software/foxhound Escape did not close what `nav.cap-site-header-sections > ul > li:nth-of-type(2) > button.cap-site-header-link` opened"
       },
       {
        "severity": "error",
@@ -2846,22 +2950,12 @@
     },
     "bsw": {
      "status": "missing",
-     "reason": "devkit-a11y: 9 errors",
+     "reason": "devkit-a11y: 10 errors",
      "findings": [
       {
        "severity": "error",
-       "check": "L1",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ axe target-size (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 40 elements, first `.cap-site-header-icon`"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ scrolls sideways at 320 px: scrollWidth 1195, widest `ul.cap-marquee-list:nth-of-type(1) > li:nth-of-type(11) > div.logo-box > img` reaches 1195 px"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ 200% zoom proxy (a 720 px viewport, not browser zoom): scrolls sideways, scrollWidth 1195"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2875,13 +2969,18 @@
       },
       {
        "severity": "error",
-       "check": "L1",
-       "detail": "https://bsw.dustin-edwards.workers.dev/about-us axe target-size (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 15 elements, first `.cap-site-header-icon`"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/about-us animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/about-us animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
+       "detail": "https://bsw.dustin-edwards.workers.dev/contact-us animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2891,12 +2990,22 @@
       {
        "severity": "error",
        "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/visual-design animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/language-support animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
+      },
+      {
+       "severity": "error",
+       "check": "L4",
        "detail": "https://bsw.dustin-edwards.workers.dev/career-development animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
-       "check": "L1",
-       "detail": "https://bsw.dustin-edwards.workers.dev/editing-process axe target-size (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 15 elements, first `.cap-site-header-icon`"
+       "check": "L4",
+       "detail": "https://bsw.dustin-edwards.workers.dev/editing-process animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
@@ -3501,7 +3610,7 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "chart-audit: 14 errors",
+     "reason": "chart-audit: 12 errors",
      "findings": [
       {
        "severity": "error",
@@ -3530,18 +3639,8 @@
       },
       {
        "severity": "error",
-       "check": "C12",
-       "detail": "https://germomics.com/data/cholera-soho-1854 \"Deaths by address, Soho, 1854, with the 13 water pumps on Sn\" (dot-map), 320 px: the drawing is 375 px wide in a 262 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
        "check": "D5",
-       "detail": "https://germomics.com/data/cholera-soho-1854 at 320 px, charts shift the page by 0.190 (layout shift); largest 0.190, div.enarratio-data.enarratio-visually-hidden +0 px"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://germomics.com/data/influenza-1918 \"Influenza deaths per week, London, June 1918 to May 1919\" (line), 320 px: the drawing is 262 px wide in a 224 px frame, so it scrolls sideways"
+       "detail": "https://germomics.com/data/cholera-soho-1854 at 320 px, charts shift the page by 0.076 (layout shift); largest 0.076, p.enarratio-summary -228 px, height +22"
       },
       {
        "severity": "error",
@@ -3674,510 +3773,9 @@
      ]
     },
     "foxing": {
-     "status": "unmeasured",
-     "reason": "chart-audit could not measure: G: https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.; could not run: timed out after 20 minutes: ::notice title=G::https://foxing.app/books/zuleika-dobson-beerbohm could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed ::notice title=G::https://foxing.app/books/zuni-folktales-cushing could not measure: the browser could not open",
-     "findings": [
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-p-herbert could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/a-w-tozer could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/abu-al-ala-al-maarri could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/ada-elizabeth-chesterton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/adam-mickiewicz could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/adam-smith could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aeschylus could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aesop could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/agatha-christie could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/akutagawa-ryunosuke could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alain-rene-lesage could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alan-sullivan could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aldous-huxley could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aleksandr-kuprin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexander-berkman could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexander-hamilton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexander-mackenzie could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexander-pushkin could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alexandre-dumas could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/alfred-lord-tennyson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/algernon-blackwood could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/algis-budrys could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/ambrose-bierce could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/ameen-rihani could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anatole-france could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/andre-gide could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/andre-norton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/angela-brazil could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anita-loos could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/ann-radcliffe could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anna-julia-cooper could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anna-katharine-green could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anna-sewell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anne-bronte could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anne-parrish could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anthony-berkeley could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anthony-hope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anthony-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/anton-chekhov could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/apollonius-of-rhodes could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/apsley-cherry-garrard could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/apuleius could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/archibald-alexander could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/aristotle could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arnold-bennett could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arthur-conan-doyle could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/authors/arthur-machen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/poetry-shevchenko could not measure: the browser could not open it: page.goto: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/poetry-thomas could not measure: the browser could not open it: page.goto: net::ERR_ABORTED; maybe frame was detached?"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/poetry-wilde could not measure: the browser could not open it: page.goto: net::ERR_ABORTED at https://foxing.app/books/poetry-wilde"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/poetry-williams could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/poetry-yeats could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Failed to open a new tab"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/point-counter-point-huxley could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Failed to open a new tab"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/pointed-roofs-richardson could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Failed to open a new tab"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/poirot-investigates-christie could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Failed to open a new tab"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/pollyanna-grows-up-porter could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Failed to open a new tab"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/pollyanna-porter could not measure: the browser could not open it: browserContext.newPage: Protocol error (Target.createTarget): Failed to open a new tab"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/polynesian-mythology-grey could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/poor-folk-dostoevsky could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/practical-mysticism-underhill could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/pragmatism-james could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/pride-and-prejudice-austen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/prince-otto-stevenson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/principia-ethica-moore could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/privy-seal-ford could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/progress-and-poverty-george could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/psmith-in-the-city-wodehouse could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/psmith-journalist-wodehouse could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/puddnhead-wilson-twain could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/pygmalion-shaw could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/queen-victoria-strachey could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/quicksand-larsen could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/quo-vadis-sienkiewicz could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/rachel-ray-trollope could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/ragged-dick-jr could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/ralestone-luck-norton could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/recollections-of-full-years-taft could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/red-dusk-and-the-morrow-dukes could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/red-harvest-hammett could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/religion-and-the-rise-of-capitalism-tawney could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/representative-men-emerson could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/resurrection-tolstoy could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/riceyman-steps-bennett could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/richard-ii-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/richard-iii-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/riders-of-the-purple-sage-grey could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/right-ho-jeeves-wodehouse could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/roads-to-freedom-russell could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/robbery-under-arms-boldrewood could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/romance-conrad could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/romeo-and-juliet-shakespeare could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/room-13-wallace could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/roughing-it-twain could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/round-the-moon-verne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/running-a-thousand-miles-for-freedom-craft could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      },
-      {
-       "severity": "unmeasured",
-       "check": "G",
-       "detail": "https://foxing.app/books/rur-capek could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "carrel": {
      "status": "partial",
@@ -4186,7 +3784,7 @@
     },
     "enarratio": {
      "status": "missing",
-     "reason": "chart-audit: 192 errors",
+     "reason": "chart-audit: 482 errors",
      "findings": [
       {
        "severity": "error",
@@ -4692,7 +4290,7 @@
     },
     "capsomer": {
      "status": "missing",
-     "reason": "chart-audit: 24 errors",
+     "reason": "chart-audit: 23 errors",
      "findings": [
       {
        "severity": "error",
@@ -4787,12 +4385,7 @@
       {
        "severity": "error",
        "check": "D5",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 1280 px, charts shift the page by 0.066 (layout shift); largest 0.066, div.enarratio-frame +0 px, height -64"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.145 (layout shift); largest 0.145, div.enarratio-frame +0 px, height -29"
+       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, p.enarratio-summary +0 px, height -115"
       },
       {
        "severity": "error",
@@ -4838,15 +4431,9 @@
      ]
     },
     "capsid": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.020 (layout shift); largest 0.020, div.cap-chart +0 px, height +195"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -5026,9 +4613,130 @@
      "clean_days": 21
     },
     "capsid-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 3
+     "status": "missing",
+     "reason": "site-runtime-ai-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "L8",
+       "detail": "https://mcp.dustinedwards.info/health tool-call-log is warn: could not run: timed out after 3000 ms"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_start_session: inputSchema.thread is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.glob is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.query is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.paths[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.query is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path_prefix is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.base is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.head is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.job is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.step is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.probe is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.query_contains is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page_contains is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.since is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.id is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_status: inputSchema.package is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp no --tools-hash pinned; the test grant's list hashes to 9f8e697260e785aae41ccab096f397a93982f45fee55fd14e768426dbab08308"
+      },
+      {
+       "severity": "warning",
+       "check": "P3",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+      }
+     ]
     },
     "foxhound-mcp": {
      "status": "missing",
