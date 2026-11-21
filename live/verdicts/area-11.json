@@ -33,9 +33,14 @@
       "note": "The suggester uses site-api 0.46.1 mediaSuggester and takes its dash rule from site-runtime WRITING_RULES. Live ai-audit: 0 errors, 0 warnings."
     },
     "julieedwards-info": {
-      "verdict": "partial",
-      "evidence": ["https://julieedwards.info/"],
-      "note": "Live ai-audit: 0 errors, 0 warnings. The repo is not readable in this session, so the old gap (suggester on site-api v0.17.0, no timeout, JSON mode or prose check) could not be checked on current main. Open until its pin is read."
+      "verdict": "complete",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/julieedwards-info/blob/cf8ff797acc185851c9a7d44fecf520947fdbc38/app/lib/media/suggest.server.ts",
+        "https://github.com/DrDustinEdwards/julieedwards-info/blob/cf8ff797acc185851c9a7d44fecf520947fdbc38/package.json#L25",
+        "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
+        "https://julieedwards.info/"
+      ],
+      "note": "Read main cf8ff79. The only model call is the media suggester, site-api mediaSuggester on the v0.46.1 pin: feature metadata, a 30 second timeout, structured output schema and checkProse on the alt (media-kit.ts:73, 75, 199, 210). It writes nothing, an editor accepts a suggestion in Carrel. No MCP route or server in the repo. The old v0.17.0 gap is gone."
     },
     "txasm": {
       "verdict": "complete",
@@ -47,16 +52,25 @@
     },
     "bsw": {
       "verdict": "complete",
-      "evidence": ["https://bsw.dustin-edwards.workers.dev/"],
-      "note": "Live ai-audit: 0 errors, 0 warnings, site kind. The repo is not readable in this session, so the claim of no model call or MCP server rests on the live probe and the earlier verdict."
+      "evidence": [
+        "https://github.com/DrDustinEdwards/bsw/blob/979f9636e834eb04615fa4545b95fc7d4bc9fd89/app/lib/media/suggest.server.ts",
+        "https://github.com/DrDustinEdwards/bsw/blob/979f9636e834eb04615fa4545b95fc7d4bc9fd89/package.json#L29",
+        "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
+        "https://bsw.dustin-edwards.workers.dev/"
+      ],
+      "note": "Read main 979f963. The earlier note was wrong: bsw does make a model call. Its media suggester is site-api mediaSuggester on v0.46.1 (timeout, schema, prose check, feature metadata), editor-triggered, writes nothing. No other model call and no MCP server or route anywhere in app/ or workers/."
     },
     "foxhound": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://foxhoundapp.com/.well-known/oauth-authorization-server",
-        "https://foxhoundapp.com/.well-known/oauth-protected-resource"
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/api/oauth-register.ts",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/oauth/provider.server.ts#L144-L205",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/mcp/handler.server.ts#L276-L385",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/mcp/confirm.server.ts",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/mcp/tools.server.ts#L1252-L1340",
+        "https://foxhoundapp.com/.well-known/oauth-authorization-server"
       ],
-      "note": "The repo is not readable in this session. Live: the merchant MCP at /mcp still serves its own OAuth with a registration_endpoint (open registration), its own scope names merchant.read and merchant.write, and ai-audit reports 0 errors but 1 not measured (no test grant for tools/list). The old gaps (rate limit fails open, log after the call, unconfirmed destructive tools, no outputSchema, local dash lines) could not be checked in code."
+      "note": "Read main f0d1cb9 (PR #784 not needed: registration is already restricted on main). Registration is not open: every redirect URI must be on the shared allowlist (site-runtime registrationRefusal, provider.server.ts:181), 10 an hour per IP, and a live POST with https://evil.example.com/cb answered 400 invalid_redirect_uri. The registration_endpoint stays for Grok and Gemini (a MAY in the MCP authorization spec); Claude, Claude Code and ChatGPT use a client metadata document. Foxhound #784 moves the registration limit to site-runtime registrationLimited's numbers (5 an hour per address, 30 a day of allowlisted ones) and fails closed. Old gaps closed: MCP rate limit is site-runtime checkRateLimit, which fails closed (handler.server.ts:285); the call's started row is written before the tool runs and a failed write refuses the call (:313-337); both destructiveHint tools (settings overwrite, alert delete) need a signed confirm code (confirm.server.ts, tools.server.ts:1252, 1327); all 13 tools declare an outputSchema; no local dash lines. Scopes merchant.read and merchant.write come from site-runtime mcpScopes. Live tools/list not measured without a test grant."
     },
     "foxing": {
       "verdict": "complete",
@@ -109,12 +123,17 @@
       "note": "Closed: the metadata lists capsid.read and capsid.write; scopes come from site-runtime mcpScopes; the 403 insufficient_scope step-up uses toolScopeChallenge; audienceRefusal and mcpOriginRefusal are the shared ones; a conformance gate runs in CI. Still open: Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured. The OAuth KV name (capsid-oauth, not capsid-mcp-oauth) is in the uncommitted wrangler.jsonc and could not be read."
     },
     "foxhound-mcp": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
-        "https://admin-mcp.foxhoundapp.com/.well-known/oauth-protected-resource/mcp",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/mcp/src/index.ts",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/mcp/src/server.ts",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/.conformance.json",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/.github/workflows/ci.yml#L144-L149",
+        "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/test/admin-mcp-worker-mcp7.test.ts#L295-L299",
+        "https://github.com/DrDustinEdwards/site-runtime/blob/5a8c31f54da014747a09368050cdc9325b13bfca/admin-mcp.mjs#L337-L339",
         "https://admin-mcp.foxhoundapp.com/health"
       ],
-      "note": "Closed live: scopes are foxhound.read and foxhound.write; /health passes with a sha and a passing tool-call-log check. The repo is not readable in this session, so the Host check, conformance in CI and the read grant not seeing write tools could not be checked in code. Live tools/list checks (T1 to T4, T7, T9, T12), the conformance server scenarios and the rate-limit burst (S1) were not measured: this sandbox has no test grant for the server. The live run with ai-audit reports 0 errors, 0 warnings, 1 not measured."
+      "note": "Read main f0d1cb9. Host and Origin checks come from site-runtime adminMcpWorker (host mismatch is 403; a live request with a foreign Host got 403). The official MCP conformance suite runs in CI (check:conformance, .conformance.json). registerTools lists only tools the grant can call, so a read grant sees no write tool, and a test covers it. Every tool has an outputSchema, scopes are foxhound.read and foxhound.write. Live /health passes at sha f0d1cb9, the same as main. Not measured: live tools/list and rate-limit burst, which need a test grant."
     },
     "dustinedwards-mcp": {
       "verdict": "partial",
