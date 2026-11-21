@@ -105,6 +105,7 @@ function focusVisible(
  * @typedef {object} PageScan
  * @property {string} url as loaded
  * @property {string} why home, 404, about, list, detail...
+ * @property {string} [landed] the address after redirects
  * @property {number} [status]
  * @property {string} [error] why the page could not be scanned
  * @property {{ lang: string | null, title: string | null, h1: number, headings: { level: number, sel: string }[],
@@ -181,7 +182,12 @@ export function judgeSite({ statement, pages }) {
     if (!b) continue;
     if (!b.lang) add("error", "S2", url, "no lang on <html>");
     if (!b.title) add("error", "S2", url, "no <title>");
-    else if (page.why !== "404") titles.set(b.title, [...(titles.get(b.title) ?? []), url]);
+    // A page that redirected shows the destination's title; the destination is judged on its own.
+    else if (
+      page.why !== "404" &&
+      (!page.landed || new URL(page.landed).href === new URL(url).href)
+    )
+      titles.set(b.title, [...(titles.get(b.title) ?? []), url]);
     if (b.h1 !== 1) add("warning", "S2", url, `${b.h1} h1 elements, not one`);
     const skips = headingSkips(b.headings);
     if (skips.length) add("warning", "S2", url, `heading levels skipped: ${list(skips)}`);

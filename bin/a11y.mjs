@@ -518,6 +518,7 @@ async function scanPage(
     const page = await context.newPage();
     scan.status = (await page.goto(url, { waitUntil: "load", timeout: 45_000 }))?.status();
     await settle(page, 800);
+    scan.landed = page.url();
     scan.basics = await basics(page);
     scan.axe = {};
     for (const view of VIEWS) {
