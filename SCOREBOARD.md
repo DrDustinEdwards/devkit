@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-20 16:02 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 04:55 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,16 +8,16 @@ Newest run 2026-11-20 16:02 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
-| 4. Writing and rendering | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6996 | −3129 |
+| 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | ❌ | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | 🟡 | 🟡 | · | · | +28958 | −2924 |
+| 7. Speed and caching | 🟡 | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 8. Running and recovery | 🟡 | ❌ | 🟡 | ❌ | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | ❌ | ❌ | ❌ | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ❔ | ❔ | · | · | · | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | ❔ | ❔ | +33215 | −9539 |
+| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | ❔ | 🟡 | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ❌ | 🟡 | ❌ | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
@@ -28,18 +28,33 @@ Newest run 2026-11-20 16:02 UTC. Filled only from the live checks and the verifi
 Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❔ dustinedwards.info: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Germomics: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ julieedwards.info: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ TXASM: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ BSW: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Foxhound: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Foxing: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Carrel: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Enarratio: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Capsomer: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Prelum specimen: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Capsid explorer: prelum-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
+- 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Germomics: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 julieedwards.info: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- ❌ TXASM: prelum-audit: 124 errors
+  - robots-blocks-all: https://txasm.org/robots.txt robots.txt disallows the home page to Googlebot, so no page is crawled
+  - sitemap-blocked: https://txasm.org the sitemap lists a URL robots.txt disallows
+  - sitemap-blocked: https://txasm.org/meetings the sitemap lists a URL robots.txt disallows
+  - sitemap-blocked: https://txasm.org/awardees the sitemap lists a URL robots.txt disallows
+  - sitemap-blocked: https://txasm.org/award-nominations the sitemap lists a URL robots.txt disallows
+- ❌ BSW: prelum-audit: 20 errors
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/ the sitemap lists a noindex page
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/grant-proposal-support the sitemap lists a noindex page
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
+- 🟡 Foxhound: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- ❌ Foxing: prelum-audit: 4464 errors
+  - link-redirect: https://foxing.app/ links to https://foxing.app/clubs, which redirects to /login?next=%2Fclubs
+  - link-redirect: https://foxing.app/ links to https://foxing.app/people, which redirects to /login?next=%2Fpeople
+  - link-redirect: https://foxing.app/books links to https://foxing.app/clubs, which redirects to /login?next=%2Fclubs
+  - link-redirect: https://foxing.app/books links to https://foxing.app/people, which redirects to /login?next=%2Fpeople
+  - link-redirect: https://foxing.app/awards links to https://foxing.app/clubs, which redirects to /login?next=%2Fclubs
+- 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Enarratio: checks pass; no verifier yet
+- 🟡 Capsomer: checks pass; no verifier yet
+- 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Capsid explorer: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 
 ### 2. Security headers and CSP
 
@@ -74,18 +89,18 @@ Builder: Complete shared sign-in and access. Verifier: Verify shared sign-in and
 Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❔ dustinedwards.info: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Germomics: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ julieedwards.info: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ TXASM: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ BSW: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Foxhound: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Foxing: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Carrel: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Enarratio: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Capsomer: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Prelum specimen: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Capsid explorer: prelum-content could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
+- 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Germomics: checks pass; no verifier yet
+- 🟡 julieedwards.info: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 TXASM: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 BSW: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Foxhound: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Foxing: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Enarratio: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Capsomer: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Capsid explorer: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 
 ### 5. Carrel editing contract
 
@@ -145,7 +160,8 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 - ❔ Enarratio: site-runtime-speed-static could not measure: A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Capsomer: site-runtime-speed-static could not measure: A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Prelum specimen: site-runtime-speed-static could not measure: A3: https://prelum.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://prelum.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❔ Capsid explorer: site-runtime-speed could not measure: A3: https://capsid.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❌ Capsid explorer: site-runtime-speed: 1 errors
+  - B1: https://capsid.dustinedwards.info/numbers/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=300, must-revalidate, colo SJC then SJC
 
 ### 8. Running and recovery
 
@@ -165,10 +181,11 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - ❌ Capsid MCP: ops-audit: 1 errors
   - H5: https://mcp.dustinedwards.info/health no check on /health probes EMAIL (send_email), declared in https://github.com/DrDustinEdwards/capsid/blob/master/wrangler.jsonc.example; probe each, or name it in .ops-audit.json's unprobed with the reason
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 0eb6f8df98eb8079cfca11e6c5c0a537ba95f0cf, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 3434 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 51debddadcdd2848e1ae7ed1243e7d2b60c339e6, not the branch head abf9b7cd1ccab863b8842730b5b37a06e9294822 (https://github.com/DrDustinEdwards/foxhound/commit/abf9b7cd1ccab863b8842730b5b37a06e9294822), committed 4192 minutes ago
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves 7449ab86eeedf3e345b0c05122ca906d115b1437, not the branch head d926e1b97d8dfde2791017d5ae83d40b487df2fb (https://github.com/DrDustinEdwards/dustinedwards-info/commit/d926e1b97d8dfde2791017d5ae83d40b487df2fb), committed 1208 minutes ago
-- 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
+  - H4: https://admin-mcp.dustinedwards.info/health serves d45e6dc1e418e905c967a24c2ff67c8b1e48bf7f, not the branch head 868e318b5046690336e355361bb56995fe67fd7b (https://github.com/DrDustinEdwards/dustinedwards-info/commit/868e318b5046690336e355361bb56995fe67fd7b), committed 83 minutes ago
+- ❌ Carrel MCP: ops-audit: 1 errors
+  - H4: https://carrel-mcp.dustinedwards.info/health serves 33d24634e67a918cee4b54a1808a7a46a8532032, not the branch head e3be69ca3a59466e5f39f6be5e043f3c75c5e402 (https://github.com/DrDustinEdwards/carrel/commit/e3be69ca3a59466e5f39f6be5e043f3c75c5e402), committed 39 minutes ago
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
@@ -200,12 +217,12 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
   - L4: https://txasm.dustin-edwards.workers.dev/contact animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L4: https://txasm.dustin-edwards.workers.dev/archive/abstract-books animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L4: https://txasm.dustin-edwards.workers.dev/meetings animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-- ❌ BSW: devkit-a11y: 10 errors
-  - L4: https://bsw.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+- ❌ BSW: devkit-a11y: 9 errors
+  - L1: https://bsw.dustin-edwards.workers.dev/ axe target-size (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 40 elements, first &#96;.cap-site-header-icon&#96;
+  - L3: https://bsw.dustin-edwards.workers.dev/ scrolls sideways at 320 px: scrollWidth 1195, widest &#96;ul.cap-marquee-list:nth-of-type(1) &gt; li:nth-of-type(11) &gt; div.logo-box &gt; img&#96; reaches 1195 px
+  - L3: https://bsw.dustin-edwards.workers.dev/ 200% zoom proxy (a 720 px viewport, not browser zoom): scrolls sideways, scrollWidth 1195
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-error-page-body &gt; div.cap-empty-content &gt; a.cap-btn&#96; "Go to the home page")
-  - L4: https://bsw.dustin-edwards.workers.dev/about-us animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://bsw.dustin-edwards.workers.dev/contact-us animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://bsw.dustin-edwards.workers.dev/grant-proposal-support animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L1: https://bsw.dustin-edwards.workers.dev/about-us axe target-size (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 15 elements, first &#96;.cap-site-header-icon&#96;
 - ❌ Foxhound: devkit-a11y: 12 errors
   - L2: https://foxhoundapp.com/ no visible focus on 3 of 40 stops: &#96;input#mrr-slider&#96;, &#96;input#failure-share-slider&#96;, &#96;input#recovery-share-slider&#96;
   - L3: https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest &#96;section.cap-hero.fh-home-hero &gt; div.cap-hero-aside:nth-of-type(2) &gt; div.fh-queue-block-3 &gt; p.cap-sr-only&#96; reaches 1320 px
@@ -255,17 +272,51 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❔ dustinedwards.info: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Germomics: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Foxhound: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Foxing: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Carrel: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Enarratio: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Capsomer: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Prelum specimen: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Capsid explorer: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Capsid Portal: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ Carrel Desk: chart-audit could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
+- ❌ dustinedwards.info: chart-audit: 14 errors
+  - C2: https://dustinedwards.info/cv "Output by year" (bar): no source line
+  - B3: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar): 2 text under 12 px, smallest "run" at 11.0 px
+  - C2: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar): no source line
+  - C12: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar), 320 px: 2 text under 12 px, smallest "run" at 11.0 px
+  - F: https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth an SVG chart drawn outside Enarratio: "The MCP server holds no policy. It verifies identity, then m" (12 lines)
+- ❌ Germomics: chart-audit: 14 errors
+  - F: https://germomics.com/a-boy-named-flu an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
+  - F: https://germomics.com/a-sky-full-of-sars an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
+  - F: https://germomics.com/antitoxin-togo-please an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
+  - F: https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: "A schematic of that path, not a measurement from one patient" (6 dots)
+  - F: https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
+- ❌ Foxhound: chart-audit: 16 errors
+  - F: https://foxhoundapp.com/blog/dunning-email-sequence an SVG chart drawn outside Enarratio: "an svg" (17 dots)
+  - F: https://foxhoundapp.com/blog/stripe-disputes-guide an SVG chart drawn outside Enarratio: "an svg" (7 dots)
+  - C2: https://foxhoundapp.com/demos/dashboard "MRR trend" (area): no source line
+  - C2: https://foxhoundapp.com/demos/dashboard "MRR movements, latest month" (bar): no source line
+  - C2: https://foxhoundapp.com/demos/dashboard "Customer cohorts still paying" (bar): no source line
+- ❔ Foxing: chart-audit could not measure: G: https://foxing.app/authors/a-a-milne could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-e-w-mason could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-merritt could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed; G: https://foxing.app/authors/a-n-afanasyev could not measure: the browser could not open it: browserContext.; could not run: timed out after 20 minutes: ::notice title=G::https://foxing.app/books/zuleika-dobson-beerbohm could not measure: the browser could not open it: browserContext.newPage: Target page, context or browser has been closed ::notice title=G::https://foxing.app/books/zuni-folktales-cushing could not measure: the browser could not open
+- 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- ❌ Enarratio: chart-audit: 192 errors
+  - B1: https://enarratio.dustinedwards.info/ "Classified reads in one stool sample" (sunburst), light: 2 text under 4.5:1, lowest "Total" #57606a on #084fba at 1.16:1
+  - B1: https://enarratio.dustinedwards.info/ "Moves between US regions in one year" (chord), light: 4 text under 4.5:1, lowest "West" #1b1e23 on #811736 at 1.68:1
+  - B1: https://enarratio.dustinedwards.info/ "Moves between US regions in one year" (chord), light: 5 marks under 3:1, lowest &lt;path in ribbon&gt; #cbaf8c on #fefdfd at 2.06:1
+  - B1: https://enarratio.dustinedwards.info/ "Hospital bed occupancy today" (gauge), light: 1 text under 4.5:1, lowest "87%" #1b1e23 on #084fba at 2.26:1
+  - B1: https://enarratio.dustinedwards.info/ "Classified reads in one stool sample" (sunburst), dark: 2 text under 4.5:1, lowest "Total" #a3aab3 on #4b8efe at 1.36:1
+- ❌ Capsomer: chart-audit: 24 errors
+  - F: https://capsomer.dustinedwards.info/components/annotated-figure/states?example=s-default an SVG chart drawn outside Enarratio: "Figure 1. The parts of a page, from the Example Co style gui" (5 rects)
+  - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Response time, median" (line): no source line
+  - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Queue by day" (area): no source line
+  - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Actions minutes per day, last 7 days" (sparkline): no source line
+  - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Uptime of example.edu" (uptime-strip): no source line
+- ❌ Prelum specimen: chart-audit: 3 errors
+  - C2: https://prelum.dustinedwards.info/ "Two series" (line): no source line
+  - C2: https://prelum.dustinedwards.info/ "Total over time" (area): no source line
+  - C2: https://prelum.dustinedwards.info/ "Dose and response" (scatter): no source line
+- ❌ Capsid explorer: chart-audit: 1 errors
+  - D5: https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.020 (layout shift); largest 0.020, div.cap-chart +0 px, height +195
+- ❌ Capsid Portal: chart-audit: 5 errors
+  - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Daily" (heat-strip): no source line
+  - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Weekly" (heat-strip): no source line
+  - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Monthly" (heat-strip): no source line
+  - C2: https://portal.dustinedwards.info/demos/health?tab=ci "sample" (heat-strip): no source line
+  - C2: https://portal.dustinedwards.info/demos/health?tab=ci "sample-b" (heat-strip): no source line
+- 🟡 Carrel Desk: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 
 ### 11. AI and MCP
 
