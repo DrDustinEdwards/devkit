@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.55.1
+
+### Patch Changes
+
+- `devkit-route-weight` finds the site script by its hashed name, `/site-<hash>.js`, so a non-hydrating route is weighed as that script again.
+
 ## 0.55.0
 
 ### Minor Changes
