@@ -60,10 +60,22 @@ const SELECTOR = `window.__sel = (el) => {
 };`;
 
 /** The focus-relevant computed style of an element. */
-const STYLE = `window.__style = (el) => {
+const STYLE = `window.__ring = (cs) => cs.outlineStyle + " " + cs.outlineWidth + " " + cs.outlineColor + " " + cs.boxShadow + " " + cs.borderColor;
+window.__style = (el) => {
+  const ringOf = (el) => {
+    const own = [];
+    for (const pseudo of ["::-webkit-slider-thumb", "::-moz-range-thumb"]) own.push(window.__ring(getComputedStyle(el, pseudo)));
+    let up = el;
+    for (let i = 0; i < 4 && up.parentElement && up.parentElement !== document.body; i++) {
+      up = up.parentElement;
+      own.push(window.__ring(getComputedStyle(up)));
+    }
+    return own.join("|");
+  };
   const cs = getComputedStyle(el);
   return { outline: cs.outlineStyle + " " + cs.outlineWidth + " " + cs.outlineColor, shadow: cs.boxShadow, bg: cs.backgroundColor,
-    border: cs.borderColor + " " + cs.borderWidth, decoration: cs.textDecorationLine + " " + cs.textDecorationThickness, color: cs.color };
+    border: cs.borderColor + " " + cs.borderWidth, decoration: cs.textDecorationLine + " " + cs.textDecorationThickness, color: cs.color,
+    ring: ringOf(el) };
 };`;
 
 const SPACING_CSS =
