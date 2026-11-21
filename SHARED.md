@@ -88,13 +88,13 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.169.4 (DrDustinEdwards/site-runtime)
+## site-runtime 0.170.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `cookiePairs`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
 - `./csp`: `CSP_REPORT_PATH`, `CSP_REPORT_GROUP`, `generateNonce`, `integrityHash`, `scriptHash`, `buildPolicy`, `buildContentSecurityPolicy`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `reportingEndpoints`, `broadSource`, `buildStagedPolicy`, `integrityPolicy`, `renewNonce`
 - `./page-headers`: `pageSecurity`
-- `./context`: `cloudflareContext`, `cspNonceContext`, `serverTimingContext`, `getEnv`, `getExecutionContext`, `getNonce`, `getTimings`
+- `./context`: `cloudflareContext`, `cspNonceContext`, `serverTimingContext`, `previewContext`, `getEnv`, `getExecutionContext`, `getNonce`, `getTimings`
 - `./kv-cache`: `KV_MIN_TTL`, `kvCached`
 - `./csp-report`: `MAX_REPORT_BYTES`, `MAX_REPORTS`, `trimReportUrl`, `reportBodies`, `summarizeReport`, `summarizeVital`, `receiveCspReport`, `rateLimitAllow`
 - `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`, `multipartBoundary`, `readMultipart`, `partText`, `readJsonWith`
@@ -236,7 +236,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.161.0 (DrDustinEdwards/capsomer)
+## Capsomer 0.162.0 (DrDustinEdwards/capsomer)
 
 - `./token-check`: `stripCss`, `readDeclarations`, `resolveToken`, `tokenScale`, `rawValues`, `invalidValues`, `fixCss`
 - `./build`: `CAPSOMER_ROOT`, `inlineCss`, `capsomerStylesheet`, `copyFonts`, `minifyCss`, `bundleScript`
