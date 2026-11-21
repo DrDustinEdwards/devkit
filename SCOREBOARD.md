@@ -8,15 +8,15 @@ Newest run 2026-11-21 20:29 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ✅ | 🟡 | ✅ | ✅ | ❌ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | ✅ | ✅ | ✅ | · | 🟡 | · | 🟡 | ✅ | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | +67457 | −2968 |
-| 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
+| 4. Writing and rendering | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | 🟡 | ✅ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
-| 9. Accessibility and components | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
+| 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❌ | ❌ | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
@@ -25,26 +25,20 @@ Newest run 2026-11-21 20:29 UTC. Filled only from the live checks and the verifi
 
 ### 1. Search, sharing and AI answers
 
-Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells awaiting sign-off.
+Builder: Share SEO and other key site code. Verifier: Fresh verifier: re-sign of areas 1, 4 and 9.
 
-- ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Germomics: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 julieedwards.info: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 dustinedwards.info: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (563 pages). Gap: 27 of 204 sitemap URLs have no lastmod (contact, colophon, features and every /systems page).
 - ❌ TXASM: prelum-audit: 464 errors
   - link-redirect: https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/award-nominations links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/branch-officers links to https://txasm.org/awards, which redirects to /awardees
-- 🟡 BSW: checks pass; no verifier yet
-- 🟡 Foxhound: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Foxing: failed on 2026-11-07, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Enarratio: checks pass; no verifier yet
-- 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Capsid explorer: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 BSW: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (20 pages). Gap: none of the 20 sitemap URLs has a lastmod. The site is a mockup on a workers.dev address.
+- 🟡 Enarratio: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (140 pages) and all 8 sitemap URLs carry lastmod. Gap: 140 of 140 pages have no &lt;meta name="text-scale" content="scale"&gt; (a prelum-audit warning).
+- 🟡 Capsomer: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (210 pages) and all 209 sitemap URLs carry lastmod. Gap: the title "Icons · Capsomer" is on two pages (/components/icons/ and /icons/), a prelum-audit warning.
+- 🟡 Prelum specimen: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (7 pages). Gap, minor: /accessibility is in the sitemap with no lastmod (1 of 2 URLs).
+- 🟡 Capsid explorer: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (117 pages) and all 116 sitemap URLs carry lastmod. Gap: 116 of 117 pages have no &lt;meta name="text-scale" content="scale"&gt; (a prelum-audit warning).
 
 ### 2. Security headers and CSP
 
@@ -68,21 +62,14 @@ Builder: Complete shared sign-in and access. Verifier: Re-sign partial devkit ar
 
 ### 4. Writing and rendering
 
-Builder: Complete shared writing and rendering. Verifier: Verify scoreboard cells awaiting sign-off.
+Builder: Complete shared writing and rendering. Verifier: Fresh verifier: re-sign of areas 1, 4 and 9.
 
-- ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Germomics: checks pass; no verifier yet
-- 🟡 julieedwards.info: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 TXASM: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 BSW: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Foxhound: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Foxing: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Enarratio: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Capsomer: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Capsid explorer: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- 🟡 Germomics: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 34 pages, 0 errors, 4 warnings. Two Carrel conformance-probe posts (/carrel-conformance-7e19650b-renamed and /carrel-conformance-30b8b1fe-renamed) are published and listed on /writing, each with an image (/conformance-probe.png) that has no width and height. Test content left on a live site; unpublish them.
+- 🟡 julieedwards.info: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 0 warnings. The repository is not readable from this session; an earlier note says the site has its own section grammar rather than Prelum, and nothing here refutes it.
+- 🟡 TXASM: prelum-content v0.63.7 (run by hand, 21 Nov 2026) on the workers.dev address: 200 pages, 0 errors, 4 warnings: /award-nominations has no data-render-version wrapper, and /meetings, /awardees and /trail go h1 to h3.
+- 🟡 Enarratio: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 140 pages, 0 errors, 0 warnings. The repository is not readable from this session, so use of Prelum and the absence of a second renderer are not proven.
+- 🟡 Capsomer: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages, 0 errors, 0 warnings, but the showcase still renders its doc pages with its own renderer (site/markdown.ts, which uses Prelum only for slugify), so there is a second renderer; it also pins Prelum v0.63.3, behind v0.63.7.
+- 🟡 Prelum specimen: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 1 warning: the specimen renders writing with no data-render-version on its wrapper, so an upgrade cannot be seen.
 
 ### 5. Carrel editing contract
 
@@ -151,21 +138,16 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 
 ### 9. Accessibility and components
 
-Builder: Complete accessibility and Capsomer components. Verifier: none yet.
+Builder: Complete accessibility and Capsomer components. Verifier: Fresh verifier: re-sign of areas 1, 4 and 9.
 
-- ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: checks pass; no verifier yet
-- 🟡 Germomics: checks pass; no verifier yet
-- 🟡 julieedwards.info: checks pass; no verifier yet
-- 🟡 TXASM: checks pass; no verifier yet
-- 🟡 BSW: checks pass; no verifier yet
-- 🟡 Foxhound: checks pass; no verifier yet
-- 🟡 Foxing: checks pass; no verifier yet
-- 🟡 Carrel: checks pass; no verifier yet
-- 🟡 Enarratio: checks pass; no verifier yet
-- 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Prelum specimen: checks pass; no verifier yet
-- 🟡 Capsid explorer: checks pass; no verifier yet
+- 🟡 Package: devkit-a11y finds real issues (it flagged the warnings below), and Capsomer's CI is green on main. Not complete: the shared 404 page has a main but no header, nav or footer (S2 on germomics, txasm, bsw, foxing and capsomer); Enarratio's chart points are covered by another element when focused (L2 on germomics, enarratio and capsid); and two Capsomer showcase pages warn: contact-card (h3 after h1 inside its demo frame, duplicate #main landmark) and not-found-report (duplicate #main).
+- 🟡 Germomics: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 2 warnings: the 404 page has no header, nav or footer; on /data/cholera-soho-1854 the focused map point is covered by another element on 2 Tab stops.
+- 🟡 TXASM: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026) on the workers.dev address: 10 pages, 0 errors, 5 warnings: /meetings and /awardees skip from h1 to h3 (axe heading-order and S2), and the 404 page has no header, nav or footer.
+- 🟡 BSW: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: the 404 page has no header, nav or footer. A mockup.
+- 🟡 Foxing: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: the 404 page has no header, nav or footer.
+- 🟡 Enarratio: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 9 pages, 0 errors, 1 warning: on /astro a focused chart point is covered by another element.
+- 🟡 Capsomer: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 4 warnings: the 404 page has no header, nav or footer; contact-card has an h3 after h1 and a duplicate #main landmark; not-found-report has a duplicate #main landmark.
+- 🟡 Capsid explorer: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: on /numbers/ a focused chart point is covered by another element on 3 Tab stops.
 - Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
 ### 10. Charts

@@ -104,7 +104,7 @@
    "id": 1,
    "name": "Search, sharing and AI answers",
    "builder": "Share SEO and other key site code",
-   "verifier": "Verify scoreboard cells awaiting sign-off",
+   "verifier": "Fresh verifier: re-sign of areas 1, 4 and 9",
    "lines": {
     "prs": 37,
     "added": 18963,
@@ -113,22 +113,46 @@
    "unchecked": {},
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "complete",
+     "reason": "Prelum v0.63.7 ships the audit, the Markdown twin files, llms.txt and llms-full.txt, sitemap lastmod and the head tags; 10 of 12 sites show them working live. The gaps below are sites' own (TXASM has not adopted the twins), not missing code.",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/audit.mjs",
+      "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/markdown-files.mjs",
+      "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/llms.mjs",
+      "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/lastmod.mjs"
+     ]
     },
     "dustinedwards-info": {
      "status": "partial",
-     "reason": "failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (563 pages). Gap: 27 of 204 sitemap URLs have no lastmod (contact, colophon, features and every /systems page).",
+     "evidence": [
+      "https://dustinedwards.info/llms.txt",
+      "https://dustinedwards.info/llms-full.txt",
+      "https://dustinedwards.info/sitemap.xml",
+      "https://dustinedwards.info/index.md"
+     ],
      "clean_days": 1
     },
     "germomics": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (59 pages, no findings); all 28 sitemap URLs carry lastmod.",
+     "evidence": [
+      "https://germomics.com/llms.txt",
+      "https://germomics.com/llms-full.txt",
+      "https://germomics.com/sitemap.xml",
+      "https://germomics.com/index.md"
+     ],
      "clean_days": 1
     },
     "julieedwards-info": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (2 pages, no findings); both sitemap URLs carry lastmod.",
+     "evidence": [
+      "https://julieedwards.info/llms.txt",
+      "https://julieedwards.info/llms-full.txt",
+      "https://julieedwards.info/sitemap.xml",
+      "https://julieedwards.info/index.md"
+     ],
      "clean_days": 1
     },
     "txasm": {
@@ -639,42 +663,90 @@
     },
     "bsw": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (20 pages). Gap: none of the 20 sitemap URLs has a lastmod. The site is a mockup on a workers.dev address.",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/llms.txt",
+      "https://bsw.dustin-edwards.workers.dev/llms-full.txt",
+      "https://bsw.dustin-edwards.workers.dev/sitemap.xml",
+      "https://bsw.dustin-edwards.workers.dev/index.md"
+     ],
      "clean_days": 1
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (122 pages, no findings); all 113 sitemap URLs carry lastmod.",
+     "evidence": [
+      "https://foxhoundapp.com/llms.txt",
+      "https://foxhoundapp.com/llms-full.txt",
+      "https://foxhoundapp.com/sitemap.xml",
+      "https://foxhoundapp.com/index.md"
+     ],
      "clean_days": 1
     },
     "foxing": {
-     "status": "partial",
-     "reason": "failed on 2026-11-07, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (200 of 2,204 sitemap URLs crawled, --max-pages 200, no findings); all 2,204 carry lastmod.",
+     "evidence": [
+      "https://foxing.app/llms.txt",
+      "https://foxing.app/llms-full.txt",
+      "https://foxing.app/sitemap.xml",
+      "https://foxing.app/index.md"
+     ],
      "clean_days": 1
     },
     "carrel": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (2 pages, no findings); both sitemap URLs carry lastmod. The public page is two pages.",
+     "evidence": [
+      "https://carrel.dustinedwards.info/llms.txt",
+      "https://carrel.dustinedwards.info/llms-full.txt",
+      "https://carrel.dustinedwards.info/sitemap.xml",
+      "https://carrel.dustinedwards.info/index.md"
+     ],
      "clean_days": 1
     },
     "enarratio": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (140 pages) and all 8 sitemap URLs carry lastmod. Gap: 140 of 140 pages have no <meta name=\"text-scale\" content=\"scale\"> (a prelum-audit warning).",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/llms.txt",
+      "https://enarratio.dustinedwards.info/llms-full.txt",
+      "https://enarratio.dustinedwards.info/sitemap.xml",
+      "https://enarratio.dustinedwards.info/index.md"
+     ],
      "clean_days": 1
     },
     "capsomer": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (210 pages) and all 209 sitemap URLs carry lastmod. Gap: the title \"Icons · Capsomer\" is on two pages (/components/icons/ and /icons/), a prelum-audit warning.",
+     "evidence": [
+      "https://capsomer.dustinedwards.info/llms.txt",
+      "https://capsomer.dustinedwards.info/llms-full.txt",
+      "https://capsomer.dustinedwards.info/sitemap.xml",
+      "https://capsomer.dustinedwards.info/index.md"
+     ],
      "clean_days": 1
     },
     "prelum": {
      "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (7 pages). Gap, minor: /accessibility is in the sitemap with no lastmod (1 of 2 URLs).",
+     "evidence": [
+      "https://prelum.dustinedwards.info/llms.txt",
+      "https://prelum.dustinedwards.info/llms-full.txt",
+      "https://prelum.dustinedwards.info/sitemap.xml",
+      "https://prelum.dustinedwards.info/index.md"
+     ],
      "clean_days": 1
     },
     "capsid": {
      "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (117 pages) and all 116 sitemap URLs carry lastmod. Gap: 116 of 117 pages have no <meta name=\"text-scale\" content=\"scale\"> (a prelum-audit warning).",
+     "evidence": [
+      "https://capsid.dustinedwards.info/llms.txt",
+      "https://capsid.dustinedwards.info/llms-full.txt",
+      "https://capsid.dustinedwards.info/sitemap.xml",
+      "https://capsid.dustinedwards.info/index.md"
+     ],
      "clean_days": 1
     },
     "capsid-mcp": {
@@ -1066,7 +1138,7 @@
    "id": 4,
    "name": "Writing and rendering",
    "builder": "Complete shared writing and rendering",
-   "verifier": "Verify scoreboard cells awaiting sign-off",
+   "verifier": "Fresh verifier: re-sign of areas 1, 4 and 9",
    "lines": {
     "prs": 35,
     "added": 6996,
@@ -1075,67 +1147,117 @@
    "unchecked": {},
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "complete",
+     "reason": "Prelum v0.63.7 holds the one render pipeline, its render version, the conformance run and the content audit; dustinedwards.info and germomics.com stamp data-render-version=\"26\" on rendered writing. Carrel, Capsid, Foxing, Germomics, TXASM and dustinedwards.info pin v0.63.7 and Capsomer v0.63.3.",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/render.mjs",
+      "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/render-conformance.mjs",
+      "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/render-audit.mjs",
+      "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/render-version.mjs"
+     ]
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages (of 563), 0 errors, 0 warnings; /about carries data-render-version=\"26\"; Prelum v0.63.7 pinned.",
+     "evidence": [
+      "https://dustinedwards.info/about",
+      "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/package.json"
+     ],
      "clean_days": 1
     },
     "germomics": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 34 pages, 0 errors, 4 warnings. Two Carrel conformance-probe posts (/carrel-conformance-7e19650b-renamed and /carrel-conformance-30b8b1fe-renamed) are published and listed on /writing, each with an image (/conformance-probe.png) that has no width and height. Test content left on a live site; unpublish them.",
+     "evidence": [
+      "https://germomics.com/writing",
+      "https://germomics.com/carrel-conformance-7e19650b-renamed"
+     ],
      "clean_days": 1
     },
     "julieedwards-info": {
      "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 0 warnings. The repository is not readable from this session; an earlier note says the site has its own section grammar rather than Prelum, and nothing here refutes it.",
+     "evidence": [
+      "https://julieedwards.info/"
+     ],
      "clean_days": 1
     },
     "txasm": {
      "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026) on the workers.dev address: 200 pages, 0 errors, 4 warnings: /award-nominations has no data-render-version wrapper, and /meetings, /awardees and /trail go h1 to h3.",
+     "evidence": [
+      "https://txasm.dustin-edwards.workers.dev/award-nominations",
+      "https://txasm.dustin-edwards.workers.dev/meetings",
+      "https://txasm.dustin-edwards.workers.dev/awardees"
+     ],
      "clean_days": 1
     },
     "bsw": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 20 pages, 0 errors, 0 warnings (the earlier h3-after-h1 findings are gone). The repository is not readable from this session, so no second renderer is ruled out beyond the live output.",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/cookie-policy"
+     ],
      "clean_days": 1
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 122 pages, 0 errors, 0 warnings (the h3-after-h1 pages are fixed). The repository is not readable from this session.",
+     "evidence": [
+      "https://foxhoundapp.com/compare"
+     ],
      "clean_days": 1
     },
     "foxing": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages, 0 errors, 0 warnings (/books heading order fixed); apps/web pins Prelum v0.63.7 and has no second Markdown renderer in its package.json.",
+     "evidence": [
+      "https://foxing.app/books",
+      "https://github.com/DrDustinEdwards/foxing/blob/main/apps/web/package.json"
+     ],
      "clean_days": 1
     },
     "carrel": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 0 warnings; the repository pins Prelum v0.63.7 and has no renderer of its own (app/lib/site-markdown.ts calls Prelum's figureMarkup). The public page is two pages and carries no writing; Desk is behind Access and not scanned.",
+     "evidence": [
+      "https://carrel.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/carrel/blob/main/package.json"
+     ],
      "clean_days": 1
     },
     "enarratio": {
      "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 140 pages, 0 errors, 0 warnings. The repository is not readable from this session, so use of Prelum and the absence of a second renderer are not proven.",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "capsomer": {
      "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages, 0 errors, 0 warnings, but the showcase still renders its doc pages with its own renderer (site/markdown.ts, which uses Prelum only for slugify), so there is a second renderer; it also pins Prelum v0.63.3, behind v0.63.7.",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts",
+      "https://capsomer.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "prelum": {
      "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 1 warning: the specimen renders writing with no data-render-version on its wrapper, so an upgrade cannot be seen.",
+     "evidence": [
+      "https://prelum.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "capsid": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 117 pages, 0 errors, 0 warnings; the explorer pins Prelum v0.63.7.",
+     "evidence": [
+      "https://capsid.dustinedwards.info/",
+      "https://github.com/DrDustinEdwards/capsid/blob/main/explorer/package.json"
+     ],
      "clean_days": 1
     },
     "capsid-mcp": {
@@ -1933,7 +2055,7 @@
    "id": 9,
    "name": "Accessibility and components",
    "builder": "Complete accessibility and Capsomer components",
-   "verifier": null,
+   "verifier": "Fresh verifier: re-sign of areas 1, 4 and 9",
    "lines": {
     "prs": 3,
     "added": 7063,
@@ -1944,67 +2066,116 @@
    },
    "cells": {
     "package": {
-     "status": "missing",
-     "reason": "no verifier has checked the package"
+     "status": "partial",
+     "reason": "devkit-a11y finds real issues (it flagged the warnings below), and Capsomer's CI is green on main. Not complete: the shared 404 page has a main but no header, nav or footer (S2 on germomics, txasm, bsw, foxing and capsomer); Enarratio's chart points are covered by another element when focused (L2 on germomics, enarratio and capsid); and two Capsomer showcase pages warn: contact-card (h3 after h1 inside its demo frame, duplicate #main landmark) and not-found-report (duplicate #main).",
+     "evidence": [
+      "https://github.com/DrDustinEdwards/devkit/blob/v0.55.10/bin/a11y.mjs",
+      "https://github.com/DrDustinEdwards/devkit/blob/v0.55.10/bin/a11y-judge.mjs",
+      "https://github.com/DrDustinEdwards/capsomer/blob/main/DEFAULTS.md",
+      "https://capsomer.dustinedwards.info/components/contact-card/"
+     ]
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 0 warnings, 0 not measured.",
+     "evidence": [
+      "https://dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "germomics": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 2 warnings: the 404 page has no header, nav or footer; on /data/cholera-soho-1854 the focused map point is covered by another element on 2 Tab stops.",
+     "evidence": [
+      "https://germomics.com/",
+      "https://germomics.com/data/cholera-soho-1854"
+     ],
      "clean_days": 1
     },
     "julieedwards-info": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 3 pages, 0 errors, 0 warnings, 0 not measured.",
+     "evidence": [
+      "https://julieedwards.info/"
+     ],
      "clean_days": 1
     },
     "txasm": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026) on the workers.dev address: 10 pages, 0 errors, 5 warnings: /meetings and /awardees skip from h1 to h3 (axe heading-order and S2), and the 404 page has no header, nav or footer.",
+     "evidence": [
+      "https://txasm.dustin-edwards.workers.dev/",
+      "https://txasm.dustin-edwards.workers.dev/meetings",
+      "https://txasm.dustin-edwards.workers.dev/awardees"
+     ],
      "clean_days": 1
     },
     "bsw": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: the 404 page has no header, nav or footer. A mockup.",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/"
+     ],
      "clean_days": 1
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 0 warnings, 0 not measured.",
+     "evidence": [
+      "https://foxhoundapp.com/"
+     ],
      "clean_days": 1
     },
     "foxing": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: the 404 page has no header, nav or footer.",
+     "evidence": [
+      "https://foxing.app/"
+     ],
      "clean_days": 1
     },
     "carrel": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 3 pages, 0 errors, 0 warnings, 0 not measured. Desk (signed in) is not scanned.",
+     "evidence": [
+      "https://carrel.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "enarratio": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 9 pages, 0 errors, 1 warning: on /astro a focused chart point is covered by another element.",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/",
+      "https://enarratio.dustinedwards.info/astro"
+     ],
      "clean_days": 1
     },
     "capsomer": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 4 warnings: the 404 page has no header, nav or footer; contact-card has an h3 after h1 and a duplicate #main landmark; not-found-report has a duplicate #main landmark.",
+     "evidence": [
+      "https://capsomer.dustinedwards.info/",
+      "https://capsomer.dustinedwards.info/components/contact-card/",
+      "https://capsomer.dustinedwards.info/components/not-found-report/"
+     ],
      "clean_days": 1
     },
     "prelum": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 3 pages, 0 errors, 0 warnings, 0 not measured.",
+     "evidence": [
+      "https://prelum.dustinedwards.info/"
+     ],
      "clean_days": 1
     },
     "capsid": {
      "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: on /numbers/ a focused chart point is covered by another element on 3 Tab stops.",
+     "evidence": [
+      "https://capsid.dustinedwards.info/",
+      "https://capsid.dustinedwards.info/numbers/"
+     ],
      "clean_days": 1
     },
     "capsid-mcp": {
