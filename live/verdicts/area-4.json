@@ -1,65 +1,99 @@
 {
   "area": 4,
-  "verifier": "Verify scoreboard cells awaiting sign-off",
-  "date": "2026-11-05",
+  "verifier": "Fresh verifier: re-sign of areas 1, 4 and 9",
+  "date": "2026-11-21",
   "cells": {
+    "package": {
+      "verdict": "complete",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/render.mjs",
+        "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/render-conformance.mjs",
+        "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/render-audit.mjs",
+        "https://github.com/DrDustinEdwards/prelum/blob/v0.63.7/render-version.mjs"
+      ],
+      "note": "Prelum v0.63.7 holds the one render pipeline, its render version, the conformance run and the content audit; dustinedwards.info and germomics.com stamp data-render-version=\"26\" on rendered writing. Carrel, Capsid, Foxing, Germomics, TXASM and dustinedwards.info pin v0.63.7 and Capsomer v0.63.3."
+    },
     "capsid": {
       "verdict": "complete",
       "evidence": [
         "https://capsid.dustinedwards.info/",
-        "https://github.com/DrDustinEdwards/capsid/blob/master/explorer/package.json"
+        "https://github.com/DrDustinEdwards/capsid/blob/main/explorer/package.json"
       ],
-      "note": "prelum-content: 117 pages, 0 errors, 0 warnings; one h1, no skipped level; the explorer pins Prelum and carries no second Markdown renderer"
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 117 pages, 0 errors, 0 warnings; the explorer pins Prelum v0.63.7."
     },
     "dustinedwards-info": {
-      "verdict": "partial",
-      "evidence": ["https://dustinedwards.info/research"],
-      "note": "53 pages render writing with no data-render-version wrapper, 6 images without width and height, h3 after h1 on /research/publications"
+      "verdict": "complete",
+      "evidence": [
+        "https://dustinedwards.info/about",
+        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/package.json"
+      ],
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages (of 563), 0 errors, 0 warnings; /about carries data-render-version=\"26\"; Prelum v0.63.7 pinned."
     },
     "bsw": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://bsw.dustin-edwards.workers.dev/cookie-policy"],
-      "note": "11 pages with h3 after h1 (heading order)"
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 20 pages, 0 errors, 0 warnings (the earlier h3-after-h1 findings are gone). The repository is not readable from this session, so no second renderer is ruled out beyond the live output."
     },
     "txasm": {
       "verdict": "partial",
-      "evidence": ["https://txasm.org/award-nominations"],
-      "note": "checked on the workers.dev address: 41 pages, 0 errors; /award-nominations has no data-render-version wrapper"
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/award-nominations",
+        "https://txasm.dustin-edwards.workers.dev/meetings",
+        "https://txasm.dustin-edwards.workers.dev/awardees"
+      ],
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026) on the workers.dev address: 200 pages, 0 errors, 4 warnings: /award-nominations has no data-render-version wrapper, and /meetings, /awardees and /trail go h1 to h3."
     },
     "foxhound": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://foxhoundapp.com/compare"],
-      "note": "6 pages with h3 after h1"
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 122 pages, 0 errors, 0 warnings (the h3-after-h1 pages are fixed). The repository is not readable from this session."
     },
     "foxing": {
-      "verdict": "partial",
-      "evidence": ["https://foxing.app/books"],
-      "note": "/books has h3 after h1"
+      "verdict": "complete",
+      "evidence": [
+        "https://foxing.app/books",
+        "https://github.com/DrDustinEdwards/foxing/blob/main/apps/web/package.json"
+      ],
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages, 0 errors, 0 warnings (/books heading order fixed); apps/web pins Prelum v0.63.7 and has no second Markdown renderer in its package.json."
     },
-    "capsomer": {
+    "germomics": {
       "verdict": "partial",
-      "evidence": ["https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts"],
-      "note": "the live check is clean, but the showcase still renders Markdown with its own regex renderer (site/markdown.ts, used by home, views and main), so there is more than one renderer"
+      "evidence": [
+        "https://germomics.com/writing",
+        "https://germomics.com/carrel-conformance-7e19650b-renamed"
+      ],
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 34 pages, 0 errors, 4 warnings. Two Carrel conformance-probe posts (/carrel-conformance-7e19650b-renamed and /carrel-conformance-30b8b1fe-renamed) are published and listed on /writing, each with an image (/conformance-probe.png) that has no width and height. Test content left on a live site; unpublish them."
+    },
+    "carrel": {
+      "verdict": "complete",
+      "evidence": [
+        "https://carrel.dustinedwards.info/",
+        "https://github.com/DrDustinEdwards/carrel/blob/main/package.json"
+      ],
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 0 warnings; the repository pins Prelum v0.63.7 and has no renderer of its own (app/lib/site-markdown.ts calls Prelum's figureMarkup). The public page is two pages and carries no writing; Desk is behind Access and not scanned."
     },
     "enarratio": {
       "verdict": "partial",
       "evidence": ["https://enarratio.dustinedwards.info/"],
-      "note": "live check clean on 5 pages; its source was not available to this verifier, so use of Prelum and absence of a second renderer is not proven"
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 140 pages, 0 errors, 0 warnings. The repository is not readable from this session, so use of Prelum and the absence of a second renderer are not proven."
     },
-    "carrel": {
+    "capsomer": {
       "verdict": "partial",
-      "evidence": ["https://carrel.dustinedwards.info/"],
-      "note": "live check clean on 2 pages; the Carrel repository was not available to this verifier, and earlier notes say Carrel books still use a regex renderer"
+      "evidence": [
+        "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts",
+        "https://capsomer.dustinedwards.info/"
+      ],
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages, 0 errors, 0 warnings, but the showcase still renders its doc pages with its own renderer (site/markdown.ts, which uses Prelum only for slugify), so there is a second renderer; it also pins Prelum v0.63.3, behind v0.63.7."
     },
     "julieedwards-info": {
       "verdict": "partial",
       "evidence": ["https://julieedwards.info/"],
-      "note": "live check clean on 1 page; the repository was not available, and earlier notes say it has its own section grammar rather than Prelum"
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 0 warnings. The repository is not readable from this session; an earlier note says the site has its own section grammar rather than Prelum, and nothing here refutes it."
     },
     "prelum": {
       "verdict": "partial",
       "evidence": ["https://prelum.dustinedwards.info/"],
-      "note": "specimen renders writing with no data-render-version wrapper"
+      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 1 warning: the specimen renders writing with no data-render-version on its wrapper, so an upgrade cannot be seen."
     }
   }
 }

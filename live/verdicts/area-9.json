@@ -1,0 +1,91 @@
+{
+  "area": 9,
+  "verifier": "Fresh verifier: re-sign of areas 1, 4 and 9",
+  "date": "2026-11-21",
+  "cells": {
+    "package": {
+      "verdict": "partial",
+      "evidence": [
+        "https://github.com/DrDustinEdwards/devkit/blob/v0.55.10/bin/a11y.mjs",
+        "https://github.com/DrDustinEdwards/devkit/blob/v0.55.10/bin/a11y-judge.mjs",
+        "https://github.com/DrDustinEdwards/capsomer/blob/main/DEFAULTS.md",
+        "https://capsomer.dustinedwards.info/components/contact-card/"
+      ],
+      "note": "devkit-a11y finds real issues (it flagged the warnings below), and Capsomer's CI is green on main. Not complete: the shared 404 page has a main but no header, nav or footer (S2 on germomics, txasm, bsw, foxing and capsomer); Enarratio's chart points are covered by another element when focused (L2 on germomics, enarratio and capsid); and two Capsomer showcase pages warn: contact-card (h3 after h1 inside its demo frame, duplicate #main landmark) and not-found-report (duplicate #main)."
+    },
+    "dustinedwards-info": {
+      "verdict": "complete",
+      "evidence": ["https://dustinedwards.info/"],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 0 warnings, 0 not measured."
+    },
+    "germomics": {
+      "verdict": "partial",
+      "evidence": ["https://germomics.com/", "https://germomics.com/data/cholera-soho-1854"],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 2 warnings: the 404 page has no header, nav or footer; on /data/cholera-soho-1854 the focused map point is covered by another element on 2 Tab stops."
+    },
+    "julieedwards-info": {
+      "verdict": "complete",
+      "evidence": ["https://julieedwards.info/"],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 3 pages, 0 errors, 0 warnings, 0 not measured."
+    },
+    "txasm": {
+      "verdict": "partial",
+      "evidence": [
+        "https://txasm.dustin-edwards.workers.dev/",
+        "https://txasm.dustin-edwards.workers.dev/meetings",
+        "https://txasm.dustin-edwards.workers.dev/awardees"
+      ],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026) on the workers.dev address: 10 pages, 0 errors, 5 warnings: /meetings and /awardees skip from h1 to h3 (axe heading-order and S2), and the 404 page has no header, nav or footer."
+    },
+    "bsw": {
+      "verdict": "partial",
+      "evidence": ["https://bsw.dustin-edwards.workers.dev/"],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: the 404 page has no header, nav or footer. A mockup."
+    },
+    "foxhound": {
+      "verdict": "complete",
+      "evidence": ["https://foxhoundapp.com/"],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 0 warnings, 0 not measured."
+    },
+    "foxing": {
+      "verdict": "partial",
+      "evidence": ["https://foxing.app/"],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: the 404 page has no header, nav or footer."
+    },
+    "carrel": {
+      "verdict": "complete",
+      "evidence": ["https://carrel.dustinedwards.info/"],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 3 pages, 0 errors, 0 warnings, 0 not measured. Desk (signed in) is not scanned."
+    },
+    "enarratio": {
+      "verdict": "partial",
+      "evidence": [
+        "https://enarratio.dustinedwards.info/",
+        "https://enarratio.dustinedwards.info/astro"
+      ],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 9 pages, 0 errors, 1 warning: on /astro a focused chart point is covered by another element."
+    },
+    "capsomer": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsomer.dustinedwards.info/",
+        "https://capsomer.dustinedwards.info/components/contact-card/",
+        "https://capsomer.dustinedwards.info/components/not-found-report/"
+      ],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 4 warnings: the 404 page has no header, nav or footer; contact-card has an h3 after h1 and a duplicate #main landmark; not-found-report has a duplicate #main landmark."
+    },
+    "prelum": {
+      "verdict": "complete",
+      "evidence": ["https://prelum.dustinedwards.info/"],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 3 pages, 0 errors, 0 warnings, 0 not measured."
+    },
+    "capsid": {
+      "verdict": "partial",
+      "evidence": [
+        "https://capsid.dustinedwards.info/",
+        "https://capsid.dustinedwards.info/numbers/"
+      ],
+      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: on /numbers/ a focused chart point is covered by another element on 3 Tab stops."
+    }
+  }
+}
