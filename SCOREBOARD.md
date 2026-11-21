@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 08:54 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 09:42 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -13,8 +13,8 @@ Newest run 2026-11-21 08:54 UTC. Filled only from the live checks and the verifi
 | 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | 🟡 | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
-| 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❌ | ❔ | ❌ | ❔ | ❔ | ❌ | ❌ | ❔ | ❌ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30007 | −3470 |
+| 7. Speed and caching | 🟡 | ❔ | ❔ | ❌ | ❌ | ❌ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | 🟡 | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
@@ -31,7 +31,7 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
 - 🟡 dustinedwards.info: failed on 2026-11-08, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Germomics: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 julieedwards.info: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ TXASM: prelum-audit: 887 errors
+- ❌ TXASM: prelum-audit: 751 errors
   - link-redirect: https://txasm.org/ links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/meetings links to https://txasm.org/awards, which redirects to /awardees
   - link-redirect: https://txasm.org/awardees links to https://txasm.org/awards, which redirects to /awardees
@@ -113,12 +113,7 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 - 🟡 julieedwards.info: profile photo 884 KB, 2048 px, unsized, no srcset, 3.1x at 670 px, cached 4 h, other host without preconnect; must go into the library; fallback img unsized
 - 🟡 TXASM: og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap
 - 🟡 BSW: failed on 2026-11-03, after Verify area 6 images and media signed; needs a fresh verifier
-- ❌ Foxhound: site-runtime-images: 42 errors
-  - A6: https://foxhoundapp.com/ /favicon.svg is below the fold (y≈17112 at 390, y≈16865 at 1440) and not lazy (no loading attribute)
-  - A6: https://foxhoundapp.com/ preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈17112 at 390, y≈16865 at 1440), ahead of what the screen shows
-  - A6: https://foxhoundapp.com/pricing /favicon.svg is below the fold (y≈8170 at 390, y≈8271 at 1440) and not lazy (no loading attribute)
-  - A6: https://foxhoundapp.com/pricing preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈8170 at 390, y≈8271 at 1440), ahead of what the screen shows
-  - A6: https://foxhoundapp.com/products /favicon.svg is below the fold (y≈1589 at 390, y≈1715 at 1440) and not lazy (no loading attribute)
+- 🟡 Foxhound: failed on 2026-11-13, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Foxing: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
 - 🟡 Carrel: images check passes; share card answers CORP same-origin
 - 🟡 Enarratio: failed on 2026-11-01, after Verify area 6 images and media signed; needs a fresh verifier
@@ -132,27 +127,20 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- ❌ dustinedwards.info: site-runtime-speed: 4 errors
-  - B1: https://dustinedwards.info/privacy not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://dustinedwards.info/writing/observable-plot-inside-a-worker not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B7: https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine a conditional request with the page's own validator answered 200, not 304
-  - B7: https://dustinedwards.info/software/foxing-edu a conditional request with the page's own validator answered 200, not 304
+- ❔ dustinedwards.info: site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Germomics: site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❌ julieedwards.info: site-runtime-speed: 1 errors
   - C1: https://julieedwards.info/site-n32F1S32ej.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable
-- ❔ TXASM: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❔ BSW: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
-- ❌ Foxhound: site-runtime-speed: 9 errors
-  - B1: https://foxhoundapp.com/product/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://foxhoundapp.com/blog/foxhound-vs-churn-buster not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://foxhoundapp.com/compare/baremetrics-recover not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B7: https://foxhoundapp.com/security a conditional request with the page's own validator answered 200, not 304
-  - B7: https://foxhoundapp.com/accessibility a conditional request with the page's own validator answered 200, not 304
+- ❌ TXASM: site-runtime-speed: 2 errors
+  - C1: https://txasm.dustin-edwards.workers.dev/site-G5RyxUDLHc.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable
+  - D1: https://txasm.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain
+- ❌ BSW: site-runtime-speed: 1 errors
+  - D1: https://bsw.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain
+- ❔ Foxhound: site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❌ Foxing: site-runtime-speed: 1 errors
   - C1: https://foxing.app/site-y5Ulz9Adj9.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable
 - ❔ Carrel: site-runtime-speed-static could not measure: A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❌ Enarratio: site-runtime-speed-static: 1 errors
-  - B7: https://enarratio.dustinedwards.info/ a conditional request with the page's own validator answered 200, not 304
+- ❔ Enarratio: site-runtime-speed-static could not measure: A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Capsomer: site-runtime-speed-static could not measure: A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Prelum specimen: site-runtime-speed-static could not measure: A3: https://prelum.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://prelum.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Capsid explorer: site-runtime-speed could not measure: A3: https://capsid.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
@@ -171,11 +159,11 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves 87a03d3290a35f8f62badfcd659cf05fe6816cb2, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 74 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves ebc1545b05a86853753d3986154a2a374d7dd4b5, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 122 minutes ago
 - ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.dustinedwards.info/health serves 0d1875e61d37723abef4f199ab3e08f04c69755f, not the branch head b7404a17da216179743491e569a420d55e0e1579 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/b7404a17da216179743491e569a420d55e0e1579), committed 45 minutes ago
+  - H4: https://admin-mcp.dustinedwards.info/health serves 0d1875e61d37723abef4f199ab3e08f04c69755f, not the branch head b7404a17da216179743491e569a420d55e0e1579 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/b7404a17da216179743491e569a420d55e0e1579), committed 92 minutes ago
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 28.7 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 29.9 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
