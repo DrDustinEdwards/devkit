@@ -17,7 +17,8 @@ const REPLACED = {
   "@ungap/structured-clone": "export default (value, options) => structuredClone(value, options);",
 };
 
-const LEGACY_RENDERER = /\/react-dom\/cjs\/react-dom-server-legacy\.(?:browser|node)\.production\.js$/;
+const LEGACY_RENDERER =
+  /\/react-dom\/cjs\/react-dom-server-legacy\.(?:browser|node)\.production\.js$/;
 const LEGACY_STUB = `const gone = () => {
   throw new Error("renderToString and renderToStaticMarkup are not in this build (devkit nativeBuiltins); use renderToReadableStream.");
 };
