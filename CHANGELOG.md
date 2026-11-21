@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.55.6
+
+### Patch Changes
+
+- `devkit-a11y` runs axe about four times faster on a page with thousands of elements: it asks for violations only and analyses a page with no frames in the page itself. Enarratio's scan went from 9 to 4 minutes with the same findings. `live` also caps the Foxing `prelum-audit` at 200 pages, as it does the chart audit.
+- devkit-a11y: a focus ring drawn by an ancestor (an input group's `:has(:focus-visible)` outline) or by a range slider's thumb counts as visible focus.
+
 ## 0.55.5
 
 ### Patch Changes
