@@ -381,13 +381,15 @@ export function bindingFindings({ url, configUrl, bindings, checks, exempt = {} 
 
 /**
  * H4 against the branch: the live sha must be the head. A head younger than the grace may still be deploying.
- * @param {{ url: string, liveSha: string, head: { sha: string, date: string, url: string }, now?: number }} read
+ * `liveAhead` (--path only): the live commit comes after the path's newest commit on the branch, so the Worker was deployed from a later
+ * commit than the one that last touched its directory, which is not behind.
+ * @param {{ url: string, liveSha: string, head: { sha: string, date: string, url: string }, liveAhead?: boolean, now?: number }} read
  * @returns {Finding[]}
  */
-export function shaFindings({ url, liveSha, head, now = Date.now() }) {
+export function shaFindings({ url, liveSha, head, liveAhead = false, now = Date.now() }) {
   const live = String(liveSha).toLowerCase();
   const sha = head.sha.toLowerCase();
-  if (sha.startsWith(live) || live.startsWith(sha)) return [];
+  if (sha.startsWith(live) || live.startsWith(sha) || liveAhead) return [];
   const minutes = Math.round((now - Date.parse(head.date)) / 60_000);
   const severity = minutes > DEPLOY_GRACE_MINUTES ? "error" : "warning";
   return [
@@ -656,14 +658,21 @@ async function main() {
         say(
           `branch head: ${values.repo}@${branch}${values.path ? ` (${values.path})` : ""} is ${head.body.sha}, committed ${date}`,
         );
-        if (body && /^[0-9a-f]{7,40}$/i.test(String(body.sha ?? "")))
+        if (body && /^[0-9a-f]{7,40}$/i.test(String(body.sha ?? ""))) {
+          let liveAhead = false;
+          if (values.path && !head.body.sha.startsWith(body.sha)) {
+            const cmp = await github(`/repos/${values.repo}/compare/${head.body.sha}...${body.sha}`);
+            liveAhead = !cmp.error && ["ahead", "identical"].includes(cmp.body.status);
+          }
           findings.push(
             ...shaFindings({
               url: health.url,
               liveSha: body.sha,
               head: { sha: head.body.sha, date, url: head.body.html_url },
+              liveAhead,
             }),
           );
+        }
       }
       if (values["drill-workflow"]) {
         const file = values["drill-workflow"];
