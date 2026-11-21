@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 11:50 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 13:01 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -16,9 +16,9 @@ Newest run 2026-11-21 11:50 UTC. Filled only from the live checks and the verifi
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❔ | ❌ | ❌ | ❌ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
-| 9. Accessibility and components | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
+| 9. Accessibility and components | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
+| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | ❌ | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
+| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 ## Why a cell is not complete
@@ -159,10 +159,10 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Foxhound admin MCP: ops-audit: 1 errors
-  - H4: https://admin-mcp.foxhoundapp.com/health serves f2ee14022beae583ac7c8960f27b03cb14f4971a, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 254 minutes ago
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 7ef890a90c6cdd23621475d2a688c2526d35487d, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 324 minutes ago
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 32.1 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 33.3 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
@@ -176,9 +176,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 - 🟡 TXASM: checks pass; no verifier yet
 - ❌ BSW: devkit-a11y: 1 errors
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-error-page-body &gt; div.cap-empty-content &gt; a.cap-btn&#96; "Go to the home page")
-- ❌ Foxhound: devkit-a11y: 2 errors
-  - L2: https://foxhoundapp.com/ no visible focus on 3 of 40 stops: &#96;input#mrr-slider&#96;, &#96;input#failure-share-slider&#96;, &#96;input#recovery-share-slider&#96;
-  - L3: https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest &#96;section.cap-hero.fh-home-hero &gt; div.cap-hero-aside:nth-of-type(2) &gt; div.fh-queue-block-3 &gt; p.cap-sr-only&#96; reaches 1320 px
+- 🟡 Foxhound: checks pass; no verifier yet
 - 🟡 Foxing: checks pass; no verifier yet
 - 🟡 Carrel: checks pass; no verifier yet
 - 🟡 Enarratio: checks pass; no verifier yet
@@ -214,7 +212,8 @@ Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign
   - D5: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, p.enarratio-source +891 px, height +9
   - B2: https://capsomer.dustinedwards.info/components/writing-progress/states?example=s-target "Words typed, the last 7 days" (bar): drawn only with scripts on, so there is no chart, text or table without them
 - 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Capsid explorer: checks pass; no verifier yet
+- ❌ Capsid explorer: chart-audit: 1 errors
+  - D5: https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.154 (layout shift); largest 0.153, div.cap-chart +0 px
 - ❌ Capsid Portal: chart-audit: 2 errors
   - C2: https://portal.dustinedwards.info/demos/health?tab=ci "sample" (heat-strip): no source line
   - C2: https://portal.dustinedwards.info/demos/health?tab=ci "sample-b" (heat-strip): no source line
@@ -233,7 +232,8 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 - 🟡 Foxing: Plus chat and recommendation reasons unchecked by prose; companion logs user_id; suggester on site-api v0.17.0
 - 🟡 Carrel: routine re-fire guard not atomic; shared fireOnce unused
 - 🟡 Capsid explorer: AI Search reranker has no timeout or gateway and returns raw upstream errors
-- 🟡 Capsid MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
+- ❌ Capsid MCP: site-runtime-ai-audit: 1 errors
+  - L8: https://mcp.dustinedwards.info/health tool-call-log is warn: could not run: timed out after 3000 ms
 - 🟡 Foxhound admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier

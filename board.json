@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T11:50:50.475Z",
+ "as_of": "2026-11-21T13:01:28.255Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -1751,7 +1751,7 @@
       {
        "severity": "error",
        "check": "H4",
-       "detail": "https://admin-mcp.foxhoundapp.com/health serves f2ee14022beae583ac7c8960f27b03cb14f4971a, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 254 minutes ago"
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves 7ef890a90c6cdd23621475d2a688c2526d35487d, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 324 minutes ago"
       }
      ]
     },
@@ -1767,7 +1767,7 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 32.1 hours old, not under 26"
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 33.3 hours old, not under 26"
       },
       {
        "severity": "warning",
@@ -1846,20 +1846,9 @@
      ]
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "devkit-a11y: 2 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://foxhoundapp.com/ no visible focus on 3 of 40 stops: `input#mrr-slider`, `input#failure-share-slider`, `input#recovery-share-slider`"
-      },
-      {
-       "severity": "error",
-       "check": "L3",
-       "detail": "https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest `section.cap-hero.fh-home-hero > div.cap-hero-aside:nth-of-type(2) > div.fh-queue-block-3 > p.cap-sr-only` reaches 1320 px"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "foxing": {
      "status": "partial",
@@ -2074,9 +2063,15 @@
      "clean_days": 1
     },
     "capsid": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "chart-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "D5",
+       "detail": "https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.154 (layout shift); largest 0.153, div.cap-chart +0 px"
+      }
+     ]
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2241,9 +2236,130 @@
      "clean_days": 21
     },
     "capsid-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
-     "clean_days": 3
+     "status": "missing",
+     "reason": "site-runtime-ai-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "L8",
+       "detail": "https://mcp.dustinedwards.info/health tool-call-log is warn: could not run: timed out after 3000 ms"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_start_session: inputSchema.thread is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.glob is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.query is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.paths[] is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.query is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path_prefix is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.base is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.head is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.job is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.step is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.probe is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.query_contains is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page_contains is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.since is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.id is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T4",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_status: inputSchema.package is a string with no pattern, enum, const or format"
+      },
+      {
+       "severity": "warning",
+       "check": "T12",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp no --tools-hash pinned; the test grant's list hashes to 9f8e697260e785aae41ccab096f397a93982f45fee55fd14e768426dbab08308"
+      },
+      {
+       "severity": "warning",
+       "check": "P3",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+      }
+     ]
     },
     "foxhound-mcp": {
      "status": "partial",
