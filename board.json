@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T22:10:01.203Z",
+ "as_of": "2026-11-21T22:44:33.923Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -134,35 +134,15 @@
      "clean_days": 1
     },
     "germomics": {
-     "status": "missing",
-     "reason": "prelum-audit: 5 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-4a8b6f91-renamed, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-da5e5158-renamed, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-f908b11b-renamed, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-7e19650b-renamed, which answers 404"
-      },
-      {
-       "severity": "error",
-       "check": "link-broken",
-       "detail": "https://germomics.com/ links to https://germomics.com/carrel-conformance-30b8b1fe-renamed, which answers 404"
-      }
-     ]
+     "status": "complete",
+     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (59 pages, no findings); all 28 sitemap URLs carry lastmod.",
+     "evidence": [
+      "https://germomics.com/llms.txt",
+      "https://germomics.com/llms-full.txt",
+      "https://germomics.com/sitemap.xml",
+      "https://germomics.com/index.md"
+     ],
+     "clean_days": 1
     },
     "julieedwards-info": {
      "status": "complete",
@@ -853,22 +833,12 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "carrel-conformance: 3 errors",
+     "reason": "carrel-conformance: 1 errors",
      "findings": [
       {
        "severity": "error",
        "check": "M1",
        "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed"
-      },
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://germomics.com/api/carrel/v1 probe post: a delete answers 410 on the old path failed"
-      },
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://germomics.com/api/carrel/v1 probe post: cleaned up failed"
       }
      ]
     },
@@ -903,7 +873,7 @@
     },
     "foxhound": {
      "status": "missing",
-     "reason": "carrel-conformance: 4 errors",
+     "reason": "carrel-conformance: 2 errors",
      "findings": [
       {
        "severity": "error",
@@ -914,16 +884,6 @@
        "severity": "error",
        "check": "M1",
        "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed"
-      },
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a delete answers 410 on the old path failed"
-      },
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: cleaned up failed"
       }
      ]
     },
@@ -1028,16 +988,25 @@
      "clean_days": 1
     },
     "germomics": {
-     "status": "partial",
-     "reason": "Open: no placeholder on live images (no style background on /a-boy-named-flu); no ImageObject in the page JSON-LD; a credit is stored but not shown. Closed: card is image/jpeg with CORP cross-origin, no fetchpriority issue, image sitemap has 10 entries, episodes use their own artwork when set (this episode has none, so the wordmark card shows), local reencode wrapper gone. Live site-runtime-images run on 2026-11-21: 0 errors, 0 warnings.",
-     "evidence": [
-      "https://germomics.com/a-boy-named-flu",
-      "https://germomics.com/brand/germomics-card.jpg",
-      "https://germomics.com/sitemap.xml",
-      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/seo.ts#L23-L29",
-      "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/images.ts#L61-L74"
-     ],
-     "clean_days": 21
+     "status": "missing",
+     "reason": "site-runtime-images: 3 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "A4",
+       "detail": "https://germomics.com/writing /conformance-probe.png has no width attribute, so the page shifts as it loads"
+      },
+      {
+       "severity": "error",
+       "check": "A6",
+       "detail": "https://germomics.com/writing /conformance-probe.png is loading=\"lazy\" above the fold (y≈128 at 390, y≈162 at 1440), so it waits for layout"
+      },
+      {
+       "severity": "error",
+       "check": "C8",
+       "detail": "https://germomics.com/writing 1 content image on this page, and its sitemap entry has no image:image"
+      }
+     ]
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1203,9 +1172,49 @@
      ]
     },
     "germomics": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 7 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/data not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/games not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/rabies-day-out not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/a-boy-named-flu not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/on-the-right-taq not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ORD then ORD"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/a-sky-full-of-sars not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo ORD then ORD"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/confessions-of-a-cholera-girl a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "warning",
+       "check": "C2",
+       "detail": "https://germomics.com/site-KeXBzH-V5H.js an unhashed file is immutable: a change in place reaches no returning reader"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1219,14 +1228,9 @@
      ]
     },
     "julieedwards-info": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://julieedwards.info/accessibility not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo PDX then PDX"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1285,6 +1289,11 @@
      "status": "unmeasured",
      "reason": "site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
+      {
+       "severity": "warning",
+       "check": "F2",
+       "detail": "https://foxhoundapp.com/?speedcheck=nq8wmxze an uncached render took 1172 ms to the first byte (bar 600 ms)"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1526,17 +1535,12 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 42.5 hours old, not under 26"
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 43 hours old, not under 26"
       },
       {
        "severity": "warning",
        "check": "C2",
        "detail": "https://carrel-mcp.dustinedwards.info/health the cron check is warn: backup failed"
-      },
-      {
-       "severity": "warning",
-       "check": "H4",
-       "detail": "https://carrel-mcp.dustinedwards.info/health serves 525a15eafccffb72c68f3edf00c56f145180519c, not the branch head cedd8ed32241254756a6cd9d829114dc4197299c (https://github.com/DrDustinEdwards/carrel/commit/cedd8ed32241254756a6cd9d829114dc4197299c), committed 8 minutes ago"
       }
      ]
     },
@@ -1781,9 +1785,15 @@
      "clean_days": 1
     },
     "capsid": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "chart-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "D5",
+       "detail": "https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.020 (layout shift); largest 0.020, div.cap-chart +0 px, height +195"
+      }
+     ]
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1806,15 +1816,9 @@
      "reason": "no check for a worker"
     },
     "capsid-portal": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://portal.dustinedwards.info/demos/health?tab=backups at 320 px, charts shift the page by 0.024 (layout shift); largest 0.024, div.cap-chart +3 px, height +2"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "carrel-desk": {
      "status": "partial",
