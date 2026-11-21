@@ -60,7 +60,7 @@ async function run(options, define) {
  * @param {string} entry
  * @param {"iife" | "es"} [format]
  * @param {Record<string, string>} [urls]
- * @param {Record<string, { integrity: string, imports: string[] }>} [modules]
+ * @param {Record<string, { integrity: string, imports: string[], lazy: string[] }>} [modules]
  */
 async function bundle(entry, format = "iife", urls, modules) {
   const output = await run(

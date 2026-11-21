@@ -68,7 +68,7 @@ const started = new WeakSet();
 // bundled some other way, it is undefined and an island is /islands/<name>.js.
 /** @type {Record<string, string>} */
 const BUILT = typeof __DEVKIT_ISLANDS__ === "object" ? __DEVKIT_ISLANDS__ : {};
-/** @type {Record<string, { integrity: string, imports: string[] }>} */
+/** @type {Record<string, { integrity: string, imports: string[], lazy: string[] }>} */
 const MODULES = typeof __DEVKIT_MODULES__ === "object" ? __DEVKIT_MODULES__ : {};
 const islandUrl = (/** @type {string} */ name) =>
   Object.hasOwn(BUILT, name) ? BUILT[name] : `/islands/${name}.js`;
