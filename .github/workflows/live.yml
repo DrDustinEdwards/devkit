@@ -68,6 +68,9 @@ jobs:
           npm install --no-save --no-audit --no-fund --ignore-scripts playwright@1.63.0 @axe-core/playwright@4.14.0
           npx playwright install --with-deps chromium
       - name: Run every area's checks against every live site
+        # A daily run takes about 25 minutes; a check that stops answering is killed at its own 20-minute limit, and this step
+        # ends the whole run at 60 so one stuck check never holds the runner for the job's 150.
+        timeout-minutes: 60
         env:
           LIVE_GITHUB_TOKEN: ${{ secrets.LIVE_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
