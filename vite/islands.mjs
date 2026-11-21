@@ -75,20 +75,24 @@ const islandUrl = (/** @type {string} */ name) =>
 
 /**
  * import() takes no integrity, which Integrity-Policy needs of every script, so a module the build hashed is
- * preloaded first with its integrity, along with the files it imports: the browser's module map then holds each
- * with its integrity, and the import and the imports inside take them. In `vite dev` nothing is hashed.
+ * preloaded first with its integrity, along with the files it imports and, at low priority, the files it import()s
+ * in turn: the browser's module map then holds each with its integrity, and the import and the imports inside take
+ * them. In `vite dev` nothing is hashed.
  * @param {string} url
  */
 function preload(url) {
-  for (const file of [url, ...(MODULES[url]?.imports ?? [])]) {
-    const integrity = MODULES[file]?.integrity;
+  const module = MODULES[url];
+  const files = [url, ...(module?.imports ?? [])].map((file) => [file, false]);
+  for (const [file, lazy] of [...files, ...(module?.lazy ?? []).map((file) => [file, true])]) {
+    const integrity = MODULES[String(file)]?.integrity;
     if (!integrity || preloaded.has(file)) continue;
     preloaded.add(file);
     const link = document.createElement("link");
     link.rel = "modulepreload";
-    link.href = file;
+    link.href = String(file);
     link.integrity = integrity;
     link.crossOrigin = "anonymous";
+    if (lazy) link.setAttribute("fetchpriority", "low");
     document.head.append(link);
   }
   return url;

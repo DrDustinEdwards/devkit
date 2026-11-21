@@ -181,9 +181,10 @@ test("size-budget: passes within the limits and fails over one, on a missing bui
     join(dir, "islands", "one.js"),
     'import { shared } from "../shared.js"; export default (el) => { el.textContent = shared() + "one"; };',
   );
+  writeFileSync(join(dir, "lazy.js"), "export const lazy = () => document.title + 'lazy';");
   writeFileSync(
     join(dir, "islands", "two.js"),
-    'import { shared } from "../shared.js"; export default (el) => { el.textContent = shared() + "two"; };',
+    'import { shared } from "../shared.js"; export default async (el) => { el.textContent = shared() + (await import("../lazy.js")).lazy(); };',
   );
   writeFileSync(
     join(dir, "site.js"),
@@ -224,6 +225,8 @@ test("size-budget: passes within the limits and fails over one, on a missing bui
     files.some((f) => f.fileName.startsWith("islands/chunks/")),
     "the shared code is one chunk",
   );
+  // A file only an import() reaches is listed apart (lazy), so the island's preload can hash it too.
+  assert.match(site.source, /lazy:\[[^\]]*chunks\/lazy-/, "the import()ed chunk is in the lazy list");
 });
 
 test("test-assertions: flags a test that asserts nothing, accepts every assertion shape, holds the floor", () => {
