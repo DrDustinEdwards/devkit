@@ -65,6 +65,12 @@ window.__style = (el) => {
   const ringOf = (el) => {
     const own = [];
     for (const pseudo of ["::-webkit-slider-thumb", "::-moz-range-thumb"]) own.push(window.__ring(getComputedStyle(el, pseudo)));
+    // An svg link draws its ring on its shape: the stroke of its first child.
+    const shape = el.firstElementChild;
+    if (shape) {
+      const cs = getComputedStyle(shape);
+      own.push(cs.stroke + " " + cs.strokeWidth);
+    }
     let up = el;
     for (let i = 0; i < 4 && up.parentElement && up.parentElement !== document.body; i++) {
       up = up.parentElement;
