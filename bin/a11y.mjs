@@ -418,7 +418,7 @@ async function motion(/** @type {Page} */ browser, /** @type {string} */ url) {
     return await page.evaluate(() =>
       document
         .getAnimations()
-        .filter((a) => a.playState === "running")
+        .filter((a) => a.playState === "running" && a.timeline instanceof DocumentTimeline)
         .map((animation) => {
           const a = /** @type {Animation & Record<string, any>} */ (animation);
           const timing = a.effect?.getTiming?.() ?? {};
