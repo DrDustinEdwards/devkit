@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T08:21:27.913Z",
+ "as_of": "2026-11-21T08:54:52.870Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -731,198 +731,33 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "missing",
-     "reason": "site-runtime-security: 4 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://dustinedwards.info/ (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-LpVS8p9BVSWozd7lkpP7Qg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://dustinedwards.info/about (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://dustinedwards.info/about (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-ZVuP21VojusJIe5rMJ9ZcQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://dustinedwards.info/site-runtime-security-8909ce2d-0e4e-4aa4-a6b1-90beb4500d8e (404) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://dustinedwards.info/site-runtime-security-8909ce2d-0e4e-4aa4-a6b1-90beb4500d8e (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-pWltHAS/m7S3rG/KQV2uXw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-e4uqHvCBYpcIzLp2H6OxGQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://dustinedwards.info/ (405) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-6qGFfi3QWMIzCDYohosKUg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      }
-     ]
+     "status": "partial",
+     "reason": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3: COEP is still enforced where an embedding site must keep it Report-Only. It passes v0.65.0 with 0 errors. Pin is v0.65.0 in package.json and mcp/package.json; a bump to v0.66.0 with the site's embeds change and a deploy fixes it. Re-check then.",
+     "evidence": [
+      "https://dustinedwards.info/"
+     ],
+     "clean_days": 21
     },
     "germomics": {
-     "status": "missing",
-     "reason": "site-runtime-security: 4 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://germomics.com/ (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-CSB2naJCzVs3t1u/OPBvQg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://germomics.com/episodes (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-rTZDrkYBogSa3Zeo4F3vNA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://germomics.com/site-runtime-security-b1f8f6e9-9405-414b-bd6c-4e89cb0291bf (404) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://germomics.com/site-runtime-security-b1f8f6e9-9405-414b-bd6c-4e89cb0291bf (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-gLOWsz+wAmMgpmXY8xOt0Q==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-GT0v/AK5u5mLEszMVWnxDQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://germomics.com/ (405) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-GbWqzs2Ufwz/Kn0UByLnKg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier",
+     "clean_days": 18
     },
     "julieedwards-info": {
-     "status": "missing",
-     "reason": "site-runtime-security: 4 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://julieedwards.info/ (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Q3v+/eRGKo/j+CR9itG88g==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://julieedwards.info/accessibility (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://julieedwards.info/accessibility (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-pHD5sPwCqQgIFHW/oo+ICA==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://julieedwards.info/site-runtime-security-6d5d228d-4035-4d8e-b08d-25b7fda066ec (404) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://julieedwards.info/site-runtime-security-6d5d228d-4035-4d8e-b08d-25b7fda066ec (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-5rDcG2Aw0hvM1zYKN9rDTQ==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-M+RsPd/be7H49vSDnuXi5A==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://julieedwards.info/ (405) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://julieedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-AajCgtIw5m3DIFyWTTW1ow==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      }
-     ]
+     "status": "complete",
+     "reason": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0; subResourceIntegrity on; Integrity-Policy, Trusted Types and COEP staged Report-Only.",
+     "evidence": [
+      "https://julieedwards.info/"
+     ],
+     "clean_days": 21
     },
     "txasm": {
-     "status": "missing",
-     "reason": "site-runtime-security: 2 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://txasm.dustin-edwards.workers.dev/ (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-QKf5EuM17G7YqjRtF+qhlg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://txasm.dustin-edwards.workers.dev/meetings (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-/41gg09KmdOZqByIF6XQ5Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-7cd8d7e2-7789-4b62-8516-2912397a3ec9 (404) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-7cd8d7e2-7789-4b62-8516-2912397a3ec9 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-QIh5aPMn2nHsvM0Mrctzng==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-43u4RYKXzoDy4nyqRzsmbg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://txasm.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-X5/0n1+4a7siEEH2lHpORw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      }
-     ]
+     "status": "complete",
+     "reason": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0; pin v0.65.0; stays indexed on workers.dev because txasm.org is a suspended host (sites.mjs:339). Dustin's flag 21: txasm.org answers 302 to /cgi-sys/suspendedpage.cgi.",
+     "evidence": [
+      "https://txasm.dustin-edwards.workers.dev/"
+     ],
+     "clean_days": 21
     },
     "bsw": {
      "status": "complete",
@@ -933,106 +768,20 @@
      "clean_days": 21
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "site-runtime-security: 4 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://foxhoundapp.com/ (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-vvWexvKm4CpUpZsUy7K0cg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://foxhoundapp.com/pricing (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-uIxQmCBZcnxovJZI81DUUA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://foxhoundapp.com/site-runtime-security-9436bf7c-7264-4d8b-a2cb-7930613e1172 (404) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxhoundapp.com/site-runtime-security-9436bf7c-7264-4d8b-a2cb-7930613e1172 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-tbWWmrmK9s8HhSFEk560mQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-poeF9dfrGdqSxU2wNgVQ6g==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://foxhoundapp.com/ (405) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-uMqIZfWfFnVBoOVZFB2q0Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      }
-     ]
+     "status": "partial",
+     "reason": "Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. foxhound #432 (v0.66.0) is open; re-check after it deploys.",
+     "evidence": [
+      "https://foxhoundapp.com/"
+     ],
+     "clean_days": 21
     },
     "foxing": {
-     "status": "missing",
-     "reason": "site-runtime-security: 4 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://foxing.app/ (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-t2pwSg3GL7FCieQW80fj8A==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://foxing.app/books (200) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxing.app/books (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-aUYffY482jakWLMbZiNBmA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://foxing.app/site-runtime-security-897a15af-3799-48b4-8162-f449ec6c638c (404) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxing.app/site-runtime-security-897a15af-3799-48b4-8162-f449ec6c638c (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-jei2RcMRo8WTPHcChV9uow==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-1XcjKBGZcfwaj/FwOcdaYw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://foxing.app/ (405) Integrity-Policy is present: ABSENT"
-      },
-      {
-       "severity": "warning",
-       "check": "C3",
-       "detail": "https://foxing.app/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-je1v3s+fwthZE085437QvA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
-      }
-     ]
+     "status": "complete",
+     "reason": "Complete apart from Dustin's steps (CAA, DNSSEC, HSTS preload, TLS 1.2 minimum: /mnt/project-files/area2-round3/dustin-steps.md). 0 errors at v0.66.0. apps/web is on v0.65.0, but packages/api and packages/core are on v0.62.1: bump them with the next foxing change.",
+     "evidence": [
+      "https://foxing.app/"
+     ],
+     "clean_days": 21
     },
     "carrel": {
      "status": "complete",
@@ -1177,20 +926,9 @@
      "reason": "no sign-in, admin pages or MCP server"
     },
     "txasm": {
-     "status": "missing",
-     "reason": "site-runtime-sign-in: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "A1",
-       "detail": "https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options the passkey's rpId is txasm.dustin-edwards.workers.dev, not txasm.org: a passkey made here will not work on the site"
-      },
-      {
-       "severity": "warning",
-       "check": "G1",
-       "detail": "https://txasm.dustin-edwards.workers.dev/admin redirects to https://txasm.dustin-edwards.workers.dev/login, not Cloudflare Access"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "bsw": {
      "status": "n/a",
@@ -1578,7 +1316,7 @@
     },
     "foxhound": {
      "status": "missing",
-     "reason": "site-runtime-images: 46 errors",
+     "reason": "site-runtime-images: 42 errors",
      "findings": [
       {
        "severity": "error",
@@ -1623,16 +1361,6 @@
       {
        "severity": "error",
        "check": "A6",
-       "detail": "https://foxhoundapp.com/product/recovery /favicon.svg is below the fold (y≈30001 at 390, y≈32061 at 1440) and not lazy (no loading attribute)"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/product/recovery preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈30001 at 390, y≈32061 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
        "detail": "https://foxhoundapp.com/product/disputes /favicon.svg is below the fold (y≈25111 at 390, y≈26248 at 1440) and not lazy (no loading attribute)"
       },
       {
@@ -1669,16 +1397,6 @@
        "severity": "error",
        "check": "A6",
        "detail": "https://foxhoundapp.com/demos preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈1798 at 390, y≈1924 at 1440), ahead of what the screen shows"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs /favicon.svg is below the fold (y≈2257 at 390, y≈2365 at 1440) and not lazy (no loading attribute)"
-      },
-      {
-       "severity": "error",
-       "check": "A6",
-       "detail": "https://foxhoundapp.com/docs preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈2257 at 390, y≈2365 at 1440), ahead of what the screen shows"
       },
       {
        "severity": "error",
@@ -1906,37 +1624,27 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "site-runtime-speed: 6 errors",
+     "reason": "site-runtime-speed: 4 errors",
      "findings": [
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://dustinedwards.info/site-map not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
+       "detail": "https://dustinedwards.info/privacy not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://dustinedwards.info/software a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine a conditional request with the page's own validator answered 200, not 304"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/systems/site-runtime a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://dustinedwards.info/teaching/central-dogma a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://dustinedwards.info/software/foxing-edu a conditional request with the page's own validator answered 200, not 304"
       },
       {
        "severity": "unmeasured",
@@ -1951,34 +1659,9 @@
      ]
     },
     "germomics": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 5 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://germomics.com/subscribe not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://germomics.com/terms a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://germomics.com/hell-on-weils a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://germomics.com/confessions-of-a-cholera-girl a conditional request with the page's own validator answered 200, not 304"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2029,32 +1712,27 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://foxhoundapp.com/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
+       "detail": "https://foxhoundapp.com/product/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
       },
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://foxhoundapp.com/features not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
+       "detail": "https://foxhoundapp.com/blog/foxhound-vs-churn-buster not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
       },
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://foxhoundapp.com/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
+       "detail": "https://foxhoundapp.com/compare/baremetrics-recover not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
       },
       {
        "severity": "error",
-       "check": "B1",
-       "detail": "https://foxhoundapp.com/security not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/security a conditional request with the page's own validator answered 200, not 304"
       },
       {
        "severity": "error",
-       "check": "B1",
-       "detail": "https://foxhoundapp.com/decline-codes not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxhoundapp.com/blog/archive not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/accessibility a conditional request with the page's own validator answered 200, not 304"
       },
       {
        "severity": "error",
@@ -2069,7 +1747,12 @@
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://foxhoundapp.com/product/intelligence a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/blog/foxhound-vs-stripe-smart-retries a conditional request with the page's own validator answered 200, not 304"
       },
       {
        "severity": "unmeasured",
@@ -2085,38 +1768,8 @@
     },
     "foxing": {
      "status": "missing",
-     "reason": "site-runtime-speed: 7 errors",
+     "reason": "site-runtime-speed: 1 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxing.app/about not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxing.app/authors/a-w-tozer not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SEA then SEA"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/picks a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/picks/anthony-jeselnik a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/journal/moby-dick-whale-symbolism a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/picks/bookofthemonthclub-orig a conditional request with the page's own validator answered 200, not 304"
-      },
       {
        "severity": "error",
        "check": "C1",
@@ -2151,9 +1804,14 @@
      ]
     },
     "enarratio": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed-static could not measure: A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed-static: 1 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/ a conditional request with the page's own validator answered 200, not 304"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -2331,14 +1989,26 @@
      "clean_days": 1
     },
     "foxhound-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "H4",
+       "detail": "https://admin-mcp.foxhoundapp.com/health serves 87a03d3290a35f8f62badfcd659cf05fe6816cb2, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 74 minutes ago"
+      }
+     ]
     },
     "dustinedwards-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "H4",
+       "detail": "https://admin-mcp.dustinedwards.info/health serves 0d1875e61d37723abef4f199ab3e08f04c69755f, not the branch head b7404a17da216179743491e569a420d55e0e1579 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/b7404a17da216179743491e569a420d55e0e1579), committed 45 minutes ago"
+      }
+     ]
     },
     "carrel-mcp": {
      "status": "missing",
@@ -2347,17 +2017,12 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 28.5 hours old, not under 26"
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 28.7 hours old, not under 26"
       },
       {
        "severity": "warning",
        "check": "C2",
        "detail": "https://carrel-mcp.dustinedwards.info/health the cron check is warn: backup failed"
-      },
-      {
-       "severity": "warning",
-       "check": "H4",
-       "detail": "https://carrel-mcp.dustinedwards.info/health serves 9975637c26029facb92da645ae0dacea23b77810, not the branch head e8ba10ebce7bff162836f4ec02581b51aa56d3c5 (https://github.com/DrDustinEdwards/carrel/commit/e8ba10ebce7bff162836f4ec02581b51aa56d3c5), committed 0 minutes ago"
       }
      ]
     },
@@ -2396,17 +2061,12 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "devkit-a11y: 22 errors",
+     "reason": "devkit-a11y: 12 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L2",
        "detail": "https://dustinedwards.info/ focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2420,18 +2080,8 @@
       },
       {
        "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
        "check": "L2",
        "detail": "https://dustinedwards.info/about focus hidden under sticky `html > body > header.cap-site-header` on 2 stops: `html > body > a.cap-skip`, `html > body > a.cap-skip`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/about animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2440,18 +2090,8 @@
       },
       {
        "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/contact animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
        "check": "L2",
        "detail": "https://dustinedwards.info/research/publications focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/research/publications animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2465,18 +2105,8 @@
       },
       {
        "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/writing animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
        "check": "L2",
        "detail": "https://dustinedwards.info/teaching/phage-discovery focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/teaching/phage-discovery animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2485,44 +2115,24 @@
       },
       {
        "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/site-map animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
        "check": "L2",
        "detail": "https://dustinedwards.info/software/foxhound focus hidden under sticky `html > body > header.cap-site-header` on 2 stops: `html > body > a.cap-skip`, `html > body > a.cap-skip`"
       },
       {
        "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/software/foxhound animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
        "check": "L2",
        "detail": "https://dustinedwards.info/colophon focus hidden under sticky `html > body > header.cap-site-header` on 1 stops: `html > body > a.cap-skip`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://dustinedwards.info/colophon animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "germomics": {
      "status": "missing",
-     "reason": "devkit-a11y: 13 errors",
+     "reason": "devkit-a11y: 4 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/ no visible focus on 9 of 40 stops: `article.cap-card.gm-post-card:nth-of-type(2) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(3) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(4) > header > h3.gm-post-card-title > a.cap-card-link.gm-post-card-link` and 6 more"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2535,24 +2145,9 @@
        "detail": "https://germomics.com/no-such-page-devkit-a11y landmarks: main 1, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
       },
       {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/about animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/contact animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
        "severity": "warning",
        "check": "L2",
        "detail": "https://germomics.com/data/cholera-soho-1854 focused element covered by another on 2 stops: `figure#cholera-soho-1854-map > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > span:nth-of-type(1)` by `div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > svg > g:nth-of-type(2) > circle:nth-of-type(130)`, `figure#cholera-soho-1854-timeline > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(2)`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/data/cholera-soho-1854 animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2561,121 +2156,20 @@
       },
       {
        "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/episodes animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/games/phage-defense animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/writing animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/about/dustin-edwards animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
        "check": "L2",
        "detail": "https://germomics.com/archive no visible focus on 11 of 40 stops: `div.gm-archive-bar:nth-of-type(1) > form.gm-archive-form > div.gm-archive-field > input.gm-archive-input`, `article.cap-card.gm-post-card:nth-of-type(1) > header > h2.gm-post-card-title > a.cap-card-link.gm-post-card-link`, `article.cap-card.gm-post-card:nth-of-type(2) > header > h2.gm-post-card-title > a.cap-card-link.gm-post-card-link` and 8 more"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://germomics.com/archive animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "julieedwards-info": {
-     "status": "missing",
-     "reason": "devkit-a11y: 9 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://julieedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://julieedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://julieedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://julieedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://julieedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://julieedwards.info/site.webmanifest axe landmark-one-main (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://julieedwards.info/site.webmanifest axe page-has-heading-one (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://julieedwards.info/site.webmanifest axe region (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `pre`"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://julieedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` \"\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://julieedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://julieedwards.info/site.webmanifest no lang on <html>"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://julieedwards.info/site.webmanifest no <title>"
-      },
-      {
-       "severity": "warning",
-       "check": "S2",
-       "detail": "https://julieedwards.info/site.webmanifest 0 h1 elements, not one"
-      },
-      {
-       "severity": "warning",
-       "check": "S2",
-       "detail": "https://julieedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "txasm": {
      "status": "missing",
-     "reason": "devkit-a11y: 10 errors",
+     "reason": "devkit-a11y: 1 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
-      },
       {
        "severity": "error",
        "check": "L2",
@@ -2687,24 +2181,9 @@
        "detail": "https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y landmarks: main 1, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
       },
       {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/contact animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/archive/abstract-books animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
        "severity": "warning",
        "check": "L1",
        "detail": "https://txasm.dustin-edwards.workers.dev/meetings axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `li:nth-child(1) > article > h3`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/meetings animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "warning",
@@ -2712,51 +2191,21 @@
        "detail": "https://txasm.dustin-edwards.workers.dev/meetings heading levels skipped: h1 to h3 at `ul.cap-stack > li:nth-of-type(1) > article.cap-card > h3`"
       },
       {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/meetings/spring-2026/program animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
        "severity": "warning",
        "check": "L1",
        "detail": "https://txasm.dustin-edwards.workers.dev/awardees axe heading-order (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `a[href$=\"thomas-s-matney-award\"] > article > h3`"
       },
       {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/awardees animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
        "severity": "warning",
        "check": "S2",
        "detail": "https://txasm.dustin-edwards.workers.dev/awardees heading levels skipped: h1 to h3 at `li:nth-of-type(1) > a > article.cap-card > h3`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/awards/thomas-s-matney-award animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/award-nominations animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1991-newsletter animations still running with reduced motion: cap-fade-start-in on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.txasm-page > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "bsw": {
      "status": "missing",
-     "reason": "devkit-a11y: 10 errors",
+     "reason": "devkit-a11y: 1 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
-      },
       {
        "severity": "error",
        "check": "L2",
@@ -2766,52 +2215,12 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y landmarks: main 1, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/about-us animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/contact-us animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/manuscript-editing animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/visual-design animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/language-support animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/career-development animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://bsw.dustin-edwards.workers.dev/editing-process animations still running with reduced motion: cap-fade-start-in on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `body > div.site-frame > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "foxhound": {
      "status": "missing",
-     "reason": "devkit-a11y: 12 errors",
+     "reason": "devkit-a11y: 2 errors",
      "findings": [
       {
        "severity": "error",
@@ -2822,72 +2231,17 @@
        "severity": "error",
        "check": "L3",
        "detail": "https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest `section.cap-hero.fh-home-hero > div.cap-hero-aside:nth-of-type(2) > div.fh-queue-block-3 > p.cap-sr-only` reaches 1320 px"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/ animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/about animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/contact animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/product/audit animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/pricing animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/blog/archive animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/products animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/docs/platform animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxhoundapp.com/features animations still running with reduced motion: cap-fade-start-in on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `div.fh-page-frame.fh-text > div.fh-cap.fh-site-header > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.fh-features-grid:nth-of-type(2) > aside.fh-features-aside > nav.cap-anchors > ul.cap-anchors-list` and 1 more"
       }
      ]
     },
     "foxing": {
      "status": "missing",
-     "reason": "devkit-a11y: 11 errors",
+     "reason": "devkit-a11y: 2 errors",
      "findings": [
       {
        "severity": "error",
        "check": "L2",
        "detail": "https://foxing.app/ no visible focus on 1 of 40 stops: `input#_R_1maaj5_-control`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       },
       {
        "severity": "error",
@@ -2898,205 +2252,23 @@
        "severity": "warning",
        "check": "S2",
        "detail": "https://foxing.app/no-such-page-devkit-a11y landmarks: main 1, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/about animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/journal/archive animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/books animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/books/813-leblanc animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/awards animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/authors/a-a-milne animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/picks animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://foxing.app/awards/james-tait-black animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
     "carrel": {
-     "status": "missing",
-     "reason": "devkit-a11y: 9 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://carrel.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://carrel.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://carrel.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest axe landmark-one-main (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest axe page-has-heading-one (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest axe region (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `pre`"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` \"\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest no lang on <html>"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest no <title>"
-      },
-      {
-       "severity": "warning",
-       "check": "S2",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest 0 h1 elements, not one"
-      },
-      {
-       "severity": "warning",
-       "check": "S2",
-       "detail": "https://carrel.dustinedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "enarratio": {
-     "status": "missing",
-     "reason": "devkit-a11y: 12 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/example animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/capsomer animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://enarratio.dustinedwards.info/shadcn axe color-contrast (serious, WCAG) at 1440-light, 390-light: 1 element, first `.enarratio-heat[data-step=\"5\"] > .enarratio-numeric`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/shadcn animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://enarratio.dustinedwards.info/radix axe color-contrast (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `.enarratio-heat[data-step=\"4\"] > .enarratio-numeric`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/radix animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://enarratio.dustinedwards.info/material axe color-contrast (serious, WCAG) at 1440-light, 390-light: 1 element, first `.enarratio-heat[data-step=\"4\"] > .enarratio-numeric`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/material animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "warning",
-       "check": "L2",
-       "detail": "https://enarratio.dustinedwards.info/astro focused element covered by another on 1 stops: `figure#tickets-by-team > div.enarratio-frame.enarratio-frame-wide:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `svg > g:nth-of-type(6) > g:nth-of-type(1) > path:nth-of-type(1)`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/astro animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://enarratio.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "capsomer": {
      "status": "missing",
-     "reason": "devkit-a11y: 10 errors",
+     "reason": "devkit-a11y: 1 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.th-board-grid > div.th-tile:nth-of-type(2) > div.cap-tabs:nth-of-type(1) > div.cap-tabs-list:nth-of-type(1)` and 1 more"
-      },
       {
        "severity": "error",
        "check": "L2",
@@ -3118,147 +2290,21 @@
        "detail": "https://capsomer.dustinedwards.info/components/contact-card/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#main`"
       },
       {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/components/contact-card/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(1) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/themes/color/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.th-board-grid > div.th-tile:nth-of-type(2) > div.cap-tabs:nth-of-type(1) > div.cap-tabs-list:nth-of-type(1)` and 1 more"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/icons/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
        "severity": "warning",
        "check": "L1",
        "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ axe landmark-unique (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `#main`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `main#main > section:nth-of-type(1) > div.cap-tabs > div.cap-tabs-list:nth-of-type(1)` and 1 more"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/colors/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/primitives/data/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/accessibility/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsomer.dustinedwards.info/themes/typography/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.th-board-grid > div.th-tile:nth-of-type(2) > div.cap-tabs:nth-of-type(1) > div.cap-tabs-list:nth-of-type(1)` and 1 more"
       }
      ]
     },
     "prelum": {
-     "status": "missing",
-     "reason": "devkit-a11y: 9 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://prelum.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `div.pair:nth-of-type(1) > div:nth-of-type(2) > div.output.prose > div.table-scroll` and 1 more"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://prelum.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://prelum.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on `html > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "error",
-       "check": "L1",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest axe landmark-one-main (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest axe page-has-heading-one (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `html`"
-      },
-      {
-       "severity": "warning",
-       "check": "L1",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest axe region (moderate, best practice) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first `pre`"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest no skip link to main as the first Tab stop (first stop `html > body > div.json-formatter-container` \"\")"
-      },
-      {
-       "severity": "error",
-       "check": "L2",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest no visible focus on 20 of 20 stops: `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container`, `html > body > div.json-formatter-container` and 17 more"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest no lang on <html>"
-      },
-      {
-       "severity": "error",
-       "check": "S2",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest no <title>"
-      },
-      {
-       "severity": "warning",
-       "check": "S2",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest 0 h1 elements, not one"
-      },
-      {
-       "severity": "warning",
-       "check": "S2",
-       "detail": "https://prelum.dustinedwards.info/site.webmanifest landmarks: main 0, header 0, nav 0, footer 0; each page needs one main and a header, nav and footer"
-      }
-     ]
+     "status": "partial",
+     "reason": "checks pass; no verifier yet",
+     "clean_days": 1
     },
     "capsid": {
      "status": "missing",
-     "reason": "devkit-a11y: 13 errors",
+     "reason": "devkit-a11y: 3 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/s/capsid/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
       {
        "severity": "error",
        "check": "L4",
@@ -3270,26 +2316,6 @@
        "detail": "https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(1)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(2)`, `div#family-hex > svg.cap-system-map-comb > a.cap-system-map-cell:nth-of-type(3)` and 18 more"
       },
       {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/systems/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-start-in on `figure#family > div.cap-tabs.cap-system-map-views > div.cap-tabs-list.cap-system-map-switch:nth-of-type(1)` and 1 more"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/flows/job-life/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/flows/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/tools/capsid_start_session/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
        "severity": "warning",
        "check": "L2",
        "detail": "https://capsid.dustinedwards.info/numbers/ focused element covered by another on 3 stops: `figure#jobs-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > rect:nth-of-type(10)`, `figure#agreement-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(6) > circle:nth-of-type(1)`, `figure#waits-per-week > div.enarratio-frame:nth-of-type(2) > div.enarratio-points > button:nth-of-type(1)` by `div.enarratio-frame:nth-of-type(2) > svg > g:nth-of-type(7) > circle:nth-of-type(1)`"
@@ -3297,22 +2323,7 @@
       {
        "severity": "error",
        "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/numbers/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/code/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
        "detail": "https://capsid.dustinedwards.info/code/ axe target-size (serious, WCAG) only in forced colors: first `a[data-devkit-tab=\"19\"]`"
-      },
-      {
-       "severity": "error",
-       "check": "L4",
-       "detail": "https://capsid.dustinedwards.info/tools/ animations still running with reduced motion: cap-fade-start-in on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`, cap-fade-end-out on `html.js > body > header.cap-site-header > nav.cap-site-header-sections`"
       }
      ]
     },
@@ -3364,7 +2375,7 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "chart-audit: 14 errors",
+     "reason": "chart-audit: 13 errors",
      "findings": [
       {
        "severity": "error",
@@ -3385,11 +2396,6 @@
        "severity": "error",
        "check": "C12",
        "detail": "https://dustinedwards.info/writing/ai-answer-mode-on-site-search \"Requests refused by the built-in rate-limiting binding, limi\" (bar), 320 px: 2 text under 12 px, smallest \"run\" at 11.0 px"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth an SVG chart drawn outside Enarratio: \"The MCP server holds no policy. It verifies identity, then m\" (12 lines)"
       },
       {
        "severity": "error",
@@ -3440,67 +2446,12 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "chart-audit: 12 errors",
+     "reason": "chart-audit: 1 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/a-boy-named-flu an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/a-sky-full-of-sars an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/antitoxin-togo-please an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: \"A schematic of that path, not a measurement from one patient\" (6 dots)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
       {
        "severity": "error",
        "check": "D5",
        "detail": "https://germomics.com/data/cholera-soho-1854 at 320 px, charts shift the page by 0.076 (layout shift); largest 0.076, p.enarratio-summary -228 px, height +22"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/hell-on-weils an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/its-on-the-syphilis an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/on-the-right-taq an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/one-flew-over-the-kuru-nest an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/rabies-day-out an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://germomics.com/theres-something-about-typhoid-mary an SVG chart drawn outside Enarratio: \"cap-player-wave-bars\" (120 rects)"
       }
      ]
     },
@@ -3518,42 +2469,12 @@
     },
     "foxhound": {
      "status": "missing",
-     "reason": "chart-audit: 21 errors",
+     "reason": "chart-audit: 7 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://foxhoundapp.com/blog/dunning-email-sequence an SVG chart drawn outside Enarratio: \"an svg\" (17 dots)"
-      },
-      {
-       "severity": "error",
-       "check": "F",
-       "detail": "https://foxhoundapp.com/blog/stripe-disputes-guide an SVG chart drawn outside Enarratio: \"an svg\" (7 dots)"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://foxhoundapp.com/demos/dashboard \"MRR trend\" (area): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://foxhoundapp.com/demos/dashboard \"MRR movements, latest month\" (bar): no source line"
-      },
       {
        "severity": "error",
        "check": "C2",
        "detail": "https://foxhoundapp.com/demos/dashboard \"Customer cohorts still paying\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://foxhoundapp.com/demos/intelligence \"MRR trend\" (area): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://foxhoundapp.com/demos/intelligence \"Net Revenue Retention\" (line): no source line"
       },
       {
        "severity": "error",
@@ -3572,43 +2493,8 @@
       },
       {
        "severity": "error",
-       "check": "C12",
-       "detail": "https://foxhoundapp.com/demos/intelligence \"MRR trend\" (area), 320 px: the drawing is 480 px wide in a 246 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://foxhoundapp.com/demos/intelligence \"Net Revenue Retention\" (line), 320 px: the drawing is 480 px wide in a 246 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://foxhoundapp.com/demos/intelligence \"MRR movement by week\" (bar), 320 px: the drawing is 480 px wide in a 246 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://foxhoundapp.com/demos/intelligence \"MRR by plan\" (bar), 320 px: the drawing is 480 px wide in a 246 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://foxhoundapp.com/demos/intelligence \"Customer health distribution\" (bar), 320 px: the drawing is 480 px wide in a 246 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "B3",
-       "detail": "https://foxhoundapp.com/demos/recovery \"Recovered revenue · 30d\" (bar): 2 text under 12 px, smallest \"30d ago\" at 11.0 px"
-      },
-      {
-       "severity": "error",
        "check": "C2",
        "detail": "https://foxhoundapp.com/demos/recovery \"Recovery rate · 30d\" (area): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://foxhoundapp.com/demos/recovery \"Recovered revenue · 30d\" (bar): no source line"
       },
       {
        "severity": "error",
@@ -3619,11 +2505,6 @@
        "severity": "error",
        "check": "C2",
        "detail": "https://foxhoundapp.com/demos/recovery \"When recoveries happen\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://foxhoundapp.com/demos/recovery \"Recovered revenue · 30d\" (bar), 320 px: 2 text under 12 px, smallest \"30d ago\" at 11.0 px"
       }
      ]
     },
@@ -3638,629 +2519,18 @@
      "clean_days": 1
     },
     "enarratio": {
-     "status": "missing",
-     "reason": "chart-audit: 265 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/ \"Classified reads in one stool sample\" (sunburst), light: 2 text under 4.5:1, lowest \"Total\" #57606a on #084fba at 1.16:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/ \"Moves between US regions in one year\" (chord), light: 4 text under 4.5:1, lowest \"West\" #1b1e23 on #811736 at 1.68:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/ \"Moves between US regions in one year\" (chord), light: 5 marks under 3:1, lowest <path in ribbon> #cbaf8c on #fefdfd at 2.06:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/ \"Hospital bed occupancy today\" (gauge), light: 1 text under 4.5:1, lowest \"87%\" #1b1e23 on #084fba at 2.26:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/ \"Classified reads in one stool sample\" (sunburst), dark: 2 text under 4.5:1, lowest \"Total\" #a3aab3 on #4b8efe at 1.36:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/ \"Moves between US regions in one year\" (chord), dark: 4 text under 4.5:1, lowest \"South\" #e6e8eb on #a1e7e2 at 1.14:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/ \"Moves between US regions in one year\" (chord), dark: 4 marks under 3:1, lowest <path in ribbon> #83434f on #1c1517 at 2.46:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/ \"Hospital bed occupancy today\" (gauge), dark: 1 text under 4.5:1, lowest \"87%\" #e6e8eb on #4b8efe at 2.59:1"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Entries per year, 2005 to 2026\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Analysis runs per day, by site\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Time to result by assay\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Most viewed pages\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Vaccination rate change, 2024 to 2025\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Viral titer with and without antiviral\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Lab budget, 2025 to 2026\" (waterfall): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Daily visits and a one-week forecast\" (line): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Influenza-like illness visits, fall 2025\" (line): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Where the week goes\" (area): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Influenza detections by subtype\" (area): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Positive tests by virus, October 2025 to March 2026\" (streamgraph): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Influenza positivity by region\" (line): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Clinic visits by quarter\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Ct value against infectious titer\" (scatter): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Wastewater signal and test positivity by site\" (scatter): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Cell diameters\" (histogram): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Ct values by virus\" (density): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Daily highs by month\" (ridgeline): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Body weight by diet\" (box): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"How long results take, by test\" (violin): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Vaccine knowledge scores by age\" (strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Influenza vaccination by state\" (dot): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Central 95% of values in the cohort\" (range): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Measles vaccine coverage, 2015 and 2025\" (dumbbell): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Enrolled majors, 2020 and 2025\" (slope): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Confidence in vaccine safety\" (pie): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Where a monthly budget of $4,750 goes\" (treemap): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Classified reads in one stool sample\" (sunburst): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"From invitation to enrollment in a vaccine trial\" (funnel): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Where clinic patients went in one quarter\" (sankey): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Moves between US regions in one year\" (chord): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Two diagnostic tests, scored out of 100\" (radar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Hospital bed occupancy today\" (gauge): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Laboratory performance this month\" (bullet): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Twelve yeast strains on four traits\" (parallel): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Retention by cohort\" (heatmap): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Samples received each day, January to June 2026\" (calendar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Trial plan for 2026\" (gantt): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"A reagent supplier's share price, November 2026\" (candlestick): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Testing by site this week\" (table+sparkline): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Co-authorship network\" (network): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"HAI titers after vaccination\" (titer): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"HIV-1 HXB2 genome\" (genome): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Inhibition of viral polymerase activity\" (dose-response): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Remission in childhood leukemia\" (survival): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Vaccination and hospitalization, six trials\" (forest): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"H5N1 hemagglutinin phylogeny\" (tree): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Cases by address\" (dot-map): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Cases per 10,000 by ward\" (choropleth): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Entries per year, 2019 to 2024\" (sparkline): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Site, last 48 hours\" (progress-ring+uptime-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Requests per hour, 7 and 8 June\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/ \"Agent runs, 9 June 2026\" (timeline): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "D6",
-       "detail": "https://enarratio.dustinedwards.info/ \"Daily highs by month\" (ridgeline): 100.3 kB of inline SVG, over the 100 kB budget"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/astro \"Tickets by team\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Positive tests by virus, October 2025 to March 2026\" (streamgraph), light: 1 text under 4.5:1, lowest \"Influenza B\" #261519 on #51579a at 2.64:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Classified reads in one stool sample\" (sunburst), light: 2 text under 4.5:1, lowest \"Total\" #716265 on #8c5fd2 at 1.29:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Moves between US regions in one year\" (chord), light: 3 text under 4.5:1, lowest \"South\" #261519 on #008489 at 3.87:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Moves between US regions in one year\" (chord), light: 6 marks under 3:1, lowest <path in ribbon> #b0c2a7 on #fefdfd at 1.86:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Hospital bed occupancy today\" (gauge), light: 1 text under 4.5:1, lowest \"87%\" #261519 on #8c5fd2 at 3.89:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Classified reads in one stool sample\" (sunburst), dark: 2 text under 4.5:1, lowest \"Total\" #c0b3b6 on #8c5fd2 at 2.21:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Moves between US regions in one year\" (chord), dark: 4 text under 4.5:1, lowest \"West\" #f3ecee on #abce9b at 1.50:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Moves between US regions in one year\" (chord), dark: 5 marks under 3:1, lowest <path in ribbon> #7c3411 on #1c1517 at 2.02:1"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Hospital bed occupancy today\" (gauge), dark: 1 text under 4.5:1, lowest \"87%\" #f3ecee on #8c5fd2 at 3.85:1"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Entries per year, 2005 to 2026\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Analysis runs per day, by site\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Time to result by assay\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Most viewed pages\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Vaccination rate change, 2024 to 2025\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Viral titer with and without antiviral\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Lab budget, 2025 to 2026\" (waterfall): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Daily visits and a one-week forecast\" (line): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Influenza-like illness visits, fall 2025\" (line): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Where the week goes\" (area): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Influenza detections by subtype\" (area): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Positive tests by virus, October 2025 to March 2026\" (streamgraph): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Influenza positivity by region\" (line): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Clinic visits by quarter\" (bar): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Ct value against infectious titer\" (scatter): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Wastewater signal and test positivity by site\" (scatter): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Cell diameters\" (histogram): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Ct values by virus\" (density): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Daily highs by month\" (ridgeline): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Body weight by diet\" (box): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"How long results take, by test\" (violin): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Vaccine knowledge scores by age\" (strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Influenza vaccination by state\" (dot): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Central 95% of values in the cohort\" (range): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Measles vaccine coverage, 2015 and 2025\" (dumbbell): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Enrolled majors, 2020 and 2025\" (slope): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://enarratio.dustinedwards.info/capsomer \"Confidence in vaccine safety\" (pie): no source line"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "capsomer": {
      "status": "missing",
-     "reason": "chart-audit: 24 errors",
+     "reason": "chart-audit: 2 errors",
      "findings": [
       {
        "severity": "error",
-       "check": "F",
-       "detail": "https://capsomer.dustinedwards.info/components/annotated-figure/states?example=s-default an SVG chart drawn outside Enarratio: \"Figure 1. The parts of a page, from the Example Co style gui\" (5 rects)"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"Response time, median\" (line): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"Queue by day\" (area): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"Actions minutes per day, last 7 days\" (sparkline): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"Uptime of example.edu\" (uptime-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"Requests per hour, last 12 hours\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"Nightly backups verified\" (progress-ring): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"Deploys and downtime, today\" (timeline): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the purple family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the fox family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the teal family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the amber family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the navy family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the forest family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the magenta family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the cerulean family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the olive family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed \"The ramp in the rose family\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
        "check": "D5",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 1280 px, charts shift the page by 0.066 (layout shift); largest 0.066, div.enarratio-frame +0 px, height -64"
-      },
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, figure.enarratio +0 px, height -86"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?example=s-all-up \"example.com\" (uptime-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?example=s-all-up \"example.org\" (uptime-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://capsomer.dustinedwards.info/components/uptime-strip/states?example=s-all-up \"example.net\" (uptime-strip): no source line"
+       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, p.enarratio-source +891 px, height +9"
       },
       {
        "severity": "error",
@@ -4301,28 +2571,8 @@
     },
     "capsid-portal": {
      "status": "missing",
-     "reason": "chart-audit: 6 errors",
+     "reason": "chart-audit: 2 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "C12",
-       "detail": "https://portal.dustinedwards.info/demos/agents?tab=claims \"What does the work cost?\" (line), 320 px: the drawing is 480 px wide in a 231 px frame, so it scrolls sideways"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://portal.dustinedwards.info/demos/health?tab=backups \"Daily\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://portal.dustinedwards.info/demos/health?tab=backups \"Weekly\" (heat-strip): no source line"
-      },
-      {
-       "severity": "error",
-       "check": "C2",
-       "detail": "https://portal.dustinedwards.info/demos/health?tab=backups \"Monthly\" (heat-strip): no source line"
-      },
       {
        "severity": "error",
        "check": "C2",
@@ -4477,195 +2727,9 @@
      "clean_days": 15
     },
     "carrel-mcp": {
-     "status": "missing",
-     "reason": "site-runtime-ai-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.q is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.kind is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_voice_brief: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.source is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.sources[] is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.source is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.q is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.q is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.item is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_book_files: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.path is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.project is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.path is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.source is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.doc is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.tab is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.heading is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_export_doc: inputSchema.doc is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T12",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp no --tools-hash pinned; the test grant's list hashes to bd193813a768ae75a1d05c08f76b1dc0f72f25e661b5b749771ef970215b02c6"
-      },
-      {
-       "severity": "warning",
-       "check": "P3",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
-      },
-      {
-       "severity": "warning",
-       "check": "P7",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching: 1 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints)"
-      },
-      {
-       "severity": "error",
-       "check": "P7",
-       "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching passed 5/6 (failing: sep-2549-resources-read-caching-hints)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "foxing-mcp": {
      "status": "partial",

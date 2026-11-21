@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 08:21 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-21 08:54 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -9,16 +9,16 @@ Newest run 2026-11-21 08:21 UTC. Filled only from the live checks and the verifi
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
 | 1. Search, sharing and AI answers | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
-| 2. Security headers and CSP | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
-| 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | ❌ | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
+| 2. Security headers and CSP | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ❌ | +52000 | −8463 |
+| 3. Sign-in and access | 🟡 | 🟡 | 🟡 | · | 🟡 | · | 🟡 | 🟡 | · | · | · | · | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | 🟡 | +67457 | −2968 |
 | 4. Writing and rendering | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | 🟡 | 🟡 | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❔ | ❔ | ❌ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
-| 9. Accessibility and components | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | ❌ | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | +52017 | −7048 |
+| 7. Speed and caching | 🟡 | ❌ | ❔ | ❌ | ❔ | ❔ | ❌ | ❌ | ❔ | ❌ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | ❌ | ❌ | ❌ | 🟡 | · | · | +28958 | −2924 |
+| 9. Accessibility and components | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | 🟡 | ❌ | · | · | · | · | · | · | · | +7063 | −801 |
+| 10. Charts | ❌ | ❌ | ❌ | · | · | · | ❌ | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | 🟡 | · | · | · | · | · | ❌ | 🟡 | +33215 | −9539 |
+| 11. AI and MCP | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | +3950 | −382 |
 
 ## Why a cell is not complete
@@ -50,34 +50,9 @@ Builder: Share SEO and other key site code. Verifier: Verify scoreboard cells aw
 
 Builder: Complete shared security headers and CSP. Verifier: Verify security headers.
 
-- ❌ dustinedwards.info: site-runtime-security: 4 errors
-  - S2: https://dustinedwards.info/ (200) Integrity-Policy is present: ABSENT
-  - S2: https://dustinedwards.info/about (200) Integrity-Policy is present: ABSENT
-  - S2: https://dustinedwards.info/site-runtime-security-8909ce2d-0e4e-4aa4-a6b1-90beb4500d8e (404) Integrity-Policy is present: ABSENT
-  - S2: https://dustinedwards.info/ (405) Integrity-Policy is present: ABSENT
-- ❌ Germomics: site-runtime-security: 4 errors
-  - S2: https://germomics.com/ (200) Integrity-Policy is present: ABSENT
-  - S2: https://germomics.com/episodes (200) Integrity-Policy is present: ABSENT
-  - S2: https://germomics.com/site-runtime-security-b1f8f6e9-9405-414b-bd6c-4e89cb0291bf (404) Integrity-Policy is present: ABSENT
-  - S2: https://germomics.com/ (405) Integrity-Policy is present: ABSENT
-- ❌ julieedwards.info: site-runtime-security: 4 errors
-  - S2: https://julieedwards.info/ (200) Integrity-Policy is present: ABSENT
-  - S2: https://julieedwards.info/accessibility (200) Integrity-Policy is present: ABSENT
-  - S2: https://julieedwards.info/site-runtime-security-6d5d228d-4035-4d8e-b08d-25b7fda066ec (404) Integrity-Policy is present: ABSENT
-  - S2: https://julieedwards.info/ (405) Integrity-Policy is present: ABSENT
-- ❌ TXASM: site-runtime-security: 2 errors
-  - S2: https://txasm.dustin-edwards.workers.dev/ (200) Integrity-Policy is present: ABSENT
-  - S2: https://txasm.dustin-edwards.workers.dev/site-runtime-security-7cd8d7e2-7789-4b62-8516-2912397a3ec9 (404) Integrity-Policy is present: ABSENT
-- ❌ Foxhound: site-runtime-security: 4 errors
-  - S2: https://foxhoundapp.com/ (200) Integrity-Policy is present: ABSENT
-  - S2: https://foxhoundapp.com/pricing (200) Integrity-Policy is present: ABSENT
-  - S2: https://foxhoundapp.com/site-runtime-security-9436bf7c-7264-4d8b-a2cb-7930613e1172 (404) Integrity-Policy is present: ABSENT
-  - S2: https://foxhoundapp.com/ (405) Integrity-Policy is present: ABSENT
-- ❌ Foxing: site-runtime-security: 4 errors
-  - S2: https://foxing.app/ (200) Integrity-Policy is present: ABSENT
-  - S2: https://foxing.app/books (200) Integrity-Policy is present: ABSENT
-  - S2: https://foxing.app/site-runtime-security-897a15af-3799-48b4-8162-f449ec6c638c (404) Integrity-Policy is present: ABSENT
-  - S2: https://foxing.app/ (405) Integrity-Policy is present: ABSENT
+- 🟡 dustinedwards.info: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3: COEP is still enforced where an embedding site must keep it Report-Only. It passes v0.65.0 with 0 errors. Pin is v0.65.0 in package.json and mcp/package.json; a bump to v0.66.0 with the site's embeds change and a deploy fixes it. Re-check then.
+- 🟡 Germomics: failed on 2026-11-02, after Verify security headers signed; needs a fresh verifier
+- 🟡 Foxhound: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds). It passes v0.65.0 with 0 errors. foxhound #432 (v0.66.0) is open; re-check after it deploys.
 - 🟡 Capsomer: failed on 2026-11-01, after Verify security headers signed; needs a fresh verifier
 - 🟡 Prelum specimen: Fails the newest check (v0.66.0, which the board runs) on C16: frame-src does not yet let in the post players the entry declares (embeds) and on I3 (COEP enforced, not Report-Only). prelum #182 (v0.66.0) merged at 22:49Z but the live sha at 23:10Z was still ffbe359, so the deploy had not landed. It passes v0.65.0 with 0 errors. Re-check after the deploy.
 - 🟡 Foxing admin MCP: 0 errors, 0 warnings live (on Cloudflare since foxing #165), but mcp/package.json pins site-runtime v0.62.0, four minors behind v0.66.0. devkit's pin check (S7) wants every MCP server within one minor; it is a warning until devkit 0.21.0. Bump to the current release and redeploy.
@@ -91,8 +66,7 @@ Builder: Complete shared sign-in and access. Verifier: Verify shared sign-in and
 - 🟡 Package: passkey delete and email change need no fresh sign-in; a new link resets the three tries; Turnstile off when a key is missing; no new-device or recovery notice, no security history, no spike alert
 - 🟡 dustinedwards.info: failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier
 - 🟡 Germomics: admin items pass; the admin 403 is not logged and nothing alerts on spikes (F2, F3)
-- ❌ TXASM: site-runtime-sign-in: 1 errors
-  - A1: https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options the passkey's rpId is txasm.dustin-edwards.workers.dev, not txasm.org: a passkey made here will not work on the site
+- 🟡 TXASM: failed on 2026-11-01, after Verify shared sign-in and access signed; needs a fresh verifier
 - 🟡 Foxhound: merchant MCP has no CIMD (fails H4 live), thin consent page, local call log; package gaps
 - 🟡 Foxing: idle sign-out skips /api/v1/admin and /api/v1/ops; change-email mail goes to the wrong address; raw send error rethrown; package gaps
 - 🟡 Capsid explorer: Portal session is a 12-hour cookie with no 1-hour idle sign-out and no server-side revoke; Portal sign-ins not logged
@@ -139,7 +113,7 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 - 🟡 julieedwards.info: profile photo 884 KB, 2048 px, unsized, no srcset, 3.1x at 670 px, cached 4 h, other host without preconnect; must go into the library; fallback img unsized
 - 🟡 TXASM: og:image only works on workers.dev (txasm.org still WordPress); brand-image upload has no byte check or GPS strip; card CORP same-origin; no placeholder, credit, ImageObject or image sitemap
 - 🟡 BSW: failed on 2026-11-03, after Verify area 6 images and media signed; needs a fresh verifier
-- ❌ Foxhound: site-runtime-images: 46 errors
+- ❌ Foxhound: site-runtime-images: 42 errors
   - A6: https://foxhoundapp.com/ /favicon.svg is below the fold (y≈17112 at 390, y≈16865 at 1440) and not lazy (no loading attribute)
   - A6: https://foxhoundapp.com/ preloads https://foxhoundapp.com/favicon.svg, an image below the fold (y≈17112 at 390, y≈16865 at 1440), ahead of what the screen shows
   - A6: https://foxhoundapp.com/pricing /favicon.svg is below the fold (y≈8170 at 390, y≈8271 at 1440) and not lazy (no loading attribute)
@@ -158,36 +132,27 @@ Builder: Complete shared images and media. Verifier: Verify area 6 images and me
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- ❌ dustinedwards.info: site-runtime-speed: 6 errors
-  - B1: https://dustinedwards.info/site-map not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
-  - B7: https://dustinedwards.info/software a conditional request with the page's own validator answered 200, not 304
-  - B7: https://dustinedwards.info/writing/observable-plot-inside-a-worker a conditional request with the page's own validator answered 200, not 304
-  - B7: https://dustinedwards.info/systems/site-runtime a conditional request with the page's own validator answered 200, not 304
-  - B7: https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp a conditional request with the page's own validator answered 200, not 304
-- ❌ Germomics: site-runtime-speed: 5 errors
-  - B1: https://germomics.com/subscribe not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
-  - B7: https://germomics.com/terms a conditional request with the page's own validator answered 200, not 304
-  - B7: https://germomics.com/hell-on-weils a conditional request with the page's own validator answered 200, not 304
-  - B7: https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304
-  - B7: https://germomics.com/confessions-of-a-cholera-girl a conditional request with the page's own validator answered 200, not 304
+- ❌ dustinedwards.info: site-runtime-speed: 4 errors
+  - B1: https://dustinedwards.info/privacy not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
+  - B1: https://dustinedwards.info/writing/observable-plot-inside-a-worker not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
+  - B7: https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine a conditional request with the page's own validator answered 200, not 304
+  - B7: https://dustinedwards.info/software/foxing-edu a conditional request with the page's own validator answered 200, not 304
+- ❔ Germomics: site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❌ julieedwards.info: site-runtime-speed: 1 errors
   - C1: https://julieedwards.info/site-n32F1S32ej.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable
 - ❔ TXASM: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
 - ❔ BSW: site-runtime-speed could not measure: could not run: exit 1 with no ::error line: }  Node.js v26.13.1
 - ❌ Foxhound: site-runtime-speed: 9 errors
-  - B1: https://foxhoundapp.com/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
-  - B1: https://foxhoundapp.com/features not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
-  - B1: https://foxhoundapp.com/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
-  - B1: https://foxhoundapp.com/security not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
-  - B1: https://foxhoundapp.com/decline-codes not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
-- ❌ Foxing: site-runtime-speed: 7 errors
-  - B1: https://foxing.app/about not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo SEA then SEA
-  - B1: https://foxing.app/authors/a-w-tozer not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SEA then SEA
-  - B7: https://foxing.app/picks a conditional request with the page's own validator answered 200, not 304
-  - B7: https://foxing.app/picks/anthony-jeselnik a conditional request with the page's own validator answered 200, not 304
-  - B7: https://foxing.app/journal/moby-dick-whale-symbolism a conditional request with the page's own validator answered 200, not 304
+  - B1: https://foxhoundapp.com/product/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
+  - B1: https://foxhoundapp.com/blog/foxhound-vs-churn-buster not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
+  - B1: https://foxhoundapp.com/compare/baremetrics-recover not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
+  - B7: https://foxhoundapp.com/security a conditional request with the page's own validator answered 200, not 304
+  - B7: https://foxhoundapp.com/accessibility a conditional request with the page's own validator answered 200, not 304
+- ❌ Foxing: site-runtime-speed: 1 errors
+  - C1: https://foxing.app/site-y5Ulz9Adj9.js a hashed file sent cache-control public, max-age=0, must-revalidate, not a year immutable
 - ❔ Carrel: site-runtime-speed-static could not measure: A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❔ Enarratio: site-runtime-speed-static could not measure: A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❌ Enarratio: site-runtime-speed-static: 1 errors
+  - B7: https://enarratio.dustinedwards.info/ a conditional request with the page's own validator answered 200, not 304
 - ❔ Capsomer: site-runtime-speed-static could not measure: A3: https://capsomer.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsomer.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Prelum specimen: site-runtime-speed-static could not measure: A3: https://prelum.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://prelum.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Capsid explorer: site-runtime-speed could not measure: A3: https://capsid.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://capsid.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
@@ -205,10 +170,12 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Foxhound: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Foxhound admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
+- ❌ Foxhound admin MCP: ops-audit: 1 errors
+  - H4: https://admin-mcp.foxhoundapp.com/health serves 87a03d3290a35f8f62badfcd659cf05fe6816cb2, not the branch head 5353a997b7f021a74db3cad49d0cba8fbd8dc839 (https://github.com/DrDustinEdwards/foxhound/commit/5353a997b7f021a74db3cad49d0cba8fbd8dc839), committed 74 minutes ago
+- ❌ Dustin Edwards admin MCP: ops-audit: 1 errors
+  - H4: https://admin-mcp.dustinedwards.info/health serves 0d1875e61d37723abef4f199ab3e08f04c69755f, not the branch head b7404a17da216179743491e569a420d55e0e1579 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/b7404a17da216179743491e569a420d55e0e1579), committed 45 minutes ago
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 28.5 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 28.7 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
@@ -216,78 +183,37 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: devkit-a11y: 22 errors
+- ❌ dustinedwards.info: devkit-a11y: 12 errors
   - L2: https://dustinedwards.info/ focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
-  - L4: https://dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L2: https://dustinedwards.info/no-such-page-devkit-a11y no visible focus on 1 of 40 stops: &#96;input#_R_1cct5_-control&#96;
   - L2: https://dustinedwards.info/no-such-page-devkit-a11y focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 1 stops: &#96;html &gt; body &gt; a.cap-skip&#96;
-  - L4: https://dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-- ❌ Germomics: devkit-a11y: 13 errors
+  - L2: https://dustinedwards.info/about focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 2 stops: &#96;html &gt; body &gt; a.cap-skip&#96;, &#96;html &gt; body &gt; a.cap-skip&#96;
+  - L2: https://dustinedwards.info/contact focus hidden under sticky &#96;html &gt; body &gt; header.cap-site-header&#96; on 2 stops: &#96;html &gt; body &gt; a.cap-skip&#96;, &#96;html &gt; body &gt; a.cap-skip&#96;
+- ❌ Germomics: devkit-a11y: 4 errors
   - L2: https://germomics.com/ no visible focus on 9 of 40 stops: &#96;article.cap-card.gm-post-card:nth-of-type(2) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(3) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(4) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96; and 6 more
-  - L4: https://germomics.com/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L2: https://germomics.com/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
-  - L4: https://germomics.com/about animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://germomics.com/contact animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-- ❌ julieedwards.info: devkit-a11y: 9 errors
-  - L4: https://julieedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://julieedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://julieedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L1: https://julieedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
-  - L1: https://julieedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
-- ❌ TXASM: devkit-a11y: 10 errors
-  - L4: https://txasm.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+  - L2: https://germomics.com/episodes no visible focus on 10 of 40 stops: &#96;article.cap-card.gm-post-card:nth-of-type(1) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(2) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(3) &gt; header &gt; h3.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96; and 7 more
+  - L2: https://germomics.com/archive no visible focus on 11 of 40 stops: &#96;div.gm-archive-bar:nth-of-type(1) &gt; form.gm-archive-form &gt; div.gm-archive-field &gt; input.gm-archive-input&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(1) &gt; header &gt; h2.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96;, &#96;article.cap-card.gm-post-card:nth-of-type(2) &gt; header &gt; h2.gm-post-card-title &gt; a.cap-card-link.gm-post-card-link&#96; and 8 more
+- 🟡 julieedwards.info: checks pass; no verifier yet
+- ❌ TXASM: devkit-a11y: 1 errors
   - L2: https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
-  - L4: https://txasm.dustin-edwards.workers.dev/contact animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://txasm.dustin-edwards.workers.dev/archive/abstract-books animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://txasm.dustin-edwards.workers.dev/meetings animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.txasm-page &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-- ❌ BSW: devkit-a11y: 10 errors
-  - L4: https://bsw.dustin-edwards.workers.dev/ animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+- ❌ BSW: devkit-a11y: 1 errors
   - L2: https://bsw.dustin-edwards.workers.dev/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-error-page-body &gt; div.cap-empty-content &gt; a.cap-btn&#96; "Go to the home page")
-  - L4: https://bsw.dustin-edwards.workers.dev/about-us animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://bsw.dustin-edwards.workers.dev/contact-us animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://bsw.dustin-edwards.workers.dev/grant-proposal-support animations still running with reduced motion: cap-fade-start-in on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;body &gt; div.site-frame &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-- ❌ Foxhound: devkit-a11y: 12 errors
+- ❌ Foxhound: devkit-a11y: 2 errors
   - L2: https://foxhoundapp.com/ no visible focus on 3 of 40 stops: &#96;input#mrr-slider&#96;, &#96;input#failure-share-slider&#96;, &#96;input#recovery-share-slider&#96;
   - L3: https://foxhoundapp.com/ scrolls sideways at 320 px: scrollWidth 337, widest &#96;section.cap-hero.fh-home-hero &gt; div.cap-hero-aside:nth-of-type(2) &gt; div.fh-queue-block-3 &gt; p.cap-sr-only&#96; reaches 1320 px
-  - L4: https://foxhoundapp.com/ animations still running with reduced motion: cap-fade-start-in on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://foxhoundapp.com/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://foxhoundapp.com/about animations still running with reduced motion: cap-fade-start-in on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;div.fh-page-frame.fh-text &gt; div.fh-cap.fh-site-header &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-- ❌ Foxing: devkit-a11y: 11 errors
+- ❌ Foxing: devkit-a11y: 2 errors
   - L2: https://foxing.app/ no visible focus on 1 of 40 stops: &#96;input#_R_1maaj5_-control&#96;
-  - L4: https://foxing.app/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
   - L2: https://foxing.app/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;main#main &gt; div.cap-empty &gt; div.cap-empty-content:nth-of-type(2) &gt; a.cap-btn&#96; "Go to the home page")
-  - L4: https://foxing.app/about animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://foxing.app/journal/archive animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-- ❌ Carrel: devkit-a11y: 9 errors
-  - L4: https://carrel.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://carrel.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://carrel.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L1: https://carrel.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
-  - L1: https://carrel.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
-- ❌ Enarratio: devkit-a11y: 12 errors
-  - L4: https://enarratio.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://enarratio.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://enarratio.dustinedwards.info/example animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://enarratio.dustinedwards.info/capsomer animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L1: https://enarratio.dustinedwards.info/shadcn axe color-contrast (serious, WCAG) at 1440-light, 390-light: 1 element, first &#96;.enarratio-heat[data-step="5"] &gt; .enarratio-numeric&#96;
-- ❌ Capsomer: devkit-a11y: 10 errors
-  - L4: https://capsomer.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;div.th-board-grid &gt; div.th-tile:nth-of-type(2) &gt; div.cap-tabs:nth-of-type(1) &gt; div.cap-tabs-list:nth-of-type(1)&#96; and 1 more
+- 🟡 Carrel: checks pass; no verifier yet
+- 🟡 Enarratio: checks pass; no verifier yet
+- ❌ Capsomer: devkit-a11y: 1 errors
   - L2: https://capsomer.dustinedwards.info/no-such-page-devkit-a11y no skip link to main as the first Tab stop (first stop &#96;body &gt; main &gt; p &gt; a&#96; "Go to Capsomer's front page")
-  - L4: https://capsomer.dustinedwards.info/components/contact-card/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;main#main &gt; section:nth-of-type(1) &gt; div.cap-tabs &gt; div.cap-tabs-list:nth-of-type(1)&#96; and 1 more
-  - L4: https://capsomer.dustinedwards.info/themes/color/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;div.th-board-grid &gt; div.th-tile:nth-of-type(2) &gt; div.cap-tabs:nth-of-type(1) &gt; div.cap-tabs-list:nth-of-type(1)&#96; and 1 more
-  - L4: https://capsomer.dustinedwards.info/icons/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-- ❌ Prelum specimen: devkit-a11y: 9 errors
-  - L4: https://prelum.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-start-in on &#96;div.pair:nth-of-type(1) &gt; div:nth-of-type(2) &gt; div.output.prose &gt; div.table-scroll&#96; and 1 more
-  - L4: https://prelum.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://prelum.dustinedwards.info/accessibility animations still running with reduced motion: cap-fade-start-in on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L1: https://prelum.dustinedwards.info/site.webmanifest axe document-title (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
-  - L1: https://prelum.dustinedwards.info/site.webmanifest axe html-has-lang (serious, WCAG) at 1440-light, 1440-dark, 390-light, 390-dark: 1 element, first &#96;html&#96;
-- ❌ Capsid explorer: devkit-a11y: 13 errors
-  - L4: https://capsid.dustinedwards.info/ animations still running with reduced motion: cap-fade-start-in on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://capsid.dustinedwards.info/no-such-page-devkit-a11y animations still running with reduced motion: cap-fade-start-in on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
-  - L4: https://capsid.dustinedwards.info/s/capsid/ animations still running with reduced motion: cap-fade-start-in on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;, cap-fade-end-out on &#96;html.js &gt; body &gt; header.cap-site-header &gt; nav.cap-site-header-sections&#96;
+- 🟡 Prelum specimen: checks pass; no verifier yet
+- ❌ Capsid explorer: devkit-a11y: 3 errors
   - L4: https://capsid.dustinedwards.info/s/capsid/ axe target-size (serious, WCAG) only in forced colors: first &#96;a[data-devkit-tab="16"]&#96;
   - L2: https://capsid.dustinedwards.info/systems/ no visible focus on 21 of 40 stops: &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(1)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(2)&#96;, &#96;div#family-hex &gt; svg.cap-system-map-comb &gt; a.cap-system-map-cell:nth-of-type(3)&#96; and 18 more
+  - L4: https://capsid.dustinedwards.info/code/ axe target-size (serious, WCAG) only in forced colors: first &#96;a[data-devkit-tab="19"]&#96;
 - Not checked, the MCP servers' consent pages: each renders only for a registered OAuth client mid-sign-in, so a stranger's scan cannot reach it
 
 ### 10. Charts
@@ -295,46 +221,31 @@ Builder: Complete accessibility and Capsomer components. Verifier: none yet.
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- ❌ dustinedwards.info: chart-audit: 14 errors
+- ❌ dustinedwards.info: chart-audit: 13 errors
   - C2: https://dustinedwards.info/cv "Output by year" (bar): no source line
   - B3: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar): 2 text under 12 px, smallest "run" at 11.0 px
   - C2: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar): no source line
   - C12: https://dustinedwards.info/writing/ai-answer-mode-on-site-search "Requests refused by the built-in rate-limiting binding, limi" (bar), 320 px: 2 text under 12 px, smallest "run" at 11.0 px
-  - F: https://dustinedwards.info/writing/mcp-server-on-workers-with-oauth an SVG chart drawn outside Enarratio: "The MCP server holds no policy. It verifies identity, then m" (12 lines)
-- ❌ Germomics: chart-audit: 12 errors
-  - F: https://germomics.com/a-boy-named-flu an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
-  - F: https://germomics.com/a-sky-full-of-sars an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
-  - F: https://germomics.com/antitoxin-togo-please an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
-  - F: https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: "A schematic of that path, not a measurement from one patient" (6 dots)
-  - F: https://germomics.com/confessions-of-a-cholera-girl an SVG chart drawn outside Enarratio: "cap-player-wave-bars" (120 rects)
-- ❌ Foxhound: chart-audit: 21 errors
-  - F: https://foxhoundapp.com/blog/dunning-email-sequence an SVG chart drawn outside Enarratio: "an svg" (17 dots)
-  - F: https://foxhoundapp.com/blog/stripe-disputes-guide an SVG chart drawn outside Enarratio: "an svg" (7 dots)
-  - C2: https://foxhoundapp.com/demos/dashboard "MRR trend" (area): no source line
-  - C2: https://foxhoundapp.com/demos/dashboard "MRR movements, latest month" (bar): no source line
+  - B3: https://dustinedwards.info/writing/observable-plot-inside-a-worker "Worker bundle size by charting configuration" (bar): 2 text under 12 px, smallest "configuration" at 11.0 px
+- ❌ Germomics: chart-audit: 1 errors
+  - D5: https://germomics.com/data/cholera-soho-1854 at 320 px, charts shift the page by 0.076 (layout shift); largest 0.076, p.enarratio-summary -228 px, height +22
+- ❌ Foxhound: chart-audit: 7 errors
   - C2: https://foxhoundapp.com/demos/dashboard "Customer cohorts still paying" (bar): no source line
+  - C2: https://foxhoundapp.com/demos/intelligence "MRR movement by week" (bar): no source line
+  - C2: https://foxhoundapp.com/demos/intelligence "MRR by plan" (bar): no source line
+  - C2: https://foxhoundapp.com/demos/intelligence "Customer health distribution" (bar): no source line
+  - C2: https://foxhoundapp.com/demos/recovery "Recovery rate · 30d" (area): no source line
 - 🟡 Foxing: checks pass; no verifier yet
 - 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- ❌ Enarratio: chart-audit: 265 errors
-  - B1: https://enarratio.dustinedwards.info/ "Classified reads in one stool sample" (sunburst), light: 2 text under 4.5:1, lowest "Total" #57606a on #084fba at 1.16:1
-  - B1: https://enarratio.dustinedwards.info/ "Moves between US regions in one year" (chord), light: 4 text under 4.5:1, lowest "West" #1b1e23 on #811736 at 1.68:1
-  - B1: https://enarratio.dustinedwards.info/ "Moves between US regions in one year" (chord), light: 5 marks under 3:1, lowest &lt;path in ribbon&gt; #cbaf8c on #fefdfd at 2.06:1
-  - B1: https://enarratio.dustinedwards.info/ "Hospital bed occupancy today" (gauge), light: 1 text under 4.5:1, lowest "87%" #1b1e23 on #084fba at 2.26:1
-  - B1: https://enarratio.dustinedwards.info/ "Classified reads in one stool sample" (sunburst), dark: 2 text under 4.5:1, lowest "Total" #a3aab3 on #4b8efe at 1.36:1
-- ❌ Capsomer: chart-audit: 24 errors
-  - F: https://capsomer.dustinedwards.info/components/annotated-figure/states?example=s-default an SVG chart drawn outside Enarratio: "Figure 1. The parts of a page, from the Example Co style gui" (5 rects)
-  - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Response time, median" (line): no source line
-  - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Queue by day" (area): no source line
-  - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Actions minutes per day, last 7 days" (sparkline): no source line
-  - C2: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed "Uptime of example.edu" (uptime-strip): no source line
+- 🟡 Enarratio: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- ❌ Capsomer: chart-audit: 2 errors
+  - D5: https://capsomer.dustinedwards.info/components/chart-frame/states?example=s-closed at 320 px, charts shift the page by 0.139 (layout shift); largest 0.139, p.enarratio-source +891 px, height +9
+  - B2: https://capsomer.dustinedwards.info/components/writing-progress/states?example=s-target "Words typed, the last 7 days" (bar): drawn only with scripts on, so there is no chart, text or table without them
 - 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Capsid explorer: checks pass; no verifier yet
-- ❌ Capsid Portal: chart-audit: 6 errors
-  - C12: https://portal.dustinedwards.info/demos/agents?tab=claims "What does the work cost?" (line), 320 px: the drawing is 480 px wide in a 231 px frame, so it scrolls sideways
-  - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Daily" (heat-strip): no source line
-  - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Weekly" (heat-strip): no source line
-  - C2: https://portal.dustinedwards.info/demos/health?tab=backups "Monthly" (heat-strip): no source line
+- ❌ Capsid Portal: chart-audit: 2 errors
   - C2: https://portal.dustinedwards.info/demos/health?tab=ci "sample" (heat-strip): no source line
+  - C2: https://portal.dustinedwards.info/demos/health?tab=ci "sample-b" (heat-strip): no source line
 - 🟡 Carrel Desk: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 
 ### 11. AI and MCP
@@ -353,8 +264,7 @@ Builder: Complete shared AI and MCP code. Verifier: Verify area 11 AI and MCP.
 - 🟡 Capsid MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Foxhound admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
-- ❌ Carrel MCP: site-runtime-ai-audit: 1 errors
-  - P7: https://carrel-mcp.dustinedwards.info/mcp conformance caching passed 5/6 (failing: sep-2549-resources-read-caching-hints)
+- 🟡 Carrel MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 - 🟡 Foxing admin MCP: failed on 2026-11-01, after Verify area 11 AI and MCP signed; needs a fresh verifier
 
 ### 12. Checks and tooling
