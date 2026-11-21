@@ -226,7 +226,11 @@ test("size-budget: passes within the limits and fails over one, on a missing bui
     "the shared code is one chunk",
   );
   // A file only an import() reaches is listed apart (lazy), so the island's preload can hash it too.
-  assert.match(site.source, /lazy:\[[^\]]*chunks\/lazy-/, "the import()ed chunk is in the lazy list");
+  assert.match(
+    site.source,
+    /lazy:\[[^\]]*chunks\/lazy-/,
+    "the import()ed chunk is in the lazy list",
+  );
 });
 
 test("test-assertions: flags a test that asserts nothing, accepts every assertion shape, holds the floor", () => {

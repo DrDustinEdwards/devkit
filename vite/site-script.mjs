@@ -126,7 +126,10 @@ function manifestOf(output) {
     /** @type {Set<string>} */ seen = new Set(),
   ) => {
     const chunk = chunks.get(file);
-    for (const next of [...(chunk?.imports ?? []), ...(dynamic ? (chunk?.dynamicImports ?? []) : [])]) {
+    for (const next of [
+      ...(chunk?.imports ?? []),
+      ...(dynamic ? (chunk?.dynamicImports ?? []) : []),
+    ]) {
       if (seen.has(next)) continue;
       seen.add(next);
       closure(next, dynamic, seen);
