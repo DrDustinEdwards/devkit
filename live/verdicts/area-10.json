@@ -5,79 +5,57 @@
   "cells": {
     "germomics": {
       "verdict": "complete",
-      "evidence": [
-        "https://germomics.com/"
-      ],
+      "evidence": ["https://germomics.com/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show."
     },
     "foxhound": {
       "verdict": "complete",
-      "evidence": [
-        "https://foxhoundapp.com/"
-      ],
+      "evidence": ["https://foxhoundapp.com/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "enarratio": {
       "verdict": "complete",
-      "evidence": [
-        "https://enarratio.dustinedwards.info/"
-      ],
+      "evidence": ["https://enarratio.dustinedwards.info/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show."
     },
     "prelum": {
       "verdict": "complete",
-      "evidence": [
-        "https://prelum.dustinedwards.info/"
-      ],
+      "evidence": ["https://prelum.dustinedwards.info/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "capsid-portal": {
       "verdict": "complete",
-      "evidence": [
-        "https://portal.dustinedwards.info/"
-      ],
+      "evidence": ["https://portal.dustinedwards.info/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "carrel": {
       "verdict": "complete",
-      "evidence": [
-        "https://carrel.dustinedwards.info/"
-      ],
+      "evidence": ["https://carrel.dustinedwards.info/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "carrel-desk": {
       "verdict": "complete",
-      "evidence": [
-        "https://desk.dustinedwards.info/"
-      ],
+      "evidence": ["https://desk.dustinedwards.info/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "dustinedwards-info": {
       "verdict": "complete",
-      "evidence": [
-        "https://dustinedwards.info/"
-      ],
+      "evidence": ["https://dustinedwards.info/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show."
     },
     "foxing": {
       "verdict": "complete",
-      "evidence": [
-        "https://foxing.app/"
-      ],
+      "evidence": ["https://foxing.app/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "capsid": {
       "verdict": "complete",
-      "evidence": [
-        "https://capsid.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsid.dustinedwards.info/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show."
     },
     "capsomer": {
       "verdict": "complete",
-      "evidence": [
-        "https://capsomer.dustinedwards.info/"
-      ],
+      "evidence": ["https://capsomer.dustinedwards.info/"],
       "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     }
   }
