@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.58.1
+
+### Patch Changes
+
+- devkit-no-bloat: a change of how Knip counts may move the comment share's line counts, which only warn, so a Knip config's own lines no longer block writing the baseline.
+
 ## 0.58.0
 
 ### Minor Changes
