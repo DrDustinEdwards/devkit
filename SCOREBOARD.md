@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-21 23:18 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-22 00:13 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -11,13 +11,13 @@ Newest run 2026-11-21 23:18 UTC. Filled only from the live checks and the verifi
 | 1. Search, sharing and AI answers | ✅ | 🟡 | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | +52000 | −8463 |
 | 3. Sign-in and access | ✅ | ✅ | ✅ | · | 🟡 | · | 🟡 | ✅ | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | +67457 | −2968 |
-| 4. Writing and rendering | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
+| 4. Writing and rendering | ✅ | ✅ | 🟡 | 🟡 | ❌ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | ❌ | ❌ | 🟡 | 🟡 | · | ❌ | ❌ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❔ | ❔ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 7. Speed and caching | 🟡 | ❔ | ❔ | ❔ | ❔ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
 | 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | 🟡 | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | ❔ | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
 
@@ -55,7 +55,9 @@ Builder: Complete shared writing and rendering. Verifier: Fresh verifier: re-sig
 
 - 🟡 Germomics: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 34 pages, 0 errors, 4 warnings. Two Carrel conformance-probe posts (/carrel-conformance-7e19650b-renamed and /carrel-conformance-30b8b1fe-renamed) are published and listed on /writing, each with an image (/conformance-probe.png) that has no width and height. Test content left on a live site; unpublish them.
 - 🟡 julieedwards.info: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 0 warnings. The repository is not readable from this session; an earlier note says the site has its own section grammar rather than Prelum, and nothing here refutes it.
-- 🟡 TXASM: prelum-content v0.63.7 (run by hand, 21 Nov 2026) on the workers.dev address: 200 pages, 0 errors, 4 warnings: /award-nominations has no data-render-version wrapper, and /meetings, /awardees and /trail go h1 to h3.
+- ❌ TXASM: prelum-content: 2 errors
+  - writing-render-version: https://txasm.org/ stored HTML from render version 3; the pipeline is at 26
+  - writing-render-version: https://txasm.org/award-nominations stored HTML from render version 3; the pipeline is at 26
 - 🟡 Enarratio: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 140 pages, 0 errors, 0 warnings. The repository is not readable from this session, so use of Prelum and the absence of a second renderer are not proven.
 - 🟡 Capsomer: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages, 0 errors, 0 warnings, but the showcase still renders its doc pages with its own renderer (site/markdown.ts, which uses Prelum only for slugify), so there is a second renderer; it also pins Prelum v0.63.3, behind v0.63.7.
 - 🟡 Prelum specimen: prelum-content v0.63.7 (run by hand, 21 Nov 2026): 2 pages, 0 errors, 1 warning: the specimen renders writing with no data-render-version on its wrapper, so an upgrade cannot be seen.
@@ -66,16 +68,16 @@ Builder: Complete Carrel editing contract. Verifier: Re-sign partial devkit area
 
 - 🟡 Package: Closed since 2026-10-31: schedule and unschedule events (path null for an unpublished post), unknown fields now 400 unknown-field, site-api-live honors --from, one DNS-resolving outbound guard, shared purge hook (schedulePurgeHook), feature image, excerpt, authors and series boxes in Carrel, merge panel for a diverged copy, backlinks warning on trash and delete, sort is a select so aria-sort does not apply. Open: the post-life probe (301, 410, trash, preview-link life, hooks, field round-trips) is off by default and Carrel's live run does not turn it on (health.server.ts runConformance has no probePosts), so no live site is checked for those. Open: Carrel has no way to list or revoke a preview link (site-api client has it, no Carrel screen uses it). Open: no width preview in the editor (PreviewPane is one iframe). Open: no hand a11y pass, and whether Carrel's README is now right, could not be proven by a script.
 - ❌ dustinedwards.info: carrel-conformance: 1 errors
-  - M1: https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed
+  - M1: https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed: create: 422 refused
 - ❌ Germomics: carrel-conformance: 1 errors
-  - M1: https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed
+  - M1: https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow, webmention
 - 🟡 julieedwards.info: Read main cf8ff79. Closed: site-api v0.46.1 pin; the webmention hook is wired (handler.server.ts) and sends the page itself on publish only; a save lands in a draft and never changes the live text; schedules and scheduled update; the unpublish, trash, rename and delete refusals are documented for a fixed set of sections. Still open: (1) a live section with a saved draft reads as status draft, not published with hasDraft (sections.server.ts:54-55); (2) revisions are capped at 50 and carry the literal author julieedwards, not the actor (sections.server.ts:234, 243); (3) no unpublish or delete by design (sections.server.ts:220-225), still wants a ruling recorded; (4) the preview is main plus HomeSections with no site header or footer (adapter.server.tsx:84-86).
 - 🟡 TXASM: Closed: site-api-live honors --from and passes against the workers.dev copy, IndexNow uses publicOrigin so Carrel publishes are sent, preview renders through the site's own route, revisions are not pruned and old ones open, media shrink exists. Open: no delete or unpublish (every page is a live route; needs Dustin's ruling, none found in Capsid). Open: revision author is hard-coded 'Dustin Edwards' instead of the actor. Pre-cutover limit: txasm.org is still WordPress, so the site is served from workers.dev and passkey rpId follows the host; that cannot change now.
 - ❌ Foxhound: carrel-conformance: 2 errors
-  - M1: https://foxhoundapp.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed
-  - M1: https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed
+  - M1: https://foxhoundapp.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow
+  - M1: https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed: old path /blog/conformance-probe-7704156b: expected 301, got 404
 - ❌ Foxing: carrel-conformance: 1 errors
-  - M1: https://foxing.app/api/carrel/v1 probe post: created as a draft failed
+  - M1: https://foxing.app/api/carrel/v1 probe post: created as a draft failed: create: 422 refused
 
 ### 6. Images and media
 
@@ -98,14 +100,13 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 - ❔ dustinedwards.info: site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Germomics: site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ julieedwards.info: site-runtime-speed could not measure: A3: https://julieedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://julieedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❌ TXASM: site-runtime-speed: 6 errors
-  - B1: https://txasm.dustin-edwards.workers.dev/newsletters/fall-1988-newsletter not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SJC then SJC
-  - B1: https://txasm.dustin-edwards.workers.dev/newsletters/fall-1971-newsletter not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SJC then SJC
-  - B7: https://txasm.dustin-edwards.workers.dev/archive/abstract-books a conditional request with the page's own validator answered 200, not 304
-  - B7: https://txasm.dustin-edwards.workers.dev/awards/samuel-kaplan-award a conditional request with the page's own validator answered 200, not 304
-  - B7: https://txasm.dustin-edwards.workers.dev/meetings/fall-2025/abstracts a conditional request with the page's own validator answered 200, not 304
+- ❔ TXASM: site-runtime-speed could not measure: A3: https://txasm.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://txasm.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ BSW: site-runtime-speed could not measure: A3: https://bsw.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://bsw.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
-- ❔ Foxhound: site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
+- ❌ Foxhound: site-runtime-speed: 4 errors
+  - B1: https://foxhoundapp.com/docs/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD
+  - B1: https://foxhoundapp.com/product/intelligence not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD
+  - B7: https://foxhoundapp.com/products a conditional request with the page's own validator answered 200, not 304
+  - B7: https://foxhoundapp.com/compare a conditional request with the page's own validator answered 200, not 304
 - ❔ Foxing: site-runtime-speed could not measure: A3: https://foxing.app/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxing.app/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Carrel: site-runtime-speed-static could not measure: A3: https://carrel.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://carrel.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
 - ❔ Enarratio: site-runtime-speed-static could not measure: A3: https://enarratio.dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://enarratio.dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured
@@ -129,7 +130,7 @@ Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
 - 🟡 Foxhound admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
 - ❌ Carrel MCP: ops-audit: 1 errors
-  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 43.6 hours old, not under 26
+  - B1: https://carrel-mcp.dustinedwards.info/health the newest complete backup is 44.5 hours old, not under 26
 - 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
@@ -151,7 +152,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: Fresh verifie
 Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
 
 - ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
+- ❔ dustinedwards.info: chart-audit could not measure: could not run: prelum-chart-audit: could not start a browser: Cannot find module 'playwright-core' Require stack: - /tmp/prelum-chart-audit-playwright-core_1.65.1-axe-core_4.14.0/package.json
 - 🟡 Germomics: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Foxhound: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 - 🟡 Foxing: checks pass; no verifier yet

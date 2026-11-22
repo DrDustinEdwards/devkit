@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T23:18:32.402Z",
+ "as_of": "2026-11-22T00:13:06.031Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -131,7 +131,7 @@
       "https://dustinedwards.info/sitemap.xml",
       "https://dustinedwards.info/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "germomics": {
      "status": "complete",
@@ -142,7 +142,7 @@
       "https://germomics.com/sitemap.xml",
       "https://germomics.com/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "julieedwards-info": {
      "status": "complete",
@@ -153,7 +153,7 @@
       "https://julieedwards.info/sitemap.xml",
       "https://julieedwards.info/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "txasm": {
      "status": "partial",
@@ -163,7 +163,7 @@
       "https://txasm.dustin-edwards.workers.dev/awardees.md",
       "https://txasm.dustin-edwards.workers.dev/sitemap.xml"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "bsw": {
      "status": "partial",
@@ -174,7 +174,7 @@
       "https://bsw.dustin-edwards.workers.dev/sitemap.xml",
       "https://bsw.dustin-edwards.workers.dev/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxhound": {
      "status": "complete",
@@ -185,7 +185,7 @@
       "https://foxhoundapp.com/sitemap.xml",
       "https://foxhoundapp.com/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxing": {
      "status": "complete",
@@ -196,7 +196,7 @@
       "https://foxing.app/sitemap.xml",
       "https://foxing.app/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel": {
      "status": "complete",
@@ -207,7 +207,7 @@
       "https://carrel.dustinedwards.info/sitemap.xml",
       "https://carrel.dustinedwards.info/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "enarratio": {
      "status": "partial",
@@ -218,7 +218,7 @@
       "https://enarratio.dustinedwards.info/sitemap.xml",
       "https://enarratio.dustinedwards.info/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsomer": {
      "status": "partial",
@@ -229,7 +229,7 @@
       "https://capsomer.dustinedwards.info/sitemap.xml",
       "https://capsomer.dustinedwards.info/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "prelum": {
      "status": "partial",
@@ -240,7 +240,7 @@
       "https://prelum.dustinedwards.info/sitemap.xml",
       "https://prelum.dustinedwards.info/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid": {
      "status": "partial",
@@ -251,7 +251,7 @@
       "https://capsid.dustinedwards.info/sitemap.xml",
       "https://capsid.dustinedwards.info/index.md"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -312,7 +312,7 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "germomics": {
      "status": "complete",
@@ -320,7 +320,7 @@
      "evidence": [
       "https://germomics.com/"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "julieedwards-info": {
      "status": "complete",
@@ -328,7 +328,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "txasm": {
      "status": "complete",
@@ -336,7 +336,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "bsw": {
      "status": "complete",
@@ -344,7 +344,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "foxhound": {
      "status": "complete",
@@ -352,7 +352,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "foxing": {
      "status": "complete",
@@ -360,7 +360,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "carrel": {
      "status": "complete",
@@ -368,7 +368,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "enarratio": {
      "status": "complete",
@@ -376,7 +376,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "capsomer": {
      "status": "complete",
@@ -384,7 +384,7 @@
      "evidence": [
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 15
+     "clean_days": 16
     },
     "prelum": {
      "status": "complete",
@@ -392,7 +392,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "capsid": {
      "status": "complete",
@@ -400,7 +400,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "capsid-mcp": {
      "status": "complete",
@@ -408,7 +408,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -416,7 +416,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -424,7 +424,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "carrel-mcp": {
      "status": "complete",
@@ -432,7 +432,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "foxing-mcp": {
      "status": "complete",
@@ -440,7 +440,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "capsid-portal": {
      "status": "complete",
@@ -449,7 +449,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "carrel-desk": {
      "status": "missing",
@@ -501,7 +501,7 @@
       "https://dustinedwards.info/lab-bench",
       "https://dustinedwards.info/admin"
      ],
-     "clean_days": 16
+     "clean_days": 17
     },
     "germomics": {
      "status": "complete",
@@ -510,7 +510,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/routes/admin.tsx#L56",
       "https://germomics.com/admin"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -524,7 +524,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/auth.server.ts#L50",
       "https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "bsw": {
      "status": "n/a",
@@ -539,7 +539,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/oauth/authorize.tsx",
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/health.ts"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "foxing": {
      "status": "complete",
@@ -550,7 +550,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/test/security-notice.integration.test.ts#L81",
       "https://foxing.app/login"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "carrel": {
      "status": "n/a",
@@ -576,7 +576,7 @@
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L318",
       "https://portal.dustinedwards.info/health"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "capsid-mcp": {
      "status": "complete",
@@ -585,7 +585,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/index.ts"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -594,7 +594,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/mcp/src/index.ts"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -603,7 +603,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "carrel-mcp": {
      "status": "complete",
@@ -612,7 +612,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/mcp/door.ts"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "foxing-mcp": {
      "status": "complete",
@@ -621,7 +621,7 @@
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/src/index.ts"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "capsid-portal": {
      "status": "complete",
@@ -630,7 +630,7 @@
       "https://portal.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L63"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "carrel-desk": {
      "status": "complete",
@@ -640,7 +640,7 @@
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/workers/gate.ts#L50",
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 20
+     "clean_days": 21
     }
    }
   },
@@ -673,7 +673,7 @@
       "https://dustinedwards.info/about",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/package.json"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "germomics": {
      "status": "partial",
@@ -682,7 +682,7 @@
       "https://germomics.com/writing",
       "https://germomics.com/carrel-conformance-7e19650b-renamed"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "julieedwards-info": {
      "status": "partial",
@@ -690,17 +690,23 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "txasm": {
-     "status": "partial",
-     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026) on the workers.dev address: 200 pages, 0 errors, 4 warnings: /award-nominations has no data-render-version wrapper, and /meetings, /awardees and /trail go h1 to h3.",
-     "evidence": [
-      "https://txasm.dustin-edwards.workers.dev/award-nominations",
-      "https://txasm.dustin-edwards.workers.dev/meetings",
-      "https://txasm.dustin-edwards.workers.dev/awardees"
-     ],
-     "clean_days": 1
+     "status": "missing",
+     "reason": "prelum-content: 2 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://txasm.org/ stored HTML from render version 3; the pipeline is at 26"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://txasm.org/award-nominations stored HTML from render version 3; the pipeline is at 26"
+      }
+     ]
     },
     "bsw": {
      "status": "complete",
@@ -708,7 +714,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/cookie-policy"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxhound": {
      "status": "complete",
@@ -716,7 +722,7 @@
      "evidence": [
       "https://foxhoundapp.com/compare"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxing": {
      "status": "complete",
@@ -725,7 +731,7 @@
       "https://foxing.app/books",
       "https://github.com/DrDustinEdwards/foxing/blob/main/apps/web/package.json"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel": {
      "status": "complete",
@@ -734,7 +740,7 @@
       "https://carrel.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/carrel/blob/main/package.json"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "enarratio": {
      "status": "partial",
@@ -742,7 +748,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsomer": {
      "status": "partial",
@@ -751,7 +757,7 @@
       "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts",
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "prelum": {
      "status": "partial",
@@ -759,7 +765,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid": {
      "status": "complete",
@@ -768,7 +774,7 @@
       "https://capsid.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/main/explorer/package.json"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -833,7 +839,7 @@
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed"
+       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed: create: 422 refused"
       }
      ]
     },
@@ -844,7 +850,7 @@
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed"
+       "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow, webmention"
       }
      ]
     },
@@ -859,7 +865,7 @@
       "https://julieedwards.info/api/carrel/v1/meta",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "txasm": {
      "status": "partial",
@@ -871,7 +877,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/site-meta.ts",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "bsw": {
      "status": "n/a",
@@ -884,12 +890,12 @@
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed"
+       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow"
       },
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed"
+       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed: old path /blog/conformance-probe-7704156b: expected 301, got 404"
       }
      ]
     },
@@ -900,7 +906,7 @@
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://foxing.app/api/carrel/v1 probe post: created as a draft failed"
+       "detail": "https://foxing.app/api/carrel/v1 probe post: created as a draft failed: create: 422 refused"
       }
      ]
     },
@@ -991,7 +997,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/media/images.mjs#L15-L19",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/content/pipeline.mjs#L244"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "germomics": {
      "status": "partial",
@@ -1003,7 +1009,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/seo.ts#L23-L29",
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/images.ts#L61-L74"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1013,7 +1019,7 @@
       "https://julieedwards.info/media/uploads/2026/11/julie-edwards-bluff-dale-profile-a78445bc.jpg.webp?v=a78445bc0643&w=640",
       "https://julieedwards.info/sitemap.xml"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "txasm": {
      "status": "partial",
@@ -1023,7 +1029,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/routes/admin.documents.tsx#L226-L256",
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/carrel/render.server.ts#L64"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "bsw": {
      "status": "partial",
@@ -1032,7 +1038,7 @@
       "https://bsw.dustin-edwards.workers.dev/",
       "https://bsw.dustin-edwards.workers.dev/sitemap.xml"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxhound": {
      "status": "partial",
@@ -1041,7 +1047,7 @@
       "https://foxhoundapp.com/og/default",
       "https://foxhoundapp.com/blog/stripe-billing-descriptor"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxing": {
      "status": "partial",
@@ -1052,7 +1058,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/journal-images.server.ts#L76-L120",
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/package.json#L22"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel": {
      "status": "complete",
@@ -1061,7 +1067,7 @@
       "https://carrel.dustinedwards.info/",
       "https://carrel.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "enarratio": {
      "status": "complete",
@@ -1070,7 +1076,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://enarratio.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 17
+     "clean_days": 18
     },
     "capsomer": {
      "status": "complete",
@@ -1079,7 +1085,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://capsomer.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 15
+     "clean_days": 16
     },
     "prelum": {
      "status": "complete",
@@ -1088,7 +1094,7 @@
       "https://prelum.dustinedwards.info/",
       "https://prelum.dustinedwards.info/share-card.png"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "capsid": {
      "status": "complete",
@@ -1097,7 +1103,7 @@
       "https://capsid.dustinedwards.info/",
       "https://capsid.dustinedwards.info/assets/og-card.png"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1206,39 +1212,9 @@
      ]
     },
     "txasm": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 6 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://txasm.dustin-edwards.workers.dev/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://txasm.dustin-edwards.workers.dev/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1988-newsletter not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SJC then SJC"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://txasm.dustin-edwards.workers.dev/newsletters/fall-1971-newsletter not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo SJC then SJC"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://txasm.dustin-edwards.workers.dev/archive/abstract-books a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://txasm.dustin-edwards.workers.dev/awards/samuel-kaplan-award a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://txasm.dustin-edwards.workers.dev/meetings/fall-2025/abstracts a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://txasm.dustin-edwards.workers.dev/meetings/spring-2026/abstracts/2 a conditional request with the page's own validator answered 200, not 304"
-      },
       {
        "severity": "warning",
        "check": "D1",
@@ -1278,9 +1254,29 @@
      ]
     },
     "foxhound": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 4 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxhoundapp.com/docs/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxhoundapp.com/product/intelligence not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/products a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare a conditional request with the page's own validator answered 200, not 304"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1444,17 +1440,17 @@
     "dustinedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "partial",
      "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "txasm": {
      "status": "partial",
@@ -1463,22 +1459,22 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "bsw": {
      "status": "partial",
      "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxing": {
      "status": "partial",
      "reason": "failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "n/a",
@@ -1503,17 +1499,17 @@
     "capsid-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxhound-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "dustinedwards-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel-mcp": {
      "status": "missing",
@@ -1522,19 +1518,24 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 43.6 hours old, not under 26"
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 44.5 hours old, not under 26"
       },
       {
        "severity": "warning",
        "check": "C2",
        "detail": "https://carrel-mcp.dustinedwards.info/health the cron check is warn: backup failed"
+      },
+      {
+       "severity": "warning",
+       "check": "H4",
+       "detail": "https://carrel-mcp.dustinedwards.info/health serves f6542e15d99f3e5862e11755705761cb6219337b, not the branch head ba53c9e7b1af5a9bd0f972f8296752e311d2bbbc (https://github.com/DrDustinEdwards/carrel/commit/ba53c9e7b1af5a9bd0f972f8296752e311d2bbbc), committed 10 minutes ago"
       }
      ]
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
-     "clean_days": 14
+     "clean_days": 15
     },
     "capsid-portal": {
      "status": "n/a",
@@ -1576,7 +1577,7 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "germomics": {
      "status": "partial",
@@ -1585,7 +1586,7 @@
       "https://germomics.com/",
       "https://germomics.com/data/cholera-soho-1854"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1593,7 +1594,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "txasm": {
      "status": "partial",
@@ -1603,7 +1604,7 @@
       "https://txasm.dustin-edwards.workers.dev/meetings",
       "https://txasm.dustin-edwards.workers.dev/awardees"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "bsw": {
      "status": "partial",
@@ -1611,7 +1612,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxhound": {
      "status": "complete",
@@ -1619,7 +1620,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxing": {
      "status": "partial",
@@ -1627,7 +1628,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel": {
      "status": "complete",
@@ -1635,7 +1636,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "enarratio": {
      "status": "partial",
@@ -1644,7 +1645,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://enarratio.dustinedwards.info/astro"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsomer": {
      "status": "partial",
@@ -1654,7 +1655,7 @@
       "https://capsomer.dustinedwards.info/components/contact-card/",
       "https://capsomer.dustinedwards.info/components/not-found-report/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "prelum": {
      "status": "complete",
@@ -1662,7 +1663,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid": {
      "status": "partial",
@@ -1671,7 +1672,7 @@
       "https://capsid.dustinedwards.info/",
       "https://capsid.dustinedwards.info/numbers/"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1720,14 +1721,14 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "unmeasured",
+     "reason": "chart-audit could not measure: could not run: prelum-chart-audit: could not start a browser: Cannot find module 'playwright-core' Require stack: - /tmp/prelum-chart-audit-playwright-core_1.65.1-axe-core_4.14.0/package.json",
+     "findings": []
     },
     "germomics": {
      "status": "partial",
      "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -1744,37 +1745,37 @@
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxing": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel": {
      "status": "partial",
      "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "enarratio": {
      "status": "partial",
      "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsomer": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "prelum": {
      "status": "partial",
      "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid": {
      "status": "partial",
      "reason": "checks pass; no verifier yet",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1799,12 +1800,12 @@
     "capsid-portal": {
      "status": "partial",
      "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel-desk": {
      "status": "partial",
      "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     }
    }
   },
@@ -1840,7 +1841,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/search/ask.server.ts",
       "https://dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "germomics": {
      "status": "complete",
@@ -1849,7 +1850,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/media/suggest.server.ts",
       "https://germomics.com/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1860,7 +1861,7 @@
       "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
       "https://julieedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "txasm": {
      "status": "complete",
@@ -1869,7 +1870,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/media/suggest.server.ts",
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "bsw": {
      "status": "complete",
@@ -1880,7 +1881,7 @@
       "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "foxhound": {
      "status": "complete",
@@ -1893,7 +1894,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/lib/mcp/tools.server.ts#L1252-L1340",
       "https://foxhoundapp.com/.well-known/oauth-authorization-server"
      ],
-     "clean_days": 15
+     "clean_days": 16
     },
     "foxing": {
      "status": "complete",
@@ -1903,7 +1904,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/core/src/domain/recommendations.ts",
       "https://foxing.app/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "carrel": {
      "status": "complete",
@@ -1913,7 +1914,7 @@
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/social/routine.server.ts",
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "enarratio": {
      "status": "complete",
@@ -1921,7 +1922,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "capsomer": {
      "status": "complete",
@@ -1929,7 +1930,7 @@
      "evidence": [
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "prelum": {
      "status": "complete",
@@ -1937,7 +1938,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "capsid": {
      "status": "partial",
@@ -1945,7 +1946,7 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/doc-index.ts"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "capsid-mcp": {
      "status": "partial",
@@ -1956,7 +1957,7 @@
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/index.ts",
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/.conformance.json"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1970,7 +1971,7 @@
       "https://github.com/DrDustinEdwards/site-runtime/blob/5a8c31f54da014747a09368050cdc9325b13bfca/admin-mcp.mjs#L337-L339",
       "https://admin-mcp.foxhoundapp.com/health"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "dustinedwards-mcp": {
      "status": "partial",
@@ -1981,7 +1982,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp/.conformance.json",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp/src/mcp-handler.ts"
      ],
-     "clean_days": 15
+     "clean_days": 16
     },
     "carrel-mcp": {
      "status": "partial",
@@ -1993,7 +1994,7 @@
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/mcp/scopes.ts",
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/.conformance.json"
      ],
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxing-mcp": {
      "status": "partial",
@@ -2005,7 +2006,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/src/api-client.ts",
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/.conformance.json"
      ],
-     "clean_days": 15
+     "clean_days": 16
     },
     "capsid-portal": {
      "status": "n/a",
