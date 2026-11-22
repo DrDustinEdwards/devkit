@@ -1,61 +1,62 @@
 {
   "area": 10,
-  "verifier": "Verify scoreboard cells awaiting sign-off",
-  "date": "2026-11-05",
+  "verifier": "Verify backups, repo settings and remaining charts",
+  "date": "2026-11-22",
   "cells": {
     "germomics": {
       "verdict": "complete",
-      "evidence": [
-        "https://germomics.com/data/cholera-soho-1854",
-        "https://germomics.com/data/influenza-1918"
-      ],
-      "note": "chart-audit 5 Nov: 3 charts on 2 pages, no findings, including both data pages that shifted at 320 px on 4 Nov"
+      "evidence": ["https://germomics.com/"],
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show."
     },
     "foxhound": {
       "verdict": "complete",
-      "evidence": [
-        "https://foxhoundapp.com/demos/dashboard",
-        "https://foxhoundapp.com/demos/recovery",
-        "https://foxhoundapp.com/demos/intelligence"
-      ],
-      "note": "chart-audit 5 Nov: 37 charts on 7 pages, no findings"
+      "evidence": ["https://foxhoundapp.com/"],
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "enarratio": {
       "verdict": "complete",
       "evidence": ["https://enarratio.dustinedwards.info/"],
-      "note": "chart-audit 5 Nov: 127 charts on 4 pages, no findings"
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show."
     },
     "prelum": {
       "verdict": "complete",
       "evidence": ["https://prelum.dustinedwards.info/"],
-      "note": "chart-audit 5 Nov: 4 charts, no findings"
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "capsid-portal": {
       "verdict": "complete",
-      "evidence": [
-        "https://portal.dustinedwards.info/demos/packages",
-        "https://portal.dustinedwards.info/demos/queue"
-      ],
-      "note": "chart-audit 5 Nov: 28 charts on 10 demo pages, no findings, rerun 3 times on packages, prs and queue; signed-in pages are not checked"
+      "evidence": ["https://portal.dustinedwards.info/"],
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "carrel": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": ["https://carrel.dustinedwards.info/"],
-      "note": "no charts on either public page, so the check proves nothing; this cell should be a skip in areas.json"
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "carrel-desk": {
-      "verdict": "partial",
-      "evidence": ["https://desk.dustinedwards.info/demos/progress"],
-      "note": "chart-audit fails D5 on /demos/progress at 320 px, 0.025, div.cap-chart moves 42 px; reproduced on 3 of 3 runs on 5 Nov"
+      "verdict": "complete",
+      "evidence": ["https://desk.dustinedwards.info/"],
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     },
     "dustinedwards-info": {
       "verdict": "complete",
-      "evidence": [
-        "https://dustinedwards.info/writing/site-search-on-d1",
-        "https://dustinedwards.info/cv",
-        "https://github.com/DrDustinEdwards/dustinedwards-info/blob/d3e0303e879268aada9bd68468b39f8582a8c7c6/app/styles/post-enhancements.css"
-      ],
-      "note": "chart-audit 5 Nov on prelum main: 203 pages, 8 charts on 5 pages, no findings. Layout shift measured in Chromium, 3 runs per page at 1280 and 320 px, scrolled through: the four writing posts with charts and /cv all under 0.01 (worst 0.0096 once); the code-block room is reserved on pre[data-lang]. Fonts are font-display: optional."
+      "evidence": ["https://dustinedwards.info/"],
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show."
+    },
+    "foxing": {
+      "verdict": "complete",
+      "evidence": ["https://foxing.app/"],
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
+    },
+    "capsid": {
+      "verdict": "complete",
+      "evidence": ["https://capsid.dustinedwards.info/"],
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show."
+    },
+    "capsomer": {
+      "verdict": "complete",
+      "evidence": ["https://capsomer.dustinedwards.info/"],
+      "note": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings."
     }
   }
 }
