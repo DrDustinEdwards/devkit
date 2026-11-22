@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.57.0
+
+### Minor Changes
+
+- `devkit-no-bloat` holds file size: a source file over 500 lines (a test over 800) is listed in the baseline's `size` with its line count; a new file over the cap fails, a listed one may not grow, and the list only shrinks. A repository's first `--write-baseline` after this release records its current long files, which is no raise.
+
 ## 0.56.0
 
 ### Minor Changes
