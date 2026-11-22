@@ -44,7 +44,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.63.9 (DrDustinEdwards/prelum)
+## Prelum 0.63.13 (DrDustinEdwards/prelum)
 
 - `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `PUBLISHED_STATUS`, `isPubliclyVisible`, `ZERO_RESULT_MAX_LENGTH`, `normalizeZeroResultQuery`, `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `uniqueSlug`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
 - `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.173.5 (DrDustinEdwards/site-runtime)
+## site-runtime 0.173.12 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `cookiePairs`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
@@ -104,10 +104,10 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./deploy`: `deployedSha`, `deployedAt`
 - `./health-read`: `healthOf`, `parseHealth`, `failingCheckNames`, `healthChecks`
 - `./image`: `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `IMAGE_FORMATS`, `IMAGE_QUALITY`, `RASTER_TYPES`, `RASTER_PATH`, `FOCUS_METADATA`, `SHARE_IMAGE`, `ARTICLE_IMAGE_RATIOS`, `imageVersion`, `originalKey`, `focusOf`, `IMMUTABLE_CACHE`, `versionedCache`, `assetsObject`, `mediaKey`, `keyOfAddress`, `keysAtAddresses`, `focalPosition`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `pictureHtml`, `imagePreload`, `editImage`
-- `./r2-object`: `contentDisposition`, `attachmentResponse`, `r2ObjectResponse`
+- `./r2-object`: `retryR2Read`, `contentDisposition`, `attachmentResponse`, `r2ObjectResponse`
 - `./prefetch`: `SPECULATION_RULES_PATH`, `NEVER_PREFETCH`, `FILE_EXTENSIONS`, `speculationRules`, `speculationRulesResponse`, `SPECULATION_RULES_HEADER`
 - `./preload`: `preloads`, `rootStylesheets`, `pageStylesheets`, `withPreloadHeader`
-- `./edge-cache`: `SHARED_CACHE_CONTROL`, `UNCACHED`, `PRIVATE_PAGE_HEADERS`, `compressUntransformed`, `EDGE_CACHE_HEADER`, `PAGES_CACHE_TAG`, `publicPageHeaders`, `TRACKING_PARAMS`, `cacheKey`, `settleCacheHeaders`, `forRenderer`, `forReader`, `privateRender`, `purgeTags`, `PURGE_FAILED_KEY`, `recordPurge`, `withPurgePages`, `purgeAfterWrite`, `purgeViaRenderer`, `schedulePurgeHook`
+- `./edge-cache`: `SHARED_CACHE_CONTROL`, `UNCACHED`, `PRIVATE_PAGE_HEADERS`, `compressUntransformed`, `EDGE_CACHE_HEADER`, `PAGES_CACHE_TAG`, `publicPageHeaders`, `TRACKING_PARAMS`, `cacheKey`, `settleCacheHeaders`, `stampValidator`, `forRenderer`, `forReader`, `privateRender`, `purgeTags`, `purgeCoalesced`, `PURGE_FAILED_KEY`, `recordPurge`, `withPurgePages`, `purgeAfterWrite`, `purgeViaRenderer`, `schedulePurgeHook`
 - `./server-timing`: `serverTiming`, `timed`, `timedRender`
 - `./embeds`: `EMBED_FRAME_SOURCES`, `EMBED_FEATURES`, `permissionsAllowingEmbeds`
 - `./static-site`: `staticHeaders`, `staticSite`
@@ -198,7 +198,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./newsletter`: `SUBSCRIBERS_SQL`, `newsletter`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
-## site-api 0.46.6 (DrDustinEdwards/site-api)
+## site-api 0.46.14 (DrDustinEdwards/site-api)
 
 - `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `ROUTES`, `schemaHash`, `capabilitiesOf`, `hasContentTrash`, `contentFiltersOf`, `contentVersion`, `transcriptVersion`, `VersionConflictError`, `NotFoundError`, `MediaInUseError`, `describeUses`, `RefusedError`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `HOOK_BACKOFF_MINUTES`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `readEmbedded`, `stripMetadata`, `duplicateKey`, `placeholderAndColor`, `fileNameFor`, `prepareUpload`, `PICTURE_TYPES`, `pictureLimits`, `PICTURE_RESIZE`, `extensionFor`, `datedKey`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `siteApiStep`, `standardSiteApi`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `tombstoneResponse`, `gonePath`, `tombstoned`, `PREVIEW_LINK_PATH`
 - `./admin`: `readPostQuery`, `loadPosts`, `liveSaveWarning`, `loadScheduledUpdate`, `runPostsIntent`, `readMediaQuery`, `loadMedia`, `loadMediaChanges`, `runMediaIntent`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `localClient`, `askFirst`
