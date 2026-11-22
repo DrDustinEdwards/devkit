@@ -127,6 +127,7 @@ test("with no config: one knip run, jscpd on the root unless the repository has 
     jscpd: { clones: 4, lines: 40, percentage: 1.23, unread: 0 },
     "shared copies": { clones: 0, lines: 0 },
     legacy: { dialog: 2, "dark-mode": 1 },
+    size: {},
     tests: { files: 0, cases: 0 },
     comments: { lines: 0, code: 0, percentage: 0 },
   });
@@ -163,6 +164,7 @@ test("each knip run is labeled and passes its own arguments; jscpd's arguments c
     "jscpd",
     "shared copies",
     "legacy",
+    "size",
     "tests",
     "comments",
   ]);
@@ -400,17 +402,63 @@ test("countFiles counts test files by the globs, and the comment share of the so
   };
   const read = (/** @type {string} */ p) => files[/** @type {keyof typeof files} */ (p)];
   assert.deepEqual(countFiles({}, Object.keys(files), read), {
+    size: {},
     tests: { files: 2, cases: 2 },
     comments: { lines: 2, code: 4, percentage: 33.33 },
   });
   assert.deepEqual(
-    countFiles({ tests: { ignore: ["e2e/**"] }, comments: false }, Object.keys(files), read),
+    countFiles(
+      { tests: { ignore: ["e2e/**"] }, comments: false, size: false },
+      Object.keys(files),
+      read,
+    ),
     { tests: { files: 1, cases: 1 } },
   );
   assert.deepEqual(
-    countFiles({ tests: false, comments: { files: ["src/**"] } }, Object.keys(files), read),
+    countFiles(
+      { tests: false, size: false, comments: { files: ["src/**"] } },
+      Object.keys(files),
+      read,
+    ),
     { comments: { lines: 2, code: 2, percentage: 50 } },
   );
+});
+
+test("a file over its size cap is listed: a new one fails, a listed one may not grow, and a cut one lowers", () => {
+  const long = (/** @type {number} */ n) => "a();\n".repeat(n);
+  const files = {
+    "src/big.ts": long(501),
+    "src/ok.ts": long(500),
+    "t/a.test.ts": long(801),
+    "t/b.test.ts": long(800),
+  };
+  const read = (/** @type {string} */ p) => files[/** @type {keyof typeof files} */ (p)];
+  const { size } = countFiles({ tests: false, comments: false }, Object.keys(files), read);
+  assert.deepEqual(size, { "src/big.ts": 501, "t/a.test.ts": 801 });
+  assert.deepEqual(
+    countFiles({ tests: false, comments: false, size: { source: 600 } }, ["src/big.ts"], read).size,
+    {},
+  );
+  const base = { size: { "src/big.ts": 501, "src/gone.ts": 600 } };
+  const same = compare(base, { size: { "src/big.ts": 501 } });
+  assert.deepEqual(same.errors, []);
+  assert.deepEqual(same.lowered, ["size: src/gone.ts 600 to 0"]);
+  const worse = compare(base, {
+    size: { "src/big.ts": 502, "src/new.ts": 510, "src/gone.ts": 600 },
+  });
+  const code = { code: true, definition: [], workflow: [], back: [] };
+  assert.deepEqual(raised({ baseline: base }, { baseline: {} }, code), []);
+  assert.match(
+    raised(
+      { baseline: { size: { "a.ts": 9 } } },
+      { baseline: { size: { "a.ts": 8 } } },
+      code,
+    ).join(),
+    /raises the baseline's a.ts from 8 to 9/,
+  );
+  assert.equal(worse.errors.length, 2);
+  assert.match(worse.errors[0], /size: src\/big.ts went from 501 to 502/);
+  assert.match(worse.errors[1], /size: src\/new.ts went from 0 to 510/);
 });
 
 test("a test added without a raise fails; the comment share warns past its tolerance, fails with fail: true, and passes when only code went", () => {
