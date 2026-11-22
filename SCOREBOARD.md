@@ -15,9 +15,9 @@ Newest run 2026-11-22 15:12 UTC. Filled only from the live checks and the verifi
 | 5. Carrel editing contract | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | 🟡 | ✅ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +28958 | −2924 |
+| 8. Running and recovery | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | ✅ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | 🟡 | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | +33215 | −9539 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
 
@@ -102,21 +102,9 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 ### 8. Running and recovery
 
-Builder: Complete shared running and recovery. Verifier: Verify area 8 round 2.
+Builder: Complete shared running and recovery. Verifier: Verify backups, repo settings and remaining charts.
 
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
-- 🟡 dustinedwards.info: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Germomics: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 julieedwards.info: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 TXASM: Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off
-- 🟡 BSW: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Foxhound: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Foxing: failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Capsid MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Foxhound admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Dustin Edwards admin MCP: failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Carrel MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
-- 🟡 Foxing admin MCP: failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier
 
 ### 9. Accessibility and components
 
@@ -133,20 +121,9 @@ Builder: Complete accessibility and Capsomer components. Verifier: Fresh verifie
 
 ### 10. Charts
 
-Builder: Complete shared charts. Verifier: Verify scoreboard cells awaiting sign-off.
+Builder: Complete shared charts. Verifier: Verify backups, repo settings and remaining charts.
 
 - ❌ Package: no verifier has checked the package
-- 🟡 dustinedwards.info: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Germomics: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Foxhound: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Foxing: checks pass; no verifier yet
-- 🟡 Carrel: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Enarratio: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Capsomer: checks pass; no verifier yet
-- 🟡 Prelum specimen: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Capsid explorer: checks pass; no verifier yet
-- 🟡 Capsid Portal: failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
-- 🟡 Carrel Desk: failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier
 
 ### 11. AI and MCP
 

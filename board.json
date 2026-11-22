@@ -1396,7 +1396,7 @@
    "id": 8,
    "name": "Running and recovery",
    "builder": "Complete shared running and recovery",
-   "verifier": "Verify area 8 round 2",
+   "verifier": "Verify backups, repo settings and remaining charts",
    "lines": {
     "prs": 55,
     "added": 28958,
@@ -1415,42 +1415,65 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. Newest restore-drill run succeeded 22 Nov 2026 12:4x UTC.",
+     "evidence": [
+      "https://dustinedwards.info/health",
+      "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/45023620671"
+     ],
      "clean_days": 2
     },
     "germomics": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. Newest restore-drill run succeeded 22 Nov 2026 12:4x UTC.",
+     "evidence": [
+      "https://germomics.com/health",
+      "https://github.com/DrDustinEdwards/germomics/actions/runs/45023601143"
+     ],
      "clean_days": 4
     },
     "julieedwards-info": {
-     "status": "partial",
-     "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. Newest restore-drill run succeeded 22 Nov 2026 12:4x UTC.",
+     "evidence": [
+      "https://julieedwards.info/health",
+      "https://github.com/DrDustinEdwards/julieedwards-info/actions/runs/45023650785"
+     ],
      "clean_days": 2
     },
     "txasm": {
-     "status": "partial",
-     "reason": "Health passes on workers.dev at head and drill passed; txasm.org still serves WordPress; D4/D6 off",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. Newest restore-drill run succeeded 22 Nov 2026 12:4x UTC.",
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/health",
-      "https://github.com/DrDustinEdwards/txasm/actions/runs/41201513710"
+      "https://github.com/DrDustinEdwards/txasm/actions/runs/45023660607"
      ],
      "clean_days": 22
     },
     "bsw": {
-     "status": "partial",
-     "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. No restore drill workflow for this one (BSW is a mockup; the admin MCPs have no database of their own).",
+     "evidence": [
+      "https://bsw.dustin-edwards.workers.dev/health"
+     ],
      "clean_days": 2
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. Newest restore-drill run succeeded 22 Nov 2026 12:4x UTC.",
+     "evidence": [
+      "https://foxhoundapp.com/health",
+      "https://github.com/DrDustinEdwards/foxhound/actions/runs/45023692582"
+     ],
      "clean_days": 3
     },
     "foxing": {
-     "status": "partial",
-     "reason": "failed on 2026-11-04, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. Newest restore-drill run succeeded 22 Nov 2026 12:4x UTC.",
+     "evidence": [
+      "https://foxing.app/health",
+      "https://github.com/DrDustinEdwards/foxing/actions/runs/45023710978"
+     ],
      "clean_days": 4
     },
     "carrel": {
@@ -1474,28 +1497,44 @@
      "reason": "static: the explorer is prerendered pages on an assets Worker whose script only sends the 404 page, with no database, binding, cron or backup to report; Capsid's health is capsid-mcp's /health"
     },
     "capsid-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head.",
+     "evidence": [
+      "https://mcp.dustinedwards.info/health"
+     ],
      "clean_days": 2
     },
     "foxhound-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head.",
+     "evidence": [
+      "https://admin-mcp.foxhoundapp.com/health"
+     ],
      "clean_days": 2
     },
     "dustinedwards-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-07, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head.",
+     "evidence": [
+      "https://admin-mcp.dustinedwards.info/health"
+     ],
      "clean_days": 2
     },
     "carrel-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. Newest restore-drill run succeeded 22 Nov 2026 12:4x UTC.",
+     "evidence": [
+      "https://carrel-mcp.dustinedwards.info/health",
+      "https://github.com/DrDustinEdwards/carrel/actions/runs/45023690833"
+     ],
      "clean_days": 1
     },
     "foxing-mcp": {
-     "status": "partial",
-     "reason": "failed on 2026-11-05, after Verify area 8 round 2 signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head.",
+     "evidence": [
+      "https://admin-mcp.foxing.app/health"
+     ],
      "clean_days": 15
     },
     "capsid-portal": {
@@ -1670,7 +1709,7 @@
    "id": 10,
    "name": "Charts",
    "builder": "Complete shared charts",
-   "verifier": "Verify scoreboard cells awaiting sign-off",
+   "verifier": "Verify backups, repo settings and remaining charts",
    "lines": {
     "prs": 92,
     "added": 33215,
@@ -1683,13 +1722,19 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show.",
+     "evidence": [
+      "https://dustinedwards.info/"
+     ],
      "clean_days": 2
     },
     "germomics": {
-     "status": "partial",
-     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show.",
+     "evidence": [
+      "https://germomics.com/"
+     ],
      "clean_days": 2
     },
     "julieedwards-info": {
@@ -1705,38 +1750,59 @@
      "reason": "nothing to chart: no charts; the pricing page is a table, as it should be (charts audit, 30 Oct 2026)"
     },
     "foxhound": {
-     "status": "partial",
-     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings.",
+     "evidence": [
+      "https://foxhoundapp.com/"
+     ],
      "clean_days": 2
     },
     "foxing": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings.",
+     "evidence": [
+      "https://foxing.app/"
+     ],
      "clean_days": 2
     },
     "carrel": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings.",
+     "evidence": [
+      "https://carrel.dustinedwards.info/"
+     ],
      "clean_days": 2
     },
     "enarratio": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show.",
+     "evidence": [
+      "https://enarratio.dustinedwards.info/"
+     ],
      "clean_days": 2
     },
     "capsomer": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings.",
+     "evidence": [
+      "https://capsomer.dustinedwards.info/"
+     ],
      "clean_days": 2
     },
     "prelum": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings.",
+     "evidence": [
+      "https://prelum.dustinedwards.info/"
+     ],
      "clean_days": 2
     },
     "capsid": {
-     "status": "partial",
-     "reason": "checks pass; no verifier yet",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show.",
+     "evidence": [
+      "https://capsid.dustinedwards.info/"
+     ],
      "clean_days": 2
     },
     "capsid-mcp": {
@@ -1760,13 +1826,19 @@
      "reason": "no check for a worker"
     },
     "capsid-portal": {
-     "status": "partial",
-     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings.",
+     "evidence": [
+      "https://portal.dustinedwards.info/"
+     ],
      "clean_days": 2
     },
     "carrel-desk": {
-     "status": "partial",
-     "reason": "failed on 2026-11-12, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings.",
+     "evidence": [
+      "https://desk.dustinedwards.info/"
+     ],
      "clean_days": 2
     }
    }
