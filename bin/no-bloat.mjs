@@ -2129,13 +2129,13 @@ function toolSpecs(was, is) {
  * change how a count is measured, nor the workflows that run the check, nor move a shared package back. A change of what
  * is measured comes on its own, and may raise but not lower or drop a count: a narrower measure would hide what it no
  * longer reads. Only a version bump alone may lower one, with one exception: a change whose only change of measure adds
- * `entry` globs to a Knip config (kind.entries) may lower a Knip run's unused files by as many of the repository's
- * `files` as those globs name, since each of them is now an entry, and lower nothing else. No change drops a count from
+ * `entry` globs to a Knip config (kind.entries) may lower any Knip count, since each glob's files are now entries and what they
+ * import is reached, and lower nothing else. No change drops a count from
  * the baseline. Tests may rise: a new test is how they do. Pure.
  * @param {Config} config @param {Config | null} base the config at the pull request's base
- * @param {ReturnType<typeof classify>} kind @param {string[]} [files] the repository's files now
+ * @param {ReturnType<typeof classify>} kind
  */
-export function raised(config, base, kind, files = []) {
+export function raised(config, base, kind) {
   const was = base?.baseline ?? {};
   const now = config.baseline ?? {};
   /** @type {string[]} */
@@ -2178,22 +2178,19 @@ export function raised(config, base, kind, files = []) {
             `knip: this change removes a dependency (${kind.removed.join("; ")}) and raises ${key} from ${before[key] ?? 0} to ${after[key]}. Remove the import that still needs it, or keep the dependency.`,
           );
     }
-    // The files the added entries name: Knip reads each as an entry now, so none of them is an unused file any more.
-    const added = Object.values(kind.entries ?? {}).flat();
+    // Entries only add reach: Knip reads each as an entry and follows its imports, so the files, dependencies, exports and
+    // types that only they used stop being counted. Every Knip count may fall; nothing else may.
     const entriesOnly =
-      added.length &&
+      kind.entries &&
+      Object.keys(kind.entries).length &&
       !kind.workflow.length &&
-      kind.definition.every((d) => d in (kind.entries ?? {}));
-    const named = entriesOnly
-      ? files.filter((f) => added.some((g) => posix.matchesGlob(f, g))).length
-      : 0;
+      kind.definition.every((d) => d in kind.entries);
     for (const [tool, counts] of Object.entries(was)) {
       if (skip(tool, counts)) continue;
       const after = /** @type {Record<string, number>} */ (now[tool] ?? {});
       const knip = tool === "knip" || tool.startsWith("knip ");
       for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
-        if (knip && key === "files" && typeof n === "number" && n - (after[key] ?? 0) <= named)
-          continue;
+        if (knip && entriesOnly) continue;
         else if (key !== "percentage" && typeof n === "number" && (after[key] ?? 0) < n)
           out.push(
             `${tool}: this change of how it is counted (${what}) lowers ${key} from ${n} to ${after[key] ?? 0}, so the narrower measure hides what it no longer reads. Measure as much as before; an exception goes in knip.json's ignore list with its reason.`,
@@ -2717,7 +2714,7 @@ function main() {
       }
       const next = write ? { ...config, baseline: { ...measured.counts } } : config;
       refused.push(
-        ...raised(next, base.config, classify({ ...base, plugins }, tools.parseYaml), files),
+        ...raised(next, base.config, classify({ ...base, plugins }, tools.parseYaml)),
         ...unreasoned(base, config, base.config),
         ...narrowed(base, config, base.config),
         ...hiddenFiles(base.ignored, base.changed, base.before),
