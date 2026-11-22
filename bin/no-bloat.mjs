@@ -28,7 +28,9 @@
 // `--write-baseline` in the same change, so the diff shows it. `--verify-install <dir>`, run from the workflow's own
 // devkit, fails unless the installed devkit is a release no older than it, file for file. The share of source lines that
 // are comments is recorded too, and a rise of more than `tolerance` points (with more comment lines than the baseline) is
-// a warning, or an error with `"fail": true`. A tool that cannot run
+// a warning, or an error with `"fail": true`. A file over `size` lines (500 source, 800 test; generated files are left out
+// as for comments) is listed in the baseline with its line count: a new one over the cap fails, a listed one may not grow,
+// and one cut or dropped lowers its entry (`size` sets the caps). A tool that cannot run
 // fails the run too (an ::error:: naming its error): a count nobody measured is not a pass, and neither is a baseline entry
 // no run measures. The table goes to the job summary.
 //
@@ -53,7 +55,7 @@
 //       "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
 //   }
 //
-// `"jscpd": false`, `"shared": false`, `"legacy": false`, `"tests": false` or `"comments": false` turns one off. `legacy`
+// `"jscpd": false`, `"shared": false`, `"legacy": false`, `"tests": false`, `"size": false` or `"comments": false` turns one off. `legacy`
 // is Chrome's Modern Web Guidance scanner (`modern-web-guidance legacy-scan`, github.com/GoogleChrome/modern-web-guidance):
 // a static match of about 35 legacy patterns (a dialog built by hand, `100vh`, Enter that ignores an IME, `resize:
 // none`...), counted per guide, over the repository root unless `legacy.args` names the paths; it skips docs, examples and
@@ -102,12 +104,14 @@ const SOURCE = ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}"];
 const GENERATED = ["**/*.min.*", "**/worker-configuration.d.ts"];
 const DOCS = ["**/*.{md,mdx,markdown,rst,txt,adoc}", "docs/**"];
 const BUFFER = 64 * 1024 * 1024;
+/** Lines a file may have before it is on the size list (`"size": { "source": 500, "test": 800 }` sets them). */
+const SIZE_CAP = { source: 500, test: 800 };
 
 /**
  * @typedef {{ label: string, args?: string[] }} KnipRun
  * @typedef {{ files?: string[], ignore?: string[] }} Files
  * @typedef {{ knip?: KnipRun[], jscpd?: { args?: string[] } | false, shared?: false, legacy?: { args?: string[] } | false,
- *   tests?: Files | false, comments?: Files & { tolerance?: number, fail?: boolean } | false,
+ *   size?: { source?: number, test?: number } | false, tests?: Files | false, comments?: Files & { tolerance?: number, fail?: boolean } | false,
  *   tools?: { knip?: string, jscpd?: string, "modern-web-guidance"?: string },
  *   baseline?: Record<string, unknown> & { measured_at?: string } }} Config
  * @typedef {(name: "knip" | "jscpd" | "modern-web-guidance", args: string[], cwd?: string) => string} Runner
@@ -398,13 +402,20 @@ const percent = (/** @type {number} */ part, /** @type {number} */ whole) =>
 export function countFiles(config, paths, read) {
   const { isTest, isSource } = globs(config);
   const tests = { files: 0, cases: 0 };
+  /** @type {Record<string, number>} */
+  const size = {};
+  const cap = { ...SIZE_CAP, ...config.size };
   let lines = 0;
   let code = 0;
   for (const path of paths) {
-    const test = config.tests !== false && isTest(path);
+    const isT = isTest(path);
+    const test = config.tests !== false && isT;
     const source = config.comments !== false && isSource(path);
-    if (!test && !source) continue;
+    const sized = config.size !== false && (isT || isSource(path));
+    if (!test && !source && !sized) continue;
     const scanned = scan(read(path), path.endsWith(".css"));
+    if (sized && scanned.kinds.length > (isT ? cap.test : cap.source))
+      size[path] = scanned.kinds.length;
     if (test) {
       tests.files++;
       tests.cases += testCases(scanned.code);
@@ -418,6 +429,7 @@ export function countFiles(config, paths, read) {
   }
   /** @type {Counts} */
   const counts = {};
+  if (config.size !== false) counts.size = size;
   if (config.tests !== false) counts.tests = tests;
   if (config.comments !== false)
     counts.comments = { lines, code, percentage: percent(lines, lines + code) };
@@ -676,7 +688,7 @@ export function compare(baseline, counts, config = {}) {
       );
 
   for (const [tool, now] of Object.entries(counts)) {
-    if (["jscpd", "shared copies", "legacy", "tests", "comments"].includes(tool)) continue;
+    if (["jscpd", "shared copies", "legacy", "tests", "comments", "size"].includes(tool)) continue;
     const was = before(tool);
     const keys = [...new Set([...Object.keys(was ?? {}), ...Object.keys(now)])];
     // A clean run is a row too, so the table shows the tool ran.
@@ -732,6 +744,14 @@ export function compare(baseline, counts, config = {}) {
     gate("shared copies", "lines", "copied lines", hint);
   }
 
+  if (counts.size) {
+    const cap = { ...SIZE_CAP, ...config.size };
+    const hint = `A new file over ${cap.source} lines (${cap.test} for a test) fails, and so does a listed one that grew: split it by what it does. When one is cut, run \`npx devkit-no-bloat --write-baseline\` to lower its entry or drop it.`;
+    const listed = Object.keys(before("size") ?? {});
+    for (const key of new Set([...listed, ...Object.keys(counts.size)]))
+      gate("size", key, key, hint, true);
+  }
+
   if (counts.tests) {
     gate(
       "tests",
@@ -770,7 +790,7 @@ export function compare(baseline, counts, config = {}) {
   }
 
   const measured = new Set(["measured_at", ...knipRuns.map((r) => r.label)]);
-  for (const tool of ["jscpd", "tests", "comments"])
+  for (const tool of ["jscpd", "tests", "comments", "size"])
     if (config[/** @type {"jscpd"} */ (tool)] !== false) measured.add(tool);
   if (config.shared !== false) measured.add("shared copies");
   if (config.legacy !== false) measured.add("legacy");
@@ -2150,6 +2170,8 @@ export function raised(config, base, kind) {
   if (kind.code) {
     for (const [tool, counts] of Object.entries(now)) {
       if (skip(tool, counts) || ["tests", "comments"].includes(tool)) continue;
+      // The size list starts as today's files when a baseline first has it; after that a file joining or growing is a raise.
+      if (tool === "size" && !(tool in was)) continue;
       const before = /** @type {Record<string, number>} */ (was[tool] ?? {});
       for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
         if (key !== "percentage" && typeof n === "number" && n > (before[key] ?? 0))
