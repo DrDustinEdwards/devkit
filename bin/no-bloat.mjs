@@ -1903,6 +1903,7 @@ function entryChange(before, now) {
     JSON.stringify({
       ...c,
       entry: undefined,
+      ignoreDependencies: undefined,
       workspaces: Object.fromEntries(
         Object.entries(c.workspaces ?? {}).map(([k, w]) => [
           k,
@@ -2149,9 +2150,8 @@ function toolSpecs(was, is) {
  * change how a count is measured, nor the workflows that run the check, nor move a shared package back. A change of what
  * is measured comes on its own, and may raise but not lower or drop a count: a narrower measure would hide what it no
  * longer reads. Only a version bump alone may lower one, with one exception: a change whose only change of measure adds
- * `entry` globs to a Knip config (kind.entries) may lower any Knip count, since each glob's files are now entries and what they
- * import is reached, and lower nothing else. No change drops a count from
- * the baseline. Tests may rise: a new test is how they do. Pure.
+ * `entry` globs or `ignoreDependencies` names to a Knip config (kind.entries) may lower any Knip count, since each glob's files
+ * are now entries and what they import is reached, and an ignored name has a comment saying where it is listed, and lower nothing else. No change drops a count from the baseline. Tests may rise: a new test is how they do. Pure.
  * @param {Config} config @param {Config | null} base the config at the pull request's base
  * @param {ReturnType<typeof classify>} kind
  */
