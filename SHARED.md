@@ -44,51 +44,51 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.63.14 (DrDustinEdwards/prelum)
+## Prelum 0.64.0 (DrDustinEdwards/prelum)
 
-- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `RRF_K`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `PUBLISHED_STATUS`, `isPubliclyVisible`, `ZERO_RESULT_MAX_LENGTH`, `normalizeZeroResultQuery`, `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `uniqueSlug`, `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
-- `./xml`: `escapeXml`, `unescapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
-- `./slug`: `slugify`, `SLUG_PATTERN`, `isSlug`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `uniqueSlug`
-- `./text`: `WORDS_PER_MINUTE`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `findWideDashes`, `hasWideDash`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
-- `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `FEED_CONTENT_TYPES`, `feedResponse`
+- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `feedResponse`, `FEED_CONTENT_TYPES`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `isPubliclyVisible`, `normalizeZeroResultQuery`, `RRF_K`, `PUBLISHED_STATUS`, `ZERO_RESULT_MAX_LENGTH`, `slugify`, `isSlug`, `uniqueSlug`, `SLUG_PATTERN`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`, `WORDS_PER_MINUTE`
+- `./xml`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
+- `./slug`: `slugify`, `isSlug`, `uniqueSlug`, `SLUG_PATTERN`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`
+- `./text`: `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`, `WORDS_PER_MINUTE`
+- `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `feedResponse`, `FEED_CONTENT_TYPES`
 - `./lastmod`: `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`
-- `./sitemap`: `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`
-- `./accessibility`: `ACCESSIBILITY_PATH`, `ACCESSIBILITY_STANDARD`, `HAND_CHECK_LIMITATIONS`, `accessibilityStatement`
-- `./llms`: `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `llmsResponse`, `serveMarkdownCopies`
-- `./markdown-copy`: `htmlToMarkdown`, `markdownCopies`, `llmsHeaderOf`
+- `./sitemap`: `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`
+- `./accessibility`: `accessibilityStatement`, `ACCESSIBILITY_PATH`, `ACCESSIBILITY_STANDARD`, `HAND_CHECK_LIMITATIONS`
+- `./llms`: `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`
+- `./markdown-copy`: `htmlToMarkdown`, `llmsHeaderOf`, `markdownCopies`
 - `./markdown-files`: `writeMarkdownCopies`, `writeSitemapLastmod`
 - `./frontmatter`: `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`
 - `./matter`: `matter`, `stringifyMatter`
-- `./head`: `headTags`, `articleDates`, `SHARE_CARD_SIZE`, `shareCard`, `absoluteUrl`, `headHtml`, `truncateForSerp`, `searchTitle`, `SERP_TITLE`, `SERP_DESCRIPTION`, `serpWidth`, `BREADCRUMB_MIN_ITEMS`, `defineHead`, `metaText`, `rootLoaderData`, `privateMeta`
-- `./scholar`: `escapeBibtex`, `bibtexPages`, `toBibtex`, `toRis`, `coinsTitle`, `REQUIRED_CITATION_TAGS`, `citationTags`, `DOI_PATTERN`, `doiSlug`
+- `./head`: `serpWidth`, `headTags`, `articleDates`, `shareCard`, `absoluteUrl`, `headHtml`, `truncateForSerp`, `searchTitle`, `defineHead`, `metaText`, `rootLoaderData`, `privateMeta`, `SERP_TITLE`, `SERP_DESCRIPTION`, `BREADCRUMB_MIN_ITEMS`, `SHARE_CARD_SIZE`
+- `./scholar`: `escapeBibtex`, `bibtexPages`, `toBibtex`, `toRis`, `coinsTitle`, `citationTags`, `doiSlug`, `REQUIRED_CITATION_TAGS`, `DOI_PATTERN`
 - `./vtt`: `parseVtt`, `transcriptText`, `transcriptDuration`, `isVtt`, `toParagraphs`, `srtToVtt`, `parseCueText`
-- `./schema`: `jsonLd`, `thing`, `graph`, `website`, `pageImage`, `imageObject`, `ARTICLE_IMAGE_MIN_PIXELS`, `ARTICLE_IMAGE_RATIOS`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `faqPage`, `sameAs`, `postalAddress`, `person`, `organization`, `softwareApplication`, `podcastSeries`, `podcastEpisode`, `dataset`, `scholarlyType`, `scholarlyArticle`
-- `./robots`: `robotsDocument`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `CONTENT_SIGNAL`, `TDM_RESERVATION_HEADERS`, `aiTxt`, `PLAIN_TEXT_CACHE_CONTROL`, `isPreviewRequest`, `plainTextResponse`, `robotsNotes`, `robotsResponse`, `aiTxtResponse`, `verificationFileResponse`, `DISALLOW_ALL`, `privateRobotsResponse`
+- `./schema`: `jsonLd`, `thing`, `graph`, `website`, `pageImage`, `imageObject`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `faqPage`, `sameAs`, `postalAddress`, `person`, `organization`, `softwareApplication`, `podcastSeries`, `podcastEpisode`, `dataset`, `scholarlyType`, `scholarlyArticle`, `ARTICLE_IMAGE_MIN_PIXELS`, `ARTICLE_IMAGE_RATIOS`
+- `./robots`: `robotsDocument`, `privateRobotsResponse`, `aiTxt`, `isPreviewRequest`, `plainTextResponse`, `robotsNotes`, `robotsResponse`, `aiTxtResponse`, `verificationFileResponse`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `CONTENT_SIGNAL`, `DISALLOW_ALL`, `TDM_RESERVATION_HEADERS`, `PLAIN_TEXT_CACHE_CONTROL`
 - `./files`: `standardFiles`
 - `./indexnow`: `submitIndexNow`, `submitIndexNowIfChanged`, `keyFileResponse`, `recentSitemapUrls`
-- `./source`: `CHART_KINDS`, `csvColumns`, `chartBlock`, `chartBlocks`, `figureMarkup`, `imagesWithoutAlt`, `isAbsoluteHttps`
+- `./source`: `csvColumns`, `chartBlock`, `chartBlocks`, `figureMarkup`, `imagesWithoutAlt`, `isAbsoluteHttps`, `CHART_KINDS`
 - `./site-map`: `sectionOf`, `siteMapSections`, `lineText`
-- `./stored-render`: `RENDER_VERSION_ATTRIBUTE`, `wrapRendered`, `storedRender`, `rerenderEach`
-- `./icons`: `ICONS`, `iconLinks`, `webManifest`, `icoFile`, `auditIcons`, `webManifestResponse`
+- `./stored-render`: `wrapRendered`, `storedRender`, `rerenderEach`, `RENDER_VERSION_ATTRIBUTE`
+- `./icons`: `iconLinks`, `webManifest`, `icoFile`, `auditIcons`, `webManifestResponse`
 - `./audit`: `auditPages`, `crawlSite`
-- `./search`: `ftsLiteral`, `toMatchExpression`, `fuse`, `RRF_K`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `PUBLISHED_STATUS`, `isPubliclyVisible`, `ZERO_RESULT_MAX_LENGTH`, `normalizeZeroResultQuery`
+- `./search`: `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `isPubliclyVisible`, `normalizeZeroResultQuery`, `RRF_K`, `PUBLISHED_STATUS`, `ZERO_RESULT_MAX_LENGTH`
 - `./render`: `render`, `ContentError`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `DEFAULT_SCAN_LIMITS`, `RENDER_VERSION`, `isAllowedUrl`
-- `./render/nomath`: `render`, `renderWith`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `DEFAULT_SCAN_LIMITS`, `ContentError`, `RENDER_VERSION`, `isAllowedUrl`
+- `./render/nomath`: `render`, `renderWith`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `ContentError`, `RENDER_VERSION`, `isAllowedUrl`
 - `./render/packs`: `remarkSwatch`, `remarkSidenote`, `remarkPullQuote`, `remarkChartSource`, `editorialPack`
 - `./render/highlight`: `createHighlight`, `LANGUAGES`, `bash`, `css`, `html`, `javascript`, `json`, `markdown`, `python`, `sql`, `tsx`, `typescript`, `light`, `dark`
-- `./render/safe`: `scanHtml`, `assertSafe`, `inventory`, `LQIP_STYLE`, `srcsetUrls`
-- `./render/enhance`: `enhance`, `enhanceEmbeds`
-- `./render/embeds`: `EMBED_PROVIDERS`, `BLUESKY_HANDLE`, `embedPlayerUrl`
+- `./render/safe`: `srcsetUrls`, `scanHtml`, `assertSafe`, `inventory`, `LQIP_STYLE`
+- `./render/enhance`: `enhanceEmbeds`, `enhance`
+- `./render/embeds`: `embedPlayerUrl`, `EMBED_PROVIDERS`, `BLUESKY_HANDLE`
 - `./render/audit`: `auditContent`
 - `./render/conformance`: `runRenderConformance`, `HOSTILE_INPUTS`
 - `./render/math`: `htmlHasMath`
-- `./render/url`: `isAllowedUrl`, `isCsvDownload`
-- `./render/link-icons`: `LINK_ICON_PATH`, `LINK_ICON_MAX_BYTES`, `LINK_ICON_TIMEOUT_MS`, `linkIconType`, `LINK_ICON_SIZE`, `fitLinkIcon`, `lookupLinkIcon`, `linkIconSrc`, `linkIconResponse`
-- `./render/diagram`: `diagramAssetPath`, `buildDiagramModel`, `DIAGRAM_ASSET_DIR`, `DIAGRAM_THEMES`, `DIAGRAM_SIZES_FILE`, `renderDiagramHast`, `diagramSize`
-- `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
+- `./render/url`: `isCsvDownload`, `isAllowedUrl`
+- `./render/link-icons`: `linkIconType`, `fitLinkIcon`, `lookupLinkIcon`, `linkIconSrc`, `linkIconResponse`, `LINK_ICON_PATH`, `LINK_ICON_MAX_BYTES`, `LINK_ICON_TIMEOUT_MS`, `LINK_ICON_SIZE`
+- `./render/diagram`: `diagramAssetPath`, `buildDiagramModel`, `diagramSize`, `DIAGRAM_ASSET_DIR`, `DIAGRAM_THEMES`, `DIAGRAM_SIZES_FILE`, `renderDiagramHast`
+- `./render/diagram-draw`: `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`, `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.176.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.176.3 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `permissionsAllowingSelf`, `corpFor`, `entryOverrides`, `buildSecurityHeaders`, `hostCookie`, `cookiePairs`, `readCookie`, `applyHeaderSet`, `headersFile`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `PASSKEY_OVERRIDES`, `UPLOAD_HEADERS`
@@ -125,6 +125,8 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./turnstile`: `mountTurnstile`, `verifyTurnstile`, `TURNSTILE_ORIGIN`, `SITEVERIFY_URL`
 - `./sign-in-path`: `SIGN_IN_PATH`, `CONFIRM_PATH`
 - `./sign-in`: `turnstileSiteKey`, `signInOptions`, `signInMethods`, `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_PATH`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `pruneAuthEventsJob`, `pruneExpiredAuth`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
+- `./sign-in-link`: `confirmLinkURL`, `confirmSignInLink`, `signInLinkProblem`, `emailConfirmURL`, `confirmEmailLink`, `emailLinkResult`, `DISPOSABLE_EMAIL`, `UNDELIVERABLE_EMAIL`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `CODE_COOKIE`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `CONFIRM_PATH`, `SIGN_IN_PATH`
+- `./sign-in-account`: `deviceName`, `coarseLocation`, `sessionLookup`, `sessionTouch`, `isNewSignInDevice`, `sessionRows`, `accountSessions`, `revokeSessionById`, `sessionIsFresh`, `requireFreshSession`, `knownProvider`, `passkeyProvider`, `passkeyLabel`, `passkeyRows`, `passkeyLastUsed`, `accountPasskeys`, `needsSecondPasskey`, `dismissPasskeyOffer`, `shouldOfferPasskey`, `outcome`, `authEvent`, `logAuthEvent`, `securityHistory`, `signedInDevices`, `signedInDeviceIds`, `hadPasskey`, `isNewDevice`, `authEventCounts`, `pruneAuthEvents`, `pruneExpiredAuth`, `pruneAuthEventsJob`, `noticeDetail`, `sendNoticeSafely`, `SECURITY_NOTICE_KINDS`, `FRESH_SECONDS`, `SESSION_TOUCH_SECONDS`, `DEVICE_COOKIE`, `DEVICE_COOKIE_SECONDS`, `SESSION_DETAILS_SQL`, `AUTH_EVENTS_DEVICE_SQL`, `SessionNotFresh`, `PASSKEY_OFFER_DAYS`, `AUTH_EVENTS_SQL`
 - `./sign-in-client`: `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`
 - `./vitals-client`: `inpEntry`, `reportInp`
 - `./trusted-types`: `allowDocumentParsing`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`, `REACT_SCRIPT_STUB`, `DOCUMENT_PARSE_SINK`, `TRUSTED_TYPES_NAMES`
