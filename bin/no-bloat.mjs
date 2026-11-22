@@ -404,7 +404,7 @@ export function countFiles(config, paths, read) {
   const tests = { files: 0, cases: 0 };
   /** @type {Record<string, number>} */
   const size = {};
-  const cap = { ...SIZE_CAP, ...(config.size || {}) };
+  const cap = { ...SIZE_CAP, ...config.size };
   let lines = 0;
   let code = 0;
   for (const path of paths) {
@@ -745,7 +745,7 @@ export function compare(baseline, counts, config = {}) {
   }
 
   if (counts.size) {
-    const cap = { ...SIZE_CAP, ...(config.size || {}) };
+    const cap = { ...SIZE_CAP, ...config.size };
     const hint = `A new file over ${cap.source} lines (${cap.test} for a test) fails, and so does a listed one that grew: split it by what it does. When one is cut, run \`npx devkit-no-bloat --write-baseline\` to lower its entry or drop it.`;
     const listed = Object.keys(before("size") ?? {});
     for (const key of new Set([...listed, ...Object.keys(counts.size)]))
