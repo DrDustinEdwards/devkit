@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-22T00:13:06.031Z",
+ "as_of": "2026-11-22T02:14:06.249Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -701,12 +701,12 @@
       {
        "severity": "error",
        "check": "writing-render-version",
-       "detail": "https://txasm.org/ stored HTML from render version 3; the pipeline is at 26"
+       "detail": "https://txasm.org/ stored HTML from render version 26; the pipeline is at 27"
       },
       {
        "severity": "error",
        "check": "writing-render-version",
-       "detail": "https://txasm.org/award-nominations stored HTML from render version 3; the pipeline is at 26"
+       "detail": "https://txasm.org/award-nominations stored HTML from render version 26; the pipeline is at 27"
       }
      ]
     },
@@ -753,13 +753,510 @@
      "clean_days": 2
     },
     "capsomer": {
-     "status": "partial",
-     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages, 0 errors, 0 warnings, but the showcase still renders its doc pages with its own renderer (site/markdown.ts, which uses Prelum only for slugify), so there is a second renderer; it also pins Prelum v0.63.3, behind v0.63.7.",
-     "evidence": [
-      "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts",
-      "https://capsomer.dustinedwards.info/"
-     ],
-     "clean_days": 2
+     "status": "missing",
+     "reason": "prelum-content: 179 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-engine-settings/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-job-buttons/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-sample/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/ambient/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/annotated-document/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/annotated-figure/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/app-frame/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/approval-queue/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/approval-sheet/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/ask-panel/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/author-list/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/authorship/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/avatar/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/banner/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/breadcrumb/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/bulk-bar/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/button/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/calculator/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/cta-band/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/card/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/carousel/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/catalog/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/chart-builder/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/chart-frame/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/checklist-run/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/cited-by/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/collab-editor/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/combobox/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/command-menu/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/config-form/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/confirm-dialog/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/consent/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/contact-card/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/copy/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/count/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/count-up/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/danger-zone/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/date-picker/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/delta/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/detail-panel/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/primitives/dialog/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/dictionary-entry/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/disclosure/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/document-archive/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/draft-compare/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/draft-notice/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/drop-zone/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/editor-workspace/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/email/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/empty/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/error-ad/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/error-page/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/error-summary/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/family-footer/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/faq/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/feature/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/feed/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/field/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/file-attach/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/filter-bar/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/chips/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/flag-list/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/form-status/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/freshness/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/frontmatter-fields/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/generated-file/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/graph/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/hero/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/history-list/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/icons/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/inline-add-form/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/inline-confirm/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/inspector/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/json-ld/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/offline-keep/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/label-color-list/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/leaderboard/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/legal-doc/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/lightbox/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/like-button/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/link/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/primitives/listbox/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/log-view/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/manual/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/markdown-editor/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/marquee/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/media/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/media-library/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/mentions-list/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/menu/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/message/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/meter/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/mode-banner/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/moderation-queue/ stored HTML from render version 26; the pipeline is at 27"
+      },
+      {
+       "severity": "error",
+       "check": "writing-render-version",
+       "detail": "https://capsomer.dustinedwards.info/components/newsletter-signup/ stored HTML from render version 26; the pipeline is at 27"
+      }
+     ]
     },
     "prelum": {
      "status": "partial",
@@ -836,12 +1333,27 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "carrel-conformance: 1 errors",
+     "reason": "carrel-conformance: 4 errors",
      "findings": [
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed: create: 422 refused"
+       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow, webmention"
+      },
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: a rename answers 301 from the old path failed: The operation was aborted due to timeout"
+      },
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: trash and restore failed: trash: 404 not-found"
+      },
+      {
+       "severity": "error",
+       "check": "M1",
+       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: a delete answers 410 on the old path failed: read: 404 not-found"
       }
      ]
     },
@@ -852,7 +1364,7 @@
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow, webmention"
+       "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: webmention"
       }
      ]
     },
@@ -897,7 +1409,7 @@
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed: old path /blog/conformance-probe-7704156b: expected 301, got 404"
+       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed: old path /blog/carrel-conformance-84dcf2b8: expected 301, got 200"
       }
      ]
     },
@@ -1181,11 +1693,6 @@
      "reason": "site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
       {
-       "severity": "warning",
-       "check": "C2",
-       "detail": "https://germomics.com/site-KeXBzH-V5H.js an unhashed file is immutable: a change in place reaches no returning reader"
-      },
-      {
        "severity": "unmeasured",
        "check": "A3",
        "detail": "https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
@@ -1256,29 +1763,9 @@
      ]
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 4 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxhoundapp.com/docs/audit not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxhoundapp.com/product/intelligence not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo ORD then ORD"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/products a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/compare a conditional request with the page's own validator answered 200, not 304"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1520,17 +2007,12 @@
       {
        "severity": "error",
        "check": "B1",
-       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 44.5 hours old, not under 26"
+       "detail": "https://carrel-mcp.dustinedwards.info/health the newest complete backup is 46.6 hours old, not under 26"
       },
       {
        "severity": "warning",
        "check": "C2",
        "detail": "https://carrel-mcp.dustinedwards.info/health the cron check is warn: backup failed"
-      },
-      {
-       "severity": "warning",
-       "check": "H4",
-       "detail": "https://carrel-mcp.dustinedwards.info/health serves f6542e15d99f3e5862e11755705761cb6219337b, not the branch head ba53c9e7b1af5a9bd0f972f8296752e311d2bbbc (https://github.com/DrDustinEdwards/carrel/commit/ba53c9e7b1af5a9bd0f972f8296752e311d2bbbc), committed 10 minutes ago"
       }
      ]
     },
@@ -1724,9 +2206,9 @@
      "reason": "no verifier has checked the package"
     },
     "dustinedwards-info": {
-     "status": "unmeasured",
-     "reason": "chart-audit could not measure: could not run: prelum-chart-audit: could not start a browser: Cannot find module 'playwright-core' Require stack: - /tmp/prelum-chart-audit-playwright-core_1.65.1-axe-core_4.14.0/package.json",
-     "findings": []
+     "status": "partial",
+     "reason": "failed on 2026-11-10, after Verify scoreboard cells awaiting sign-off signed; needs a fresh verifier",
+     "clean_days": 2
     },
     "germomics": {
      "status": "partial",
