@@ -29,13 +29,14 @@
       "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 3 pages, 0 errors, 0 warnings, 0 not measured."
     },
     "txasm": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
         "https://txasm.dustin-edwards.workers.dev/",
         "https://txasm.dustin-edwards.workers.dev/meetings",
-        "https://txasm.dustin-edwards.workers.dev/awardees"
+        "https://txasm.dustin-edwards.workers.dev/awardees",
+        "https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y"
       ],
-      "note": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026) on the workers.dev address: 10 pages, 0 errors, 5 warnings: /meetings and /awardees skip from h1 to h3 (axe heading-order and S2), and the 404 page has no header, nav or footer."
+      "note": "devkit-a11y v0.55.10 run by hand 22 Nov 2026 on the workers.dev address after txasm #441: 10 pages, 0 errors, 0 warnings. Headings go h1 then h2 on /meetings and /awardees, and the 404 page keeps the site header, navigation and footer."
     },
     "bsw": {
       "verdict": "partial",
