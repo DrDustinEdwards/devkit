@@ -2208,7 +2208,7 @@ export function raised(config, base, kind) {
       !kind.workflow.length &&
       kind.definition.every((d) => d in kind.entries);
     for (const [tool, counts] of Object.entries(was)) {
-      if (skip(tool, counts)) continue;
+      if (skip(tool, counts) || tool === "comments") continue;
       const after = /** @type {Record<string, number>} */ (now[tool] ?? {});
       const knip = tool === "knip" || tool.startsWith("knip ");
       for (const [key, n] of Object.entries(/** @type {Record<string, number>} */ (counts)))
