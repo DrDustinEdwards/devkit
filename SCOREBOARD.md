@@ -16,7 +16,7 @@ Newest run 2026-11-22 00:13 UTC. Filled only from the live checks and the verifi
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❔ | ❔ | ❔ | ❔ | ❔ | ❌ | ❔ | ❔ | ❔ | ❔ | ❔ | ❔ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | 🟡 | ❌ | 🟡 | · | · | +28958 | −2924 |
-| 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
+| 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | ✅ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ❔ | 🟡 | · | · | · | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | 🟡 | 🟡 | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
@@ -28,7 +28,7 @@ Newest run 2026-11-22 00:13 UTC. Filled only from the live checks and the verifi
 Builder: Share SEO and other key site code. Verifier: Fresh verifier: re-sign of areas 1, 4 and 9.
 
 - 🟡 dustinedwards.info: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (563 pages). Gap: 27 of 204 sitemap URLs have no lastmod (contact, colophon, features and every /systems page).
-- 🟡 TXASM: Read from the workers.dev address (txasm.org untouched). prelum-audit: 0 errors on 482 pages (the awards links no longer redirect). Missing: no Markdown twin (/awardees.md and /index.md are 404 HTML, Accept: text/markdown returns text/html), llms-full.txt is 404, and 8 of 464 sitemap URLs have no lastmod (the home page among them). llms.txt, canonicals and Open Graph are present.
+- 🟡 TXASM: Fixed since the last verdict (txasm #441): every public page has a Markdown copy at /path.md and for Accept: text/markdown, llms-full.txt is 200, and private paths (/admin.md, /login.md) are 404. prelum-audit v0.63.7 on 22 Nov 2026 still reports 4 errors: the PDF routes /documents/&lt;slug&gt;/inline and /download answer 500 about two requests in three (Sentry TXASM-4, R2 error 10001 from bucket.get, first seen 22 Nov 00:14 UTC; none in the 30 days before; Cloudflare status showed no R2 incident). Also 8 of 464 sitemap URLs have no lastmod; txasm #449 dates them from a daily 03:00 UTC job, so check again after it runs.
 - 🟡 BSW: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (20 pages). Gap: none of the 20 sitemap URLs has a lastmod. The site is a mockup on a workers.dev address.
 - 🟡 Enarratio: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (140 pages) and all 8 sitemap URLs carry lastmod. Gap: 140 of 140 pages have no &lt;meta name="text-scale" content="scale"&gt; (a prelum-audit warning).
 - 🟡 Capsomer: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (210 pages) and all 209 sitemap URLs carry lastmod. Gap: the title "Icons · Capsomer" is on two pages (/components/icons/ and /icons/), a prelum-audit warning.
@@ -139,7 +139,6 @@ Builder: Complete accessibility and Capsomer components. Verifier: Fresh verifie
 
 - 🟡 Package: devkit-a11y finds real issues (it flagged the warnings below), and Capsomer's CI is green on main. Not complete: the shared 404 page has a main but no header, nav or footer (S2 on germomics, txasm, bsw, foxing and capsomer); Enarratio's chart points are covered by another element when focused (L2 on germomics, enarratio and capsid); and two Capsomer showcase pages warn: contact-card (h3 after h1 inside its demo frame, duplicate #main landmark) and not-found-report (duplicate #main).
 - 🟡 Germomics: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 2 warnings: the 404 page has no header, nav or footer; on /data/cholera-soho-1854 the focused map point is covered by another element on 2 Tab stops.
-- 🟡 TXASM: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026) on the workers.dev address: 10 pages, 0 errors, 5 warnings: /meetings and /awardees skip from h1 to h3 (axe heading-order and S2), and the 404 page has no header, nav or footer.
 - 🟡 BSW: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: the 404 page has no header, nav or footer. A mockup.
 - 🟡 Foxing: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 10 pages, 0 errors, 1 warning: the 404 page has no header, nav or footer.
 - 🟡 Enarratio: devkit-a11y v0.55.10 (run by hand, 21 Nov 2026): 9 pages, 0 errors, 1 warning: on /astro a focused chart point is covered by another element.

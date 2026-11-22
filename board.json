@@ -157,10 +157,12 @@
     },
     "txasm": {
      "status": "partial",
-     "reason": "Read from the workers.dev address (txasm.org untouched). prelum-audit: 0 errors on 482 pages (the awards links no longer redirect). Missing: no Markdown twin (/awardees.md and /index.md are 404 HTML, Accept: text/markdown returns text/html), llms-full.txt is 404, and 8 of 464 sitemap URLs have no lastmod (the home page among them). llms.txt, canonicals and Open Graph are present.",
+     "reason": "Fixed since the last verdict (txasm #441): every public page has a Markdown copy at /path.md and for Accept: text/markdown, llms-full.txt is 200, and private paths (/admin.md, /login.md) are 404. prelum-audit v0.63.7 on 22 Nov 2026 still reports 4 errors: the PDF routes /documents/<slug>/inline and /download answer 500 about two requests in three (Sentry TXASM-4, R2 error 10001 from bucket.get, first seen 22 Nov 00:14 UTC; none in the 30 days before; Cloudflare status showed no R2 incident). Also 8 of 464 sitemap URLs have no lastmod; txasm #449 dates them from a daily 03:00 UTC job, so check again after it runs.",
      "evidence": [
-      "https://txasm.dustin-edwards.workers.dev/llms.txt",
+      "https://txasm.dustin-edwards.workers.dev/meetings.md",
       "https://txasm.dustin-edwards.workers.dev/awardees.md",
+      "https://txasm.dustin-edwards.workers.dev/trail.md",
+      "https://txasm.dustin-edwards.workers.dev/llms-full.txt",
       "https://txasm.dustin-edwards.workers.dev/sitemap.xml"
      ],
      "clean_days": 2
@@ -1597,12 +1599,13 @@
      "clean_days": 2
     },
     "txasm": {
-     "status": "partial",
-     "reason": "devkit-a11y v0.55.10 (run by hand, 21 Nov 2026) on the workers.dev address: 10 pages, 0 errors, 5 warnings: /meetings and /awardees skip from h1 to h3 (axe heading-order and S2), and the 404 page has no header, nav or footer.",
+     "status": "complete",
+     "reason": "devkit-a11y v0.55.10 run by hand 22 Nov 2026 on the workers.dev address after txasm #441: 10 pages, 0 errors, 0 warnings. Headings go h1 then h2 on /meetings and /awardees, and the 404 page keeps the site header, navigation and footer.",
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/",
       "https://txasm.dustin-edwards.workers.dev/meetings",
-      "https://txasm.dustin-edwards.workers.dev/awardees"
+      "https://txasm.dustin-edwards.workers.dev/awardees",
+      "https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y"
      ],
      "clean_days": 2
     },
