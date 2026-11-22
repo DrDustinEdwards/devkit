@@ -88,114 +88,115 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`, `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.174.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.176.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
-- `./headers`: `buildSecurityHeaders`, `hostCookie`, `readCookie`, `cookiePairs`, `UPLOAD_HEADERS`, `applyHeaderSet`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `permissionsAllowingSelf`, `PASSKEY_OVERRIDES`, `entryOverrides`, `corpFor`, `headersFile`
-- `./csp`: `CSP_REPORT_PATH`, `CSP_REPORT_GROUP`, `generateNonce`, `integrityHash`, `scriptHash`, `buildPolicy`, `buildContentSecurityPolicy`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `reportingEndpoints`, `broadSource`, `buildStagedPolicy`, `integrityPolicy`, `renewNonce`
+- `./headers`: `permissionsAllowingSelf`, `corpFor`, `entryOverrides`, `buildSecurityHeaders`, `hostCookie`, `cookiePairs`, `readCookie`, `applyHeaderSet`, `headersFile`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `PASSKEY_OVERRIDES`, `UPLOAD_HEADERS`
+- `./csp`: `generateNonce`, `scriptHash`, `integrityHash`, `buildPolicy`, `cloudflareBeaconAttributes`, `broadSource`, `buildContentSecurityPolicy`, `reportingEndpoints`, `buildStagedPolicy`, `integrityPolicy`, `renewNonce`, `CSP_REPORT_PATH`, `CSP_REPORT_GROUP`, `CLOUDFLARE_WEB_ANALYTICS`
 - `./page-headers`: `pageSecurity`
 - `./context`: `cloudflareContext`, `cspNonceContext`, `serverTimingContext`, `previewContext`, `getEnv`, `getExecutionContext`, `getNonce`, `getTimings`
-- `./kv-cache`: `KV_MIN_TTL`, `kvCached`
-- `./csp-report`: `MAX_REPORT_BYTES`, `MAX_REPORTS`, `trimReportUrl`, `reportBodies`, `summarizeReport`, `summarizeVital`, `receiveCspReport`, `rateLimitAllow`
-- `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`, `multipartBoundary`, `readMultipart`, `partText`, `readJsonWith`
+- `./kv-cache`: `kvCached`, `KV_MIN_TTL`
+- `./csp-report`: `trimReportUrl`, `summarizeVital`, `reportBodies`, `summarizeReport`, `rateLimitAllow`, `receiveCspReport`, `MAX_REPORT_BYTES`, `MAX_REPORTS`
+- `./body`: `readCappedBytes`, `readCapped`, `requireJson`, `payloadTooLarge`, `readText`, `readForm`, `readJson`, `readJsonWith`, `multipartBoundary`, `readMultipart`, `partText`
 - `./confirm`: `confirmationSatisfied`, `confirmationRequired`
 - `./html`: `escapeHtml`, `unescapeHtml`, `htmlAttributes`, `sitemapLocs`, `scriptJson`
-- `./health`: `CHECK_DETAIL_MAX`, `healthResponse`, `siteHealthResponse`, `r2Check`, `kvCheck`, `recordAiOutcome`, `aiOutcomeCheck`, `purgeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `emailCheck`, `browserCheck`, `aiCheck`, `DATABASE_DOWN_STATUS_TEXT`, `databaseDown`, `isDatabaseDown`
+- `./health`: `healthResponse`, `siteHealthResponse`, `r2Check`, `kvCheck`, `purgeCheck`, `recordAiOutcome`, `aiOutcomeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `aiCheck`, `emailCheck`, `browserCheck`, `databaseDown`, `CHECK_DETAIL_MAX`, `DATABASE_DOWN_STATUS_TEXT`, `isDatabaseDown`
 - `./deploy`: `deployedSha`, `deployedAt`
 - `./health-read`: `healthOf`, `parseHealth`, `failingCheckNames`, `healthChecks`
-- `./image`: `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `IMAGE_FORMATS`, `IMAGE_QUALITY`, `RASTER_TYPES`, `RASTER_PATH`, `FOCUS_METADATA`, `SHARE_IMAGE`, `ARTICLE_IMAGE_RATIOS`, `imageVersion`, `originalKey`, `focusOf`, `IMMUTABLE_CACHE`, `versionedCache`, `assetsObject`, `mediaKey`, `keyOfAddress`, `keysAtAddresses`, `focalPosition`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `pictureHtml`, `imagePreload`, `editImage`
+- `./image`: `imageVersion`, `originalKey`, `focusOf`, `focalPosition`, `versionedCache`, `assetsObject`, `mediaKey`, `keyOfAddress`, `keysAtAddresses`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `imagePreload`, `pictureHtml`, `editImage`, `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `ARTICLE_IMAGE_RATIOS`, `IMAGE_QUALITY`, `FOCUS_METADATA`, `IMMUTABLE_CACHE`, `RASTER_TYPES`, `RASTER_PATH`
 - `./r2-object`: `retryR2Read`, `contentDisposition`, `attachmentResponse`, `r2ObjectResponse`
-- `./prefetch`: `SPECULATION_RULES_PATH`, `NEVER_PREFETCH`, `FILE_EXTENSIONS`, `speculationRules`, `speculationRulesResponse`, `SPECULATION_RULES_HEADER`
+- `./prefetch`: `speculationRules`, `speculationRulesResponse`, `SPECULATION_RULES_PATH`, `NEVER_PREFETCH`, `FILE_EXTENSIONS`
 - `./preload`: `preloads`, `rootStylesheets`, `pageStylesheets`, `withPreloadHeader`
-- `./edge-cache`: `SHARED_CACHE_CONTROL`, `UNCACHED`, `PRIVATE_PAGE_HEADERS`, `compressUntransformed`, `EDGE_CACHE_HEADER`, `PAGES_CACHE_TAG`, `publicPageHeaders`, `TRACKING_PARAMS`, `cacheKey`, `settleCacheHeaders`, `stampValidator`, `forRenderer`, `forReader`, `privateRender`, `purgeTags`, `purgeCoalesced`, `PURGE_FAILED_KEY`, `recordPurge`, `withPurgePages`, `purgeAfterWrite`, `purgeViaRenderer`, `schedulePurgeHook`
+- `./edge-cache`: `compressUntransformed`, `publicPageHeaders`, `cacheKey`, `settleCacheHeaders`, `stampValidator`, `forRenderer`, `forReader`, `privateRender`, `purgeTags`, `recordPurge`, `purgeCoalesced`, `withPurgePages`, `purgeAfterWrite`, `purgeViaRenderer`, `schedulePurgeHook`, `SHARED_CACHE_CONTROL`, `UNCACHED`, `PRIVATE_PAGE_HEADERS`, `EDGE_CACHE_HEADER`, `PAGES_CACHE_TAG`, `TRACKING_PARAMS`, `PURGE_FAILED_KEY`
 - `./server-timing`: `serverTiming`, `timed`, `timedRender`
-- `./embeds`: `EMBED_FRAME_SOURCES`, `EMBED_FEATURES`, `permissionsAllowingEmbeds`
+- `./embeds`: `permissionsAllowingEmbeds`, `EMBED_FRAME_SOURCES`, `EMBED_FEATURES`
 - `./static-site`: `staticHeaders`, `staticSite`
 - `./sri`: `writeIntegrity`, `subresourceIntegrity`
-- `./share-card`: `SHARE_CARD_WIDTH`, `SHARE_CARD_HEIGHT`, `SHARE_CARD_TYPE`, `cardText`, `CARD_TITLE_MAX`, `CARD_DESCRIPTION_MAX`, `CARD_TITLE_SIZES`, `clampTitle`, `titleFontSize`, `cardKey`, `cardLayout`, `renderShareCard`, `googleFont`, `SHARE_CARD_HEADERS`, `shareCardResponse`
+- `./share-card`: `cardText`, `clampTitle`, `titleFontSize`, `cardKey`, `cardLayout`, `renderShareCard`, `googleFont`, `shareCardResponse`, `SHARE_CARD_WIDTH`, `SHARE_CARD_HEIGHT`, `SHARE_CARD_TYPE`, `SHARE_CARD_HEADERS`, `CARD_TITLE_MAX`, `CARD_DESCRIPTION_MAX`, `CARD_TITLE_SIZES`
 - `./share-card-draw`: `drawShareCard`
-- `./maintenance`: `MAINTENANCE_RETRY_AFTER`, `maintenanceOn`, `maintenanceResponse`
-- `./security-txt`: `SECURITY_CONTACT`, `SECURITY_TXT_EXPIRES`, `securityTxt`, `securityTxtResponse`
+- `./maintenance`: `maintenanceOn`, `maintenanceResponse`, `MAINTENANCE_RETRY_AFTER`
+- `./security-txt`: `securityTxt`, `securityTxtResponse`, `SECURITY_CONTACT`, `SECURITY_TXT_EXPIRES`
 - `./encoding`: `concatBytes`, `toHex`, `fromHex`, `toBase64`, `fromBase64`, `base64url`, `fromBase64url`, `fromBase64Text`, `fromBase64urlText`, `pageCursor`, `readPageCursor`, `sha256`, `sha256Hex`, `hmacSha256`, `hmacSha256Hex`, `crc32`, `canonicalJson`, `fnv1a32`
 - `./jwt`: `pkcs8FromPem`, `signJwt`, `githubAppJwt`
-- `./github`: `GITHUB_API`, `GITHUB_API_VERSION`, `githubHeaders`, `installationToken`, `readAllPages`, `githubJson`, `DISPATCH_PROBE_REF`, `canDispatch`, `PR_URL_SOURCE`, `parsePrUrl`
+- `./github`: `githubHeaders`, `installationToken`, `readAllPages`, `githubJson`, `canDispatch`, `parsePrUrl`, `GITHUB_API`, `GITHUB_API_VERSION`, `DISPATCH_PROBE_REF`, `PR_URL_SOURCE`
 - `./time`: `toSqlTime`, `parseSqlTime`, `toDate`, `toMs`, `monthKey`, `dayKey`, `withTimeout`
-- `./google-service-account`: `GOOGLE_TOKEN_URL`, `parseServiceAccountKey`, `clearServiceAccountTokens`, `serviceAccountToken`
+- `./google-service-account`: `parseServiceAccountKey`, `clearServiceAccountTokens`, `serviceAccountToken`, `GOOGLE_TOKEN_URL`
 - `./signed-token`: `signToken`, `readSignedToken`
-- `./turnstile`: `TURNSTILE_ORIGIN`, `mountTurnstile`, `SITEVERIFY_URL`, `verifyTurnstile`
+- `./turnstile`: `mountTurnstile`, `verifyTurnstile`, `TURNSTILE_ORIGIN`, `SITEVERIFY_URL`
 - `./sign-in-path`: `SIGN_IN_PATH`, `CONFIRM_PATH`
-- `./sign-in`: `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_PATH`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `pruneAuthEventsJob`, `pruneExpiredAuth`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
+- `./sign-in`: `turnstileSiteKey`, `signInOptions`, `signInMethods`, `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_PATH`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `pruneAuthEvents`, `pruneAuthEventsJob`, `pruneExpiredAuth`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`
 - `./sign-in-client`: `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`
 - `./vitals-client`: `inpEntry`, `reportInp`
-- `./trusted-types`: `REACT_SCRIPT_STUB`, `DOCUMENT_PARSE_SINK`, `allowDocumentParsing`, `TRUSTED_TYPES_NAMES`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`
+- `./trusted-types`: `allowDocumentParsing`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`, `REACT_SCRIPT_STUB`, `DOCUMENT_PARSE_SINK`, `TRUSTED_TYPES_NAMES`
 - `./page-client`: `startPage`
 - `./zod-jitless`: (no named exports)
 - `./apple-secret`: `appleClientSecret`
-- `./email`: `sendEmail`, `RECIPIENT_SUPPRESSED`, `EmailNotSent`, `isRecipientSuppressed`, `redact`, `isEmail`
+- `./email`: `isEmail`, `isRecipientSuppressed`, `redact`, `sendEmail`, `RECIPIENT_SUPPRESSED`, `EmailNotSent`
 - `./compare`: `safeEqual`
 - `./money`: `currencyExponent`, `currencyDigits`, `toMajorUnits`, `fromMajorUnits`, `formatMoney`, `formatMoneyShort`, `moneyInputValue`, `parseMoneyInput`
-- `./check`: `parsePolicy`, `checkSecurityHeaders`, `failures`, `checkSecurityTxt`, `declined`
-- `./sites`: `dustinedwardsInfo`, `SITES`, `siteEntry`, `siteForOrigin`, `siteOverrides`, `PASSKEY_OVERRIDES`, `permissionsAllowingSelf`
+- `./check`: `declined`, `parsePolicy`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`
+- `./sites`: `siteEntry`, `siteForOrigin`, `siteOverrides`, `bsw`, `capsid`, `capsidMcp`, `capsidPortal`, `capsomer`, `carrel`, `carrelDesk`, `carrelMcp`, `dustinedwardsInfo`, `dustinedwardsMcp`, `enarratio`, `foxhound`, `foxhoundMcp`, `foxing`, `foxingMcp`, `germomics`, `julieedwardsInfo`, `prelum`, `txasm`, `SITES`, `PASSKEY_OVERRIDES`, `permissionsAllowingSelf`
 - `./owasp`: `OWASP_SOURCE`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`
 - `./rate-limit`: `hitRules`, `peekRules`, `secondsLeft`, `assertRules`, `idleDeadline`, `purgeExpired`, `limit`, `limitedResponse`, `mustStop`, `ipKey`, `emailKey`, `matchRule`, `normalizePath`
 - `./rate-limit/durable-object`: `RateLimiter`
-- `./doc-room`: `DocRoom`, `DOC_ROOM_VIEWER_HEADER`, `ROLE_RECHECK_MS`, `MAX_SUGGESTION`, `MAX_EDIT`, `MAX_COMMENT`, `MAX_QUOTE`, `MAX_ANCHOR`, `viewerRequest`, `readViewer`, `withinLimit`, `suggestOnly`, `applyComment`
-- `./access-login`: `accessSaas`, `newSignIn`, `authorizationUrl`, `forgetKeys`, `KEYS_MAX_AGE_MS`, `remoteKeys`, `verifyJwt`, `verifyIdToken`, `finishSignIn`
-- `./mcp-login`: `describeRedirect`, `CONSENT_STYLE`, `loginHandler`, `isAdminUser`, `DCR_CALLBACKS`, `allowedRedirects`, `registrationRefusal`, `registrationLimited`
-- `./audit-log`: `auditChainKey`, `ToolCallLog`, `verifyAuditChain`, `AUDIT_KEEP_DAYS`, `exportAuditLog`, `auditLogCheck`, `correlationId`, `loggedArgs`, `loggedResult`, `appendAudit`, `recordAudit`
-- `./mcp-server`: `withMcpHeaders`, `routeMcpEra`, `ApiLegError`, `callApi`, `MCP_PER_MINUTE`, `checkRateLimit`, `refuse`, `unauthorized`, `audienceRefusal`, `mcpOriginRefusal`, `mcpScopes`, `callerName`, `toolScope`, `toolsForGrant`, `authorizeCall`, `toolScopeChallenge`, `invokeTool`, `registerTools`, `OUTSIDE_DATA_NOTICE`, `outsideResult`, `toolListProblems`, `toolListHash`, `mcpCacheHints`, `PROBE_METHODS`, `probeRefusal`, `probeDoor`
-- `./admin-mcp`: `ADMIN_MCP_ROUTE`, `ADMIN_MCP_OPERATOR_ROUTE`, `adminMcpJobs`, `ADMIN_MCP_ORIGINS`, `adminMcpOrigin`, `adminMcpWorker`
-- `./agent-keys`: `AGENT_KEY_PREFIX`, `bearerToken`, `agentPrincipal`, `agentKeyNames`, `agentScopes`, `agentCaller`, `PROBE_KEY_SECRET`, `PROBE_PRINCIPAL`, `isProbeKey`, `probeCaller`
-- `./owner-page`: `OWNER_PATH`, `OWNER_STYLE`, `listOwnerGrants`, `revokeOwnerGrant`, `readAuditLog`, `ownerPage`, `respond`, `originOf`
-- `./access`: `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminRoster`, `adminEmails`, `isAdminEmail`, `isMainAdmin`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`, `adminIdle`, `withAdminIdle`
-- `./access-sync`: `CAPSID_ORIGIN`, `postAccessSync`
-- `./members`: `PRIMARY_OWNER`, `OWNER`, `MANAGE_MEMBERS`, `REVIEW_DAYS`, `normalizeEmail`, `defineTitles`, `isExpired`, `reviewOpen`, `resolveActor`, `can`, `defaultEndDate`, `checkChange`, `auditRow`, `allowList`
-- `./prose`: `SIGNS`, `NOT_JUST`, `TELLS`, `PATTERNS`, `WRITING_RULES`, `checkProse`, `profileOf`, `distanceFrom`, `nearestPassages`, `VOICE_THRESHOLD`, `thresholdFor`, `copiedRuns`, `describeFeature`, `OUT_OF_PLACE`, `sentenceSpread`, `slopScan`, `instructionFor`, `voiceExcerpts`
-- `./ai-gateway`: `ANTHROPIC_ORIGIN`, `AI_GATEWAY_HEADERS`, `anthropicRoute`
-- `./anthropic`: `ANTHROPIC_VERSION`, `MODELS`, `MODELS_CHECKED`, `MODEL_IDS`, `DEPRECATIONS_URL`, `parseDeprecations`, `deprecationProblems`, `modelStatus`, `FAILURE_TEXT`, `untrusted`, `UNTRUSTED_DATA_RULE`, `messages`, `structured`, `stream`
-- `./ai-engine`: `ENGINES`, `normalizeSettings`, `engineFor`, `PRICES_CHECKED`, `PRICES`, `priceOf`, `promptOf`, `costMicros`, `runAi`
-- `./routine`: `routineId`, `routineConfig`, `fireRoutine`, `fireOnce`, `ROUTINE_FIRES_SQL`, `d1FireStore`
-- `./operator`: `MIN_TOKEN_LENGTH`, `OPERATOR_BODY_MAX`, `OPERATOR_RULES`, `operatorBearerProblem`, `OperatorError`, `operatorResponse`, `OPERATOR_CALL_TIMEOUT_MS`, `callOperator`
+- `./doc-room`: `DocRoom`, `viewerRequest`, `readViewer`, `withinLimit`, `suggestOnly`, `applyComment`, `DOC_ROOM_VIEWER_HEADER`, `ROLE_RECHECK_MS`, `MAX_SUGGESTION`, `MAX_EDIT`, `MAX_COMMENT`, `MAX_QUOTE`, `MAX_ANCHOR`
+- `./access-login`: `accessSaas`, `newSignIn`, `authorizationUrl`, `forgetKeys`, `remoteKeys`, `verifyJwt`, `verifyIdToken`, `finishSignIn`, `KEYS_MAX_AGE_MS`
+- `./mcp-login`: `describeRedirect`, `loginHandler`, `isAdminUser`, `allowedRedirects`, `registrationRefusal`, `registrationLimited`, `CONSENT_STYLE`, `DCR_CALLBACKS`
+- `./audit-log`: `auditChainKey`, `verifyAuditChain`, `correlationId`, `loggedArgs`, `loggedResult`, `exportAuditLog`, `auditLogCheck`, `appendAudit`, `recordAudit`, `AUDIT_KEEP_DAYS`, `ToolCallLog`
+- `./mcp-server`: `routeMcpEra`, `withMcpHeaders`, `callApi`, `checkRateLimit`, `refuse`, `unauthorized`, `audienceRefusal`, `mcpOriginRefusal`, `mcpScopes`, `callerName`, `toolScope`, `toolsForGrant`, `authorizeCall`, `toolScopeChallenge`, `invokeTool`, `registerTools`, `probeRefusal`, `probeDoor`, `outsideResult`, `toolListProblems`, `toolListHash`, `mcpCacheHints`, `ApiLegError`, `MCP_PER_MINUTE`, `PROBE_METHODS`, `OUTSIDE_DATA_NOTICE`
+- `./admin-mcp`: `adminMcpJobs`, `adminMcpOrigin`, `adminMcpWorker`, `ADMIN_MCP_OPERATOR_ROUTE`, `ADMIN_MCP_ROUTE`, `ADMIN_MCP_ORIGINS`
+- `./agent-keys`: `bearerToken`, `agentPrincipal`, `agentKeyNames`, `agentScopes`, `agentCaller`, `isProbeKey`, `probeCaller`, `AGENT_KEY_PREFIX`, `PROBE_KEY_SECRET`, `PROBE_PRINCIPAL`
+- `./owner-page`: `respond`, `originOf`, `listOwnerGrants`, `revokeOwnerGrant`, `readAuditLog`, `ownerPage`, `OWNER_PATH`, `OWNER_STYLE`
+- `./access`: `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminRoster`, `adminEmails`, `isAdminEmail`, `isMainAdmin`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `adminIdle`, `withAdminIdle`, `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`
+- `./access-sync`: `postAccessSync`, `CAPSID_ORIGIN`
+- `./members`: `normalizeEmail`, `defineTitles`, `isExpired`, `reviewOpen`, `resolveActor`, `can`, `defaultEndDate`, `checkChange`, `auditRow`, `allowList`, `PRIMARY_OWNER`, `OWNER`, `MANAGE_MEMBERS`, `REVIEW_DAYS`
+- `./prose`: `checkProse`, `profileOf`, `thresholdFor`, `distanceFrom`, `nearestPassages`, `copiedRuns`, `describeFeature`, `sentenceSpread`, `slopScan`, `instructionFor`, `voiceExcerpts`, `NOT_JUST`, `TELLS`, `OUT_OF_PLACE`, `PATTERNS`, `WRITING_RULES`, `VOICE_THRESHOLD`
+- `./ai-gateway`: `anthropicRoute`, `ANTHROPIC_ORIGIN`, `AI_GATEWAY_HEADERS`
+- `./anthropic`: `parseDeprecations`, `deprecationProblems`, `modelStatus`, `untrusted`, `messages`, `structured`, `stream`, `ANTHROPIC_VERSION`, `MODELS`, `MODELS_CHECKED`, `MODEL_IDS`, `DEPRECATIONS_URL`, `FAILURE_TEXT`, `UNTRUSTED_DATA_RULE`
+- `./ai-engine`: `normalizeSettings`, `engineFor`, `priceOf`, `promptOf`, `costMicros`, `runAi`, `ENGINES`, `PRICES_CHECKED`, `PRICES`
+- `./routine`: `routineId`, `routineConfig`, `fireRoutine`, `d1FireStore`, `fireOnce`, `ROUTINE_FIRES_SQL`
+- `./operator`: `operatorBearerProblem`, `operatorResponse`, `callOperator`, `MIN_TOKEN_LENGTH`, `OPERATOR_BODY_MAX`, `OPERATOR_RULES`, `OperatorError`, `OPERATOR_CALL_TIMEOUT_MS`
 - `./draft-gate`: `draftGate`, `draftRobots`
-- `./origin`: `ORIGIN_REFUSAL`, `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`
-- `./url`: `redirectStatus`, `isHttpUrl`, `isSameOriginPath`, `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
-- `./log`: `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `scrubText`, `scrubUrl`, `scrubFields`, `logEvent`, `requestFields`, `withRequestLog`, `routeNamer`, `OWASP_EVENTS`, `PREVIEW_TOKEN`, `tokenPattern`, `serverErrorHandler`, `handleServerError`, `DATABASE_DOWN_RETRY_AFTER`, `databaseDownStatus`, `errorMessage`, `reportErrorLines`, `isDatabaseDown`, `handleError`
+- `./origin`: `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`, `ORIGIN_REFUSAL`
+- `./url`: `isHttpUrl`, `redirectStatus`, `isSameOriginPath`, `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
+- `./log`: `scrubText`, `scrubUrl`, `scrubFields`, `isDatabaseDown`, `errorMessage`, `logEvent`, `reportErrorLines`, `tokenPattern`, `serverErrorHandler`, `databaseDownStatus`, `requestFields`, `withRequestLog`, `routeNamer`, `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `PREVIEW_TOKEN`, `DATABASE_DOWN_RETRY_AFTER`, `handleServerError`, `OWASP_EVENTS`
 - `./sentry`: `sentryOptions`, `withSiteSentry`, `withSentryRequest`
-- `./redact`: `SECRET_SHAPES`, `redact`, `redactText`
-- `./not-found`: `NOT_FOUND_PATH_MAX`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `NOT_FOUND_TABLE`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `pruneNotFoundJob`, `notFoundReport`, `REDIRECTS_SQL`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`
-- `./cron`: `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_LOG_SQL`, `CRON_EVENT_WINDOW_MS`, `CRON_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `runJobs`, `runJobNow`, `runJobTool`, `backupStatusTool`, `describeRuns`, `runsSucceeded`, `operatorJobTools`, `DAILY_MINUTES`, `carrelSchedulesJob`, `backupJob`, `cronFindings`, `readCronRuns`, `cronStates`, `cronCheck`
-- `./signed-in-crawl`: `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`, `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`
-- `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `ADMIN_LIST_PATH`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`
-- `./nonce`: `NonceContext`, `useNonce`
-- `./react-entry`: `streamTimeout`, `reactEntry`, `handleError`
+- `./redact`: `redact`, `redactText`
+- `./not-found`: `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `pruneNotFoundJob`, `notFoundReport`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`, `NOT_FOUND_PATH_MAX`, `NOT_FOUND_TABLE`, `NOT_FOUND_MAX_PENDING`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `REDIRECTS_SQL`
+- `./cron`: `runJobs`, `runJobNow`, `runJobTool`, `backupStatusTool`, `operatorJobTools`, `describeRuns`, `runsSucceeded`, `carrelSchedulesJob`, `backupJob`, `cronFindings`, `cronCheck`, `readCronRuns`, `cronStates`, `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_LOG_SQL`, `CRON_EVENT_WINDOW_MS`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `DAILY_MINUTES`
+- `./signed-in-crawl`: `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`, `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`
+- `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`, `ADMIN_LIST_PATH`
+- `./nonce`: `useNonce`, `NonceContext`
+- `./react-entry`: `reactEntry`, `streamTimeout`, `handleError`
 - `./deferred-scripts`: `routeHydrates`, `bootJson`, `HydrationScripts`, `StreamBuffer`
-- `./hydrate-on-intent`: `HOLDER_ID`, `HYDRATED_ATTRIBUTE`, `HYDRATED_EVENT`, `STREAM_BUFFER`, `STREAM_BUFFER_SCRIPT`, `isDeferred`, `isHydrated`, `markHydrated`, `hydrateNow`, `hydrateOnIntent`
-- `./http`: `OUTBOUND_TIMEOUT_MS`, `clientIp`, `ipBucket`, `isWrite`, `textResponse`, `jsonResponse`, `redirectResponse`, `retryAfterSeconds`, `mediaType`, `acceptedEncoding`, `timedFetch`, `fetchUntil`, `isWorkerPreview`, `publicOrigin`
+- `./hydrate-on-intent`: `isDeferred`, `isHydrated`, `markHydrated`, `hydrateNow`, `hydrateOnIntent`, `HOLDER_ID`, `HYDRATED_ATTRIBUTE`, `HYDRATED_EVENT`, `STREAM_BUFFER`, `STREAM_BUFFER_SCRIPT`
+- `./http`: `clientIp`, `ipBucket`, `isWrite`, `textResponse`, `jsonResponse`, `redirectResponse`, `retryAfterSeconds`, `mediaType`, `acceptedEncoding`, `fetchUntil`, `isWorkerPreview`, `publicOrigin`, `OUTBOUND_TIMEOUT_MS`, `timedFetch`
 - `./sign-in-passkey`: `passkeyUserHandle`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`, `signInWithPasskey`, `canOfferPasskey`, `passkeySignIn`
-- `./sign-in-form`: `isDisposableEmail`, `refuseDisposable`, `safeNextPath`, `requestSignInLink`, `signInWithCode`, `SIGN_IN_INTENT`, `signInFormAction`, `startSocialSignIn`, `authHandler`, `accountOptions`, `ACCOUNT_INTENTS`, `accountFormAction`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `emailLinkWords`, `passkeyErrorWords`, `securityHistoryWords`, `signInErrorWords`
-- `./sign-in-words`: `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `DISPOSABLE_EMAIL`, `SIGN_IN_WORDS`, `ACCOUNT_WORDS`, `signInErrorWords`, `passkeyErrorWords`, `emailLinkWords`, `securityHistoryWords`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `UNDELIVERABLE_EMAIL`
-- `./d1`: `inList`, `notInList`, `D1_MAX_BOUND_PARAMS`, `IN_LIST_CHUNK`, `chunked`, `rowsPerInsert`, `escapeLike`, `likeContains`, `likeStartsWith`, `encodeCursor`, `decodeCursor`, `olderThan`
+- `./sign-in-form`: `isDisposableEmail`, `refuseDisposable`, `safeNextPath`, `requestSignInLink`, `signInWithCode`, `signInFormAction`, `startSocialSignIn`, `authHandler`, `accountOptions`, `accountFormAction`, `SIGN_IN_INTENT`, `ACCOUNT_INTENTS`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `emailLinkWords`, `passkeyErrorWords`, `securityHistoryWords`, `signInErrorWords`
+- `./sign-in-words`: `signInErrorWords`, `passkeyErrorWords`, `emailLinkWords`, `securityHistoryWords`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `UNDELIVERABLE_EMAIL`
+- `./d1`: `inList`, `notInList`, `chunked`, `rowsPerInsert`, `escapeLike`, `likeContains`, `likeStartsWith`, `encodeCursor`, `decodeCursor`, `olderThan`, `D1_MAX_BOUND_PARAMS`, `IN_LIST_CHUNK`
 - `./drizzle`: `cronRuns`, `cronRunLog`, `page404Daily`, `alertsSent`, `authEvents`
 - `./drizzle-check`: `assertMirror`
-- `./csv`: `CSV_CONTENT_TYPE`, `guardFormula`, `csvCell`, `csvRow`, `toCsv`, `recordsCsv`, `parseCsv`, `csvResponse`
+- `./csv`: `guardFormula`, `csvCell`, `csvRow`, `toCsv`, `recordsCsv`, `parseCsv`, `csvResponse`, `CSV_CONTENT_TYPE`
 - `./csv-client`: `downloadCsv`
-- `./worker`: `SECURITY_TXT_PATH`, `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`
-- `./inbox-report`: `INBOX_REPORT_PATH`, `MAX_REPORT_ITEMS`, `MAX_REPORT_TITLE`, `MAX_INBOX_REPORT_BYTES`, `REPORT_TTL_SECONDS`, `capsidOrigin`, `reportInbox`
+- `./worker`: `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`, `SECURITY_TXT_PATH`
+- `./render-html`: `renderHtml`
+- `./inbox-report`: `capsidOrigin`, `reportInbox`, `INBOX_REPORT_PATH`, `MAX_REPORT_ITEMS`, `MAX_REPORT_TITLE`, `MAX_INBOX_REPORT_BYTES`, `REPORT_TTL_SECONDS`
 - `./secret-box`: `keyring`, `keyringFromEnv`, `seal`, `keyIdOf`, `open`, `reseal`
-- `./http-errors`: `AppError`, `errors`, `problemResponse`, `errorResponse`, `schemaIssues`, `honoErrorHandler`, `readProblem`
-- `./confirm-token`: `CONFIRM_TTL_SECONDS`, `mintConfirm`, `redeemConfirm`
+- `./http-errors`: `problemResponse`, `errorResponse`, `schemaIssues`, `honoErrorHandler`, `readProblem`, `AppError`
+- `./confirm-token`: `mintConfirm`, `redeemConfirm`, `CONFIRM_TTL_SECONDS`
 - `./hono`: `operatorBearer`, `honoRateLimit`
 - `./web-push`: `subscriptionProblem`, `readVapidKey`, `encryptPayload`, `vapidJwt`, `sendPush`
-- `./cron-lock`: `TICKER_INTERVAL_MS`, `withLease`, `armIfIdle`, `tick`, `ensureTickerArmed`, `decideAcquire`, `decideRelease`, `lockHealth`
+- `./cron-lock`: `withLease`, `armIfIdle`, `tick`, `ensureTickerArmed`, `TICKER_INTERVAL_MS`, `decideAcquire`, `decideRelease`, `lockHealth`
 - `./cron-lock/durable-object`: `CronLock`, `CronTicker`
-- `./health-alert`: `HEALTH_STATE_SQL`, `notifyOnChange`
-- `./health-snapshot`: `HEALTH_SNAPSHOT_KEY`, `HEALTH_SNAPSHOT_EVERY_MINUTES`, `healthTile`, `snapshotFromBody`, `storeHealthSnapshot`, `readHealthTile`
-- `./print-pdf`: `PAGED_DONE_ATTRIBUTE`, `PAGED_JS_PAGE_TEMPLATE`, `PAGED_JS_CONFIG`, `PAGED_JS_TRUSTED_TYPES`, `pagedContent`, `pagedScripts`, `quickPdf`, `pagedPdf`
-- `./cron-alert`: `ALERTS_SQL`, `describeAge`, `alertOnce`, `cronAlert`
+- `./health-alert`: `notifyOnChange`, `HEALTH_STATE_SQL`
+- `./health-snapshot`: `healthTile`, `snapshotFromBody`, `storeHealthSnapshot`, `readHealthTile`, `HEALTH_SNAPSHOT_KEY`, `HEALTH_SNAPSHOT_EVERY_MINUTES`
+- `./print-pdf`: `pagedContent`, `pagedScripts`, `quickPdf`, `pagedPdf`, `PAGED_DONE_ATTRIBUTE`, `PAGED_JS_PAGE_TEMPLATE`, `PAGED_JS_CONFIG`, `PAGED_JS_TRUSTED_TYPES`
+- `./cron-alert`: `describeAge`, `alertOnce`, `cronAlert`, `ALERTS_SQL`
 - `./ai-caps`: `pacedAllowance`, `secondsPerPacedUnit`, `kvCounter`, `reserveSettle`, `windowKey`, `consume`, `spent`, `ensureBudgetTable`, `resetBudget`
 - `./ai-caps/durable-object`: `DailyBudget`
-- `./ai-ask`: `CUT_EVENT`, `frameFields`, `takeSseFrames`, `answerDelta`, `finishReason`, `normalizeQuestion`, `answerKey`, `replayFrames`, `guardAnswerStream`
-- `./newsletter`: `SUBSCRIBERS_SQL`, `newsletter`
+- `./ai-ask`: `frameFields`, `takeSseFrames`, `answerDelta`, `finishReason`, `normalizeQuestion`, `answerKey`, `replayFrames`, `guardAnswerStream`, `CUT_EVENT`
+- `./newsletter`: `newsletter`, `SUBSCRIBERS_SQL`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
 ## site-api 0.48.0 (DrDustinEdwards/site-api)
@@ -217,7 +218,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `listAllKeys`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`, `createSiteBackup`
 - bins: `d1-dump`
 
-## devkit 0.58.0 (DrDustinEdwards/devkit)
+## devkit 0.58.1 (DrDustinEdwards/devkit)
 
 - `./node`: `assertFloor`, `createTally`, `walkFiles`, `readDevVar`, `isMain`
 - `./node/syntax`: `parseSource`, `propertyReads`, `interfaceMembers`, `findAction`, `intentBranches`, `objectConst`, `stringArrayConst`, `propertyValue`, `isLiteralString`, `bindingUses`, `ts`
