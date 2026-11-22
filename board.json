@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-22T02:14:06.249Z",
+ "as_of": "2026-11-22T02:48:30.862Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -1333,27 +1333,12 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "carrel-conformance: 4 errors",
+     "reason": "carrel-conformance: 1 errors",
      "findings": [
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow, webmention"
-      },
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: a rename answers 301 from the old path failed: The operation was aborted due to timeout"
-      },
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: trash and restore failed: trash: 404 not-found"
-      },
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: a delete answers 410 on the old path failed: read: 404 not-found"
+       "detail": "https://dustinedwards.info/api/carrel/v1 probe post: created as a draft failed: create: 422 refused"
       }
      ]
     },
@@ -1364,7 +1349,7 @@
       {
        "severity": "error",
        "check": "M1",
-       "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: webmention"
+       "detail": "https://germomics.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow, webmention"
       }
      ]
     },
@@ -1399,17 +1384,12 @@
     },
     "foxhound": {
      "status": "missing",
-     "reason": "carrel-conformance: 2 errors",
+     "reason": "carrel-conformance: 1 errors",
      "findings": [
       {
        "severity": "error",
        "check": "M1",
        "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: each declared hook recorded a run for the publish failed: failed: indexnow"
-      },
-      {
-       "severity": "error",
-       "check": "M1",
-       "detail": "https://foxhoundapp.com/api/carrel/v1 probe post: a rename answers 301 from the old path failed: old path /blog/carrel-conformance-84dcf2b8: expected 301, got 200"
       }
      ]
     },
@@ -2013,6 +1993,11 @@
        "severity": "warning",
        "check": "C2",
        "detail": "https://carrel-mcp.dustinedwards.info/health the cron check is warn: backup failed"
+      },
+      {
+       "severity": "warning",
+       "check": "H4",
+       "detail": "https://carrel-mcp.dustinedwards.info/health serves 373c66a59081fd816126f996534ed37ae5fb0931, not the branch head a9129fee1ed3f046bde5b5f67b47ed19d269d971 (https://github.com/DrDustinEdwards/carrel/commit/a9129fee1ed3f046bde5b5f67b47ed19d269d971), committed 9 minutes ago"
       }
      ]
     },
