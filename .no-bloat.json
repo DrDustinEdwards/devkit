@@ -23,7 +23,7 @@
     "jscpd": "jscpd@5.4.0"
   },
   "baseline": {
-    "measured_at": "690d5dc",
+    "measured_at": "4df1610",
     "knip": {},
     "jscpd": {
       "clones": 0,
