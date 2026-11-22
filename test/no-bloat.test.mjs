@@ -1586,22 +1586,20 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
   assert.deepEqual([dropped.code, dropped.definition], [true, []]);
   assert.deepEqual(drop(knip(["a.ts", "!b.ts"]), knip(["a.ts"])).definition, ["knip.json"]);
   assert.deepEqual(drop(knip(["a.ts"]), knip(["a.ts"], ["src/**"])).definition, ["knip.json"]);
-  // Adding entries is a change of measure that may lower Knip's unused files by the files it names, and nothing else.
+  // Adding entries is a change of measure that may lower any Knip count, and nothing else.
   const add = drop(knip(["a.ts"]), knip(["a.ts", "app/site.ts", "app/islands/*.ts"]));
   assert.deepEqual(
     [add.code, add.definition, add.entries],
     [false, ["knip.json"], { "knip.json": ["app/site.ts", "app/islands/*.ts"] }],
   );
-  const tree = ["a.ts", "app/site.ts", "app/islands/tabs.ts", "app/lib/x.ts"];
-  const counts = (/** @type {number} */ files, exports = 3) => ({
-    baseline: { knip: { files, exports } },
+  const counts = (/** @type {number} */ files, clones = 0) => ({
+    baseline: { knip: { files, exports: files }, jscpd: { clones } },
   });
-  assert.deepEqual(raised(counts(0), counts(2), add, tree), []);
-  assert.match(raised(counts(0), counts(3), add, tree).join(), /lowers files from 3 to 0/);
-  assert.match(raised(counts(0, 2), counts(2), add, tree).join(), /lowers exports from 3 to 2/);
+  assert.deepEqual(raised(counts(0), counts(3), add), []);
+  assert.match(raised(counts(0), counts(3, 1), add).join(), /lowers clones from 1 to 0/);
   // Beside another change of measure, or with a negation, nothing may drop.
   assert.match(
-    raised(counts(0), counts(2), { ...add, definition: ["knip.json", ".jscpd.json"] }, tree).join(),
+    raised(counts(0), counts(2), { ...add, definition: ["knip.json", ".jscpd.json"] }).join(),
     /lowers files from 2 to 0/,
   );
   assert.deepEqual(drop(knip(["a.ts"]), knip(["a.ts", "!b.ts"])).entries, {});
