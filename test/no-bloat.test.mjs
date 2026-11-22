@@ -1591,7 +1591,7 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
   const add = drop(knip(["a.ts"]), knip(more, undefined, ign));
   assert.deepEqual(
     [add.code, add.definition, add.entries],
-    [false, ["knip.json"], { "knip.json": ["app/site.ts", "app/islands/*.ts"] }],
+    [false, ["knip.json"], { "knip.json": ["app/site.ts", "app/islands/*.ts", "x"] }],
   );
   const counts = (/** @type {number} */ files, clones = 0) => ({
     baseline: { knip: { files, exports: files }, jscpd: { clones }, comments: { code: files } },

@@ -1912,7 +1912,7 @@ function entryChange(before, now) {
       ),
     });
   if (rest(a) !== rest(b)) return null;
-  const [was, is] = [knipGlobs(a, "entry"), knipGlobs(b, "entry")];
+  const [was, is] = [a, b].map((c) => [...knipGlobs(c, "entry"), ...(c.ignoreDependencies ?? [])]);
   return { dropped: was.filter((g) => !is.includes(g)), added: is.filter((g) => !was.includes(g)) };
 }
 
