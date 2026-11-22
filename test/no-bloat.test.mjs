@@ -1573,8 +1573,8 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
   assert.equal(ok(["deferResolveEntry:site/dead.ts"]), false);
   assert.equal(ok(["dependency:left-pad"]), false);
   // Dropping an entry makes Knip count more, so it is code; dropping a negation or anything else is a change of measure.
-  const knip = (/** @type {string[]} */ entry, project = ["**/*.ts"]) =>
-    JSON.stringify({ entry, project });
+  const knip = (/** @type {string[]} */ entry, project = ["**/*.ts"], more = {}) =>
+    JSON.stringify({ entry, project, ...more });
   const drop = (/** @type {string} */ was, /** @type {string} */ is) =>
     classify({
       changed: ["knip.json"],
@@ -1586,8 +1586,9 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
   assert.deepEqual([dropped.code, dropped.definition], [true, []]);
   assert.deepEqual(drop(knip(["a.ts", "!b.ts"]), knip(["a.ts"])).definition, ["knip.json"]);
   assert.deepEqual(drop(knip(["a.ts"]), knip(["a.ts"], ["src/**"])).definition, ["knip.json"]);
-  // Adding entries is a change of measure that may lower any Knip count, and nothing else.
-  const add = drop(knip(["a.ts"]), knip(["a.ts", "app/site.ts", "app/islands/*.ts"]));
+  // Adding entries or ignored dependencies is a change of measure that may lower any Knip count, and nothing else.
+  const [more, ign] = [["a.ts", "app/site.ts", "app/islands/*.ts"], { ignoreDependencies: ["x"] }];
+  const add = drop(knip(["a.ts"]), knip(more, undefined, ign));
   assert.deepEqual(
     [add.code, add.definition, add.entries],
     [false, ["knip.json"], { "knip.json": ["app/site.ts", "app/islands/*.ts"] }],
@@ -1603,7 +1604,6 @@ test("a Knip plugin's config, and what a config in code imports, is a change of 
     /lowers files from 2 to 0/,
   );
   assert.deepEqual(drop(knip(["a.ts"]), knip(["a.ts", "!b.ts"])).entries, {});
-  // Beside code, the config is refused as a change of measure.
   const kind = classify({
     changed: [".mocharc.cjs", "src/a.ts"],
     configPath: ".no-bloat.json",
