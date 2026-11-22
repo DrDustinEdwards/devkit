@@ -35,13 +35,14 @@
       "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 20 pages, 0 errors, 0 warnings (the earlier h3-after-h1 findings are gone). The repository is not readable from this session, so no second renderer is ruled out beyond the live output."
     },
     "txasm": {
-      "verdict": "partial",
+      "verdict": "complete",
       "evidence": [
         "https://txasm.dustin-edwards.workers.dev/award-nominations",
         "https://txasm.dustin-edwards.workers.dev/meetings",
-        "https://txasm.dustin-edwards.workers.dev/awardees"
+        "https://txasm.dustin-edwards.workers.dev/awardees",
+        "https://txasm.dustin-edwards.workers.dev/trail"
       ],
-      "note": "prelum-content v0.63.7 (run by hand, 21 Nov 2026) on the workers.dev address: 200 pages, 0 errors, 4 warnings: /award-nominations has no data-render-version wrapper, and /meetings, /awardees and /trail go h1 to h3."
+      "note": "prelum-content v0.63.7 run by hand 22 Nov 2026 on the workers.dev address after txasm #445, #447 and #450: 200 pages, 0 errors, 0 warnings. /meetings, /awardees and /trail go h1 then h2; /award-nominations and the home page carry data-render-version 26 (the stored renders were at 3 until the new cron re-rendered them)."
     },
     "foxhound": {
       "verdict": "complete",
