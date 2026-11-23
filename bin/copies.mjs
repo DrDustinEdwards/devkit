@@ -122,7 +122,13 @@ const NOT_OWN =
 const importedNames = (/** @type {string} */ text) =>
   new Set(
     [...text.matchAll(/import\s+(?:type\s+)?\{([^}]*)\}\s*from\s*["']/g)].flatMap((m) =>
-      m[1].split(",").map((part) => part.trim().split(/\s+as\s+/).pop() ?? ""),
+      m[1].split(",").map(
+        (part) =>
+          part
+            .trim()
+            .split(/\s+as\s+/)
+            .pop() ?? "",
+      ),
     ),
   );
 
