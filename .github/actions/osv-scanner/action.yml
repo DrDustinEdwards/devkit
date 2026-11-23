@@ -55,7 +55,8 @@ runs:
           if [ "$code" -gt 1 ]; then echo "::error::OSV-Scanner could not scan $1 (exit $code)."; exit "$code"; fi
           jq -r --arg root "$PWD/$1/" '.results[] | (.source.path | ltrimstr($root)) as $file | .packages[] | .package as $p
             | .groups[] | [$p.ecosystem, $p.name, (.ids | sort | first), $p.version, $file, (.max_severity // "")] | @tsv' \
-            "$RUNNER_TEMP/$2.json" | sort -u > "$RUNNER_TEMP/$2.tsv"
+            "$RUNNER_TEMP/$2.json" | sort -u > "$RUNNER_TEMP/$2.tsv" ||
+            { echo "::error::could not read the OSV-Scanner report of $1."; exit 1; }
         }
         scan "$HEAD_DIR" osv-head
         if [ -n "$BASE_SHA" ]; then

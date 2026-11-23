@@ -9,6 +9,7 @@ const DESTRUCTIVE = [
   [/\bALTER\s+TABLE\s+[^;]*?\bRENAME\b/i, "renames a table or column"],
   [/\bDROP\s+(?:INDEX|VIEW|TRIGGER)\b/i, "drops an index, view or trigger"],
   [/(?:^|;|\bDO)\s*UPDATE\b[^;]*?\bSET\b/i, "updates rows"],
+  [/\bWITH\b[^;]*?\)\s*UPDATE\b[^;]*?\bSET\b/i, "updates rows"],
   [/\bINSERT\s+OR\s+REPLACE\b|\bREPLACE\s+INTO\b/i, "replaces rows"],
   [/\bDELETE\s+FROM\b/i, "deletes rows"],
   [/\bPRAGMA\s+writable_schema\b/i, "edits the schema table directly"],
@@ -59,7 +60,7 @@ function scan(sql) {
   }
   // A trigger's body runs when a row changes, not when the migration does: it is not read.
   code = code.replace(
-    /\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?\bEND\s*;/gi,
+    /\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?;\s*END\s*;/gi,
     " ",
   );
   return { code, marked };

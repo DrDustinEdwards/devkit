@@ -99,7 +99,7 @@ jobs:
 
       # Runs after a refused dump too, so one run says whether the files restore as well.
       - name: Restore a sample of files and check the bytes
-        if: success() || failure()
+        if: (success() || failure()) && env.D1_DUMP_REF != ''
         env:
           BUCKET: ${{ inputs.bucket }}
           SAMPLE: ${{ inputs.files-sample }}

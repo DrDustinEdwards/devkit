@@ -344,7 +344,14 @@ async function main() {
     return;
   }
 
-  const problems = check({ files, read, manifest, min: Number(values.min) });
+  const min = Number(values.min);
+  if (!Number.isInteger(min) || min < 1) {
+    console.error(
+      `devkit-migrations: --min must be a whole number of 1 or more, got "${values.min}"`,
+    );
+    process.exit(2);
+  }
+  const problems = check({ files, read, manifest, min });
   const ledgers = await localLedgers(values.state);
   if (ledgers.length > 1)
     problems.push(

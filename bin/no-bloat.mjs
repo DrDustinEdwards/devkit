@@ -85,7 +85,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
-import { tmpdir } from "node:os";
+import { devNull, tmpdir } from "node:os";
 import { dirname, isAbsolute, join, posix, relative, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -977,12 +977,13 @@ const INJECTING =
 const IN_ACTIONS =
   /^(?:HTTPS?_PROXY|ALL_PROXY|NO_PROXY|NODE_EXTRA_CA_CERTS|NODE_TLS_REJECT_UNAUTHORIZED|SSL_CERT_FILE|SSL_CERT_DIR)$/i;
 
-/** The environment with nothing that injects code (INJECTING), for the tools. Pure. */
+/** The environment with nothing that injects code (INJECTING) and no user npmrc, for the tools. Pure. */
 export function cleanEnv(/** @type {NodeJS.ProcessEnv} */ env) {
   const actions = env.GITHUB_ACTIONS === "true";
-  return Object.fromEntries(
-    Object.entries(env).filter(([k]) => !INJECTING.test(k) && !(actions && IN_ACTIONS.test(k))),
+  const kept = Object.entries(env).filter(
+    ([k]) => !INJECTING.test(k) && !(actions && IN_ACTIONS.test(k)),
   );
+  return { ...Object.fromEntries(kept), npm_config_userconfig: devNull };
 }
 
 /** The YAML parser the workflows are read with: the version devkit's own lockfile installs and its tests run. */
@@ -1012,9 +1013,8 @@ export function checkTools(root, tools, given = process.env.DEVKIT_NO_BLOAT_TOOL
       );
     if (problems.length) throw new Error(problems.join("; "));
     const made = mkdtempSync(join(tmpdir(), "no-bloat-tools-"));
-    // npm refuses one file as both, so each gets its own empty one.
-    const [user, global] = [join(made, "userconfig"), join(made, "globalconfig")];
-    writeFileSync(user, "");
+    // npm refuses one file as both: cleanEnv's user npmrc is /dev/null, so the global one is its own empty file.
+    const global = join(made, "globalconfig");
     writeFileSync(global, "");
     // npm beside this node, as setup-node and every installer lay it out; PATH's only when there is none.
     const cli = join(
@@ -1045,8 +1045,6 @@ export function checkTools(root, tools, given = process.env.DEVKIT_NO_BLOAT_TOOL
         "--no-fund",
         "--registry",
         "https://registry.npmjs.org/",
-        "--userconfig",
-        user,
         "--globalconfig",
         global,
         "--cache",
@@ -1806,6 +1804,7 @@ function settledConfigs(root, base, roots, files, knip, runs) {
         cwd: dir,
         stdio: "ignore",
         maxBuffer: BUFFER,
+        env: cleanEnv(process.env),
       });
     else if (existsSync(join(root, "node_modules")))
       symlinkSync(join(root, "node_modules"), join(dir, "node_modules"), "dir");

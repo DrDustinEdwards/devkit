@@ -6,8 +6,8 @@ name: release
 # CHANGELOG has none. Nobody pushes a tag by hand, and a session that cannot push tags can still release by merging.
 # It is the release job, once, for every package repository installed by git tag.
 #
-# BUILD. A package that ships built files (Capsomer's dist/) passes `build: true`: the job runs `npm ci` (whose prepare
-# script builds), drops the prepare script, commits the built files on top of the merged commit and tags that commit, which
+# BUILD. A package that ships built files (Capsomer's dist/) passes `build: true`: the plan job (read-only, no OIDC token) runs `npm ci` (whose prepare
+# script builds), drops the prepare script, commits the built files on top of the merged commit and tags that commit (the tag job pushes it from a bundle), which
 # is on no branch (one such commit for each version it releases). An app installing github:DrDustinEdwards/<package>#vX.Y.Z then gets the package as built, with no build
 # and none of the package's devDependencies at install time.
 #
@@ -59,21 +59,22 @@ on:
         value: ${{ jobs.tag.outputs.created }}
       tag:
         description: The tag for package.json's version, created or not.
-        value: ${{ jobs.tag.outputs.tag }}
+        value: ${{ jobs.plan.outputs.tag }}
 
 permissions: {}
 
 jobs:
-  tag:
-    name: Tag and publish the release
+  # The package's own code (its prepare script and, through npm ci, its dependencies) runs only here, in a job that holds no
+  # write permission and no OIDC token: GitHub puts the token request variables in the environment of every step of a job
+  # that may request one, so a build never shares a job with `id-token: write`.
+  plan:
+    name: Plan and build the releases
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.timeout-minutes }}
     permissions:
-      contents: write
-      id-token: write
-      attestations: write
+      contents: read
     outputs:
-      created: ${{ steps.publish.outputs.created || steps.release.outputs.created }}
+      new: ${{ steps.release.outputs.new }}
       tag: ${{ steps.release.outputs.tag }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -89,11 +90,12 @@ jobs:
           package-manager-cache: false
 
       # Reads only: the default-branch guard, then the list of versions to release in $RUNNER_TEMP/releases.tsv (tag and
-      # commit, oldest first) and each one's CHANGELOG section in $RUNNER_TEMP/notes/. The build below runs the package's
-      # own code (its prepare script and, through npm ci, its dependencies), so it holds no token.
+      # commit, oldest first; a third field "tagged" marks a tag that exists without its release) and each one's CHANGELOG
+      # section in $RUNNER_TEMP/notes/.
       - id: release
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ "$GITHUB_REF" != "refs/heads/$DEFAULT_BRANCH" ]; then
             echo "::error::release runs only on the default branch ($DEFAULT_BRANCH), not $GITHUB_REF."
@@ -140,9 +142,15 @@ jobs:
           if ! grep -qx "$head_tag" "$tags" && ! cut -f1 "$releases" | grep -qx "$head_tag"; then
             printf '%s\t%s\n' "$head_tag" "$(git rev-parse HEAD)" >> "$releases"
           fi
+          # A tag whose release failed (the tag is made first) is never skipped: among the ten newest, one with no release gets
+          # its release made on the tag as it is.
+          for t in $(sort -V "$tags" | tail -n 10); do
+            cut -f1 "$releases" | grep -qx "$t" && continue
+            gh release view "$t" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 && continue
+            printf '%s\t%s\ttagged\n' "$t" "$(git rev-parse "$t^{commit}")" >> "$releases"
+          done
           if [ ! -s "$releases" ]; then
             echo "$head_tag already exists; nothing to release."
-            echo "created=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           # THE TIP, WHEN WORKFLOWS MOVED. GitHub refuses a workflow token (HTTP 403, "Resource not accessible by integration")
@@ -153,7 +161,11 @@ jobs:
           retargeted="$RUNNER_TEMP/releases.retargeted.tsv"
           : > "$retargeted"
           head_sha="$(git rev-parse HEAD)"
-          while IFS=$'\t' read -r -u 3 tag sha; do
+          while IFS=$'\t' read -r -u 3 tag sha kind; do
+            if [ "$kind" = tagged ]; then
+              printf '%s\t%s\ttagged\n' "$tag" "$sha" >> "$retargeted"
+              continue
+            fi
             if [ "$sha" != "$head_sha" ] && ! git diff --quiet "$sha" "$head_sha" -- .github/workflows; then
               tip_version="$(git show "$head_sha:package.json" | jq -r .version)"
               if [ "$tip_version" != "${tag#v}" ]; then
@@ -168,7 +180,7 @@ jobs:
           mv "$retargeted" "$releases"
           echo "new=true" >> "$GITHUB_OUTPUT"
           mkdir -p "$RUNNER_TEMP/notes"
-          while IFS=$'\t' read -r -u 3 tag sha; do
+          while IFS=$'\t' read -r -u 3 tag sha _; do
             echo "release $tag at $sha"
             git show "$sha:CHANGELOG.md" 2>/dev/null | awk -v v="${tag#v}" '
               index($0, "## " v " ") == 1 || $0 == "## " v || index($0, "## [" v "]") == 1 { on = 1; next }
@@ -184,7 +196,11 @@ jobs:
         run: |
           built="$RUNNER_TEMP/releases.built.tsv"
           : > "$built"
-          while IFS=$'\t' read -r -u 3 tag sha; do
+          while IFS=$'\t' read -r -u 3 tag sha kind; do
+            if [ "$kind" = tagged ]; then
+              printf '%s\t%s\ttagged\n' "$tag" "$sha" >> "$built"
+              continue
+            fi
             git checkout -q --force "$sha"
             git clean -ffdxq
             npm ci --ignore-scripts
@@ -197,16 +213,61 @@ jobs:
             printf '%s\t%s\n' "$tag" "$(git rev-parse HEAD)" >> "$built"
           done 3< "$RUNNER_TEMP/releases.tsv"
           mv "$built" "$RUNNER_TEMP/releases.tsv"
+          # The built commits travel to the job that tags them as a bundle of their tags.
+          refs="$(awk -F'\t' '$3 != "tagged" { print "refs/tags/" $1 }' "$RUNNER_TEMP/releases.tsv")"
+          # shellcheck disable=SC2086
+          [ -z "$refs" ] || git bundle create "$RUNNER_TEMP/built.bundle" $refs
 
+      - if: steps.release.outputs.new == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-plan
+          path: |
+            ${{ runner.temp }}/tags.txt
+            ${{ runner.temp }}/releases.tsv
+            ${{ runner.temp }}/notes
+            ${{ runner.temp }}/built.bundle
+          if-no-files-found: ignore
+          retention-days: 1
+
+  tag:
+    name: Tag and publish the release
+    needs: plan
+    if: needs.plan.outputs.new == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    outputs:
+      created: ${{ steps.publish.outputs.created }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-plan
+          path: ${{ runner.temp }}
+
+      # Nothing here runs the package's code: the build was the plan job's, and `npm pack` below ignores scripts.
       - id: publish
         name: Tag and publish the releases
-        if: steps.release.outputs.new == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           BUILD: ${{ inputs.build }}
         run: |
-          while IFS=$'\t' read -r -u 3 tag sha; do
-            if [ "$BUILD" = "true" ]; then
+          if [ -f "$RUNNER_TEMP/built.bundle" ]; then
+            git fetch -q "$RUNNER_TEMP/built.bundle" 'refs/tags/*:refs/tags/*'
+          fi
+          while IFS=$'\t' read -r -u 3 tag sha kind; do
+            if [ "$kind" = tagged ]; then
+              :
+            elif [ "$BUILD" = "true" ]; then
               git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/$tag"
             else
               gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$tag" -f sha="$sha" >/dev/null
@@ -228,7 +289,7 @@ jobs:
         if: steps.publish.outputs.created == 'true'
         run: |
           mkdir -p "$RUNNER_TEMP/pack"
-          while IFS=$'\t' read -r -u 3 _ sha; do
+          while IFS=$'\t' read -r -u 3 _ sha _; do
             git checkout -q --force "$sha"
             npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/pack" >/dev/null
           done 3< "$RUNNER_TEMP/releases.tsv"

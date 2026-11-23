@@ -121,4 +121,10 @@ if (process.env.GITHUB_STEP_SUMMARY)
     process.env.GITHUB_STEP_SUMMARY,
     `## Review verdict: ${output.title}\n\n${output.summary}\n`,
   );
-await writeCheck(output);
+try {
+  await writeCheck(output);
+} catch (err) {
+  console.log(
+    `::warning::could not write the ${CHECK_NAME} check: ${err instanceof Error ? err.message : err}`,
+  );
+}

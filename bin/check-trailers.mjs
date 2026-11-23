@@ -26,6 +26,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { isMain } from "../node/index.mjs";
+import { escapeAnnotation } from "./annotate.mjs";
 
 // The three named forms, matched at the start of any line of the message.
 const NAMED = [
@@ -192,10 +193,11 @@ function main() {
     return;
   }
   for (const { sha, found, identities } of bad) {
-    for (const f of found) console.error(`::error::commit ${sha} carries an AI trailer (${f})`);
+    for (const f of found)
+      console.error(`::error::${escapeAnnotation(`commit ${sha} carries an AI trailer (${f})`)}`);
     for (const id of identities) {
       console.error(
-        `::error::commit ${sha} has an AI identity (${id}). A squash merge turns a Claude author into "Co-authored-by: Claude", which the push check then refuses after the merge.`,
+        `::error::${escapeAnnotation(`commit ${sha} has an AI identity (${id}). A squash merge turns a Claude author into "Co-authored-by: Claude", which the push check then refuses after the merge.`)}`,
       );
     }
   }
