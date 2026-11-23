@@ -79,8 +79,15 @@ test("--apply runs only what adds: a drop, rename, DELETE or `-- contract:` line
     "drops a table",
   ]);
   assert.deepEqual(handOnly("DELETE FROM sessions;"), ["deletes rows"]);
+  assert.deepEqual(
+    handOnly(
+      "CREATE TRIGGER t AFTER INSERT ON a BEGIN UPDATE b SET c = CASE WHEN 1 THEN 2 END; UPDATE d SET e = 1; END;",
+    ),
+    [],
+  );
   for (const sql of [
     "UPDATE a SET b = 1;",
+    "WITH t AS (SELECT 1 AS a) UPDATE users SET x = 1;",
     "INSERT OR REPLACE INTO a VALUES (1);",
     "REPLACE INTO a VALUES (1);",
     "DROP INDEX i;",

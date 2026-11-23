@@ -31,10 +31,12 @@ const EXTERNAL = /^(?:[a-z+]+:)?\/\//i;
 
 function readSettings() {
   try {
-    return {
+    const saved = {
       placement: "bottom-center",
       ...JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? "{}"),
     };
+    if (!PLACEMENTS.includes(saved.placement)) saved.placement = "bottom-center";
+    return saved;
   } catch {
     return { placement: "bottom-center" };
   }

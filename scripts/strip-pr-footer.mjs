@@ -10,6 +10,8 @@
 // The footer as the connection writes it: a rule, then one italic line linking Claude Code, at the end of the
 // description. Also the "Generated with Claude Code" wording. Read line by line from the end, never with a pattern that
 // spans whitespace: a description of 100,000 spaces took twelve seconds under the single regular expression this was.
+import { pathToFileURL } from "node:url";
+
 const FOOTER_LINE = /^_?(?:🤖\s*)?_?Generated (?:by|with) \[Claude Code\]\([^)]*\)_?$/u;
 const RULE_LINE = /^-{3,}$/;
 // A session link left on its own line.
@@ -85,11 +87,13 @@ async function main() {
       if (await fix(repo, pr.number, pr.body)) fixed++;
     }
     if (prs.length < 100) break;
+    if (page === 50)
+      console.log("::warning::stopped at 50 pages of pull requests; older ones were not read");
   }
   console.log(`${read} pull request(s) read, ${fixed} footer(s) removed`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
     console.error(err instanceof Error ? err.message : String(err));
     process.exit(1);

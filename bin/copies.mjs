@@ -170,6 +170,10 @@ export function crossRepo(report) {
     );
 }
 
+const PRIVATE = new Set();
+const at = (/** @type {{ repo: string, path: string }} */ p, /** @type {string} */ range = "") =>
+  PRIVATE.has(p.repo) ? "a private repository" : `${p.repo}/${p.path}${range}`;
+
 /**
  * The owner's repositories that are neither forks nor archived, by name: every one the token can read when there is a
  * token for the owner (a fine-grained token lists its repositories at /user/repos), the public ones otherwise.
@@ -191,8 +195,10 @@ async function ownerRepos(/** @type {string | undefined} */ token) {
     });
     if (!resp.ok) throw new Error(`GitHub answered ${resp.status} for the repository list`);
     const repos = await resp.json();
-    for (const repo of repos)
+    for (const repo of repos) {
       if (repo.owner?.login === OWNER && !repo.fork && !repo.archived) names.push(repo.name);
+      if (repo.private) PRIVATE.add(repo.name);
+    }
     if (repos.length < 100) return names.sort();
   }
 }
@@ -342,7 +348,7 @@ function jscpd(
   /** @type {string} */ tool,
   /** @type {string[]} */ args,
 ) {
-  const out = mkdtempSync(join(tmpdir(), "devkit-copies-report-"));
+  const out = join(dirname(dir), "report");
   const r = spawnSync(
     "npx",
     [
@@ -389,6 +395,7 @@ async function main() {
     process.exit(1);
   }
   const work = mkdtempSync(join(tmpdir(), "devkit-copies-"));
+  process.on("exit", () => rmSync(work, { recursive: true, force: true })); // clones of private repositories
   const all = join(work, "all");
   mkdirSync(all);
 
@@ -441,11 +448,10 @@ async function main() {
     code.push(...got.code);
   }
 
-  if (!values.from && !token) {
+  if (!values.from && !token)
     console.log(
       "::warning title=devkit-copies::LIVE_GITHUB_TOKEN is not set, so only public repositories were read; a private one is left out of the count.",
     );
-  }
   const pairs = crossRepo(jscpd(all, config.tool, config.args ?? COPY_ARGS));
   const same = sameFiles(whole);
   // A file held by n repositories is n - 1 copies of it.
@@ -472,41 +478,35 @@ async function main() {
     "",
     ...pairs.map(
       ({ a, b, lines: n }) =>
-        `- ${n} lines: ${a.repo}/${a.path}:${a.start}-${a.end} and ${b.repo}/${b.path}:${b.start}-${b.end}`,
+        `- ${n} lines: ${at(a, `:${a.start}-${a.end}`)} and ${at(b, `:${b.start}-${b.end}`)}`,
     ),
-    ...same.map(
-      (places) => `- the same file: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`,
-    ),
+    ...same.map((places) => `- the same file: ${places.map((p) => at(p)).join(", ")}`),
     "",
     `## Names defined in more than one repository: ${names.length} (baseline ${namesBaseline})`,
     "",
-    ...names.map(
-      ({ name, places }) => `- ${name}: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`,
-    ),
+    ...names.map(({ name, places }) => `- ${name}: ${places.map((p) => at(p)).join(", ")}`),
     "",
     `## Names exported by more than one shared package: ${overlap.length} (baseline ${config.packages ?? "none yet"})`,
     "",
-    ...overlap.map(
-      ({ name, places }) => `- ${name}: ${places.map((p) => `${p.repo}/${p.path}`).join(", ")}`,
-    ),
+    ...overlap.map(({ name, places }) => `- ${name}: ${places.map((p) => at(p)).join(", ")}`),
   ];
   console.log(lines.join("\n"));
   for (const { a, b, lines: n } of pairs)
     console.log(
-      `::warning title=devkit-copies::${escapeAnnotation(`${n} lines copied: ${a.repo}/${a.path}:${a.start} and ${b.repo}/${b.path}:${b.start}`)}`,
+      `::warning title=devkit-copies::${escapeAnnotation(`${n} lines copied: ${at(a, `:${a.start}`)} and ${at(b, `:${b.start}`)}`)}`,
     );
   for (const places of same)
     console.log(
-      `::warning title=devkit-copies::${escapeAnnotation(`the same file: ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`)}`,
+      `::warning title=devkit-copies::${escapeAnnotation(`the same file: ${places.map((p) => at(p)).join(" and ")}`)}`,
     );
   for (const { name, places } of names)
     console.log(
-      `::warning title=devkit-copies::${escapeAnnotation(`${name} is defined in ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`)}`,
+      `::warning title=devkit-copies::${escapeAnnotation(`${name} is defined in ${places.map((p) => at(p)).join(" and ")}`)}`,
     );
   appendSummary(lines.join("\n"));
   for (const { name, places } of overlap)
     console.log(
-      `::warning title=devkit-copies::${escapeAnnotation(`${name} is exported by ${places.map((p) => `${p.repo}/${p.path}`).join(" and ")}`)}`,
+      `::warning title=devkit-copies::${escapeAnnotation(`${name} is exported by ${places.map((p) => at(p)).join(" and ")}`)}`,
     );
   let failed = false;
   if (count > config.baseline) {

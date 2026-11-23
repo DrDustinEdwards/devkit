@@ -547,7 +547,7 @@ async function scanPage(
     scan.zoom = await zoomProxy(page);
     await page.setViewportSize({ width: 1440, height: 900 });
     await sleep(400);
-    scan.escape = await escapeCloses(page).catch(() => undefined);
+    scan.escape = await escapeCloses(page);
     await context.close();
     await sleep(PAUSE_MS);
     scan.motion = await motion(browser, url);

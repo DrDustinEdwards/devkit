@@ -772,7 +772,7 @@ async function bindingCheck({ repo, branch, path, health, healthUrl, findings, u
   let exempt = {};
   if (extra.text !== null) {
     try {
-      exempt = JSON.parse(extra.text);
+      exempt = JSON.parse(extra.text) ?? {};
     } catch {
       findings.push(
         finding(

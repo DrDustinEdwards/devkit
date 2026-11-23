@@ -715,7 +715,7 @@ jobs:
           const origin = new URL(process.env.HEALTH_URL).origin;
           const locs = async (url) => {
             const r = await fetch(url);
-            return r.ok ? [...(await r.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]) : [];
+            return r.ok ? [...(await r.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1].replace(/&amp;/g, "&")) : [];
           };
           const top = await locs(`${origin}/sitemap.xml`);
           const pages = top.filter((u) => !/\.xml(\?|$)/.test(u));

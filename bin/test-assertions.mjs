@@ -154,7 +154,7 @@ function main() {
     })) {
       files++;
       const source = readFileSync(file, "utf8");
-      scanned += (source.match(/(?<![\w.$])(?:test|it)\s*\(/g) ?? []).length;
+      scanned += [...source.matchAll(CALL)].length;
       for (const f of testsWithoutAssertions(source))
         problems.push(
           `${relative(root, file).replaceAll("\\", "/")}:${f.line} "${f.name}" calls no assertion, so it cannot fail`,

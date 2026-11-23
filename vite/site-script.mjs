@@ -26,6 +26,13 @@ import { build } from "vite";
 import { serveToolbar, TOOLBAR_LOADER } from "./dev-toolbar.mjs";
 import { ISLAND_NAME } from "./islands.mjs";
 
+/** Answers a dev request whose bundle failed (a syntax error in the entry or an island) instead of leaving it hanging. */
+function fail(/** @type {import("node:http").ServerResponse} */ res, /** @type {unknown} */ err) {
+  console.error(err);
+  res.statusCode = 500;
+  res.end(err instanceof Error ? err.message : String(err));
+}
+
 // Islands are built as an app, not a library, so they are minified whole (library mode keeps an ES module's
 // whitespace) and keep their default export ("exports-only").
 const ISLAND_BUILD = { write: false, minify: true, modulePreload: false };
@@ -269,7 +276,10 @@ export function siteScript({
           res.setHeader("Content-Type", "text/javascript");
           res.end((await bundle(entry)) + (toolbar ? TOOLBAR_LOADER : ""));
         };
-        server.middlewares.use("/site.js", (_req, res) => void serveSite(res));
+        server.middlewares.use(
+          "/site.js",
+          (_req, res) => void serveSite(res).catch((err) => fail(res, err)),
+        );
       }
       /** @type {(req: import("node:http").IncomingMessage, res: import("node:http").ServerResponse) => Promise<void>} */
       const serveIsland = async (req, res) => {
@@ -284,7 +294,10 @@ export function siteScript({
         res.setHeader("Content-Type", "text/javascript");
         res.end(await bundle(file, "es"));
       };
-      server.middlewares.use("/islands/", (req, res) => void serveIsland(req, res));
+      server.middlewares.use(
+        "/islands/",
+        (req, res) => void serveIsland(req, res).catch((err) => fail(res, err)),
+      );
     },
     async generateBundle() {
       if (this.environment.name !== "client") return;

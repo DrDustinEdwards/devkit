@@ -36,7 +36,7 @@ const GIT = ["-c", "user.name=t", "-c", "user.email=t@example.com", "-c", "commi
  * Builds a repository from `commits` ({ version, changelog?, tag?, workflow? } in order), runs the check step and, when it found
  * something to release, the publish step. Returns the plan (tag and short commit subject), the gh calls and the outputs.
  */
-function run({ commits, ref = "refs/heads/main" } = {}) {
+function run({ commits, ref = "refs/heads/main", released = true } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "release-"));
   const temp = join(dir, "tmp");
   const repo = join(dir, "repo");
@@ -62,7 +62,7 @@ function run({ commits, ref = "refs/heads/main" } = {}) {
     }
     writeFileSync(
       join(dir, "gh"),
-      `#!/bin/sh\necho "$*" >> "${dir}/calls"\nfor a in "$@"; do [ "$prev" = --notes-file ] && cat "$a" > "${dir}/notes-$(basename "$a")"; prev="$a"; done\n`,
+      `#!/bin/sh\n${released ? "" : `[ "$1 $2" = "release view" ] && exit 1\n`}[ "$1 $2" = "release view" ] || echo "$*" >> "${dir}/calls"\nfor a in "$@"; do [ "$prev" = --notes-file ] && cat "$a" > "${dir}/notes-$(basename "$a")"; prev="$a"; done\n`,
     );
     chmodSync(join(dir, "gh"), 0o755);
     const env = {
@@ -229,7 +229,18 @@ test("an existing tag releases nothing and moves nothing", BASH, () => {
   assert.equal(r.status, 0);
   assert.deepEqual(r.plan, []);
   assert.equal(r.calls, "");
-  assert.match(r.out, /created=false/);
+  assert.doesNotMatch(r.out, /new=true/);
+});
+
+test("a tag whose release failed gets its release, and the tag is left alone", BASH, () => {
+  const r = run({
+    commits: [{ version: "0.1.0" }, { version: "0.2.0", tag: "v0.2.0" }],
+    released: false,
+  });
+  assert.equal(r.status, 0);
+  assert.deepEqual(r.plan, [{ tag: "v0.2.0", commit: 1 }]);
+  assert.doesNotMatch(r.calls, /git\/refs/);
+  assert.match(r.calls, /release create v0\.2\.0/);
 });
 
 test("another branch or a version that is not X.Y.Z fails before anything is made", BASH, () => {
@@ -242,11 +253,8 @@ test("another branch or a version that is not X.Y.Z fails before anything is mad
   }
 });
 
-test("the step that builds runs the package's code without the token", () => {
-  assert.ok(text.includes("- name: Build the package"), "the build step moved");
-  const build = text.slice(
-    text.indexOf("- name: Build the package"),
-    text.indexOf("- id: publish"),
-  );
-  assert.doesNotMatch(build, /GH_TOKEN|github\.token|secrets\./);
+test("the job that builds runs the package's code with no write token and no OIDC token", () => {
+  const plan = text.slice(text.indexOf("\n  plan:"), text.indexOf("\n  tag:"));
+  assert.ok(plan.includes("- name: Build the package"), "the build step moved");
+  assert.doesNotMatch(plan, /id-token|attestations: write|contents: write|secrets\./);
 });
