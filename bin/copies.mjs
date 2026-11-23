@@ -110,25 +110,18 @@ const ROUTE_EXPORTS = new Set([
 ]);
 
 /**
- * What defines nothing of its own: a re-export (`export { x } from "..."`, or `export { x }` of an imported x, see
- * importedNames), and a Drizzle table, which mirrors in each
- * app's schema the SQL a shared package ships (site-api's media and store tables), so the same table name in two apps
- * is the shared schema, not a second job.
+ * What defines nothing of its own: a re-export (`export { x } from "..."`; `export { x }` of an import is importedNames),
+ * and a Drizzle table, which mirrors in each app's schema the SQL a shared package ships (site-api's media and store
+ * tables), so the same table name in two apps is the shared schema, not a second job.
  */
 const NOT_OWN =
   /export\s*(?:type\s*)?\{[^}]*\}\s*from\s*["'][^"']+["']|export\s+const\s+[A-Za-z_$][\w$]*\s*=\s*(?:sqliteTable|pgTable|mysqlTable)\s*\(/g;
 
-/** The names a module imports, as it calls them: what `export { x }` then passes on, which defines nothing. */
+/** The names a module imports: what `export { x }` then passes on, which defines nothing. */
 const importedNames = (/** @type {string} */ text) =>
   new Set(
-    [...text.matchAll(/import\s+(?:type\s+)?\{([^}]*)\}\s*from\s*["']/g)].flatMap((m) =>
-      m[1].split(",").map(
-        (part) =>
-          part
-            .trim()
-            .split(/\s+as\s+/)
-            .pop() ?? "",
-      ),
+    [...text.matchAll(/import\s+(?:type\s+)?\{([^}]*)\}\s*from/g)].flatMap(
+      (m) => m[1].match(/[\w$]+/g) ?? [],
     ),
   );
 
@@ -291,17 +284,8 @@ export function packageCopies(root, paths, packages, run) {
     const config = join(work, "jscpd.json");
     writeFileSync(config, "{}\n");
     const out = join(work, "report");
-    run([
-      all,
-      ...COPY_ARGS,
-      "--config",
-      config,
-      "--reporters",
-      "json",
-      "--output",
-      out,
-      "--silent",
-    ]);
+    const flags = ["--config", config, "--reporters", "json", "--output", out, "--silent"];
+    run([all, ...COPY_ARGS, ...flags]);
     const report = JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8"));
     // jscpd 4 names a file from the directory it ran in, jscpd 5 from the folder it scanned.
     const inAll = (/** @type {string} */ name) => {
