@@ -110,12 +110,20 @@ const ROUTE_EXPORTS = new Set([
 ]);
 
 /**
- * What defines nothing of its own: a re-export (`export { x } from "..."`), and a Drizzle table, which mirrors in each
- * app's schema the SQL a shared package ships (site-api's media and store tables), so the same table name in two apps
- * is the shared schema, not a second job.
+ * What defines nothing of its own: a re-export (`export { x } from "..."`; `export { x }` of an import is importedNames),
+ * and a Drizzle table, which mirrors in each app's schema the SQL a shared package ships (site-api's media and store
+ * tables), so the same table name in two apps is the shared schema, not a second job.
  */
 const NOT_OWN =
   /export\s*(?:type\s*)?\{[^}]*\}\s*from\s*["'][^"']+["']|export\s+const\s+[A-Za-z_$][\w$]*\s*=\s*(?:sqliteTable|pgTable|mysqlTable)\s*\(/g;
+
+/** The names a module imports: what `export { x }` then passes on, which defines nothing. */
+const importedNames = (/** @type {string} */ text) =>
+  new Set(
+    [...text.matchAll(/import\s+(?:type\s+)?\{([^}]*)\}\s*from/g)].flatMap(
+      (m) => m[1].match(/[\w$]+/g) ?? [],
+    ),
+  );
 
 /**
  * Distinctive names (devkit-shared's rule) that two or more repositories each define and export, none of them a shared
@@ -130,8 +138,9 @@ export function sharedNames(files, packages = false) {
   const defined = new Map();
   for (const { repo, path, text } of files) {
     if (PACKAGE_REPOS.has(repo) !== packages) continue;
+    const imported = importedNames(text);
     for (const name of exportNames(text.replace(NOT_OWN, ""))) {
-      if (!distinctive(name) || ROUTE_EXPORTS.has(name)) continue;
+      if (!distinctive(name) || ROUTE_EXPORTS.has(name) || imported.has(name)) continue;
       const repos = defined.get(name) ?? new Map();
       if (!repos.has(repo)) repos.set(repo, path);
       defined.set(name, repos);
@@ -275,17 +284,8 @@ export function packageCopies(root, paths, packages, run) {
     const config = join(work, "jscpd.json");
     writeFileSync(config, "{}\n");
     const out = join(work, "report");
-    run([
-      all,
-      ...COPY_ARGS,
-      "--config",
-      config,
-      "--reporters",
-      "json",
-      "--output",
-      out,
-      "--silent",
-    ]);
+    const flags = ["--config", config, "--reporters", "json", "--output", out, "--silent"];
+    run([all, ...COPY_ARGS, ...flags]);
     const report = JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8"));
     // jscpd 4 names a file from the directory it ran in, jscpd 5 from the folder it scanned.
     const inAll = (/** @type {string} */ name) => {

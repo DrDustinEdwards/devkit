@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 
 import { packageCopies, sharedNames } from "../bin/copies.mjs";
 
-test("PLANT: a name two sites each define is counted; a re-export, a Drizzle table, a route export and a shared package's own are not", () => {
+test("PLANT: a name two sites each define is counted; a re-export (also of an import), a Drizzle table, a route export and a shared package's own are not", () => {
   const files = [
     {
       repo: "germomics",
@@ -24,6 +24,11 @@ test("PLANT: a name two sites each define is counted; a re-export, a Drizzle tab
       repo: "foxhound",
       path: "app/lib/mail.ts",
       text: 'export { sendEmail } from "@dustinedwards/site-runtime/email";\nexport async function clientLoader() {}\n',
+    },
+    {
+      repo: "carrel",
+      path: "app/lib/context.ts",
+      text: 'import { sendEmail } from "@dustinedwards/site-runtime/email";\nexport { sendEmail };\n',
     },
     { repo: "site-runtime", path: "email.mjs", text: "export async function sendEmail() {}\n" },
     { repo: "carrel", path: "app/routes/a.tsx", text: "export async function clientLoader() {}\n" },
