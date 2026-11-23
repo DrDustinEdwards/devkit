@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`, `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.176.3 (DrDustinEdwards/site-runtime)
+## site-runtime 0.177.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `permissionsAllowingSelf`, `corpFor`, `entryOverrides`, `buildSecurityHeaders`, `hostCookie`, `cookiePairs`, `readCookie`, `applyHeaderSet`, `headersFile`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `PASSKEY_OVERRIDES`, `UPLOAD_HEADERS`
