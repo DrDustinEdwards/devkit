@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.59.1
+
+### Patch Changes
+
+- devkit-no-bloat: a Knip config change that adds only `ignoreDependencies` names counts as an entries change, so it may lower Knip counts.
+
 ## 0.59.0
 
 ### Minor Changes
