@@ -69,7 +69,10 @@ test(
       "node_modules/wrangler/bin/wrangler.js",
       `const { createServer } = require("node:http");
 const args = process.argv.slice(2);
-if (args[0] === "d1") return require("node:fs").writeFileSync("migrated.txt", args.join(" "));
+if (args[0] === "d1") {
+  process.stdout.write("x".repeat(2 * 1024 * 1024)); // more than execFileSync's default maxBuffer
+  return require("node:fs").writeFileSync("migrated.txt", args.join(" "));
+}
 const port = Number(args[args.indexOf("--port") + 1]);
 const origin = "http://localhost:" + port;
 createServer((req, res) => {
