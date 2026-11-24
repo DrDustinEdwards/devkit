@@ -276,11 +276,17 @@ jobs:
             latest="--latest"
             top="$(printf '%s\n%s\n' "$tag" "$(sort -V "$RUNNER_TEMP/tags.txt" | tail -n 1)" | sort -V | tail -n 1)"
             [ "$top" = "$tag" ] || latest="--latest=false"
-            if [ -s "$RUNNER_TEMP/notes/$tag.md" ]; then
-              gh release create "$tag" "$latest" --verify-tag --title "$tag" --notes-file "$RUNNER_TEMP/notes/$tag.md"
-            else
-              gh release create "$tag" "$latest" --verify-tag --title "$tag" --generate-notes
-            fi
+            notes="--generate-notes"
+            [ -s "$RUNNER_TEMP/notes/$tag.md" ] && notes="--notes-file $RUNNER_TEMP/notes/$tag.md"
+            # GitHub's API answers 503 now and then (the tag was pushed a second before): try again, and a release
+            # an earlier try made is done, so the retry never fails on "already exists".
+            for attempt in 1 2 3 4; do
+              gh release view "$tag" >/dev/null 2>&1 && break
+              # shellcheck disable=SC2086
+              gh release create "$tag" "$latest" --verify-tag --title "$tag" $notes && break
+              [ "$attempt" = 4 ] && exit 1
+              sleep $((attempt * 10))
+            done
           done 3< "$RUNNER_TEMP/releases.tsv"
           echo "created=true" >> "$GITHUB_OUTPUT"
 
