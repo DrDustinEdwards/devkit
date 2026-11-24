@@ -25,7 +25,12 @@ test("decode-named-character-reference is answered by htmlparser2's entities in 
     environment: { config: { consumer } },
     resolve: async (id, importer) =>
       found
-        ? { id: id === "htmlparser2" ? "/app/node_modules/htmlparser2/index.js" : `${importer}/entities/decode.js` }
+        ? {
+            id:
+              id === "htmlparser2"
+                ? "/app/node_modules/htmlparser2/index.js"
+                : `${importer}/entities/decode.js`,
+          }
         : null,
   });
   const id = "decode-named-character-reference";

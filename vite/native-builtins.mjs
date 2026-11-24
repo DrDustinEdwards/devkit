@@ -57,7 +57,9 @@ export function nativeBuiltins() {
       if (entities === undefined) {
         // htmlparser2's own `entities` (a nested copy when versions differ), so both read one decode table.
         const parser = await this.resolve("htmlparser2", undefined, { skipSelf: true });
-        entities = (parser && (await this.resolve("entities/decode", parser.id, { skipSelf: true }))?.id) || "";
+        entities =
+          (parser && (await this.resolve("entities/decode", parser.id, { skipSelf: true }))?.id) ||
+          "";
       }
       return entities ? SHIM_ID : null;
     },
