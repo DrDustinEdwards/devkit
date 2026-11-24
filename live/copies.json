@@ -1,9 +1,9 @@
 {
-  "baseline": 0,
-  "names": 58,
+  "baseline": 8,
+  "names": 107,
   "measured_at": "2026-11-24",
   "tool": "jscpd@4.3.0",
-  "packages": 3,
+  "packages": 6,
   "packagesAccepted": {
     "escapeHtml": "Enarratio is a published library with no runtime dependencies, so it carries its own copy; site-runtime's is the one every site and Capsomer import.",
     "reducedMotion": "Enarratio's browser script is a published library with no runtime dependencies and stays independent of Capsomer, so it keeps its own one-line check."
