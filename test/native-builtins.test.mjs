@@ -19,3 +19,17 @@ test("the legacy string renderer becomes a stub that throws, and nothing else is
   );
   assert.equal(plugin.transform.call(null, "x", legacy.replace("production", "development")), null);
 });
+
+test("decode-named-character-reference is answered by entities in a server build only", async () => {
+  const context = (consumer, found) => ({
+    environment: { config: { consumer } },
+    resolve: async () => (found ? { id: "/app/node_modules/entities/dist/decode.js" } : null),
+  });
+  const id = "decode-named-character-reference";
+  assert.equal(await nativeBuiltins().resolveId.call(context("client", true), id), null);
+  assert.equal(await nativeBuiltins().resolveId.call(context("server", false), id), null);
+  const plugin = nativeBuiltins();
+  const shim = await plugin.resolveId.call(context("server", true), id);
+  const source = plugin.load.call(null, shim);
+  assert.match(source, /from "\/app\/node_modules\/entities\/dist\/decode\.js"/);
+});
