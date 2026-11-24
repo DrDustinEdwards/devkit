@@ -43,7 +43,8 @@ const SHIM_ID = "\0native-builtins-named-reference";
 
 /** @returns {import("vite").Plugin} */
 export function nativeBuiltins() {
-  /** The resolved `entities/decode`, "" when the project has none. */
+  /** The resolved `entities/decode`, "" when the project has none, undefined before the first look. */
+  /** @type {string | undefined} */
   let entities;
   return {
     name: "devkit:native-builtins",
@@ -55,7 +56,7 @@ export function nativeBuiltins() {
       return entities ? SHIM_ID : null;
     },
     load(id) {
-      if (id === SHIM_ID) return NAMED_REFERENCE_SHIM(entities);
+      if (id === SHIM_ID) return NAMED_REFERENCE_SHIM(entities ?? "");
       return id.startsWith(PREFIX) ? REPLACED[id.slice(PREFIX.length)] : null;
     },
     transform(_code, id) {
