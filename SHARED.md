@@ -238,7 +238,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.164.9 (DrDustinEdwards/capsomer)
+## Capsomer 0.164.10 (DrDustinEdwards/capsomer)
 
 - `./token-check`: `stripCss`, `readDeclarations`, `resolveToken`, `tokenScale`, `rawValues`, `invalidValues`, `fixCss`
 - `./build`: `CAPSOMER_ROOT`, `inlineCss`, `capsomerStylesheet`, `copyFonts`, `minifyCss`, `bundleScript`
@@ -248,7 +248,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./email`: `checkUrl`, `renderEmail`, `magicLink`, `verification`, `reset`, `emailChange`, `alert`, `securityNotice`, `notice`, `htmlToBlocks`
 - `./publish-transition`: `transitionsFor`, `PUBLISH_CONFIRMED_INTENT`, `FIRST_PUBLICATION_NOTE`, `DRAFT_BY_INTENT`, `draftForIntent`, `saveInPlaceIntent`, `stateOf`
 - `./confirm-server`: `wordMatches`, `CONFIRM_FIELD`, `REASON_FIELD`, `confirmTyped`
-- `./theme-server`: `THEME_PREF`, `THEME_COOKIE`, `THEME_COOKIE_MAX_AGE`, `isThemeChoice`, `readThemeCookie`, `themeCookie`, `colorSchemeContent`, `themeColorTags`, `themeColorMeta`, `themeScript`, `themeReturnTo`, `readThemeChoice`, `themeAction`
+- `./theme-server`: (no named exports)
 - `./testing`: `THEMES`, `eachTheme`, `visitStates`, `enforceTrustedTypes`, `expectNoAxeViolations`, `expectContrast`, `expectNoOverflow`, `expectShellRenders`
 - `./testing/page`: `settled`, `paintedContrast`, `focused`, `nextPost`, `ringContrast`, `countCssRules`, `rowOverflow`, `CHECK_WIDTHS`, `overflowScan`, `shellState`, `headContractProblems`, `runningMotion`, `loadedScripts`
 - `./fonts`: `LOCAL`, `MEASURED`, `fallbackName`, `fallbackFontFace`
