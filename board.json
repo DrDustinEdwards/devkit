@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-23T18:55:35.363Z",
+ "as_of": "2026-11-24T10:18:27.196Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -131,7 +131,7 @@
       "https://dustinedwards.info/sitemap.xml",
       "https://dustinedwards.info/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "complete",
@@ -142,7 +142,7 @@
       "https://germomics.com/sitemap.xml",
       "https://germomics.com/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "complete",
@@ -153,7 +153,7 @@
       "https://julieedwards.info/sitemap.xml",
       "https://julieedwards.info/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "partial",
@@ -165,7 +165,7 @@
       "https://txasm.dustin-edwards.workers.dev/llms-full.txt",
       "https://txasm.dustin-edwards.workers.dev/sitemap.xml"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "partial",
@@ -176,7 +176,7 @@
       "https://bsw.dustin-edwards.workers.dev/sitemap.xml",
       "https://bsw.dustin-edwards.workers.dev/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "complete",
@@ -187,7 +187,7 @@
       "https://foxhoundapp.com/sitemap.xml",
       "https://foxhoundapp.com/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "complete",
@@ -198,7 +198,7 @@
       "https://foxing.app/sitemap.xml",
       "https://foxing.app/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "complete",
@@ -209,7 +209,7 @@
       "https://carrel.dustinedwards.info/sitemap.xml",
       "https://carrel.dustinedwards.info/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "partial",
@@ -220,7 +220,7 @@
       "https://enarratio.dustinedwards.info/sitemap.xml",
       "https://enarratio.dustinedwards.info/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "partial",
@@ -231,7 +231,7 @@
       "https://capsomer.dustinedwards.info/sitemap.xml",
       "https://capsomer.dustinedwards.info/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "prelum": {
      "status": "partial",
@@ -242,7 +242,7 @@
       "https://prelum.dustinedwards.info/sitemap.xml",
       "https://prelum.dustinedwards.info/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
      "status": "partial",
@@ -253,7 +253,7 @@
       "https://capsid.dustinedwards.info/sitemap.xml",
       "https://capsid.dustinedwards.info/index.md"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -314,7 +314,7 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "germomics": {
      "status": "complete",
@@ -322,7 +322,7 @@
      "evidence": [
       "https://germomics.com/"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "julieedwards-info": {
      "status": "complete",
@@ -330,7 +330,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "txasm": {
      "status": "complete",
@@ -338,7 +338,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "bsw": {
      "status": "complete",
@@ -346,7 +346,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "foxhound": {
      "status": "complete",
@@ -354,7 +354,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "foxing": {
      "status": "complete",
@@ -362,7 +362,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "carrel": {
      "status": "complete",
@@ -370,7 +370,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "enarratio": {
      "status": "complete",
@@ -378,7 +378,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "capsomer": {
      "status": "complete",
@@ -386,7 +386,7 @@
      "evidence": [
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 17
+     "clean_days": 18
     },
     "prelum": {
      "status": "complete",
@@ -394,7 +394,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "capsid": {
      "status": "complete",
@@ -402,7 +402,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "capsid-mcp": {
      "status": "complete",
@@ -410,7 +410,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -418,7 +418,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -426,7 +426,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "carrel-mcp": {
      "status": "complete",
@@ -434,7 +434,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "foxing-mcp": {
      "status": "complete",
@@ -442,7 +442,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "capsid-portal": {
      "status": "complete",
@@ -451,7 +451,7 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "carrel-desk": {
      "status": "missing",
@@ -503,7 +503,7 @@
       "https://dustinedwards.info/lab-bench",
       "https://dustinedwards.info/admin"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "germomics": {
      "status": "complete",
@@ -512,7 +512,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/routes/admin.tsx#L56",
       "https://germomics.com/admin"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -526,7 +526,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/auth.server.ts#L50",
       "https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "n/a",
@@ -541,7 +541,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/oauth/authorize.tsx",
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/health.ts"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "foxing": {
      "status": "complete",
@@ -552,7 +552,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/test/security-notice.integration.test.ts#L81",
       "https://foxing.app/login"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "carrel": {
      "status": "n/a",
@@ -578,7 +578,7 @@
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L318",
       "https://portal.dustinedwards.info/health"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "capsid-mcp": {
      "status": "complete",
@@ -587,7 +587,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/index.ts"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -596,7 +596,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/mcp/src/index.ts"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -605,7 +605,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "carrel-mcp": {
      "status": "complete",
@@ -614,7 +614,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/mcp/door.ts"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "foxing-mcp": {
      "status": "complete",
@@ -623,7 +623,7 @@
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/src/index.ts"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "capsid-portal": {
      "status": "complete",
@@ -632,7 +632,7 @@
       "https://portal.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L63"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "carrel-desk": {
      "status": "complete",
@@ -642,7 +642,7 @@
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/workers/gate.ts#L50",
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 22
+     "clean_days": 23
     }
    }
   },
@@ -675,7 +675,7 @@
       "https://dustinedwards.info/about",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/package.json"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "partial",
@@ -684,7 +684,7 @@
       "https://germomics.com/writing",
       "https://germomics.com/carrel-conformance-7e19650b-renamed"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "partial",
@@ -692,7 +692,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "complete",
@@ -703,7 +703,7 @@
       "https://txasm.dustin-edwards.workers.dev/awardees",
       "https://txasm.dustin-edwards.workers.dev/trail"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "complete",
@@ -711,7 +711,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/cookie-policy"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "complete",
@@ -719,7 +719,7 @@
      "evidence": [
       "https://foxhoundapp.com/compare"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "complete",
@@ -728,7 +728,7 @@
       "https://foxing.app/books",
       "https://github.com/DrDustinEdwards/foxing/blob/main/apps/web/package.json"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "complete",
@@ -737,7 +737,7 @@
       "https://carrel.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/carrel/blob/main/package.json"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "partial",
@@ -745,7 +745,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "partial",
@@ -754,7 +754,7 @@
       "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts",
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "prelum": {
      "status": "partial",
@@ -762,7 +762,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
      "status": "complete",
@@ -771,7 +771,7 @@
       "https://capsid.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/main/explorer/package.json"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -839,7 +839,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/editor/publish.server.ts",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "germomics": {
      "status": "complete",
@@ -852,7 +852,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/routes/admin.content.$key.tsx",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "julieedwards-info": {
      "status": "partial",
@@ -865,7 +865,7 @@
       "https://julieedwards.info/api/carrel/v1/meta",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "txasm": {
      "status": "partial",
@@ -877,7 +877,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/site-meta.ts",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 10
+     "clean_days": 11
     },
     "bsw": {
      "status": "n/a",
@@ -897,7 +897,7 @@
       "https://foxhoundapp.com/api/carrel/v1/meta",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxing": {
      "status": "complete",
@@ -910,7 +910,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/core/src/repositories/admin-journal.ts#L357",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "carrel": {
      "status": "n/a",
@@ -999,7 +999,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/media/images.mjs#L15-L19",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/content/pipeline.mjs#L244"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "partial",
@@ -1011,7 +1011,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/seo.ts#L23-L29",
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/images.ts#L61-L74"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1021,7 +1021,7 @@
       "https://julieedwards.info/media/uploads/2026/11/julie-edwards-bluff-dale-profile-a78445bc.jpg.webp?v=a78445bc0643&w=640",
       "https://julieedwards.info/sitemap.xml"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "txasm": {
      "status": "partial",
@@ -1031,7 +1031,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/routes/admin.documents.tsx#L226-L256",
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/carrel/render.server.ts#L64"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "bsw": {
      "status": "partial",
@@ -1040,7 +1040,7 @@
       "https://bsw.dustin-edwards.workers.dev/",
       "https://bsw.dustin-edwards.workers.dev/sitemap.xml"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "partial",
@@ -1049,7 +1049,7 @@
       "https://foxhoundapp.com/og/default",
       "https://foxhoundapp.com/blog/stripe-billing-descriptor"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "partial",
@@ -1060,7 +1060,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/journal-images.server.ts#L76-L120",
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/package.json#L22"
      ],
-     "clean_days": 6
+     "clean_days": 7
     },
     "carrel": {
      "status": "complete",
@@ -1069,7 +1069,7 @@
       "https://carrel.dustinedwards.info/",
       "https://carrel.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "enarratio": {
      "status": "complete",
@@ -1078,7 +1078,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://enarratio.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "capsomer": {
      "status": "complete",
@@ -1087,7 +1087,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://capsomer.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 17
+     "clean_days": 18
     },
     "prelum": {
      "status": "complete",
@@ -1096,7 +1096,7 @@
       "https://prelum.dustinedwards.info/",
       "https://prelum.dustinedwards.info/share-card.png"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "capsid": {
      "status": "complete",
@@ -1105,7 +1105,7 @@
       "https://capsid.dustinedwards.info/",
       "https://capsid.dustinedwards.info/assets/og-card.png"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1251,9 +1251,79 @@
      ]
     },
     "foxhound": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 14 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxhoundapp.com/compare/stripe-smart-retries not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://foxhoundapp.com/compare/churn-buster not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/pricing a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/product/audit a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/about a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/demos a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/audit a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/accessibility a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/product/recovery a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/product/intelligence a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/docs/recovery a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare/churn-buster a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/docs/disputes a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/blog/best-dunning-software-2026 a conditional request with the page's own validator answered 200, not 304"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1421,7 +1491,7 @@
       "https://dustinedwards.info/health",
       "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/45023620671"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "complete",
@@ -1430,7 +1500,7 @@
       "https://germomics.com/health",
       "https://github.com/DrDustinEdwards/germomics/actions/runs/45023601143"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1439,7 +1509,7 @@
       "https://julieedwards.info/health",
       "https://github.com/DrDustinEdwards/julieedwards-info/actions/runs/45023650785"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "complete",
@@ -1448,7 +1518,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/45023660607"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "bsw": {
      "status": "complete",
@@ -1456,7 +1526,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/health"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "complete",
@@ -1465,7 +1535,7 @@
       "https://foxhoundapp.com/health",
       "https://github.com/DrDustinEdwards/foxhound/actions/runs/45023692582"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "complete",
@@ -1474,7 +1544,7 @@
       "https://foxing.app/health",
       "https://github.com/DrDustinEdwards/foxing/actions/runs/45023710978"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "carrel": {
      "status": "n/a",
@@ -1502,7 +1572,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/health"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1510,7 +1580,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/health"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1518,7 +1588,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/health"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1527,7 +1597,7 @@
       "https://carrel-mcp.dustinedwards.info/health",
       "https://github.com/DrDustinEdwards/carrel/actions/runs/45023690833"
      ],
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxing-mcp": {
      "status": "complete",
@@ -1535,7 +1605,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/health"
      ],
-     "clean_days": 16
+     "clean_days": 17
     },
     "capsid-portal": {
      "status": "n/a",
@@ -1577,7 +1647,7 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "partial",
@@ -1586,7 +1656,7 @@
       "https://germomics.com/",
       "https://germomics.com/data/cholera-soho-1854"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1594,7 +1664,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "txasm": {
      "status": "complete",
@@ -1605,7 +1675,7 @@
       "https://txasm.dustin-edwards.workers.dev/awardees",
       "https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "bsw": {
      "status": "partial",
@@ -1613,7 +1683,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxhound": {
      "status": "complete",
@@ -1621,7 +1691,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "partial",
@@ -1629,7 +1699,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "complete",
@@ -1637,7 +1707,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "partial",
@@ -1646,7 +1716,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://enarratio.dustinedwards.info/astro"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "partial",
@@ -1656,7 +1726,7 @@
       "https://capsomer.dustinedwards.info/components/contact-card/",
       "https://capsomer.dustinedwards.info/components/not-found-report/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "prelum": {
      "status": "complete",
@@ -1664,7 +1734,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
      "status": "partial",
@@ -1673,7 +1743,7 @@
       "https://capsid.dustinedwards.info/",
       "https://capsid.dustinedwards.info/numbers/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1727,7 +1797,7 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "germomics": {
      "status": "complete",
@@ -1735,7 +1805,7 @@
      "evidence": [
       "https://germomics.com/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -1755,7 +1825,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "foxing": {
      "status": "complete",
@@ -1763,7 +1833,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel": {
      "status": "complete",
@@ -1771,7 +1841,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "enarratio": {
      "status": "complete",
@@ -1779,7 +1849,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsomer": {
      "status": "complete",
@@ -1787,7 +1857,7 @@
      "evidence": [
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "prelum": {
      "status": "complete",
@@ -1795,7 +1865,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid": {
      "status": "complete",
@@ -1803,7 +1873,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1831,7 +1901,7 @@
      "evidence": [
       "https://portal.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     },
     "carrel-desk": {
      "status": "complete",
@@ -1839,7 +1909,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 3
+     "clean_days": 4
     }
    }
   },
@@ -1875,7 +1945,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/search/ask.server.ts",
       "https://dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "germomics": {
      "status": "complete",
@@ -1884,7 +1954,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/media/suggest.server.ts",
       "https://germomics.com/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1895,7 +1965,7 @@
       "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
       "https://julieedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "txasm": {
      "status": "complete",
@@ -1904,7 +1974,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/media/suggest.server.ts",
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "bsw": {
      "status": "complete",
@@ -1915,16 +1985,16 @@
       "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "foxhound": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
@@ -1936,7 +2006,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/core/src/domain/recommendations.ts",
       "https://foxing.app/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "carrel": {
      "status": "complete",
@@ -1946,7 +2016,7 @@
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/social/routine.server.ts",
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "enarratio": {
      "status": "complete",
@@ -1954,7 +2024,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "capsomer": {
      "status": "complete",
@@ -1962,7 +2032,7 @@
      "evidence": [
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "prelum": {
      "status": "complete",
@@ -1970,7 +2040,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "capsid": {
      "status": "partial",
@@ -1978,60 +2048,60 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/doc-index.ts"
      ],
-     "clean_days": 23
+     "clean_days": 24
     },
     "capsid-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
     "foxhound-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
     "dustinedwards-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
     "carrel-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
     "foxing-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-kebhZW/site-runtime_v0.179.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
