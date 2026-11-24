@@ -33,7 +33,9 @@ exports.version = "";`;
 
 const PREFIX = "\0native-builtins:";
 const NAMED_REFERENCE = "decode-named-character-reference";
-const NAMED_REFERENCE_SHIM = (/** @type {string} */ entities) => `import { decodeHTMLStrict } from ${JSON.stringify(entities)};
+const NAMED_REFERENCE_SHIM = (
+  /** @type {string} */ entities,
+) => `import { decodeHTMLStrict } from ${JSON.stringify(entities)};
 export function decodeNamedCharacterReference(value) {
   const reference = "&" + value + ";";
   const decoded = decodeHTMLStrict(reference);
