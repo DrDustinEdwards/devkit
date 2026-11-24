@@ -238,7 +238,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
-## Capsomer 0.164.8 (DrDustinEdwards/capsomer)
+## Capsomer 0.164.9 (DrDustinEdwards/capsomer)
 
 - `./token-check`: `stripCss`, `readDeclarations`, `resolveToken`, `tokenScale`, `rawValues`, `invalidValues`, `fixCss`
 - `./build`: `CAPSOMER_ROOT`, `inlineCss`, `capsomerStylesheet`, `copyFonts`, `minifyCss`, `bundleScript`
@@ -312,7 +312,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/family-footer`: `FAMILY_ORIGIN`, `SOCIAL_LINKS`, `PROFILE_LINKS`, `WORKSPACE_HEADING`, `LAB_BENCH_PATH`, `WORKSPACE_LINKS`, `SITE_HEADING`, `LEGAL_HEADING`, `siteLinks`, `legalLinks`, `familyLinks`, `FAMILY_SITES`, `FAMILY_LINK_SITES`, `familyFooterHtml`, `copyright`
 - `./behavior/field`: `isControl`, `messageFor`, `groupOf`, `errorFor`, `showError`, `clearError`, `validate`, `validateForm`, `dateFrom`, `checkDate`, `setRevealed`, `revealedText`, `countText`, `limitOf`, `stepValue`, `keyValue`, `toDateTimeLocal`, `fromDateTimeLocal`, `keepFocus`, `setValue`, `enhance`
 - `./behavior/filter-bar`: `withParams`, `clearedHref`, `isFiltered`, `SEARCH_DELAY_MS`, `liveSubmit`, `enhance`
-- `./behavior/flag-list`: `glyph`, `statusEl`, `readFlag`, `flagRows`, `readFlags`, `renderFlag`, `attachFlagList`, `enhance`, `groupFlags`, `countFlags`, `summaryLine`, `anchorStatus`, `applySuggestion`, `revertSuggestion`, `appliable`
+- `./behavior/flag-list`: `readFlag`, `flagRows`, `readFlags`, `renderFlag`, `attachFlagList`, `enhance`, `groupFlags`, `countFlags`, `summaryLine`, `anchorStatus`, `applySuggestion`, `revertSuggestion`, `appliable`
 - `./behavior/form-hooks`: `createSaveQueue`, `CLEAN_DRAFT`, `draftAfter`, `draftDirty`, `filterParams`, `withParam`, `pagePending`
 - `./behavior/format`: `formatBytes`, `shortCount`, `median`, `percentOf`, `formatPercent`, `formatBps`
 - `./behavior/freshness`: `shareLeft`, `RING_R`, `ringDash`
@@ -328,18 +328,18 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/listbox`: `matchesQuery`, `filterCommands`, `groupBy`, `step`, `stepEnabled`, `TYPEAHEAD_MS`, `nextTypeahead`, `resultsText`, `emptyText`, `createListbox`, `listboxFor`, `enhance`
 - `./behavior/manual`: `patchDots`, `patchSvg`, `checklistHtml`, `timelineHtml`, `formBoxesHtml`, `leaderIndexHtml`, `cueCardHtml`, `signsHtml`, `handle`, `folioOf`
 - `./behavior/markdown-editor`: `GLYPH`, `mountMarkdownEditor`, `getMarkdownEditor`, `enhance`, `rovingIndex`, `looksLikeUrl`, `filterLinkTargets`, `lineBounds`, `wrapEdit`, `headingEdit`, `footnoteEdit`, `blockEdit`, `slashBlockEdit`, `scaffoldCursor`, `linkEdit`, `defaultImageMarkdown`
-- `./behavior/media`: `controllerFor`, `attachMedia`, `enhance`, `buildTile`, `glyph`, `recordOf`, `syncTile`, `writeRecord`
+- `./behavior/media`: `controllerFor`, `attachMedia`, `enhance`, `buildTile`, `recordOf`, `syncTile`, `writeRecord`
 - `./behavior/media-library`: `SORT_DIR`, `dirOf`, `mediaHref`, `withMedia`, `mediaActions`, `inspectorOffers`, `countLine`, `filtered`, `emptyWords`, `uploadRules`, `pickable`, `LENS_WORDS`, `KIND_WORDS`, `ORIENTATION_WORDS`, `lensChips`, `folderOf`, `monthOf`, `groupRows`, `readMediaView`, `recordOfKit`, `mediaDataOfKit`, `applyChanges`, `turnMakesCopy`, `oversized`, `licenseEnded`, `filesToOpen`, `dayWords`, `momentWords`
 - `./behavior/mentions-list`: `mentionsHref`, `withMentions`, `currentView`, `mentionActions`, `countLine`, `emptyWords`, `sweepLabel`, `kitMentionsSearch`, `mentionsDataOfKit`
 - `./behavior/menu`: `stepIndex`, `enhance`
-- `./behavior/message`: `CLEARS_AFTER_MS`, `newMessage`, `lasting`, `withMessage`, `undoneText`, `undoErrorText`, `resolveFocus`, `isUndoKey`, `currentUndo`, `GLYPHS`, `glyphSvg`, `messageKind`, `say`, `fail`, `dismiss`, `runUndo`, `ensureRegion`, `enhance`
+- `./behavior/message`: `newMessage`, `lasting`, `withMessage`, `undoBusy`, `undoFailed`, `undoDone`, `syncTimers`, `resolveFocus`, `isUndoKey`, `currentUndo`, `kindGlyph`, `messageKind`, `say`, `fail`, `dismiss`, `runUndo`, `ensureRegion`, `enhance`
 - `./behavior/meter`: `percent`, `ratio`, `toneFor`, `setBar`, `update`, `enhance`
 - `./behavior/moderation-queue`: `mentionOf`, `refresh`, `syncSelection`, `decideRows`, `run`, `setView`, `QUEUE_SHORTCUTS`, `enhance`, `VIEWS`, `VIEW_LABEL`, `STATE_LABEL`, `ACTIONS`, `ACTION_KEY`, `DELETE_KEY`, `decide`, `actionsFor`, `bulkActionsFor`, `inView`, `countStates`, `summaryText`, `statusOf`, `ACTION_LABEL`, `decidedText`, `undoneText`, `undoAction`, `NO_UNDO_TEXT`, `undoStack`, `sweepLines`, `mentionsWord`, `EMPTY_TITLE`, `statusEl`, `actionButton`
 - `./behavior/not-found-report`: `referrerLine`, `hitsWord`, `windowOf`, `probesLine`
 - `./behavior/offline-keep`: `DEFAULT_CACHE`, `keepSupported`, `workerUrl`, `filesOfPage`, `isKept`, `keep`, `remove`, `enhance`
 - `./behavior/pagination`: `pageItems`, `showingRange`, `statusText`, `pageCountOf`, `parsePage`, `pageEnvelope`, `pageHref`, `pageRelLinks`, `render`, `setPage`, `enhance`
 - `./behavior/pdf-viewer`: `MIN_SCALE`, `MAX_SCALE`, `SCALE_STEP`, `DEFAULT_SCALE`, `clampView`, `start`, `enhance`
-- `./behavior/people-roles`: `SOON_DAYS`, `REASON_MISSING`, `dayText`, `timeText`, `daysLeft`, `accessText`, `endsSoon`, `syncText`, `actionText`, `cloudflareText`, `endHelp`, `tallyText`, `removeBody`, `removeTarget`, `confirmRemove`, `rowActions`, `followTitle`, `updateTally`, `enhance`, `pluralTitle`, `manageLead`, `personFromParam`, `roleSavedText`, `roleFailedText`, `personName`
+- `./behavior/people-roles`: `SOON_DAYS`, `REASON_MISSING`, `dayText`, `timeText`, `daysLeft`, `accessText`, `endsSoon`, `syncText`, `actionText`, `cloudflareText`, `endHelp`, `tallyText`, `confirmRemove`, `rowActions`, `followTitle`, `updateTally`, `enhance`, `pluralTitle`, `manageLead`, `personFromParam`, `roleSavedText`, `roleFailedText`, `personName`
 - `./behavior/permission-matrix`: `holdings`, `holders`, `showView`, `enhance`
 - `./behavior/player`: `RATE_MIN`, `RATE_MAX`, `RATE_STEP`, `SPEEDS`, `SLEEP_MINUTES`, `RESUME_TAIL_SECONDS`, `RESUME_SAVE_SECONDS`, `RESTART_SECONDS`, `clampRate`, `clampVolume`, `resumePoint`, `playerStorage`, `formatTime`, `spokenTime`, `formatRate`, `sleepLabel`, `activeChapterIndex`, `mediaSession`, `setPositionState`, `clearPositionState`, `trackMetadata`, `setSessionHandlers`, `STARTED_ATTRIBUTE`, `AUDIO_SELECTOR`, `loadTrack`, `startTrack`, `PEAKS_LENGTH`, `WAVEFORM_BARS`, `computePeaks`, `decodePeaks`, `probeDuration`, `normalizePeaks`, `syntheticPeaks`, `playheadCue`, `TRANSCRIPT_TRACK_LABEL`, `wireClip`, `enhance`
 - `./behavior/poll`: `shares`, `setShares`, `enhance`
@@ -372,7 +372,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./behavior/sortable-list`: `moveId`, `indexAtPoint`, `locate`, `moveBetween`, `keyMove`, `sortText`, `keyTarget`, `DRAG_THRESHOLD`, `moveNode`, `startPointerDrag`, `announcer`, `groupOf`, `placeItem`, `placeIn`, `createSortableList`, `enhance`
 - `./behavior/sse`: `parseEvent`, `takeEvents`, `readSse`, `jsonData`
 - `./behavior/state-hooks`: `newId`, `versionedStore`, `parseVersioned`, `selectionOf`, `sinceOf`
-- `./behavior/status`: `STATUS_GLYPH`, `glyphParts`, `glyphHtml`, `statusHtml`, `outcomeStatus`
+- `./behavior/status`: `STATUS_GLYPH`, `glyphParts`, `glyphHtml`, `glyphEl`, `statusEl`, `statusHtml`, `outcomeStatus`
 - `./behavior/step-player`: `STEP_MS`, `stepDelay`, `stepPlayer`, `enhance`
 - `./behavior/switch`: `stateWord`, `syncWord`, `setSwitch`, `setBusy`, `enhance`
 - `./behavior/switch-reason`: `EVENT`, `MISSING`, `verbFor`, `reasonLabel`, `failedMessage`, `enhance`, `setSwitch`
