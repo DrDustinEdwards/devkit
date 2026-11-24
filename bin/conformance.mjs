@@ -124,10 +124,12 @@ async function main() {
   const fail = (/** @type {string} */ what) =>
     (failures++, log(`  FAIL       ${what}`));
 
+  // Nothing reads wrangler's output, so it is not buffered (execFileSync's default 1 MiB maxBuffer fails with
+  // ENOBUFS once migration progress output passes it). Stdout is dropped; stderr shows live, which is where a failure speaks.
   const wrangler = (/** @type {string[]} */ args) =>
     execFileSync(process.execPath, [wranglerJs, ...args], {
       cwd: root,
-      stdio: ["ignore", "pipe", "pipe"],
+      stdio: ["ignore", "ignore", "inherit"],
     });
   const dev = (/** @type {Server} */ s) => {
     const args = [
