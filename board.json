@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-24T10:18:27.196Z",
+ "as_of": "2026-11-24T18:25:01.327Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -123,15 +123,15 @@
      ]
     },
     "dustinedwards-info": {
-     "status": "partial",
-     "reason": "prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (563 pages). Gap: 27 of 204 sitemap URLs have no lastmod (contact, colophon, features and every /systems page).",
-     "evidence": [
-      "https://dustinedwards.info/llms.txt",
-      "https://dustinedwards.info/llms-full.txt",
-      "https://dustinedwards.info/sitemap.xml",
-      "https://dustinedwards.info/index.md"
-     ],
-     "clean_days": 4
+     "status": "unmeasured",
+     "reason": "prelum-audit could not measure: fetch-failed: https://dustinedwards.info/writing/tags/cloudflare-workers/feed.json could not measure: no answer (fetch failed), so the page was not audited",
+     "findings": [
+      {
+       "severity": "unmeasured",
+       "check": "fetch-failed",
+       "detail": "https://dustinedwards.info/writing/tags/cloudflare-workers/feed.json could not measure: no answer (fetch failed), so the page was not audited"
+      }
+     ]
     },
     "germomics": {
      "status": "complete",
@@ -714,21 +714,31 @@
      "clean_days": 4
     },
     "foxhound": {
-     "status": "complete",
-     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 122 pages, 0 errors, 0 warnings (the h3-after-h1 pages are fixed). The repository is not readable from this session.",
-     "evidence": [
-      "https://foxhoundapp.com/compare"
-     ],
-     "clean_days": 4
+     "status": "missing",
+     "reason": "prelum-content: 2 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "writing-duplicate-id",
+       "detail": "https://foxhoundapp.com/features id \"Renewal noise filtering\" is on 2 elements"
+      },
+      {
+       "severity": "error",
+       "check": "writing-duplicate-id",
+       "detail": "https://foxhoundapp.com/features id \"Merchant context\" is on 2 elements"
+      }
+     ]
     },
     "foxing": {
-     "status": "complete",
-     "reason": "prelum-content v0.63.7 (run by hand, 21 Nov 2026): 200 pages, 0 errors, 0 warnings (/books heading order fixed); apps/web pins Prelum v0.63.7 and has no second Markdown renderer in its package.json.",
-     "evidence": [
-      "https://foxing.app/books",
-      "https://github.com/DrDustinEdwards/foxing/blob/main/apps/web/package.json"
-     ],
-     "clean_days": 4
+     "status": "unmeasured",
+     "reason": "prelum-content could not measure: page: https://foxing.app/books/candida-shaw could not measure: answered fetch failed, so its writing was not checked",
+     "findings": [
+      {
+       "severity": "unmeasured",
+       "check": "page",
+       "detail": "https://foxing.app/books/candida-shaw could not measure: answered fetch failed, so its writing was not checked"
+      }
+     ]
     },
     "carrel": {
      "status": "complete",
@@ -1165,6 +1175,11 @@
      "reason": "site-runtime-speed could not measure: A3: https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://dustinedwards.info/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
       {
+       "severity": "warning",
+       "check": "F2",
+       "detail": "https://dustinedwards.info/?speedcheck=c62ahkkb an uncached render took 752 ms to the first byte (bar 600 ms)"
+      },
+      {
        "severity": "unmeasured",
        "check": "A3",
        "detail": "https://dustinedwards.info/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured"
@@ -1177,9 +1192,19 @@
      ]
     },
     "germomics": {
-     "status": "unmeasured",
-     "reason": "site-runtime-speed could not measure: A3: https://germomics.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://germomics.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
+     "status": "missing",
+     "reason": "site-runtime-speed: 2 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/writing not from the edge on the second request: cf-cache-status MISS (first none), cache-control public, max-age=0, colo ? then EWR"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/season/1 not from the edge on the second request: cf-cache-status MISS (first none), cache-control public, max-age=0, colo ? then EWR"
+      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1251,79 +1276,9 @@
      ]
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "site-runtime-speed: 14 errors",
+     "status": "unmeasured",
+     "reason": "site-runtime-speed could not measure: A3: https://foxhoundapp.com/ could not measure: mobile: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured; A3: https://foxhoundapp.com/ could not measure: desktop: PageSpeed Insights answered 429 after 4 tries (no PSI_API_KEY, so Google's shared keyless quota), so A1, A3, D2, D3, D4 and D6 were not measured",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxhoundapp.com/compare/stripe-smart-retries not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxhoundapp.com/compare/churn-buster not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/pricing a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/product/audit a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/about a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/demos a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/audit a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/accessibility a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/product/recovery a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/product/intelligence a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/docs/recovery a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/compare/churn-buster a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/docs/disputes a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxhoundapp.com/blog/best-dunning-software-2026 a conditional request with the page's own validator answered 200, not 304"
-      },
       {
        "severity": "unmeasured",
        "check": "A3",
@@ -1989,12 +1944,12 @@
     },
     "foxhound": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
@@ -2052,56 +2007,56 @@
     },
     "capsid-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
     "foxhound-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
     "dustinedwards-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
     "carrel-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
     "foxing-mcp": {
      "status": "unmeasured",
-     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
+     "reason": "site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)",
      "findings": [
       {
        "severity": "unmeasured",
        "check": "audit",
-       "detail": "https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-urRh1I/site-runtime_v0.180.0/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
+       "detail": "https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization |     at file:///tmp/devkit-live-dP4S0L/site-runtime_v0.181.1/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 |     at Array.filter (<anonymous>)"
       }
      ]
     },
