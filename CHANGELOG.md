@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.59.5
+
+### Patch Changes
+
+- The conformance check no longer buffers wrangler's migration output, so a repository with many migrations does not fail with ENOBUFS.
+
 ## 0.59.4
 
 ### Patch Changes
