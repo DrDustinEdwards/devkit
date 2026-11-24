@@ -10,8 +10,8 @@
 //
 // micromark (Prelum's Markdown parser) decodes named character references with decode-named-character-reference, whose
 // character-entities table is about 33 KB of source, and htmlparser2 (Prelum's HTML reader) carries the same names again
-// inside entities' decode tree. In a server build the first is answered by entities' own `decodeHTMLStrict`, so one
-// table is left; where `entities` cannot be resolved, or in a browser build, nothing changes.
+// inside entities' decode tree. In a server build the first is answered by htmlparser2's own `entities`
+// (`decodeHTMLStrict`), so one table is left; where `entities` cannot be resolved, or in a browser build, nothing changes.
 //
 // It also drops React's legacy string renderer from a Worker. react-dom/server.edge requires
 // react-dom-server-legacy.browser.production.js (about 259 KB source) only to export renderToString and
@@ -54,7 +54,13 @@ export function nativeBuiltins() {
     async resolveId(id) {
       if (Object.hasOwn(REPLACED, id)) return PREFIX + id;
       if (id !== NAMED_REFERENCE || this.environment?.config.consumer !== "server") return null;
-      entities ??= (await this.resolve("entities/decode", undefined, { skipSelf: true }))?.id ?? "";
+      if (entities === undefined) {
+        // htmlparser2's own `entities` (a nested copy when versions differ), so both read one decode table.
+        const parser = await this.resolve("htmlparser2", undefined, { skipSelf: true });
+        entities =
+          (parser && (await this.resolve("entities/decode", parser.id, { skipSelf: true }))?.id) ||
+          "";
+      }
       return entities ? SHIM_ID : null;
     },
     load(id) {
