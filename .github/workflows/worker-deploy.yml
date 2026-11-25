@@ -207,7 +207,10 @@ jobs:
           REBUILD: ${{ inputs.rebuild }}
         run: |
           bash -euo pipefail -c "$INSTALL"
-          if [ -n "$REBUILD" ]; then npm rebuild $REBUILD; fi
+          if [ -n "$REBUILD" ]; then
+            read -r -a names <<< "$REBUILD"
+            npm rebuild "${names[@]}"
+          fi
 
       # The undo point for a migration, read before the guard that runs one. Wrangler's rollback never undoes a migration;
       # a Time Travel restore to this bookmark does. A bookmark that cannot be read stops the deploy before any migration.
@@ -841,7 +844,10 @@ jobs:
           REBUILD: ${{ inputs.rebuild }}
         run: |
           bash -euo pipefail -c "$INSTALL"
-          if [ -n "$REBUILD" ]; then npm rebuild $REBUILD; fi
+          if [ -n "$REBUILD" ]; then
+            read -r -a names <<< "$REBUILD"
+            npm rebuild "${names[@]}"
+          fi
 
       - name: Preview build
         if: inputs.preview-build != ''
