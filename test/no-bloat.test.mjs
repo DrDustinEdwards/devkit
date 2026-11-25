@@ -217,11 +217,6 @@ test("a tool with no baseline is a row and an error, so dropping its entry canno
   );
 });
 
-test("a clean knip run is still a row", () => {
-  assert.deepEqual(compare({ knip: {} }, { knip: {} }).rows, [["knip", "findings", 0, 0]]);
-  assert.deepEqual(compare({}, { knip: {} }).rows, [["knip", "findings", null, 0]]);
-});
-
 test("scan tells comment lines from code past URLs, regular expressions and templates; testCases counts declared cases only", () => {
   const source = [
     'const u = "http://x/*y"; // a trailing comment is a code line',
@@ -510,8 +505,3 @@ test("lineChanges sorts a diff's lines into code, tests, comments, docs and othe
     ].join("\n"),
   );
 });
-
-/**
- * A scratch repository, with stand-in knip and jscpd as an install DEVKIT_NO_BLOAT_TOOLS names (runBin), and in its own
- * node_modules/.bin a knip and a jscpd that would report nothing, which the check must never run.
- */

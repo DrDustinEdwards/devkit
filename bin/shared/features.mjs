@@ -7,7 +7,7 @@ import {
   blankComments,
   callWithKey,
   excused,
-  ownerOf,
+  appOwner,
   readManifest,
 } from "./core.mjs";
 
@@ -206,7 +206,7 @@ export function checkFeatures(tree, config, now = Date.now()) {
   /** @type {Finding[]} */
   const found = [];
   const apps = Object.entries(config.apps ?? { ".": "site" });
-  const owner = ownerOf(apps);
+  const owner = appOwner(apps);
   // A library with no kind is judged as the default site; the finding says how to say otherwise.
   const manifest = readManifest(tree, "package.json", found, "features");
   const library =

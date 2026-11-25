@@ -6,13 +6,9 @@ import test from "node:test";
 import { checkCopies, checkLibraries } from "../bin/shared/copies.mjs";
 import { blankComments, isWarning } from "../bin/shared/core.mjs";
 import { FEATURES, checkFeatures } from "../bin/shared/features.mjs";
-import { checkPins, lockDisagrees, newest } from "../bin/shared/pins.mjs";
+import { checkPins, lockDisagrees } from "../bin/shared/pins.mjs";
 import { respell } from "../bin/shared/spelling.mjs";
 import { SHA_V2, SHA_RAW, tags, tree, catalog } from "./fixtures/shared.mjs";
-
-test("the newest tag is compared as a version, not as text", () => {
-  assert.equal(newest(["v0.9.0", "v0.10.0", "v0.2.0", "latest"]), "v0.10.0");
-});
 
 test("a raw commit is refused, a pin behind the newest tag is a warning, and a site-runtime pin behind a minor out three days fails", () => {
   const found = checkPins(

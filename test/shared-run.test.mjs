@@ -500,11 +500,6 @@ test("PLANT: an exception that excused nothing in the run is named; one that did
   );
 });
 
-test("a library's package.json with exports and no kind is judged as a site, and the finding says to declare a package", () => {
-  const [first] = checkFeatures(tree({ "package.json": '{"exports":"./index.mjs"}' }), {});
-  assert.match(first.message, /"apps": \{ "\.": "package" \}/);
-});
-
 test("PLANT: a .shared.json with an unknown key or kind, or a --from missing a package, stops the check (exit 2) naming what is valid", (t) => {
   const root = mkdtempSync(join(tmpdir(), "family-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));

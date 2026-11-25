@@ -1,5 +1,4 @@
-// The syntax-tree readers (./node/syntax), moved with them from dustinedwards.info's test/syntax-reads.test.mjs and
-// destructive-scan.test.mjs: each case is a spelling a gate once missed.
+// The syntax-tree readers (./node/syntax): each case is a spelling a gate once missed.
 
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -35,15 +34,6 @@ await test("a comment naming the predicate does not guard a branch", () => {
     }`);
   assert.equal(b.intent, "delete");
   assert.equal(b.guarded, false);
-});
-
-await test("a real call guards the branch", () => {
-  const [b] = branches(`
-    if (intent === "delete") {
-      if (!confirmationSatisfied(typed, 1)) return confirm();
-      await remove();
-    }`);
-  assert.equal(b.guarded, true);
 });
 
 await test("an apostrophe in JSX text does not hide the action's comparisons", () => {

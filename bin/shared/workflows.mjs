@@ -1,5 +1,5 @@
 import { posix } from "node:path";
-import { NOT_SOURCE, SOURCE, excused, mcpServerDirs, ownerOf, readManifest } from "./core.mjs";
+import { NOT_SOURCE, SOURCE, excused, mcpServerDirs, appOwner, readManifest } from "./core.mjs";
 
 /** @typedef {import("./core.mjs").Config} Config */
 /** @typedef {import("./core.mjs").Finding} Finding */
@@ -99,7 +99,7 @@ export function checkWorkflows(tree, config, repo = {}) {
         !seen.has(name) && invokes(cmd, name) && reaches(String(body), bin, seen.add(name)),
     );
   const apps = Object.entries(config.apps ?? { ".": "site" });
-  const owner = ownerOf(apps);
+  const owner = appOwner(apps);
   const workers = apps
     .filter(
       ([dir, kind]) =>
@@ -139,8 +139,7 @@ export function checkWorkflows(tree, config, repo = {}) {
       message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .shared.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
     });
   }
-  // A stylesheet's var(--x) that nothing declares resolves to nothing, and only devkit-css-vars notices (Foxing's --fx-shadow-md,
-  // 14 uses). pr.yml runs it when the repository has a .css-vars.json.
+  // A stylesheet's var(--x) that nothing declares resolves to nothing, and only devkit-css-vars notices. pr.yml runs it when the repository has a .css-vars.json.
   const sheets = tree.files.some((f) => f.endsWith(".css") && !NOT_SOURCE.test(f));
   if (sheets && !excused(config, "waive", "workflow:css-vars")) {
     const runsIt =

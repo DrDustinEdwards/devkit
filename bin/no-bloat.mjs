@@ -157,7 +157,7 @@ function main() {
   }
   const write = argv.includes("--write-baseline");
   if (argv.includes("--warn-only")) {
-    // A report never stops a copy from merging (Enarratio, germomics and txasm ran it so). The ratchet always gates.
+    // A report never stops a copy from merging. The ratchet always gates.
     console.error(
       "devkit-no-bloat: --warn-only was removed in 0.37.0; the ratchet always gates. Drop the flag (and any continue-on-error on its step).",
     );

@@ -238,7 +238,7 @@ export function blankComments(/** @type {string} */ text) {
 }
 
 /** Which app a file belongs to: the deepest app directory that holds it. @param {[string, string][]} apps */
-export function ownerOf(apps) {
+export function appOwner(apps) {
   return (/** @type {string} */ file) =>
     apps
       .map(([dir]) => dir)
