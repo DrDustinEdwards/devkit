@@ -2,58 +2,33 @@
 # PreToolUse hook on Bash: blocks unscoped git adds (git add -A / --all / .).
 # Scoped commits with explicit named paths only.
 #
-# THE ONE COPY (2026-11-06). This file lives only in devkit; each repository runs it
-# from node_modules/@dustinedwards/devkit/claude/hooks through its
-# .claude/settings.json (devkit README, "The shared Claude Code hooks"), and
-# devkit-shared fails a repository that keeps a copy of its own.
+# This file lives only in devkit; each repository runs it from node_modules/@dustinedwards/devkit/claude/hooks through its
+# .claude/settings.json (devkit README, "The shared Claude Code hooks"), and devkit-shared fails a repository that keeps a
+# copy of its own.
 #
 # PreToolUse plus exit 2 is the only combination that blocks the tool call, and
 # jq is not guaranteed on macOS, so the check is written in Python.
 #
 # Token-based, so paths that merely START with a dot (.claude/settings.json)
-# pass; only the bare tokens -A, --all, . and ./ block.
+# pass; only -A, --all (also quoted or bundled, as -Av), . and ./ block.
 #
-# CANONICAL COPY, ruled 2026-08-16. Two properties define it, and neither is
-# negotiable without a new ruling.
+# FAILS CLOSED. The interpreter is probed by RUNNING candidates, not by command -v, because on Windows the bare name python3
+# resolves to the Microsoft Store stub, which satisfies command -v, prints an install notice and exits 49. stdin is decoded
+# from sys.stdin.buffer as UTF-8 rather than trusting the text layer, which is cp1252 on Windows. CONTRACT, matching
+# no-em-dash.sh exactly: checker exit 3 blocks, exit 0 passes, EVERY other outcome blocks and names the code.
 #
-# FAILS CLOSED. The interpreter is probed by RUNNING candidates, not by
-# command -v, because on Windows the bare name python3 resolves to the Microsoft
-# Store stub, which satisfies command -v, prints an install notice and exits 49.
-# stdin is decoded from sys.stdin.buffer as UTF-8 rather than trusting the text
-# layer, which is cp1252 on Windows. CONTRACT, matching no-em-dash.sh exactly:
-# checker exit 3 blocks, exit 0 passes, EVERY other outcome blocks and names the
-# code. Before 2026-08-11 none of that held here: a missing interpreter exited 1,
-# which does not block a tool call, and invalid JSON and any unexpected checker
-# exit both fell through to 0.
+# WHOLE-STRING MATCHING. The scan reads the entire command string. Anchoring the match to command position removes one
+# false positive and lets three real bypasses through: "if true; then git add -A; fi", "env FOO=1 git add -A", and a
+# backslash newline continuation.
 #
-# WHOLE-STRING MATCHING. The scan reads the entire command string. A variant
-# anchoring the match to command position was tried in capsid-mcp (19554e1) and
-# is REJECTED as of 2026-08-16: it removed one false positive and let three real
-# bypasses through, each measured staging every file in a throwaway repo.
-# "if true; then git add -A; fi", "env FOO=1 git add -A", and a backslash
-# newline continuation all passed the narrowed matcher and are blocked by this
-# one.
+# KNOWN AND ACCEPTED FALSE POSITIVE: it fires on UNQUOTED adjacency only, such as the rule written out in a heredoc body. A
+# QUOTED mention passes, because the closing quote glues to the token and defeats the equality test. For the cases that do
+# fire the fix is to REWORD, not to loosen the matcher: parsing shell well enough to tell a heredoc from an argument is not
+# something a guard should attempt, and for a blocking safety hook a false positive costs a rewording while a false negative
+# costs the thing the hook exists to prevent.
 #
-# KNOWN AND ACCEPTED FALSE POSITIVE, measured 2026-08-16 rather than assumed: it
-# fires on UNQUOTED adjacency only, such as the rule written out in a heredoc
-# body. A QUOTED mention passes, because the closing quote glues to the token
-# and defeats the equality test, so a commit message quoting the rule inside
-# double quotes is not blocked. For the cases that do fire the fix is to REWORD,
-# not to loosen the matcher: parsing shell well enough to tell a heredoc from an
-# argument is not something a guard should attempt, and for a blocking safety
-# hook a false positive costs a rewording while a false negative costs the thing
-# the hook exists to prevent. It fired on the very commit that landed the
-# hardening (bb63828).
-#
-# KNOWN GAP: the command is read token by token (quotes removed, a bundled short
-# option such as -Av counted), so a subshell or a variable that expands to the
-# flag still stages everything and is not blocked.
-#
-# Verified 2026-08-11 by planting all three arms, and re-verified 2026-08-16
-# against this canonical file before it landed anywhere. The older note
-# "Functionally tested 2026-07-17: 10/10 cases" is RETIRED: it covered token
-# matching only, predates every fail-open finding above, and never exercised
-# them.
+# KNOWN GAP: the command is read token by token (quotes removed, a bundled short option such as -Av counted), so a subshell or
+# a variable that expands to the flag still stages everything and is not blocked.
 set -uo pipefail
 
 block() {
