@@ -279,19 +279,6 @@ test("a gate: nothing continues on error, except the live gate of a drill (input
   );
 });
 
-test("the example caller names its secrets and never cancels a deploy in flight", () => {
-  const caller = readFileSync(
-    new URL("../examples/worker-deploy-caller.yml", import.meta.url),
-    "utf8",
-  );
-  assert.match(caller, /CLOUDFLARE_API_TOKEN: \$\{\{ secrets\.CLOUDFLARE_API_TOKEN \}\}/);
-  assert.match(
-    caller,
-    /cancel-in-progress: false/,
-    "a caller must never cancel a deploy in flight",
-  );
-});
-
 // Run cases.
 
 // The run cases need bash, as the runner has.

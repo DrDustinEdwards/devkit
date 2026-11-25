@@ -200,8 +200,8 @@ function governingNpmLock(tree, file) {
 
 /**
  * A pin of a shared package whose lockfile resolves another release (an error): npm keeps a lock entry for a git
- * dependency when the tag in package.json moves, so a bump that only edits package.json ships the old code (capsid #785
- * pinned site-runtime v0.76.0 over a lock that resolved 0.74.0). npm: the lock's version for the package must equal the
+ * dependency when the tag in package.json moves, so a bump that only edits package.json ships the old code (a pin of
+ * site-runtime v0.76.0 over a lock that resolved 0.74.0). npm: the lock's version for the package must equal the
  * tag. A workspace member has no lock of its own: the root lock holds its entry, found the way Node resolves it, at
  * `<member>/node_modules/<name>` and then in each directory above it (foxing's apps/web stayed on capsomer 0.83.1 under a
  * v0.87.0 pin, because only a lock beside the manifest was read). pnpm: the lock must record the same specifier.
