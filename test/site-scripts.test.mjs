@@ -1,4 +1,4 @@
-// The bins sites used to keep as local scripts: size-budget, tokens, gates, db-migrate and fetch-fonts; and siteScript's build.
+// The bins sites share instead of local scripts: size-budget, tokens, gates, db-migrate and fetch-fonts; and siteScript's build.
 
 import assert from "node:assert/strict";
 import { createHash, randomBytes } from "node:crypto";

@@ -1388,7 +1388,7 @@ test("a workflow change that turns the check off or changes what runs before it 
   for (const [now, what] of [
     [base.replace("npm run gen", "npm run gen && rm src/copy.ts"), /changes no-bloat-prepare/],
     [add("      no-bloat: false\n"), /changes no-bloat from "\(default\)" to "false"/],
-    // Each spelling the line reader missed (devkit 0.42.0): CRLF, a comment or anchor after with:, flow style, a quoted
+    // Each spelling the line reader must handle: CRLF, a comment or anchor after with:, flow style, a quoted
     // or upper-case key, an expression.
     [add("      no-bloat: false\n").replace(/\n/g, "\r\n"), /changes no-bloat from/],
     [base.replace("with:\n", "with: # inputs\n      no-bloat: false\n"), /changes no-bloat from/],

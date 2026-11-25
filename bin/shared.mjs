@@ -40,8 +40,7 @@
 //              extends @dustinedwards/devkit/oxlint, a linter config of its own (eslint.config.*, .eslintrc*, biome.json,
 //              .oxlintrc.json), a root `lint` script other than LINT_SCRIPT, or no workflow running `npm run lint`
 //              and the same for the shared Oxfmt config (a root oxfmt.config.ts with @dustinedwards/devkit/oxfmt, no
-//              Prettier config, the `format:check` script FORMAT_CHECK_SCRIPT, a workflow running `npm run format:check`)
-//              (a warning until 0.25.0, while the repositories move);
+//              Prettier config, the `format:check` script FORMAT_CHECK_SCRIPT, a workflow running `npm run format:check`);
 //   config     .shared.json itself: an unknown key or kind stops the check (exit 2), and an exception that excused
 //              nothing in this run is a warning.
 //
@@ -1301,7 +1300,7 @@ export function checkFeatures(tree, config, now = Date.now()) {
       });
     }
     // A Carrel site (it calls createSiteApi) tells IndexNow about each publish and schedule through site-api's hook. A
-    // createSiteApi without it either tells nobody, or hands its own submitIndexNow to onPageChange (site-api v0.9.0's way, gone after v0.21.0).
+    // createSiteApi without it either tells nobody, or hands its own submitIndexNow to onPageChange.
     const indexnow = FEATURES.indexnow;
     if (
       indexnow.kinds.includes(kind) &&
