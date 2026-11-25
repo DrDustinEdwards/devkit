@@ -66,7 +66,7 @@ import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { escapeAnnotation } from "./annotate.mjs";
 import { isMain } from "../node/index.mjs";
-import { lintConfig, live, loadConfig, readJsonFile } from "./live/config.mjs";
+import { lintConfig, live, loadConfig, readLiveJson } from "./live/config.mjs";
 import { runAll } from "./live/run.mjs";
 import { boardMarkdown, buildBoard } from "./live/board.mjs";
 
@@ -78,7 +78,7 @@ function readRuns(/** @type {string} */ dir) {
   const runs = [];
   for (const name of readdirSync(dir).filter((n) => n.endsWith(".json"))) {
     try {
-      const run = readJsonFile(join(dir, name));
+      const run = readLiveJson(join(dir, name));
       if (typeof run?.at !== "string" || !Array.isArray(run.results))
         throw new Error('no "at" time and "results" list');
       runs.push(run);
