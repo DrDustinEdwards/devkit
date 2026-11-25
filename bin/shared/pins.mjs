@@ -7,7 +7,7 @@ import { compare, mcpServerDirs, semver } from "./core.mjs";
 /** @typedef {import("./core.mjs").TagReader} TagReader */
 
 /** The newest release tag of a repository. */
-export function newest(/** @type {string[]} */ tags) {
+function newest(/** @type {string[]} */ tags) {
   return (
     tags
       .filter((t) => semver(t))

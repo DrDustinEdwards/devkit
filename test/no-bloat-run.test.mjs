@@ -1,4 +1,4 @@
-// The no-bloat bin run end to end in a scratch git repository (see no-bloat-helpers.mjs).
+// The no-bloat bin run end to end in a scratch git repository.
 
 import assert from "node:assert/strict";
 import { readFileSync, rmSync, writeFileSync } from "node:fs";
