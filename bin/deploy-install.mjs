@@ -3,7 +3,9 @@
 // (worker-deploy.yml's "Install", pr.yml's "Deploy install").
 //
 //   INSTALL='<command>' node deploy-install.mjs     run the caller's command as written, nothing more
-//   node deploy-install.mjs                         the default, in three parts:
+//   node deploy-install.mjs                         the default, run from the nearest folder at or above the working
+//                                                   directory that holds a package-lock.json (a Worker in a workspace
+//                                                   package installs the whole workspace), in three parts:
 //     1. `npm ci --ignore-scripts`: no dependency's install script runs in a job that holds the deploy token.
 //     2. each dependency the lockfile resolves from git is built from its locked commit: cloned, its own dependencies
 //        installed without scripts, packed (which runs its `prepare`, the build a package such as site-api or d1-dump
@@ -23,7 +25,7 @@ import {
   rmSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import { isMain } from "../node/index.mjs";
 
@@ -53,6 +55,18 @@ export function gitDeps(lock) {
     deps.push({ name, url, sha });
   }
   return deps.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * The nearest folder at or above `dir` that holds a package-lock.json, or null.
+ * @param {string} dir
+ * @returns {string | null}
+ */
+export function lockRoot(dir) {
+  for (let at = dir; ; at = dirname(at)) {
+    if (existsSync(join(at, "package-lock.json"))) return at;
+    if (dirname(at) === at) return null;
+  }
 }
 
 /** @param {string} command @param {string[]} args @param {string} [cwd] */
@@ -96,6 +110,12 @@ function main() {
     run("bash", ["-euo", "pipefail", "-c", custom]);
     return;
   }
+  const root = lockRoot(process.cwd());
+  if (!root) {
+    console.error("No package-lock.json in the working directory or any folder above it.");
+    process.exit(1);
+  }
+  process.chdir(root);
   run("bash", ["-euo", "pipefail", "-c", DEFAULT_INSTALL]);
   for (const dep of gitDeps(JSON.parse(readFileSync("package-lock.json", "utf8")))) {
     console.log(`Building ${dep.name} at ${dep.sha} from git`);
