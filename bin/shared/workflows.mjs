@@ -1,5 +1,5 @@
 import { posix } from "node:path";
-import { NOT_SOURCE, SOURCE, excused, mcpServerDirs, ownerOf, readManifest } from "./core.mjs";
+import { NOT_SOURCE, SOURCE, excused, mcpServerDirs, appOwner, readManifest } from "./core.mjs";
 
 /** @typedef {import("./core.mjs").Config} Config */
 /** @typedef {import("./core.mjs").Finding} Finding */
@@ -99,7 +99,7 @@ export function checkWorkflows(tree, config, repo = {}) {
         !seen.has(name) && invokes(cmd, name) && reaches(String(body), bin, seen.add(name)),
     );
   const apps = Object.entries(config.apps ?? { ".": "site" });
-  const owner = ownerOf(apps);
+  const owner = appOwner(apps);
   const workers = apps
     .filter(
       ([dir, kind]) =>

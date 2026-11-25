@@ -91,7 +91,7 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
   assert.equal(
     server("v0.9.0").message,
     "site-runtime is at v0.9.0; the newest release is v0.10.0",
-  ); // A lockfile that resolves another release than the pin names fails (capsid #785), npm and pnpm.
+  ); // A lockfile that resolves another release than the pin names fails, npm and pnpm.
   const pkg =
     '{"dependencies":{"@dustinedwards/site-runtime":"github:DrDustinEdwards/site-runtime#v0.10.0"}}';
   const npm = (v) =>

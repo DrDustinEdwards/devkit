@@ -20,7 +20,8 @@
 // `classes` (optional) checks the stylesheets the same way: every class with the package's prefix that a .ts or .tsx file
 // under `dirs` writes, and that one of the package's stylesheets styles, must be styled by a stylesheet something under
 // `dirs` imports (`import "capsomer/layout-stack.css"`, or `@import` in a .css file, followed through the package's own
-// imports). A class whose stylesheet nothing loads draws as plain markup and no other check notices.
+// imports). A class whose stylesheet nothing loads draws as plain markup and no other check notices (a Portal repinned
+// past Capsomer 0.139, which moved .cap-stack and .cap-text out of base.css, lost its layout).
 //
 //   "classes": [{ "package": "dashboard/node_modules/capsomer", "dirs": ["dashboard/src"], "prefix": "cap-" }]
 //
