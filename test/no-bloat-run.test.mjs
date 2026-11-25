@@ -49,7 +49,10 @@ test(
       writeFileSync(join(shrunk, ".no-bloat.json"), JSON.stringify(config));
       const s = runBin(shrunk);
       assert.equal(s.status, 0, s.stdout);
-      assert.match(s.stdout, /::warning::Lower the baseline to lock this in \(jscpd: clones 4 to 2\)/);
+      assert.match(
+        s.stdout,
+        /::warning::Lower the baseline to lock this in \(jscpd: clones 4 to 2\)/,
+      );
       assert.doesNotMatch(s.stdout, /::error::/);
       assert.equal(runBin(shrunk, ["--write-baseline"]).status, 0);
       assert.equal(runBin(shrunk).status, 0);
