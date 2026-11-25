@@ -26,7 +26,6 @@ function fakePackage(/** @type {string} */ entry) {
       type: "module",
       files: ["*.mjs", "dist"],
       exports: { ".": { types: "./dist/index.d.mts", default: "./index.mjs" } },
-      scripts: { prepare: "tsc -p tsconfig.build.json" },
     }),
   );
   write(
@@ -50,6 +49,7 @@ function fakePackage(/** @type {string} */ entry) {
   mkdirSync(join(dir, "node_modules"));
   symlinkSync(join(devkit, "node_modules", ".bin"), join(dir, "node_modules", ".bin"));
   symlinkSync(join(devkit, "node_modules", "typescript"), join(dir, "node_modules", "typescript"));
+  spawnSync(join(dir, "node_modules", ".bin", "tsc"), ["-p", "tsconfig.build.json"], { cwd: dir });
   return dir;
 }
 
@@ -95,4 +95,12 @@ test("typedEntries keeps the exports with types; fixtureSource calls functions a
   assert.match(source, /sub__f_return = .*m0\.f\)\(/);
   assert.match(source, /sub__K = m0\.K;/);
   assert.doesNotMatch(source, /not-an-id/);
+});
+
+test("a package whose declarations are not built fails instead of passing untyped", () => {
+  const dir = fakePackage("export function build() { return 1; }\n");
+  spawnSync("node", ["-e", 'require("node:fs").rmSync("dist", { recursive: true })'], { cwd: dir });
+  const result = run(dir);
+  assert.equal(result.status, 1);
+  assert.match(result.stdout, /build the declarations first/);
 });

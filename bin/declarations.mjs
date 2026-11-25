@@ -11,11 +11,12 @@
 // resolves to its source, not the tarball), and typechecks one generated file with `composite` and `declaration`
 // on: for every function an `exports` entry with `types` exports, a constant holding its return type and one holding
 // its parameters, and a constant for every other export. An entry the package cannot load in Node is reported and
-// skipped; only TS2883 fails the run: the
+// skipped; a `types` file the tarball lacks stops it, and only TS2883 fails the run: the
 // other errors come from the project the package is used in (ambient Workers types, optional peers).
 
 import { execFileSync } from "node:child_process";
 import {
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readdirSync,
@@ -104,6 +105,14 @@ async function main() {
       installed,
       "--strip-components=1",
     ]);
+
+    const missing = entries.filter(({ types }) => !existsSync(join(installed, types)));
+    if (missing.length > 0) {
+      fail(
+        "declarations",
+        `${missing.map(({ types }) => types).join(", ")} is not in the package: build the declarations first (npm run prepare)`,
+      );
+    }
 
     const loaded = [];
     for (const { subpath } of entries) {
