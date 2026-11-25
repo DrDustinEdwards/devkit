@@ -1,7 +1,7 @@
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { isAbsolute, join, posix, relative, sep } from "node:path";
-import { packageCopies } from "../copies.mjs";
+import { packageCopies } from "../copies/names.mjs";
 import {
   DEFAULT_TOOLS,
   SIZE_CAP,

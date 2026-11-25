@@ -6,7 +6,7 @@ import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { packageCopies, sharedNames } from "../bin/copies.mjs";
+import { packageCopies, sharedNames } from "../bin/copies/names.mjs";
 
 test("PLANT: a name two sites each define is counted; a re-export (also of an import), a Drizzle table, a route export and a shared package's own are not", () => {
   const files = [

@@ -14,7 +14,7 @@ import {
   notFoundFindings,
   parseJsonc,
   shaFindings,
-} from "../bin/ops-audit.mjs";
+} from "../bin/ops-audit/findings.mjs";
 
 const url = "https://example.com/health";
 const read = (body, extra = {}) => ({
