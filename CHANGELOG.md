@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.60.0
+
+### Minor Changes
+
+- worker-deploy.yml installs with `npm ci --ignore-scripts` by default, then runs the repository's own `postinstall` and `prepare`, so no dependency's install script runs in a job that holds the deploy token. The new `rebuild` input names dependencies whose script the build needs (`npm rebuild`). A caller that sets `install:` keeps what it wrote; one that installs with scripts can drop to this default on its next repin.
+
+### Patch Changes
+
+- Audit fixes: the migration reader reads a trigger body when the same file writes rows (so `--apply` hands such a file to a person); `devkit-secrets` has a Cloudflare token shape and names each file it skips for size; `devkit-fetch-fonts` takes font files only from fonts.gstatic.com and refuses redirects; `devkit-db-migrate` and `devkit-migrations --apply` refuse a database name that is not a D1 name; the scoped-git-add hook reads quoted and bundled flags and the `:/` pathspec; the review job's Capsid host is no longer an environment override.
+- Split bin/no-bloat.mjs into bin/no-bloat/ modules (scan, count, compare, tools, base, classify, workflow, knip-config, reasons) and its test into units, end-to-end and guards; no behavior change.
+- Split bin/shared.mjs, bin/live.mjs, bin/ops-audit.mjs, bin/a11y.mjs and bin/copies.mjs into modules under bin/<name>/, and test/shared.test.mjs into three files; no behavior change.
+
 ## 0.59.6
 
 ### Patch Changes
