@@ -1,4 +1,5 @@
 {
-  "entry": ["stryker.config.mjs", "drill/worker.mjs", "scripts/review-check.mjs"],
+  // Knip reaches scripts/review-check.mjs from .github/actions/review/action.yml on its own; nothing references the other two.
+  "entry": ["stryker.config.mjs", "drill/worker.mjs"],
   "ignore": ["test/fixtures/oxlint/*.tsx"]
 }
