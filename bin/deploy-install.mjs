@@ -13,7 +13,15 @@
 //     3. the repository's own `postinstall` and `prepare`, which are its reviewed code and may need the packages above.
 
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -33,10 +41,13 @@ export function gitDeps(lock) {
     if (!path || !entry.resolved?.startsWith("git+")) continue;
     const name = path.slice("node_modules/".length);
     if (!path.startsWith("node_modules/") || name.includes("node_modules/")) {
-      throw new Error(`${path} is installed from git but nested, so it cannot be rebuilt in place. Hoist it.`);
+      throw new Error(
+        `${path} is installed from git but nested, so it cannot be rebuilt in place. Hoist it.`,
+      );
     }
     const [repo, sha] = entry.resolved.slice("git+".length).split("#");
-    if (!/^[0-9a-f]{40}$/.test(sha ?? "")) throw new Error(`${path} is locked to ${entry.resolved}, not a commit.`);
+    if (!/^[0-9a-f]{40}$/.test(sha ?? ""))
+      throw new Error(`${path} is locked to ${entry.resolved}, not a commit.`);
     // The lock records the ssh form; a runner has no key for it, and a public repository needs none over https.
     const url = repo.replace(/^ssh:\/\/git@github\.com\//, "https://github.com/");
     deps.push({ name, url, sha });
@@ -90,7 +101,12 @@ function main() {
     console.log(`Building ${dep.name} at ${dep.sha} from git`);
     build(dep);
   }
-  run("bash", ["-euo", "pipefail", "-c", "npm run --if-present postinstall && npm run --if-present prepare"]);
+  run("bash", [
+    "-euo",
+    "pipefail",
+    "-c",
+    "npm run --if-present postinstall && npm run --if-present prepare",
+  ]);
 }
 
 if (isMain(import.meta.url)) main();

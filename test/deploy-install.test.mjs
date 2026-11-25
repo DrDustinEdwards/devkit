@@ -16,7 +16,9 @@ test("gitDeps lists only the git-resolved packages, with the https URL and the l
   const deps = gitDeps({
     packages: {
       "": { resolved: undefined },
-      "node_modules/@scope/site-api": { resolved: `git+ssh://git@github.com/Owner/site-api.git#${SHA}` },
+      "node_modules/@scope/site-api": {
+        resolved: `git+ssh://git@github.com/Owner/site-api.git#${SHA}`,
+      },
       "node_modules/zod": { resolved: "https://registry.npmjs.org/zod/-/zod-4.0.0.tgz" },
       "node_modules/prelum": { resolved: `git+https://github.com/Owner/prelum.git#${SHA}` },
     },
@@ -29,11 +31,19 @@ test("gitDeps lists only the git-resolved packages, with the https URL and the l
 
 test("gitDeps refuses a nested git dependency and one not locked to a commit", () => {
   assert.throws(
-    () => gitDeps({ packages: { "node_modules/a/node_modules/b": { resolved: `git+ssh://git@github.com/O/b.git#${SHA}` } } }),
+    () =>
+      gitDeps({
+        packages: {
+          "node_modules/a/node_modules/b": { resolved: `git+ssh://git@github.com/O/b.git#${SHA}` },
+        },
+      }),
     /nested/,
   );
   assert.throws(
-    () => gitDeps({ packages: { "node_modules/b": { resolved: "git+ssh://git@github.com/O/b.git#main" } } }),
+    () =>
+      gitDeps({
+        packages: { "node_modules/b": { resolved: "git+ssh://git@github.com/O/b.git#main" } },
+      }),
     /not a commit/,
   );
 });
@@ -50,11 +60,15 @@ test("build runs the git dependency's prepare and installs its packed files, not
         name: "dep",
         version: "1.0.0",
         files: ["dist"],
-        scripts: { prepare: "node -e \"require('fs').mkdirSync('dist',{recursive:true});require('fs').writeFileSync('dist/index.js','built')\"" },
+        scripts: {
+          prepare:
+            "node -e \"require('fs').mkdirSync('dist',{recursive:true});require('fs').writeFileSync('dist/index.js','built')\"",
+        },
       }),
     );
     writeFileSync(join(repo, "src.txt"), "source");
-    const git = (/** @type {string[]} */ ...args) => execFileSync("git", args, { cwd: repo, encoding: "utf8" }).trim();
+    const git = (/** @type {string[]} */ ...args) =>
+      execFileSync("git", args, { cwd: repo, encoding: "utf8" }).trim();
     git("init", "-q");
     git("config", "uploadpack.allowAnySHA1InWant", "true");
     git("add", ".");
@@ -68,10 +82,19 @@ test("build runs the git dependency's prepare and installs its packed files, not
     process.chdir(site);
     build({ name: "dep", url: `file://${repo}`, sha });
 
-    assert.equal(readFileSync(join(site, "node_modules", "dep", "dist", "index.js"), "utf8"), "built");
+    assert.equal(
+      readFileSync(join(site, "node_modules", "dep", "dist", "index.js"), "utf8"),
+      "built",
+    );
     assert.ok(!existsSync(join(site, "node_modules", "dep", "src.txt")), "the packed files only");
-    assert.ok(!existsSync(join(site, "node_modules", "dep", "stale.txt")), "the old copy is replaced");
-    assert.ok(existsSync(join(site, "node_modules", "dep", "node_modules", "inner")), "its nested dependencies stay");
+    assert.ok(
+      !existsSync(join(site, "node_modules", "dep", "stale.txt")),
+      "the old copy is replaced",
+    );
+    assert.ok(
+      existsSync(join(site, "node_modules", "dep", "node_modules", "inner")),
+      "its nested dependencies stay",
+    );
   } finally {
     process.chdir(cwd);
     rmSync(root, { recursive: true, force: true });
