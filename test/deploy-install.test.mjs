@@ -48,7 +48,20 @@ test("gitDeps refuses a nested git dependency and one not locked to a commit", (
   );
 });
 
-test("build runs the git dependency's prepare and installs its packed files, not its source", () => {
+test("lockRoot finds the nearest lockfile folder, and build runs the git dependency's prepare and installs its packed files, not its source", () => {
+  const lockDir = mkdtempSync(join(tmpdir(), "deploy-install-lock-"));
+  try {
+    mkdirSync(join(lockDir, "apps", "web"), { recursive: true });
+    mkdirSync(join(lockDir, "mcp"), { recursive: true });
+    writeFileSync(join(lockDir, "package-lock.json"), "{}");
+    writeFileSync(join(lockDir, "mcp", "package-lock.json"), "{}");
+    assert.equal(lockRoot(join(lockDir, "apps", "web")), lockDir);
+    assert.equal(lockRoot(lockDir), lockDir);
+    assert.equal(lockRoot(join(lockDir, "mcp")), join(lockDir, "mcp"));
+  } finally {
+    rmSync(lockDir, { recursive: true, force: true });
+  }
+
   const root = mkdtempSync(join(tmpdir(), "deploy-install-test-"));
   const cwd = process.cwd();
   try {
@@ -97,21 +110,6 @@ test("build runs the git dependency's prepare and installs its packed files, not
     );
   } finally {
     process.chdir(cwd);
-    rmSync(root, { recursive: true, force: true });
-  }
-});
-
-test("lockRoot finds the nearest folder at or above with a package-lock.json", () => {
-  const root = mkdtempSync(join(tmpdir(), "deploy-install-lock-"));
-  try {
-    mkdirSync(join(root, "apps", "web"), { recursive: true });
-    mkdirSync(join(root, "mcp"), { recursive: true });
-    writeFileSync(join(root, "package-lock.json"), "{}");
-    writeFileSync(join(root, "mcp", "package-lock.json"), "{}");
-    assert.equal(lockRoot(join(root, "apps", "web")), root);
-    assert.equal(lockRoot(root), root);
-    assert.equal(lockRoot(join(root, "mcp")), join(root, "mcp"));
-  } finally {
     rmSync(root, { recursive: true, force: true });
   }
 });
