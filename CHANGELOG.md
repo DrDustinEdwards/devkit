@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.63.0
+
+### Minor Changes
+
+- The default deploy install runs from the nearest folder at or above the working directory that holds a package-lock.json, so a Worker inside a workspace package no longer needs an `install:` override, and `check-callers.mjs` refuses an `install:` on a worker-deploy call that neither includes `--ignore-scripts` nor runs `deploy-install.mjs`.
+
 ## 0.62.0
 
 ### Minor Changes
