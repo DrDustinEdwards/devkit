@@ -303,18 +303,12 @@ export function codeMap({
   tsconfig = "tsconfig.json",
   include = ["src/"],
   exclude = [],
-  coverage: coverageByFile = null,
+  coverage = null,
   mutation = null,
   repo,
   sha,
   date,
 }) {
-  // TypeScript names files with forward slashes; istanbul on Windows keys them with backslashes.
-  const coverage =
-    coverageByFile &&
-    Object.fromEntries(
-      Object.entries(coverageByFile).map(([k, v]) => [k.replaceAll("\\", "/"), v]),
-    );
   const parsed = existsSync(resolve(root, tsconfig))
     ? ts.getParsedCommandLineOfConfigFile(
         resolve(root, tsconfig),

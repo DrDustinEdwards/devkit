@@ -22,7 +22,7 @@ test("PLANT: it merges the chunks into one score and names the zero-kill and cov
     mkdirSync(join(dir, "reports", "mutation"), { recursive: true });
     assert.match(
       run(["--protected", "x"]),
-      /^1 devkit-mutation-report: no mutation JSON in \S+reports[\\/]mutation\. Run Stryker first\./,
+      /^1 devkit-mutation-report: no mutation JSON in \S+reports\/mutation\. Run Stryker first\./,
     );
     assert.match(run([]), /^1 devkit-mutation-report: --protected <regex> is required/);
 
