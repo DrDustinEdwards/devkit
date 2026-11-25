@@ -58,16 +58,47 @@ function scan(sql) {
       i++;
     }
   }
-  // A trigger's body runs when a row changes, not when the migration does, so it is not read, unless the same file writes
-  // rows: that write can fire it during this apply.
+  // A trigger's body runs when a row changes, not when the migration does, so it is not read, unless a write in the same
+  // file can fire it during this apply: an INSERT into the table it is on, or any other write (an UPDATE, DELETE or
+  // REPLACE can cascade through foreign keys to any table, and is flagged on its own anyway).
   /** @type {string[]} */
   const triggers = [];
   code = code.replace(
     /\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?;\s*END\s*;/gi,
     (body) => (triggers.push(body), " "),
   );
-  const writes = /(?:^|;)\s*(?:INSERT|UPDATE|DELETE|REPLACE|WITH)\b/i.test(code);
-  return { code, marked, fired: writes ? triggers.join(" ") : "" };
+  return { code, marked, fired: firedTriggers(code, triggers) };
+}
+
+const WRITE = /^\s*(?:INSERT|UPDATE|DELETE|REPLACE|WITH)\b/i;
+const INSERT_INTO = /^\s*INSERT\s+(?:OR\s+(?:IGNORE|ABORT|FAIL|ROLLBACK)\s+)?INTO\s+(?:\w+\s*\.\s*)?([\w]+|_)/i;
+const TRIGGER_ON =
+  /\bTRIGGER\b[^;]*?\b(INSERT|UPDATE|DELETE)\b[^;]*?\bON\s+(?:\w+\s*\.\s*)?([\w]+|_)/i;
+
+/**
+ * The triggers a file's own writes can fire, joined; empty when it writes no rows or only inserts into other tables.
+ * @param {string} code the blanked SQL, its trigger definitions removed
+ * @param {string[]} triggers the definitions
+ */
+function firedTriggers(code, triggers) {
+  const inserted = new Set();
+  for (const statement of code.split(";")) {
+    if (!WRITE.test(statement)) continue;
+    const into = INSERT_INTO.exec(statement);
+    if (!into) return triggers.join(" ");
+    inserted.add(into[1].toLowerCase());
+  }
+  return triggers
+    .filter((trigger) => {
+      const on = TRIGGER_ON.exec(trigger);
+      if (!on) return true;
+      const table = on[2].toLowerCase();
+      return (
+        on[1].toUpperCase() === "INSERT" &&
+        (table === "_" || inserted.has("_") || inserted.has(table))
+      );
+    })
+    .join(" ");
 }
 
 const findings = (/** @type {{ code: string, fired: string }} */ { code, fired }) =>
