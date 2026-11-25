@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.64.0
+
+### Minor Changes
+
+- devkit-no-bloat (Knip, jscpd, shared copies, legacy, tests, size) and devkit-copies fail only when a count rises above its baseline. A count below it passes with a warning to lower the baseline in the next change that touches it.
+
 ## 0.63.0
 
 ### Minor Changes
