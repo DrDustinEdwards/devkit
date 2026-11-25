@@ -96,11 +96,11 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
   const found = [];
   /** @type {Record<string, ReturnType<TagReader>>} */
   const cache = {};
-  const tagsOf = (/** @type {string} */ repo) => (cache[repo] ??= readTags(repo));
+  const releaseTags = (/** @type {string} */ repo) => (cache[repo] ??= readTags(repo));
   const servers = mcpServerDirs(tree);
   /** @param {string} file @param {number} line @param {string} repo @param {string} ref */
   const judge = (file, line, repo, ref, what = repo) => {
-    const { tags, commits } = tagsOf(repo);
+    const { tags, commits } = releaseTags(repo);
     const latest = newest(tags);
     if (!latest) return;
     const at = semver(ref)
