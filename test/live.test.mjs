@@ -305,7 +305,7 @@ test("finished only when every cell is complete and clean for the full run of da
   // A page the checks cannot reach is not proven, so it keeps the job open.
   const unreached = [{ ...areas[0], unchecked: { "a /stats": "signed-in only" } }];
   assert.equal(buildBoard({ sites, areas: unreached, verdicts }, days).finished, false);
-  // An area with no live check (area 12) is the verdict alone, with no clean days to wait for.
+  // An area with no live check is the verdict alone, with no clean days to wait for.
   const tooling = [...areas, { id: 2, name: "Tooling", builder: "Build tooling", checks: [] }];
   const signed = [...verdicts, { ...verdict("Verify tooling"), area: 2 }];
   assert.equal(

@@ -1,5 +1,4 @@
-// The rollback guard: roll back only when the deploy this run shipped is what is live. Ported from capsid's
-// test/rollback-guard.test.ts with the guard it drives (scripts/rollback-guard.mjs, byte for byte capsid's).
+// The rollback guard: roll back only when the deploy this run shipped is what is live.
 //
 // Rerunning only the failed live gate preserves `needs.deploy.result`, so the rollback step's `if:` still holds, and
 // `wrangler rollback` with no version id means "the previous version". A second rollback therefore puts back the very commit

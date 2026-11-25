@@ -107,14 +107,14 @@ export const react = {
     "react/incompatible-library": "error",
     "react/unsupported-syntax": "error",
     // jsx-a11y's correctness rules stay on (Capsomer's axe checks are the runtime half), less three that flag correct
-    // markup, measured on dustinedwards-info's first run: `prefer-tag-over-role` (22) asks for a tag where
-    // the ARIA role is right, and no tag replaces `role="img"` on an SVG; `control-has-associated-label` (6) flagged a
+    // markup: `prefer-tag-over-role` asks for a tag where
+    // the ARIA role is right, and no tag replaces `role="img"` on an SVG; `control-has-associated-label` flagged a
     // table cell filled by dangerouslySetInnerHTML and a datalist option; `media-has-caption` flags audio, whose
     // accessible alternative is a transcript (WCAG 1.2.1), which the rule cannot see.
     "jsx-a11y/prefer-tag-over-role": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "jsx-a11y/media-has-caption": "off",
-    // Two options the rules already have, for markup that is right (measured on the first runs). A
+    // Two options the rules already have, for markup that is right. A
     // scrollable region needs `tabIndex={0}` so a keyboard can scroll it, and names itself with `role="region"` (axe's
     // scrollable-region-focusable; `tabpanel` is the rule's only default). Safari drops list semantics from a `ul` with
     // `list-style: none` unless it says `role="list"`, so `ul` and `ol` may state theirs.

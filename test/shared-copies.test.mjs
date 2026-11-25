@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { isWarning } from "../bin/shared/config.mjs";
-import { staleExceptions } from "../bin/shared/config.mjs";
+import { isWarning, staleExceptions } from "../bin/shared/config.mjs";
 import { checkFeatures } from "../bin/shared/features.mjs";
 import { checkCopies, blankComments, checkLibraries } from "../bin/shared/copies.mjs";
 

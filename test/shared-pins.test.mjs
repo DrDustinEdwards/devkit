@@ -3,8 +3,7 @@ import test from "node:test";
 
 import { againstBase } from "../bin/shared.mjs";
 import { isWarning } from "../bin/shared/config.mjs";
-import { checkFeatures } from "../bin/shared/features.mjs";
-import { checkPins, lockDisagrees, newest } from "../bin/shared/pins.mjs";
+import { checkPins, lockDisagrees } from "../bin/shared/pins.mjs";
 
 const SHA_V2 = "2".repeat(40);
 const SHA_RAW = "9".repeat(40);
@@ -16,10 +15,6 @@ const tags = () => ({
 const tree = (files) => ({
   files: Object.keys(files),
   read: (/** @type {string} */ f) => files[f] ?? "",
-});
-
-test("the newest tag is compared as a version, not as text", () => {
-  assert.equal(newest(["v0.9.0", "v0.10.0", "v0.2.0", "latest"]), "v0.10.0");
 });
 
 test("a raw commit is refused, a pin behind the newest tag is a warning, and a site-runtime pin behind a minor out three days fails", () => {
@@ -84,7 +79,7 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
   assert.equal(isWarning(fresh[0]), true);
   assert.equal(isWarning(fresh[1]), true);
   assert.match(fresh[1].message, /prelum's release dates could not be read/);
-  // An MCP server (S7): more than one minor behind the newest fails whatever the release's age; one behind is the usual warning.
+  // An MCP server: more than one minor behind the newest fails whatever the release's age; one behind is the usual warning.
   const server = (ref) =>
     checkPins(
       tree({
@@ -103,7 +98,8 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
   assert.equal(
     server("v0.9.0").message,
     "site-runtime is at v0.9.0; the newest release is v0.10.0",
-  ); // A lockfile that resolves another release than the pin names fails (capsid #785), npm and pnpm.
+  );
+  // A lockfile that resolves another release than the pin names fails, npm and pnpm.
   const pkg =
     '{"dependencies":{"@dustinedwards/site-runtime":"github:DrDustinEdwards/site-runtime#v0.10.0"}}';
   const npm = (v) =>
@@ -165,11 +161,6 @@ test("a raw commit is refused, a pin behind the newest tag is a warning, and a s
     ).length,
     1,
   );
-});
-
-test("a library's package.json with exports and no kind is judged as a site, and the finding says to declare a package", () => {
-  const [first] = checkFeatures(tree({ "package.json": '{"exports":"./index.mjs"}' }), {});
-  assert.match(first.message, /"apps": \{ "\.": "package" \}/);
 });
 
 test("PLANT: on a pull request a failure the base already has is a warning, and one the change adds still fails", () => {

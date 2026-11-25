@@ -4,7 +4,7 @@ import { SOURCE, NOT_SOURCE, semver, compare } from "./config.mjs";
 /** @import { Finding, Tree, TagReader } from "./config.mjs" */
 
 /** The newest release tag of a repository. */
-export function newest(/** @type {string[]} */ tags) {
+function newest(/** @type {string[]} */ tags) {
   return (
     tags
       .filter((t) => semver(t))
@@ -196,11 +196,9 @@ function governingNpmLock(tree, file) {
 
 /**
  * A pin of a shared package whose lockfile resolves another release (an error): npm keeps a lock entry for a git
- * dependency when the tag in package.json moves, so a bump that only edits package.json ships the old code (capsid #785
- * pinned site-runtime v0.76.0 over a lock that resolved 0.74.0). npm: the lock's version for the package must equal the
+ * dependency when the tag in package.json moves, so a bump that only edits package.json ships the old code. npm: the lock's version for the package must equal the
  * tag. A workspace member has no lock of its own: the root lock holds its entry, found the way Node resolves it, at
- * `<member>/node_modules/<name>` and then in each directory above it (foxing's apps/web stayed on capsomer 0.83.1 under a
- * v0.87.0 pin, because only a lock beside the manifest was read). pnpm: the lock must record the same specifier.
+ * `<member>/node_modules/<name>` and then in each directory above it. pnpm: the lock must record the same specifier.
  * @param {Tree} tree @param {string} file @param {number} line @param {string} name @param {string} repo @param {string} ref
  * @returns {Finding[]}
  */

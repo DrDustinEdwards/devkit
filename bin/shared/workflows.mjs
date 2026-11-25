@@ -135,8 +135,7 @@ export function checkWorkflows(tree, config, repo = {}) {
       message: `${why} calls devkit's ${name}.yml, and no workflow here does: add devkit's ${example}, or say why in .shared.json "waive" "workflow:${name}"${unsure ? " (a warning here: only Actions says whether this repository is public)" : ""}`,
     });
   }
-  // A stylesheet's var(--x) that nothing declares resolves to nothing, and only devkit-css-vars notices (Foxing's --fx-shadow-md,
-  // 14 uses). pr.yml runs it when the repository has a .css-vars.json.
+  // A stylesheet's var(--x) that nothing declares resolves to nothing, and only devkit-css-vars notices. pr.yml runs it when the repository has a .css-vars.json.
   const sheets = tree.files.some((f) => f.endsWith(".css") && !NOT_SOURCE.test(f));
   if (sheets && !excused(config, "waive", "workflow:css-vars")) {
     const runsIt =
