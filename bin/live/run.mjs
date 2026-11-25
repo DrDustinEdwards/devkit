@@ -3,15 +3,51 @@ import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
-  OWNER,
   CHECK_TIMEOUT_MS,
-  PARALLEL,
   MAX_OUTPUT,
   MAX_RATE_WAIT_MS,
+  MAX_REPORT,
+  OWNER,
+  PARALLEL,
   checksFor,
 } from "./config.mjs";
-import { resultOf, reportedResult, unmeasuredResult, fetchReport } from "./results.mjs";
-/** @import { Json } from "./config.mjs" */
+import { reportedResult, resultOf, unmeasuredResult } from "./results.mjs";
+
+/** @typedef {import("./config.mjs").Json} Json */
+
+/** A reported check's report, or why it could not be read (the HTTP status, a body over MAX_REPORT, bad JSON). */
+async function fetchReport(/** @type {string} */ url) {
+  try {
+    const resp = await fetch(url, {
+      headers: { Accept: "application/json" },
+      redirect: "error",
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!resp.ok) {
+      await resp.body?.cancel();
+      return { error: `HTTP ${resp.status}` };
+    }
+    if (Number(resp.headers.get("content-length")) > MAX_REPORT) {
+      await resp.body?.cancel();
+      return { error: `the report is over ${MAX_REPORT / 1024 / 1024} MB` };
+    }
+    /** @type {Uint8Array[]} */
+    const chunks = [];
+    let size = 0;
+    const reader = resp.body?.getReader();
+    for (let read = await reader?.read(); read && !read.done; read = await reader?.read()) {
+      size += read.value.byteLength;
+      if (size > MAX_REPORT) {
+        await reader?.cancel();
+        return { error: `the report is over ${MAX_REPORT / 1024 / 1024} MB` };
+      }
+      chunks.push(read.value);
+    }
+    return { report: JSON.parse(Buffer.concat(chunks).toString("utf8")) };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : String(error) };
+  }
+}
 
 /**
  * What git and npm get from the run's environment: the basics of a process and nothing else, so no token, no key and no
@@ -113,15 +149,13 @@ function install(
     : { ref, error: `${check.repo} ${ref} has no ${check.bin} bin yet` };
 }
 
-/** The MCP test grants' variables: one read-only key per MCP server, for the checks marked "grants": true alone. */
-export const GRANT_ENV = /^MCP_TEST_GRANT_/;
-
 /**
  * What every check's bin gets from the run's environment: the basics of a process, never a token or a key. Of the NODE_
  * variables only these three: NODE_OPTIONS can load code (`--require`) and NODE_AUTH_TOKEN is npm's token.
  */
 const BASE_ENV =
   /^(?:PATH|HOME|USER|SHELL|TMPDIR|TEMP|TMP|TZ|CI|LANG|LANGUAGE|LC_[A-Z_]+|NODE_EXTRA_CA_CERTS|NODE_NO_WARNINGS|NODE_ENV|SSL_CERT_(?:FILE|DIR)|(?:HTTPS?|NO|ALL)_PROXY|PLAYWRIGHT_BROWSERS_PATH|DEVKIT_A11Y_CHROMIUM|SYSTEMROOT|COMSPEC|PATHEXT)$/i;
+
 const PROXY_ENV = /^(?:HTTPS?|ALL)_PROXY$/i;
 
 /** The MCP test grant's variable for an origin: MCP_TEST_GRANT_ and its host upper-cased, every other character `_`. */

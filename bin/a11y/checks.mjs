@@ -1,198 +1,30 @@
-import { createHash } from "node:crypto";
-import { createRequire } from "node:module";
-import { join } from "node:path";
-import { WCAG_TAGS } from "../a11y-judge.mjs";
-import { locs } from "../warm.mjs";
+import {
+  ESCAPE_CONTROLS,
+  FORCED_PRESSES,
+  PAUSE_MS,
+  SELECTOR,
+  SPACING_CSS,
+  STYLE,
+  TAB_PRESSES,
+  axe,
+  basics,
+  isRange,
+  rangePixels,
+  settle,
+  sleep,
+} from "./page.mjs";
 
-export const VIEWS = [
+/** @typedef {import("./page.mjs").Page} Page */
+
+const VIEWS = [
   { width: 1440, height: 900, scheme: "light" },
   { width: 1440, height: 900, scheme: "dark" },
   { width: 390, height: 844, scheme: "light" },
   { width: 390, height: 844, scheme: "dark" },
 ];
-const TAB_PRESSES = 40;
-export const FORCED_PRESSES = 20;
-const ESCAPE_CONTROLS = 3;
-export const PAUSE_MS = 700;
-export const sleep = (/** @type {number} */ ms) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
-
-/** A short selector for an element, defined in every page the walk opens. */
-export const SELECTOR = `window.__sel = (el) => {
-  if (!el || el.nodeType !== 1) return String(el);
-  const parts = [];
-  while (el && el.nodeType === 1 && parts.length < 4) {
-    let s = el.localName;
-    if (el.id) { parts.unshift(s + "#" + CSS.escape(el.id)); break; }
-    const cls = [...el.classList].filter((c) => !/^(astro-|svelte-|css-|_)/.test(c)).slice(0, 2);
-    if (cls.length) s += "." + cls.map((c) => CSS.escape(c)).join(".");
-    const same = el.parentElement ? [...el.parentElement.children].filter((x) => x.localName === el.localName) : [];
-    if (same.length > 1) s += ":nth-of-type(" + (same.indexOf(el) + 1) + ")";
-    parts.unshift(s);
-    el = el.parentElement;
-  }
-  return parts.join(" > ");
-};`;
-
-/** The focus-relevant computed style of an element. */
-export const STYLE = `window.__ring = (cs) => cs.outlineStyle + " " + cs.outlineWidth + " " + cs.outlineColor + " " + cs.boxShadow + " " + cs.borderColor;
-window.__style = (el) => {
-  const ringOf = (el) => {
-    const own = [];
-    for (const pseudo of ["::-webkit-slider-thumb", "::-moz-range-thumb"]) own.push(window.__ring(getComputedStyle(el, pseudo)));
-    // An svg link draws its ring on its shape: the stroke of its first child.
-    const shape = el.firstElementChild;
-    if (shape) {
-      const cs = getComputedStyle(shape);
-      own.push(cs.stroke + " " + cs.strokeWidth);
-    }
-    let up = el;
-    for (let i = 0; i < 4 && up.parentElement && up.parentElement !== document.body; i++) {
-      up = up.parentElement;
-      own.push(window.__ring(getComputedStyle(up)));
-    }
-    return own.join("|");
-  };
-  const cs = getComputedStyle(el);
-  return { outline: cs.outlineStyle + " " + cs.outlineWidth + " " + cs.outlineColor, shadow: cs.boxShadow, bg: cs.backgroundColor,
-    border: cs.borderColor + " " + cs.borderWidth, decoration: cs.textDecorationLine + " " + cs.textDecorationThickness, color: cs.color,
-    ring: ringOf(el) };
-};`;
-
-const SPACING_CSS =
-  "* { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; }";
-
-export function load(/** @type {string} */ name) {
-  for (const base of [join(process.cwd(), "package.json"), import.meta.url]) {
-    try {
-      return createRequire(base)(name);
-    } catch (error) {
-      if (/** @type {any} */ (error).code !== "MODULE_NOT_FOUND") throw error;
-    }
-  }
-  return null;
-}
-
-export async function fetchText(/** @type {string} */ url) {
-  try {
-    const response = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(30_000) });
-    return { status: response.status, text: response.ok ? await response.text() : "" };
-  } catch (error) {
-    return { status: 0, text: "", error: /** @type {Error} */ (error).message };
-  }
-}
-
-/** The sitemap's URLs (a sitemap index followed to its first five children), moved from origin to base. */
-export async function sitemapUrls(/** @type {string} */ origin, /** @type {string} */ base) {
-  // Same origin by the parsed URL, not by prefix: https://example.com.evil.test starts with https://example.com.
-  const same = (/** @type {string} */ url) => {
-    try {
-      return new URL(url).origin === new URL(origin).origin;
-    } catch {
-      return false;
-    }
-  };
-  const move = (/** @type {string} */ url) => {
-    const u = new URL(url);
-    return base + u.pathname + u.search;
-  };
-  const { text } = await fetchText(`${base}/sitemap.xml`);
-  if (!/<sitemapindex/i.test(text)) return locs(text).filter(same).map(move);
-  const urls = [];
-  for (const child of locs(text).filter(same).slice(0, 5))
-    urls.push(
-      ...locs((await fetchText(move(child))).text)
-        .filter(same)
-        .map(move),
-    );
-  return urls;
-}
-
-/** @typedef {any} Page A Playwright page (Playwright is found at run time, so it has no types here). */
-
-export async function settle(/** @type {Page} */ page, /** @type {number} */ ms) {
-  await page.waitForLoadState("networkidle", { timeout: 6000 }).catch(() => {});
-  await sleep(ms);
-}
-
-export function basics(/** @type {Page} */ page) {
-  return page.evaluate(() => {
-    const headings = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].filter(
-      (h) => h.getClientRects().length || h.closest("[hidden]") === null,
-    );
-    const outside = (/** @type {string} */ sel) =>
-      [...document.querySelectorAll(sel)].filter(
-        (el) => !el.parentElement?.closest("article,aside,main,nav,section"),
-      ).length;
-    return {
-      lang: document.documentElement.getAttribute("lang") || null,
-      title: document.title || null,
-      h1: document.querySelectorAll("h1").length,
-      headings: headings.map((h) => ({ level: Number(h.localName[1]), sel: window.__sel(h) })),
-      landmarks: {
-        main: document.querySelectorAll("main, [role=main]").length,
-        banner: outside("header") + document.querySelectorAll("[role=banner]").length,
-        nav: document.querySelectorAll("nav, [role=navigation]").length,
-        contentinfo: outside("footer") + document.querySelectorAll("[role=contentinfo]").length,
-      },
-      imgNoAlt: [...document.querySelectorAll("img:not([alt]), input[type=image]:not([alt])")].map(
-        (img) => window.__sel(img),
-      ),
-    };
-  });
-}
-
-export async function axe(/** @type {Page} */ AxeBuilder, /** @type {Page} */ page) {
-  try {
-    // Only violations are read, so the passes are not built. A page with no frame in it is analyzed in the page itself
-    // (legacy mode): the partial-results route that reaches cross-origin frames takes 4x as long on a chart page.
-    const { violations } = await new AxeBuilder({ page })
-      .withTags([...WCAG_TAGS, "best-practice"])
-      .options({ resultTypes: ["violations"] })
-      .setLegacyMode(page.frames().length === 1)
-      .analyze();
-    return violations.map((/** @type {Page} */ v) => ({
-      id: v.id,
-      impact: v.impact,
-      tags: v.tags,
-      nodes: v.nodes.length,
-      target: v.nodes[0]?.target?.join(" ") ?? "",
-    }));
-  } catch (error) {
-    return { error: String(error).slice(0, 200) };
-  }
-}
-
-const isRange = (/** @type {Page} */ page) =>
-  page.evaluate(
-    () =>
-      /** @type {HTMLElement | null} */ (document.activeElement)?.matches?.("input[type=range]") ??
-      false,
-  );
-
-/** A hash of the pixels around a range input (the focused one, or with a key the one a Tab press tagged), scrolled to the middle. */
-async function rangePixels(/** @type {Page} */ page, key = -1) {
-  const box = await page.evaluate((/** @type {number} */ k) => {
-    const el =
-      k < 0 ? document.activeElement : document.querySelector('[data-devkit-tab="' + k + '"]');
-    if (!el) return null;
-    el.scrollIntoView({ block: "center" });
-    const r = el.getBoundingClientRect();
-    return {
-      x: Math.max(0, r.x - 8),
-      y: Math.max(0, r.y - 8),
-      width: r.width + 16,
-      height: r.height + 16,
-    };
-  }, key);
-  if (!box) return undefined;
-  await sleep(60);
-  const png = await page.screenshot({ clip: box }).catch(() => null);
-  return png ? createHash("sha1").update(png).digest("hex") : undefined;
-}
 
 /** Every Tab press from the top of the page: what took focus, how it looked, and what covered it. */
-export async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
+async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES) {
   await page.mouse.click(1, 1).catch(() => {});
   await page.evaluate(() => {
     for (const el of document.querySelectorAll("[data-devkit-tab]"))
@@ -310,7 +142,7 @@ export async function keyboardWalk(/** @type {Page} */ page, count = TAB_PRESSES
   );
 }
 
-export function reflow(/** @type {Page} */ page) {
+function reflow(/** @type {Page} */ page) {
   return page.evaluate(() => {
     const scrollWidth = document.documentElement.scrollWidth;
     const clientWidth = Math.min(innerWidth, document.documentElement.clientWidth);
@@ -342,7 +174,7 @@ export function reflow(/** @type {Page} */ page) {
 }
 
 /** The 720 px viewport that stands in for 200% zoom of a 1440 px window: sideways scroll, and a way to the navigation. */
-export function zoomProxy(/** @type {Page} */ page) {
+function zoomProxy(/** @type {Page} */ page) {
   return page.evaluate(() => {
     const visible = (/** @type {Element} */ el) => {
       const r = el.getBoundingClientRect();
@@ -372,7 +204,7 @@ export function zoomProxy(/** @type {Page} */ page) {
 }
 
 /** Up to ESCAPE_CONTROLS openers the walk reached: Enter opens it, Escape must close it and put focus back on it. */
-export async function escapeCloses(/** @type {Page} */ page) {
+async function escapeCloses(/** @type {Page} */ page) {
   const results = [];
   const url = page.url();
   for (const opener of (await page.$$("[data-devkit-opener]")).slice(0, ESCAPE_CONTROLS)) {
@@ -410,7 +242,7 @@ export async function escapeCloses(/** @type {Page} */ page) {
 }
 
 /** Elements whose text the WCAG 1.4.12 spacing pushes out of an overflow-hidden box that held it before. */
-export async function textSpacing(/** @type {Page} */ page) {
+async function textSpacing(/** @type {Page} */ page) {
   const clipped = () =>
     page.evaluate(() => {
       const hides = (/** @type {string} */ v) => v === "hidden" || v === "clip";
@@ -443,7 +275,7 @@ export async function textSpacing(/** @type {Page} */ page) {
   return after.filter((c) => !before.has(c.sel));
 }
 
-export async function motion(/** @type {Page} */ browser, /** @type {string} */ url) {
+async function motion(/** @type {Page} */ browser, /** @type {string} */ url) {
   const context = await browser.newContext({
     viewport: { width: 1440, height: 900 },
     reducedMotion: "reduce",
@@ -471,4 +303,67 @@ export async function motion(/** @type {Page} */ browser, /** @type {string} */ 
   } finally {
     await context.close();
   }
+}
+
+/** Every measurement of one page, in the shape judgeSite reads. */
+export async function scanPage(
+  /** @type {Page} */ browser,
+  /** @type {Page} */ AxeBuilder,
+  /** @type {{ url: string, why: string }} */ { url, why },
+) {
+  /** @type {Record<string, any>} */
+  const scan = { url, why };
+  // bypassCSP: a style-src 'self' policy would refuse the injected text spacing, as it refuses the bookmarklet.
+  const context = await browser.newContext({
+    viewport: { width: 1440, height: 900 },
+    colorScheme: "light",
+    bypassCSP: true,
+  });
+  await context.addInitScript(SELECTOR + STYLE);
+  try {
+    const page = await context.newPage();
+    scan.status = (await page.goto(url, { waitUntil: "load", timeout: 45_000 }))?.status();
+    await settle(page, 800);
+    scan.landed = page.url();
+    scan.basics = await basics(page);
+    scan.axe = {};
+    for (const view of VIEWS) {
+      await page.setViewportSize({ width: view.width, height: view.height });
+      await page.emulateMedia({ colorScheme: view.scheme });
+      await sleep(500);
+      scan.axe[`${view.width}-${view.scheme}`] = await axe(AxeBuilder, page);
+    }
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.emulateMedia({ colorScheme: "light" });
+    await sleep(400);
+    scan.clipped = await textSpacing(page);
+    scan.keyboard = await keyboardWalk(page);
+    await page.emulateMedia({ colorScheme: "light", forcedColors: "active" });
+    await sleep(400);
+    scan.forced = {
+      axe: await axe(AxeBuilder, page),
+      keyboard: await keyboardWalk(page, FORCED_PRESSES),
+    };
+    await page.emulateMedia({ colorScheme: "light", forcedColors: "none" });
+    await page.setViewportSize({ width: 320, height: 640 });
+    await sleep(500);
+    scan.reflow = await reflow(page);
+    await page.setViewportSize({ width: 720, height: 450 });
+    await sleep(500);
+    scan.zoom = await zoomProxy(page);
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await sleep(400);
+    scan.escape = await escapeCloses(page);
+    await context.close();
+    await sleep(PAUSE_MS);
+    scan.motion = await motion(browser, url);
+  } catch (error) {
+    scan.error = String(/** @type {Error} */ (error).message ?? error)
+      .split("\n")[0]
+      .slice(0, 200);
+  } finally {
+    await context.close().catch(() => {});
+  }
+  await sleep(PAUSE_MS);
+  return scan;
 }

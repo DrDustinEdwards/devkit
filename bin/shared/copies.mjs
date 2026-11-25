@@ -1,125 +1,181 @@
 import { posix } from "node:path";
-import {
-  PACKAGES,
-  FINGERPRINTS,
-  HEADERS_COPY,
-  CLAUDE_HOOKS,
-  LIBRARIES,
-  ALIASES,
-  BODY_ALIASES,
-  definitionBody,
-} from "./data.mjs";
-import {
-  DISTINCT_SINGLE,
-  COMMON_COMPOUND,
-  SOURCE,
-  NOT_SOURCE,
-  readManifest,
-  excused,
-} from "./config.mjs";
-/** @import { Finding, Tree, Config, Catalog } from "./config.mjs" */
+import { NOT_SOURCE, SOURCE, blankComments, excused, readManifest } from "./core.mjs";
 
-/** Export names from one module's source or declaration file. */
-export function exportNames(/** @type {string} */ src) {
-  const names = new Set();
-  for (const m of src.matchAll(
-    /export\s+(?:declare\s+)?(?:async\s+)?(?:function\*?|const|let|class)\s+([A-Za-z_$][\w$]*)/g,
-  ))
-    names.add(m[1]);
-  for (const m of src.matchAll(/export\s*\{([^}]*)\}/g)) {
-    for (const part of m[1].split(",")) {
-      const name = part
-        .trim()
-        .replace(/^type\s+/, "")
-        .split(/\s+as\s+/)
-        .pop();
-      if (name && !/^type\b/.test(part.trim())) names.add(name);
-    }
-  }
-  return [...names];
-}
+/** @typedef {import("./core.mjs").Config} Config */
+/** @typedef {import("./core.mjs").Finding} Finding */
+/** @typedef {import("./core.mjs").Tree} Tree */
+/** @typedef {import("./core.mjs").Catalog} Catalog */
+
+/** The shared packages: npm name, repository, and what a session should know them as. */
+export const PACKAGES = [
+  { name: "@drdustinedwards/site-helpers", repo: "prelum", label: "Prelum" },
+  { name: "@dustinedwards/site-runtime", repo: "site-runtime", label: "site-runtime" },
+  { name: "@dustinedwards/site-api", repo: "site-api", label: "site-api" },
+  { name: "@dustinedwards/d1-dump", repo: "d1-dump", label: "d1-dump" },
+  { name: "@dustinedwards/devkit", repo: "devkit", label: "devkit" },
+  { name: "capsomer", repo: "capsomer", label: "Capsomer" },
+  { name: "enarratio", repo: "enarratio", label: "Enarratio" },
+];
+
+/** Text only a shared builder should write. */
+const FINGERPRINTS = [
+  { find: /User-agent:/, use: "Prelum ./robots robotsDocument" },
+  { find: /<urlset\b/, use: "Prelum ./sitemap sitemapDocument" },
+  { find: /<rss\b|<feed xmlns=/, use: "Prelum ./feeds" },
+  { find: /api\.indexnow\.org/, use: "Prelum ./indexnow submitIndexNow" },
+  { find: /Contact: mailto:/, use: "site-runtime ./security-txt securityTxt" },
+  { find: /property[=:]\s*["']og:/, use: "Prelum ./head headTags" },
+  {
+    find: /["']Strict-Transport-Security["']\s*[:,]/,
+    use: "site-runtime ./headers buildSecurityHeaders",
+  },
+  // An inline rule set (it needs its own CSP allowance) or a site's own rules file or header.
+  {
+    find: /speculationrules|["']Speculation-Rules["']/,
+    use: "site-runtime ./prefetch speculationRules",
+  },
+  // Cloudflare Images called directly: the binding, or any .input(...).transform( chain.
+  {
+    find: /\bIMAGES\s*\.\s*input\s*\(|\.input\((?:[^()]|\([^()]*\))*\)\s*\.transform\s*\(/,
+    use: "site-runtime ./image",
+  },
+  // A Google Fonts stylesheet linked from a page: a render-blocking request to a second origin, then the files from a
+  // third. A server fetching a face (site-runtime ./share-card googleFont) names no href and passes.
+  {
+    find: /href\s*[:=]\s*\{?\s*["'`]https:\/\/fonts\.googleapis\.com\/css|@import\s+url\(\s*["']?https:\/\/fonts\.googleapis\.com/,
+    use: "self-hosted fonts (capsomer/fonts.css for the network's faces, Fontsource for a site's own)",
+  },
+  // A loader of its own: finding the marked elements, or importing a module from /islands/.
+  {
+    find: /querySelectorAll\(\s*["'`][^"'`]*\[data-island\b|import\(\s*[`"']\/islands\//,
+    use: "devkit ./islands startIslands",
+  },
+  // JSON-LD by hand: a script of that type filled by JSON.stringify in the same
+  // expression, or a node naming the context itself (Prelum's thing and graph add it).
+  {
+    find: /application\/ld\+json["'`][^;]{0,300}?JSON\.stringify\(|["']@context["']\s*:\s*["']https?:\/\/schema\.org\/?["']/,
+    use: "Prelum ./schema (thing, graph, jsonLd)",
+  },
+  // Head tags by hand: a Twitter card, or a canonical link (not a Link header's `>; rel="canonical"`).
+  {
+    find: /\bname\s*[=:]\s*["'`]twitter:|(?<![;>]\s*)\brel\s*[=:]\s*["'`]canonical["'`]/,
+    use: "Prelum ./head headTags",
+  },
+  // Bytes to hex: the toString(16).padStart(2, "0") ... join("") loop over bytes (a digest, random bytes), not a color's
+  // three channels, so only in a file that holds bytes.
+  {
+    also: /\bUint8Array\b|\bcrypto\.subtle\./,
+    find: /\.toString\(16\)\s*\.padStart\(\s*2\s*,\s*["'`]0["'`]\s*\)[^;]{0,60}?\.join\(\s*(?:""|''|``)\s*\)/,
+    use: "site-runtime ./encoding toHex (sha256Hex for a digest)",
+  },
+  // base64url: btoa(...) and then the + to - swap, in one statement.
+  { find: /\bbtoa\([^;]{0,200}?\.replace\(\s*\/\\\+\/g/, use: "site-runtime ./encoding base64url" },
+  // A constant-time compare of its own: OR-ing the XOR of two strings' or arrays' items.
+  {
+    find: /\|=\s*[\w$.]+\.charCodeAt\([^)]*\)\s*\^|\|=\s*[\w$.]+\[\w+\]\s*\^\s*[\w$.]+\[\w+\]/,
+    use: "site-runtime ./compare safeEqual",
+  },
+  // Server-side Turnstile and the Access localhost bypass: each belongs once, in site-runtime, beside the client and
+  // the verifier it goes with.
+  {
+    find: /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/,
+    use: "site-runtime ./turnstile",
+    say: "Turnstile's siteverify call is written here: it belongs in site-runtime ./turnstile, beside mountTurnstile",
+  },
+  {
+    find: /\bACCESS_DEV_BYPASS\b/,
+    use: "site-runtime ./access",
+    say: "ACCESS_DEV_BYPASS is a localhost way past Access written here: it belongs in site-runtime ./access, beside verifyAccessRequest",
+  },
+  // The pre-paint theme script: the stored choice read and set on the root before the page paints.
+  {
+    find: /localStorage\.getItem\([^)]{0,80}\)[^`]{0,300}?setAttribute\(\s*\\?["']data-theme/,
+    use: "Capsomer ./theme-server themeScript",
+  },
+  // React Router's template error boundary, never replaced.
+  {
+    find: /["'`]Oops!["'`]/,
+    use: "Capsomer",
+    say: "React Router's template ErrorBoundary (\"Oops!\") is still here: give the site its own error page, in Capsomer's empty state",
+  },
+];
+
+/** A security header set written into Cloudflare's static `_headers` (bsw's copy). */
+const HEADERS_COPY = {
+  find: /^[ \t]+(?:Strict-Transport-Security|X-Frame-Options|X-Content-Type-Options|Cross-Origin-Opener-Policy)\s*:/m,
+  use: "site-runtime ./headers buildSecurityHeaders",
+};
+
+/** The Claude Code hooks in devkit's claude/hooks, one copy for every repository. */
+export const CLAUDE_HOOKS = ["no-em-dash.sh", "scoped-git-add.sh"];
+
+/** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
+const LIBRARIES = [
+  {
+    find: /^(marked|markdown-it|micromark.*|remark.*|rehype.*|unified|mdast-util-.*|hast-util-.*)$/,
+    use: "Prelum ./render",
+  },
+  { find: /^mermaid$/, use: "Prelum ./render/diagram" },
+  { find: /^katex$/, use: "Prelum ./render/math" },
+  { find: /^(shiki|highlight\.js|prismjs)$/, use: "Prelum ./render/highlight" },
+  { find: /^(feed|rss|sitemap|xmlbuilder2?)$/, use: "Prelum ./feeds and ./sitemap" },
+  { find: /^(sanitize-html|dompurify|isomorphic-dompurify)$/, use: "Prelum ./render/safe" },
+  { find: /^jose$/, use: "site-runtime ./access and ./access-login" },
+];
 
 /**
- * Code without its comments, blanked rather than removed so line numbers hold. String and template literals are read as
- * strings and kept whole, so a `//` or `/*` inside one (a URL, a glob such as "src/*") is not a comment. A quote string
- * ends at its line, so a stray apostrophe (in a regular expression or a JSX text) cannot swallow the rest of the file.
+ * Local names for something a shared package exports under another name.
+ * @type {Readonly<Record<string, string>>}
  */
-export function blankComments(/** @type {string} */ text) {
-  const n = text.length;
-  const blank = (/** @type {string} */ s) => s.replace(/[^\n]/g, " ");
-  let out = "";
-  let depth = 0;
-  /** @type {number[]} brace depth at each open `${` */
-  const holes = [];
-  /** Reads template text from `from` to its closing backtick or the next `${`; where it stopped. */
-  const template = (/** @type {number} */ from) => {
-    let j = from;
-    while (j < n) {
-      if (text[j] === "\\") j += 2;
-      else if (text[j] === "`") {
-        j++;
-        break;
-      } else if (text[j] === "$" && text[j + 1] === "{") {
-        holes.push(depth++);
-        j += 2;
-        break;
-      } else j++;
-    }
-    j = Math.min(j, n);
-    out += text.slice(from, j);
-    return j;
-  };
-  for (let i = 0; i < n;) {
-    const c = text[i];
-    if (c === "/" && text[i + 1] === "*") {
-      const end = text.indexOf("*/", i + 2);
-      const stop = end < 0 ? n : end + 2;
-      out += blank(text.slice(i, stop));
-      i = stop;
-    } else if (c === "/" && text[i + 1] === "/") {
-      const end = text.indexOf("\n", i);
-      const stop = end < 0 ? n : end;
-      out += blank(text.slice(i, stop));
-      i = stop;
-    } else if (c === "/" && /(?:^|[(,=:[!&|?{};+\-*%<>~^]|\breturn)\s*$/.test(out.slice(-12))) {
-      // A regular expression literal: its quotes are not strings. No closing slash on the line makes it a division.
-      let j = i + 1;
-      let inClass = false;
-      while (j < n && text[j] !== "\n" && (inClass || text[j] !== "/")) {
-        if (text[j] === "\\") j++;
-        else if (text[j] === "[") inClass = true;
-        else if (text[j] === "]") inClass = false;
-        j++;
-      }
-      const stop = text[j] === "/" ? j + 1 : i + 1;
-      out += text.slice(i, stop);
-      i = stop;
-    } else if (c === '"' || c === "'") {
-      let j = i + 1;
-      while (j < n && text[j] !== c && text[j] !== "\n") j += text[j] === "\\" ? 2 : 1;
-      j = Math.min(j + (text[j] === c ? 1 : 0), n);
-      out += text.slice(i, j);
-      i = j;
-    } else if (c === "`") {
-      out += c;
-      i = template(i + 1);
-    } else {
-      if (c === "{") depth++;
-      else if (c === "}") {
-        depth--;
-        if (holes.length && holes.at(-1) === depth) {
-          holes.pop();
-          out += c;
-          i = template(i + 1);
-          continue;
-        }
-      }
-      out += c;
-      i++;
-    }
-  }
-  return out;
+const ALIASES = {
+  xmlEscape: "escapeXml",
+  escXml: "escapeXml",
+  escapeAttr: "escapeHtml",
+  bytesToHex: "toHex",
+  b64url: "base64url",
+  b64urlEncode: "base64url",
+  base64UrlEncode: "base64url",
+  parseThemeCookie: "readThemeCookie",
+  themeFromRequest: "readThemeCookie",
+  getThemeCookie: "readThemeCookie",
+  serializeThemeCookie: "themeCookie",
+  buildSecurityTxt: "securityTxt",
+  bytesToBase64: "toBase64",
+  base64ToBytes: "fromBase64",
+};
+
+/**
+ * Aliases that are also ordinary names (a Markdown `esc`, a KB path's `slugOf`, a color's `hex`), so a definition counts
+ * only when its body does the shared export's job.
+ * @type {Record<string, { target: string, body: RegExp }>}
+ */
+const BODY_ALIASES = {
+  sha256Of: { target: "sha256Hex", body: /subtle\.digest\(/ },
+  hashToken: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashMcpToken: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  hashRecipient: { target: "sha256Hex", body: /subtle\.digest\(\s*["'`]SHA-256/ },
+  generateSlug: { target: "slugify", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  slugOf: { target: "slugify", body: /toLowerCase\(\)[\s\S]*\.replace\(/ },
+  esc: { target: "escapeHtml", body: /&(?:amp|lt|quot);|&#/ },
+  attr: { target: "escapeHtml", body: /&(?:amp|lt|quot);|&#/ },
+  hex: { target: "toHex", body: /toString\(16\)\s*\.padStart\(\s*2\b/ },
+  b64: { target: "toBase64", body: /\bbtoa\(/ },
+};
+
+/** A definition's text: its first line and every line after it indented deeper, so a function's body or one arrow. */
+function definitionBody(/** @type {string} */ text, /** @type {number} */ start) {
+  const lines = text.slice(start, start + 2000).split("\n");
+  const indent = /^[ \t]*/.exec(lines[0])?.[0].length ?? 0;
+  const end = lines.findIndex(
+    (l, i) => i > 0 && l.trim() !== "" && (/^[ \t]*/.exec(l)?.[0].length ?? 0) <= indent,
+  );
+  return lines.slice(0, end < 0 ? undefined : end).join("\n");
 }
+
+// Single words too common to flag on name alone; compound names (escapeHtml, jsonLd) are distinctive, except these.
+const DISTINCT_SINGLE = new Set(["slugify"]);
+
+const COMMON_COMPOUND = new Set(["accessToken", "cacheKey"]);
 
 /** Whether a name is distinctive enough to flag a local definition of it. */
 export function distinctive(/** @type {string} */ name) {

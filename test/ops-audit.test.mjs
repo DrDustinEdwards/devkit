@@ -4,17 +4,15 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { bindingFindings, configBindings, parseJsonc } from "../bin/ops-audit/bindings.mjs";
 import {
-  bindingFindings,
-  configBindings,
   drillFindings,
   explicit404Findings,
-  maintenanceFindings,
   healthFindings,
+  maintenanceFindings,
   notFoundFindings,
-  parseJsonc,
   shaFindings,
-} from "../bin/ops-audit/findings.mjs";
+} from "../bin/ops-audit/probes.mjs";
 
 const url = "https://example.com/health";
 const read = (body, extra = {}) => ({

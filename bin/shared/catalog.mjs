@@ -1,11 +1,12 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { PACKAGES, FEATURES, ASSET_CACHE, BACKUP, EMAIL, CLAUDE_HOOKS } from "./data.mjs";
-import { ADVISORIES } from "./advisories.mjs";
-import { exportNames } from "./copies.mjs";
-import { LINT_SCRIPT, FORMAT_CHECK_SCRIPT } from "./lint.mjs";
+import { CLAUDE_HOOKS, PACKAGES } from "./copies.mjs";
+import { exportNames } from "./core.mjs";
+import { ADVISORIES, ASSET_CACHE, BACKUP, EMAIL, FEATURES } from "./features.mjs";
+import { FORMAT_CHECK_SCRIPT, LINT_SCRIPT } from "./workflows.mjs";
 import { JOBS, OTHER_JOBS } from "./jobs.mjs";
-/** @import { Catalog } from "./config.mjs" */
+
+/** @typedef {import("./core.mjs").Catalog} Catalog */
 
 /**
  * The export catalog: every installed shared package's subpaths and the names each exports.
@@ -146,4 +147,18 @@ export function listMarkdown(/** @type {ReturnType<typeof readCatalog>["packages
       );
   }
   return `${lines.join("\n")}\n`;
+}
+
+/** Each located shared package's peer dependencies. @param {(name: string, repo: string) => string | null} locate */
+export function peersOf(locate) {
+  /** @type {Record<string, string[]>} */
+  const peers = {};
+  for (const p of PACKAGES) {
+    const dir = locate(p.name, p.repo);
+    if (dir)
+      peers[p.name] = Object.keys(
+        JSON.parse(readFileSync(join(dir, "package.json"), "utf8")).peerDependencies ?? {},
+      );
+  }
+  return peers;
 }

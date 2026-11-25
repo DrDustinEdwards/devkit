@@ -1,7 +1,10 @@
 import { execFileSync } from "node:child_process";
 import { posix } from "node:path";
-import { SOURCE, NOT_SOURCE, semver, compare } from "./config.mjs";
-/** @import { Finding, Tree, TagReader } from "./config.mjs" */
+import { compare, mcpServerDirs, semver } from "./core.mjs";
+
+/** @typedef {import("./core.mjs").Finding} Finding */
+/** @typedef {import("./core.mjs").Tree} Tree */
+/** @typedef {import("./core.mjs").TagReader} TagReader */
 
 /** The newest release tag of a repository. */
 function newest(/** @type {string[]} */ tags) {
@@ -37,6 +40,7 @@ export function lsRemoteTags(/** @type {string} */ repo) {
  * more in, so it fails once a newer minor has been out two days.
  */
 export const FRESH = /** @type {Record<string, number>} */ ({ "site-runtime": 3, devkit: 2 });
+
 export const DAY_MS = 86_400_000;
 
 /**
@@ -92,11 +96,11 @@ export function checkPins(tree, readTags, dates = {}, now = Date.now()) {
   const found = [];
   /** @type {Record<string, ReturnType<TagReader>>} */
   const cache = {};
-  const tagsOf = (/** @type {string} */ repo) => (cache[repo] ??= readTags(repo));
+  const releaseTags = (/** @type {string} */ repo) => (cache[repo] ??= readTags(repo));
   const servers = mcpServerDirs(tree);
   /** @param {string} file @param {number} line @param {string} repo @param {string} ref */
   const judge = (file, line, repo, ref, what = repo) => {
-    const { tags, commits } = tagsOf(repo);
+    const { tags, commits } = releaseTags(repo);
     const latest = newest(tags);
     if (!latest) return;
     const at = semver(ref)
@@ -253,23 +257,4 @@ function minorsBehind(at, latest) {
   const [x, y] = [semver(at), semver(latest)];
   if (!x || !y) return 0;
   return x[0] < y[0] ? Infinity : Math.max(0, y[1] - x[1]);
-}
-
-/** A source file that serves MCP through the shared door. */
-const MCP_SERVER = /["']@dustinedwards\/site-runtime\/mcp-(?:server|login)["']/;
-
-/** The directories of the package.json files whose code serves MCP: each server file belongs to its nearest manifest. */
-export function mcpServerDirs(/** @type {Tree} */ tree) {
-  const manifests = tree.files
-    .filter((f) => posix.basename(f) === "package.json" && !NOT_SOURCE.test(f))
-    .map((f) => posix.dirname(f));
-  const dirs = new Set();
-  for (const file of tree.files) {
-    if (!SOURCE.test(file) || NOT_SOURCE.test(file) || !MCP_SERVER.test(tree.read(file))) continue;
-    const owner = manifests
-      .filter((d) => d === "." || file.startsWith(`${d}/`))
-      .sort((a, b) => b.length - a.length)[0];
-    if (owner) dirs.add(owner);
-  }
-  return dirs;
 }

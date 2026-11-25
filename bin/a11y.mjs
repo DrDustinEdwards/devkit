@@ -26,89 +26,45 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { annotation, judgeSite, pickPages } from "./a11y-judge.mjs";
-import {
-  VIEWS,
-  FORCED_PRESSES,
-  PAUSE_MS,
-  sleep,
-  SELECTOR,
-  STYLE,
-  load,
-  fetchText,
-  sitemapUrls,
-  settle,
-  basics,
-  axe,
-  keyboardWalk,
-  reflow,
-  zoomProxy,
-  escapeCloses,
-  textSpacing,
-  motion,
-} from "./a11y/probes.mjs";
-/** @import { Page } from "./a11y/probes.mjs" */
+import { locs } from "./warm.mjs";
+import { load } from "./a11y/page.mjs";
+import { scanPage } from "./a11y/checks.mjs";
 
-/** Every measurement of one page, in the shape judgeSite reads. */
-async function scanPage(
-  /** @type {Page} */ browser,
-  /** @type {Page} */ AxeBuilder,
-  /** @type {{ url: string, why: string }} */ { url, why },
-) {
-  /** @type {Record<string, any>} */
-  const scan = { url, why };
-  // bypassCSP: a style-src 'self' policy would refuse the injected text spacing, as it refuses the bookmarklet.
-  const context = await browser.newContext({
-    viewport: { width: 1440, height: 900 },
-    colorScheme: "light",
-    bypassCSP: true,
-  });
-  await context.addInitScript(SELECTOR + STYLE);
+/** @typedef {import("./a11y/page.mjs").Page} Page */
+
+async function fetchText(/** @type {string} */ url) {
   try {
-    const page = await context.newPage();
-    scan.status = (await page.goto(url, { waitUntil: "load", timeout: 45_000 }))?.status();
-    await settle(page, 800);
-    scan.landed = page.url();
-    scan.basics = await basics(page);
-    scan.axe = {};
-    for (const view of VIEWS) {
-      await page.setViewportSize({ width: view.width, height: view.height });
-      await page.emulateMedia({ colorScheme: view.scheme });
-      await sleep(500);
-      scan.axe[`${view.width}-${view.scheme}`] = await axe(AxeBuilder, page);
-    }
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await page.emulateMedia({ colorScheme: "light" });
-    await sleep(400);
-    scan.clipped = await textSpacing(page);
-    scan.keyboard = await keyboardWalk(page);
-    await page.emulateMedia({ colorScheme: "light", forcedColors: "active" });
-    await sleep(400);
-    scan.forced = {
-      axe: await axe(AxeBuilder, page),
-      keyboard: await keyboardWalk(page, FORCED_PRESSES),
-    };
-    await page.emulateMedia({ colorScheme: "light", forcedColors: "none" });
-    await page.setViewportSize({ width: 320, height: 640 });
-    await sleep(500);
-    scan.reflow = await reflow(page);
-    await page.setViewportSize({ width: 720, height: 450 });
-    await sleep(500);
-    scan.zoom = await zoomProxy(page);
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await sleep(400);
-    scan.escape = await escapeCloses(page);
-    await context.close();
-    await sleep(PAUSE_MS);
-    scan.motion = await motion(browser, url);
+    const response = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(30_000) });
+    return { status: response.status, text: response.ok ? await response.text() : "" };
   } catch (error) {
-    scan.error = String(/** @type {Error} */ (error).message ?? error)
-      .split("\n")[0]
-      .slice(0, 200);
-  } finally {
-    await context.close().catch(() => {});
+    return { status: 0, text: "", error: /** @type {Error} */ (error).message };
   }
-  await sleep(PAUSE_MS);
-  return scan;
+}
+
+/** The sitemap's URLs (a sitemap index followed to its first five children), moved from origin to base. */
+async function sitemapUrls(/** @type {string} */ origin, /** @type {string} */ base) {
+  // Same origin by the parsed URL, not by prefix: https://example.com.evil.test starts with https://example.com.
+  const same = (/** @type {string} */ url) => {
+    try {
+      return new URL(url).origin === new URL(origin).origin;
+    } catch {
+      return false;
+    }
+  };
+  const move = (/** @type {string} */ url) => {
+    const u = new URL(url);
+    return base + u.pathname + u.search;
+  };
+  const { text } = await fetchText(`${base}/sitemap.xml`);
+  if (!/<sitemapindex/i.test(text)) return locs(text).filter(same).map(move);
+  const urls = [];
+  for (const child of locs(text).filter(same).slice(0, 5))
+    urls.push(
+      ...locs((await fetchText(move(child))).text)
+        .filter(same)
+        .map(move),
+    );
+  return urls;
 }
 
 /** The checklist items a run measures, each reported not measured when no page could be scanned at all. */
@@ -158,7 +114,7 @@ function installedBuilds() {
   return candidates.filter((path) => existsSync(path));
 }
 
-async function main() {
+export async function main() {
   const { values } = parseArgs({
     options: {
       origin: { type: "string" },

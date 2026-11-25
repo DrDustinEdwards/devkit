@@ -32,9 +32,9 @@ on:
     - cron: "23 6 * * *"
   push:
     branches: [main]
-    paths: ["live/**", "bin/live.mjs", "bin/live/**", "bin/copies.mjs", "bin/copies/**"]
+    paths: ["live/**", "bin/live.mjs", "bin/live/**", "bin/copies.mjs"]
   pull_request:
-    paths: ["live/copies.json", "bin/copies.mjs", "bin/copies/**", ".github/workflows/live.yml"]
+    paths: ["live/copies.json", "bin/copies.mjs", ".github/workflows/live.yml"]
   workflow_dispatch:
 
 concurrency:

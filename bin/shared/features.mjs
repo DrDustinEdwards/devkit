@@ -1,17 +1,201 @@
 import { posix } from "node:path";
-import { FEATURES, HASHED_DIRS, ASSET_CACHE, cachesHashed, BACKUP, EMAIL } from "./data.mjs";
-import { ADVISORIES } from "./advisories.mjs";
-import { SOURCE, NOT_SOURCE, readManifest, excused } from "./config.mjs";
-/** @import { Finding, Tree, Config } from "./config.mjs" */
+import {
+  NOT_SOURCE,
+  PUBLIC_OR_PRIVATE,
+  SITE,
+  SOURCE,
+  blankComments,
+  callWithKey,
+  excused,
+  ownerOf,
+  readManifest,
+} from "./core.mjs";
 
-/** Which app a file belongs to: the deepest app directory that holds it. @param {[string, string][]} apps */
-export function ownerOf(apps) {
-  return (/** @type {string} */ file) =>
-    apps
-      .map(([dir]) => dir)
-      .filter((dir) => dir === "." || file === dir || file.startsWith(`${dir}/`))
-      .sort((a, b) => b.length - a.length)[0];
+/** @typedef {import("./core.mjs").Config} Config */
+/** @typedef {import("./core.mjs").Finding} Finding */
+/** @typedef {import("./core.mjs").Tree} Tree */
+
+/** Every shared feature: which kinds of app need it, how its use is found, and what provides it. */
+export const FEATURES = {
+  robots: {
+    kinds: SITE,
+    find: /site-helpers\/robots["']/,
+    use: "Prelum ./robots robotsDocument (/robots.txt)",
+  },
+  aiTxt: {
+    kinds: SITE,
+    // standardFiles serves ai.txt when it is given `ai`.
+    find: {
+      test: (/** @type {string} */ text) =>
+        /\baiTxt(Response)?\b/.test(text) || callWithKey(text, "standardFiles", "ai"),
+    },
+    use: "Prelum ./robots aiTxt or aiTxtResponse (/ai.txt), or ./files standardFiles with `ai`",
+  },
+  tdm: {
+    kinds: SITE,
+    find: /\bTDM_RESERVATION_HEADERS\b/,
+    use: "Prelum ./robots TDM_RESERVATION_HEADERS",
+  },
+  sitemap: {
+    kinds: SITE,
+    find: /site-helpers\/sitemap["']/,
+    use: "Prelum ./sitemap sitemapDocument (/sitemap.xml)",
+  },
+  llms: {
+    kinds: SITE,
+    find: /site-helpers\/llms["']/,
+    use: "Prelum ./llms llmsDocument (/llms.txt)",
+  },
+  head: {
+    kinds: SITE,
+    find: /site-helpers\/head["']/,
+    use: "Prelum ./head headTags (canonical, Open Graph, Twitter)",
+  },
+  schema: { kinds: SITE, find: /site-helpers\/schema["']/, use: "Prelum ./schema (JSON-LD)" },
+  indexnow: {
+    kinds: SITE,
+    // site-api's standardSiteApi sends IndexNow when it is given `indexNow`.
+    find: {
+      test: (/** @type {string} */ text) =>
+        /site-helpers\/indexnow["']|prelum-indexnow/.test(text) ||
+        callWithKey(text, "standardSiteApi", "indexNow"),
+    },
+    use: "Prelum ./indexnow submitIndexNow (site-api indexNowHook on a Carrel site; prelum-indexnow after a static deploy)",
+  },
+  securityTxt: {
+    kinds: SITE,
+    // site-runtime ./worker's gateway answers /.well-known/security.txt on every site.
+    find: /site-runtime\/(security-txt|worker)["']/,
+    use: "site-runtime ./security-txt (/.well-known/security.txt), or ./worker's gateway",
+  },
+  // A registry entry (./sites) counts for both: staticSite({ site }) and site-runtime-headers build a static site's set
+  // and page policy from it with buildSecurityHeaders and buildContentSecurityPolicy.
+  headers: {
+    kinds: [...PUBLIC_OR_PRIVATE, "worker"],
+    find: /site-runtime\/(headers|sites)["']|\bwithMcpHeaders\b/,
+    use: "site-runtime ./headers buildSecurityHeaders (or a ./sites entry given to ./static-site staticSite)",
+  },
+  csp: {
+    kinds: PUBLIC_OR_PRIVATE,
+    find: /site-runtime\/(csp|sites)["']/,
+    use: "site-runtime ./csp buildContentSecurityPolicy (or a ./sites entry given to ./static-site staticSite)",
+  },
+  cspReport: {
+    kinds: PUBLIC_OR_PRIVATE,
+    find: /site-runtime\/(csp-report|static-site|worker)["']/,
+    use: "site-runtime ./csp-report receiveCspReport (./worker's gateway and ./static-site staticSite receive them)",
+  },
+  health: {
+    kinds: ["site", "private"],
+    find: /site-runtime\/health["']/,
+    use: "site-runtime ./health healthResponse (/health)",
+  },
+  // base.css, not just a token file: the element styles every page in the network shares. A build that copies it out of the
+  // package (require.resolve("capsomer/package.json"), then "css/base.css") counts, and so does Capsomer's own build
+  // helper, whose capsomerStylesheet always writes base.css (Carrel's www, Prelum's specimen, Capsid's explorer).
+  capsomer: {
+    kinds: PUBLIC_OR_PRIVATE,
+    find: /["']capsomer\/base\.css["']|["']capsomer\/package\.json["'][^]{0,400}?["']css\/base\.css["']|\bimport\s*\{[^{}]*\bcapsomerStylesheet\b[^{}]*\}\s*from\s*["']capsomer\/build["']/,
+    use: "Capsomer's capsomer/base.css (tokens, element styles, the site layer), then its components",
+  },
+};
+
+/**
+ * A React Router app on Workers Assets serves its built files from the assets layer, which sends them with
+ * `max-age=0, must-revalidate` unless the app's `_headers` says otherwise, so every page load revalidates every file.
+ * Vite and siteScript name each one by its content, so a year, immutable, is safe for the hashed directories.
+ */
+const HASHED_DIRS = [
+  { dir: "/assets/*", needed: () => true },
+  { dir: "/islands/*", needed: (/** @type {string} */ text) => /devkit\/islands["']/.test(text) },
+];
+
+export const ASSET_CACHE = {
+  use: "public/_headers: Cache-Control: public, max-age=31536000, immutable",
+};
+
+/** Whether a `_headers` text gives `dir` a Cache-Control with immutable. */
+function cachesHashed(/** @type {string} */ headers, /** @type {string} */ dir) {
+  const blocks = headers.split(/\r?\n(?=\S)/);
+  return blocks.some(
+    (b) => b.split(/\r?\n/)[0].trim() === dir && /^\s+Cache-Control:[^\n]*\bimmutable\b/im.test(b),
+  );
 }
+
+/** A D1 database needs the nightly dump, whatever the kind. */
+export const BACKUP = {
+  find: /@dustinedwards\/d1-dump["']/,
+  use: "d1-dump runCheckedBackup and backupHealth",
+};
+
+export const EMAIL = {
+  find: /@dustinedwards\/site-runtime\/email["']/,
+  use: "site-runtime ./email sendEmail",
+};
+
+/**
+ * Family features found by a heuristic, so they warn instead of failing: each is a function of the app's files that
+ * answers what is missing, or null. `.shared.json` "waive" silences one by its name, as it does a feature.
+ * @type {Record<string, { kinds: string[], use: string, missing: (app: { files: string[], text: string, read: (f: string) => string }) => string | null }>}
+ */
+export const ADVISORIES = {
+  // An accessibility test of its own pages: Capsomer's axe helpers or axe-core, in a test or a browser check script.
+  a11y: {
+    kinds: PUBLIC_OR_PRIVATE,
+    use: "capsomer/testing expectNoAxeViolations (or @axe-core) in a browser test",
+    missing: ({ files, read }) =>
+      files.some(
+        (f) =>
+          SOURCE.test(f) &&
+          /["'](?:capsomer\/testing|@axe-core\/[^"']+|axe-core(?:\/[^"']*)?)["']/.test(read(f)),
+      )
+        ? null
+        : "no accessibility test",
+  },
+  // An admin, login or console page kept out of search: some file that names the route also says noindex (the route,
+  // its layout, a Worker rule or a _headers block).
+  noindex: {
+    kinds: SITE,
+    use: "a robots noindex meta or X-Robots-Tag: noindex on each admin, login, signin or console route",
+    missing: ({ files, read }) => {
+      const names = new Set(
+        files.map((f) => ADMIN_ROUTE.exec(f)?.[1]).filter((n) => n !== undefined),
+      );
+      const sayers = files.filter(
+        (f) =>
+          ((SOURCE.test(f) && !NOT_SOURCE.test(f)) || posix.basename(f) === "_headers") &&
+          /noindex/i.test(read(f)),
+      );
+      const bare = [...names].filter(
+        (n) =>
+          !sayers.some(
+            (f) =>
+              ADMIN_ROUTE.exec(f)?.[1] === n ||
+              new RegExp(`(?:^|["'\`])/${n}\\b`, "m").test(read(f)),
+          ),
+      );
+      return bare.length ? `${bare.map((n) => `/${n}`).join(", ")} without noindex` : null;
+    },
+  },
+  // A feed a reader can find from the page: a rel="alternate" link of the feed's type, in code, not a comment.
+  feedLink: {
+    kinds: SITE,
+    use: '`<link rel="alternate" type="application/rss+xml">` (or atom, or feed+json) in the head',
+    missing: ({ text }) =>
+      /\b(?:rssDocument|atomDocument|jsonFeedDocument)\b|["'`]Content-Type["'`]\s*:\s*["'`]application\/(?:rss|atom)\+xml/.test(
+        text,
+      ) &&
+      !/\brel\s*[=:]\s*["'`]alternate["'`][^>{}]{0,200}?application\/(?:rss\+xml|atom\+xml|feed\+json)|application\/(?:rss\+xml|atom\+xml|feed\+json)["'`][^>{}]{0,200}?\brel\s*[=:]\s*["'`]alternate/.test(
+        blankComments(text),
+      )
+        ? "a feed and no alternate link to it"
+        : null,
+  },
+};
+
+/** A route file for a page search should not list, and which one (admin, login, signin, sign-in or console). */
+const ADMIN_ROUTE =
+  /(?:^|\/)routes\/(?:[^/]*\/)*(?:[^/]*\.)?(admin|login|signin|sign-in|console)(?=[./_$-])/;
 
 /**
  * Family features each app is missing for its kind.
@@ -152,6 +336,3 @@ export function checkFeatures(tree, config, now = Date.now()) {
   }
   return found;
 }
-
-/** A wrangler config: the app it sits in is a Worker. */
-export const WRANGLER = /(^|\/)wrangler[^/]*\.(jsonc?|toml)(\.example)?$/;

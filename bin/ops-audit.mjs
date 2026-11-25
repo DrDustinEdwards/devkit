@@ -29,114 +29,26 @@
 // 2 when it could not run at all: the site answered nothing. N6 asks for the shared error page: the 404 is HTML with a
 // <title> and Capsomer's ErrorPage region (class `cap-error-page`, ERROR_PAGE_MARKER).
 
+import { isMain } from "../node/index.mjs";
 import { randomUUID } from "node:crypto";
 import { parseArgs } from "node:util";
 import { escapeAnnotation, escapeProperty } from "./annotate.mjs";
-import { isMain } from "../node/index.mjs";
 import {
-  TIMEOUT_MS,
-  OUTAGE,
-  WRANGLER_FILES,
+  drillFindings,
+  explicit404Findings,
   finding,
   healthFindings,
-  notFoundFindings,
-  explicit404Findings,
   maintenanceFindings,
-  parseJsonc,
-  configBindings,
-  bindingFindings,
+  notFoundFindings,
   shaFindings,
-  drillFindings,
-} from "./ops-audit/findings.mjs";
-/** @import { Finding, Unread } from "./ops-audit/findings.mjs" */
+} from "./ops-audit/probes.mjs";
+import { github, isRead, read } from "./ops-audit/net.mjs";
+import { bindingCheck } from "./ops-audit/bindings.mjs";
 
-/** A read with a timeout and no redirect followed; the error instead of a throw. @param {string} url */
-async function read(url, accept = "*/*") {
-  try {
-    const response = await fetch(url, {
-      redirect: "manual",
-      headers: { accept, "user-agent": "devkit-ops-audit" },
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
-    const body = await response.text();
-    const header = (/** @type {string} */ name) => response.headers.get(name) ?? "";
-    return {
-      url,
-      status: response.status,
-      contentType: header("content-type"),
-      cacheControl: header("cache-control"),
-      robots: header("x-robots-tag"),
-      location: header("location"),
-      retryAfter: header("retry-after"),
-      body,
-    };
-  } catch (error) {
-    return {
-      url,
-      error:
-        error instanceof Error
-          ? error.cause instanceof Error
-            ? error.cause.message
-            : error.message
-          : String(error),
-    };
-  }
-}
+/** @typedef {import("./ops-audit/probes.mjs").Finding} Finding */
+/** @typedef {import("./ops-audit/probes.mjs").Unread} Unread */
 
-/** One GitHub REST read; the parsed body, or the reason it could not be read. @param {string} path */
-async function github(path) {
-  const headers = {
-    accept: "application/vnd.github+json",
-    "user-agent": "devkit-ops-audit",
-    ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
-  };
-  try {
-    const response = await fetch(`https://api.github.com${path}`, {
-      headers,
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
-    if (!response.ok)
-      return { status: response.status, error: `GitHub answered ${response.status} for ${path}` };
-    return { status: response.status, body: await response.json() };
-  } catch (error) {
-    return {
-      status: 0,
-      error: `GitHub did not answer for ${path}: ${error instanceof Error ? error.message : String(error)}`,
-    };
-  }
-}
-
-/**
- * One file from a repository at a ref: its text, null when there is no such file, or the reason it could not be read.
- * @param {string} repo @param {string} path @param {string} ref
- * @returns {Promise<{ text: string | null, error?: undefined } | { error: string, text?: undefined }>}
- */
-async function githubFile(repo, path, ref) {
-  const headers = {
-    accept: "application/vnd.github.raw+json",
-    "user-agent": "devkit-ops-audit",
-    ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
-  };
-  const where = `/repos/${repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(ref)}`;
-  try {
-    const response = await fetch(`https://api.github.com${where}`, {
-      headers,
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
-    if (response.status === 404) return { text: null };
-    if (!response.ok) return { error: `GitHub answered ${response.status} for ${where}` };
-    return { text: await response.text() };
-  } catch (error) {
-    return {
-      error: `GitHub did not answer for ${where}: ${error instanceof Error ? error.message : String(error)}`,
-    };
-  }
-}
-
-const isRead = (/** @type {any} */ r) =>
-  !r.error && !(OUTAGE.has(r.status) && !/json/i.test(r.contentType));
-
-async function main() {
+export async function main() {
   const { values } = parseArgs({
     options: {
       origin: { type: "string" },
@@ -335,76 +247,6 @@ async function main() {
     `${errors} errors, ${findings.length - errors} warnings, ${unread.length} not measured on ${base}.`,
   );
   process.exit(errors ? 1 : unread.length ? 3 : 0);
-}
-
-/**
- * H5 against the repository: reads the wrangler config (the named one, else the first root config that exists) and the
- * `.ops-audit.json` beside it, and compares the bindings with /health's checks.
- * @param {{ repo: string, branch: string, path?: string, health: any, healthUrl: string, findings: Finding[], unread: Unread[], say: (line: string) => void }} run
- */
-async function bindingCheck({ repo, branch, path, health, healthUrl, findings, unread: all, say }) {
-  const unread = {
-    push: (/** @type {string} */ reason) =>
-      all.push({ item: "H5", url: `https://github.com/${repo}`, reason }),
-  };
-  let file = path;
-  let text = null;
-  for (const candidate of path ? [path] : WRANGLER_FILES) {
-    const read = await githubFile(repo, candidate, branch);
-    if (read.error !== undefined)
-      return (void unread.push(read.error), say(`bindings: ${read.error}`));
-    if (read.text !== null) {
-      file = candidate;
-      text = read.text;
-      break;
-    }
-  }
-  const configUrl = `https://github.com/${repo}/blob/${branch}/${file ?? ""}`;
-  if (text === null || !file) {
-    if (path) unread.push(`${repo} has no ${path} on ${branch}`);
-    say(
-      path
-        ? `bindings: ${repo} has no ${path}`
-        : `bindings: no wrangler config at the root of ${repo} (${WRANGLER_FILES.join(", ")}); name it with --wrangler`,
-    );
-    if (!path) unread.push(`no wrangler config at the root of ${repo}`);
-    return;
-  }
-  let bindings;
-  try {
-    bindings = configBindings(parseJsonc(text));
-  } catch (error) {
-    unread.push(
-      `${configUrl} is not JSON or JSONC: ${error instanceof Error ? error.message : String(error)}`,
-    );
-    return;
-  }
-  const dir = file.includes("/") ? file.slice(0, file.lastIndexOf("/") + 1) : "";
-  const extra = await githubFile(repo, `${dir}.ops-audit.json`, branch);
-  if (extra.error !== undefined) return void unread.push(extra.error);
-  let exempt = {};
-  if (extra.text !== null) {
-    try {
-      exempt = JSON.parse(extra.text) ?? {};
-    } catch {
-      findings.push(
-        finding(
-          "error",
-          "H5",
-          `https://github.com/${repo}/blob/${branch}/${dir}.ops-audit.json`,
-          ".ops-audit.json is not JSON",
-        ),
-      );
-    }
-  }
-  const checks = Array.isArray(health?.checks)
-    ? health.checks.filter((/** @type {any} */ c) => typeof c?.name === "string")
-    : [];
-  say(
-    `bindings: ${file} declares ${bindings.length ? bindings.map((b) => b.name).join(", ") : "none /health can probe"}; /health checks ${checks.map((/** @type {any} */ c) => c.name).join(", ") || "nothing"}${extra.text !== null ? `; ${dir}.ops-audit.json read` : ""}`,
-  );
-  if (!health) return;
-  findings.push(...bindingFindings({ url: healthUrl, configUrl, bindings, checks, exempt }));
 }
 
 // Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.

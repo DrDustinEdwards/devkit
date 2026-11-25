@@ -66,10 +66,11 @@ import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { escapeAnnotation } from "./annotate.mjs";
 import { isMain } from "../node/index.mjs";
-import { live, readJsonFile, loadConfig, lintConfig } from "./live/config.mjs";
-import { runAll } from "./live/runner.mjs";
-import { buildBoard, boardMarkdown } from "./live/board.mjs";
-/** @import { Json } from "./live/config.mjs" */
+import { lintConfig, live, loadConfig, readJsonFile } from "./live/config.mjs";
+import { runAll } from "./live/run.mjs";
+import { boardMarkdown, buildBoard } from "./live/board.mjs";
+
+/** @typedef {import("./live/config.mjs").Json} Json */
 
 /** The runs in a directory; a file that is not a run is skipped with a warning, never the end of the board. */
 function readRuns(/** @type {string} */ dir) {

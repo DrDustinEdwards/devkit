@@ -1,28 +1,41 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { pathToFileURL } from "node:url";
-import { GRANT_ENV } from "./runner.mjs";
 
 /** @typedef {Record<string, any>} Json A site, area, check, verdict, run or cell: JSON the config and the runs hold. */
 
 export const CLEAN_DAYS = 7;
+
 export const OWNER = "DrDustinEdwards";
+
 const KINDS = ["site", "static", "worker", "app"];
+
 const VERDICTS = ["complete", "partial", "missing"];
+
 export const MAX_FINDINGS = 100;
+
 export const CHECK_TIMEOUT_MS = 20 * 60_000;
+
 export const PARALLEL = 4;
+
 export const REPORT_MAX_AGE_MINUTES = 60;
+
 export const STATUSES = ["pass", "fail", "unmeasured"];
+
 export const MAX_OUTPUT = 5 * 1024 * 1024;
+
 export const MAX_REPORT = 2 * 1024 * 1024;
+
 /** The longest a rate-limited GitHub read waits before it gives up and the area's lines are unmeasured. */
 export const MAX_RATE_WAIT_MS = 60_000;
+
 /** The detail an unmeasured item's ::notice line starts with. */
 export const UNMEASURED_PREFIX = "could not measure: ";
+
 /** A check's exit when nothing failed but something could not be measured (Monitoring Plugins' UNKNOWN). */
 export const EXIT_UNMEASURED = 3;
 
 export const live = new URL("../../live/", import.meta.url);
+
 export const readJsonFile = (/** @type {string | URL} */ path) =>
   JSON.parse(readFileSync(path, "utf8"));
 
@@ -250,3 +263,6 @@ export const checksFor = (/** @type {Json} */ area, /** @type {Json} */ site) =>
     .map((/** @type {Json} */ check) =>
       check.site_reports?.[site.id] ? { ...check, report: check.site_reports[site.id] } : check,
     );
+
+/** The MCP test grants' variables: one read-only key per MCP server, for the checks marked "grants": true alone. */
+const GRANT_ENV = /^MCP_TEST_GRANT_/;

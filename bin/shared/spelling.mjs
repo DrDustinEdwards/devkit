@@ -1,8 +1,10 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, posix } from "node:path";
-import { used } from "./config.mjs";
-/** @import { Finding, Config } from "./config.mjs" */
+import { used } from "./core.mjs";
+
+/** @typedef {import("./core.mjs").Config} Config */
+/** @typedef {import("./core.mjs").Finding} Finding */
 
 /**
  * One British word rewritten the American way in a line, keeping its case: inside a camelCase or CONSTANT_CASE name too

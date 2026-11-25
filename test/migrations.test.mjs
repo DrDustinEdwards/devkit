@@ -15,7 +15,7 @@ import {
   readBookmark,
   pendingBlockers,
   readPending,
-  sha256,
+  migrationHash,
 } from "../bin/migrations.mjs";
 
 const BIN = fileURLToPath(new URL("../bin/migrations.mjs", import.meta.url));
@@ -46,7 +46,10 @@ test("an edited, unrecorded, deleted or contracting migration each fails; a clea
   const read = (f) => sql[f];
   const manifest = {
     expand_only_after: "0001_a.sql",
-    sha256: { "0001_a.sql": sha256(sql["0001_a.sql"]), "0002_b.sql": sha256(sql["0002_b.sql"]) },
+    sha256: {
+      "0001_a.sql": migrationHash(sql["0001_a.sql"]),
+      "0002_b.sql": migrationHash(sql["0002_b.sql"]),
+    },
   };
   assert.deepEqual(check({ files: Object.keys(sql), read, manifest }), []);
   assert.match(

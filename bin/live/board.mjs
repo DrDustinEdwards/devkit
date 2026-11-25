@@ -1,5 +1,6 @@
-import { CLEAN_DAYS, same, checksFor } from "./config.mjs";
-/** @import { Json } from "./config.mjs" */
+import { CLEAN_DAYS, checksFor, same } from "./config.mjs";
+
+/** @typedef {import("./config.mjs").Json} Json */
 
 /**
  * The board, from the runs (any order) and the config. Pure.

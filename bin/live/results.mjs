@@ -1,12 +1,12 @@
 import {
+  EXIT_UNMEASURED,
   MAX_FINDINGS,
   REPORT_MAX_AGE_MINUTES,
   STATUSES,
-  MAX_REPORT,
   UNMEASURED_PREFIX,
-  EXIT_UNMEASURED,
 } from "./config.mjs";
-/** @import { Json } from "./config.mjs" */
+
+/** @typedef {import("./config.mjs").Json} Json */
 
 /** Undoes bin/annotate.mjs's escapes (`%25`, `%0D`, `%0A`, and in a property `%3A`, `%2C`), in one pass. */
 const unescapeAnnotation = (/** @type {string} */ text) =>
@@ -138,37 +138,3 @@ export const unmeasuredResult = (/** @type {string} */ detail) => ({
   findings: [],
   detail,
 });
-
-/** A reported check's report, or why it could not be read (the HTTP status, a body over MAX_REPORT, bad JSON). */
-export async function fetchReport(/** @type {string} */ url) {
-  try {
-    const resp = await fetch(url, {
-      headers: { Accept: "application/json" },
-      redirect: "error",
-      signal: AbortSignal.timeout(30_000),
-    });
-    if (!resp.ok) {
-      await resp.body?.cancel();
-      return { error: `HTTP ${resp.status}` };
-    }
-    if (Number(resp.headers.get("content-length")) > MAX_REPORT) {
-      await resp.body?.cancel();
-      return { error: `the report is over ${MAX_REPORT / 1024 / 1024} MB` };
-    }
-    /** @type {Uint8Array[]} */
-    const chunks = [];
-    let size = 0;
-    const reader = resp.body?.getReader();
-    for (let read = await reader?.read(); read && !read.done; read = await reader?.read()) {
-      size += read.value.byteLength;
-      if (size > MAX_REPORT) {
-        await reader?.cancel();
-        return { error: `the report is over ${MAX_REPORT / 1024 / 1024} MB` };
-      }
-      chunks.push(read.value);
-    }
-    return { report: JSON.parse(Buffer.concat(chunks).toString("utf8")) };
-  } catch (error) {
-    return { error: error instanceof Error ? error.message : String(error) };
-  }
-}

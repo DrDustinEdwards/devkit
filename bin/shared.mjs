@@ -80,55 +80,77 @@
 // file, "waive" for a feature or workflow.
 
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, statSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, posix } from "node:path";
 import { appendSummary, escapeAnnotation, escapeProperty } from "./annotate.mjs";
 import { isMain } from "../node/index.mjs";
-import { PACKAGES } from "./shared/data.mjs";
-import { isWarning, validateConfig, staleExceptions } from "./shared/config.mjs";
-import { lsRemoteTags, FRESH, DAY_MS, releaseDates, checkPins } from "./shared/pins.mjs";
-import { checkCopies, checkLibraries } from "./shared/copies.mjs";
-import { capsomerTokens, checkTokens } from "./shared/tokens.mjs";
+import { EXCUSED, gitTree, isWarning } from "./shared/core.mjs";
+import { PACKAGES, checkCopies, checkLibraries } from "./shared/copies.mjs";
+import { DAY_MS, FRESH, checkPins, lsRemoteTags, releaseDates } from "./shared/pins.mjs";
+import { capsomerTokens, checkFakes, checkTokens } from "./shared/tokens.mjs";
 import { checkFeatures } from "./shared/features.mjs";
-import { checkWorkflows } from "./shared/workflows.mjs";
-import { checkLint } from "./shared/lint.mjs";
-import { checkFakes } from "./shared/fakes.mjs";
-import { checkJobs } from "./shared/jobs.mjs";
-import { checkAi } from "./shared/ai.mjs";
+import { checkLint, checkWorkflows } from "./shared/workflows.mjs";
+import { checkAi, checkJobs } from "./shared/jobs.mjs";
 import { checkSpelling } from "./shared/spelling.mjs";
-import { readCatalog, listMarkdown } from "./shared/catalog.mjs";
-/** @import { Finding, Config } from "./shared/config.mjs" */
+import { listMarkdown, peersOf, readCatalog } from "./shared/catalog.mjs";
 
-/** Every tracked file, read from disk. */
-export function gitTree(/** @type {string} */ root) {
-  const files = execFileSync("git", ["ls-files", "-z"], { cwd: root, encoding: "utf8" })
-    .split("\0")
-    .filter(Boolean);
-  /** @type {Record<string, string>} */
-  const cache = {};
-  return {
-    files: files.filter((f) => !f.includes("node_modules/")),
-    read: (/** @type {string} */ f) =>
-      (cache[f] ??=
-        existsSync(join(root, f)) && statSync(join(root, f)).isFile()
-          ? readFileSync(join(root, f), "utf8")
-          : ""),
+/** @typedef {import("./shared/core.mjs").Config} Config */
+/** @typedef {import("./shared/core.mjs").Finding} Finding */
+
+export const KINDS = ["site", "static", "private", "worker", "package"];
+
+const CONFIG_KEYS = {
+  apps: 0,
+  waive: 0,
+  copies: 0,
+  libraries: 0,
+  tokens: 0,
+  spelling: ["ignore", "contracts", "skip"],
+};
+
+/** Refuses a .shared.json the check would misread: an unknown key (a typo'd "wave" waives nothing) or kind. */
+export function validateConfig(/** @type {Record<string, any>} */ config) {
+  const bad = (/** @type {string} */ what, /** @type {string[]} */ valid) => {
+    throw new Error(`.shared.json: ${what}; the valid ones are ${valid.join(", ")}`);
   };
+  for (const key of Object.keys(config))
+    if (!(key in CONFIG_KEYS)) bad(`"${key}" is no key`, Object.keys(CONFIG_KEYS));
+  for (const key of Object.keys(config.spelling ?? {}))
+    if (!CONFIG_KEYS.spelling.includes(key))
+      bad(`"spelling" has no "${key}"`, CONFIG_KEYS.spelling);
+  for (const [dir, kind] of Object.entries(config.apps ?? {}))
+    if (!KINDS.includes(kind)) bad(`"apps" "${dir}" is "${kind}", which is no kind`, KINDS);
 }
 
-/** Each located shared package's peer dependencies. @param {(name: string, repo: string) => string | null} locate */
-export function peersOf(locate) {
-  /** @type {Record<string, string[]>} */
-  const peers = {};
-  for (const p of PACKAGES) {
-    const dir = locate(p.name, p.repo);
-    if (dir)
-      peers[p.name] = Object.keys(
-        JSON.parse(readFileSync(join(dir, "package.json"), "utf8")).peerDependencies ?? {},
-      );
-  }
-  return peers;
+/** Each exception in .shared.json that excused nothing in this run: dead config, or a rule that moved past it. */
+export function staleExceptions(/** @type {Config} */ config) {
+  const seen = EXCUSED.get(config) ?? new Set();
+  /** @type {[string, string][]} */
+  const all = [
+    ...["copies", "waive", "libraries", "tokens"].flatMap((s) =>
+      Object.keys(/** @type {Record<string, any>} */ (config)[s] ?? {}).map(
+        (k) => /** @type {[string, string]} */ ([s, k]),
+      ),
+    ),
+    ...(config.spelling?.ignore ?? []).map(
+      (k) => /** @type {[string, string]} */ (["spelling.ignore", k]),
+    ),
+    ...(config.spelling?.contracts ?? []).map(
+      (k) => /** @type {[string, string]} */ (["spelling.contracts", k]),
+    ),
+  ];
+  return all
+    .filter(([s, k]) => !seen.has(`${s}\0${k}`))
+    .map(([s, k]) => ({
+      check: "config",
+      file: ".shared.json",
+      warn: true,
+      message: `${s
+        .split(".")
+        .map((p) => `"${p}"`)
+        .join(" ")} "${k}" excuses nothing in this run: remove it`,
+    }));
 }
 
 /**
@@ -137,7 +159,7 @@ export function peersOf(locate) {
  * @param {string} root @param {(name: string, repo: string) => string | null} locate @param {boolean} from @param {boolean} fix
  * @returns {Promise<Finding[]>}
  */
-export async function findingsAt(root, locate, from, fix) {
+async function findingsAt(root, locate, from, fix) {
   const configFile = existsSync(join(root, ".shared.json")) ? ".shared.json" : null;
   /** @type {Config} */
   const config = configFile ? JSON.parse(readFileSync(join(root, configFile), "utf8")) : {};
@@ -219,7 +241,7 @@ export async function findingsAt(root, locate, from, fix) {
 }
 
 /** What makes two findings the same one, on two trees: a line number moves with any edit above it. @param {Finding} f */
-export const findingKey = (f) => `${f.check}\u0000${f.file ?? ""}\u0000${f.message}`;
+const findingKey = (f) => `${f.check}\u0000${f.file ?? ""}\u0000${f.message}`;
 
 /**
  * A pull request's findings, judged against its base: a failure the base already has is the repository's state, not the
@@ -235,7 +257,7 @@ export function againstBase(head, base) {
   );
 }
 
-export async function main(/** @type {string[]} */ argv) {
+async function main(/** @type {string[]} */ argv) {
   const root = process.cwd();
   const from = argv.includes("--from") ? argv[argv.indexOf("--from") + 1] : null;
   const base = argv.includes("--base") ? argv[argv.indexOf("--base") + 1] : null;

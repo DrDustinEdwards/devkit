@@ -31,10 +31,8 @@
 // under one name, which jscpd misses whenever the code differs. "packages" ratchets the names two or more shared packages
 // each export, the overlap between the packages themselves.
 
-import { execFileSync, spawnSync } from "node:child_process";
-import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import {
-  copyFileSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
@@ -44,98 +42,60 @@ import {
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { appendSummary, escapeAnnotation } from "./annotate.mjs";
 import { isMain } from "../node/index.mjs";
-import {
-  OWNER,
-  BUFFER,
-  isSource,
-  isWholeFile,
-  sameFiles,
-  sharedNames,
-  crossRepo,
-  at,
-  ownerRepos,
-  gitAuthEnv,
-  COPY_ARGS,
-} from "./copies/names.mjs";
+import { COPY_ARGS, crossRepo, gather, jscpd, sameFiles } from "./copies/scan.mjs";
+import { sharedNames } from "./copies/names.mjs";
 
-/** The source files that can export a name. */
-const CODE = /\.[cm]?[jt]sx?$/;
+const OWNER = "DrDustinEdwards";
+
+const PRIVATE = new Set();
+
+const at = (/** @type {{ repo: string, path: string }} */ p, /** @type {string} */ range = "") =>
+  PRIVATE.has(p.repo) ? "a private repository" : `${p.repo}/${p.path}${range}`;
 
 /**
- * Copies one checkout's tracked source into dest/<repo>, and returns how many files that was, the hashes of its whole
- * .claude files and the text of its code files, for the name pass.
+ * The owner's repositories that are neither forks nor archived, by name: every one the token can read when there is a
+ * token for the owner (a fine-grained token lists its repositories at /user/repos), the public ones otherwise.
  */
-function gather(
-  /** @type {string} */ checkout,
-  /** @type {string} */ repo,
-  /** @type {string} */ dest,
-) {
-  const tracked = execFileSync("git", ["ls-files", "-z"], {
-    cwd: checkout,
-    encoding: "utf8",
-    maxBuffer: BUFFER,
-  }).split("\0");
-  const files = tracked.filter(isSource);
-  /** @type {{ repo: string, path: string, text: string }[]} */
-  const code = [];
-  for (const file of files) {
-    const from = join(checkout, file);
-    if (!existsSync(from)) continue;
-    const to = join(dest, repo, file);
-    mkdirSync(dirname(to), { recursive: true });
-    copyFileSync(from, to);
-    if (CODE.test(file)) code.push({ repo, path: file, text: readFileSync(from, "utf8") });
+async function ownerRepos(/** @type {string | undefined} */ token) {
+  const headers = {
+    Accept: "application/vnd.github+json",
+    "User-Agent": "devkit-copies",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+  const list = token
+    ? "https://api.github.com/user/repos?affiliation=owner&visibility=all"
+    : `https://api.github.com/users/${OWNER}/repos?type=owner`;
+  const names = [];
+  for (let page = 1; ; page++) {
+    const resp = await fetch(`${list}&per_page=100&page=${page}`, {
+      headers,
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!resp.ok) throw new Error(`GitHub answered ${resp.status} for the repository list`);
+    const repos = await resp.json();
+    for (const repo of repos) {
+      if (repo.owner?.login === OWNER && !repo.fork && !repo.archived) names.push(repo.name);
+      if (repo.private) PRIVATE.add(repo.name);
+    }
+    if (repos.length < 100) return names.sort();
   }
-  const whole = tracked
-    .filter((file) => isWholeFile(file) && existsSync(join(checkout, file)))
-    .map((file) => ({
-      repo,
-      path: file,
-      hash: createHash("sha256")
-        .update(readFileSync(join(checkout, file)))
-        .digest("hex"),
-    }));
-  return { count: files.length, whole, code };
 }
 
-/** Runs jscpd over the gathered folder and returns its JSON report. */
-function jscpd(
-  /** @type {string} */ dir,
-  /** @type {string} */ tool,
-  /** @type {string[]} */ args,
-) {
-  const out = join(dirname(dir), "report");
-  const r = spawnSync(
-    "npx",
-    [
-      "--yes",
-      "--package",
-      tool,
-      "--",
-      "jscpd",
-      ".",
-      ...args,
-      "--reporters",
-      "json",
-      "--output",
-      out,
-      "--silent",
-    ],
-    {
-      cwd: dir,
-      encoding: "utf8",
-      maxBuffer: BUFFER,
-    },
-  );
-  if (r.error || r.status !== 0)
-    throw new Error(
-      `jscpd exited ${r.status}: ${(r.error?.message ?? r.stderr ?? r.stdout).trim().slice(0, 400)}`,
-    );
-  return JSON.parse(readFileSync(join(out, "jscpd-report.json"), "utf8"));
+/** The environment that gives git the token as an Authorization header, as actions/checkout does, off the command line. */
+function gitAuthEnv(/** @type {string | undefined} */ token) {
+  if (!token) return { ...process.env, GIT_TERMINAL_PROMPT: "0" };
+  const basic = Buffer.from(`x-access-token:${token}`).toString("base64");
+  return {
+    ...process.env,
+    GIT_TERMINAL_PROMPT: "0",
+    GIT_CONFIG_COUNT: "1",
+    GIT_CONFIG_KEY_0: "http.https://github.com/.extraheader",
+    GIT_CONFIG_VALUE_0: `AUTHORIZATION: basic ${basic}`,
+  };
 }
 
 async function main() {
