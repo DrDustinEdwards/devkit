@@ -44,38 +44,38 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.67.2 (DrDustinEdwards/prelum)
+## Prelum 0.68.0 (DrDustinEdwards/prelum)
 
-- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `feedResponse`, `FEED_CONTENT_TYPES`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `setPageRenderer`, `trackRenderedPageDates`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `isPubliclyVisible`, `normalizeZeroResultQuery`, `RRF_K`, `PUBLISHED_STATUS`, `ZERO_RESULT_MAX_LENGTH`, `slugify`, `isSlug`, `uniqueSlug`, `SLUG_PATTERN`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`, `WORDS_PER_MINUTE`
-- `./xml`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `toDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
+- `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `feedDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `feedResponse`, `FEED_CONTENT_TYPES`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `setPageRenderer`, `trackRenderedPageDates`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `SITEMAP_MAX_URLS`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likePattern`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `isPubliclyVisible`, `normalizeZeroResultQuery`, `RRF_K`, `PUBLISHED_STATUS`, `slugify`, `isSlug`, `uniqueSlug`, `SLUG_PATTERN`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
+- `./xml`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `feedDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
 - `./slug`: `slugify`, `isSlug`, `uniqueSlug`, `SLUG_PATTERN`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`
-- `./text`: `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`, `WORDS_PER_MINUTE`
+- `./text`: `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
 - `./feeds`: `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `feedResponse`, `FEED_CONTENT_TYPES`
 - `./lastmod`: `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `setPageRenderer`, `trackRenderedPageDates`
-- `./sitemap`: `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `SITEMAP_MAX_URLS`, `SITEMAP_MAX_BYTES`
-- `./accessibility`: `accessibilityStatement`, `ACCESSIBILITY_PATH`, `ACCESSIBILITY_STANDARD`, `HAND_CHECK_LIMITATIONS`
+- `./sitemap`: `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `SITEMAP_MAX_URLS`
+- `./accessibility`: `accessibilityStatement`, `ACCESSIBILITY_PATH`, `HAND_CHECK_LIMITATIONS`
 - `./llms`: `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`
-- `./markdown-copy`: `htmlToMarkdown`, `llmsHeaderOf`, `markdownCopies`
+- `./markdown-copy`: `llmsHeaderOf`, `markdownCopies`, `htmlToMarkdown`
 - `./markdown-files`: `writeMarkdownCopies`, `writeSitemapLastmod`
 - `./frontmatter`: `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`
 - `./matter`: `matter`, `stringifyMatter`
-- `./head`: `serpWidth`, `headTags`, `articleDates`, `shareCard`, `absoluteUrl`, `headHtml`, `truncateForSerp`, `searchTitle`, `defineHead`, `metaText`, `rootLoaderData`, `privateMeta`, `SERP_TITLE`, `SERP_DESCRIPTION`, `BREADCRUMB_MIN_ITEMS`, `SHARE_CARD_SIZE`
+- `./head`: `headTags`, `articleDates`, `shareCard`, `absoluteUrl`, `headHtml`, `defineHead`, `rootLoaderData`, `privateMeta`, `BREADCRUMB_MIN_ITEMS`, `SERP_DESCRIPTION`, `SERP_TITLE`, `metaText`, `searchTitle`, `serpWidth`, `truncateForSerp`
 - `./scholar`: `escapeBibtex`, `bibtexPages`, `toBibtex`, `toRis`, `coinsTitle`, `citationTags`, `doiSlug`, `REQUIRED_CITATION_TAGS`, `DOI_PATTERN`
 - `./vtt`: `parseVtt`, `transcriptText`, `transcriptDuration`, `isVtt`, `toParagraphs`, `srtToVtt`, `parseCueText`
-- `./schema`: `jsonLd`, `thing`, `graph`, `website`, `pageImage`, `imageObject`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `sameAs`, `postalAddress`, `person`, `organization`, `softwareApplication`, `podcastSeries`, `podcastEpisode`, `dataset`, `scholarlyType`, `scholarlyArticle`, `ARTICLE_IMAGE_MIN_PIXELS`, `ARTICLE_IMAGE_RATIOS`
-- `./robots`: `robotsDocument`, `privateRobotsResponse`, `aiTxt`, `isPreviewRequest`, `plainTextResponse`, `robotsNotes`, `robotsResponse`, `aiTxtResponse`, `verificationFileResponse`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `CONTENT_SIGNAL`, `DISALLOW_ALL`, `TDM_RESERVATION_HEADERS`, `PLAIN_TEXT_CACHE_CONTROL`
+- `./schema`: `website`, `pageImage`, `imageObject`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `sameAs`, `person`, `organization`, `podcastSeries`, `podcastEpisode`, `dataset`, `jsonLd`, `thing`, `graph`
+- `./robots`: `robotsDocument`, `privateRobotsResponse`, `aiTxt`, `plainTextResponse`, `robotsResponse`, `aiTxtResponse`, `verificationFileResponse`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `TDM_RESERVATION_HEADERS`
 - `./files`: `standardFiles`
 - `./indexnow`: `submitIndexNow`, `submitIndexNowIfChanged`, `keyFileResponse`, `recentSitemapUrls`
 - `./source`: `csvColumns`, `chartBlock`, `chartBlocks`, `figureMarkup`, `imagesWithoutAlt`, `isAbsoluteHttps`, `CHART_KINDS`
 - `./site-map`: `sectionOf`, `siteMapSections`, `lineText`
-- `./stored-render`: `wrapRendered`, `storedRender`, `rerenderEach`, `RENDER_VERSION_ATTRIBUTE`
+- `./stored-render`: `wrapRendered`, `storedRender`, `rerenderEach`
 - `./icons`: `iconLinks`, `webManifest`, `icoFile`, `auditIcons`, `webManifestResponse`
 - `./audit`: `auditPages`, `crawlSite`
-- `./search`: `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likeContains`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `isPubliclyVisible`, `normalizeZeroResultQuery`, `RRF_K`, `PUBLISHED_STATUS`, `ZERO_RESULT_MAX_LENGTH`
+- `./search`: `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likePattern`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `isPubliclyVisible`, `normalizeZeroResultQuery`, `RRF_K`, `PUBLISHED_STATUS`
 - `./render`: `render`, `ContentError`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `DEFAULT_SCAN_LIMITS`, `RENDER_VERSION`, `isAllowedUrl`
-- `./render/nomath`: `render`, `renderWith`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `ContentError`, `RENDER_VERSION`, `isAllowedUrl`
-- `./render/packs`: `remarkSwatch`, `remarkSidenote`, `remarkPullQuote`, `remarkChartSource`, `editorialPack`
-- `./render/highlight`: `createHighlight`, `LANGUAGES`, `bash`, `css`, `html`, `javascript`, `json`, `markdown`, `python`, `sql`, `tsx`, `typescript`, `light`, `dark`
+- `./render/nomath`: `render`, `renderWith`, `ContentError`, `RENDER_VERSION`, `isAllowedUrl`, `DEFAULT_MAX_BYTES`, `DEFAULT_MAX_DEPTH`, `DEFAULT_SCAN_LIMITS`
+- `./render/packs`: `editorialPack`
+- `./render/highlight`: `createHighlight`, `LANGUAGES`, `light`, `dark`
 - `./render/safe`: `srcsetUrls`, `scanHtml`, `assertSafe`, `inventory`, `LQIP_STYLE`
 - `./render/enhance`: `enhanceEmbeds`, `enhance`
 - `./render/embeds`: `embedPlayerUrl`, `EMBED_PROVIDERS`, `BLUESKY_HANDLE`
@@ -83,16 +83,16 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/conformance`: `runRenderConformance`, `HOSTILE_INPUTS`
 - `./render/math`: `htmlHasMath`
 - `./render/url`: `isCsvDownload`, `isAllowedUrl`, `URL_ATTRIBUTES`
-- `./render/link-icons`: `linkIconType`, `fitLinkIcon`, `lookupLinkIcon`, `linkIconSrc`, `linkIconResponse`, `LINK_ICON_PATH`, `LINK_ICON_MAX_BYTES`, `LINK_ICON_TIMEOUT_MS`, `LINK_ICON_SIZE`
+- `./render/link-icons`: `linkIconType`, `fitLinkIcon`, `lookupLinkIcon`, `linkIconSrc`, `linkIconResponse`, `LINK_ICON_PATH`
 - `./render/diagram`: `diagramAssetPath`, `buildDiagramModel`, `diagramSize`, `DIAGRAM_ASSET_DIR`, `DIAGRAM_THEMES`, `DIAGRAM_SIZES_FILE`, `renderDiagramHast`
-- `./render/diagram-draw`: `mermaidConfig`, `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`, `DIAGRAM_ROLES`, `DIAGRAM_ROLE_NAMES`
+- `./render/diagram-draw`: `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`, `DIAGRAM_ROLE_NAMES`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.181.2 (DrDustinEdwards/site-runtime)
+## site-runtime 0.182.0 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `permissionsAllowingSelf`, `corpFor`, `entryOverrides`, `buildSecurityHeaders`, `hostCookie`, `cookiePairs`, `readCookie`, `applyHeaderSet`, `headersFile`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `PASSKEY_OVERRIDES`, `UPLOAD_HEADERS`
-- `./csp`: `generateNonce`, `scriptHash`, `integrityHash`, `buildPolicy`, `cloudflareBeaconAttributes`, `broadSource`, `buildContentSecurityPolicy`, `reportingEndpoints`, `buildStagedPolicy`, `integrityPolicy`, `renewNonce`, `CSP_REPORT_PATH`, `CSP_REPORT_GROUP`, `CLOUDFLARE_WEB_ANALYTICS`
+- `./csp`: `generateNonce`, `scriptHash`, `integrityHash`, `buildPolicy`, `cloudflareBeaconAttributes`, `broadSource`, `buildContentSecurityPolicy`, `CSP_REPORT_PATH`, `CSP_REPORT_GROUP`, `CLOUDFLARE_WEB_ANALYTICS`, `buildStagedPolicy`, `integrityPolicy`, `renewNonce`, `reportingEndpoints`
 - `./page-headers`: `pageSecurity`
 - `./context`: `cloudflareContext`, `cspNonceContext`, `serverTimingContext`, `previewContext`, `getEnv`, `getExecutionContext`, `getNonce`, `getTimings`
 - `./kv-cache`: `kvCached`, `KV_MIN_TTL`
@@ -103,11 +103,11 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./health`: `healthResponse`, `siteHealthResponse`, `r2Check`, `kvCheck`, `purgeCheck`, `recordAiOutcome`, `aiOutcomeCheck`, `authSpikeCheck`, `imagesCheck`, `durableObjectCheck`, `queueCheck`, `aiCheck`, `emailCheck`, `browserCheck`, `databaseDown`, `CHECK_DETAIL_MAX`, `DATABASE_DOWN_STATUS_TEXT`, `isDatabaseDown`
 - `./deploy`: `deployedSha`, `deployedAt`
 - `./health-read`: `healthOf`, `parseHealth`, `failingCheckNames`, `healthChecks`
-- `./image`: `imageVersion`, `originalKey`, `focusOf`, `focalPosition`, `versionedCache`, `assetsObject`, `mediaKey`, `keyOfAddress`, `keysAtAddresses`, `imageWidths`, `imageSizes`, `defineImages`, `pictureProps`, `imagePreload`, `pictureHtml`, `editImage`, `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `ARTICLE_IMAGE_RATIOS`, `IMAGE_QUALITY`, `FOCUS_METADATA`, `IMMUTABLE_CACHE`, `RASTER_TYPES`, `RASTER_PATH`
+- `./image`: `imageWidths`, `imageSizes`, `defineImages`, `SCREEN_WIDTHS`, `AVIF_MAX_EDGE`, `ARTICLE_IMAGE_RATIOS`, `editImage`, `FOCUS_METADATA`, `IMAGE_FORMATS`, `IMAGE_QUALITY`, `IMMUTABLE_CACHE`, `RASTER_PATH`, `RASTER_TYPES`, `assetsObject`, `focalPosition`, `focusOf`, `imageVersion`, `keyOfAddress`, `keysAtAddresses`, `mediaKey`, `originalKey`, `versionedCache`, `imagePreload`, `pictureHtml`, `pictureProps`
 - `./r2-object`: `retryR2Read`, `contentDisposition`, `attachmentResponse`, `r2ObjectResponse`
 - `./prefetch`: `speculationRules`, `speculationRulesResponse`, `SPECULATION_RULES_PATH`, `NEVER_PREFETCH`, `FILE_EXTENSIONS`
 - `./preload`: `preloads`, `rootStylesheets`, `pageStylesheets`, `withPreloadHeader`
-- `./edge-cache`: `compressUntransformed`, `publicPageHeaders`, `cacheKey`, `settleCacheHeaders`, `stampValidator`, `forRenderer`, `forReader`, `privateRender`, `purgeTags`, `recordPurge`, `purgeCoalesced`, `withPurgePages`, `purgeAfterWrite`, `purgeViaRenderer`, `schedulePurgeHook`, `SHARED_CACHE_CONTROL`, `UNCACHED`, `PRIVATE_PAGE_HEADERS`, `EDGE_CACHE_HEADER`, `PAGES_CACHE_TAG`, `TRACKING_PARAMS`, `PURGE_FAILED_KEY`
+- `./edge-cache`: `compressUntransformed`, `publicPageHeaders`, `cacheKey`, `settleCacheHeaders`, `stampValidator`, `forRenderer`, `forReader`, `privateRender`, `SHARED_CACHE_CONTROL`, `UNCACHED`, `PRIVATE_PAGE_HEADERS`, `EDGE_CACHE_HEADER`, `TRACKING_PARAMS`, `purgeTags`, `recordPurge`, `purgeCoalesced`, `withPurgePages`, `purgeAfterWrite`, `purgeViaRenderer`, `schedulePurgeHook`, `PAGES_CACHE_TAG`, `PURGE_FAILED_KEY`
 - `./server-timing`: `serverTiming`, `timed`, `timedRender`
 - `./embeds`: `permissionsAllowingEmbeds`, `EMBED_FRAME_SOURCES`, `EMBED_FEATURES`
 - `./static-site`: `staticHeaders`, `staticSite`
@@ -124,9 +124,9 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./signed-token`: `signToken`, `readSignedToken`
 - `./turnstile`: `mountTurnstile`, `verifyTurnstile`, `TURNSTILE_ORIGIN`, `SITEVERIFY_URL`
 - `./sign-in-path`: `SIGN_IN_PATH`, `CONFIRM_PATH`
-- `./sign-in`: `turnstileSiteKey`, `signInOptions`, `signInMethods`, `SIGN_IN_CODE_PATH`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `SESSION_SECONDS`, `SESSION_IDLE_SECONDS`, `LINK_EMAIL_RULES`, `CODE_EMAIL_RULES`, `SIGN_IN_FAILURE_RULES`, `PASSKEY_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_PATH`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`, `pruneAuthEvents`, `pruneAuthEventsJob`, `pruneExpiredAuth`
+- `./sign-in`: `turnstileSiteKey`, `signInOptions`, `signInMethods`, `CONFIRM_PATH`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_PATH`, `SIGN_IN_LINK_WORDS`, `confirmEmailLink`, `confirmSignInLink`, `emailConfirmURL`, `emailLinkResult`, `signInLinkProblem`, `AUTH_EVENTS_DEVICE_SQL`, `AUTH_EVENTS_SQL`, `DEVICE_COOKIE`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `FRESH_SECONDS`, `PASSKEY_OFFER_DAYS`, `SECURITY_NOTICE_KINDS`, `SessionNotFresh`, `accountPasskeys`, `accountSessions`, `coarseLocation`, `deviceName`, `dismissPasskeyOffer`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `requireFreshSession`, `revokeSessionById`, `securityHistory`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `shouldOfferPasskey`, `APP_CODE_PATH`, `APP_CODE_RATE_LIMIT`, `CODE_EMAIL_RULES`, `LINK_EMAIL_RULES`, `PASSKEY_FAILURE_RULES`, `SESSION_IDLE_SECONDS`, `SESSION_SECONDS`, `SIGN_IN_CODE_PATH`, `SIGN_IN_FAILURE_RULES`, `TURNSTILE_OFF_UNTIL_KEYS`, `pruneAuthEvents`, `pruneAuthEventsJob`, `pruneExpiredAuth`
 - `./sign-in-link`: `confirmLinkURL`, `confirmSignInLink`, `signInLinkProblem`, `emailConfirmURL`, `confirmEmailLink`, `emailLinkResult`, `DISPOSABLE_EMAIL`, `UNDELIVERABLE_EMAIL`, `EMAIL_CONFIRM_PATH`, `SIGN_IN_EXPIRES_IN_SECONDS`, `CODE_COOKIE`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `CONFIRM_PATH`, `SIGN_IN_PATH`
-- `./sign-in-account`: `deviceName`, `coarseLocation`, `sessionLookup`, `sessionTouch`, `isNewSignInDevice`, `sessionRows`, `accountSessions`, `revokeSessionById`, `sessionIsFresh`, `requireFreshSession`, `knownProvider`, `passkeyProvider`, `passkeyLabel`, `passkeyRows`, `passkeyLastUsed`, `accountPasskeys`, `needsSecondPasskey`, `dismissPasskeyOffer`, `shouldOfferPasskey`, `outcome`, `authEvent`, `logAuthEvent`, `securityHistory`, `signedInDevices`, `signedInDeviceIds`, `hadPasskey`, `isNewDevice`, `authEventCounts`, `noticeDetail`, `sendNoticeSafely`, `SECURITY_NOTICE_KINDS`, `FRESH_SECONDS`, `SESSION_TOUCH_SECONDS`, `DEVICE_COOKIE`, `DEVICE_COOKIE_SECONDS`, `SESSION_DETAILS_SQL`, `AUTH_EVENTS_DEVICE_SQL`, `SessionNotFresh`, `PASSKEY_OFFER_DAYS`, `AUTH_EVENTS_SQL`
+- `./sign-in-account`: `coarseLocation`, `deviceName`, `SECURITY_NOTICE_KINDS`, `noticeDetail`, `sendNoticeSafely`, `AUTH_EVENTS_SQL`, `authEvent`, `authEventCounts`, `hadPasskey`, `isNewDevice`, `isNewSignInDevice`, `logAuthEvent`, `outcome`, `securityHistory`, `signedInDeviceIds`, `signedInDevices`, `AUTH_EVENTS_DEVICE_SQL`, `DEVICE_COOKIE`, `DEVICE_COOKIE_SECONDS`, `FRESH_SECONDS`, `SESSION_DETAILS_SQL`, `SESSION_TOUCH_SECONDS`, `SessionNotFresh`, `accountSessions`, `requireFreshSession`, `revokeSessionById`, `sessionIsFresh`, `sessionLookup`, `sessionRows`, `sessionTouch`, `PASSKEY_OFFER_DAYS`, `accountPasskeys`, `dismissPasskeyOffer`, `knownProvider`, `needsSecondPasskey`, `passkeyLabel`, `passkeyLastUsed`, `passkeyProvider`, `passkeyRows`, `shouldOfferPasskey`
 - `./sign-in-client`: `signInAgainIfStale`, `signInClientPlugins`, `canOfferPasskey`, `passkeySignIn`, `passkeyUserHandle`, `signInWithPasskey`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`
 - `./vitals-client`: `inpEntry`, `reportInp`
 - `./trusted-types`: `allowDocumentParsing`, `callerScript`, `escapedReport`, `defaultRules`, `installTrustedTypes`, `REACT_SCRIPT_STUB`, `DOCUMENT_PARSE_SINK`, `TRUSTED_TYPES_NAMES`
@@ -136,25 +136,25 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./email`: `isEmail`, `isRecipientSuppressed`, `redact`, `sendEmail`, `RECIPIENT_SUPPRESSED`, `EmailNotSent`
 - `./compare`: `safeEqual`
 - `./money`: `currencyExponent`, `currencyDigits`, `toMajorUnits`, `fromMajorUnits`, `formatMoney`, `formatMoneyShort`, `moneyInputValue`, `parseMoneyInput`
-- `./check`: `declined`, `parsePolicy`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`
+- `./check`: `checkSecurityHeaders`, `failures`, `checkSecurityTxt`, `declined`, `parsePolicy`
 - `./sites`: `siteEntry`, `siteForOrigin`, `siteOverrides`, `bsw`, `capsid`, `capsidMcp`, `capsidPortal`, `capsomer`, `carrel`, `carrelDesk`, `carrelMcp`, `dustinedwardsInfo`, `dustinedwardsMcp`, `enarratio`, `foxhound`, `foxhoundMcp`, `foxing`, `foxingMcp`, `germomics`, `julieedwardsInfo`, `prelum`, `txasm`, `SITES`, `PASSKEY_OVERRIDES`, `permissionsAllowingSelf`
 - `./owasp`: `OWASP_SOURCE`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`
 - `./rate-limit`: `hitRules`, `peekRules`, `secondsLeft`, `assertRules`, `idleDeadline`, `purgeExpired`, `limit`, `limitedResponse`, `mustStop`, `ipKey`, `emailKey`, `matchRule`, `normalizePath`
 - `./rate-limit/durable-object`: `RateLimiter`
-- `./doc-room`: `DocRoom`, `viewerRequest`, `readViewer`, `withinLimit`, `suggestOnly`, `applyComment`, `DOC_ROOM_VIEWER_HEADER`, `ROLE_RECHECK_MS`, `MAX_SUGGESTION`, `MAX_EDIT`, `MAX_COMMENT`, `MAX_QUOTE`, `MAX_ANCHOR`
+- `./doc-room`: `DocRoom`, `viewerRequest`, `readViewer`, `withinLimit`, `suggestOnly`, `applyComment`, `viewerOf`, `messageBytes`, `DOC_ROOM_VIEWER_HEADER`, `ROLE_RECHECK_MS`, `MAX_SUGGESTION`, `MAX_EDIT`, `MAX_COMMENT`, `MAX_QUOTE`, `MAX_ANCHOR`
 - `./access-login`: `accessSaas`, `newSignIn`, `authorizationUrl`, `forgetKeys`, `remoteKeys`, `verifyJwt`, `verifyIdToken`, `finishSignIn`, `KEYS_MAX_AGE_MS`
-- `./mcp-login`: `describeRedirect`, `loginHandler`, `isAdminUser`, `allowedRedirects`, `registrationRefusal`, `registrationLimited`, `CONSENT_STYLE`, `DCR_CALLBACKS`
-- `./audit-log`: `auditChainKey`, `verifyAuditChain`, `correlationId`, `loggedArgs`, `loggedResult`, `exportAuditLog`, `auditLogCheck`, `appendAudit`, `recordAudit`, `AUDIT_KEEP_DAYS`, `ToolCallLog`
-- `./mcp-server`: `routeMcpEra`, `withMcpHeaders`, `callApi`, `checkRateLimit`, `refuse`, `unauthorized`, `audienceRefusal`, `mcpOriginRefusal`, `mcpScopes`, `callerName`, `toolScope`, `toolsForGrant`, `authorizeCall`, `toolScopeChallenge`, `invokeTool`, `registerTools`, `probeRefusal`, `probeDoor`, `outsideResult`, `toolListProblems`, `toolListHash`, `mcpCacheHints`, `ApiLegError`, `MCP_PER_MINUTE`, `PROBE_METHODS`, `OUTSIDE_DATA_NOTICE`
+- `./mcp-login`: `describeRedirect`, `loginHandler`, `isAdminUser`, `CONSENT_STYLE`, `DCR_CALLBACKS`, `allowedRedirects`, `registrationLimited`, `registrationRefusal`
+- `./audit-log`: `correlationId`, `loggedArgs`, `loggedResult`, `exportAuditLog`, `auditLogCheck`, `appendAudit`, `recordAudit`, `auditChainKey`, `verifyAuditChain`, `AUDIT_KEEP_DAYS`, `ToolCallLog`
+- `./mcp-server`: `checkRateLimit`, `refuse`, `unauthorized`, `audienceRefusal`, `mcpOriginRefusal`, `mcpScopes`, `callerName`, `toolScope`, `toolsForGrant`, `authorizeCall`, `toolScopeChallenge`, `invokeTool`, `registerTools`, `outsideResult`, `MCP_PER_MINUTE`, `OUTSIDE_DATA_NOTICE`, `ApiLegError`, `callApi`, `routeMcpEra`, `withMcpHeaders`, `PROBE_METHODS`, `probeDoor`, `probeRefusal`, `mcpCacheHints`, `toolListHash`, `toolListProblems`
 - `./admin-mcp`: `adminMcpJobs`, `adminMcpOrigin`, `adminMcpWorker`, `ADMIN_MCP_OPERATOR_ROUTE`, `ADMIN_MCP_ROUTE`, `ADMIN_MCP_ORIGINS`
 - `./agent-keys`: `bearerToken`, `agentPrincipal`, `agentKeyNames`, `agentScopes`, `agentCaller`, `isProbeKey`, `probeCaller`, `AGENT_KEY_PREFIX`, `PROBE_KEY_SECRET`, `PROBE_PRINCIPAL`
 - `./owner-page`: `respond`, `originOf`, `listOwnerGrants`, `revokeOwnerGrant`, `readAuditLog`, `ownerPage`, `OWNER_PATH`, `OWNER_STYLE`
-- `./access`: `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessToken`, `verifyAccessRequest`, `adminRoster`, `adminEmails`, `isAdminEmail`, `isMainAdmin`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `adminIdle`, `withAdminIdle`, `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`
+- `./access`: `accessIssuer`, `accessKeys`, `accessToken`, `verifyAccessRequest`, `adminRoster`, `adminEmails`, `isAdminEmail`, `isMainAdmin`, `accessAdmin`, `accessSignInUrl`, `safeAdminNext`, `adminIdle`, `withAdminIdle`, `ACCESS_JWT_HEADER`, `ACCESS_COOKIE`, `REFETCH_COOLDOWN_MS`, `ADMIN_IDLE_SECONDS`, `ADMIN_SEEN_COOKIE`, `ACCESS_LOGOUT_PATH`, `BACKGROUND_HEADER`
 - `./access-sync`: `postAccessSync`, `CAPSID_ORIGIN`
 - `./members`: `normalizeEmail`, `defineTitles`, `isExpired`, `reviewOpen`, `resolveActor`, `can`, `defaultEndDate`, `checkChange`, `auditRow`, `allowList`, `PRIMARY_OWNER`, `OWNER`, `MANAGE_MEMBERS`, `REVIEW_DAYS`
-- `./prose`: `checkProse`, `profileOf`, `thresholdFor`, `distanceFrom`, `nearestPassages`, `copiedRuns`, `describeFeature`, `sentenceSpread`, `slopScan`, `instructionFor`, `voiceExcerpts`, `NOT_JUST`, `TELLS`, `OUT_OF_PLACE`, `PATTERNS`, `WRITING_RULES`, `VOICE_THRESHOLD`
-- `./anthropic`: `parseDeprecations`, `deprecationProblems`, `modelStatus`, `untrusted`, `messages`, `structured`, `stream`, `ANTHROPIC_VERSION`, `MODELS`, `MODELS_CHECKED`, `MODEL_IDS`, `DEPRECATIONS_URL`, `FAILURE_TEXT`, `UNTRUSTED_DATA_RULE`
-- `./ai-engine`: `normalizeSettings`, `engineFor`, `priceOf`, `promptOf`, `costMicros`, `runAi`, `ENGINES`, `PRICES_CHECKED`, `PRICES`
+- `./prose`: `VOICE_THRESHOLD`, `copiedRuns`, `describeFeature`, `distanceFrom`, `nearestPassages`, `profileOf`, `thresholdFor`, `NOT_JUST`, `OUT_OF_PLACE`, `PATTERNS`, `SIGNS`, `TELLS`, `WRITING_RULES`, `checkProse`, `sentenceSpread`, `voiceExcerpts`, `instructionFor`, `slopScan`
+- `./anthropic`: `untrusted`, `messages`, `structured`, `stream`, `UNTRUSTED_DATA_RULE`, `ANTHROPIC_VERSION`, `FAILURE_TEXT`, `DEPRECATIONS_URL`, `MODELS`, `MODEL_IDS`, `deprecationProblems`, `modelStatus`, `parseDeprecations`
+- `./ai-engine`: `normalizeSettings`, `engineFor`, `priceOf`, `promptOf`, `costMicros`, `runAi`, `ENGINES`, `PRICES`
 - `./routine`: `routineId`, `routineConfig`, `fireRoutine`, `d1FireStore`, `fireOnce`, `ROUTINE_FIRES_SQL`
 - `./operator`: `operatorBearerProblem`, `operatorResponse`, `callOperator`, `MIN_TOKEN_LENGTH`, `OPERATOR_BODY_MAX`, `OPERATOR_RULES`, `OperatorError`, `OPERATOR_CALL_TIMEOUT_MS`
 - `./draft-gate`: `draftGate`, `draftRobots`
@@ -163,8 +163,8 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./log`: `scrubText`, `scrubUrl`, `scrubFields`, `isDatabaseDown`, `errorMessage`, `logEvent`, `reportErrorLines`, `tokenPattern`, `serverErrorHandler`, `databaseDownStatus`, `requestFields`, `withRequestLog`, `routeNamer`, `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `PREVIEW_TOKEN`, `DATABASE_DOWN_RETRY_AFTER`, `handleServerError`, `OWASP_EVENTS`
 - `./sentry`: `sentryOptions`, `withSiteSentry`, `withSentryRequest`
 - `./redact`: `redact`, `redactText`
-- `./not-found`: `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `pruneNotFoundJob`, `notFoundReport`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`, `NOT_FOUND_PATH_MAX`, `NOT_FOUND_TABLE`, `NOT_FOUND_MAX_PENDING`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `REDIRECTS_SQL`
-- `./cron`: `runJobs`, `runJobNow`, `runJobTool`, `backupStatusTool`, `operatorJobTools`, `describeRuns`, `runsSucceeded`, `carrelSchedulesJob`, `backupJob`, `cronFindings`, `cronCheck`, `readCronRuns`, `cronStates`, `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_LOG_SQL`, `CRON_EVENT_WINDOW_MS`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `DAILY_MINUTES`
+- `./not-found`: `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `pruneNotFoundJob`, `notFoundReport`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`, `NOT_FOUND_PATH_MAX`, `NOT_FOUND_MAX_PENDING`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `REDIRECTS_SQL`
+- `./cron`: `runJobs`, `runJobNow`, `runJobTool`, `backupStatusTool`, `operatorJobTools`, `describeRuns`, `runsSucceeded`, `carrelSchedulesJob`, `backupJob`, `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_LOG_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `DAILY_MINUTES`, `CRON_EVENT_WINDOW_MS`, `cronCheck`, `cronFindings`, `cronStates`, `readCronRuns`
 - `./signed-in-crawl`: `crawlApp`, `guardedCrawl`, `signedInReport`, `signedInSummary`, `signedInReportResponse`, `SIGNED_IN_CHECK`, `SIGNED_IN_REPORT_PATH`, `SIGNED_IN_MISSING_PATH`
 - `./access-drift`: `parseAdminList`, `accessAllowed`, `accessDrift`, `adminHash`, `adminListResponse`, `fetchAdminList`, `accessDriftHashed`, `ADMIN_LIST_PATH`
 - `./nonce`: `useNonce`, `NonceContext`
@@ -173,14 +173,14 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./hydrate-on-intent`: `isDeferred`, `isHydrated`, `markHydrated`, `hydrateNow`, `hydrateOnIntent`, `HOLDER_ID`, `HYDRATED_ATTRIBUTE`, `HYDRATED_EVENT`, `STREAM_BUFFER`, `STREAM_BUFFER_SCRIPT`
 - `./http`: `clientIp`, `ipBucket`, `isWrite`, `textResponse`, `jsonResponse`, `redirectResponse`, `retryAfterSeconds`, `mediaType`, `acceptedEncoding`, `fetchUntil`, `isWorkerPreview`, `publicOrigin`, `OUTBOUND_TIMEOUT_MS`, `timedFetch`
 - `./sign-in-passkey`: `passkeyUserHandle`, `signalAllAcceptedCredentials`, `signalCurrentUserDetails`, `signalPasskeys`, `signalUnknownCredential`, `signInWithPasskey`, `canOfferPasskey`, `passkeySignIn`
-- `./sign-in-form`: `isDisposableEmail`, `refuseDisposable`, `safeNextPath`, `requestSignInLink`, `signInWithCode`, `signInFormAction`, `startSocialSignIn`, `authHandler`, `accountOptions`, `accountFormAction`, `SIGN_IN_INTENT`, `ACCOUNT_INTENTS`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `emailLinkWords`, `passkeyErrorWords`, `securityHistoryWords`, `signInErrorWords`
+- `./sign-in-form`: `safeNextPath`, `requestSignInLink`, `signInWithCode`, `signInFormAction`, `startSocialSignIn`, `authHandler`, `SIGN_IN_INTENT`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `emailLinkWords`, `passkeyErrorWords`, `securityHistoryWords`, `signInErrorWords`, `isDisposableEmail`, `refuseDisposable`, `accountFormAction`, `accountOptions`, `ACCOUNT_INTENTS`
 - `./sign-in-words`: `signInErrorWords`, `passkeyErrorWords`, `emailLinkWords`, `securityHistoryWords`, `EMAIL_CHANGE_EXPIRES_IN_SECONDS`, `EMAIL_CHANGE_EXPIRES_IN_WORDS`, `SIGN_IN_WORDS`, `ACCOUNT_WORDS`, `DISPOSABLE_EMAIL`, `SIGN_IN_EXPIRES_IN_WORDS`, `SIGN_IN_LINK_WORDS`, `UNDELIVERABLE_EMAIL`
 - `./d1`: `inList`, `notInList`, `chunked`, `rowsPerInsert`, `escapeLike`, `likeContains`, `likeStartsWith`, `encodeCursor`, `decodeCursor`, `olderThan`, `D1_MAX_BOUND_PARAMS`, `IN_LIST_CHUNK`
 - `./drizzle`: `cronRuns`, `cronRunLog`, `page404Daily`, `alertsSent`, `authEvents`
 - `./drizzle-check`: `assertMirror`
 - `./csv`: `guardFormula`, `csvCell`, `csvRow`, `toCsv`, `recordsCsv`, `parseCsv`, `csvResponse`, `CSV_CONTENT_TYPE`
 - `./csv-client`: `downloadCsv`
-- `./worker`: `defineSite`, `Renderer`, `siteRenderer`, `siteWorker`, `SECURITY_TXT_PATH`
+- `./worker`: `siteWorker`, `SECURITY_TXT_PATH`, `defineSite`, `siteRenderer`
 - `./render-html`: `renderHtml`
 - `./inbox-report`: `capsidOrigin`, `reportInbox`, `INBOX_REPORT_PATH`, `MAX_REPORT_ITEMS`, `MAX_REPORT_TITLE`, `MAX_INBOX_REPORT_BYTES`, `REPORT_TTL_SECONDS`
 - `./secret-box`: `keyring`, `keyringFromEnv`, `seal`, `keyIdOf`, `open`, `reseal`
@@ -200,18 +200,18 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./newsletter`: `newsletter`, `SUBSCRIBERS_SQL`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
-## site-api 0.49.0 (DrDustinEdwards/site-api)
+## site-api 0.49.1 (DrDustinEdwards/site-api)
 
-- `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `ROUTES`, `HASHED`, `schemaHash`, `capabilitiesOf`, `hasContentTrash`, `contentFiltersOf`, `contentVersion`, `transcriptVersion`, `orderAndPage`, `VersionConflictError`, `NotFoundError`, `MediaInUseError`, `describeUses`, `RefusedError`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `HOOK_BACKOFF_MINUTES`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `readEmbedded`, `stripMetadata`, `duplicateKey`, `placeholderAndColor`, `fileNameFor`, `REENCODED`, `prepareUpload`, `PICTURE_TYPES`, `pictureLimits`, `PICTURE_RESIZE`, `extensionFor`, `datedKey`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `siteApiStep`, `standardSiteApi`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `tombstoneResponse`, `gonePath`, `tombstoned`, `PREVIEW_LINK_PATH`
-- `./admin`: `readPostQuery`, `loadPosts`, `liveSaveWarning`, `loadScheduledUpdate`, `runPostsIntent`, `readMediaQuery`, `loadMedia`, `loadMediaChanges`, `runMediaIntent`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`
+- `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `HASHED`, `schemaHash`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `placeholderAndColor`, `fileNameFor`, `REENCODED`, `prepareUpload`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `siteApiStep`, `standardSiteApi`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `ROUTES`, `tombstoneResponse`, `gonePath`, `tombstoned`, `HOOK_BACKOFF_MINUTES`, `PREVIEW_LINK_PATH`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `readEmbedded`, `duplicateKey`, `stripMetadata`, `PICTURE_RESIZE`, `PICTURE_TYPES`, `datedKey`, `extensionFor`, `pictureLimits`
+- `./admin`: `runPostsIntent`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `liveSaveWarning`, `loadPosts`, `loadScheduledUpdate`, `readPostQuery`, `loadMedia`, `loadMediaChanges`, `readMediaQuery`, `runMediaIntent`
 - `./client`: `SiteApiError`, `createSiteClient`, `localClient`
 - `./frontmatter`: `tagsOf`, `setTags`, `SEARCH_FIELDS`, `searchFieldsOf`, `setSearchFields`, `POST_FIELDS`, `postFieldsOf`, `setPostFields`, `missingAltFields`, `JsonSourceError`, `jsonSource`
-- `./schedules`: `SCHEDULED_UPDATES_SQL`, `utc`, `d1ScheduledUpdates`, `waitingUpdates`
+- `./schedules`: `SCHEDULED_UPDATES_SQL`, `d1ScheduledUpdates`, `waitingUpdates`
 - `./drizzle`: `media`, `mediaRevisions`, `mediaChanges`, `siteApiWrites`, `hookRetries`, `previewLinks`, `webmentionTargets`, `mediaUploads`, `gonePaths`, `hookRuns`, `scheduledUpdates`
 - `./store`: `gonePath`, `tombstoned`, `tombstoneResponse`, `SITE_API_STORE_SQL_V0_21`, `SITE_API_STORE_SQL_V0_22`, `SITE_API_STORE_SQL`, `d1SiteApiStore`
 - `./r2`: `writeFocus`, `replaceObject`
 - `./conformance`: `runConformance`
-- `./testing`: `MEMORY_MEDIA_LIMITS`, `memoryAdapter`
+- `./testing`: `memoryAdapter`, `MEMORY_MEDIA_LIMITS`
 - bins: `site-api-live`
 
 ## d1-dump 0.18.0 (DrDustinEdwards/d1-dump)
