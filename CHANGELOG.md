@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.63.0
+
+### Minor Changes
+
+- The default deploy install runs from the nearest folder at or above the working directory that holds a package-lock.json, so a Worker inside a workspace package no longer needs an `install:` override, and `check-callers.mjs` refuses an `install:` on a worker-deploy call that neither includes `--ignore-scripts` nor runs `deploy-install.mjs`.
+
+## 0.62.0
+
+### Minor Changes
+
+- worker-deploy.yml's default install now builds the dependencies the lockfile resolves from git (site-api, d1-dump and the like) from their locked commit, running their own `prepare`, so a deploy no longer fails on a missing `dist/` while still running no registry dependency's install script. The `install` input defaults to empty, which runs the new `bin/deploy-install.mjs`; a command set there still replaces it. pr.yml's new `deploy-install` input (on by default with `worker-size`) runs the same install in a clean worktree and then `worker-size-prepare`, so a pull request cannot pass while its deploy would fail. A caller that worked around the bug with `rebuild:` can drop it.
+
+### Patch Changes
+
+- `devkit-migrations` reads a trigger's body only when a write in the same file can fire it: an INSERT into the table the trigger is on, or any other write. A file that creates triggers and only backfills another table (Foxing's `0021_book_subjects.sql`, whose `DELETE FROM book_subjects` sits in an `AFTER UPDATE ON books` trigger) is no longer read as deleting rows.
+
+## 0.61.0
+
+### Minor Changes
+
+- `devkit-declarations` fails a package whose exported function returns a type defined outside its entry points (TS2883 in a project with a composite tsconfig). It found 2 such types in Prelum 0.68.0, 24 in site-runtime 0.182.0 and 2 in site-api 0.49.1.
+
+## 0.60.0
+
+### Minor Changes
+
+- worker-deploy.yml installs with `npm ci --ignore-scripts` by default, then runs the repository's own `postinstall` and `prepare`, so no dependency's install script runs in a job that holds the deploy token. The new `rebuild` input names dependencies whose script the build needs (`npm rebuild`). A caller that sets `install:` keeps what it wrote; one that installs with scripts can drop to this default on its next repin.
+
+### Patch Changes
+
+- Audit fixes: the migration reader reads a trigger body when the same file writes rows (so `--apply` hands such a file to a person); `devkit-secrets` has a Cloudflare token shape and names each file it skips for size; `devkit-fetch-fonts` takes font files only from fonts.gstatic.com and refuses redirects; `devkit-db-migrate` and `devkit-migrations --apply` refuse a database name that is not a D1 name; the scoped-git-add hook reads quoted and bundled flags and the `:/` pathspec; the review job's Capsid host is no longer an environment override.
+- Split bin/no-bloat.mjs into bin/no-bloat/ modules (scan, count, compare, tools, base, classify, workflow, knip-config, reasons) and its test into units, end-to-end and guards; no behavior change.
+- Split bin/shared.mjs, bin/live.mjs, bin/ops-audit.mjs, bin/a11y.mjs and bin/copies.mjs into modules under bin/<name>/, and test/shared.test.mjs into three files; no behavior change.
+
 ## 0.59.6
 
 ### Patch Changes

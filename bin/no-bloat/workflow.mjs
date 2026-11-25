@@ -82,15 +82,13 @@ function needsOf(/** @type {Record<string, any>} */ jobs, /** @type {string} */ 
 
 /**
  * What a change to a workflow does to the check itself, which no pull request may do. The workflow is parsed as YAML,
- * as GitHub reads it (a flow map, a quoted or upper-case key, an anchor, CRLF line ends are the same data), and for each
- * job that calls pr.yml or no-bloat.yml at the base it refuses: dropping the job; any change to the job but its pin and
- * the inputs that are not CHECK_INPUTS (its `if`, `needs`, `strategy`, the workflow it calls); a change to an input that
- * turns the check off or decides what runs before it (the install, the prepare step, the config, the Node); any change to
- * a job it waits for (`needs`, which a skipped job skips too); and any change outside `jobs` (`on`, whose filters stop the
- * workflow running at all, `concurrency`, `permissions`), except a `schedule` added to `on`, which only adds runs. A file that no longer parses is refused too. The run that judges
- * such a change is the change's own, with its inputs, so a check it turns off never runs to refuse it; so it is refused
- * here whenever it does run, pr.yml refuses the rest (`--inputs-from`), and Capsid's nightly watch reports any that
- * merged. Pure, given the parser.
+ * as GitHub reads it, and for each job that calls pr.yml or no-bloat.yml at the base it refuses: dropping the job; any
+ * change to it but its pin and the inputs that are not CHECK_INPUTS; a change to an input that turns the check off or
+ * decides what runs before it; any change to a job it waits for; and any change outside `jobs` (`on`, `concurrency`,
+ * `permissions`), except a `schedule` added to `on`. A file that no longer parses is refused too. The run that judges such
+ * a change uses the change's own inputs, so a check it turns off never runs to refuse it: it is refused here whenever it
+ * does run, pr.yml refuses the rest (`--inputs-from`), and Capsid's nightly watch reports any that merged. Pure, given the
+ * parser.
  * @param {string} path @param {string} was @param {string} is @param {(text: string) => unknown} parseYaml
  */
 export function workflowInputs(path, was, is, parseYaml) {

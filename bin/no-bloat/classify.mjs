@@ -71,8 +71,8 @@ const DEPENDENCY_FIELDS = [
  * but the config's `baseline` and `tools`, a lockfile, a definition, and in package.json dependency versions moved
  * forward or a new shared package). `definition`: what it changes in how Knip or jscpd counts (their config files in any
  * format, a Knip config a run names with --config, a Knip plugin's config and what it imports (`plugins`,
- * knipPluginFiles; a Knip config in data that only drops entries is code, onlyDropsEntries), package.json's `knip` or `jscpd`, the no-bloat config outside `baseline` and `tools`). `workflow`: the workflows it changes that run the check, other than moving their devkit pins
- * (a workflow is no file the counts read, so it is never code). `back`: the shared packages it moves to an older release.
+ * knipPluginFiles), package.json's `knip` or `jscpd`, the no-bloat config; a Knip config in data that only drops entries
+ * is code, onlyDropsEntries; a workflow is never code). `back`: the shared packages it moves to an older release.
  * `entries`: per Knip config in data whose only change adds `entry` globs, the globs it adds (addedEntries). `refused`: what no change may do to the tools that measure: a `tools` entry that is not `<tool>@x.y.z` or is older than
  * the base's, and a devkit dependency that is not a DrDustinEdwards/devkit release tag or is overridden. Pure.
  * @param {{ changed: string[], configPath: string, definitions?: string[], plugins?: string[], before: (path: string) => string | null, now: (path: string) => string | null }} change
@@ -252,12 +252,11 @@ function toolSpecs(was, is) {
 
 /**
  * What the change is refused for, against the config at its base. A change that moves code may not raise a Knip, jscpd
- * or shared-copies count (a count the base lacked is raised from 0, and every count when the base had no baseline), nor
- * change how a count is measured, nor the workflows that run the check, nor move a shared package back. A change of what
- * is measured comes on its own, and may raise but not lower or drop a count: a narrower measure would hide what it no
- * longer reads. Only a version bump alone may lower one, with one exception: a change whose only change of measure adds
- * `entry` globs or `ignoreDependencies` names to a Knip config (kind.entries) may lower any Knip count, since each glob's files
- * are now entries and what they import is reached, and an ignored name has a comment saying where it is listed, and lower nothing else. No change drops a count from the baseline. Tests may rise: a new test is how they do. Pure.
+ * or shared-copies count (a count the base lacked is raised from 0), change how a count is measured, change the
+ * workflows that run the check, or move a shared package back. A change of measure comes on its own and may raise but not
+ * lower or drop a count. Only a version bump alone may lower one, and a change whose only change of measure adds `entry`
+ * globs or `ignoreDependencies` names to a Knip config (kind.entries) may lower any Knip count and nothing else. No change
+ * drops a count from the baseline. Tests may rise: a new test is how they do. Pure.
  * @param {Config} config @param {Config | null} base the config at the pull request's base
  * @param {ReturnType<typeof classify>} kind
  */

@@ -39,7 +39,7 @@ const onOrigin = (/** @type {string} */ url, /** @type {string} */ origin) => {
 };
 
 /** Every page the sitemap names on this origin, an index followed one level, at most MAX_PAGES. */
-export async function sitemapPages(/** @type {string} */ origin) {
+export async function sitemapPageList(/** @type {string} */ origin) {
   const top = await fetchLocs(`${origin}/sitemap.xml`);
   const pages = top.filter((u) => !/\.xml(\?|$)/.test(u));
   for (const index of top.filter((u) => /\.xml(\?|$)/.test(u) && onOrigin(u, origin)))
@@ -103,7 +103,7 @@ async function main(/** @type {string[]} */ argv) {
       `::warning::${origin}/health never named ${sha.slice(0, 12)}; warming what is live`,
     );
   }
-  const pages = await sitemapPages(origin);
+  const pages = await sitemapPageList(origin);
   const stored = await warm(pages);
   console.log(`warmed ${stored} of ${pages.length} sitemap pages on ${origin}`);
   return 0;

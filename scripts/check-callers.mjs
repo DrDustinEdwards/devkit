@@ -5,7 +5,9 @@
 //
 // Every `uses:` that names this repository's reusable workflows must end in `@` and a full 40-character commit sha: a branch
 // or a tag moves under a caller without a reviewed change to the caller. `secrets: inherit` is refused too, so a reader can
-// see exactly which secrets the shared file receives.
+// see exactly which secrets the shared file receives. A worker-deploy call that sets `install:` must keep it script-free
+// (`--ignore-scripts`, or devkit's own deploy-install.mjs): the deploy job holds the deploy token, so a plain `npm ci`
+// would run every dependency's install script with it.
 //
 // Exit 0 when every call is pinned, 1 when any is not, 2 when a file is unreadable or names no call at all.
 
@@ -15,6 +17,39 @@ import { isMain } from "../node/index.mjs";
 // A quoted value is the same value to YAML, so a quote around it is read through.
 const SHARED =
   /^\s*uses:\s*["']?(?<repo>[\w.-]+)\/devkit\/\.github\/workflows\/(?<file>[\w.-]+)@(?<ref>[^\s"']+)/;
+
+const DEPLOY = /\/worker-deploy\.yml@/;
+const SCRIPT_FREE = /--ignore-scripts|deploy-install\.mjs/;
+
+/**
+ * The line of each `install:` input on a worker-deploy call that does not stay script-free.
+ * @param {string[]} lines
+ * @returns {number[]}
+ */
+function scriptingInstalls(lines) {
+  const indent = (/** @type {string} */ l) => l.length - l.trimStart().length;
+  /** @type {number[]} */
+  const found = [];
+  lines.forEach((raw, i) => {
+    if (!DEPLOY.test(raw) || !/^\s*uses:/.test(raw)) return;
+    const base = indent(raw);
+    for (let j = i + 1; j < lines.length; j++) {
+      const text = lines[j].replace(/\s+#.*$/, "");
+      if (text.trim() && indent(text) < base) break;
+      const key = /^(\s*)install:\s*(.*)$/.exec(text);
+      if (!key) continue;
+      let value = key[2];
+      for (
+        let k = j + 1;
+        k < lines.length && (!lines[k].trim() || indent(lines[k]) > indent(text));
+        k++
+      )
+        value += ` ${lines[k]}`;
+      if (!SCRIPT_FREE.test(value)) found.push(j + 1);
+    }
+  });
+  return found;
+}
 
 /**
  * @param {string} text
@@ -45,6 +80,12 @@ export function callerProblems(text) {
       });
     }
   });
+  for (const line of scriptingInstalls(lines))
+    problems.push({
+      line,
+      problem:
+        "install: on a worker-deploy call must include --ignore-scripts (or run deploy-install.mjs); leave it unset for the default",
+    });
   if (calls === 0) problems.push({ line: 0, problem: "no call to a devkit reusable workflow" });
   return problems;
 }

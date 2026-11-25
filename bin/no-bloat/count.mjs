@@ -63,11 +63,10 @@ export function countFiles(config, paths, read) {
 }
 
 /**
- * The source files jscpd skips, wherever they are: a path narrowed to today's files or directories, or a pattern, leaves
- * the next file outside it unread, and a copy there is never counted. A file shorter than jscpd's minLines (its lines as
- * jscpd counts them, newline-split) is left out, since it can hold no copy and jscpd skips it by design (one under its
- * minTokens is left out by measure, which asks jscpd); one longer than maxLines or larger than maxSize is not, since a
- * copy in it is never seen. Test files are left out (tests rise by design).
+ * The source files jscpd skips, wherever they are: a path narrowed to today's files, or a pattern, leaves the next file
+ * outside it unread, and a copy there is never counted. A file shorter than jscpd's minLines (newline-split) is left out,
+ * since it can hold no copy (one under its minTokens is left out by measure, which asks jscpd); one longer than maxLines
+ * or larger than maxSize is not, since a copy in it is never seen. Test files are left out (tests rise by design).
  * @param {Config} config @param {string[]} paths
  * @param {string[]} scanned the files jscpd read, from its report (measure)
  * @param {string} root
@@ -353,10 +352,10 @@ function bytes(/** @type {unknown} */ size) {
 
 /**
  * The ways a change narrows what jscpd counts as a copy, so that nothing it reads now drops but the next change's copy is
- * missed: a larger minimum or a smaller maximum, fewer formats, another mode than strict, a file pattern, an extension map
- * or a config path changed, gitignore, skipLocal or noSymlinks turned on, or a path that no longer covers one it read
- * (a narrowing to today's file list); a new file it then skips is unreadAdded's. And a knip run whose arguments change, since the no-bloat config is strict JSON and cannot say why.
- * Pure.
+ * missed: a larger minimum or smaller maximum, fewer formats, another mode than strict, a changed pattern, extension map
+ * or config path, gitignore, skipLocal or noSymlinks turned on, or a path that no longer covers one it read; a new file it
+ * then skips is unreadAdded's. And a knip run whose arguments change, since the no-bloat config is strict JSON and cannot
+ * say why. Pure.
  * @param {{ before: (path: string) => string | null, now: (path: string) => string | null }} change
  * @param {Config} config @param {Config | null} base
  */
