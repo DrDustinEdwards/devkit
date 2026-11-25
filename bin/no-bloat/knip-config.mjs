@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, posix } from "node:path";
-import { blankComments } from "../shared.mjs";
+import { blankComments } from "../shared/core.mjs";
 import { BUFFER, cleanEnv } from "./tools.mjs";
 
 /** A Knip plugin config in code, which Knip runs in its own process, and the extensions its local imports resolve to. */

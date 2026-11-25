@@ -4,16 +4,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import {
-  boardMarkdown,
-  buildBoard,
-  checkEnv,
-  CLEAN_DAYS,
-  lintConfig,
-  loadConfig,
-  reportedResult,
-  resultOf,
-} from "../bin/live.mjs";
+import { boardMarkdown, buildBoard } from "../bin/live/board.mjs";
+import { CLEAN_DAYS, lintConfig, loadConfig } from "../bin/live/config.mjs";
+import { reportedResult, resultOf } from "../bin/live/results.mjs";
+import { checkEnv } from "../bin/live/run.mjs";
 
 const sites = [{ id: "a", name: "A", kind: "site", origin: "https://a.example.com" }];
 const areas = [

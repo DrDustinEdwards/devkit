@@ -1,5 +1,5 @@
 import { posix } from "node:path";
-import { blankComments } from "../shared.mjs";
+import { blankComments } from "../shared/core.mjs";
 import { TOOL_KEYS, flagValues } from "./base.mjs";
 import { isReason, legacyKeep } from "./scan.mjs";
 import { KNIP_DATA } from "./classify.mjs";
