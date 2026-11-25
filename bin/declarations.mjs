@@ -45,7 +45,7 @@ export function fixtureSource(
   /** @type {string} */ name,
   /** @type {Array<{ subpath: string, members: Array<{ name: string, isFunction: boolean }> }>} */ entries,
 ) {
-  const lines = [];
+  const lines = /** @type {string[]} */ ([]);
   entries.forEach(({ subpath, members }, i) => {
     lines.push(`import * as m${i} from ${JSON.stringify(name + subpath.slice(1))};`);
     for (const { name: member, isFunction } of members) {
