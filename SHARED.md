@@ -44,7 +44,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.68.0 (DrDustinEdwards/prelum)
+## Prelum 0.68.1 (DrDustinEdwards/prelum)
 
 - `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `feedDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `feedResponse`, `FEED_CONTENT_TYPES`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `setPageRenderer`, `trackRenderedPageDates`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `SITEMAP_MAX_URLS`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likePattern`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `isPubliclyVisible`, `normalizeZeroResultQuery`, `RRF_K`, `PUBLISHED_STATUS`, `slugify`, `isSlug`, `uniqueSlug`, `SLUG_PATTERN`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
 - `./xml`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `feedDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`, `DIAGRAM_ROLE_NAMES`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.182.0 (DrDustinEdwards/site-runtime)
+## site-runtime 0.182.1 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `permissionsAllowingSelf`, `corpFor`, `entryOverrides`, `buildSecurityHeaders`, `hostCookie`, `cookiePairs`, `readCookie`, `applyHeaderSet`, `headersFile`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `PASSKEY_OVERRIDES`, `UPLOAD_HEADERS`
