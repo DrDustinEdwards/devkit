@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 import { devNull, tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { PACKAGES } from "../shared.mjs";
+import { PACKAGES } from "../shared/copies.mjs";
 
 /** @typedef {import("./scan.mjs").Runner} Runner */
 

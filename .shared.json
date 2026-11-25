@@ -1,7 +1,8 @@
 {
   "copies": {
     "bin/migrations.mjs": "devkit-migrations hashes migration files with node:crypto; devkit depends on no shared package, so it cannot import site-runtime's encoding",
-    "bin/shared.mjs": "the fingerprints the check looks for are written here",
+    "bin/shared/copies.mjs": "the fingerprints the check looks for are written here",
+    "bin/shared/features.mjs": "the feature rules name the shared pieces they look for",
     "testing/access.mjs": "the Access test fake signs its own tokens; devkit depends on no shared package, so it cannot import site-runtime's encoding",
     "testing/github.mjs": "the GitHub fake writes real git blob shas in hex; devkit depends on no shared package, so it cannot import site-runtime's encoding"
   },

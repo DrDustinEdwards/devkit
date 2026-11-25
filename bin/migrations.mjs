@@ -50,7 +50,7 @@ const NOTE =
 /** The shape of a migration file name; wrangler lists the pending ones by it. */
 const NAME = /^\d{4}_[\w-]+\.sql$/;
 
-export const sha256 = (/** @type {string} */ text) =>
+export const migrationHash = (/** @type {string} */ text) =>
   createHash("sha256").update(text.replace(/\r\n/g, "\n"), "utf8").digest("hex");
 
 /**
@@ -123,7 +123,7 @@ export function check({ files, read, manifest, min = 1 }) {
       problems.push(
         `${file} is not in the manifest: a new migration adds its hash in the same commit (--write)`,
       );
-    else if (sha256(read(file)) !== expected)
+    else if (migrationHash(read(file)) !== expected)
       problems.push(
         `${file} differs from its recorded hash: an applied migration was edited. The repair is a new migration, never an edit`,
       );
@@ -314,7 +314,7 @@ async function main() {
 
   if (values.write) {
     const previous = manifest?.sha256 ?? {};
-    const sha = Object.fromEntries(files.map((f) => [f, sha256(read(f))]));
+    const sha = Object.fromEntries(files.map((f) => [f, migrationHash(read(f))]));
     const changed = files.filter((f) => previous[f] && previous[f] !== sha[f]);
     const gone = Object.keys(previous).filter((f) => !files.includes(f));
     if ((changed.length || gone.length) && !values.force) {
