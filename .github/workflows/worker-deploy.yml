@@ -55,10 +55,15 @@ on:
         type: string
         default: "."
       install:
-        description: The install command for the deploy job.
+        description: The install command for the deploy job. The default runs no dependency's install script (they run with the checkout the later steps hold the deploy token for), then the repository's own postinstall and prepare, which are its own reviewed code. A command that installs with scripts is the caller's choice.
         required: false
         type: string
-        default: npm ci
+        default: npm ci --ignore-scripts && npm run --if-present postinstall && npm run --if-present prepare
+      rebuild:
+        description: Space-separated dependencies whose install script the build needs (`npm rebuild <names>`), run after the install. Empty for none.
+        required: false
+        type: string
+        default: ""
       pre-deploy:
         description: The caller's pre-deploy guard (a migration check, a config rebuild, a build), run with the Cloudflare secrets. Empty for none.
         required: false
@@ -199,7 +204,10 @@ jobs:
       - name: Install
         env:
           INSTALL: ${{ inputs.install }}
-        run: bash -euo pipefail -c "$INSTALL"
+          REBUILD: ${{ inputs.rebuild }}
+        run: |
+          bash -euo pipefail -c "$INSTALL"
+          if [ -n "$REBUILD" ]; then npm rebuild $REBUILD; fi
 
       # The undo point for a migration, read before the guard that runs one. Wrangler's rollback never undoes a migration;
       # a Time Travel restore to this bookmark does. A bookmark that cannot be read stops the deploy before any migration.
@@ -830,7 +838,10 @@ jobs:
       - name: Install
         env:
           INSTALL: ${{ inputs.install }}
-        run: bash -euo pipefail -c "$INSTALL"
+          REBUILD: ${{ inputs.rebuild }}
+        run: |
+          bash -euo pipefail -c "$INSTALL"
+          if [ -n "$REBUILD" ]; then npm rebuild $REBUILD; fi
 
       - name: Preview build
         if: inputs.preview-build != ''
