@@ -1510,7 +1510,7 @@ export function checkWorkflows(tree, config, repo = {}) {
 
 /**
  * A workflow's text without the steps that cannot fail their job (`continue-on-error: true`): no-bloat run that way is a
- * report, and a report lets every new copy merge (germomics and Enarratio ran it so before 0.37.0).
+ * report, and a report lets every new copy merge.
  */
 export function gating(/** @type {string} */ text) {
   return text
