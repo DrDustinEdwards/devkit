@@ -112,6 +112,11 @@ on:
         required: false
         type: string
         default: ""
+      deploy-install:
+        description: Install a clean copy the way worker-deploy.yml's default install does (bin/deploy-install.mjs), then run worker-size-prepare there, so a pull request cannot pass while its deploy's install or build would fail. False for a repository that deploys with its own `install:`, or has no Worker.
+        required: false
+        type: boolean
+        default: true
       css-vars:
         description: devkit-css-vars, a var(--x) nothing declares, when the repository has a .css-vars.json. It runs from the install (declared_in reads installed packages such as Capsomer).
         required: false
@@ -249,6 +254,20 @@ jobs:
           package-manager: ${{ inputs.package-manager }}
           install: ${{ inputs.install }}
 
+      # A clean worktree of the same commit, installed as the deploy installs: no dependency script, git dependencies built
+      # from the lockfile. The first install above ran every script, so a missing dist/ passed there and failed on deploy.
+      - name: Deploy install
+        id: deploy-install
+        if: ${{ !cancelled() && steps.install.outcome == 'success' && inputs.deploy-install && inputs.worker-size }}
+        env:
+          PREPARE: ${{ inputs.worker-size-prepare }}
+        run: |
+          set -euo pipefail
+          git -C repo worktree add --detach "$GITHUB_WORKSPACE/deploy-install" HEAD
+          cd deploy-install
+          node "$GITHUB_WORKSPACE/.devkit/bin/deploy-install.mjs"
+          if [ -n "$PREPARE" ]; then bash -euo pipefail -c "$PREPARE"; fi
+
       - name: No-bloat
         id: no-bloat
         if: ${{ !cancelled() && steps.install.outcome == 'success' && inputs.no-bloat }}
@@ -303,6 +322,7 @@ jobs:
             Dependencies=${{ steps.dependencies.outcome }}
             Workflow-audit=${{ steps.touched.outcome == 'failure' && 'failure' || steps.workflow-audit.outcome }}
             Install=${{ steps.install.outcome }}
+            Deploy-install=${{ steps.deploy-install.outcome }}
             No-bloat=${{ steps.no-bloat.outcome }}
             No-bloat-on=${{ steps.no-bloat-on.outcome }}
             Worker-size=${{ steps.worker-size.outcome }}
