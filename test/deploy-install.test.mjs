@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { build, gitDeps } from "../bin/deploy-install.mjs";
+import { build, gitDeps, lockRoot } from "../bin/deploy-install.mjs";
 
 const SHA = "a".repeat(40);
 
@@ -97,6 +97,21 @@ test("build runs the git dependency's prepare and installs its packed files, not
     );
   } finally {
     process.chdir(cwd);
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("lockRoot finds the nearest folder at or above with a package-lock.json", () => {
+  const root = mkdtempSync(join(tmpdir(), "deploy-install-lock-"));
+  try {
+    mkdirSync(join(root, "apps", "web"), { recursive: true });
+    mkdirSync(join(root, "mcp"), { recursive: true });
+    writeFileSync(join(root, "package-lock.json"), "{}");
+    writeFileSync(join(root, "mcp", "package-lock.json"), "{}");
+    assert.equal(lockRoot(join(root, "apps", "web")), root);
+    assert.equal(lockRoot(root), root);
+    assert.equal(lockRoot(join(root, "mcp")), join(root, "mcp"));
+  } finally {
     rmSync(root, { recursive: true, force: true });
   }
 });

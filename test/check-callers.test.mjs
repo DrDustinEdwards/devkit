@@ -34,3 +34,36 @@ test("a branch, tag, short, uppercase or 41-character ref, secrets: inherit, or 
     { line: 0, problem: "no call to a devkit reusable workflow" },
   ]);
 });
+
+const DEPLOY = (install = "") => `jobs:
+  deploy:
+    uses: DrDustinEdwards/devkit/.github/workflows/worker-deploy.yml@${SHA}
+    with:
+      worker-name: x
+${install}      health-url: https://example.com/health
+  other:
+    uses: DrDustinEdwards/devkit/.github/workflows/no-bloat.yml@${SHA}
+    with:
+      install: npm ci
+`;
+
+test("an install input on a worker-deploy call must stay script-free", () => {
+  for (const install of [
+    "",
+    "      install: npm ci --ignore-scripts\n",
+    '      install: "cd ../.. && npm ci --ignore-scripts"\n',
+    '      install: cd .. && INSTALL= node "$GITHUB_WORKSPACE/.devkit/bin/deploy-install.mjs"\n',
+    "      install: >-\n        npm ci\n        --ignore-scripts\n",
+  ])
+    assert.deepEqual(callerProblems(DEPLOY(install)), [], install);
+  for (const install of [
+    "      install: npm ci\n",
+    '      install: "cd ../.. && npm ci"\n',
+    "      install: >-\n        npm ci &&\n        npm run build\n",
+  ]) {
+    const problems = callerProblems(DEPLOY(install));
+    assert.equal(problems.length, 1, install);
+    assert.equal(problems[0].line, 6);
+    assert.match(problems[0].problem, /--ignore-scripts/);
+  }
+});
