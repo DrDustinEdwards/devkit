@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.62.0
+
+### Minor Changes
+
+- worker-deploy.yml's default install now builds the dependencies the lockfile resolves from git (site-api, d1-dump and the like) from their locked commit, running their own `prepare`, so a deploy no longer fails on a missing `dist/` while still running no registry dependency's install script. The `install` input defaults to empty, which runs the new `bin/deploy-install.mjs`; a command set there still replaces it. pr.yml's new `deploy-install` input (on by default with `worker-size`) runs the same install in a clean worktree and then `worker-size-prepare`, so a pull request cannot pass while its deploy would fail. A caller that worked around the bug with `rebuild:` can drop it.
+
+### Patch Changes
+
+- `devkit-migrations` reads a trigger's body only when a write in the same file can fire it: an INSERT into the table the trigger is on, or any other write. A file that creates triggers and only backfills another table (Foxing's `0021_book_subjects.sql`, whose `DELETE FROM book_subjects` sits in an `AFTER UPDATE ON books` trigger) is no longer read as deleting rows.
+
 ## 0.61.0
 
 ### Minor Changes
