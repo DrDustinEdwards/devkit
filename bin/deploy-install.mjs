@@ -19,7 +19,7 @@ import { join } from "node:path";
 
 import { isMain } from "../node/index.mjs";
 
-export const DEFAULT_INSTALL = "npm ci --ignore-scripts";
+const DEFAULT_INSTALL = "npm ci --ignore-scripts";
 
 /**
  * The dependencies a package-lock.json resolves from git: the package's folder in node_modules, the repository to fetch and
@@ -50,7 +50,10 @@ const run = (command, args, cwd) => {
   if (r.status !== 0) process.exit(r.status ?? 1);
 };
 
-/** Build one git dependency at its locked commit and put the packed result in node_modules. */
+/**
+ * Build one git dependency at its locked commit and put the packed result in node_modules.
+ * @param {{ name: string, url: string, sha: string }} dep
+ */
 export function build({ name, url, sha }) {
   const work = mkdtempSync(join(tmpdir(), "git-dep-"));
   const src = join(work, "src");

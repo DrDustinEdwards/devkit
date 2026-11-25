@@ -55,7 +55,7 @@ on:
         type: string
         default: "."
       install:
-        description: The install command for the deploy job. Empty runs devkit's bin/deploy-install.mjs, the same install a pull request runs (pr.yml, "Deploy install"): `npm ci --ignore-scripts`, then each dependency the lockfile resolves from git built from its locked commit (its own `prepare`, which a package shipping no dist/ needs), then the repository's own postinstall and prepare. No registry dependency's install script runs in a job that holds the deploy token. A command set here replaces all of it, and is the caller's choice.
+        description: The install command for the deploy job. Empty runs devkit's bin/deploy-install.mjs, the same install a pull request runs (pr.yml, "Deploy install"). It runs `npm ci --ignore-scripts`, then each dependency the lockfile resolves from git built from its locked commit (its own `prepare`, which a package shipping no dist/ needs), then the repository's own postinstall and prepare. No registry dependency's install script runs in a job that holds the deploy token. A command set here replaces all of it, and is the caller's choice.
         required: false
         type: string
         default: ""

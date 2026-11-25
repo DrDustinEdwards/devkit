@@ -13,6 +13,7 @@
     "devkit-css-vars": "./bin/css-vars.mjs",
     "devkit-db-migrate": "./bin/db-migrate.mjs",
     "devkit-declarations": "./bin/declarations.mjs",
+    "devkit-deploy-install": "./bin/deploy-install.mjs",
     "devkit-destructive": "./bin/destructive.mjs",
     "devkit-fetch-fonts": "./bin/fetch-fonts.mjs",
     "devkit-gates": "./bin/gates.mjs",
