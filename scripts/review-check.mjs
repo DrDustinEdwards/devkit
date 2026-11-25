@@ -11,11 +11,11 @@
 // Capsid reads the pull request itself through its GitHub App; this sends nothing but the token.
 //
 // Environment: ACTIONS_ID_TOKEN_REQUEST_URL and ACTIONS_ID_TOKEN_REQUEST_TOKEN (the job's id-token: write),
-// GITHUB_TOKEN (checks: write), GITHUB_REPOSITORY, HEAD_SHA, GITHUB_STEP_SUMMARY, and CAPSID_URL to override the host.
+// GITHUB_TOKEN (checks: write), GITHUB_REPOSITORY, HEAD_SHA, GITHUB_STEP_SUMMARY.
 
 import { appendFileSync } from "node:fs";
 
-const CAPSID = process.env.CAPSID_URL || "https://mcp.dustinedwards.info";
+const CAPSID = "https://mcp.dustinedwards.info";
 const AUDIENCE = "capsid-review";
 const CHECK_NAME = "review verdict";
 // A reasoning model on a large diff takes minutes; Capsid's own deadline on the model is six.

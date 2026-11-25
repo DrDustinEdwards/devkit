@@ -51,6 +51,7 @@ export const BUILT_IN_SHAPES = {
   "a GitHub token": /\b(?:gh[pousr]_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{60,})/,
   "an AWS access key id": /\b(?:AKIA|ASIA)[0-9A-Z]{16}\b/,
   "a Sentry auth token": /\bsntr[ysu]_[A-Za-z0-9+/=_-]{40,}/,
+  "a Cloudflare API token or key": /\bcf(?:k|ut|at)_[A-Za-z0-9]{40,}/,
   "a private key": /-----BEGIN (?:RSA |EC |DSA |OPENSSH |ENCRYPTED )?PRIVATE KEY-----/,
 };
 
@@ -244,11 +245,16 @@ async function main() {
   /** @type {string[]} */
   const unreadable = [];
   let scanned = 0;
+  /** @type {string[]} */
+  const skipped = [];
   for (const rel of tracked) {
     const full = join(root, rel);
     if (!existsSync(full)) continue;
     const st = statSync(full);
-    if (!st.isFile() || st.size >= 2_000_000) continue;
+    if (!st.isFile() || st.size >= 2_000_000) {
+      if (st.isFile()) skipped.push(rel);
+      continue;
+    }
     let text;
     try {
       text = readFileSync(full, "utf8");
@@ -262,6 +268,8 @@ async function main() {
     for (const [name, value] of values)
       if (text.includes(value)) valueHits.push(`${rel} (${name})`);
   }
+  for (const rel of skipped)
+    console.log(`::notice title=devkit-secrets::${rel} is 2 MB or more and was not scanned`);
   ok(
     "every tracked file in scope was read",
     unreadable.length === 0,

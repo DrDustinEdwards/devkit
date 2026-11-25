@@ -82,6 +82,13 @@ test("--apply runs only what adds: a drop, rename, DELETE or `-- contract:` line
     "drops a table",
   ]);
   assert.deepEqual(handOnly("DELETE FROM sessions;"), ["deletes rows"]);
+  // A trigger the same file's own write fires is read: it runs during this apply.
+  assert.deepEqual(
+    handOnly(
+      "CREATE TRIGGER t AFTER INSERT ON users BEGIN DELETE FROM users; END;\nINSERT INTO users (id) VALUES (1);",
+    ),
+    ["deletes rows"],
+  );
   assert.deepEqual(
     handOnly(
       "CREATE TRIGGER t AFTER INSERT ON a BEGIN UPDATE b SET c = CASE WHEN 1 THEN 2 END; UPDATE d SET e = 1; END;",

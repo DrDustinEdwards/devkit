@@ -10,7 +10,7 @@
 # jq is not guaranteed on macOS, so the check is written in Python.
 #
 # Token-based, so paths that merely START with a dot (.claude/settings.json)
-# pass; only the bare tokens -A, --all, . and ./ block.
+# pass; only -A, --all (also quoted or bundled, as -Av), . and ./ block.
 #
 # FAILS CLOSED. The interpreter is probed by RUNNING candidates, not by command -v, because on Windows the bare name python3
 # resolves to the Microsoft Store stub, which satisfies command -v, prints an install notice and exits 49. stdin is decoded
@@ -27,9 +27,8 @@
 # something a guard should attempt, and for a blocking safety hook a false positive costs a rewording while a false negative
 # costs the thing the hook exists to prevent.
 #
-# KNOWN GAP, recorded and not fixed here: the check is token EQUALITY against four literal spellings, so a quoted flag,
-# bundled short options, a subshell, and the repo-root pathspec all stage everything and are NOT blocked. Widening that tuple
-# is a separate ruling.
+# KNOWN GAP: the command is read token by token (quotes removed, a bundled short option such as -Av counted), so a subshell or
+# a variable that expands to the flag still stages everything and is not blocked.
 set -uo pipefail
 
 block() {
@@ -51,7 +50,7 @@ if [ -z "$PY" ]; then
 fi
 
 "$PY" -c '
-import json, re, sys
+import json, re, shlex, sys
 raw = sys.stdin.buffer.read().decode("utf-8", "replace")
 try:
     d = json.loads(raw)
@@ -59,9 +58,14 @@ except Exception:
     sys.exit(4)
 cmd = str((d.get("tool_input") or {}).get("command") or "")
 for m in re.finditer(r"git\s+add\s+([^|;&]*)", cmd):
-    toks = m.group(1).split()
-    if any(t in ("-A", "--all", ".", "./") for t in toks):
-        sys.exit(3)
+    try:
+        toks = shlex.split(m.group(1))
+    except ValueError:
+        toks = m.group(1).split()
+    for t in toks:
+        short = t.startswith("-") and not t.startswith("--") and "A" in t
+        if short or t == "--all" or t.startswith("--all=") or t in (".", "./", ":/", "*"):
+            sys.exit(3)
 sys.exit(0)
 '
 rc=$?

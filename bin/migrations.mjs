@@ -304,7 +304,14 @@ async function main() {
     );
     process.exit(2);
   }
-  if (values.apply) return apply(dir, values.apply, values.config);
+  if (values.apply) {
+    // wrangler runs through cmd.exe on Windows, so the name must be one D1 could have.
+    if (!/^[\w.-]+$/.test(values.apply)) {
+      console.error(`devkit-migrations: "${values.apply}" is not a D1 database name.`);
+      process.exit(2);
+    }
+    return apply(dir, values.apply, values.config);
+  }
   const manifestPath = values.manifest ?? join(dir, "manifest.json");
   const files = readdirSync(dir)
     .filter((f) => f.endsWith(".sql"))

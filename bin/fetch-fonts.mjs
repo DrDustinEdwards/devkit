@@ -77,7 +77,10 @@ async function main() {
   const files = [];
   for (const f of faces) {
     const file = `${f.family.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${f.subset}.woff2`;
+    if (!f.url.startsWith("https://fonts.gstatic.com/"))
+      throw new Error(`${f.url}: a font file must come from https://fonts.gstatic.com/`);
     const r = await fetch(f.url, {
+      redirect: "error",
       headers: { "User-Agent": UA },
       signal: AbortSignal.timeout(30_000),
     });
