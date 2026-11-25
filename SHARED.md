@@ -200,13 +200,13 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./newsletter`: `newsletter`, `SUBSCRIBERS_SQL`
 - bins: `site-runtime-access-drift`, `site-runtime-ai-audit`, `site-runtime-headers`, `site-runtime-images`, `site-runtime-security`, `site-runtime-session-check`, `site-runtime-sign-in`, `site-runtime-speed`
 
-## site-api 0.49.1 (DrDustinEdwards/site-api)
+## site-api 0.49.2 (DrDustinEdwards/site-api)
 
 - `.`: `PACKAGE_VERSION`, `PREFIX`, `Capabilities`, `Meta`, `ErrorCode`, `ErrorBody`, `HASHED`, `schemaHash`, `MIN_KEY_LENGTH`, `isSiteApiRequest`, `insidePrefix`, `createSiteApi`, `PAGE_ACTIONS`, `hears`, `runHooks`, `indexNowHook`, `MEDIA_VERSION_PATTERN`, `mediaVersion`, `mediaRev`, `answerWrite`, `toArrayBuffer`, `SUGGEST_MODEL`, `SUGGEST_FEATURE`, `readSuggestion`, `mediaSuggester`, `previewDocument`, `placeholderAndColor`, `fileNameFor`, `REENCODED`, `prepareUpload`, `mediaLibrary`, `webmentionHook`, `addressRefusal`, `guardedFetch`, `outboundRefusal`, `publicAddress`, `resolveRefusal`, `OutboundRefusal`, `altRefusal`, `imageRights`, `kindOf`, `orientationOf`, `transformFocus`, `turnsSize`, `d1MediaStore`, `MEDIA_LIBRARY_SQL`, `siteApiStep`, `standardSiteApi`, `POST_FIELDS`, `SEARCH_FIELDS`, `Actor`, `ActorName`, `ChangeId`, `ContentId`, `SiteInfo`, `SortDir`, `Version`, `ROUTES`, `tombstoneResponse`, `gonePath`, `tombstoned`, `HOOK_BACKOFF_MINUTES`, `PREVIEW_LINK_PATH`, `TRASH_DAYS`, `SCHEDULE_BATCH_LIMIT`, `readEmbedded`, `duplicateKey`, `stripMetadata`, `PICTURE_RESIZE`, `PICTURE_TYPES`, `datedKey`, `extensionFor`, `pictureLimits`
 - `./admin`: `runPostsIntent`, `readMentionsQuery`, `loadMentions`, `runMentionsIntent`, `summary`, `liveSaveWarning`, `loadPosts`, `loadScheduledUpdate`, `readPostQuery`, `loadMedia`, `loadMediaChanges`, `readMediaQuery`, `runMediaIntent`
 - `./client`: `SiteApiError`, `createSiteClient`, `localClient`
 - `./frontmatter`: `tagsOf`, `setTags`, `SEARCH_FIELDS`, `searchFieldsOf`, `setSearchFields`, `POST_FIELDS`, `postFieldsOf`, `setPostFields`, `missingAltFields`, `JsonSourceError`, `jsonSource`
-- `./schedules`: `SCHEDULED_UPDATES_SQL`, `d1ScheduledUpdates`, `waitingUpdates`
+- `./schedules`: `SCHEDULED_UPDATES_SQL`, `utc`, `d1ScheduledUpdates`, `waitingUpdates`
 - `./drizzle`: `media`, `mediaRevisions`, `mediaChanges`, `siteApiWrites`, `hookRetries`, `previewLinks`, `webmentionTargets`, `mediaUploads`, `gonePaths`, `hookRuns`, `scheduledUpdates`
 - `./store`: `gonePath`, `tombstoned`, `tombstoneResponse`, `SITE_API_STORE_SQL_V0_21`, `SITE_API_STORE_SQL_V0_22`, `SITE_API_STORE_SQL`, `d1SiteApiStore`
 - `./r2`: `writeFocus`, `replaceObject`
