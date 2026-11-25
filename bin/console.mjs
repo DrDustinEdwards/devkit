@@ -25,7 +25,7 @@ import { execFileSync } from "node:child_process";
 import { join, posix } from "node:path";
 import { parseArgs } from "node:util";
 
-import { scan } from "./no-bloat.mjs";
+import { scan } from "./no-bloat/scan.mjs";
 
 import { appendSummary, escapeAnnotation } from "./annotate.mjs";
 import { isMain } from "../node/index.mjs";
