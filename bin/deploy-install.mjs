@@ -13,7 +13,7 @@
 //     3. the repository's own `postinstall` and `prepare`, which are its reviewed code and may need the packages above.
 
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -62,10 +62,15 @@ export function build({ name, url, sha }) {
     run("npm", ["install", "--ignore-scripts", "--no-audit", "--no-fund"], src);
     run("npm", ["pack", "--pack-destination", work], src);
     const target = join(process.cwd(), "node_modules", name);
+    // npm put the package's own dependencies that it could not hoist inside it; the packed files do not carry them.
+    const nested = join(target, "node_modules");
+    const kept = join(work, "nested");
+    if (existsSync(nested)) renameSync(nested, kept);
     rmSync(target, { recursive: true, force: true });
     mkdirSync(target, { recursive: true });
     const tarball = readdirSync(work).find((file) => file.endsWith(".tgz"));
     run("tar", ["-xzf", join(work, tarball ?? ""), "--strip-components=1", "-C", target]);
+    if (existsSync(kept)) renameSync(kept, nested);
   } finally {
     rmSync(work, { recursive: true, force: true });
   }

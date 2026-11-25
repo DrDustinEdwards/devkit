@@ -64,12 +64,14 @@ test("build runs the git dependency's prepare and installs its packed files, not
     const site = join(root, "site");
     mkdirSync(join(site, "node_modules", "dep"), { recursive: true });
     writeFileSync(join(site, "node_modules", "dep", "stale.txt"), "");
+    mkdirSync(join(site, "node_modules", "dep", "node_modules", "inner"), { recursive: true });
     process.chdir(site);
     build({ name: "dep", url: `file://${repo}`, sha });
 
     assert.equal(readFileSync(join(site, "node_modules", "dep", "dist", "index.js"), "utf8"), "built");
     assert.ok(!existsSync(join(site, "node_modules", "dep", "src.txt")), "the packed files only");
     assert.ok(!existsSync(join(site, "node_modules", "dep", "stale.txt")), "the old copy is replaced");
+    assert.ok(existsSync(join(site, "node_modules", "dep", "node_modules", "inner")), "its nested dependencies stay");
   } finally {
     process.chdir(cwd);
     rmSync(root, { recursive: true, force: true });
