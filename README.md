@@ -124,6 +124,8 @@ Which browser features a site may use, and with what fallback, is [docs/browser-
 
 When something breaks after a deploy, or anywhere else, the steps are in [docs/runbook.md](docs/runbook.md): site down, database down, bad deploy, stale backup and lost data, each site's RPO and RTO, and the incident record.
 
+What every repo's `.claude/skills/verify` skill shares (the driver helpers, the rules, the report) is [docs/verify.md](docs/verify.md); a repo's own skill keeps its boot steps, flows and specs.
+
 The guard is inlined into the workflow so a caller's one pinned sha fixes both. After an edit to `scripts/rollback-guard.mjs`, run `node scripts/inline-rollback-guard.mjs`; the test fails while the two differ.
 
 ## The restore drill

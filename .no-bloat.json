@@ -23,7 +23,7 @@
     "jscpd": "jscpd@5.4.0"
   },
   "baseline": {
-    "measured_at": "c07fc66",
+    "measured_at": "9f5fb87",
     "knip": {},
     "jscpd": {
       "clones": 0,
@@ -41,7 +41,7 @@
       "bin/copies.mjs": 556,
       "bin/live.mjs": 1249,
       "bin/ops-audit.mjs": 798,
-      "bin/shared.mjs": 2501,
+      "bin/shared.mjs": 2500,
       "scripts/code-map.mjs": 521,
       "test/shared.test.mjs": 1283
     },
@@ -50,9 +50,9 @@
       "cases": 245
     },
     "comments": {
-      "lines": 3613,
+      "lines": 3612,
       "code": 20609,
-      "percentage": 14.92
+      "percentage": 14.91
     }
   }
 }
