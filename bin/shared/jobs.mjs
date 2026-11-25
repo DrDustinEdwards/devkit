@@ -162,8 +162,7 @@ const TIME_IMPORT = /["'`]@dustinedwards\/site-runtime\/time["'`]/;
 /**
  * The AI rules: each a pattern over a source file's code (comments blanked), what it means, and the checklist item it
  * proves. `test`, when given, judges the match (the call's arguments, the code around it) and returns what is missing, or
- * null when the call is fine. Every rule was run against the network's repositories before it was added; none flags code
- * that already does it the shared way.
+ * null when the call is fine.
  * @type {{ id: string, find: RegExp, self?: string, test?: (code: string, m: RegExpExecArray) => string | null, say: (missing: string) => string }[]}
  */
 const AI_RULES = [

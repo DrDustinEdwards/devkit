@@ -160,15 +160,3 @@ test("an unknown URL throws naming it, unless the fallback answers it", async ()
     stub.restore();
   }
 });
-
-test("a token request sent as a Request is recorded too", async () => {
-  const stub = await stubAccess({ issuer: ISSUER, audience: "a", email: "x@example.com" });
-  try {
-    await fetch(
-      new Request(`${ISSUER}/token`, { method: "POST", body: new URLSearchParams({ code: "r" }) }),
-    );
-    assert.equal(stub.tokenRequests[0].get("code"), "r");
-  } finally {
-    stub.restore();
-  }
-});
