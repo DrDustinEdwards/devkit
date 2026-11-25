@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-24 22:32 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-25 11:38 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -8,17 +8,17 @@ Newest run 2026-11-24 22:32 UTC. Filled only from the live checks and the verifi
 
 | Area | Package | dustinedwards.info | Germomics | julieedwards.info | TXASM | BSW | Foxhound | Foxing | Carrel | Enarratio | Capsomer | Prelum specimen | Capsid explorer | Capsid MCP | Foxhound admin MCP | Dustin Edwards admin MCP | Carrel MCP | Foxing admin MCP | Capsid Portal | Carrel Desk | Lines added | Lines removed |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|
-| 1. Search, sharing and AI answers | ✅ | 🟡 | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
+| 1. Search, sharing and AI answers | ✅ | 🟡 | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | · | · | · | · | · | +18963 | −960 |
 | 2. Security headers and CSP | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | +52000 | −8463 |
 | 3. Sign-in and access | ✅ | ✅ | ✅ | · | 🟡 | · | 🟡 | ✅ | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | +67457 | −2968 |
 | 4. Writing and rendering | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ❌ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | 🟡 | ✅ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | ✅ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ❔ | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ❌ | ❔ | ❔ | ❔ | ❔ | · | · | +52017 | −7048 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | · | · | · | · | · | ✅ | ✅ | +33215 | −9539 |
+| 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
 
 ## Why a cell is not complete
@@ -28,8 +28,14 @@ Newest run 2026-11-24 22:32 UTC. Filled only from the live checks and the verifi
 Builder: Share SEO and other key site code. Verifier: Fresh verifier: re-sign of areas 1, 4 and 9.
 
 - 🟡 dustinedwards.info: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (563 pages). Gap: 27 of 204 sitemap URLs have no lastmod (contact, colophon, features and every /systems page).
-- 🟡 TXASM: Fixed since the last verdict (txasm #441): every public page has a Markdown copy at /path.md and for Accept: text/markdown, llms-full.txt is 200, and private paths (/admin.md, /login.md) are 404. prelum-audit v0.63.7 on 22 Nov 2026 still reports 4 errors: the PDF routes /documents/&lt;slug&gt;/inline and /download answer 500 about two requests in three (Sentry TXASM-4, R2 error 10001 from bucket.get, first seen 22 Nov 00:14 UTC; none in the 30 days before; Cloudflare status showed no R2 incident). Also 8 of 464 sitemap URLs have no lastmod; txasm #449 dates them from a daily 03:00 UTC job, so check again after it runs.
-- 🟡 BSW: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (20 pages). Gap: none of the 20 sitemap URLs has a lastmod. The site is a mockup on a workers.dev address.
+- ❌ TXASM: prelum-audit: 1 errors
+  - sitemap-missing: https://txasm.org/privacy an indexable page the site links to is not in the sitemap, so search engines find it only by following links
+- ❌ BSW: prelum-audit: 20 errors
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/ the sitemap lists a noindex page
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/grant-proposal-support the sitemap lists a noindex page
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page
+  - sitemap-noindex: https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page
 - 🟡 Enarratio: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (140 pages) and all 8 sitemap URLs carry lastmod. Gap: 140 of 140 pages have no &lt;meta name="text-scale" content="scale"&gt; (a prelum-audit warning).
 - 🟡 Capsomer: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (210 pages) and all 209 sitemap URLs carry lastmod. Gap: the title "Icons · Capsomer" is on two pages (/components/icons/ and /icons/), a prelum-audit warning.
 - 🟡 Prelum specimen: prelum-audit v0.63.7 (run by hand, 21 Nov 2026): 0 errors; text/markdown answers to Accept and .md on 6 random sitemap URLs; llms.txt and llms-full.txt 200; canonical and Open Graph present (7 pages). Gap, minor: /accessibility is in the sitemap with no lastmod (1 of 2 URLs).
@@ -89,32 +95,27 @@ Builder: Complete shared images and media. Verifier: Re-sign partial devkit area
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- ❌ dustinedwards.info: site-runtime-speed: 2 errors
+- ❌ dustinedwards.info: site-runtime-speed: 1 errors
   - C5: http://www.dustinedwards.info/about/ http www page, other slash: 2 redirects (301 http://www.dustinedwards.info/about/ &gt; 301 https://dustinedwards.info/about/ &gt; 200 https://dustinedwards.info/about)
-  - A3: https://dustinedwards.info/ desktop Lighthouse performance 99 (bar 100)
-- ❌ Germomics: site-runtime-speed: 12 errors
-  - B1: https://germomics.com/archive not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://germomics.com/season/1 not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://germomics.com/about/dustin-edwards not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B7: https://germomics.com/archive a conditional request with the page's own validator answered 200, not 304
-  - B7: https://germomics.com/data a conditional request with the page's own validator answered 200, not 304
+- ❌ Germomics: site-runtime-speed: 1 errors
+  - C5: http://www.germomics.com/episodes/ http www page, other slash: 2 redirects (301 http://www.germomics.com/episodes/ &gt; 301 https://germomics.com/episodes/ &gt; 200 https://germomics.com/episodes)
 - ❌ julieedwards.info: site-runtime-speed: 1 errors
   - C5: http://www.julieedwards.info/accessibility/ http www page, other slash: 2 redirects (301 http://www.julieedwards.info/accessibility/ &gt; 301 https://julieedwards.info/accessibility/ &gt; 200 https://julieedwards.info/accessibility)
-- ❌ TXASM: site-runtime-speed: 11 errors
-  - B1: https://txasm.dustin-edwards.workers.dev/sponsorship not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://txasm.dustin-edwards.workers.dev/awards/thomas-s-matney-award not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://txasm.dustin-edwards.workers.dev/awards/s-e-sulkin-award not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://txasm.dustin-edwards.workers.dev/newsletters/spring-1981-newsletter not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://txasm.dustin-edwards.workers.dev/awards/joan-abramowitz-award not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
+- 🟡 TXASM: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
 - 🟡 BSW: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
 - ❌ Foxhound: site-runtime-speed: 1 errors
   - C5: http://www.foxhoundapp.com/pricing/ http www page, other slash: 2 redirects (301 http://www.foxhoundapp.com/pricing/ &gt; 301 https://foxhoundapp.com/pricing/ &gt; 200 https://foxhoundapp.com/pricing)
-- ❌ Foxing: site-runtime-speed: 1 errors
-  - C5: http://www.foxing.app/books/ http www page, other slash: 2 redirects (301 http://www.foxing.app/books/ &gt; 301 https://foxing.app/books/ &gt; 200 https://foxing.app/books)
+- ❌ Foxing: site-runtime-speed: 16 errors
+  - B1: https://foxing.app/authors/a-e-w-mason not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
+  - B1: https://foxing.app/journal/great-gatsby-green-light-meaning not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
+  - B1: https://foxing.app/authors/a-p-herbert not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
+  - B1: https://foxing.app/picks/bookofthemonthclub-orig not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
+  - B7: https://foxing.app/about a conditional request with the page's own validator answered 200, not 304
 - ❌ Carrel: site-runtime-speed-static: 2 errors
   - D4: https://carrel.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 15 KiB
   - D4: https://carrel.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 15 KiB
-- ❌ Enarratio: site-runtime-speed-static: 2 errors
+- ❌ Enarratio: site-runtime-speed-static: 3 errors
+  - B1: https://enarratio.dustinedwards.info/astro not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=300, must-revalidate, colo IAD then IAD
   - D4: https://enarratio.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 27 KiB
   - D4: https://enarratio.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 27 KiB
 - ❌ Capsomer: site-runtime-speed-static: 1 errors
@@ -152,6 +153,8 @@ Builder: Complete accessibility and Capsomer components. Verifier: Fresh verifie
 Builder: Complete shared charts. Verifier: Verify backups, repo settings and remaining charts.
 
 - ❌ Package: no verifier has checked the package
+- ❌ Capsid explorer: chart-audit: 1 errors
+  - D5: https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.014 (layout shift); largest 0.014, div.cap-chart +0 px in "Claims matching" at 1476 ms
 
 ### 11. AI and MCP
 
@@ -159,14 +162,15 @@ Builder: Complete shared AI and MCP code. Verifier: Re-sign partial devkit areas
 
 - 🟡 Package: Closed since 2026-10-31: toolsForGrant, icons, cancel on close and toolListHash exist and are used by Carrel, Foxing, Capsid and dustinedwards MCP; fireOnce is used by Carrel; the tool-call log has export, 90 day retention, a health alert and an owner page per server (linked from the Portal Agents view); shared agent keys exist in ./agent-keys; the suggester in site-api 0.46.1 has feature metadata, a timeout, a JSON schema, a prose check and leaves Llama out of the Claude-only prose checks; a reusable conformance workflow exists. Still open: devkit has no static AI rules and no tool-list pin comparison (areas.json passes no --tools-hash, so T12 only warns); the live check lists about 25 item ids but the old 89 item checklist could not be found, so coverage is not proven; the live tools/list, conformance and burst checks run only with a test grant, which this sandbox lacks.
 - 🟡 dustinedwards.info: Closed: site-api is pinned at 0.46.1 (current); a cut answer is never cached; gateway tags use {app, feature}; ai-audit live: 0 errors, 0 warnings. Still open: Ask's question is not wrapped in untrusted() (C10; wrapping breaks AI Search retrieval, so this is a known limit, not a pass); that Ask's calls reach the gateway is set on the AI Search instance and cannot be checked from here.
-- ❔ Foxhound: site-runtime-ai-audit could not measure: audit: https://foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization \|     at file:///tmp/devkit-live-7VrYKW/site-runtime_v0.181.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 \|     at Array.filter (&lt;anonymous&gt;)
+- 🟡 Foxhound: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Capsid explorer: Closed: the AI Search call is raced against an 8 s timeout and an upstream error goes to the log only, so the caller gets a fixed sentence. Still open: the gateway is attached only when the AI_GATEWAY_ID dashboard var is set, and whether it is set live cannot be checked from here.
 - ❌ Capsid MCP: site-runtime-ai-audit: 1 errors
-  - L8: https://mcp.dustinedwards.info/health tool-call-log is warn: 1 call(s) with no finished row after 15 minutes
-- ❔ Foxhound admin MCP: site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxhoundapp.com could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization \|     at file:///tmp/devkit-live-7VrYKW/site-runtime_v0.181.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 \|     at Array.filter (&lt;anonymous&gt;)
-- ❔ Dustin Edwards admin MCP: site-runtime-ai-audit could not measure: audit: https://admin-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization \|     at file:///tmp/devkit-live-7VrYKW/site-runtime_v0.181.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 \|     at Array.filter (&lt;anonymous&gt;)
-- ❔ Carrel MCP: site-runtime-ai-audit could not measure: audit: https://carrel-mcp.dustinedwards.info could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization \|     at file:///tmp/devkit-live-7VrYKW/site-runtime_v0.181.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 \|     at Array.filter (&lt;anonymous&gt;)
-- ❔ Foxing admin MCP: site-runtime-ai-audit could not measure: audit: https://admin-mcp.foxing.app could not measure: the audit stopped before it finished, so the rest was not measured: ReferenceError: Cannot access 'NPX_ENV' before initialization \|     at file:///tmp/devkit-live-7VrYKW/site-runtime_v0.181.2/node_modules/@dustinedwards/site-runtime/bin/ai-audit.mjs:739:86 \|     at Array.filter (&lt;anonymous&gt;)
+  - L8: https://mcp.dustinedwards.info/health tool-call-log is warn: could not run: timed out after 3000 ms
+- 🟡 Foxhound admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
+- 🟡 Dustin Edwards admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
+- 🟡 Carrel MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
+- ❌ Foxing admin MCP: site-runtime-ai-audit: 1 errors
+  - P3: https://admin-mcp.foxing.app/mcp conformance server-stateless passed 22/26 (failing: sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel, sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
 
 ### 12. Checks and tooling
 
