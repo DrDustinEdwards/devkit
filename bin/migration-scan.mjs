@@ -71,7 +71,8 @@ function scan(sql) {
 }
 
 const WRITE = /^\s*(?:INSERT|UPDATE|DELETE|REPLACE|WITH)\b/i;
-const INSERT_INTO = /^\s*INSERT\s+(?:OR\s+(?:IGNORE|ABORT|FAIL|ROLLBACK)\s+)?INTO\s+(?:\w+\s*\.\s*)?([\w]+|_)/i;
+const INSERT_INTO =
+  /^\s*INSERT\s+(?:OR\s+(?:IGNORE|ABORT|FAIL|ROLLBACK)\s+)?INTO\s+(?:\w+\s*\.\s*)?([\w]+|_)/i;
 const TRIGGER_ON =
   /\bTRIGGER\b[^;]*?\b(INSERT|UPDATE|DELETE)\b[^;]*?\bON\s+(?:\w+\s*\.\s*)?([\w]+|_)/i;
 
