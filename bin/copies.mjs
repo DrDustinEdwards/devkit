@@ -3,8 +3,8 @@
 // another under a new name slips past it; this scan reads the code itself. It shallow-clones every repository of the owner
 // it can read (no forks, nothing archived), gathers each one's tracked source (no tests, builds or vendored files, SOURCE
 // and SKIP below) into one folder, runs jscpd over all of it at once and counts the copied blocks whose two files sit in
-// different repositories. The count is held exactly: above the baseline in live/copies.json it fails (exit 1), and so does
-// a count below it, until the baseline is lowered so the gain is kept.
+// different repositories. Above the baseline in live/copies.json it fails (exit 1); a count below it passes with a
+// warning, and the baseline is lowered in the next change that touches it.
 //
 //   devkit-copies [--config live/copies.json] [--from <dir>]   the check; --from reads checkouts named by repository
 //                                                              (dir/prelum, dir/site-runtime...) instead of cloning
@@ -256,8 +256,8 @@ async function main() {
     );
     failed = true;
   }
-  // The count is held exactly, as no-bloat holds its own: below the baseline the room a cleanup left would let the next copy
-  // in, so it fails until the baseline is lowered.
+  // Below the baseline passes with a warning, as no-bloat does: only a rise fails, and the next change that touches the
+  // baseline lowers it.
   const lower = [];
   if (count < config.baseline) lower.push(`${count} copies (baseline ${config.baseline})`);
   if (config.names !== undefined && names.length < namesBaseline)
@@ -266,9 +266,8 @@ async function main() {
     lower.push(`${overlap.length} package overlaps (baseline ${config.packages})`);
   if (lower.length) {
     console.log(
-      `::error title=devkit-copies::${lower.join(", ")}. The count went down, so lower the baseline to keep the gain: run \`node bin/copies.mjs --write-baseline\` and commit live/copies.json.`,
+      `::warning title=devkit-copies::${lower.join(", ")}. The count went down: lower the baseline to keep the gain with \`node bin/copies.mjs --write-baseline\` in live/copies.json.`,
     );
-    failed = true;
   }
   if (failed) process.exit(1);
 }

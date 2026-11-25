@@ -3,9 +3,8 @@
 // blocks copied from the shared packages the repository installs ("shared copies", copies.mjs packageCopies, so a copy
 // under a new name is caught too), Chrome's legacy scanner for old web platform patterns ("legacy", Modern Web
 // Guidance), and a static count of test files and test cases, each compared with the repository's
-// own baseline. The baseline is the count exactly: one above it fails the run (exit 1, an ::error:: line per count), and so
-// does one below it, until the baseline is lowered in the same change, so the room a removal leaves can never let a new
-// copy back in (the ratchet of ESLint's bulk suppressions and Betterer's ci mode). Knip counts each issue (its JSON
+// own baseline. The baseline is a ceiling: one above it fails the run (exit 1, an ::error:: line per count); one below it passes
+// with a warning, and the next change that touches the baseline lowers it (a baseline is never raised). Knip counts each issue (its JSON
 // report), not each file. Every count the run measures needs its baseline entry, and no change drops one. Against the
 // branch the change goes into (`--lines-from` on a pull request; otherwise the first of origin/HEAD, origin/main and
 // origin/master) a change that moves code may not raise a Knip, jscpd or shared-copies count (one new to the baseline
@@ -252,10 +251,10 @@ function main() {
       "Remove what was added: change the code that already does it, or import the shared one, and delete the copy (SHARED.md). A real exception goes in knip.json's ignore list with a comment saying why, or behind `jscpd:ignore-start` and its reason in the source.",
     );
   }
-  // The room a removal leaves is where the next copy would go: a count below its baseline fails until it is lowered.
+  // A count below its baseline passes: only a rise fails. The next change that touches the baseline lowers it.
   if (lowered.length)
-    errors.push(
-      `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config in this change.`,
+    warnings.push(
+      `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
     );
   errors.push(...refused);
   errors.unshift(...measured.warnings, ...stale);
