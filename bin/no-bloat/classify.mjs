@@ -1,5 +1,5 @@
 import { posix } from "node:path";
-import { PACKAGES } from "../shared.mjs";
+import { PACKAGES } from "../shared/data.mjs";
 import { LOCKFILES, TOOL_KEYS, compareVersions } from "./base.mjs";
 import { addedEntries, onlyDropsEntries } from "./knip-config.mjs";
 import { DEFAULT_TOOLS } from "./scan.mjs";

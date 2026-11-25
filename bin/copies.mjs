@@ -46,9 +46,9 @@ import {
 import { tmpdir } from "node:os";
 import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { parseArgs } from "node:util";
-
 import { appendSummary, escapeAnnotation } from "./annotate.mjs";
-import { PACKAGES, distinctive, exportNames } from "./shared.mjs";
+import { distinctive, exportNames } from "./shared/copies.mjs";
+import { PACKAGES } from "./shared/data.mjs";
 import { isMain } from "../node/index.mjs";
 
 const OWNER = "DrDustinEdwards";

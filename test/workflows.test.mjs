@@ -77,7 +77,7 @@ test("every example caller pins a full commit sha", () => {
 });
 
 test("checks.yml writes only pull requests, only on the repository's own, checks the code on every event that adds commits, and counts as the checks workflow", async () => {
-  const { checkWorkflows } = await import("../bin/shared.mjs");
+  const { checkWorkflows } = await import("../bin/shared/workflows.mjs");
   const code = codeOf(readFileSync(new URL("checks.yml", dir), "utf8"));
   assert.deepEqual(
     [...code.matchAll(/(\S+): write\b/g)].map((m) => m[1]),
