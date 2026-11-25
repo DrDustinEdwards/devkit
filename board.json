@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-25T11:38:00.152Z",
+ "as_of": "2026-11-25T17:57:36.486Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -1298,8 +1298,58 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
+     "reason": "site-runtime-speed: 11 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://dustinedwards.info/cv not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://dustinedwards.info/software/foxhound not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://dustinedwards.info/research/retroviruses/human not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://dustinedwards.info/teaching/central-dogma not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/writing a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/cv a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/software/foxhound a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/research/retroviruses a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/research/retroviruses/human a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/teaching/central-dogma a conditional request with the page's own validator answered 200, not 304"
+      },
       {
        "severity": "error",
        "check": "C5",
@@ -1319,8 +1369,33 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
+     "reason": "site-runtime-speed: 6 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://germomics.com/a-boy-named-flu not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/txasm a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/games/phage-defense a conditional request with the page's own validator answered 200, not 304"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/data/influenza-1918 a conditional request with the page's own validator answered 200, not 304"
+      },
       {
        "severity": "error",
        "check": "C5",
@@ -1392,83 +1467,8 @@
     },
     "foxing": {
      "status": "missing",
-     "reason": "site-runtime-speed: 16 errors",
+     "reason": "site-runtime-speed: 1 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxing.app/authors/a-e-w-mason not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxing.app/journal/great-gatsby-green-light-meaning not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxing.app/authors/a-p-herbert not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://foxing.app/picks/bookofthemonthclub-orig not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/about a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/terms a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/authors/a-a-milne a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/books/813-leblanc a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/books/a-bid-for-fortune-boothby a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/picks/audacious a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/journal/frankenstein-monster-meaning a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/journal/great-gatsby-green-light-meaning a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/authors/a-p-herbert a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/picks/bookofthemonthclub-orig a conditional request with the page's own validator answered 200, not 304"
-      },
-      {
-       "severity": "error",
-       "check": "B7",
-       "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain a conditional request with the page's own validator answered 200, not 304"
-      },
       {
        "severity": "warning",
        "check": "C2",
@@ -1519,13 +1519,8 @@
     },
     "enarratio": {
      "status": "missing",
-     "reason": "site-runtime-speed-static: 3 errors",
+     "reason": "site-runtime-speed-static: 2 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://enarratio.dustinedwards.info/astro not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=300, must-revalidate, colo IAD then IAD"
-      },
       {
        "severity": "error",
        "check": "D4",
@@ -1550,8 +1545,13 @@
     },
     "capsomer": {
      "status": "missing",
-     "reason": "site-runtime-speed-static: 1 errors",
+     "reason": "site-runtime-speed-static: 2 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B1",
+       "detail": "https://capsomer.dustinedwards.info/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, must-revalidate, colo SJC then SJC"
+      },
       {
        "severity": "error",
        "check": "A3",
@@ -1728,13 +1728,15 @@
      "clean_days": 5
     },
     "foxhound": {
-     "status": "complete",
-     "reason": "devkit-ops-audit (devkit live run --areas 8, by hand, 22 Nov 2026): pass, 0 errors, 0 warnings, 0 not measured, with GitHub read through the session's repository access. /health pass with backup pass; deployed sha read against the branch head. Newest restore-drill run succeeded 22 Nov 2026 12:4x UTC.",
-     "evidence": [
-      "https://foxhoundapp.com/health",
-      "https://github.com/DrDustinEdwards/foxhound/actions/runs/45023692582"
-     ],
-     "clean_days": 6
+     "status": "missing",
+     "reason": "ops-audit: 1 errors",
+     "findings": [
+      {
+       "severity": "error",
+       "check": "H4",
+       "detail": "https://foxhoundapp.com/health serves 7dcc64e86cdcc6e4559d3d5ad5ae2f6f6ac93a57, not the branch head c2ef480c9adc5871f03f0f2867dd6ef80962edd3 (https://github.com/DrDustinEdwards/foxhound/commit/c2ef480c9adc5871f03f0f2867dd6ef80962edd3), committed 77 minutes ago"
+      }
+     ]
     },
     "foxing": {
      "status": "complete",
@@ -2067,15 +2069,12 @@
      "clean_days": 5
     },
     "capsid": {
-     "status": "missing",
-     "reason": "chart-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "D5",
-       "detail": "https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.014 (layout shift); largest 0.014, div.cap-chart +0 px in \"Claims matching\" at 1476 ms"
-      }
-     ]
+     "status": "complete",
+     "reason": "prelum-chart-audit (devkit live run --areas 10, by hand, 22 Nov 2026): full crawl, light and dark, 0 errors, 0 warnings. Focused chart points checked in Chromium on /data/cholera-soho-1854, /astro, /numbers/ and /cv: no focused point has another element on top, and the focus ring and tooltip show.",
+     "evidence": [
+      "https://capsid.dustinedwards.info/"
+     ],
+     "clean_days": 5
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2388,80 +2387,9 @@
      "clean_days": 1
     },
     "foxing-mcp": {
-     "status": "missing",
-     "reason": "site-runtime-ai-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_find_user: inputSchema.query is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_find_user: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_get_user_state: inputSchema.user_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_audit_log: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_inspect_book: inputSchema.query is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_inspect_book: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_check_catalog: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_book_of_month: inputSchema.botm_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_read_book_of_month: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_review_club_picks: inputSchema.club_id is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "T4",
-       "detail": "https://admin-mcp.foxing.app/mcp foxing_review_club_picks: inputSchema.cursor is a string with no pattern, enum, const or format"
-      },
-      {
-       "severity": "warning",
-       "check": "P3",
-       "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless: 2 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400)"
-      },
-      {
-       "severity": "error",
-       "check": "P3",
-       "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless passed 22/26 (failing: sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel, sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
-      },
-      {
-       "severity": "warning",
-       "check": "P7",
-       "detail": "https://admin-mcp.foxing.app/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "capsid-portal": {
      "status": "n/a",

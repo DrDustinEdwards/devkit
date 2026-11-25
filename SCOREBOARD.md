@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-25 11:38 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-25 17:57 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -15,10 +15,10 @@ Newest run 2026-11-25 11:38 UTC. Filled only from the live checks and the verifi
 | 5. Carrel editing contract | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | 🟡 | ✅ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
 | 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | +28958 | −2924 |
+| 8. Running and recovery | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | · | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | ✅ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | · | · | · | · | · | ✅ | ✅ | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | ❌ | · | · | +52017 | −7048 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | +33215 | −9539 |
+| 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
 
 ## Why a cell is not complete
@@ -95,30 +95,34 @@ Builder: Complete shared images and media. Verifier: Re-sign partial devkit area
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- ❌ dustinedwards.info: site-runtime-speed: 1 errors
-  - C5: http://www.dustinedwards.info/about/ http www page, other slash: 2 redirects (301 http://www.dustinedwards.info/about/ &gt; 301 https://dustinedwards.info/about/ &gt; 200 https://dustinedwards.info/about)
-- ❌ Germomics: site-runtime-speed: 1 errors
-  - C5: http://www.germomics.com/episodes/ http www page, other slash: 2 redirects (301 http://www.germomics.com/episodes/ &gt; 301 https://germomics.com/episodes/ &gt; 200 https://germomics.com/episodes)
+- ❌ dustinedwards.info: site-runtime-speed: 11 errors
+  - B1: https://dustinedwards.info/cv not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
+  - B1: https://dustinedwards.info/software/foxhound not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
+  - B1: https://dustinedwards.info/research/retroviruses/human not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
+  - B1: https://dustinedwards.info/teaching/central-dogma not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
+  - B7: https://dustinedwards.info/writing a conditional request with the page's own validator answered 200, not 304
+- ❌ Germomics: site-runtime-speed: 6 errors
+  - B1: https://germomics.com/a-boy-named-flu not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
+  - B7: https://germomics.com/txasm a conditional request with the page's own validator answered 200, not 304
+  - B7: https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304
+  - B7: https://germomics.com/games/phage-defense a conditional request with the page's own validator answered 200, not 304
+  - B7: https://germomics.com/data/influenza-1918 a conditional request with the page's own validator answered 200, not 304
 - ❌ julieedwards.info: site-runtime-speed: 1 errors
   - C5: http://www.julieedwards.info/accessibility/ http www page, other slash: 2 redirects (301 http://www.julieedwards.info/accessibility/ &gt; 301 https://julieedwards.info/accessibility/ &gt; 200 https://julieedwards.info/accessibility)
 - 🟡 TXASM: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
 - 🟡 BSW: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
 - ❌ Foxhound: site-runtime-speed: 1 errors
   - C5: http://www.foxhoundapp.com/pricing/ http www page, other slash: 2 redirects (301 http://www.foxhoundapp.com/pricing/ &gt; 301 https://foxhoundapp.com/pricing/ &gt; 200 https://foxhoundapp.com/pricing)
-- ❌ Foxing: site-runtime-speed: 16 errors
-  - B1: https://foxing.app/authors/a-e-w-mason not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://foxing.app/journal/great-gatsby-green-light-meaning not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://foxing.app/authors/a-p-herbert not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
-  - B1: https://foxing.app/picks/bookofthemonthclub-orig not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD
-  - B7: https://foxing.app/about a conditional request with the page's own validator answered 200, not 304
+- ❌ Foxing: site-runtime-speed: 1 errors
+  - C5: http://www.foxing.app/books/ http www page, other slash: 2 redirects (301 http://www.foxing.app/books/ &gt; 301 https://foxing.app/books/ &gt; 200 https://foxing.app/books)
 - ❌ Carrel: site-runtime-speed-static: 2 errors
   - D4: https://carrel.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 15 KiB
   - D4: https://carrel.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 15 KiB
-- ❌ Enarratio: site-runtime-speed-static: 3 errors
-  - B1: https://enarratio.dustinedwards.info/astro not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=300, must-revalidate, colo IAD then IAD
+- ❌ Enarratio: site-runtime-speed-static: 2 errors
   - D4: https://enarratio.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 27 KiB
   - D4: https://enarratio.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 27 KiB
-- ❌ Capsomer: site-runtime-speed-static: 1 errors
+- ❌ Capsomer: site-runtime-speed-static: 2 errors
+  - B1: https://capsomer.dustinedwards.info/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, must-revalidate, colo SJC then SJC
   - A3: https://capsomer.dustinedwards.info/ mobile Lighthouse performance 89 (bar 95)
 - ❌ Prelum specimen: site-runtime-speed-static: 4 errors
   - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 26 KiB
@@ -134,6 +138,8 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 Builder: Complete shared running and recovery. Verifier: Verify backups, repo settings and remaining charts.
 
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
+- ❌ Foxhound: ops-audit: 1 errors
+  - H4: https://foxhoundapp.com/health serves 7dcc64e86cdcc6e4559d3d5ad5ae2f6f6ac93a57, not the branch head c2ef480c9adc5871f03f0f2867dd6ef80962edd3 (https://github.com/DrDustinEdwards/foxhound/commit/c2ef480c9adc5871f03f0f2867dd6ef80962edd3), committed 77 minutes ago
 
 ### 9. Accessibility and components
 
@@ -153,8 +159,6 @@ Builder: Complete accessibility and Capsomer components. Verifier: Fresh verifie
 Builder: Complete shared charts. Verifier: Verify backups, repo settings and remaining charts.
 
 - ❌ Package: no verifier has checked the package
-- ❌ Capsid explorer: chart-audit: 1 errors
-  - D5: https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.014 (layout shift); largest 0.014, div.cap-chart +0 px in "Claims matching" at 1476 ms
 
 ### 11. AI and MCP
 
@@ -169,8 +173,7 @@ Builder: Complete shared AI and MCP code. Verifier: Re-sign partial devkit areas
 - 🟡 Foxhound admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
-- ❌ Foxing admin MCP: site-runtime-ai-audit: 1 errors
-  - P3: https://admin-mcp.foxing.app/mcp conformance server-stateless passed 22/26 (failing: sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel, sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)
+- 🟡 Foxing admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 
 ### 12. Checks and tooling
 

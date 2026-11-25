@@ -1,5 +1,5 @@
 {
- "at": "2026-11-25T11:38:00.152Z",
+ "at": "2026-11-25T17:57:36.486Z",
  "public_token": false,
  "results": [
   {
@@ -118,7 +118,7 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/accessibility the sitemap lists a noindex page"
     }
    ],
-   "seconds": 4
+   "seconds": 6
   },
   {
    "area": 1,
@@ -130,7 +130,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 8
+   "seconds": 5
   },
   {
    "area": 1,
@@ -153,7 +153,7 @@
      "detail": "https://capsomer.dustinedwards.info/icons/ \"Icons · Capsomer\" is on 2 pages"
     }
    ],
-   "seconds": 7
+   "seconds": 23
   },
   {
    "area": 1,
@@ -165,7 +165,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 2
   },
   {
    "area": 1,
@@ -177,7 +177,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 65
+   "seconds": 143
   },
   {
    "area": 1,
@@ -189,7 +189,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 7
+   "seconds": 9
   },
   {
    "area": 1,
@@ -201,7 +201,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 43
+   "seconds": 45
   },
   {
    "area": 1,
@@ -213,7 +213,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 63
+   "seconds": 103
   },
   {
    "area": 1,
@@ -225,7 +225,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 13
+   "seconds": 25
   },
   {
    "area": 1,
@@ -237,7 +237,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 2
   },
   {
    "area": 1,
@@ -249,7 +249,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 3
   },
   {
    "area": 1,
@@ -307,7 +307,7 @@
      "detail": "https://txasm.org/meetings/spring-2025/abstracts/66 \"The Isolation and Characterization of the Bacteriophage...\" is on 2 pages"
     }
    ],
-   "seconds": 154
+   "seconds": 222
   },
   {
    "area": 2,
@@ -322,7 +322,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-lGo6STpfx27anI4Ot2Cfmg==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-nqB5P/fpxjQhohbCChTSiQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     },
     {
      "severity": "warning",
@@ -332,25 +332,25 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-bASfk3COxyyOnB/blJlsPg==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-pM2mOkp8P7RgHhNjKeTV8Q==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/site-runtime-security-fc7a2d6b-9631-4512-a487-71fd1f8f6cff (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-YU+rN2C2JGEZHb0ni4tQHQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/site-runtime-security-35ae3f04-4e35-4a25-8ecb-c2a090d9afbd (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-ie/qFyJL8U0OY2TzZbF2ww==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-cct1vEZKlEL3s7kA0tn7iw==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-rqh8OIOspSkE8FX3Rn4/OQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://bsw.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-ngZ7KS72LckI0tGTchP1GQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-eaxH7vqUsxSosTUT1XBW1w==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
     }
    ],
-   "seconds": 3
+   "seconds": 4
   },
   {
    "area": 2,
@@ -375,7 +375,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://capsid.dustinedwards.info/site-runtime-security-89015ebf-a08d-487d-8603-b36a735aa4d4 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://capsid.dustinedwards.info/site-runtime-security-044f54c4-4585-4dad-acdb-63b1e769e16a (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -401,7 +401,7 @@
    "area": 2,
    "site": "capsid-portal",
    "check": "signed-in-security",
-   "ref": "capsid cddee83d163e",
+   "ref": "capsid aa8785df1c7d",
    "status": "pass",
    "errors": 0,
    "warnings": 2,
@@ -410,12 +410,12 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://portal.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-uWtWcEYxHvS8zdaAqGgr9w==' 'self')"
+     "detail": "https://portal.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-NNH6cTo8SBHBqBP5Jz3QuA==' 'self')"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-PR8YWusn+6dg0icCmapYlg==' 'self')"
+     "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-mpE7C4SroOpjKlPeKoJUiA==' 'self')"
     }
    ],
    "seconds": 0
@@ -436,7 +436,7 @@
      "detail": "https://portal.dustinedwards.info/ is behind Cloudflare Access (dustinedwards.cloudflareaccess.com): the pages behind it were not graded"
     }
    ],
-   "seconds": 3
+   "seconds": 4
   },
   {
    "area": 2,
@@ -461,7 +461,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://capsomer.dustinedwards.info/site-runtime-security-5f5ec0a5-0850-40f4-b403-c574fe2557bf (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://capsomer.dustinedwards.info/site-runtime-security-bf291101-c58d-4e3f-89b6-0e34ee156cf6 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -469,7 +469,7 @@
      "detail": "https://capsomer.dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 1
+   "seconds": 2
   },
   {
    "area": 2,
@@ -494,7 +494,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://carrel.dustinedwards.info/site-runtime-security-4fa3aec3-01e8-4765-8b0d-54761caf21d7 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://carrel.dustinedwards.info/site-runtime-security-9c7bfcde-cf74-4d10-9b6f-f31eeea5765f (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -508,7 +508,7 @@
    "area": 2,
    "site": "carrel-desk",
    "check": "signed-in-security",
-   "ref": "carrel 47ac675fbf9c",
+   "ref": "carrel 50d21f0f594c",
    "status": "pass",
    "errors": 0,
    "warnings": 2,
@@ -570,30 +570,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-RLxLCBLUxjNswePU+we2YA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-bXw1P38NlmfSXJzRCkf5Dw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/about (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-RPI1DQzHDHlrgnvvIGWvMQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/about (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-h71G/KIPQxj0d8rRzh2e1w==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/site-runtime-security-b8361de0-f1b2-4c41-8392-421c5c892b1b (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-v1tbiP+bhYlIlQNxcAnW2A==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/site-runtime-security-eff65f8e-556d-4a44-ab7b-c1ce2df9b232 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-KIG29w5snzMtywI5Zvi8SA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-6imgLxvlMBDzB4kUZecwZg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-C8wqbUk2ubTsXrijGW782g==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-MMA8lPCMGpGqLgFGCJ9b8w==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-FhpihiimWytczR5BgJUaxQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 1
+   "seconds": 4
   },
   {
    "area": 2,
@@ -630,7 +630,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://enarratio.dustinedwards.info/site-runtime-security-f398d790-7aba-4175-be61-e7b112cd5f08 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://enarratio.dustinedwards.info/site-runtime-security-7f68d029-598d-45a8-8dc9-54fe41ef284c (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -653,30 +653,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-uXZVzlX3WSL8zx/eLCEnxA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-IV3SoHX+AYvS97LzBZh73Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-b04c43Jbi3WiCqgBZi0CoQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Aij6jdm0GhCvRYj3JzTsiA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/site-runtime-security-2088d050-b5e2-4dd5-be26-e3565c6bc2f9 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-TquTk6bSwuS2JOsAMJJYfg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/site-runtime-security-981da063-64ea-4cb7-b1c9-6bb96d20c9eb (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-zqBvI0I4Rg3mOJ5PNqaFJw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-GcpkSAqO6aHoSW5OpEoyDw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-fwXIOozybmxguC83MdRSRQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-HC4xiFGfWsL1Z9IiXhVJXw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-jGun3h/uTQDcM3ZG/tyP0w==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 2
+   "seconds": 4
   },
   {
    "area": 2,
@@ -703,30 +703,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-plx2NHTIHk4+HNSjMFVFRQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-UGu/z/ipXEvTurSoYqQt0w==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/books (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-TlmcCZoem2mf9zpOBvonhw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/books (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-OpJUQxNjzp2gf/XQ6Gatpg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/site-runtime-security-11fdccc7-ce82-47a6-91b7-160f432a838c (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-zs3W26ET2uAF6g6Vrmwcmg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/site-runtime-security-64056ace-07f9-4905-a38a-b26415ac4ddf (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Fzsp4IhtlBFolJOrgfykpQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-v9m+HNuDhtKBPy/MEaQG9A==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-aLjn9oy14bHSWbFB4MHdbQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://foxing.app/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-dd4AUN7qonykV298rFGi+w==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://foxing.app/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-kEocgK3/ZYZmJ/kjv4Qkfg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 2,
@@ -753,30 +753,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-dI/EQqJhxuXpcb6LmUhSfw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-TqX7UZMm1Kad3wzoaT0Eng==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-I5k0866WWGEL3V0UOYst9w==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-3LrzxkGHJXlXgIDikfBzHQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/site-runtime-security-fe5dab18-25d7-44d2-9d9d-379c43c8b636 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-cDHFugpjWHe8n4jUterweA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/site-runtime-security-47581fcc-be88-48b0-a325-d7356130a243 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-thZdOUi4CMsjQfdJrHr42w==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-flWnejo5mQxH/5DtxvoLKQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-M+50pip1uWB/g2tVsz/Aeg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-hW22YaUoCJfUW6MRCWd46w==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-462i/u1N/+nZVExhc0yodA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 3
+   "seconds": 6
   },
   {
    "area": 2,
@@ -791,30 +791,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-QA+I0PpJVfYsTja9QhZA9A==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-28xjZdD2hYGNHsDEk63t0Q==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://julieedwards.info/accessibility (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-EDD/5srQnysZztcEGQfkrA==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://julieedwards.info/accessibility (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-hXeGqtmPu2a+kIZz6gNmqA==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://julieedwards.info/site-runtime-security-1168db5c-652a-468b-9508-7a1a4b01d12f (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-8ZByLU+wwBYmP6qJtydppA==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://julieedwards.info/site-runtime-security-7593c5c3-8d42-4267-b93b-50af9bc062e5 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-dmFWXaXc/UpHwsH4gVAilA==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-38BRYkgi7kevOfzqlJmLQg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-fDnafVffQW2jDgwEDxydVg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://julieedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-NPaLznlf024cT5UjDqL9Ow==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://julieedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-pp6Ab8ouGDSFO4vLAj8Igw==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 3
+   "seconds": 4
   },
   {
    "area": 2,
@@ -839,7 +839,7 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://prelum.dustinedwards.info/site-runtime-security-8c64e385-51fe-4f64-b0e2-907b5ba1b169 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://prelum.dustinedwards.info/site-runtime-security-151b2df5-312e-4dc2-9540-29a6c2388e2c (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
@@ -862,30 +862,30 @@
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-x+P90g2mnsOXlsPv8WX9FQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-9ugy0a5F2JIoOcDvs+TMXA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/meetings (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-mkGN5TbkXKk+W0d0l0dqWw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/meetings (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-//JhktuUMRfHwA0Q2EfXzw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-9ea36398-82e2-42fd-890f-c8408f4d95ef (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-xBt7fUKeA9Cj2JkvmJcDKA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-6a90c653-fab9-4793-90d1-86ce63e4ae1d (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-BkOfVDGKkAPovcg7iBiAtw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-AgEv5tvXUgf6dh9YSjyfmg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Y5m7dkTPyvyfrXjJHbuwbw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     },
     {
      "severity": "warning",
      "check": "C3",
-     "detail": "https://txasm.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-wVvlFYfdepNcl4xjZCeyEw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-MZbShHKVyho94GqcyDih/A==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
     }
    ],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 3,
@@ -909,7 +909,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 3,
@@ -921,7 +921,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 3,
@@ -945,7 +945,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 3,
@@ -981,7 +981,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 5
   },
   {
    "area": 3,
@@ -1029,7 +1029,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 2
   },
   {
    "area": 3,
@@ -1064,7 +1064,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 2
   },
   {
    "area": 4,
@@ -1076,7 +1076,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 17
   },
   {
    "area": 4,
@@ -1088,7 +1088,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 5
+   "seconds": 18
   },
   {
    "area": 4,
@@ -1112,7 +1112,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 6
+   "seconds": 16
   },
   {
    "area": 4,
@@ -1124,7 +1124,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 9
+   "seconds": 11
   },
   {
    "area": 4,
@@ -1147,7 +1147,7 @@
      "detail": "https://foxhoundapp.com/features id \"Merchant context\" is on 2 elements"
     }
    ],
-   "seconds": 3
+   "seconds": 5
   },
   {
    "area": 4,
@@ -1159,7 +1159,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 23
+   "seconds": 5
   },
   {
    "area": 4,
@@ -1171,7 +1171,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 16
   },
   {
    "area": 4,
@@ -1183,7 +1183,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 4,
@@ -1195,7 +1195,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 4,
@@ -1207,7 +1207,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 5
+   "seconds": 11
   },
   {
    "area": 5,
@@ -1225,13 +1225,13 @@
    "area": 5,
    "site": "dustinedwards-info",
    "check": "site-api-live",
-   "ref": "v0.49.2",
+   "ref": "v0.50.1",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 3
   },
   {
    "area": 5,
@@ -1249,7 +1249,7 @@
    "area": 5,
    "site": "foxhound",
    "check": "site-api-live",
-   "ref": "v0.49.2",
+   "ref": "v0.50.1",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -1273,7 +1273,7 @@
    "area": 5,
    "site": "foxing",
    "check": "site-api-live",
-   "ref": "v0.49.2",
+   "ref": "v0.50.1",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -1297,13 +1297,13 @@
    "area": 5,
    "site": "germomics",
    "check": "site-api-live",
-   "ref": "v0.49.2",
+   "ref": "v0.50.1",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 5,
@@ -1321,7 +1321,7 @@
    "area": 5,
    "site": "julieedwards-info",
    "check": "site-api-live",
-   "ref": "v0.49.2",
+   "ref": "v0.50.1",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -1345,7 +1345,7 @@
    "area": 5,
    "site": "txasm",
    "check": "site-api-live",
-   "ref": "v0.49.2",
+   "ref": "v0.50.1",
    "status": "pass",
    "errors": 0,
    "warnings": 0,
@@ -1363,7 +1363,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 4
   },
   {
    "area": 6,
@@ -1375,7 +1375,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 6,
@@ -1411,7 +1411,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 6,
@@ -1459,7 +1459,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 4
+   "seconds": 8
   },
   {
    "area": 6,
@@ -1471,7 +1471,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 3
+   "seconds": 6
   },
   {
    "area": 6,
@@ -1483,7 +1483,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 6,
@@ -1523,7 +1523,7 @@
      "detail": "https://bsw.dustin-edwards.workers.dev/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 36
+   "seconds": 35
   },
   {
    "area": 7,
@@ -1564,10 +1564,15 @@
    "check": "site-runtime-speed-static",
    "ref": "v0.182.3",
    "status": "fail",
-   "errors": 1,
+   "errors": 2,
    "warnings": 2,
    "unmeasured": 0,
    "findings": [
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://capsomer.dustinedwards.info/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, must-revalidate, colo SJC then SJC"
+    },
     {
      "severity": "error",
      "check": "A3",
@@ -1584,7 +1589,7 @@
      "detail": "https://capsomer.dustinedwards.info/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 46
+   "seconds": 39
   },
   {
    "area": 7,
@@ -1617,7 +1622,7 @@
      "detail": "https://carrel.dustinedwards.info/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 19
+   "seconds": 24
   },
   {
    "area": 7,
@@ -1625,10 +1630,60 @@
    "check": "site-runtime-speed",
    "ref": "v0.182.3",
    "status": "fail",
-   "errors": 1,
+   "errors": 11,
    "warnings": 2,
    "unmeasured": 0,
    "findings": [
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://dustinedwards.info/cv not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://dustinedwards.info/software/foxhound not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://dustinedwards.info/research/retroviruses/human not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+    },
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://dustinedwards.info/teaching/central-dogma not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/writing a conditional request with the page's own validator answered 200, not 304"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/cv a conditional request with the page's own validator answered 200, not 304"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/software/foxhound a conditional request with the page's own validator answered 200, not 304"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/research/retroviruses a conditional request with the page's own validator answered 200, not 304"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/research/retroviruses/human a conditional request with the page's own validator answered 200, not 304"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/teaching/central-dogma a conditional request with the page's own validator answered 200, not 304"
+    },
     {
      "severity": "error",
      "check": "C5",
@@ -1645,7 +1700,7 @@
      "detail": "https://dustinedwards.info/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 32
+   "seconds": 36
   },
   {
    "area": 7,
@@ -1653,15 +1708,10 @@
    "check": "site-runtime-speed-static",
    "ref": "v0.182.3",
    "status": "fail",
-   "errors": 3,
+   "errors": 2,
    "warnings": 2,
    "unmeasured": 0,
    "findings": [
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://enarratio.dustinedwards.info/astro not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=300, must-revalidate, colo IAD then IAD"
-    },
     {
      "severity": "error",
      "check": "D4",
@@ -1683,7 +1733,7 @@
      "detail": "https://enarratio.dustinedwards.info/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 36
+   "seconds": 30
   },
   {
    "area": 7,
@@ -1711,7 +1761,7 @@
      "detail": "https://foxhoundapp.com/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 30
+   "seconds": 26
   },
   {
    "area": 7,
@@ -1719,85 +1769,10 @@
    "check": "site-runtime-speed",
    "ref": "v0.182.3",
    "status": "fail",
-   "errors": 16,
+   "errors": 1,
    "warnings": 3,
    "unmeasured": 0,
    "findings": [
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://foxing.app/authors/a-e-w-mason not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://foxing.app/journal/great-gatsby-green-light-meaning not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://foxing.app/authors/a-p-herbert not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD"
-    },
-    {
-     "severity": "error",
-     "check": "B1",
-     "detail": "https://foxing.app/picks/bookofthemonthclub-orig not from the edge on the second request: cf-cache-status MISS (first MISS), cache-control public, max-age=0, colo IAD then IAD"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/about a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/terms a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/authors/a-a-milne a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/books/813-leblanc a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/picks/audacious a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/journal/frankenstein-monster-meaning a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/journal/great-gatsby-green-light-meaning a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/authors/a-p-herbert a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/picks/bookofthemonthclub-orig a conditional request with the page's own validator answered 200, not 304"
-    },
-    {
-     "severity": "error",
-     "check": "B7",
-     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain a conditional request with the page's own validator answered 200, not 304"
-    },
     {
      "severity": "warning",
      "check": "C2",
@@ -1827,10 +1802,35 @@
    "check": "site-runtime-speed",
    "ref": "v0.182.3",
    "status": "fail",
-   "errors": 1,
+   "errors": 6,
    "warnings": 2,
    "unmeasured": 0,
    "findings": [
+    {
+     "severity": "error",
+     "check": "B1",
+     "detail": "https://germomics.com/a-boy-named-flu not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/txasm a conditional request with the page's own validator answered 200, not 304"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/games/phage-defense a conditional request with the page's own validator answered 200, not 304"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/data/influenza-1918 a conditional request with the page's own validator answered 200, not 304"
+    },
     {
      "severity": "error",
      "check": "C5",
@@ -1847,7 +1847,7 @@
      "detail": "https://germomics.com/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 21
+   "seconds": 47
   },
   {
    "area": 7,
@@ -1875,7 +1875,7 @@
      "detail": "https://julieedwards.info/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 21
+   "seconds": 20
   },
   {
    "area": 7,
@@ -1918,7 +1918,7 @@
      "detail": "https://prelum.dustinedwards.info/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 26
+   "seconds": 28
   },
   {
    "area": 7,
@@ -1946,7 +1946,7 @@
      "detail": "https://txasm.dustin-edwards.workers.dev/ desktop: no Chrome field data for this page yet"
     }
    ],
-   "seconds": 23
+   "seconds": 25
   },
   {
    "area": 8,
@@ -1970,7 +1970,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 4
+   "seconds": 5
   },
   {
    "area": 8,
@@ -1982,7 +1982,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 8,
@@ -1991,9 +1991,15 @@
    "ref": "v0.64.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 0,
+   "warnings": 1,
    "unmeasured": 0,
-   "findings": [],
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "H4",
+     "detail": "https://dustinedwards.info/health serves 04801b6b2826d9f67cc979c0fd64a5021c635375, not the branch head cf047e32294b9a9cb3a56b11dca3af3eef35fb44 (https://github.com/DrDustinEdwards/dustinedwards-info/commit/cf047e32294b9a9cb3a56b11dca3af3eef35fb44), committed 19 minutes ago"
+    }
+   ],
    "seconds": 4
   },
   {
@@ -2006,19 +2012,25 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 2
   },
   {
    "area": 8,
    "site": "foxhound",
    "check": "ops-audit",
    "ref": "v0.64.0",
-   "status": "pass",
-   "errors": 0,
+   "status": "fail",
+   "errors": 1,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [],
-   "seconds": 2
+   "findings": [
+    {
+     "severity": "error",
+     "check": "H4",
+     "detail": "https://foxhoundapp.com/health serves 7dcc64e86cdcc6e4559d3d5ad5ae2f6f6ac93a57, not the branch head c2ef480c9adc5871f03f0f2867dd6ef80962edd3 (https://github.com/DrDustinEdwards/foxhound/commit/c2ef480c9adc5871f03f0f2867dd6ef80962edd3), committed 77 minutes ago"
+    }
+   ],
+   "seconds": 3
   },
   {
    "area": 8,
@@ -2030,7 +2042,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 3
   },
   {
    "area": 8,
@@ -2039,15 +2051,9 @@
    "ref": "v0.64.0",
    "status": "pass",
    "errors": 0,
-   "warnings": 1,
+   "warnings": 0,
    "unmeasured": 0,
-   "findings": [
-    {
-     "severity": "warning",
-     "check": "H4",
-     "detail": "https://foxing.app/health serves 59ddde5ce5a7746e6e0d8f7df655c142c91a3338, not the branch head 1c3d4253d61c48b23a8c22e557bdf6eeef5a96d3 (https://github.com/DrDustinEdwards/foxing/commit/1c3d4253d61c48b23a8c22e557bdf6eeef5a96d3), committed 22 minutes ago"
-    }
-   ],
+   "findings": [],
    "seconds": 2
   },
   {
@@ -2108,7 +2114,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 222
+   "seconds": 224
   },
   {
    "area": 9,
@@ -2120,7 +2126,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 245
+   "seconds": 226
   },
   {
    "area": 9,
@@ -2132,7 +2138,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 226
+   "seconds": 225
   },
   {
    "area": 9,
@@ -2156,7 +2162,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 239
+   "seconds": 244
   },
   {
    "area": 9,
@@ -2168,7 +2174,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 282
+   "seconds": 271
   },
   {
    "area": 9,
@@ -2180,7 +2186,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 205
+   "seconds": 209
   },
   {
    "area": 9,
@@ -2192,7 +2198,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 226
+   "seconds": 231
   },
   {
    "area": 9,
@@ -2204,7 +2210,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 212
+   "seconds": 219
   },
   {
    "area": 9,
@@ -2216,7 +2222,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 79
+   "seconds": 80
   },
   {
    "area": 9,
@@ -2240,25 +2246,19 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 211
+   "seconds": 216
   },
   {
    "area": 10,
    "site": "capsid",
    "check": "chart-audit",
    "ref": "v0.68.2",
-   "status": "fail",
-   "errors": 1,
+   "status": "pass",
+   "errors": 0,
    "warnings": 0,
    "unmeasured": 0,
-   "findings": [
-    {
-     "severity": "error",
-     "check": "D5",
-     "detail": "https://capsid.dustinedwards.info/numbers/ at 1280 px, charts shift the page by 0.014 (layout shift); largest 0.014, div.cap-chart +0 px in \"Claims matching\" at 1476 ms"
-    }
-   ],
-   "seconds": 111
+   "findings": [],
+   "seconds": 121
   },
   {
    "area": 10,
@@ -2270,7 +2270,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 64
+   "seconds": 58
   },
   {
    "area": 10,
@@ -2282,7 +2282,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 330
+   "seconds": 309
   },
   {
    "area": 10,
@@ -2294,7 +2294,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 6
+   "seconds": 5
   },
   {
    "area": 10,
@@ -2306,7 +2306,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 28
+   "seconds": 24
   },
   {
    "area": 10,
@@ -2318,7 +2318,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 192
+   "seconds": 239
   },
   {
    "area": 10,
@@ -2330,7 +2330,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 337
+   "seconds": 346
   },
   {
    "area": 10,
@@ -2342,7 +2342,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 161
+   "seconds": 154
   },
   {
    "area": 10,
@@ -2354,7 +2354,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 222
+   "seconds": 285
   },
   {
    "area": 10,
@@ -2366,7 +2366,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 65
+   "seconds": 62
   },
   {
    "area": 10,
@@ -2378,7 +2378,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 61
+   "seconds": 49
   },
   {
    "area": 11,
@@ -2402,7 +2402,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 11,
@@ -2535,7 +2535,7 @@
      "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
     }
    ],
-   "seconds": 270
+   "seconds": 267
   },
   {
    "area": 11,
@@ -2547,7 +2547,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 1
+   "seconds": 0
   },
   {
    "area": 11,
@@ -2747,7 +2747,7 @@
      "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching: 2 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-read-caching-hints)"
     }
    ],
-   "seconds": 259
+   "seconds": 257
   },
   {
    "area": 11,
@@ -2802,7 +2802,7 @@
      "detail": "https://admin-mcp.dustinedwards.info/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 258
+   "seconds": 257
   },
   {
    "area": 11,
@@ -2814,7 +2814,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 0
+   "seconds": 1
   },
   {
    "area": 11,
@@ -3035,7 +3035,7 @@
      "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 258
+   "seconds": 256
   },
   {
    "area": 11,
@@ -3054,8 +3054,8 @@
    "site": "foxing-mcp",
    "check": "site-runtime-ai-audit",
    "ref": "v0.182.3",
-   "status": "fail",
-   "errors": 1,
+   "status": "pass",
+   "errors": 0,
    "warnings": 13,
    "unmeasured": 0,
    "findings": [
@@ -3117,12 +3117,7 @@
     {
      "severity": "warning",
      "check": "P3",
-     "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless: 2 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400)"
-    },
-    {
-     "severity": "error",
-     "check": "P3",
-     "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless passed 22/26 (failing: sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel, sep-2575-server-sends-subscription-ack, sep-2575-server-tags-subscription-id)"
+     "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
     },
     {
      "severity": "warning",
@@ -3130,7 +3125,7 @@
      "detail": "https://admin-mcp.foxing.app/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
     }
    ],
-   "seconds": 273
+   "seconds": 256
   },
   {
    "area": 11,
@@ -3154,7 +3149,7 @@
    "warnings": 0,
    "unmeasured": 0,
    "findings": [],
-   "seconds": 2
+   "seconds": 1
   },
   {
    "area": 11,
