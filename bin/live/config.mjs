@@ -36,7 +36,7 @@ export const EXIT_UNMEASURED = 3;
 
 export const live = new URL("../../live/", import.meta.url);
 
-export const readJsonFile = (/** @type {string | URL} */ path) =>
+export const readLiveJson = (/** @type {string | URL} */ path) =>
   JSON.parse(readFileSync(path, "utf8"));
 
 /**
@@ -49,7 +49,7 @@ export function loadConfig(/** @type {string | URL} */ dir = live) {
   const problems = [];
   const read = (/** @type {URL} */ url, /** @type {string} */ name) => {
     try {
-      return readJsonFile(url);
+      return readLiveJson(url);
     } catch (error) {
       problems.push(
         `${name} cannot be read: ${error instanceof Error ? error.message : String(error)}`,
