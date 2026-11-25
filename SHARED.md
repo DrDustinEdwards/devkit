@@ -44,7 +44,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 | Claude Code hooks | devkit | devkit claude/hooks, run from .claude/settings.json: a repository's own copy fails (copies) |
 | the nightly dump | d1-dump | d1-dump runCheckedBackup and backupHealth in the app's cron: an app with D1 and no dump fails (features) |
 
-## Prelum 0.68.1 (DrDustinEdwards/prelum)
+## Prelum 0.68.2 (DrDustinEdwards/prelum)
 
 - `.`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `feedDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`, `rssItem`, `rssDocument`, `atomEntry`, `atomDocument`, `feedItem`, `jsonFeedDocument`, `feedResponse`, `FEED_CONTENT_TYPES`, `pageDates`, `readPageRecord`, `trackPageDates`, `kvPageRecord`, `setPageRenderer`, `trackRenderedPageDates`, `sitemapDocument`, `sitemapIndexDocument`, `sitemapResponse`, `sitemapEntries`, `SITEMAP_MAX_URLS`, `llmsDocument`, `llmsLink`, `markdownPage`, `llmsFullDocument`, `markdownPath`, `prefersMarkdown`, `markdownResponse`, `serveMarkdownCopies`, `llmsResponse`, `splitSource`, `joinSource`, `blocks`, `unquote`, `withoutComment`, `splitFlow`, `readKey`, `readList`, `setRawKey`, `setBlock`, `frontmatter`, `ftsLiteral`, `toMatchExpression`, `fuse`, `staticSearchIndex`, `searchWords`, `staticSearch`, `likePattern`, `parseQuery`, `hasFilters`, `parseSort`, `applySort`, `isPubliclyVisible`, `normalizeZeroResultQuery`, `RRF_K`, `PUBLISHED_STATUS`, `slugify`, `isSlug`, `uniqueSlug`, `SLUG_PATTERN`, `SLUG_MAX_LENGTH`, `SLUG_ATTRIBUTE_PATTERN`, `wordCount`, `readingMinutes`, `excerpt`, `htmlToText`, `isoDuration`, `hasWideDash`, `findWideDashes`, `plural`, `formatCount`, `capitalize`, `titleCase`, `humanize`, `normalizeHex`, `normalizeNewlines`, `mdCell`, `escapeMarkdown`
 - `./xml`: `unescapeXml`, `escapeXml`, `cdata`, `rfc822`, `isoDay`, `feedDate`, `absolutizeUrls`, `mathToTex`, `documentResponse`
@@ -62,7 +62,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./head`: `headTags`, `articleDates`, `shareCard`, `absoluteUrl`, `headHtml`, `defineHead`, `rootLoaderData`, `privateMeta`, `BREADCRUMB_MIN_ITEMS`, `SERP_DESCRIPTION`, `SERP_TITLE`, `metaText`, `searchTitle`, `serpWidth`, `truncateForSerp`
 - `./scholar`: `escapeBibtex`, `bibtexPages`, `toBibtex`, `toRis`, `coinsTitle`, `citationTags`, `doiSlug`, `REQUIRED_CITATION_TAGS`, `DOI_PATTERN`
 - `./vtt`: `parseVtt`, `transcriptText`, `transcriptDuration`, `isVtt`, `toParagraphs`, `srtToVtt`, `parseCueText`
-- `./schema`: `website`, `pageImage`, `imageObject`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `sameAs`, `person`, `organization`, `podcastSeries`, `podcastEpisode`, `dataset`, `jsonLd`, `thing`, `graph`
+- `./schema`: `website`, `pageImage`, `imageObject`, `articleImageSet`, `videoObject`, `article`, `breadcrumbs`, `itemList`, `sameAs`, `person`, `organization`, `softwareApplication`, `podcastSeries`, `podcastEpisode`, `dataset`, `jsonLd`, `thing`, `graph`
 - `./robots`: `robotsDocument`, `privateRobotsResponse`, `aiTxt`, `plainTextResponse`, `robotsResponse`, `aiTxtResponse`, `verificationFileResponse`, `SEARCH_ENGINE_BOTS`, `AI_SEARCH_BOTS`, `AI_TRAINING_BOTS`, `DENIED_BOTS`, `TDM_RESERVATION_HEADERS`
 - `./files`: `standardFiles`
 - `./indexnow`: `submitIndexNow`, `submitIndexNowIfChanged`, `keyFileResponse`, `recentSitemapUrls`
@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`, `DIAGRAM_ROLE_NAMES`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.182.1 (DrDustinEdwards/site-runtime)
+## site-runtime 0.182.3 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `permissionsAllowingSelf`, `corpFor`, `entryOverrides`, `buildSecurityHeaders`, `hostCookie`, `cookiePairs`, `readCookie`, `applyHeaderSet`, `headersFile`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `PASSKEY_OVERRIDES`, `UPLOAD_HEADERS`
@@ -219,7 +219,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `.`: `COMPLETE_MARKER`, `DEFAULT_PREFIX`, `LATEST_POINTER`, `latestPointerKey`, `SCHEMA_SIDECAR`, `dumpDatabase`, `runIdFor`, `writeCompleteMarker`, `BackupIncomplete`, `CREDENTIAL_COLUMN`, `columnNames`, `credentialProblems`, `runCheckedBackup`, `standardProblems`, `restoreDump`, `DEFAULT_MIN_KEPT`, `DEFAULT_RETENTION`, `DEFAULT_RETENTION_DAYS`, `DEFAULT_STALE_HOURS`, `backupHealth`, `latestDump`, `pruneDumps`, `selectStaleRuns`, `readDumpJson`, `listAllKeys`, `readPlan`, `DEFAULT_KEEP_DELETED_DAYS`, `DEFAULT_MAX_OBJECTS`, `DEFAULT_TIME_BUDGET_MS`, `FILES_COMPLETE`, `FILES_PREFIX`, `SOURCE_ETAG`, `backupFiles`, `filesHealth`, `restoreFiles`, `D1_MAX_STATEMENT_BYTES`, `SCRATCH_PREFIX`, `guardStatements`, `runRestoreDrill`, `scratchName`, `createSiteBackup`
 - bins: `d1-dump`
 
-## devkit 0.60.0 (DrDustinEdwards/devkit)
+## devkit 0.61.0 (DrDustinEdwards/devkit)
 
 - `./node`: `assertFloor`, `createTally`, `walkFiles`, `readDevVar`, `isMain`
 - `./node/syntax`: `parseSource`, `propertyReads`, `interfaceMembers`, `findAction`, `intentBranches`, `objectConst`, `stringArrayConst`, `propertyValue`, `isLiteralString`, `bindingUses`, `ts`
@@ -235,7 +235,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./vite/native-builtins`: `nativeBuiltins`
 - `./stryker`: `chunkedStryker`
 - `./migration-scan`: `contractions`, `handOnly`, `statements`
-- bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
+- bins: `devkit-a11y`, `devkit-bootstrap`, `devkit-check-trailers`, `devkit-conformance`, `devkit-console`, `devkit-css-vars`, `devkit-db-migrate`, `devkit-declarations`, `devkit-destructive`, `devkit-fetch-fonts`, `devkit-gates`, `devkit-live`, `devkit-migrations`, `devkit-mutation-report`, `devkit-no-bloat`, `devkit-ops-audit`, `devkit-route-weight`, `devkit-secrets`, `devkit-shared`, `devkit-size-budget`, `devkit-test-assertions`, `devkit-tokens`, `devkit-verify-deploy`, `devkit-warm`, `devkit-worker-size`
 - Claude Code hooks (`claude/hooks`, run from `.claude/settings.json`, README "The shared Claude Code hooks"): `no-em-dash.sh`, `scoped-git-add.sh`
 
 ## Capsomer 0.164.10 (DrDustinEdwards/capsomer)
