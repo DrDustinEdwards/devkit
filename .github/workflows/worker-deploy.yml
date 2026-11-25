@@ -55,10 +55,10 @@ on:
         type: string
         default: "."
       install:
-        description: The install command for the deploy job. The default runs no dependency's install script (they run with the checkout the later steps hold the deploy token for), then the repository's own postinstall and prepare, which are its own reviewed code. A command that installs with scripts is the caller's choice.
+        description: The install command for the deploy job. Empty runs devkit's bin/deploy-install.mjs, the same install a pull request runs (pr.yml, "Deploy install"). It runs `npm ci --ignore-scripts`, then each dependency the lockfile resolves from git built from its locked commit (its own `prepare`, which a package shipping no dist/ needs), then the repository's own postinstall and prepare. No registry dependency's install script runs in a job that holds the deploy token. A command set here replaces all of it, and is the caller's choice.
         required: false
         type: string
-        default: npm ci --ignore-scripts && npm run --if-present postinstall && npm run --if-present prepare
+        default: ""
       rebuild:
         description: Space-separated dependencies whose install script the build needs (`npm rebuild <names>`), run after the install. Empty for none.
         required: false
@@ -194,6 +194,14 @@ jobs:
         with:
           persist-credentials: false
 
+      # devkit at the commit the caller pinned, for the install below.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
       # No dependency cache in any job here: each holds the deploy secrets, and a cache restored from the repository's
       # shared Actions cache is a path for code from a less trusted run into this one (cache poisoning).
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
@@ -206,7 +214,7 @@ jobs:
           INSTALL: ${{ inputs.install }}
           REBUILD: ${{ inputs.rebuild }}
         run: |
-          bash -euo pipefail -c "$INSTALL"
+          node "$GITHUB_WORKSPACE/.devkit/bin/deploy-install.mjs"
           if [ -n "$REBUILD" ]; then
             read -r -a names <<< "$REBUILD"
             npm rebuild "${names[@]}"
@@ -833,6 +841,14 @@ jobs:
         with:
           persist-credentials: false
 
+      # devkit at the commit the caller pinned, for the install below.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: DrDustinEdwards/devkit
+          ref: ${{ job.workflow_sha }}
+          path: .devkit
+          persist-credentials: false
+
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: ${{ inputs.node-version-file }}
@@ -843,7 +859,7 @@ jobs:
           INSTALL: ${{ inputs.install }}
           REBUILD: ${{ inputs.rebuild }}
         run: |
-          bash -euo pipefail -c "$INSTALL"
+          node "$GITHUB_WORKSPACE/.devkit/bin/deploy-install.mjs"
           if [ -n "$REBUILD" ]; then
             read -r -a names <<< "$REBUILD"
             npm rebuild "${names[@]}"

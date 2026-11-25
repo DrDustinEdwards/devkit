@@ -89,6 +89,26 @@ test("--apply runs only what adds: a drop, rename, DELETE or `-- contract:` line
     ),
     ["deletes rows"],
   );
+  // Foxing's 0021_book_subjects.sql: a backfill INSERT into book_subjects fires no trigger, since both triggers are on books.
+  assert.deepEqual(
+    handOnly(
+      "CREATE TABLE book_subjects (book_id TEXT, subject TEXT);\nINSERT OR IGNORE INTO book_subjects (book_id, subject) SELECT b.id, 'x' FROM books b;\nCREATE TRIGGER IF NOT EXISTS book_subjects_au AFTER UPDATE OF subjects ON books BEGIN DELETE FROM book_subjects WHERE book_id = NEW.id; INSERT INTO book_subjects (book_id, subject) VALUES (NEW.id, 'x'); END;",
+    ),
+    [],
+  );
+  // An insert into the trigger's own table, or a write that can cascade, still reads it.
+  assert.deepEqual(
+    handOnly(
+      "INSERT INTO books (id) VALUES (1);\nCREATE TRIGGER t AFTER INSERT ON books BEGIN DELETE FROM x; END;",
+    ),
+    ["deletes rows"],
+  );
+  assert.deepEqual(
+    handOnly(
+      "CREATE TRIGGER t AFTER DELETE ON a BEGIN DELETE FROM x; END;\nINSERT OR REPLACE INTO b (id) VALUES (1);",
+    ),
+    ["replaces rows", "deletes rows"],
+  );
   assert.deepEqual(
     handOnly(
       "CREATE TRIGGER t AFTER INSERT ON a BEGIN UPDATE b SET c = CASE WHEN 1 THEN 2 END; UPDATE d SET e = 1; END;",
