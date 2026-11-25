@@ -13,16 +13,11 @@ const IMPORT_EXTS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx
 /**
  * The repository's files that a Knip plugin reads as its config (`patterns`, Knip's own list at the tool's version,
  * checkTools knipConfigs), at the root or in a workspace, and the local modules a config in code imports, followed
- * through literal relative specifiers. Knip imports a config in code (.mocharc.cjs, vite.config.ts), so one can print a
- * report of its own or patch Knip; a config in data (tsconfig.json, .mocharc.json) can make any file an entry, whose
- * exports Knip then never reports. Either is a change of how Knip counts. package.json and the workflows are judged on
- * their own (classify). An import stops at a code file of the repository's own Knip project (`counted`, the `entry` and
- * `project` globs of its Knip config, knipCounted): Knip reads that file as code like any other, whatever imports it, so
- * a config importing it changes nothing about how it is counted, and a site's Vite config that renders pages from the
- * components and its own render modules (Capsomer's docs site) does not make them configs. A data file it reaches
- * (.json) is still followed, and a code file outside the project, which Knip never reads as code, is still a config's.
- * A config in code in `settled` is left out with what it imports: Knip counts no less from it now than at the base
- * (settledConfigs), so its body changed what the config does, not what Knip counts. Pure.
+ * through literal relative specifiers. Knip runs a config in code and can be made to count differently by a config in data,
+ * so either is a change of how Knip counts; package.json and the workflows are judged on their own (classify). An import
+ * stops at a code file of the repository's own Knip project (`counted`, knipCounted), which Knip reads as code whatever
+ * imports it; a data file it reaches is still followed, and a code file outside the project is still a config's. A config
+ * in `settled` is left out with what it imports: Knip counts no less from it now than at the base (settledConfigs). Pure.
  * @param {string[]} paths @param {string[]} patterns @param {(path: string) => string} read
  * @param {string[]} [counted] @param {string[]} [settled]
  */
@@ -84,11 +79,10 @@ export function knipConfigInputs(debug) {
 
 /**
  * Whether Knip counts no less from a config now than at the base: every input it takes now it took at the base too. An
- * entry naming a file the repository does not have at that side (a page the build writes, which is not in git) reads
- * nothing and is left out, at the base against `filesBefore` and now against `filesNow`; a relative entry is read from
- * the config's folder and from the root. Dropping an input is a stricter count, as dropping an entry from knip.json is
- * (onlyDropsEntries). A script a page among the config's inputs loads (`pageScripts`, an HTML file's `<script src>`, as
- * Knip's Vite plugin reads it) is that page's code, as an import is, so it may be new. Pure.
+ * entry naming a file the repository does not have at that side (a page the build writes) reads nothing and is left out,
+ * at the base against `filesBefore` and now against `filesNow`; a relative entry is read from the config's folder and from
+ * the root. Dropping an input is a stricter count (onlyDropsEntries). A script a page among the inputs loads
+ * (`pageScripts`) is that page's code, as an import is, so it may be new. Pure.
  * @param {string} config @param {string[]} before @param {string[]} now
  * @param {string[]} filesBefore @param {string[]} filesNow @param {string[]} [pageScripts]
  */
@@ -112,8 +106,7 @@ export function inputsNarrowed(config, before, now, filesBefore, filesNow, pageS
 
 /**
  * The scripts the HTML pages among a config's inputs load, by repository path: each `<script src>` that is not a URL,
- * read from the folder of its page. A page the build writes is read where it is now. `read` is null for a page that
- * is not there. Pure.
+ * read from the folder of its page. `read` is null for a page that is not there. Pure.
  * @param {string[]} inputs @param {(path: string) => string | null} read @returns {string[]}
  */
 export function pageScripts(inputs, read) {
@@ -133,9 +126,9 @@ export function pageScripts(inputs, read) {
 /**
  * The configs in code among `roots` that Knip counts no less from now than at `base`, for every Knip run
  * (inputsNarrowed): a change to such a config's body, or to what it imports, changes what the config does, not what Knip
- * counts. The base is checked out on its own, beside this checkout's node_modules, and read by the same Knip. When
- * either side cannot be read, none is settled and every change to a config stays a change of measure. Knip runs a config
- * in code to read it, so a config could still patch Knip itself; the counts the run reports are the guard there.
+ * counts. The base is checked out beside this checkout's node_modules and read by the same Knip. When either side cannot
+ * be read, none is settled. Knip runs a config in code to read it, so one could still patch Knip itself; the counts the
+ * run reports are the guard there.
  * @param {string} root @param {string} base a commit @param {string[]} roots @param {string[]} files now
  * @param {(args: string[], cwd?: string) => string} knip @param {string[][]} runs each Knip run's own arguments
  * @returns {string[]}
@@ -249,9 +242,8 @@ export function knipCounted(read) {
 }
 
 /**
- * How a change to a Knip config in data moves its `entry` globs (root or workspace), when it moves nothing else:
- * `dropped`, the globs it no longer has, and `added`, the ones it gains. Null when the config changes in any other way or
- * either side does not parse. Pure.
+ * How a change to a Knip config in data moves its `entry` globs, when it moves nothing else: `dropped`, the globs it no
+ * longer has, and `added`, the ones it gains. Null when the config changes any other way or a side does not parse. Pure.
  * @param {string | null} before @param {string | null} now
  * @returns {{ dropped: string[], added: string[] } | null}
  */
@@ -287,8 +279,8 @@ export function onlyDropsEntries(before, now) {
 
 /**
  * The `entry` globs a change to a Knip config in data adds, when it changes nothing else and adds no negation; none
- * otherwise. Such a change is a change of measure: Knip reads the files the globs name as entries, and follows their
- * imports, so it reads more, but no longer counts those files as unused (raised allows that drop and no other). Pure.
+ * otherwise. Knip then reads those files as entries and follows their imports, so it reads more but no longer counts
+ * them as unused (raised allows that drop and no other). Pure.
  * @param {string | null} before @param {string | null} now
  */
 export function addedEntries(before, now) {

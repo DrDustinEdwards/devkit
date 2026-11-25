@@ -1,38 +1,11 @@
 #!/usr/bin/env node
-// The no-bloat ratchet. Knip for unused files, exports and dependencies, jscpd for duplicated blocks, jscpd again for the
-// blocks copied from the shared packages the repository installs ("shared copies", copies.mjs packageCopies, so a copy
-// under a new name is caught too), Chrome's legacy scanner for old web platform patterns ("legacy", Modern Web
-// Guidance), and a static count of test files and test cases, each compared with the repository's
-// own baseline. The baseline is the count exactly: one above it fails the run (exit 1, an ::error:: line per count), and so
-// does one below it, until the baseline is lowered in the same change, so the room a removal leaves can never let a new
-// copy back in (the ratchet of ESLint's bulk suppressions and Betterer's ci mode). Knip counts each issue (its JSON
-// report), not each file. Every count the run measures needs its baseline entry, and no change drops one. Against the
-// branch the change goes into (`--lines-from` on a pull request; otherwise the first of origin/HEAD, origin/main and
-// origin/master) a change that moves code may not raise a Knip, jscpd or shared-copies count (one new to the baseline
-// is raised from 0), change how a count is measured (the no-bloat config outside baseline and tools, a Knip config in
-// any format, .jscpd.json, package.json's knip or jscpd), change a workflow that runs this check (moving only its devkit
-// pins is a bump, not a change), or move a shared package back; `--write-baseline` refuses what the check would. A change
-// of measure comes alone and may not lower a count, so a narrower measure cannot hide what it stops reading; a version
-// bump alone (tools, a lockfile, dependency versions forward, a new shared package) may raise or lower. What would hide
-// the next change's code is refused even when it hides nothing yet: every new line of a Knip config needs its own reason,
-// a narrower jscpd measure fails, jscpd's `unread` counts the source files it skips, a tracked file a
-// .gitignore hides from Knip fails, a new file jscpd skips fails, and the tools must be npm's at x.y.z and devkit a
-// DrDustinEdwards/devkit tag. No change may drop or turn off the job that runs the check, or change the inputs that
-// decide what runs before it (workflowInputs, which reads the workflow with a YAML parser); install scripts, patches and
-// a Knip plugin's config files are a change of measure, except a config in code Knip counts no less from at the base and
-// now (settledConfigs: its inputs in `knip --debug`, less pages the build writes and the scripts its pages load). In Actions the check counts the commit the run is for
-// (checkoutProblems). A real
-// exception goes in knip.jsonc with a comment saying why, behind `jscpd:ignore-start` and its reason, or after `@public`,
-// `@beta` or `@alias` with who uses it; one added with no reason in words (isReason) fails, and so does any entry added
-// to .jscpd.json or the config's jscpd --ignore, which are strict JSON and cannot hold one. Adding a test is a raise:
-// `--write-baseline` in the same change, so the diff shows it. `--verify-install <dir>`, run from the workflow's own
-// devkit, fails unless the installed devkit is a release no older than it, file for file. The share of source lines that
-// are comments is recorded too, and a rise of more than `tolerance` points (with more comment lines than the baseline) is
-// a warning, or an error with `"fail": true`. A file over `size` lines (500 source, 800 test; generated files are left out
-// as for comments) is listed in the baseline with its line count: a new one over the cap fails, a listed one may not grow,
-// and one cut or dropped lowers its entry (`size` sets the caps). A tool that cannot run
-// fails the run too (an ::error:: naming its error): a count nobody measured is not a pass, and neither is a baseline entry
-// no run measures. The table goes to the job summary.
+// The no-bloat ratchet: Knip (unused files, exports, dependencies), jscpd (duplicated blocks, and blocks copied from the
+// shared packages the repository installs), Chrome's legacy scanner, and a static count of test files and cases, each
+// compared with the repository's own baseline in .no-bloat.json. The baseline is the count exactly: above it fails, and so
+// does below it until the same change lowers it, so the room a removal leaves never lets a new copy in. Against the branch
+// the change goes into, a change may not raise a count, change how one is measured, or turn the job off; a change of
+// measure comes alone. A real exception carries a reason in words. Every rule, with its reasons, is README "The shared
+// checks"; a tool that cannot run fails the run, and the table goes to the job summary.
 //
 //   npx devkit-no-bloat                      check against .no-bloat.json (no file: one knip run, jscpd on its own config)
 //   npx devkit-no-bloat --config <file>      another config
@@ -55,21 +28,10 @@
 //       "comments": { "lines": 900, "code": 9100, "percentage": 9 } }
 //   }
 //
-// `"jscpd": false`, `"shared": false`, `"legacy": false`, `"tests": false`, `"size": false` or `"comments": false` turns one off. `legacy`
-// is Chrome's Modern Web Guidance scanner (`modern-web-guidance legacy-scan`, github.com/GoogleChrome/modern-web-guidance):
-// a static match of about 35 legacy patterns (a dialog built by hand, `100vh`, Enter that ignores an IME, `resize:
-// none`...), counted per guide, over the repository root unless `legacy.args` names the paths; it skips docs, examples and
-// tests itself. A match is a lead, not a verdict: the guide (`npx modern-web-guidance retrieve <guide>`) says when one may
-// stay. One kept on purpose carries `legacy-scan:keep <guide> <reason>` on its line or the line above, and is not
-// counted when the guide it names is the match's; a marker added with no guide or no reason fails, as a jscpd marker does. jscpd's clones and duplicated
-// lines are gated; its percentage is shown, not gated, since deleting code that is not duplicated raises it. The shared
-// copies read every shared package (shared.mjs PACKAGES) installed in node_modules, the repository's own excepted; each copy
-// is an ::warning:: line with both places. Test cases are counted from the source, never by running a runner: each `test(`
-// or `it(` call (node:test, vitest, Playwright), with their modifiers (`.only`, `.skip`, `.each(...)`...), outside comments
-// and strings; `describe`, hooks and Playwright's runtime `test.skip(condition)` are not cases. A case made in a loop counts
-// once.
-//
-// knip and jscpd are npm's, at the exact versions in `tools`, installed by the check itself (checkTools), never the
+// `"jscpd": false`, `"shared": false`, `"legacy": false`, `"tests": false`, `"size": false` or `"comments": false` turns one off.
+// `legacy` is Chrome's Modern Web Guidance scanner, counted per guide; a match kept on purpose carries
+// `legacy-scan:keep <guide> <reason>` on its line or the line above. Test cases are counted from the source, never by running
+// a runner: each `test(` or `it(` call outside comments and strings.
 
 import { execFileSync } from "node:child_process";
 import { existsSync, writeFileSync } from "node:fs";
