@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // The no-bloat ratchet: Knip (unused files, exports, dependencies), jscpd (duplicated blocks, and blocks copied from the
 // shared packages the repository installs), Chrome's legacy scanner, and a static count of test files and cases, each
-// compared with the repository's own baseline in .no-bloat.json. The baseline is the count exactly: above it fails, and so
-// does below it until the same change lowers it, so the room a removal leaves never lets a new copy in. Against the branch
+// compared with the repository's own baseline in .no-bloat.json. The baseline is a ceiling: above it fails, below it passes
+// with a warning and the next change that touches it lowers it. Against the branch
 // the change goes into, a change may not raise a count, change how one is measured, or turn the job off; a change of
 // measure comes alone. A real exception carries a reason in words. Every rule, with its reasons, is README "The shared
 // checks"; a tool that cannot run fails the run, and the table goes to the job summary.
@@ -214,10 +214,10 @@ function main() {
       "Remove what was added: change the code that already does it, or import the shared one, and delete the copy (SHARED.md). A real exception goes in knip.json's ignore list with a comment saying why, or behind `jscpd:ignore-start` and its reason in the source.",
     );
   }
-  // The room a removal leaves is where the next copy would go: a count below its baseline fails until it is lowered.
+  // A count below its baseline passes: only a rise fails. The next change that touches the baseline lowers it.
   if (lowered.length)
-    errors.push(
-      `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config in this change.`,
+    warnings.push(
+      `Lower the baseline to lock this in (${lowered.join(", ")}): run \`npx devkit-no-bloat --write-baseline\` and commit the config.`,
     );
   errors.push(...refused);
   errors.unshift(...measured.warnings, ...stale);

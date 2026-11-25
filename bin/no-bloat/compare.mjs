@@ -10,7 +10,7 @@ import { BUFFER } from "./tools.mjs";
 /**
  * One row per finding the baseline or the measurement names, an error for each that grew, a warning for a comment share that
  * rose past its tolerance (an error with `"fail": true`), and in `lowered` each gated count that went down, which main()
- * fails until the baseline is lowered (the comment share's fall is only a note). A finding with no baseline is a
+ * reports as a warning (a fall never fails). A finding with no baseline is a
  * row and never an error: there is nothing to have grown from. A baseline entry that no run in the config measures is stale.
  * @param {Record<string, unknown>} baseline
  * @param {Counts} counts
@@ -30,7 +30,7 @@ export function compare(baseline, counts, config = {}) {
   const knipRuns = config.knip ?? [{ label: "knip" }];
   const before = (/** @type {string} */ tool) =>
     /** @type {Record<string, number> | null} */ (tool in baseline ? baseline[tool] : null);
-  /** A gated count: a row, an error when it grew, a note when it went down. `zero` counts a key the baseline lacks from 0. */
+  /** A gated count: a row, an error when it grew, a warning when it went down. `zero` counts a key the baseline lacks from 0. */
   const gate = (
     /** @type {string} */ tool,
     /** @type {string} */ key,

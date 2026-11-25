@@ -8,7 +8,7 @@ import test from "node:test";
 import { git, runBin, scratch, tool } from "./fixtures/no-bloat.mjs";
 
 test(
-  "end to end: --write-baseline records the counts, a later run that grew fails, and so does one that shrank until the baseline is lowered",
+  "end to end: --write-baseline records the counts, a later run that grew fails, and one that shrank passes with a warning",
   { skip: process.platform === "win32" },
   () => {
     const dir = scratch();
@@ -48,11 +48,12 @@ test(
       const shrunk = scratch({ clones: 2 });
       writeFileSync(join(shrunk, ".no-bloat.json"), JSON.stringify(config));
       const s = runBin(shrunk);
-      assert.equal(s.status, 1, s.stdout);
+      assert.equal(s.status, 0, s.stdout);
       assert.match(
         s.stdout,
-        /::error::Lower the baseline to lock this in \(jscpd: clones 4 to 2\)/,
+        /::warning::Lower the baseline to lock this in \(jscpd: clones 4 to 2\)/,
       );
+      assert.doesNotMatch(s.stdout, /::error::/);
       assert.equal(runBin(shrunk, ["--write-baseline"]).status, 0);
       assert.equal(runBin(shrunk).status, 0);
       rmSync(shrunk, { recursive: true, force: true });
