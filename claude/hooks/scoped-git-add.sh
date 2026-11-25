@@ -45,10 +45,9 @@
 # the hook exists to prevent. It fired on the very commit that landed the
 # hardening (bb63828).
 #
-# KNOWN GAP, recorded and not fixed here: the check is token EQUALITY against
-# four literal spellings, so a quoted flag, bundled short options, a subshell,
-# and the repo-root pathspec all stage everything and are NOT blocked. Widening
-# that tuple is a separate ruling.
+# KNOWN GAP: the command is read token by token (quotes removed, a bundled short
+# option such as -Av counted), so a subshell or a variable that expands to the
+# flag still stages everything and is not blocked.
 #
 # Verified 2026-08-11 by planting all three arms, and re-verified 2026-08-16
 # against this canonical file before it landed anywhere. The older note
@@ -76,7 +75,7 @@ if [ -z "$PY" ]; then
 fi
 
 "$PY" -c '
-import json, re, sys
+import json, re, shlex, sys
 raw = sys.stdin.buffer.read().decode("utf-8", "replace")
 try:
     d = json.loads(raw)
@@ -84,9 +83,14 @@ except Exception:
     sys.exit(4)
 cmd = str((d.get("tool_input") or {}).get("command") or "")
 for m in re.finditer(r"git\s+add\s+([^|;&]*)", cmd):
-    toks = m.group(1).split()
-    if any(t in ("-A", "--all", ".", "./") for t in toks):
-        sys.exit(3)
+    try:
+        toks = shlex.split(m.group(1))
+    except ValueError:
+        toks = m.group(1).split()
+    for t in toks:
+        short = t.startswith("-") and not t.startswith("--") and "A" in t
+        if short or t == "--all" or t.startswith("--all=") or t in (".", "./", ":/", "*"):
+            sys.exit(3)
 sys.exit(0)
 '
 rc=$?

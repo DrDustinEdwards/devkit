@@ -254,7 +254,10 @@ test("a JavaScript repository with no tsconfig is mapped as plain modules, with 
     "",
   ].join("\n");
   const coverage = lcovCoverage(lcov, root);
-  assert.deepEqual(Object.keys(coverage), [join(root, "lib.mjs"), join(root, "util/twice.mjs")]);
+  assert.deepEqual(
+    Object.keys(coverage),
+    [join(root, "lib.mjs"), join(root, "util/twice.mjs")].map((p) => p.replaceAll("\\", "/")),
+  );
   const map = codeMap({ ...base, root, include: ["."], exclude: ["docs/", "test/"], coverage });
   assert.deepEqual(
     map.modules.map((/** @type {any} */ m) => m.path),

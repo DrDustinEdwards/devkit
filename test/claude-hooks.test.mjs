@@ -66,5 +66,14 @@ test(
     );
     assert.equal(run(scopedAdd, project, bash("git add -A")), 2);
     assert.equal(run(scopedAdd, project, bash("git add README.md")), 0);
+    for (const staged of [
+      'git add "-A"',
+      "git add -Av",
+      "git add -vA",
+      "git add ':/'",
+      "git add --all=x",
+    ])
+      assert.equal(run(scopedAdd, project, bash(staged)), 2, staged);
+    assert.equal(run(scopedAdd, project, bash("git add -p src/a.ts")), 0);
   },
 );

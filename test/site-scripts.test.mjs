@@ -105,6 +105,7 @@ test("db-migrate: local by default, remote only with --remote-confirm, a bare --
   assert.ok(!("error" in remote) && remote.wranglerArgs.slice(-2).join(" ") === "--remote --x");
   assert.ok("error" in plan(["foxhound", "--remote"]));
   assert.ok("error" in plan([]));
+  assert.ok("error" in plan(["a&calc"]));
 });
 
 test("fetch-fonts: keeps the subsets asked, reads each face, and refuses a face missing a field", () => {

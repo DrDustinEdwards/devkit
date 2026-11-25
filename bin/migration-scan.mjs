@@ -20,7 +20,7 @@ const DESTRUCTIVE = [
  * part of the name, not the start of a string), and whether a `-- contract: <reason>` line comment starts a line. A marker
  * inside a block comment or a string is neither.
  * @param {string} sql
- * @returns {{ code: string, marked: boolean }}
+ * @returns {{ code: string, marked: boolean, fired: string }}
  */
 function scan(sql) {
   let code = "";
@@ -58,16 +58,22 @@ function scan(sql) {
       i++;
     }
   }
-  // A trigger's body runs when a row changes, not when the migration does: it is not read.
+  // A trigger's body runs when a row changes, not when the migration does, so it is not read, unless the same file writes
+  // rows: that write can fire it during this apply.
+  /** @type {string[]} */
+  const triggers = [];
   code = code.replace(
     /\bCREATE\s+(?:TEMP\s+|TEMPORARY\s+)?TRIGGER\b[\s\S]*?\bBEGIN\b[\s\S]*?;\s*END\s*;/gi,
-    " ",
+    (body) => (triggers.push(body), " "),
   );
-  return { code, marked };
+  const writes = /(?:^|;)\s*(?:INSERT|UPDATE|DELETE|REPLACE|WITH)\b/i.test(code);
+  return { code, marked, fired: writes ? triggers.join(" ") : "" };
 }
 
-const findings = (/** @type {string} */ code) =>
-  DESTRUCTIVE.filter(([pattern]) => pattern.test(code)).map(([, what]) => what);
+const findings = (/** @type {{ code: string, fired: string }} */ { code, fired }) =>
+  DESTRUCTIVE.filter(([pattern]) => pattern.test(code) || pattern.test(fired)).map(
+    ([, what]) => what,
+  );
 
 /**
  * What a migration does beyond adding, read with its comments and string literals blanked; empty when it only adds or
@@ -76,8 +82,8 @@ const findings = (/** @type {string} */ code) =>
  * @returns {string[]}
  */
 export function contractions(sql) {
-  const { code, marked } = scan(sql);
-  return marked ? [] : findings(code);
+  const read = scan(sql);
+  return read.marked ? [] : findings(read);
 }
 
 /**
@@ -87,8 +93,8 @@ export function contractions(sql) {
  * @returns {string[]}
  */
 export function handOnly(sql) {
-  const { code, marked } = scan(sql);
-  return [...(marked ? ["says `-- contract:`"] : []), ...findings(code)];
+  const read = scan(sql);
+  return [...(read.marked ? ["says `-- contract:`"] : []), ...findings(read)];
 }
 
 /**

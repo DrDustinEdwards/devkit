@@ -22,6 +22,10 @@ export function plan(args) {
   const [database, ...rest] = args;
   if (!database || database.startsWith("-"))
     return { error: "usage: devkit-db-migrate <database> [--remote-confirm] [wrangler args]" };
+  if (!/^[\w.-]+$/.test(database))
+    return {
+      error: `"${database}" is not a D1 database name (letters, digits, "_", "-" and "." only).`,
+    };
   if (rest.includes("--remote"))
     return {
       error: `Refusing to run: pass --remote-confirm, not --remote. The database "${database}" is production; the explicit flag exists so that is acknowledged rather than assumed.`,
