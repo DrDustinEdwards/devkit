@@ -61,7 +61,7 @@ test("PLANT: a returned type defined outside the entry point fails with TS2883",
     '/** @import { Hidden } from "./hidden.mjs" */\n/** @returns {Hidden} */\nexport function build() { return {}; }\n',
   );
   const result = run(dir);
-  assert.equal(result.status, 1);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
   assert.match(result.stdout, /TS2883.*Hidden/);
 });
 
