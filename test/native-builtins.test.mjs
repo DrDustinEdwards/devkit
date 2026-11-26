@@ -41,3 +41,7 @@ test("decode-named-character-reference is answered by htmlparser2's entities in 
   const source = plugin.load.call(null, shim);
   assert.match(source, /from "\/app\/node_modules\/htmlparser2\/index\.js\/entities\/decode\.js"/);
 });
+
+test("Sentry's debug-logging code is defined away, so a bundler drops it", () => {
+  assert.deepEqual(nativeBuiltins().config(), { define: { __SENTRY_DEBUG__: "false" } });
+});

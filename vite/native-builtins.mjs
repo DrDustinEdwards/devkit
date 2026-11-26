@@ -17,6 +17,10 @@
 // react-dom-server-legacy.browser.production.js (about 259 KB source) only to export renderToString and
 // renderToStaticMarkup, which a bundler cannot drop from a CommonJS file. Every site renders with
 // renderToReadableStream (site-runtime ./react-entry), so those two exports become functions that throw.
+//
+// And it defines `__SENTRY_DEBUG__` as false, which Sentry documents as tree-shaking "any SDK code that's related to
+// debug logging" (docs.sentry.io, JavaScript, Tree Shaking). That logging runs only with Sentry's `debug` option, which
+// no site sets; it is about 10 KiB raw and 3.8 KiB gzip of a Worker (Germomics, 2026-11-26).
 /** @type {Record<string, string>} */
 const REPLACED = {
   "@ungap/structured-clone": "export default (value, options) => structuredClone(value, options);",
@@ -51,6 +55,7 @@ export function nativeBuiltins() {
   return {
     name: "devkit:native-builtins",
     enforce: "pre",
+    config: () => ({ define: { __SENTRY_DEBUG__: "false" } }),
     async resolveId(id) {
       if (Object.hasOwn(REPLACED, id)) return PREFIX + id;
       if (id !== NAMED_REFERENCE || this.environment?.config.consumer !== "server") return null;
