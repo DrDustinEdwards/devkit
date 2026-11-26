@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-25T17:57:36.486Z",
+ "as_of": "2026-11-26T17:36:11.275Z",
  "finished": false,
  "public_token": false,
  "sites": [
@@ -131,7 +131,7 @@
       "https://dustinedwards.info/sitemap.xml",
       "https://dustinedwards.info/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "germomics": {
      "status": "complete",
@@ -142,7 +142,7 @@
       "https://germomics.com/sitemap.xml",
       "https://germomics.com/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "julieedwards-info": {
      "status": "complete",
@@ -153,7 +153,7 @@
       "https://julieedwards.info/sitemap.xml",
       "https://julieedwards.info/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "txasm": {
      "status": "missing",
@@ -210,11 +210,6 @@
      "status": "missing",
      "reason": "prelum-audit: 20 errors",
      "findings": [
-      {
-       "severity": "warning",
-       "check": "sitemap-lastmod-uniform",
-       "detail": "https://bsw.dustin-edwards.workers.dev/sitemap.xml all 20 dated URLs share the lastmod 2026-11-25, which reads as the build date"
-      },
       {
        "severity": "error",
        "check": "sitemap-noindex",
@@ -326,7 +321,7 @@
       "https://foxhoundapp.com/sitemap.xml",
       "https://foxhoundapp.com/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxing": {
      "status": "complete",
@@ -337,7 +332,7 @@
       "https://foxing.app/sitemap.xml",
       "https://foxing.app/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "carrel": {
      "status": "complete",
@@ -348,7 +343,7 @@
       "https://carrel.dustinedwards.info/sitemap.xml",
       "https://carrel.dustinedwards.info/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "enarratio": {
      "status": "partial",
@@ -359,7 +354,7 @@
       "https://enarratio.dustinedwards.info/sitemap.xml",
       "https://enarratio.dustinedwards.info/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsomer": {
      "status": "partial",
@@ -370,7 +365,7 @@
       "https://capsomer.dustinedwards.info/sitemap.xml",
       "https://capsomer.dustinedwards.info/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "prelum": {
      "status": "partial",
@@ -381,7 +376,7 @@
       "https://prelum.dustinedwards.info/sitemap.xml",
       "https://prelum.dustinedwards.info/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid": {
      "status": "partial",
@@ -392,7 +387,7 @@
       "https://capsid.dustinedwards.info/sitemap.xml",
       "https://capsid.dustinedwards.info/index.md"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -453,7 +448,7 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "germomics": {
      "status": "complete",
@@ -461,7 +456,7 @@
      "evidence": [
       "https://germomics.com/"
      ],
-     "clean_days": 22
+     "clean_days": 23
     },
     "julieedwards-info": {
      "status": "complete",
@@ -469,7 +464,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "txasm": {
      "status": "complete",
@@ -477,7 +472,7 @@
      "evidence": [
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "bsw": {
      "status": "complete",
@@ -485,7 +480,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "foxhound": {
      "status": "complete",
@@ -493,7 +488,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "foxing": {
      "status": "complete",
@@ -501,7 +496,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "carrel": {
      "status": "complete",
@@ -509,7 +504,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "enarratio": {
      "status": "complete",
@@ -517,7 +512,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "capsomer": {
      "status": "complete",
@@ -525,7 +520,7 @@
      "evidence": [
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "prelum": {
      "status": "complete",
@@ -533,7 +528,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "capsid": {
      "status": "complete",
@@ -541,7 +536,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 24
+     "clean_days": 25
     },
     "capsid-mcp": {
      "status": "complete",
@@ -549,7 +544,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -557,7 +552,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -565,7 +560,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "carrel-mcp": {
      "status": "complete",
@@ -573,7 +568,7 @@
      "evidence": [
       "https://carrel-mcp.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "foxing-mcp": {
      "status": "complete",
@@ -581,7 +576,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/"
      ],
-     "clean_days": 24
+     "clean_days": 25
     },
     "capsid-portal": {
      "status": "complete",
@@ -590,12 +585,12 @@
       "https://portal.dustinedwards.info/",
       "https://mcp.dustinedwards.info/reports/signed-in-security.json"
      ],
-     "clean_days": 24
+     "clean_days": 25
     },
     "carrel-desk": {
      "status": "partial",
      "reason": "failed on 2026-11-22, after Verify security headers signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     }
    }
   },
@@ -631,7 +626,7 @@
       "https://dustinedwards.info/lab-bench",
       "https://dustinedwards.info/admin"
      ],
-     "clean_days": 20
+     "clean_days": 21
     },
     "germomics": {
      "status": "complete",
@@ -640,7 +635,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/routes/admin.tsx#L56",
       "https://germomics.com/admin"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -654,7 +649,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/auth.server.ts#L50",
       "https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "bsw": {
      "status": "n/a",
@@ -669,7 +664,7 @@
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/oauth/authorize.tsx",
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/app/routes/health.ts"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "foxing": {
      "status": "complete",
@@ -680,7 +675,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/test/security-notice.integration.test.ts#L81",
       "https://foxing.app/login"
      ],
-     "clean_days": 24
+     "clean_days": 25
     },
     "carrel": {
      "status": "n/a",
@@ -706,7 +701,7 @@
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L318",
       "https://portal.dustinedwards.info/health"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "capsid-mcp": {
      "status": "complete",
@@ -715,7 +710,7 @@
       "https://mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/index.ts"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -724,7 +719,7 @@
       "https://admin-mcp.foxhoundapp.com/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxhound/blob/f0d1cb923eec478a4b0033b04dacb6b684f13c0c/mcp/src/index.ts"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -733,7 +728,7 @@
       "https://admin-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/mcp"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "carrel-mcp": {
      "status": "complete",
@@ -742,7 +737,7 @@
       "https://carrel-mcp.dustinedwards.info/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/mcp/door.ts"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "foxing-mcp": {
      "status": "complete",
@@ -751,7 +746,7 @@
       "https://admin-mcp.foxing.app/.well-known/oauth-authorization-server",
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/mcp/src/index.ts"
      ],
-     "clean_days": 24
+     "clean_days": 25
     },
     "capsid-portal": {
      "status": "complete",
@@ -760,7 +755,7 @@
       "https://portal.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/portal-auth.ts#L63"
      ],
-     "clean_days": 24
+     "clean_days": 25
     },
     "carrel-desk": {
      "status": "complete",
@@ -770,7 +765,7 @@
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/workers/gate.ts#L50",
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 24
+     "clean_days": 25
     }
    }
   },
@@ -803,7 +798,7 @@
       "https://dustinedwards.info/about",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/main/package.json"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "germomics": {
      "status": "partial",
@@ -812,7 +807,7 @@
       "https://germomics.com/writing",
       "https://germomics.com/carrel-conformance-7e19650b-renamed"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "julieedwards-info": {
      "status": "partial",
@@ -820,7 +815,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "txasm": {
      "status": "complete",
@@ -831,7 +826,7 @@
       "https://txasm.dustin-edwards.workers.dev/awardees",
       "https://txasm.dustin-edwards.workers.dev/trail"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "bsw": {
      "status": "complete",
@@ -839,7 +834,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/cookie-policy"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxhound": {
      "status": "missing",
@@ -864,7 +859,7 @@
       "https://foxing.app/books",
       "https://github.com/DrDustinEdwards/foxing/blob/main/apps/web/package.json"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "carrel": {
      "status": "complete",
@@ -873,7 +868,7 @@
       "https://carrel.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/carrel/blob/main/package.json"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "enarratio": {
      "status": "partial",
@@ -881,7 +876,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsomer": {
      "status": "partial",
@@ -890,7 +885,7 @@
       "https://github.com/DrDustinEdwards/capsomer/blob/main/site/markdown.ts",
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "prelum": {
      "status": "partial",
@@ -898,7 +893,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid": {
      "status": "complete",
@@ -907,7 +902,7 @@
       "https://capsid.dustinedwards.info/",
       "https://github.com/DrDustinEdwards/capsid/blob/main/explorer/package.json"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -975,7 +970,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/editor/publish.server.ts",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "germomics": {
      "status": "complete",
@@ -988,7 +983,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/routes/admin.content.$key.tsx",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1001,7 +996,7 @@
       "https://julieedwards.info/api/carrel/v1/meta",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "txasm": {
      "status": "partial",
@@ -1013,7 +1008,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/site-meta.ts",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 12
+     "clean_days": 13
     },
     "bsw": {
      "status": "n/a",
@@ -1033,7 +1028,7 @@
       "https://foxhoundapp.com/api/carrel/v1/meta",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing": {
      "status": "complete",
@@ -1046,7 +1041,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/core/src/repositories/admin-journal.ts#L357",
       "https://carrel-mcp.dustinedwards.info/reports/conformance.json"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "carrel": {
      "status": "n/a",
@@ -1135,7 +1130,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/media/images.mjs#L15-L19",
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/content/pipeline.mjs#L244"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "germomics": {
      "status": "partial",
@@ -1147,7 +1142,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/seo.ts#L23-L29",
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/images.ts#L61-L74"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "julieedwards-info": {
      "status": "partial",
@@ -1157,7 +1152,7 @@
       "https://julieedwards.info/media/uploads/2026/11/julie-edwards-bluff-dale-profile-a78445bc.jpg.webp?v=a78445bc0643&w=640",
       "https://julieedwards.info/sitemap.xml"
      ],
-     "clean_days": 24
+     "clean_days": 25
     },
     "txasm": {
      "status": "partial",
@@ -1167,7 +1162,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/routes/admin.documents.tsx#L226-L256",
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/carrel/render.server.ts#L64"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "bsw": {
      "status": "partial",
@@ -1176,7 +1171,7 @@
       "https://bsw.dustin-edwards.workers.dev/",
       "https://bsw.dustin-edwards.workers.dev/sitemap.xml"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxhound": {
      "status": "partial",
@@ -1185,7 +1180,7 @@
       "https://foxhoundapp.com/og/default",
       "https://foxhoundapp.com/blog/stripe-billing-descriptor"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxing": {
      "status": "partial",
@@ -1196,7 +1191,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/app/lib/journal-images.server.ts#L76-L120",
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/apps/web/package.json#L22"
      ],
-     "clean_days": 8
+     "clean_days": 9
     },
     "carrel": {
      "status": "complete",
@@ -1205,7 +1200,7 @@
       "https://carrel.dustinedwards.info/",
       "https://carrel.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "enarratio": {
      "status": "complete",
@@ -1214,7 +1209,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://enarratio.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 21
+     "clean_days": 22
     },
     "capsomer": {
      "status": "complete",
@@ -1223,7 +1218,7 @@
       "https://capsomer.dustinedwards.info/",
       "https://capsomer.dustinedwards.info/og-card.png"
      ],
-     "clean_days": 19
+     "clean_days": 20
     },
     "prelum": {
      "status": "complete",
@@ -1232,7 +1227,7 @@
       "https://prelum.dustinedwards.info/",
       "https://prelum.dustinedwards.info/share-card.png"
      ],
-     "clean_days": 24
+     "clean_days": 25
     },
     "capsid": {
      "status": "complete",
@@ -1241,7 +1236,7 @@
       "https://capsid.dustinedwards.info/",
       "https://capsid.dustinedwards.info/assets/og-card.png"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1298,57 +1293,202 @@
     },
     "dustinedwards-info": {
      "status": "missing",
-     "reason": "site-runtime-speed: 11 errors",
+     "reason": "site-runtime-speed: 40 errors",
      "findings": [
       {
        "severity": "error",
-       "check": "B1",
-       "detail": "https://dustinedwards.info/cv not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://dustinedwards.info/software/foxhound not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://dustinedwards.info/research/retroviruses/human not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
-      },
-      {
-       "severity": "error",
-       "check": "B1",
-       "detail": "https://dustinedwards.info/teaching/central-dogma not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+       "check": "B7",
+       "detail": "https://dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://dustinedwards.info/writing a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://dustinedwards.info/about no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://dustinedwards.info/cv a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://dustinedwards.info/writing no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://dustinedwards.info/software/foxhound a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://dustinedwards.info/research/publications no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://dustinedwards.info/research/retroviruses a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://dustinedwards.info/contact no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://dustinedwards.info/research/retroviruses/human a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://dustinedwards.info/site-map no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://dustinedwards.info/teaching/central-dogma a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://dustinedwards.info/colophon no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/features no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/systems no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/teaching no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/software no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/cv no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/privacy no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/terms no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/research no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/systems/capsid no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/teaching/phage-discovery no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/software/foxhound no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/writing/carrel-one-api-for-every-site no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/research/retroviruses no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/systems/d1-dump no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/teaching/virus-isolation no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/software/foxing no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/writing/carrel-a-writing-desk-apart-from-the-site no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/research/retroviruses/human no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/systems/devkit no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/teaching/virus-isolation/faq no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/software/foxing-edu no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/research/retroviruses/avian no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/systems/site-runtime no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/teaching/phage-bioinformatics no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/software/germomics no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/research/bacteriophages no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/systems/prelum no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://dustinedwards.info/teaching/central-dogma no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
@@ -1369,32 +1509,147 @@
     },
     "germomics": {
      "status": "missing",
-     "reason": "site-runtime-speed: 6 errors",
+     "reason": "site-runtime-speed: 29 errors",
      "findings": [
       {
        "severity": "error",
-       "check": "B1",
-       "detail": "https://germomics.com/a-boy-named-flu not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX"
+       "check": "B7",
+       "detail": "https://germomics.com/ no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://germomics.com/txasm a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://germomics.com/episodes no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://germomics.com/writing no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://germomics.com/games/phage-defense a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://germomics.com/archive no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
        "check": "B7",
-       "detail": "https://germomics.com/data/influenza-1918 a conditional request with the page's own validator answered 200, not 304"
+       "detail": "https://germomics.com/data no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/games no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/subscribe no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/about no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/privacy no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/terms no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/contact no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/txasm no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/season/1 no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/antitoxin-togo-please no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/hell-on-weils no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/rabies-day-out no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/a-boy-named-flu no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/theres-something-about-typhoid-mary no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/its-on-the-syphilis no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/one-flew-over-the-kuru-nest no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/confessions-of-a-cholera-girl no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/on-the-right-taq no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/a-sky-full-of-sars no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/data/cholera-soho-1854 no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/games/phage-defense no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/about/dustin-edwards no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://germomics.com/data/influenza-1918 no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
@@ -1435,19 +1690,240 @@
      ]
     },
     "txasm": {
-     "status": "partial",
-     "reason": "failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier",
-     "clean_days": 1
+     "status": "missing",
+     "reason": "site-runtime-speed: 1 errors",
+     "findings": [
+      {
+       "severity": "warning",
+       "check": "D1",
+       "detail": "https://txasm.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain"
+      },
+      {
+       "severity": "warning",
+       "check": "A1",
+       "detail": "https://txasm.dustin-edwards.workers.dev/ mobile: no Chrome field data for this page yet"
+      },
+      {
+       "severity": "error",
+       "check": "A3",
+       "detail": "https://txasm.dustin-edwards.workers.dev/ desktop Lighthouse performance 98 (bar 100)"
+      },
+      {
+       "severity": "warning",
+       "check": "A1",
+       "detail": "https://txasm.dustin-edwards.workers.dev/ desktop: no Chrome field data for this page yet"
+      }
+     ]
     },
     "bsw": {
      "status": "partial",
      "reason": "failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier",
-     "clean_days": 2
+     "clean_days": 3
     },
     "foxhound": {
      "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
+     "reason": "site-runtime-speed: 41 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/pricing no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/products no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/product/audit no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/features no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/about no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/contact no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/demos no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/docs no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/audit no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/privacy no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/terms no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/security no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/blog no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/decline-codes no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/product/recovery no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/docs/platform no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/blog/archive no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/decline-codes/insufficient-funds no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare/stripe-smart-retries no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/product/disputes no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/docs/audit no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/decline-codes/do-not-honor no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare/churnkey no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/product/intelligence no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/docs/recovery no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/blog/foxhound-vs-stripe-smart-retries no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/decline-codes/generic-decline no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare/churn-buster no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/docs/disputes no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/blog/best-dunning-software-2026 no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/decline-codes/card-declined no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare/paddle-retain no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/docs/intelligence no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/blog/foxhound-vs-churn-buster no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/decline-codes/transaction-not-allowed no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxhoundapp.com/compare/baremetrics-recover no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
       {
        "severity": "error",
        "check": "C5",
@@ -1467,8 +1943,208 @@
     },
     "foxing": {
      "status": "missing",
-     "reason": "site-runtime-speed: 1 errors",
+     "reason": "site-runtime-speed: 41 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/books no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/awards no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/picks no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/book-of-the-month no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/journal no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/about no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/features no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/guide no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/app-guide no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/privacy no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/terms no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/authors/a-a-milne no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/books/813-leblanc no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/awards/james-tait-black no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/picks/anthony-jeselnik no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/journal/archive no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/authors/a-e-w-mason no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/books/a-bid-for-fortune-boothby no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/awards/newbery-medal no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/picks/audacious no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/journal/frankenstein-monster-meaning no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/authors/a-merritt no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/awards/nobel-literature no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/picks/barnes-noble no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/journal/great-gatsby-green-light-meaning no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/authors/a-n-afanasyev no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/books/a-christmas-carol-dickens no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/awards/pulitzer-fiction no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/picks/belletrist no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/journal/moby-dick-whale-symbolism no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/authors/a-p-herbert no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/books/a-confession-tolstoy no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/awards/pulitzer-poetry no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/picks/bookofthemonthclub-orig no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/journal/how-to-read-moby-dick no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/authors/a-w-tozer no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
       {
        "severity": "warning",
        "check": "C2",
@@ -1493,8 +2169,18 @@
     },
     "carrel": {
      "status": "missing",
-     "reason": "site-runtime-speed-static: 2 errors",
+     "reason": "site-runtime-speed-static: 4 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://carrel.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://carrel.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
       {
        "severity": "error",
        "check": "D4",
@@ -1519,8 +2205,48 @@
     },
     "enarratio": {
      "status": "missing",
-     "reason": "site-runtime-speed-static: 2 errors",
+     "reason": "site-runtime-speed-static: 11 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/example no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/capsomer no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/shadcn no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/radix no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/material no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/astro no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://enarratio.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
       {
        "severity": "error",
        "check": "D4",
@@ -1530,6 +2256,11 @@
        "severity": "warning",
        "check": "A1",
        "detail": "https://enarratio.dustinedwards.info/ mobile: no Chrome field data for this page yet"
+      },
+      {
+       "severity": "error",
+       "check": "A3",
+       "detail": "https://enarratio.dustinedwards.info/ desktop Lighthouse performance 92 (bar 100)"
       },
       {
        "severity": "error",
@@ -1545,12 +2276,207 @@
     },
     "capsomer": {
      "status": "missing",
-     "reason": "site-runtime-speed-static: 2 errors",
+     "reason": "site-runtime-speed-static: 41 errors",
      "findings": [
       {
        "severity": "error",
-       "check": "B1",
-       "detail": "https://capsomer.dustinedwards.info/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, must-revalidate, colo SJC then SJC"
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/themes/color/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/data/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/icons/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/colors/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/accessibility/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/themes/typography/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/dialog/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/themes/radius/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-engine-settings/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/form-hooks/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/themes/spacing/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-job-buttons/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/hooks/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/themes/shadows/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/ai-sample/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/listbox/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/themes/motion/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/ambient/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/format/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/themes/dark-mode/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/popover/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/annotated-document/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/router/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/annotated-figure/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/route-hooks/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/app-frame/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/state-hooks/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/approval-queue/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/primitives/trusted-html/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/approval-sheet/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/ask-panel/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/attention-list/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/author-list/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/authorship/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsomer.dustinedwards.info/components/avatar/ no ETag or Last-Modified, so a repeat visit downloads the page again"
       },
       {
        "severity": "error",
@@ -1571,8 +2497,18 @@
     },
     "prelum": {
      "status": "missing",
-     "reason": "site-runtime-speed-static: 4 errors",
+     "reason": "site-runtime-speed-static: 6 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://prelum.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://prelum.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
       {
        "severity": "error",
        "check": "D4",
@@ -1607,8 +2543,208 @@
     },
     "capsid": {
      "status": "missing",
-     "reason": "site-runtime-speed: 2 errors",
+     "reason": "site-runtime-speed: 42 errors",
      "findings": [
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/systems/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/numbers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/code/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/capsid/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/accessibility/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/capsid/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_start_session/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/1/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/d1-dump/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_find_docs/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/2/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/d1-dump/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_read_doc/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/3/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/devkit/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_write_doc/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/4/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/devkit/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_delete_doc/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/5/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/site-runtime/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_lint_namespace/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/6/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/site-runtime/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_read_repo/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/7/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/prelum/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_inspect_repo/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/8/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/prelum/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_close_pr/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/job-life/9/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/capsomer/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/tools/capsid_work_jobs/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/flows/doc-search/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
+      {
+       "severity": "error",
+       "check": "B7",
+       "detail": "https://capsid.dustinedwards.info/s/capsomer/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+      },
       {
        "severity": "error",
        "check": "D4",
@@ -1690,7 +2826,7 @@
       "https://dustinedwards.info/health",
       "https://github.com/DrDustinEdwards/dustinedwards-info/actions/runs/45023620671"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "germomics": {
      "status": "complete",
@@ -1699,7 +2835,7 @@
       "https://germomics.com/health",
       "https://github.com/DrDustinEdwards/germomics/actions/runs/45023601143"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1708,7 +2844,7 @@
       "https://julieedwards.info/health",
       "https://github.com/DrDustinEdwards/julieedwards-info/actions/runs/45023650785"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "txasm": {
      "status": "complete",
@@ -1717,7 +2853,7 @@
       "https://txasm.dustin-edwards.workers.dev/health",
       "https://github.com/DrDustinEdwards/txasm/actions/runs/45023660607"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "bsw": {
      "status": "complete",
@@ -1725,18 +2861,12 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/health"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxhound": {
-     "status": "missing",
-     "reason": "ops-audit: 1 errors",
-     "findings": [
-      {
-       "severity": "error",
-       "check": "H4",
-       "detail": "https://foxhoundapp.com/health serves 7dcc64e86cdcc6e4559d3d5ad5ae2f6f6ac93a57, not the branch head c2ef480c9adc5871f03f0f2867dd6ef80962edd3 (https://github.com/DrDustinEdwards/foxhound/commit/c2ef480c9adc5871f03f0f2867dd6ef80962edd3), committed 77 minutes ago"
-      }
-     ]
+     "status": "partial",
+     "reason": "failed on 2026-11-25, after Verify backups, repo settings and remaining charts signed; needs a fresh verifier",
+     "clean_days": 1
     },
     "foxing": {
      "status": "complete",
@@ -1745,7 +2875,7 @@
       "https://foxing.app/health",
       "https://github.com/DrDustinEdwards/foxing/actions/runs/45023710978"
      ],
-     "clean_days": 7
+     "clean_days": 8
     },
     "carrel": {
      "status": "n/a",
@@ -1773,7 +2903,7 @@
      "evidence": [
       "https://mcp.dustinedwards.info/health"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxhound-mcp": {
      "status": "complete",
@@ -1781,7 +2911,7 @@
      "evidence": [
       "https://admin-mcp.foxhoundapp.com/health"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "dustinedwards-mcp": {
      "status": "complete",
@@ -1789,7 +2919,7 @@
      "evidence": [
       "https://admin-mcp.dustinedwards.info/health"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "carrel-mcp": {
      "status": "complete",
@@ -1798,7 +2928,7 @@
       "https://carrel-mcp.dustinedwards.info/health",
       "https://github.com/DrDustinEdwards/carrel/actions/runs/45023690833"
      ],
-     "clean_days": 4
+     "clean_days": 5
     },
     "foxing-mcp": {
      "status": "complete",
@@ -1806,7 +2936,7 @@
      "evidence": [
       "https://admin-mcp.foxing.app/health"
      ],
-     "clean_days": 18
+     "clean_days": 19
     },
     "capsid-portal": {
      "status": "n/a",
@@ -1848,7 +2978,7 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "germomics": {
      "status": "partial",
@@ -1857,7 +2987,7 @@
       "https://germomics.com/",
       "https://germomics.com/data/cholera-soho-1854"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "julieedwards-info": {
      "status": "complete",
@@ -1865,7 +2995,7 @@
      "evidence": [
       "https://julieedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "txasm": {
      "status": "complete",
@@ -1876,7 +3006,7 @@
       "https://txasm.dustin-edwards.workers.dev/awardees",
       "https://txasm.dustin-edwards.workers.dev/no-such-page-devkit-a11y"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "bsw": {
      "status": "partial",
@@ -1884,7 +3014,7 @@
      "evidence": [
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxhound": {
      "status": "complete",
@@ -1892,7 +3022,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxing": {
      "status": "partial",
@@ -1900,7 +3030,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "carrel": {
      "status": "complete",
@@ -1908,7 +3038,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "enarratio": {
      "status": "partial",
@@ -1917,7 +3047,7 @@
       "https://enarratio.dustinedwards.info/",
       "https://enarratio.dustinedwards.info/astro"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsomer": {
      "status": "partial",
@@ -1927,7 +3057,7 @@
       "https://capsomer.dustinedwards.info/components/contact-card/",
       "https://capsomer.dustinedwards.info/components/not-found-report/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "prelum": {
      "status": "complete",
@@ -1935,7 +3065,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid": {
      "status": "partial",
@@ -1944,7 +3074,7 @@
       "https://capsid.dustinedwards.info/",
       "https://capsid.dustinedwards.info/numbers/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -1998,7 +3128,7 @@
      "evidence": [
       "https://dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "germomics": {
      "status": "complete",
@@ -2006,7 +3136,7 @@
      "evidence": [
       "https://germomics.com/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "julieedwards-info": {
      "status": "n/a",
@@ -2026,7 +3156,7 @@
      "evidence": [
       "https://foxhoundapp.com/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "foxing": {
      "status": "complete",
@@ -2034,7 +3164,7 @@
      "evidence": [
       "https://foxing.app/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "carrel": {
      "status": "complete",
@@ -2042,7 +3172,7 @@
      "evidence": [
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "enarratio": {
      "status": "complete",
@@ -2050,7 +3180,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsomer": {
      "status": "complete",
@@ -2058,7 +3188,7 @@
      "evidence": [
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "prelum": {
      "status": "complete",
@@ -2066,7 +3196,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid": {
      "status": "complete",
@@ -2074,7 +3204,7 @@
      "evidence": [
       "https://capsid.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "capsid-mcp": {
      "status": "n/a",
@@ -2102,7 +3232,7 @@
      "evidence": [
       "https://portal.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     },
     "carrel-desk": {
      "status": "complete",
@@ -2110,7 +3240,7 @@
      "evidence": [
       "https://desk.dustinedwards.info/"
      ],
-     "clean_days": 5
+     "clean_days": 6
     }
    }
   },
@@ -2146,7 +3276,7 @@
       "https://github.com/DrDustinEdwards/dustinedwards-info/blob/a602d9aa2c73118ca7ab25736d50def007fa91a1/app/lib/search/ask.server.ts",
       "https://dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "germomics": {
      "status": "complete",
@@ -2155,7 +3285,7 @@
       "https://github.com/DrDustinEdwards/germomics/blob/a923b38e632db70636688259093102db8232e74e/app/lib/media/suggest.server.ts",
       "https://germomics.com/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "julieedwards-info": {
      "status": "complete",
@@ -2166,7 +3296,7 @@
       "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
       "https://julieedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "txasm": {
      "status": "complete",
@@ -2175,7 +3305,7 @@
       "https://github.com/DrDustinEdwards/txasm/blob/3d19c39851c69f0bb46ab20c9416ae121dff06b0/app/lib/media/suggest.server.ts",
       "https://txasm.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "bsw": {
      "status": "complete",
@@ -2186,12 +3316,12 @@
       "https://github.com/DrDustinEdwards/site-api/blob/b850638bfe26136ba617a99fcc96a5bad8514ed0/src/media-kit.ts#L73-L215",
       "https://bsw.dustin-edwards.workers.dev/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "foxhound": {
      "status": "partial",
      "reason": "failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxing": {
      "status": "complete",
@@ -2201,7 +3331,7 @@
       "https://github.com/DrDustinEdwards/foxing/blob/cc1f55118ce444b15a3812a65bc44aa90c6021f9/packages/core/src/domain/recommendations.ts",
       "https://foxing.app/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "carrel": {
      "status": "complete",
@@ -2211,7 +3341,7 @@
       "https://github.com/DrDustinEdwards/carrel/blob/5f1a8b5f5fd14a2b5cad067e53850ed5ff9d7c36/app/lib/social/routine.server.ts",
       "https://carrel.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "enarratio": {
      "status": "complete",
@@ -2219,7 +3349,7 @@
      "evidence": [
       "https://enarratio.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "capsomer": {
      "status": "complete",
@@ -2227,7 +3357,7 @@
      "evidence": [
       "https://capsomer.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "prelum": {
      "status": "complete",
@@ -2235,7 +3365,7 @@
      "evidence": [
       "https://prelum.dustinedwards.info/"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "capsid": {
      "status": "partial",
@@ -2243,17 +3373,12 @@
      "evidence": [
       "https://github.com/DrDustinEdwards/capsid/blob/f762abe0fe1c03e2d4bc218f507676bb86944583/src/doc-index.ts"
      ],
-     "clean_days": 25
+     "clean_days": 26
     },
     "capsid-mcp": {
      "status": "missing",
      "reason": "site-runtime-ai-audit: 1 errors",
      "findings": [
-      {
-       "severity": "error",
-       "check": "L8",
-       "detail": "https://mcp.dustinedwards.info/health tool-call-log is warn: could not run: timed out after 3000 ms"
-      },
       {
        "severity": "warning",
        "check": "T4",
@@ -2368,28 +3493,33 @@
        "severity": "warning",
        "check": "P3",
        "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+      },
+      {
+       "severity": "error",
+       "check": "S1",
+       "detail": "https://mcp.dustinedwards.info/ops/mcp 35 concurrent requests by one caller, none refused (statuses 200)"
       }
      ]
     },
     "foxhound-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "dustinedwards-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "carrel-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "foxing-mcp": {
      "status": "partial",
      "reason": "failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier",
-     "clean_days": 1
+     "clean_days": 2
     },
     "capsid-portal": {
      "status": "n/a",

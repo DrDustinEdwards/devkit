@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-25 17:57 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-26 17:36 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -14,8 +14,8 @@ Newest run 2026-11-25 17:57 UTC. Filled only from the live checks and the verifi
 | 4. Writing and rendering | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ❌ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | 🟡 | ✅ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
-| 8. Running and recovery | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | · | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | +28958 | −2924 |
+| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 8. Running and recovery | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | · | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | ✅ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
@@ -95,51 +95,71 @@ Builder: Complete shared images and media. Verifier: Re-sign partial devkit area
 Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
 
 - 🟡 Package: Three of the four check bugs are fixed in site-runtime 0.67.1 and proven. D1: the check sends a Chrome agent; on the devkit runner (run 41252992440, 1 Nov 00:10 UTC, check v0.67.1) D1 passes on all ten custom domains and fails only on txasm and bsw (workers.dev, accepted); curl with that agent gets 103 then 200 on all ten. B4: a 404 is judged by its cache-control; passes on Carrel, Capsomer, Enarratio, Prelum and the explorer (no B4 in the run). hashed(): needs a hash-like token; apple-touch-icon.png is no longer hashed (4 unit tests pass). Still wrong: the old path shortcut in hashed() treats every file under /assets/ or /islands/ as hashed, so C1 fails 5 times on the Capsid explorer, whose /assets files (capsomer.css, enarratio.css, explorer.css, theme.js, explorer.js) are deliberately unhashed (explorer/worker.mjs says so) and send public, max-age=3600, which is right for them. Until the check judges those by their names, or the explorer hashes them, the board stays red on that cell. A1/A3 have no data without the CrUX key (Dustin's; the run shows PageSpeed 429). Not caught in round 2 because a cloud session's Node cannot decode zstd, so the home page body was empty and no files were sampled.
-- ❌ dustinedwards.info: site-runtime-speed: 11 errors
-  - B1: https://dustinedwards.info/cv not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B1: https://dustinedwards.info/software/foxhound not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B1: https://dustinedwards.info/research/retroviruses/human not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B1: https://dustinedwards.info/teaching/central-dogma not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B7: https://dustinedwards.info/writing a conditional request with the page's own validator answered 200, not 304
-- ❌ Germomics: site-runtime-speed: 6 errors
-  - B1: https://germomics.com/a-boy-named-flu not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, colo LAX then LAX
-  - B7: https://germomics.com/txasm a conditional request with the page's own validator answered 200, not 304
-  - B7: https://germomics.com/a-boy-named-flu a conditional request with the page's own validator answered 200, not 304
-  - B7: https://germomics.com/games/phage-defense a conditional request with the page's own validator answered 200, not 304
-  - B7: https://germomics.com/data/influenza-1918 a conditional request with the page's own validator answered 200, not 304
+- ❌ dustinedwards.info: site-runtime-speed: 40 errors
+  - B7: https://dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://dustinedwards.info/about no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://dustinedwards.info/writing no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://dustinedwards.info/research/publications no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://dustinedwards.info/contact no ETag or Last-Modified, so a repeat visit downloads the page again
+- ❌ Germomics: site-runtime-speed: 29 errors
+  - B7: https://germomics.com/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://germomics.com/episodes no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://germomics.com/writing no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://germomics.com/archive no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://germomics.com/data no ETag or Last-Modified, so a repeat visit downloads the page again
 - ❌ julieedwards.info: site-runtime-speed: 1 errors
   - C5: http://www.julieedwards.info/accessibility/ http www page, other slash: 2 redirects (301 http://www.julieedwards.info/accessibility/ &gt; 301 https://julieedwards.info/accessibility/ &gt; 200 https://julieedwards.info/accessibility)
-- 🟡 TXASM: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
+- ❌ TXASM: site-runtime-speed: 1 errors
+  - A3: https://txasm.dustin-edwards.workers.dev/ desktop Lighthouse performance 98 (bar 100)
 - 🟡 BSW: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
-- ❌ Foxhound: site-runtime-speed: 1 errors
-  - C5: http://www.foxhoundapp.com/pricing/ http www page, other slash: 2 redirects (301 http://www.foxhoundapp.com/pricing/ &gt; 301 https://foxhoundapp.com/pricing/ &gt; 200 https://foxhoundapp.com/pricing)
-- ❌ Foxing: site-runtime-speed: 1 errors
-  - C5: http://www.foxing.app/books/ http www page, other slash: 2 redirects (301 http://www.foxing.app/books/ &gt; 301 https://foxing.app/books/ &gt; 200 https://foxing.app/books)
-- ❌ Carrel: site-runtime-speed-static: 2 errors
+- ❌ Foxhound: site-runtime-speed: 41 errors
+  - B7: https://foxhoundapp.com/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://foxhoundapp.com/pricing no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://foxhoundapp.com/products no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://foxhoundapp.com/product/audit no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://foxhoundapp.com/features no ETag or Last-Modified, so a repeat visit downloads the page again
+- ❌ Foxing: site-runtime-speed: 41 errors
+  - B7: https://foxing.app/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://foxing.app/books no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://foxing.app/awards no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://foxing.app/picks no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://foxing.app/book-of-the-month no ETag or Last-Modified, so a repeat visit downloads the page again
+- ❌ Carrel: site-runtime-speed-static: 4 errors
+  - B7: https://carrel.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://carrel.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again
   - D4: https://carrel.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 15 KiB
   - D4: https://carrel.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 15 KiB
-- ❌ Enarratio: site-runtime-speed-static: 2 errors
-  - D4: https://enarratio.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 27 KiB
-  - D4: https://enarratio.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 27 KiB
-- ❌ Capsomer: site-runtime-speed-static: 2 errors
-  - B1: https://capsomer.dustinedwards.info/ not from the edge on the second request: cf-cache-status MISS (first HIT), cache-control public, max-age=0, must-revalidate, colo SJC then SJC
-  - A3: https://capsomer.dustinedwards.info/ mobile Lighthouse performance 89 (bar 95)
-- ❌ Prelum specimen: site-runtime-speed-static: 4 errors
+- ❌ Enarratio: site-runtime-speed-static: 11 errors
+  - B7: https://enarratio.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://enarratio.dustinedwards.info/example no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://enarratio.dustinedwards.info/capsomer no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://enarratio.dustinedwards.info/shadcn no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://enarratio.dustinedwards.info/radix no ETag or Last-Modified, so a repeat visit downloads the page again
+- ❌ Capsomer: site-runtime-speed-static: 41 errors
+  - B7: https://capsomer.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://capsomer.dustinedwards.info/themes/color/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://capsomer.dustinedwards.info/components/not-found-report/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://capsomer.dustinedwards.info/primitives/data/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://capsomer.dustinedwards.info/icons/ no ETag or Last-Modified, so a repeat visit downloads the page again
+- ❌ Prelum specimen: site-runtime-speed-static: 6 errors
+  - B7: https://prelum.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://prelum.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again
   - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 26 KiB
   - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-javascript: Est savings of 25 KiB
   - D4: https://prelum.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 25 KiB
-  - D4: https://prelum.dustinedwards.info/ desktop Lighthouse unused-javascript: Est savings of 41 KiB
-- ❌ Capsid explorer: site-runtime-speed: 2 errors
-  - D4: https://capsid.dustinedwards.info/ mobile Lighthouse unused-javascript: Est savings of 54 KiB
-  - D4: https://capsid.dustinedwards.info/ desktop Lighthouse unused-javascript: Est savings of 54 KiB
+- ❌ Capsid explorer: site-runtime-speed: 42 errors
+  - B7: https://capsid.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://capsid.dustinedwards.info/systems/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://capsid.dustinedwards.info/flows/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://capsid.dustinedwards.info/numbers/ no ETag or Last-Modified, so a repeat visit downloads the page again
+  - B7: https://capsid.dustinedwards.info/code/ no ETag or Last-Modified, so a repeat visit downloads the page again
 
 ### 8. Running and recovery
 
 Builder: Complete shared running and recovery. Verifier: Verify backups, repo settings and remaining charts.
 
 - 🟡 Package: Built but off: gradual rollout and previews in worker-deploy (no caller turns them on; D4 never compares error rates); goneResponse/renameRedirect unused; no shared redirect table (N5); no drill restores files; R2/R5 still owed; ops-audit exits 0 when its GitHub reads fail and never tests bindings (H5) or the shared 404 page (N6); probe filter misses .zip, .tar.gz, /web.config, /server-status
-- ❌ Foxhound: ops-audit: 1 errors
-  - H4: https://foxhoundapp.com/health serves 7dcc64e86cdcc6e4559d3d5ad5ae2f6f6ac93a57, not the branch head c2ef480c9adc5871f03f0f2867dd6ef80962edd3 (https://github.com/DrDustinEdwards/foxhound/commit/c2ef480c9adc5871f03f0f2867dd6ef80962edd3), committed 77 minutes ago
+- 🟡 Foxhound: failed on 2026-11-25, after Verify backups, repo settings and remaining charts signed; needs a fresh verifier
 
 ### 9. Accessibility and components
 
@@ -169,7 +189,7 @@ Builder: Complete shared AI and MCP code. Verifier: Re-sign partial devkit areas
 - 🟡 Foxhound: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Capsid explorer: Closed: the AI Search call is raced against an 8 s timeout and an upstream error goes to the log only, so the caller gets a fixed sentence. Still open: the gateway is attached only when the AI_GATEWAY_ID dashboard var is set, and whether it is set live cannot be checked from here.
 - ❌ Capsid MCP: site-runtime-ai-audit: 1 errors
-  - L8: https://mcp.dustinedwards.info/health tool-call-log is warn: could not run: timed out after 3000 ms
+  - S1: https://mcp.dustinedwards.info/ops/mcp 35 concurrent requests by one caller, none refused (statuses 200)
 - 🟡 Foxhound admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
