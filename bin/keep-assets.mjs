@@ -174,15 +174,17 @@ async function main(/** @type {string[]} */ argv) {
   return 0;
 }
 
-// Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to.
+// Run through node_modules/.bin, argv[1] is the link and import.meta.url the file it points to. An error is a warning:
+// a deploy goes on without the earlier files rather than not at all.
 if (isMain(import.meta.url)) {
-  main(process.argv.slice(2)).then(
-    (code) => process.exit(code),
-    (error) => {
-      console.log(
-        `::warning::${escapeAnnotation(`devkit-keep-assets did not finish, so this deploy keeps no earlier files: ${error?.message ?? error}`)}`,
-      );
-      process.exit(0);
-    },
-  );
+  let code = 0;
+  try {
+    code = await main(process.argv.slice(2));
+  } catch (error) {
+    const why = error instanceof Error ? error.message : String(error);
+    console.log(
+      `::warning::${escapeAnnotation(`devkit-keep-assets did not finish, so this deploy keeps no earlier files: ${why}`)}`,
+    );
+  }
+  process.exit(code);
 }
