@@ -113,14 +113,18 @@ The limits. Cloudflare's rollback swaps the Worker's code and bindings only. It 
 
 **Preview per pull request (opt-in, `preview`).** On a pull request from the same repository (a fork's never gets the secrets), the `preview` job installs, runs `preview-build` if set, and uploads a version that is never deployed: `wrangler versions upload --preview-alias pr-<number>`. Its URL, `pr-<number>-<worker>.<subdomain>.workers.dev`, goes to the summary and the `preview-url` output. The caller adds `pull_request` to its triggers. The pre-deploy guard never runs for a preview, since it may migrate the live database, but the preview runs with the live Worker's bindings, its D1 and buckets included. It needs Version URLs on (`workers_dev`, or `"preview_urls": true`), and Cloudflare gives a Worker with a Durable Object none. Cloudflare Docs: "Preview URLs".
 
+**Earlier releases' assets (opt-in, `keep-assets`).** A Worker version serves only the files in its own upload, so after a deploy a page an older release served (a tab left open, the back-forward cache, a crawler rendering HTML it fetched hours ago) asks for a hashed stylesheet or script the live version lacks and gets a 404 (Cloudflare Docs, "Version skew and static assets", whose fix for older pages is "Include assets needed by older pages"). With `keep-assets` set to the built asset directory, a step after the pre-deploy guard runs `devkit-keep-assets`: it reads `/assets/kept-assets.json` from the live origin (health-url's), the list of every file under `<dir>/assets` with its sha-256 and when a build last produced it; fetches each listed file this build lacks, produced within `keep-assets-days`, checks its hash and adds it; and writes this build's list for the next deploy. It never fails a deploy. During a gradual rollout's split it covers an old page reaching the new version, not a new page's request reaching the old one (that needs version affinity, a zone rule).
+
 **Why both stay opt-in.** Turning either on by default would break callers that work today: a gradual rollout refuses a Durable Object migration (Foxhound, Foxing, Carrel and Capsid have Durable Objects, and a new class or rename needs `wrangler deploy`), cannot run on a Worker's first deploy, needs Account Analytics Read on a token that today has only the deploy permissions, and adds `gradual-minutes` to every deploy; a preview fails on every pull request for a Worker with a Durable Object (Cloudflare gives it no preview URL) or with Version URLs off. Each site turns them on in its caller once its token and config allow, in a reviewed change.
 
-| Input             | Default | What it is                                                                                    |
-| ----------------- | ------- | --------------------------------------------------------------------------------------------- |
-| `gradual-percent` | `0`     | 0 deploys at once. 1 to 99 is the new version's share of traffic before the gate promotes it. |
-| `gradual-minutes` | `10`    | How long that share runs before the verify command, 0 to 25.                                  |
-| `preview`         | `false` | Upload a preview version for each pull request from this repository.                          |
-| `preview-build`   | none    | Run before the preview upload, with the Cloudflare secrets (a config rebuild, a build).       |
+| Input              | Default | What it is                                                                                    |
+| ------------------ | ------- | --------------------------------------------------------------------------------------------- |
+| `gradual-percent`  | `0`     | 0 deploys at once. 1 to 99 is the new version's share of traffic before the gate promotes it. |
+| `gradual-minutes`  | `10`    | How long that share runs before the verify command, 0 to 25.                                  |
+| `preview`          | `false` | Upload a preview version for each pull request from this repository.                          |
+| `preview-build`    | none    | Run before the preview upload, with the Cloudflare secrets (a config rebuild, a build).       |
+| `keep-assets`      | none    | The built asset directory; keep earlier releases' hashed files in the upload (below).         |
+| `keep-assets-days` | `7`     | How long after a build last produced a file it is still kept.                                 |
 
 Which browser features a site may use, and with what fallback, is [docs/browser-support.md](docs/browser-support.md): Baseline Widely available freely, Newly available with a small fallback, Limited availability only as feature-detected enhancement, no polyfills.
 
