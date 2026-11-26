@@ -17,6 +17,7 @@
     "devkit-destructive": "./bin/destructive.mjs",
     "devkit-fetch-fonts": "./bin/fetch-fonts.mjs",
     "devkit-gates": "./bin/gates.mjs",
+    "devkit-keep-assets": "./bin/keep-assets.mjs",
     "devkit-live": "./bin/live.mjs",
     "devkit-migrations": "./bin/migrations.mjs",
     "devkit-mutation-report": "./bin/mutation-report.mjs",

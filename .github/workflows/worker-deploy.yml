@@ -84,6 +84,16 @@ on:
         required: false
         type: string
         default: ""
+      keep-assets:
+        description: The built asset directory (wrangler's `assets.directory`, such as build/client), to keep the earlier releases' hashed files in this upload (bin/keep-assets.mjs). A Worker version serves only its own files, so a page an older release served, still open in a tab or rendered later by a crawler, asks for a stylesheet the new version lacks (Cloudflare Docs, "Version skew and static assets"). After the pre-deploy guard builds, each file under <dir>/assets that the live release lists in /assets/kept-assets.json and a build produced within keep-assets-days is fetched from the live origin (health-url's), checked against its sha-256 and added. Empty keeps nothing.
+        required: false
+        type: string
+        default: ""
+      keep-assets-days:
+        description: With keep-assets, how many days after a build last produced a file it is still carried.
+        required: false
+        type: number
+        default: 7
       gradual-percent:
         description: Opt in to a gradual rollout (D4). 0, the default, deploys with `wrangler deploy`. 1 to 99 uploads a version, gives it this share of traffic beside the live one, applies the config's triggers (routes, crons), gates it through a version override, compares its error rate with the old version's, then gives it all traffic. Not for a Worker with a Durable Object migration to apply, nor one that declares its Durable Objects in `exports` (Cloudflare does not support gradual deployments there).
         required: false
@@ -254,6 +264,18 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: bash -euo pipefail -c "$PRE_DEPLOY"
+
+      # After the build, before the upload: the earlier releases' hashed files ride along, so an older page keeps its styles.
+      - name: Keep earlier releases' assets
+        if: inputs.keep-assets != ''
+        env:
+          KEEP_DIR: ${{ inputs.keep-assets }}
+          KEEP_DAYS: ${{ inputs.keep-assets-days }}
+          HEALTH_URL: ${{ inputs.health-url }}
+        run: |
+          set -euo pipefail
+          origin=$(node -e 'process.stdout.write(new URL(process.argv[1]).origin)' "$HEALTH_URL")
+          node "$GITHUB_WORKSPACE/.devkit/bin/keep-assets.mjs" "$KEEP_DIR" --origin "$origin" --days "$KEEP_DAYS" | tee -a "$GITHUB_STEP_SUMMARY"
 
       # GRADUAL (gradual-percent 1 to 99): upload a version, then split traffic between it and the version serving most of
       # it now (`wrangler versions deploy <new>@<p>% <old>@<rest>%`, Cloudflare Docs, "Gradual deployments"). The live gate
