@@ -1,5 +1,6 @@
 {
   "copies": {
+    "bin/keep-assets.mjs": "devkit-keep-assets checks each carried file's sha-256 with node:crypto inside the deploy job, which installs no shared package; devkit depends on none, so it cannot import site-runtime's encoding",
     "bin/migrations.mjs": "devkit-migrations hashes migration files with node:crypto; devkit depends on no shared package, so it cannot import site-runtime's encoding",
     "bin/shared/copies.mjs": "the fingerprints the check looks for are written here",
     "bin/shared/features.mjs": "the feature rules name the shared pieces they look for",
