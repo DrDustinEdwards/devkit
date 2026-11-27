@@ -85,7 +85,7 @@ function needsOf(/** @type {Record<string, any>} */ jobs, /** @type {string} */ 
  * as GitHub reads it, and for each job that calls pr.yml or no-bloat.yml at the base it refuses: dropping the job; any
  * change to it but its pin and the inputs that are not CHECK_INPUTS; a change to an input that turns the check off or
  * decides what runs before it; any change to a job it waits for; and any change outside `jobs` (`on`, `concurrency`,
- * `permissions`), except a `schedule` added to `on`. A file that no longer parses is refused too. The run that judges such
+ * `permissions`), except a `schedule` added to `on` or `edited` dropped from its pull_request types. A file that no longer parses is refused too. The run that judges such
  * a change uses the change's own inputs, so a check it turns off never runs to refuse it: it is refused here whenever it
  * does run, pr.yml refuses the rest (`--inputs-from`), and Capsid's nightly watch reports any that merged. Pure, given the
  * parser.
@@ -130,11 +130,19 @@ export function workflowInputs(path, was, is, parseYaml) {
     const { schedule: _, ...rest } = is;
     return canonical(was) === canonical(rest);
   };
+  // Dropping `edited` from pull_request's types, and nothing else, stops only the runs a description edit started, which
+  // add no commit: the check already judged the same head when its commits came.
+  const dropsOnlyEdited = (/** @type {any} */ was, /** @type {any} */ is) => {
+    const types = was?.pull_request?.types;
+    if (!Array.isArray(types) || !types.includes("edited")) return false;
+    const pull_request = { ...was.pull_request, types: types.filter((t) => t !== "edited") };
+    return canonical({ ...was, pull_request }) === canonical(is);
+  };
   for (const key of new Set([...Object.keys(a), ...Object.keys(b)]))
     if (
       key !== "jobs" &&
       canonical(a[key]) !== canonical(b[key]) &&
-      !(key === "on" && addsOnlySchedule(a.on, b.on))
+      !(key === "on" && (addsOnlySchedule(a.on, b.on) || dropsOnlyEdited(a.on, b.on)))
     )
       say(`changes its top-level "${key}"`);
   const show = (/** @type {unknown} */ v) =>
