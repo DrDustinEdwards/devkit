@@ -64,6 +64,15 @@ test("a branch, tag, short, uppercase or 41-character ref, secrets: inherit, a s
     assert.match(problems[0].problem, /--ignore-scripts/);
   }
   assert.deepEqual(callerProblems("name: x\n"), [
-    { line: 0, problem: "no call to a devkit reusable workflow" },
+    { line: 0, problem: "no call to a devkit reusable workflow or action" },
+  ]);
+});
+
+test("a devkit action is a call too, held to the same full-sha pin", () => {
+  const job = (/** @type {string} */ ref) =>
+    `jobs:\n  footer:\n    steps:\n      - uses: DrDustinEdwards/devkit/.github/actions/footer@${ref}\n`;
+  assert.deepEqual(callerProblems(job(SHA)), []);
+  assert.deepEqual(callerProblems(job("v0.65.0")), [
+    { line: 4, problem: 'pinned to "v0.65.0", not a full 40-character commit sha' },
   ]);
 });

@@ -28,8 +28,9 @@ name: pr
 # devkit-shared reads those inputs: a call of this workflow counts as each check it leaves on.
 #
 # THE CHECK NAME. The job is named "Repo checks", so a caller whose job id is `checks` (examples/pr-caller.yml) reports
-# "checks / Repo checks", the name every repository's "Protect main" ruleset already requires. An edit of the description
-# runs every check again under that name: GitHub judges a required check by the newest run of the workflow on the commit,
+# "checks / Repo checks", the name every repository's "Protect main" ruleset already requires. The caller no longer runs
+# on an edit of the description (examples/footer-caller.yml strips the footer then); a caller that still does runs every
+# check again under that name: GitHub judges a required check by the newest run of the workflow on the commit,
 # so a footer-only run under another name left the required check "expected" and blocked the merge, and a
 # footer-only run under the same name would put a green over a red. A dispatch (no pull request) runs only the footer
 # strip, under the name "Description footer". The rulesets also require the old workflows' names by name

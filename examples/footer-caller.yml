@@ -1,0 +1,27 @@
+name: footer
+
+# The footer strip on an edit of a pull request's description, apart from the checks. pr.yml strips it when a pull request
+# opens; a cloud session's GitHub connection puts it back on every description it writes later, so an edit needs the strip
+# too. It is its own workflow because an edit adds no commits: run inside the checks workflow, it reran every check on the
+# same head (GitHub judges a required check by the newest run of the workflow), and Renovate edits its description after
+# nearly every push, 1,061 full runs in the week to 2026-11-27. Renovate's own edits never carry the footer, so they
+# skip the job and take no runner.
+#
+# The step is devkit's footer action (scripts/strip-pr-footer.mjs), with nothing to install. Replace the sha with the
+# devkit commit that holds the reviewed action, and keep it a full sha: scripts/check-callers.mjs fails on anything else.
+
+on:
+  pull_request:
+    types: [edited]
+
+permissions: {}
+
+jobs:
+  footer:
+    if: github.actor != 'renovate[bot]' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: DrDustinEdwards/devkit/.github/actions/footer@0000000000000000000000000000000000000000

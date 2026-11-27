@@ -16,7 +16,7 @@ import { isMain } from "../node/index.mjs";
 
 // A quoted value is the same value to YAML, so a quote around it is read through.
 const SHARED =
-  /^\s*uses:\s*["']?(?<repo>[\w.-]+)\/devkit\/\.github\/workflows\/(?<file>[\w.-]+)@(?<ref>[^\s"']+)/;
+  /^\s*(?:-\s+)?uses:\s*["']?(?<repo>[\w.-]+)\/devkit\/\.github\/(?:workflows\/(?<file>[\w.-]+)|actions\/[\w.-]+)@(?<ref>[^\s"']+)/;
 
 const DEPLOY = /\/worker-deploy\.yml@/;
 const SCRIPT_FREE = /--ignore-scripts|deploy-install\.mjs/;
@@ -86,7 +86,8 @@ export function callerProblems(text) {
       problem:
         "install: on a worker-deploy call must include --ignore-scripts (or run deploy-install.mjs); leave it unset for the default",
     });
-  if (calls === 0) problems.push({ line: 0, problem: "no call to a devkit reusable workflow" });
+  if (calls === 0)
+    problems.push({ line: 0, problem: "no call to a devkit reusable workflow or action" });
   return problems;
 }
 

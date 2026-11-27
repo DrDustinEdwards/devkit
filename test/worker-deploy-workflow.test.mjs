@@ -21,6 +21,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
+import { verdict } from "../scripts/error-rates.mjs";
 import { inlined } from "../scripts/inline-rollback-guard.mjs";
 
 const text = readFileSync(
@@ -171,7 +172,7 @@ test("caller input reaches a shell only through the environment, never spliced i
   }
 });
 
-test("the Cloudflare secrets reach only the bookmark, the pre-deploy guard, the deploy and the rollback", () => {
+test("the Cloudflare secrets reach only the bookmark, the pre-deploy guard, the deploy, the gradual wait and the rollback", () => {
   const holders = [...text.matchAll(/\n {6}- name: (.+)\n[\s\S]*?(?=\n {6}- |\n {2}[\w-]+:\n|$)/g)]
     .filter((m) => m[0].includes("secrets.CLOUDFLARE_API_TOKEN"))
     .map((m) => m[1]);
@@ -179,16 +180,22 @@ test("the Cloudflare secrets reach only the bookmark, the pre-deploy guard, the 
     BOOKMARK,
     "Pre-deploy guard",
     "Deploy",
+    "verify:live",
     ERRORS,
     PROMOTE,
     ROLLBACK,
     "Preview build",
     PREVIEW,
   ]);
-  // The verify command gets the caller's VERIFY_TOKEN and no other secret.
+  // The verify command gets the caller's VERIFY_TOKEN and no other secret: the Cloudflare pair is for the gradual wait's
+  // analytics reads and is taken out of the command's environment.
   assert.deepEqual(
     [...step("verify:live").matchAll(/secrets\.(\w+)/g)].map((m) => m[1]),
-    ["VERIFY_TOKEN"],
+    ["VERIFY_TOKEN", "CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"],
+  );
+  assert.match(
+    step("verify:live"),
+    /env -u CLOUDFLARE_API_TOKEN -u CLOUDFLARE_ACCOUNT_ID bash -euo pipefail -c "\$VERIFY"/,
   );
 });
 
@@ -328,6 +335,7 @@ function runStep(name, opts) {
       WRANGLER_VERSION: /WRANGLER_VERSION: "(.+)"/.exec(text)?.[1] ?? "",
       HEALTH_URL: "https://sample.example.com/health",
       WORKER: "sample",
+      DEVKIT_DIR: new URL("..", import.meta.url).pathname,
       ...opts.env,
     },
   });
@@ -634,3 +642,76 @@ test(
     }
   },
 );
+
+test(
+  "RUN: the gradual wait ends at the first read showing MIN_REQUESTS on the new version, and runs to gradual-minutes otherwise",
+  BASH,
+  () => {
+    const served = (/** @type {number} */ requests) =>
+      JSON.stringify({
+        data: {
+          viewer: {
+            accounts: [
+              {
+                workersInvocationsAdaptive: [
+                  { sum: { requests, errors: 0 }, dimensions: { scriptVersion: "new-version" } },
+                ],
+              },
+            ],
+          },
+        },
+      });
+    const env = {
+      EXPECT_SHA: THIS_RUN,
+      VERIFY: "true",
+      VERIFY_POLL_ATTEMPTS: "1",
+      VERSION_ID: "new-version",
+      GRADUAL_MINUTES: "3",
+      POLL_SECONDS: "30",
+      MIN_REQUESTS: "20",
+      SPLIT_AT: "2026-10-31T00:00:00Z",
+      CLOUDFLARE_ACCOUNT_ID: "x",
+      CLOUDFLARE_API_TOKEN: "x",
+    };
+    const dir = gate();
+    try {
+      // /health, two analytics reads (5, then 25 requests), then the home page read before the verify command.
+      const early = runStep("verify:live", {
+        dir,
+        health: [health(THIS_RUN), served(5), served(25), "200 "],
+        env,
+      });
+      assert.equal(early.status, 0, early.stdout + early.stderr);
+      assert.match(early.stdout, /served 25 requests in 60 seconds/);
+      // Never enough: six reads at 30 seconds, the 3-minute cap, and a failed read counts as none.
+      const capped = runStep("verify:live", {
+        dir,
+        health: [health(THIS_RUN), "NOANSWER", served(3)],
+        env,
+      });
+      assert.equal(capped.status, 0, capped.stdout + capped.stderr);
+      assert.match(
+        capped.stdout,
+        /served 3 requests in 180 seconds of its share \(at most 3 minutes\)/,
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test("the error-rate verdict: too few requests, worse only past both the ratio and the point, fine otherwise", () => {
+  const limits = { minRequests: 20, minErrors: 3 };
+  assert.equal(verdict({ requests: 19, errors: 19 }, { requests: 900, errors: 0 }, limits), "few");
+  assert.equal(
+    verdict({ requests: 100, errors: 9 }, { requests: 900, errors: 9 }, limits),
+    "worse",
+  );
+  // Twice the old rate but not a point above it.
+  assert.equal(
+    verdict({ requests: 1000, errors: 3 }, { requests: 1000, errors: 1 }, limits),
+    "fine",
+  );
+  // Above both but under MIN_ERRORS.
+  assert.equal(verdict({ requests: 100, errors: 2 }, { requests: 900, errors: 0 }, limits), "fine");
+});
