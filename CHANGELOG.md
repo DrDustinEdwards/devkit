@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.67.0
+
+### Minor Changes
+
+- New `release-batch.yml` and `release-pr.yml`: once a day, each shared package with changesets waiting gets one "Release X" pull request. Before it opens, the candidate is built and tested in every public consumer, at the consumer's own pins and then with the candidate. It merges itself once its checks pass. The pull request is made with a private GitHub App's token (variable `RELEASE_APP_CLIENT_ID`, secret `RELEASE_APP_PRIVATE_KEY`), because one made with `GITHUB_TOKEN` starts no checks. `bump-consumers.yml` takes a `repository` input and returns the consumers it found.
+
+### Patch Changes
+
+- devkit-no-bloat no longer refuses a pull request whose only change to a checks workflow's `on` is dropping `edited` from `pull_request.types`. A description edit adds no commit, so dropping its runs skips no check of code. Every other change to `on` is still refused.
+
 ## 0.66.0
 
 ### Minor Changes
