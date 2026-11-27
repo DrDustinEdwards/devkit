@@ -429,6 +429,22 @@ test("a workflow change that turns the check off or changes what runs before it 
     base.replace("  pull_request:\n", "  pull_request:\n  schedule:\n    - cron: '17 5 * * *'\n"),
   ])
     assert.equal(check(same), "");
+  // Dropping `edited` stops only the runs a description edit started; any other change to the types is still refused.
+  const typed = base.replace(
+    "  pull_request:\n",
+    "  pull_request:\n    types: [opened, synchronize, edited]\n",
+  );
+  const checkTyped = (/** @type {string} */ now) =>
+    workflowInputs("c.yml", typed, now, parseYaml).join("\n");
+  assert.equal(checkTyped(typed.replace(", edited]", "]")), "");
+  assert.match(
+    checkTyped(typed.replace(", synchronize, edited]", "]")),
+    /changes its top-level "on"/,
+  );
+  assert.match(
+    checkTyped(typed.replace(", edited]", "]\n    paths-ignore: ['**']")),
+    /changes its top-level "on"/,
+  );
   const add = (/** @type {string} */ lines) =>
     base.replace("      review: false\n", `      review: false\n${lines}`);
   for (const [now, what] of [
