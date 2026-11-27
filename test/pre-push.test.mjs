@@ -4,13 +4,13 @@
 
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { callerInput, pushesCommits } from "../bin/pre-push.mjs";
+import { callerInput, pushesCommits, withCodespell } from "../bin/pre-push.mjs";
 
 const BIN = fileURLToPath(new URL("../bin/pre-push.mjs", import.meta.url));
 
@@ -117,6 +117,24 @@ test(
         0,
       );
     } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test(
+  "withCodespell leaves the environment alone when codespell is already on PATH",
+  { skip: process.platform === "win32" },
+  () => {
+    const dir = mkdtempSync(join(tmpdir(), "pre-push-codespell-"));
+    const path = process.env.PATH;
+    try {
+      writeFileSync(join(dir, "codespell"), "#!/bin/sh\nexit 0\n");
+      chmodSync(join(dir, "codespell"), 0o755);
+      process.env.PATH = `${dir}:${path}`;
+      assert.equal(withCodespell(), process.env);
+    } finally {
+      process.env.PATH = path;
       rmSync(dir, { recursive: true, force: true });
     }
   },

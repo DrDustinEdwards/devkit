@@ -19,12 +19,15 @@
 
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { homedir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { isMain } from "../node/index.mjs";
 
 const BIN = fileURLToPath(new URL(".", import.meta.url));
+/** The version devkit-shared's spelling check pins (bin/shared/spelling.mjs). */
+const CODESPELL = "codespell==2.4.3";
 const MINUTE = 60_000;
 
 /** True for a command that pushes commits: not a delete, and not a push of tags alone. */
@@ -62,6 +65,32 @@ const git = (args, cwd) => {
   return r.status === 0 ? r.stdout.trim() : "";
 };
 
+/**
+ * Makes sure devkit-shared's spelling check can run: codespell or pipx on PATH, else a user install of the pinned codespell
+ * (`pip install --user`, then again with --break-system-packages for a Python that refuses it), with ~/.local/bin on PATH
+ * for the child. Best effort: when nothing installs, the shared check reports it could not run and is skipped.
+ * @returns {NodeJS.ProcessEnv} the environment the shared check runs with
+ */
+export function withCodespell() {
+  const has = (/** @type {string} */ cmd, env = process.env) =>
+    !spawnSync(cmd, ["--version"], { env, stdio: "ignore" }).error;
+  if (has("codespell") || has("pipx")) return process.env;
+  const env = {
+    ...process.env,
+    PATH: `${join(homedir(), ".local", "bin")}:${process.env.PATH ?? ""}`,
+  };
+  if (has("codespell", env)) return env;
+  for (const py of ["python3", "python"])
+    for (const extra of [[], ["--break-system-packages"]]) {
+      const r = spawnSync(py, ["-m", "pip", "install", "--quiet", "--user", ...extra, CODESPELL], {
+        stdio: "ignore",
+        timeout: 2 * MINUTE,
+      });
+      if (r.status === 0 && has("codespell", env)) return env;
+    }
+  return process.env;
+}
+
 /** The default branch's remote ref, or "" when the clone knows none. */
 export function baseRef(/** @type {string} */ root) {
   const head = git(["symbolic-ref", "--short", "refs/remotes/origin/HEAD"], root);
@@ -77,13 +106,14 @@ export function baseRef(/** @type {string} */ root) {
  * @param {string} command
  * @param {string[]} args
  * @param {number} timeout
+ * @param {NodeJS.ProcessEnv} [env]
  * @returns {Promise<{ code: number | null, out: string, error: string }>}
  */
-function run(name, cwd, command, args, timeout) {
+function run(name, cwd, command, args, timeout, env = process.env) {
   return new Promise((resolve) => {
     const child = spawn(command, args, {
       cwd,
-      env: { ...process.env, CI: "", GITHUB_STEP_SUMMARY: "", GITHUB_ACTIONS: "" },
+      env: { ...env, CI: "", GITHUB_STEP_SUMMARY: "", GITHUB_ACTIONS: "" },
     });
     let out = "";
     let error = "";
@@ -133,8 +163,9 @@ export async function checks(root) {
    * @param {number} minutes
    * @param {(r: { code: number | null, out: string }) => boolean} failed whether the exit means a real finding
    * @param {string} [prepare] a one-line command run first, through bash
+   * @param {NodeJS.ProcessEnv} [env]
    */
-  const job = (name, command, args, minutes, failed, prepare) =>
+  const job = (name, command, args, minutes, failed, prepare, env) =>
     jobs.push(
       (async () => {
         if (prepare) {
@@ -146,7 +177,7 @@ export async function checks(root) {
               detail: `prepare did not run: ${p.error || tail(p.out)}`,
             };
         }
-        const r = await run(name, root, command, args, minutes * MINUTE);
+        const r = await run(name, root, command, args, minutes * MINUTE, env);
         if (r.error) return { name, status: "skip", detail: r.error };
         if (r.code === 0) return { name, status: "pass", detail: "" };
         return failed(r)
@@ -168,7 +199,15 @@ export async function checks(root) {
       1,
       (r) => r.code === 1,
     );
-    job("shared code", node, [join(BIN, "shared.mjs"), "--base", sha], 3, (r) => r.code === 1);
+    job(
+      "shared code",
+      node,
+      [join(BIN, "shared.mjs"), "--base", sha],
+      3,
+      (r) => r.code === 1,
+      undefined,
+      withCodespell(),
+    );
     if (existsSync(join(root, ".no-bloat.json"))) {
       const prepare = callerInput(root, "no-bloat-prepare");
       if (prepare === null) jobs.push(skip("no-bloat", "its prepare step spans lines: left to CI"));
