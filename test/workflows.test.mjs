@@ -39,7 +39,11 @@ test("each pins every action to a full commit sha, and no checkout keeps credent
   for (const { name, text } of [...shared, ...actions]) {
     const uses = [...codeOf(text).matchAll(/^\s*(?:- )?uses: (\S+)/gm)]
       .map((m) => m[1])
-      .filter((ref) => !ref.startsWith("./.devkit/.github/actions/"));
+      .filter((ref) => !ref.startsWith("./.devkit/.github/actions/"))
+      // release-pr.yml is devkit's own, called only by release-batch.yml, so its local call is devkit's file too.
+      .filter(
+        (ref) => !(name === "release-pr.yml" && ref === "./.github/workflows/bump-consumers.yml"),
+      );
     for (const ref of uses) assert.match(ref, /@[0-9a-f]{40}$/, `${name}: ${ref}`);
     const checkouts = uses.filter((ref) => ref.startsWith("actions/checkout@")).length;
     assert.equal([...codeOf(text).matchAll(/persist-credentials: false/g)].length, checkouts, name);

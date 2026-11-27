@@ -1,0 +1,79 @@
+name: release-batch
+
+# THE DAILY RELEASE of the shared packages (release-pr.yml says why and how). Once a day it finds every public repository
+# of the owner with changesets waiting (.changeset/config.json, and a .md there other than README.md) and runs
+# release-pr.yml for each: one release pull request per package, tested in its consumers first, that merges itself on
+# green. Run it by hand, naming one package, for a release that cannot wait for tomorrow.
+#
+# The GitHub App release-pr.yml's header describes is read from this repository's variable RELEASE_APP_CLIENT_ID and
+# secret RELEASE_APP_PRIVATE_KEY.
+
+on:
+  schedule:
+    # 14:23 UTC, 8:23 in the morning in Texas: the day's merges go out together, early enough to land the same day.
+    - cron: "23 14 * * *"
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: One package repository to release now. Empty for every package with changesets waiting.
+        type: string
+        default: ""
+
+permissions: {}
+
+concurrency:
+  group: release-batch
+  cancel-in-progress: false
+
+jobs:
+  find:
+    name: Packages with changesets waiting
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      repositories: ${{ steps.find.outputs.repositories }}
+    steps:
+      - id: find
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          ONLY: ${{ inputs.repository }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const only = process.env.ONLY;
+            const repos = await github.paginate(github.rest.repos.listForUser, { username: owner, type: "owner", per_page: 100 });
+            const waiting = [];
+            for (const repo of repos) {
+              if (repo.archived || (only && repo.name !== only)) continue;
+              let files;
+              try {
+                ({ data: files } = await github.rest.repos.getContent({ owner, repo: repo.name, path: ".changeset" }));
+              } catch (error) {
+                if (error.status === 404) continue;
+                throw error;
+              }
+              if (!Array.isArray(files) || !files.some((f) => f.name === "config.json")) continue;
+              const notes = files.filter((f) => f.name.endsWith(".md") && f.name !== "README.md");
+              core.info(`${repo.name}: ${notes.length} changeset(s) waiting`);
+              if (notes.length > 0) waiting.push(repo.name);
+            }
+            if (only && waiting.length === 0) core.warning(`${only} has no changesets waiting, so there is nothing to release.`);
+            core.setOutput("repositories", JSON.stringify(waiting));
+
+  release:
+    needs: find
+    if: needs.find.outputs.repositories != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        repository: ${{ fromJSON(needs.find.outputs.repositories) }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/release-pr.yml
+    with:
+      repository: ${{ matrix.repository }}
+      app-client-id: ${{ vars.RELEASE_APP_CLIENT_ID }}
+    secrets:
+      app-private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
