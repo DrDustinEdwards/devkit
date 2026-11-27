@@ -389,7 +389,7 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: read
-    # The gradual rollout's judgement (scripts/error-rates.mjs): fewer requests than MIN_REQUESTS on the new version is too
+    # The gradual rollout's judgment (scripts/error-rates.mjs): fewer requests than MIN_REQUESTS on the new version is too
     # few to compare, and a refusal needs at least MIN_ERRORS errors. The wait before the verify command reads the counts
     # every POLL_SECONDS.
     env:
