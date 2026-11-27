@@ -38,10 +38,20 @@ on:
         required: false
         type: boolean
         default: false
+      repository:
+        description: The package whose consumers to find, when it is not the caller (release-pr.yml asks for each package it releases). Read as the public sees it, so only public consumers are listed. Use it with dry_run.
+        required: false
+        type: string
+        default: ""
     secrets:
       token:
         description: The fine-grained token described in the header.
         required: true
+
+    outputs:
+      consumers:
+        description: 'The consumers, as JSON: [{ "repo": "<name>", "manifests": ["<path>", ...] }, ...].'
+        value: ${{ jobs.trigger.outputs.consumers }}
 
 permissions: {}
 
@@ -50,6 +60,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions: {}
+    outputs:
+      consumers: ${{ steps.find.outputs.consumers }}
     steps:
       - name: Refuse to run without the token
         env:
@@ -61,14 +73,17 @@ jobs:
           fi
 
       - name: Start a Renovate run in every consumer
+        id: find
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           DRY_RUN: ${{ inputs.dry_run }}
+          PACKAGE: ${{ inputs.repository }}
         with:
           github-token: ${{ secrets.token }}
           script: |
             const owner = context.repo.owner;
-            const self = context.repo.repo;
+            const self = process.env.PACKAGE || context.repo.repo;
+            const other = self !== context.repo.repo;
             const dryRun = process.env.DRY_RUN === "true";
             const UNTICKED = "- [ ] <!-- manual job -->";
             const TICKED = "- [x] <!-- manual job -->";
@@ -90,7 +105,7 @@ jobs:
               }
             };
 
-            const own = await readJson(self, "package.json", context.sha);
+            const own = await readJson(self, "package.json", other ? undefined : context.sha);
             const npmName = own?.name ?? null;
             const escaped = `${owner}/${self}`.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
             const gitRef = new RegExp(`(?:^|[:/])${escaped}(?:\\.git)?#`, "i");
@@ -101,7 +116,9 @@ jobs:
                 ),
               );
 
-            const repos = await github.paginate(github.rest.repos.listForAuthenticatedUser, { affiliation: "owner", per_page: 100 });
+            const repos = other
+              ? await github.paginate(github.rest.repos.listForUser, { username: owner, type: "owner", per_page: 100 })
+              : await github.paginate(github.rest.repos.listForAuthenticatedUser, { affiliation: "owner", per_page: 100 });
             const rows = [];
             let failed = 0;
             for (const repo of repos) {
@@ -151,5 +168,6 @@ jobs:
               .addTable([[{ data: "Repository", header: true }, { data: "Manifests", header: true }, { data: "Outcome", header: true }], ...rows])
               .write();
             for (const [name, hits, outcome] of rows) core.info(`${name} [${hits}]: ${outcome}`);
+            core.setOutput("consumers", JSON.stringify(rows.filter(([, hits]) => hits).map(([repo, hits]) => ({ repo, manifests: hits.split(", ") }))));
             if (rows.length === 0) core.warning(`No repository the token can see depends on ${owner}/${self}.`);
             if (failed > 0) core.setFailed(`${failed} consumer(s) could not be read or triggered; each is named above.`);

@@ -1,0 +1,253 @@
+name: release-pr
+
+# ONE RELEASE PULL REQUEST PER PACKAGE PER DAY, TESTED IN ITS CONSUMERS FIRST. Measured 2026-11-20 to 11-27: 149 releases
+# of the shared packages in 7 days, one per merge, each moving the renovate/network-packages branch in every consuming
+# repository (887 pushes, 29% of all workflow runs, a third of them red). release-batch.yml calls this once a day for each
+# package with changesets waiting, so every change merged that day goes out in one release and the consumers repin once.
+#
+#   1. version (no secret): `npx changeset version` on the package's default branch, the release a thread used to make by
+#      hand (.changeset/README.md in each package), kept as a patch; then the package is built and packed as it would ship.
+#   2. consumers: bump-consumers.yml, as a dry run, lists every public repository whose package.json names the package.
+#   3. check (no secret): in each consumer, its typecheck and test scripts run at its own pins and again with the packed
+#      candidate in place of the package. Only a script that passed before and fails with the candidate fails the release,
+#      so a consumer already red on its own main holds nothing back.
+#   4. open: the patch is committed on the branch `release` as the repositories' owner, the pull request "Release <version>" is
+#      opened or updated, and GitHub's auto-merge is turned on. The package's own required checks gate the merge; the merge
+#      is the release (release.yml, which tags it and starts bump-consumers).
+#
+# THE TOKEN. A pull request or push made with the workflow's GITHUB_TOKEN starts no workflow (GitHub Docs, "Triggering a
+# workflow from a workflow"), so neither the package's CI nor its release would run. The open job makes a GitHub App
+# installation token instead (GitHub Docs, "Making authenticated API requests with a GitHub App in a GitHub Actions
+# workflow"): a private app installed only on the package repositories, with Contents and Pull requests read and write,
+# whose token lasts an hour and is cut to the one package. Only that job holds it, and it runs none of the package's code.
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: The package repository, by name under the caller's owner.
+        required: true
+        type: string
+      timeout-minutes:
+        description: Each consumer's check, at its own pins and again with the candidate.
+        required: false
+        type: number
+        default: 20
+      app-client-id:
+        description: The client ID of the GitHub App described in the header.
+        required: true
+        type: string
+    secrets:
+      app-private-key:
+        description: The private key of the GitHub App described in the header.
+        required: true
+
+permissions: {}
+
+jobs:
+  version:
+    name: Version and pack
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ github.repository_owner }}/${{ inputs.repository }}
+          path: pkg
+          persist-credentials: false
+
+      - id: node
+        name: Find the Node version file
+        working-directory: pkg
+        run: for f in .nvmrc .node-version; do if [ -f "$f" ]; then echo "file=pkg/$f" >> "$GITHUB_OUTPUT"; exit 0; fi; done; echo "file=" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: ${{ steps.node.outputs.file }}
+          node-version: ${{ steps.node.outputs.file == '' && 'lts/*' || '' }}
+          package-manager-cache: false
+
+      - id: version
+        name: Use up the changesets
+        working-directory: pkg
+        run: |
+          npm ci --ignore-scripts
+          npx changeset version
+          version="$(jq -r .version package.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          mkdir -p "$RUNNER_TEMP/release"
+          git add -A
+          git diff --cached --binary > "$RUNNER_TEMP/release/release.patch"
+          [ -s "$RUNNER_TEMP/release/release.patch" ] || { echo "::error::changeset version changed nothing."; exit 1; }
+          # The CHANGELOG section for this version is the pull request's description.
+          awk -v v="$version" 'index($0, "## " v) == 1 { on = 1; next } on && /^## / { exit } on { print }' CHANGELOG.md > "$RUNNER_TEMP/release/notes.md"
+
+      # The package as it would ship: its prepare script builds (Capsomer's dist/), then npm pack takes what "files" lists.
+      - name: Build and pack the candidate
+        working-directory: pkg
+        run: |
+          npm ci
+          npm pack --pack-destination "$RUNNER_TEMP/release"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-${{ inputs.repository }}
+          path: ${{ runner.temp }}/release
+          retention-days: 1
+
+  consumers:
+    permissions: {}
+    uses: ./.github/workflows/bump-consumers.yml
+    with:
+      dry_run: true
+      repository: ${{ inputs.repository }}
+    secrets:
+      # Another package's consumers are read as the public sees them, which this run's own token can do.
+      token: ${{ secrets.GITHUB_TOKEN }}
+
+  check:
+    name: In ${{ matrix.consumer.repo }}
+    needs: [version, consumers]
+    if: needs.consumers.outputs.consumers != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        consumer: ${{ fromJSON(needs.consumers.outputs.consumers) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ github.repository_owner }}/${{ matrix.consumer.repo }}
+          path: consumer
+          persist-credentials: false
+
+      - id: node
+        name: Find the Node version file
+        working-directory: consumer
+        run: for f in .nvmrc .node-version; do if [ -f "$f" ]; then echo "file=consumer/$f" >> "$GITHUB_OUTPUT"; exit 0; fi; done; echo "file=" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: ${{ steps.node.outputs.file }}
+          node-version: ${{ steps.node.outputs.file == '' && 'lts/*' || '' }}
+          package-manager-cache: false
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-${{ inputs.repository }}
+          path: ${{ runner.temp }}/release
+
+      # Each manifest's typecheck (typecheck, type-check or check, the first it has) and test, at the consumer's pins, then
+      # with the candidate installed over the package. A gitignored Wrangler config is made from its committed example.
+      - name: Its checks, before and with the candidate
+        working-directory: consumer
+        env:
+          MANIFESTS: ${{ join(matrix.consumer.manifests, ' ') }}
+          CONSUMER: ${{ matrix.consumer.repo }}
+          PACKAGE: ${{ inputs.repository }}
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          set -uo pipefail
+          tarball="$(ls "$RUNNER_TEMP"/release/*.tgz)"
+          for example in $(git ls-files '*wrangler.jsonc.example' '*wrangler.toml.example'); do
+            [ -f "${example%.example}" ] || cp "$example" "${example%.example}"
+          done
+          scripts_of() {
+            node -e 'const s = require(process.argv[1]).scripts ?? {}; const t = ["typecheck", "type-check", "check"].find((n) => s[n]); console.log([t, s.test && "test"].filter(Boolean).join(" "))' "$PWD/$1"
+          }
+          run_all() {
+            local label="$1" out="$2"
+            : > "$out"
+            for manifest in $MANIFESTS; do
+              dir="$(dirname "$manifest")"
+              for script in $(scripts_of "$manifest"); do
+                if (cd "$dir" && npm run "$script" > "$RUNNER_TEMP/$label-${dir//\//_}-$script.log" 2>&1); then r=pass; else r=fail; fi
+                echo "$dir $script $r" >> "$out"
+                echo "$label: $dir npm run $script: $r"
+              done
+            done
+          }
+          # A manifest with its own lockfile is its own install (an mcp/ beside the site); any other is a workspace of the root.
+          own() { [ "$1" = . ] || [ -f "$1/package-lock.json" ]; }
+          npm ci || { echo "::error::npm ci fails in ${CONSUMER} at its own pins, so the candidate cannot be judged here."; exit 1; }
+          for manifest in $MANIFESTS; do
+            dir="$(dirname "$manifest")"
+            if [ "$dir" != . ] && own "$dir"; then (cd "$dir" && npm ci) || { echo "::error::npm ci fails in ${CONSUMER}/$dir at its own pins."; exit 1; }; fi
+          done
+          run_all before "$RUNNER_TEMP/before.txt"
+          for manifest in $MANIFESTS; do
+            dir="$(dirname "$manifest")"
+            if own "$dir"; then (cd "$dir" && npm install --no-save --ignore-scripts "$tarball"); else npm install --no-save --ignore-scripts -w "$dir" "$tarball"; fi
+          done
+          run_all with "$RUNNER_TEMP/with.txt"
+          broke=0
+          while read -r dir script r; do
+            if [ "$r" = pass ] && grep -qx "$dir $script fail" "$RUNNER_TEMP/with.txt"; then
+              broke=1
+              echo "::error::${CONSUMER}: npm run $script in $dir passes at its own pins and fails with ${PACKAGE} ${VERSION}."
+              tail -n 60 "$RUNNER_TEMP/with-${dir//\//_}-$script.log"
+            fi
+          done < "$RUNNER_TEMP/before.txt"
+          exit "$broke"
+
+  open:
+    name: Open the release pull request
+    needs: [version, consumers, check]
+    if: ${{ !cancelled() && needs.version.result == 'success' && needs.consumers.result == 'success' && (needs.check.result == 'success' || needs.check.result == 'skipped') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-${{ inputs.repository }}
+          path: ${{ runner.temp }}/release
+
+      - name: Make the app's token for this package
+        id: app
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
+        with:
+          client-id: ${{ inputs.app-client-id }}
+          private-key: ${{ secrets.app-private-key }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ inputs.repository }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      # Nothing of the package runs here: the patch is applied with git and the rest is GitHub's API.
+      - name: Commit, push and open
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.repository_owner }}/${{ inputs.repository }}
+          VERSION: ${{ needs.version.outputs.version }}
+          BRANCH: release
+        run: |
+          set -euo pipefail
+          # The commit is the repositories' owner's, under GitHub's private noreply address.
+          user="$(gh api "users/${OWNER}")"
+          login="$(jq -r .login <<< "$user")"
+          name="$(jq -r '.name // .login' <<< "$user")"
+          email="$(jq -r .id <<< "$user")+${login}@users.noreply.github.com"
+          git clone -q --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" pkg
+          cd pkg
+          git apply --index "$RUNNER_TEMP/release/release.patch"
+          git -c user.name="$name" -c user.email="$email" commit -q -m "Release ${VERSION}"
+          git push -q --force origin "HEAD:refs/heads/${BRANCH}"
+          notes="$RUNNER_TEMP/release/notes.md"
+          number="$(gh pr list -R "$REPO" --head "$BRANCH" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$number" ]; then
+            gh pr edit "$number" -R "$REPO" --title "Release ${VERSION}" --body-file "$notes"
+          else
+            gh pr create -R "$REPO" --head "$BRANCH" --title "Release ${VERSION}" --body-file "$notes"
+            number="$(gh pr list -R "$REPO" --head "$BRANCH" --state open --json number --jq '.[0].number')"
+          fi
+          gh pr merge "$number" -R "$REPO" --auto --squash
+          echo "Release ${VERSION}: https://github.com/${REPO}/pull/${number}, merging itself once its checks pass." >> "$GITHUB_STEP_SUMMARY"

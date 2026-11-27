@@ -38,10 +38,12 @@ function stub(
   /** @type {Record<string, { files?: Record<string, unknown>, issues?: any[], archived?: boolean, unreadable?: boolean }>} */ repos,
 ) {
   const updates = [];
+  const listed = [];
   const api = {
     rest: {
       repos: {
         listForAuthenticatedUser: Symbol("repos"),
+        listForUser: Symbol("public repos"),
         getContent: async ({ repo, path }) => {
           const value = repos[repo]?.files?.[path];
           if (value === undefined) throw new Error("Not Found");
@@ -71,7 +73,11 @@ function stub(
       },
     },
     paginate: async (method, args) => {
-      if (method === api.rest.repos.listForAuthenticatedUser) {
+      if (
+        method === api.rest.repos.listForAuthenticatedUser ||
+        method === api.rest.repos.listForUser
+      ) {
+        listed.push(method === api.rest.repos.listForUser ? "public" : "token");
         return Object.entries(repos).map(([name, r]) => ({
           name,
           archived: Boolean(r.archived),
@@ -82,11 +88,11 @@ function stub(
       return (repos[args.repo].issues ?? []).filter((issue) => issue.user === args.creator);
     },
   };
-  return { api, updates };
+  return { api, updates, listed };
 }
 
-async function run(repos, { self = "capsomer", dryRun = false } = {}) {
-  const { api, updates } = stub(repos);
+async function run(repos, { self = "capsomer", dryRun = false, pkg = "" } = {}) {
+  const { api, updates, listed } = stub(repos);
   const log = { warnings: [], errors: [], failed: null, info: [] };
   const summary = {
     addHeading: () => summary,
@@ -98,13 +104,14 @@ async function run(repos, { self = "capsomer", dryRun = false } = {}) {
     error: (m) => log.errors.push(m),
     info: (m) => log.info.push(m),
     setFailed: (m) => (log.failed = m),
+    setOutput: (name, value) => (log[name] = value),
     summary,
   };
   const context = { repo: { owner: "DrDustinEdwards", repo: self }, sha: "0".repeat(40) };
-  const proc = { env: { DRY_RUN: String(dryRun) } };
+  const proc = { env: { DRY_RUN: String(dryRun), PACKAGE: pkg } };
   const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
   await new AsyncFunction("github", "context", "core", "process", script)(api, context, core, proc);
-  return { updates, log };
+  return { updates, log, listed };
 }
 
 const dashboard = (number = 7) => ({
@@ -304,4 +311,27 @@ test("a manifest over 1 MB is read through the blob API, and one that cannot be 
   );
   assert.ok(log.errors.some((e) => e.startsWith("nope:")));
   assert.match(log.failed ?? "", /1 consumer/);
+});
+
+test("for another package (release-pr.yml) it lists the public consumers as JSON and ticks nothing on a dry run", async () => {
+  const { updates, log, listed } = await run(
+    {
+      "site-runtime": { files: { "package.json": { name: "@dustinedwards/site-runtime" } } },
+      site: {
+        files: {
+          "apps/web/package.json": {
+            dependencies: { r: "github:DrDustinEdwards/site-runtime#v0.1.0" },
+          },
+        },
+        issues: [dashboard()],
+      },
+      other: { files: { "package.json": { dependencies: {} } } },
+    },
+    { self: "devkit", pkg: "site-runtime", dryRun: true },
+  );
+  assert.deepEqual(listed, ["public"]);
+  assert.deepEqual(updates, []);
+  assert.deepEqual(JSON.parse(log.consumers), [
+    { repo: "site", manifests: ["apps/web/package.json"] },
+  ]);
 });
