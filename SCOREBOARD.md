@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-26 17:36 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-27 17:22 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -14,11 +14,11 @@ Newest run 2026-11-26 17:36 UTC. Filled only from the live checks and the verifi
 | 4. Writing and rendering | ✅ | ✅ | 🟡 | 🟡 | ✅ | ✅ | ❌ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | ✅ | · | · | · | · | · | · | · | +6996 | −3129 |
 | 5. Carrel editing contract | 🟡 | 🟡 | ✅ | 🟡 | 🟡 | · | 🟡 | ✅ | · | · | · | · | · | · | · | · | · | · | · | · | +38995 | −8146 |
 | 6. Images and media | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | · | · | +30007 | −3470 |
-| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | ❌ | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
+| 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | · | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | ✅ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
 | 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | +33215 | −9539 |
-| 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ❌ | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
+| 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
 
 ## Why a cell is not complete
@@ -109,8 +109,7 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
   - B7: https://germomics.com/data no ETag or Last-Modified, so a repeat visit downloads the page again
 - ❌ julieedwards.info: site-runtime-speed: 1 errors
   - C5: http://www.julieedwards.info/accessibility/ http www page, other slash: 2 redirects (301 http://www.julieedwards.info/accessibility/ &gt; 301 https://julieedwards.info/accessibility/ &gt; 200 https://julieedwards.info/accessibility)
-- ❌ TXASM: site-runtime-speed: 1 errors
-  - A3: https://txasm.dustin-edwards.workers.dev/ desktop Lighthouse performance 98 (bar 100)
+- 🟡 TXASM: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
 - 🟡 BSW: failed on 2026-11-02, after Verify speed and caching signed; needs a fresh verifier
 - ❌ Foxhound: site-runtime-speed: 41 errors
   - B7: https://foxhoundapp.com/ no ETag or Last-Modified, so a repeat visit downloads the page again
@@ -129,24 +128,24 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
   - B7: https://carrel.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again
   - D4: https://carrel.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 15 KiB
   - D4: https://carrel.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 15 KiB
-- ❌ Enarratio: site-runtime-speed-static: 11 errors
+- ❌ Enarratio: site-runtime-speed-static: 10 errors
   - B7: https://enarratio.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://enarratio.dustinedwards.info/example no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://enarratio.dustinedwards.info/capsomer no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://enarratio.dustinedwards.info/shadcn no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://enarratio.dustinedwards.info/radix no ETag or Last-Modified, so a repeat visit downloads the page again
-- ❌ Capsomer: site-runtime-speed-static: 41 errors
+- ❌ Capsomer: site-runtime-speed-static: 40 errors
   - B7: https://capsomer.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsomer.dustinedwards.info/themes/color/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsomer.dustinedwards.info/components/not-found-report/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsomer.dustinedwards.info/primitives/data/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsomer.dustinedwards.info/icons/ no ETag or Last-Modified, so a repeat visit downloads the page again
-- ❌ Prelum specimen: site-runtime-speed-static: 6 errors
+- ❌ Prelum specimen: site-runtime-speed-static: 7 errors
   - B7: https://prelum.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://prelum.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again
-  - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 26 KiB
+  - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 24 KiB
   - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-javascript: Est savings of 25 KiB
-  - D4: https://prelum.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 25 KiB
+  - A3: https://prelum.dustinedwards.info/ desktop Lighthouse performance 96 (bar 100)
 - ❌ Capsid explorer: site-runtime-speed: 42 errors
   - B7: https://capsid.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsid.dustinedwards.info/systems/ no ETag or Last-Modified, so a repeat visit downloads the page again
@@ -188,8 +187,7 @@ Builder: Complete shared AI and MCP code. Verifier: Re-sign partial devkit areas
 - 🟡 dustinedwards.info: Closed: site-api is pinned at 0.46.1 (current); a cut answer is never cached; gateway tags use {app, feature}; ai-audit live: 0 errors, 0 warnings. Still open: Ask's question is not wrapped in untrusted() (C10; wrapping breaks AI Search retrieval, so this is a known limit, not a pass); that Ask's calls reach the gateway is set on the AI Search instance and cannot be checked from here.
 - 🟡 Foxhound: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Capsid explorer: Closed: the AI Search call is raced against an 8 s timeout and an upstream error goes to the log only, so the caller gets a fixed sentence. Still open: the gateway is attached only when the AI_GATEWAY_ID dashboard var is set, and whether it is set live cannot be checked from here.
-- ❌ Capsid MCP: site-runtime-ai-audit: 1 errors
-  - S1: https://mcp.dustinedwards.info/ops/mcp 35 concurrent requests by one caller, none refused (statuses 200)
+- 🟡 Capsid MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Foxhound admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Dustin Edwards admin MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier
 - 🟡 Carrel MCP: failed on 2026-11-23, after Re-sign partial devkit areas signed; needs a fresh verifier

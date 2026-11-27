@@ -1,0 +1,4334 @@
+{
+ "at": "2026-11-27T17:22:11.512Z",
+ "public_token": false,
+ "results": [
+  {
+   "area": 1,
+   "site": "bsw",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "fail",
+   "errors": 20,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/ the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/manuscript-editing the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/visual-design the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/language-support the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/career-development the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/editing-process the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/institutional-partnerships the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/pricing the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/our-experts the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/knowledge-hub the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/about-us the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/careers the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/contact-us the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/editing-guarantee the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/security-confidentiality the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/privacy-policy the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/terms-of-service the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/cookie-policy the sitemap lists a noindex page"
+    },
+    {
+     "severity": "error",
+     "check": "sitemap-noindex",
+     "detail": "https://bsw.dustin-edwards.workers.dev/accessibility the sitemap lists a noindex page"
+    }
+   ],
+   "seconds": 4
+  },
+  {
+   "area": 1,
+   "site": "capsid",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 10
+  },
+  {
+   "area": 1,
+   "site": "capsomer",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://capsomer.dustinedwards.info/components/icons/ \"Icons · Capsomer\" is on 2 pages"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://capsomer.dustinedwards.info/icons/ \"Icons · Capsomer\" is on 2 pages"
+    }
+   ],
+   "seconds": 16
+  },
+  {
+   "area": 1,
+   "site": "carrel",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 1,
+   "site": "dustinedwards-info",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 96
+  },
+  {
+   "area": 1,
+   "site": "enarratio",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 12
+  },
+  {
+   "area": 1,
+   "site": "foxhound",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 45
+  },
+  {
+   "area": 1,
+   "site": "foxing",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 68
+  },
+  {
+   "area": 1,
+   "site": "germomics",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 16
+  },
+  {
+   "area": 1,
+   "site": "julieedwards-info",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 1,
+   "site": "prelum",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 1,
+   "site": "txasm",
+   "check": "prelum-audit",
+   "ref": "v0.69.0",
+   "status": "fail",
+   "errors": 1,
+   "warnings": 8,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "sitemap-missing",
+     "detail": "https://txasm.org/privacy an indexable page the site links to is not in the sitemap, so search engines find it only by following links"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2026/abstracts/43 \"Elucidating the Genes Underlying Hydrocarbon Degradation in...\" is on 2 pages"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/82 \"Elucidating the Genes Underlying Hydrocarbon Degradation in...\" is on 2 pages"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2026/abstracts/53 \"The Effects of Historical Adaptation of Microbes in New Stressful...\" is on 2 pages"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/fall-2025/abstracts/26 \"The Effects of Historical Adaptation of Microbes in New Stressful...\" is on 2 pages"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/21 \"Coevolution of Pseudomonas aeruginosa and Drosophila...\" is on 2 pages"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/77 \"Coevolution of Pseudomonas aeruginosa and Drosophila...\" is on 2 pages"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/65 \"The Isolation and Characterization of the Bacteriophage...\" is on 2 pages"
+    },
+    {
+     "severity": "warning",
+     "check": "title-duplicate",
+     "detail": "https://txasm.org/meetings/spring-2025/abstracts/66 \"The Isolation and Characterization of the Bacteriophage...\" is on 2 pages"
+    }
+   ],
+   "seconds": 164
+  },
+  {
+   "area": 2,
+   "site": "bsw",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 6,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-tnTWs+OfnXUZrX5fuF5Eeg==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+    },
+    {
+     "severity": "warning",
+     "check": "S1",
+     "detail": "https://bsw.dustin-edwards.workers.dev/ https://static.cloudflareinsights.com/beacon.min.js loads from another origin with no integrity attribute: self-host it or pin its hash"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://bsw.dustin-edwards.workers.dev/grant-proposal-support (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-KOMQ9rlTnrM61yPDnsS7RQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://bsw.dustin-edwards.workers.dev/site-runtime-security-fc977b94-2db3-447f-9a95-181e1c9a12a0 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-DmmOUx7ST3jNxo8R3aHH3w==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-JmCEni7zDp3BH1Txhhg7Rw==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://bsw.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: Pages are edge-cached and shared, so a per-request nonce cannot cover them, and a hash admits an external script only with an integrity attribute, which Cloudflare's manual Web Analytics beacon cannot carry (unpinned by design). The policy names /site.js ('self') and the one beacon file exactly, with no wildcard host. (script sources: 'nonce-83mWpL7qA3hBYZ03TJOgzA==' 'self' https://static.cloudflareinsights.com/beacon.min.js)"
+    }
+   ],
+   "seconds": 3
+  },
+  {
+   "area": 2,
+   "site": "capsid",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 4,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://capsid.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://capsid.dustinedwards.info/systems/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://capsid.dustinedwards.info/site-runtime-security-04b0fd17-2762-4127-829c-290edb337fdc (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://capsid.dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 11
+  },
+  {
+   "area": 2,
+   "site": "capsid-mcp",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "capsid-portal",
+   "check": "signed-in-security",
+   "ref": "capsid 166681267ed3",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://portal.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-7Cu/XZ/aDwypLUK+wq/7jg==' 'self')"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://portal.dustinedwards.info/signed-in-crawl-404 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: The dashboard is a Vite build served as files under script-src 'self' (src/dashboard-csp.ts): no nonce or hash for 'strict-dynamic' to start from. (script sources: 'nonce-hfQ/WSj0XX6AJtAL+Eyg8A==' 'self')"
+    }
+   ],
+   "seconds": 0
+  },
+  {
+   "area": 2,
+   "site": "capsid-portal",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 1,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://portal.dustinedwards.info/ is behind Cloudflare Access (dustinedwards.cloudflareaccess.com): the pages behind it were not graded"
+    }
+   ],
+   "seconds": 3
+  },
+  {
+   "area": 2,
+   "site": "capsomer",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 4,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://capsomer.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://capsomer.dustinedwards.info/themes/color/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://capsomer.dustinedwards.info/site-runtime-security-1a13de81-0931-4415-bb69-8e873ca14ca2 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://capsomer.dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "carrel",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 4,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://carrel.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://carrel.dustinedwards.info/accessibility (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://carrel.dustinedwards.info/site-runtime-security-871490d4-cd47-489a-ad40-722213a1d344 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://carrel.dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "carrel-desk",
+   "check": "signed-in-security",
+   "ref": "carrel b47f347c1098",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "I3",
+     "detail": "https://desk.dustinedwards.info/p/bsw/media loads a img from https://bsw.dustin-edwards.workers.dev, which COEP and default-src 'none' must allow"
+    },
+    {
+     "severity": "warning",
+     "check": "R4",
+     "detail": "not probed on Desk: its actions take form bodies by design (no-script forms) and the door refuses a cross-site one by Fetch Metadata; the crawl only reads (GET)"
+    }
+   ],
+   "seconds": 0
+  },
+  {
+   "area": 2,
+   "site": "carrel-desk",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 1,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://desk.dustinedwards.info/ is behind Cloudflare Access (dustinedwards.cloudflareaccess.com): the pages behind it were not graded"
+    }
+   ],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "carrel-mcp",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "dustinedwards-info",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 5,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-cdBeU1xMhJZbHqYeQ3Pq5w==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://dustinedwards.info/about (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-Zj50p40gk/izIJEqTGx6IQ==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://dustinedwards.info/site-runtime-security-b608774b-3dbe-4e87-8a09-f4c7d06d2e49 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-itM9T6RQZAeapP5whV54Uw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-34ECsZMuCShdDNIRGzwHEw==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-1B6a9AUg7Ongi8xRjQrCeg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 4
+  },
+  {
+   "area": 2,
+   "site": "dustinedwards-mcp",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "enarratio",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 4,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://enarratio.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://enarratio.dustinedwards.info/example (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://enarratio.dustinedwards.info/site-runtime-security-cfd6ad33-13bf-4d88-96e4-899ae88a6e90 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://enarratio.dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "foxhound",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 5,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-d/JpmkQWWouN54oYgKNd8Q==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxhoundapp.com/pricing (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-i/jnP+rMsmc0hnYNDGNlUQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxhoundapp.com/site-runtime-security-56680d9e-aa75-4127-aee4-08af280ae7e3 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-tN8RrDQDVwcgyBzHeyZKew==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxhoundapp.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-pScuFuPiONoi6CWyNIdfmw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxhoundapp.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-yq1mwCMDPMTLI5MCpdravg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 22
+  },
+  {
+   "area": 2,
+   "site": "foxhound-mcp",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "foxing",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 5,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-R41al3T2MUxE04JNFZcEKA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxing.app/books (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-j3ePaVMeQU9GcgcvPD616A==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxing.app/site-runtime-security-3105396e-2586-4832-8769-d063d661acc7 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-+JwtqHRt5grADJTi6Ft3Cw==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxing.app/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-ba1qesIDj979ARSpT/Z2bQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://foxing.app/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-z2sOBzglJk1K/KyXmPp7KA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 3
+  },
+  {
+   "area": 2,
+   "site": "foxing-mcp",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "germomics",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 5,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-gJzt+XpK/ysuvbMD8kAvmg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://germomics.com/episodes (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-swKvjpSxCMo9JhTCrGlyXg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://germomics.com/site-runtime-security-d486265a-c1f7-46cf-bbcb-de73a079ce49 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-iiasujdO6/zCbscwbPfPQA==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://germomics.com/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-zlJ4UWXuVYlDbjkyg9fb/w==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://germomics.com/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-nSB2T/oyA6hHb6otcb2dtg==' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 3
+  },
+  {
+   "area": 2,
+   "site": "julieedwards-info",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 5,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-B/JD7fDGt7/6N91u2YIVvg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/accessibility (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-wVKlv2NV+jYP89uOE+ZxTA==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/site-runtime-security-94220888-ecd6-41f4-a77e-736c97ddd374 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-op1NIgQo1e6hNkA04fMyZg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-imHN9/OcBq1Kd+LoHWxMGg==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://julieedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-FLirnmd0gZKnPe8mWP8DNQ==' 'sha256-FhXSNwzmpcA+n8B3hIEm0bUPttnL7Za8uPPMHpukSeM=' 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 5
+  },
+  {
+   "area": 2,
+   "site": "prelum",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 4,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://prelum.dustinedwards.info/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://prelum.dustinedwards.info/accessibility (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://prelum.dustinedwards.info/site-runtime-security-b46ab719-2c58-47b7-81bf-616fd57c5ad6 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://prelum.dustinedwards.info/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 1
+  },
+  {
+   "area": 2,
+   "site": "txasm",
+   "check": "site-runtime-security",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 5,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-t5kIbgekH27aNR99e4m1dA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://txasm.dustin-edwards.workers.dev/meetings (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-y9Ac0cYRFODas54WSiJ6ZA==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://txasm.dustin-edwards.workers.dev/site-runtime-security-21ce6d3f-9353-49ce-ad94-8d7c125054e1 (404) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-A55z8QQ78Ino6izPov8GWg==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (200) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-0klCsXLVppeOmXz1ytatfQ==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    },
+    {
+     "severity": "warning",
+     "check": "C3",
+     "detail": "https://txasm.dustin-edwards.workers.dev/ (405) script-src is strict: 'strict-dynamic' beside a nonce or hash, or 'none': declared deviation: buildContentSecurityPolicy refuses strictDynamic beside cloudflareWebAnalytics: 'strict-dynamic' makes a browser ignore host sources, and the edge injects the Web Analytics beacon with no nonce, and with an integrity that changes at each Cloudflare release, so neither a nonce nor a hash can let it run. (script sources: 'nonce-vVcQGYWMwPnFboWSfmqQ+A==' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/)"
+    }
+   ],
+   "seconds": 2
+  },
+  {
+   "area": 3,
+   "site": "capsid",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 3,
+   "site": "capsid-mcp",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 3,
+   "site": "capsid-portal",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 3,
+   "site": "carrel-desk",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 3,
+   "site": "carrel-mcp",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 3,
+   "site": "dustinedwards-info",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 3
+  },
+  {
+   "area": 3,
+   "site": "dustinedwards-mcp",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 3,
+   "site": "foxhound",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 4
+  },
+  {
+   "area": 3,
+   "site": "foxhound-mcp",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 3,
+   "site": "foxing",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 3,
+   "site": "foxing-mcp",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 3,
+   "site": "germomics",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 3,
+   "site": "txasm",
+   "check": "site-runtime-sign-in",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://txasm.dustin-edwards.workers.dev/api/auth/passkey/generate-authenticate-options the passkey's rpId is txasm.dustin-edwards.workers.dev, not txasm.org: a passkey made here will not work on the site"
+    },
+    {
+     "severity": "warning",
+     "check": "G1",
+     "detail": "https://txasm.dustin-edwards.workers.dev/admin redirects to https://txasm.dustin-edwards.workers.dev/login, not Cloudflare Access"
+    }
+   ],
+   "seconds": 2
+  },
+  {
+   "area": 4,
+   "site": "bsw",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 4,
+   "site": "capsid",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 7
+  },
+  {
+   "area": 4,
+   "site": "capsomer",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 7
+  },
+  {
+   "area": 4,
+   "site": "carrel",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 4,
+   "site": "dustinedwards-info",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 45
+  },
+  {
+   "area": 4,
+   "site": "enarratio",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 14
+  },
+  {
+   "area": 4,
+   "site": "foxhound",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "fail",
+   "errors": 2,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "writing-duplicate-id",
+     "detail": "https://foxhoundapp.com/features id \"Renewal noise filtering\" is on 2 elements"
+    },
+    {
+     "severity": "error",
+     "check": "writing-duplicate-id",
+     "detail": "https://foxhoundapp.com/features id \"Merchant context\" is on 2 elements"
+    }
+   ],
+   "seconds": 40
+  },
+  {
+   "area": 4,
+   "site": "foxing",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 12
+  },
+  {
+   "area": 4,
+   "site": "germomics",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 5
+  },
+  {
+   "area": 4,
+   "site": "julieedwards-info",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 4,
+   "site": "prelum",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 4,
+   "site": "txasm",
+   "check": "prelum-content",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 11
+  },
+  {
+   "area": 5,
+   "site": "dustinedwards-info",
+   "check": "carrel-conformance",
+   "ref": "site-api v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 5,
+   "site": "dustinedwards-info",
+   "check": "site-api-live",
+   "ref": "v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 5,
+   "site": "foxhound",
+   "check": "carrel-conformance",
+   "ref": "site-api v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 5,
+   "site": "foxhound",
+   "check": "site-api-live",
+   "ref": "v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 5,
+   "site": "foxing",
+   "check": "carrel-conformance",
+   "ref": "site-api v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 5,
+   "site": "foxing",
+   "check": "site-api-live",
+   "ref": "v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 5,
+   "site": "germomics",
+   "check": "carrel-conformance",
+   "ref": "site-api v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 5,
+   "site": "germomics",
+   "check": "site-api-live",
+   "ref": "v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 5,
+   "site": "julieedwards-info",
+   "check": "carrel-conformance",
+   "ref": "site-api v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 5,
+   "site": "julieedwards-info",
+   "check": "site-api-live",
+   "ref": "v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 5,
+   "site": "txasm",
+   "check": "carrel-conformance",
+   "ref": "site-api v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 5,
+   "site": "txasm",
+   "check": "site-api-live",
+   "ref": "v0.51.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 6,
+   "site": "bsw",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 4
+  },
+  {
+   "area": 6,
+   "site": "capsid",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 6,
+   "site": "capsomer",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 6,
+   "site": "carrel",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 6,
+   "site": "dustinedwards-info",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 6
+  },
+  {
+   "area": 6,
+   "site": "enarratio",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 6,
+   "site": "foxhound",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 3
+  },
+  {
+   "area": 6,
+   "site": "foxing",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 13
+  },
+  {
+   "area": 6,
+   "site": "germomics",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 8
+  },
+  {
+   "area": 6,
+   "site": "julieedwards-info",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 7
+  },
+  {
+   "area": 6,
+   "site": "prelum",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 6,
+   "site": "txasm",
+   "check": "site-runtime-images",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 7,
+   "site": "bsw",
+   "check": "site-runtime-speed",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 3,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "D1",
+     "detail": "https://bsw.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://bsw.dustin-edwards.workers.dev/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://bsw.dustin-edwards.workers.dev/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 40
+  },
+  {
+   "area": 7,
+   "site": "capsid",
+   "check": "site-runtime-speed",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 42,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/systems/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/numbers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/code/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/capsid/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/accessibility/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/capsid/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_start_session/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/1/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/d1-dump/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_find_docs/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/2/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/d1-dump/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_read_doc/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/3/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/devkit/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_write_doc/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/4/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/devkit/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_delete_doc/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/5/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/site-runtime/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_lint_namespace/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/6/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/site-runtime/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_read_repo/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/7/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/prelum/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_inspect_repo/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/8/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/prelum/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_close_pr/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/job-life/9/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/capsomer/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/tools/capsid_work_jobs/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/flows/doc-search/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsid.dustinedwards.info/s/capsomer/containers/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://capsid.dustinedwards.info/ mobile Lighthouse unused-javascript: Est savings of 54 KiB"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://capsid.dustinedwards.info/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://capsid.dustinedwards.info/ desktop Lighthouse unused-javascript: Est savings of 54 KiB"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://capsid.dustinedwards.info/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 28
+  },
+  {
+   "area": 7,
+   "site": "capsomer",
+   "check": "site-runtime-speed-static",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 40,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/themes/color/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/not-found-report/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/data/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/icons/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/colors/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/accessibility/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/themes/typography/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/admin-shell/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/dialog/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/themes/radius/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/ai-engine-settings/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/form-hooks/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/themes/spacing/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/ai-job-buttons/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/hooks/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/themes/shadows/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/ai-sample/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/listbox/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/themes/motion/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/ambient/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/format/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/themes/dark-mode/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/anchor-bar/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/popover/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/annotated-document/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/router/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/annotated-figure/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/route-hooks/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/app-frame/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/state-hooks/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/approval-queue/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/primitives/trusted-html/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/approval-sheet/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/ask-panel/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/attention-list/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/author-list/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/authorship/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/switch-reason/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://capsomer.dustinedwards.info/components/avatar/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://capsomer.dustinedwards.info/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://capsomer.dustinedwards.info/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 27
+  },
+  {
+   "area": 7,
+   "site": "carrel",
+   "check": "site-runtime-speed-static",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 4,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://carrel.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://carrel.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://carrel.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 15 KiB"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://carrel.dustinedwards.info/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://carrel.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 15 KiB"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://carrel.dustinedwards.info/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 20
+  },
+  {
+   "area": 7,
+   "site": "dustinedwards-info",
+   "check": "site-runtime-speed",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 40,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/about no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/writing no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/research/publications no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/contact no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/site-map no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/colophon no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/features no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/systems no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/teaching no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/software no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/cv no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/privacy no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/terms no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/writing/carrel-ai-drafts-beside-mine no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/research no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/systems/capsid no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/teaching/phage-discovery no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/software/foxhound no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/writing/carrel-one-api-for-every-site no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/research/retroviruses no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/systems/d1-dump no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/teaching/virus-isolation no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/software/foxing no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/writing/carrel-a-writing-desk-apart-from-the-site no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/research/retroviruses/human no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/systems/devkit no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/teaching/virus-isolation/faq no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/software/foxing-edu no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/writing/observable-plot-inside-a-worker no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/research/retroviruses/avian no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/systems/site-runtime no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/teaching/phage-bioinformatics no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/software/germomics no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/writing/policy-in-the-api-not-the-mcp no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/research/bacteriophages no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/systems/prelum no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://dustinedwards.info/teaching/central-dogma no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "C5",
+     "detail": "http://www.dustinedwards.info/about/ http www page, other slash: 2 redirects (301 http://www.dustinedwards.info/about/ > 301 https://dustinedwards.info/about/ > 200 https://dustinedwards.info/about)"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://dustinedwards.info/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://dustinedwards.info/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 31
+  },
+  {
+   "area": 7,
+   "site": "enarratio",
+   "check": "site-runtime-speed-static",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 10,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://enarratio.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://enarratio.dustinedwards.info/example no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://enarratio.dustinedwards.info/capsomer no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://enarratio.dustinedwards.info/shadcn no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://enarratio.dustinedwards.info/radix no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://enarratio.dustinedwards.info/material no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://enarratio.dustinedwards.info/astro no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://enarratio.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://enarratio.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 26 KiB"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://enarratio.dustinedwards.info/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://enarratio.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 25 KiB"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://enarratio.dustinedwards.info/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 35
+  },
+  {
+   "area": 7,
+   "site": "foxhound",
+   "check": "site-runtime-speed",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 41,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/pricing no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/products no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/product/audit no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/features no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/about no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/contact no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/demos no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/docs no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/audit no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/privacy no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/terms no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/security no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/blog no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/decline-codes no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/compare no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/product/recovery no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/docs/platform no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/blog/archive no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/decline-codes/insufficient-funds no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/compare/stripe-smart-retries no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/product/disputes no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/docs/audit no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/blog/stripe-billing-descriptor no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/decline-codes/do-not-honor no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/compare/churnkey no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/product/intelligence no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/docs/recovery no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/blog/foxhound-vs-stripe-smart-retries no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/decline-codes/generic-decline no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/compare/churn-buster no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/docs/disputes no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/blog/best-dunning-software-2026 no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/decline-codes/card-declined no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/compare/paddle-retain no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/docs/intelligence no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/blog/foxhound-vs-churn-buster no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/decline-codes/transaction-not-allowed no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxhoundapp.com/compare/baremetrics-recover no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "C5",
+     "detail": "http://www.foxhoundapp.com/pricing/ http www page, other slash: 2 redirects (301 http://www.foxhoundapp.com/pricing/ > 301 https://foxhoundapp.com/pricing/ > 200 https://foxhoundapp.com/pricing)"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://foxhoundapp.com/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://foxhoundapp.com/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 28
+  },
+  {
+   "area": 7,
+   "site": "foxing",
+   "check": "site-runtime-speed",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 41,
+   "warnings": 3,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/books no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/awards no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/picks no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/book-of-the-month no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/journal no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/about no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/features no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/guide no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/app-guide no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/privacy no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/terms no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/authors/a-a-milne no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/books/813-leblanc no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/awards/james-tait-black no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/picks/anthony-jeselnik no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/journal/archive no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/authors/a-e-w-mason no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/books/a-bid-for-fortune-boothby no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/awards/newbery-medal no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/picks/audacious no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/journal/frankenstein-monster-meaning no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/authors/a-merritt no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/books/a-bride-of-a-summers-day-pirkis no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/awards/nobel-literature no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/picks/barnes-noble no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/journal/great-gatsby-green-light-meaning no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/authors/a-n-afanasyev no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/books/a-christmas-carol-dickens no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/awards/pulitzer-fiction no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/picks/belletrist no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/journal/moby-dick-whale-symbolism no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/authors/a-p-herbert no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/books/a-confession-tolstoy no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/awards/pulitzer-poetry no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/picks/bookofthemonthclub-orig no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/journal/how-to-read-moby-dick no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/authors/a-w-tozer no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://foxing.app/books/a-connecticut-yankee-in-king-arthurs-court-twain no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "warning",
+     "check": "C2",
+     "detail": "https://foxing.app/site-qC34E3oa-Y.js an unhashed file is immutable: a change in place reaches no returning reader"
+    },
+    {
+     "severity": "error",
+     "check": "C5",
+     "detail": "http://www.foxing.app/books/ http www page, other slash: 2 redirects (301 http://www.foxing.app/books/ > 301 https://foxing.app/books/ > 200 https://foxing.app/books)"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://foxing.app/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://foxing.app/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 40
+  },
+  {
+   "area": 7,
+   "site": "germomics",
+   "check": "site-runtime-speed",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 29,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/episodes no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/writing no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/archive no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/data no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/games no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/subscribe no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/about no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/privacy no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/terms no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/contact no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/txasm no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/season/1 no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/antitoxin-togo-please no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/hell-on-weils no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/rabies-day-out no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/a-boy-named-flu no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/theres-something-about-typhoid-mary no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/its-on-the-syphilis no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/one-flew-over-the-kuru-nest no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/confessions-of-a-cholera-girl no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/on-the-right-taq no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/a-sky-full-of-sars no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/data/cholera-soho-1854 no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/games/phage-defense no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/about/dustin-edwards no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://germomics.com/data/influenza-1918 no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "C5",
+     "detail": "http://www.germomics.com/episodes/ http www page, other slash: 2 redirects (301 http://www.germomics.com/episodes/ > 301 https://germomics.com/episodes/ > 200 https://germomics.com/episodes)"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://germomics.com/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://germomics.com/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 30
+  },
+  {
+   "area": 7,
+   "site": "julieedwards-info",
+   "check": "site-runtime-speed",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 1,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "C5",
+     "detail": "http://www.julieedwards.info/accessibility/ http www page, other slash: 2 redirects (301 http://www.julieedwards.info/accessibility/ > 301 https://julieedwards.info/accessibility/ > 200 https://julieedwards.info/accessibility)"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://julieedwards.info/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://julieedwards.info/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 25
+  },
+  {
+   "area": 7,
+   "site": "prelum",
+   "check": "site-runtime-speed-static",
+   "ref": "v0.183.1",
+   "status": "fail",
+   "errors": 7,
+   "warnings": 2,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://prelum.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "B7",
+     "detail": "https://prelum.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://prelum.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 24 KiB"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://prelum.dustinedwards.info/ mobile Lighthouse unused-javascript: Est savings of 25 KiB"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://prelum.dustinedwards.info/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "error",
+     "check": "A3",
+     "detail": "https://prelum.dustinedwards.info/ desktop Lighthouse performance 96 (bar 100)"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://prelum.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 23 KiB"
+    },
+    {
+     "severity": "error",
+     "check": "D4",
+     "detail": "https://prelum.dustinedwards.info/ desktop Lighthouse unused-javascript: Est savings of 41 KiB"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://prelum.dustinedwards.info/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 31
+  },
+  {
+   "area": 7,
+   "site": "txasm",
+   "check": "site-runtime-speed",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 3,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "D1",
+     "detail": "https://txasm.dustin-edwards.workers.dev/ no 103 Early Hints before the page: workers.dev never sends Early Hints; the site needs its own domain"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://txasm.dustin-edwards.workers.dev/ mobile: no Chrome field data for this page yet"
+    },
+    {
+     "severity": "warning",
+     "check": "A1",
+     "detail": "https://txasm.dustin-edwards.workers.dev/ desktop: no Chrome field data for this page yet"
+    }
+   ],
+   "seconds": 30
+  },
+  {
+   "area": 8,
+   "site": "bsw",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 8,
+   "site": "capsid-mcp",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 8,
+   "site": "carrel-mcp",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 8,
+   "site": "dustinedwards-info",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 3
+  },
+  {
+   "area": 8,
+   "site": "dustinedwards-mcp",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 3
+  },
+  {
+   "area": 8,
+   "site": "foxhound",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 3
+  },
+  {
+   "area": 8,
+   "site": "foxhound-mcp",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 8,
+   "site": "foxing",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 8,
+   "site": "foxing-mcp",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 8,
+   "site": "germomics",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 8,
+   "site": "julieedwards-info",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 8,
+   "site": "txasm",
+   "check": "ops-audit",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 9,
+   "site": "bsw",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 223
+  },
+  {
+   "area": 9,
+   "site": "capsid",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 242
+  },
+  {
+   "area": 9,
+   "site": "capsomer",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 231
+  },
+  {
+   "area": 9,
+   "site": "carrel",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 59
+  },
+  {
+   "area": 9,
+   "site": "dustinedwards-info",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 245
+  },
+  {
+   "area": 9,
+   "site": "enarratio",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 282
+  },
+  {
+   "area": 9,
+   "site": "foxhound",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 207
+  },
+  {
+   "area": 9,
+   "site": "foxing",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 234
+  },
+  {
+   "area": 9,
+   "site": "germomics",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 217
+  },
+  {
+   "area": 9,
+   "site": "julieedwards-info",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 81
+  },
+  {
+   "area": 9,
+   "site": "prelum",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 67
+  },
+  {
+   "area": 9,
+   "site": "txasm",
+   "check": "devkit-a11y",
+   "ref": "v0.67.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 216
+  },
+  {
+   "area": 10,
+   "site": "capsid",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 134
+  },
+  {
+   "area": 10,
+   "site": "capsid-portal",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 54
+  },
+  {
+   "area": 10,
+   "site": "capsomer",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 341
+  },
+  {
+   "area": 10,
+   "site": "carrel",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 4
+  },
+  {
+   "area": 10,
+   "site": "carrel-desk",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 24
+  },
+  {
+   "area": 10,
+   "site": "dustinedwards-info",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 191
+  },
+  {
+   "area": 10,
+   "site": "enarratio",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 346
+  },
+  {
+   "area": 10,
+   "site": "foxhound",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 133
+  },
+  {
+   "area": 10,
+   "site": "foxing",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 311
+  },
+  {
+   "area": 10,
+   "site": "germomics",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 66
+  },
+  {
+   "area": 10,
+   "site": "prelum",
+   "check": "chart-audit",
+   "ref": "v0.69.0",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 50
+  },
+  {
+   "area": 11,
+   "site": "bsw",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 11,
+   "site": "capsid",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 11,
+   "site": "capsid-mcp",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 23,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_start_session: inputSchema.thread is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.glob is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_find_docs: inputSchema.query is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_doc: inputSchema.path is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.paths[] is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.query is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_repo: inputSchema.path_prefix is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.ref is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.base is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.head is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.job is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.step is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.probe is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.query_contains is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_inspect_repo: inputSchema.page_contains is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.since is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_work_jobs: inputSchema.id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp capsid_read_status: inputSchema.package is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T12",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp no --tools-hash pinned; the test grant's list hashes to ce634134a6c1309386b7113d690d7e2f8e4859b952f070b0c7c8e93db34758bd"
+    },
+    {
+     "severity": "warning",
+     "check": "P3",
+     "detail": "https://mcp.dustinedwards.info/ops/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+    }
+   ],
+   "seconds": 265
+  },
+  {
+   "area": 11,
+   "site": "capsomer",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 11,
+   "site": "carrel",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 11,
+   "site": "carrel-mcp",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 35,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.q is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.kind is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_search_items: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_item: inputSchema.item is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_voice_brief: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.source is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.sources[] is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_post_text: inputSchema.item is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.item is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_preview_item: inputSchema.source is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_get_checks: inputSchema.item is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.q is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_media: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.q is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.item is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_review_mentions: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_list_book_files: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_book_file: inputSchema.path is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.project is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.path is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_check_book_text: inputSchema.source is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.doc is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.tab is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_read_doc: inputSchema.heading is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp carrel_export_doc: inputSchema.doc is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "P3",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+    },
+    {
+     "severity": "warning",
+     "check": "P7",
+     "detail": "https://carrel-mcp.dustinedwards.info/mcp conformance caching: 2 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-read-caching-hints)"
+    }
+   ],
+   "seconds": 265
+  },
+  {
+   "area": 11,
+   "site": "dustinedwards-info",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 11,
+   "site": "dustinedwards-mcp",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 6,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_registry: inputSchema.record_key is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_registry: inputSchema.kind is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_registry: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.dustinedwards.info/mcp dei_read_procedure: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "P3",
+     "detail": "https://admin-mcp.dustinedwards.info/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+    },
+    {
+     "severity": "warning",
+     "check": "P7",
+     "detail": "https://admin-mcp.dustinedwards.info/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+    }
+   ],
+   "seconds": 259
+  },
+  {
+   "area": 11,
+   "site": "enarratio",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 11,
+   "site": "foxhound",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 17,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_list_payments: inputSchema.status is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_list_payments: inputSchema.decline_category is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_list_payments: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_get_payment: inputSchema.payment_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_list_customers: inputSchema.tier is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_list_customers: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_get_customer: inputSchema.stripe_customer_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_get_intelligence: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_get_recovery: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_list_disputes: inputSchema.dispute_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_list_disputes: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_review_audits: inputSchema.run_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_review_audits: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://foxhoundapp.com/mcp foxhound_get_billing: inputSchema.invoice_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T12",
+     "detail": "https://foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to 2f92db4f9e967e8e65a914758a067df769b62892d8921f64457238e6a384a2f6"
+    },
+    {
+     "severity": "warning",
+     "check": "P3",
+     "detail": "https://foxhoundapp.com/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+    },
+    {
+     "severity": "warning",
+     "check": "P7",
+     "detail": "https://foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+    }
+   ],
+   "seconds": 276
+  },
+  {
+   "area": 11,
+   "site": "foxhound-mcp",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 22,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.query is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.account_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_find_merchant: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.account_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.view is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.status is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.decline_category is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.tier is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.payment_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.stripe_customer_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.dispute_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.run_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_view_as_merchant: inputSchema.arguments.invoice_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_read_audit_log: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_list_staged: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.type is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.account_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp foxhound_admin_preview_email: inputSchema.to is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T12",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp no --tools-hash pinned; the test grant's list hashes to 58b0380934f8f890a33c5d456d62f2d9bc030c57e3e98c0cbb34b52ae6c91bdf"
+    },
+    {
+     "severity": "warning",
+     "check": "P3",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+    },
+    {
+     "severity": "warning",
+     "check": "P7",
+     "detail": "https://admin-mcp.foxhoundapp.com/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+    }
+   ],
+   "seconds": 260
+  },
+  {
+   "area": 11,
+   "site": "foxing",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 11,
+   "site": "foxing-mcp",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 13,
+   "unmeasured": 0,
+   "findings": [
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_find_user: inputSchema.query is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_find_user: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_get_user_state: inputSchema.user_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_read_audit_log: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_inspect_book: inputSchema.query is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_inspect_book: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_check_catalog: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_read_book_of_month: inputSchema.botm_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_read_book_of_month: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_review_club_picks: inputSchema.club_id is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "T4",
+     "detail": "https://admin-mcp.foxing.app/mcp foxing_review_club_picks: inputSchema.cursor is a string with no pattern, enum, const or format"
+    },
+    {
+     "severity": "warning",
+     "check": "P3",
+     "detail": "https://admin-mcp.foxing.app/mcp conformance server-stateless: 4 check(s) do not apply here and were left out (sep-2575-server-rejects-undeclared-capability, sep-2575-missing-capability-http-400, sep-2575-http-server-no-independent-requests-on-stream, sep-2575-server-no-log-without-loglevel)"
+    },
+    {
+     "severity": "warning",
+     "check": "P7",
+     "detail": "https://admin-mcp.foxing.app/mcp conformance caching: 3 check(s) do not apply here and were left out (sep-2549-prompts-list-caching-hints, sep-2549-resources-list-caching-hints, sep-2549-resources-templates-list-caching-hints)"
+    }
+   ],
+   "seconds": 257
+  },
+  {
+   "area": 11,
+   "site": "germomics",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 2
+  },
+  {
+   "area": 11,
+   "site": "julieedwards-info",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  },
+  {
+   "area": 11,
+   "site": "prelum",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 0
+  },
+  {
+   "area": 11,
+   "site": "txasm",
+   "check": "site-runtime-ai-audit",
+   "ref": "v0.183.1",
+   "status": "pass",
+   "errors": 0,
+   "warnings": 0,
+   "unmeasured": 0,
+   "findings": [],
+   "seconds": 1
+  }
+ ],
+ "lines": {
+  "1": {
+   "prs": 37,
+   "added": 18963,
+   "removed": 960
+  },
+  "2": {
+   "prs": 76,
+   "added": 52000,
+   "removed": 8463
+  },
+  "3": {
+   "prs": 48,
+   "added": 67457,
+   "removed": 2968
+  },
+  "4": {
+   "prs": 35,
+   "added": 6996,
+   "removed": 3129
+  },
+  "5": {
+   "prs": 14,
+   "added": 38995,
+   "removed": 8146
+  },
+  "6": {
+   "prs": 32,
+   "added": 30007,
+   "removed": 3470
+  },
+  "7": {
+   "prs": 49,
+   "added": 6536,
+   "removed": 3234
+  },
+  "8": {
+   "prs": 55,
+   "added": 28958,
+   "removed": 2924
+  },
+  "9": {
+   "prs": 3,
+   "added": 7063,
+   "removed": 801
+  },
+  "10": {
+   "prs": 92,
+   "added": 33215,
+   "removed": 9539
+  },
+  "11": {
+   "prs": 75,
+   "added": 52017,
+   "removed": 7048
+  },
+  "12": {
+   "prs": 4,
+   "added": 3950,
+   "removed": 382
+  }
+ }
+}
