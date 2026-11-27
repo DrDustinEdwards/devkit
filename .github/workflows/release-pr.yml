@@ -77,6 +77,9 @@ jobs:
         run: |
           npm ci --ignore-scripts
           npx changeset version
+          # The package's `version` script, npm's lifecycle step of `npm version` (npm docs, scripts), updates any file that
+          # repeats the version, such as site-api's PACKAGE_VERSION in src/contract.ts.
+          npm run --if-present version
           version="$(jq -r .version package.json)"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           mkdir -p "$RUNNER_TEMP/release"
