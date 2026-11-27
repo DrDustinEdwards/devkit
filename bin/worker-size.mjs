@@ -7,6 +7,7 @@
 //
 //   npx devkit-worker-size                   check against .worker-size.json
 //   npx devkit-worker-size --config <file>   another budget file
+//   npx devkit-worker-size --write-budget    lower each budget to the next round number above the size now (never raise one)
 //
 // The budget file:
 //
@@ -16,7 +17,7 @@
 // wrangler itself (default wrangler@4.149.0).
 
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -29,6 +30,45 @@ function totalUpload(/** @type {string} */ text) {
   const kib = (/** @type {string} */ n, /** @type {string} */ unit) =>
     Number(n) * (unit === "MiB" ? 1024 : 1);
   return { raw: kib(m[1], m[2]), gzip: kib(m[3], m[4]) };
+}
+
+/**
+ * The budget a size gets when a trim lowers it: the next round number above the size (a multiple of 10 KiB from 1000 KiB,
+ * of 5 from 100, of 1 below), so a fix that adds a fraction of a KiB does not fail the next push. Never above `current`.
+ * @param {number} size KiB now
+ * @param {number} current the budget in the file
+ */
+export function roundedBudget(size, current) {
+  const step = size >= 1000 ? 10 : size >= 100 ? 5 : 1;
+  return Math.min(current, Math.ceil(size / step) * step);
+}
+
+/** Rewrites the two numbers in the budget file's own text, so its formatting stays. */
+function writeBudget(
+  /** @type {string} */ file,
+  /** @type {{ raw: number, gzip: number }} */ size,
+  /** @type {{ raw_kib: number, gzip_kib: number }} */ budget,
+) {
+  const next = {
+    raw_kib: roundedBudget(size.raw, budget.raw_kib),
+    gzip_kib: roundedBudget(size.gzip, budget.gzip_kib),
+  };
+  let text = readFileSync(file, "utf8");
+  for (const key of /** @type {const} */ (["raw_kib", "gzip_kib"]))
+    text = text.replace(new RegExp(`("${key}"\\s*:\\s*)[\\d.]+`), `$1${next[key]}`);
+  writeFileSync(file, text);
+  return next;
+}
+
+/** True when a trim left room: a rounded budget would be lower than the one in the file. */
+function lowerable(
+  /** @type {{ raw: number, gzip: number }} */ size,
+  /** @type {{ raw_kib: number, gzip_kib: number }} */ budget,
+) {
+  return (
+    roundedBudget(size.raw, budget.raw_kib) < budget.raw_kib ||
+    roundedBudget(size.gzip, budget.gzip_kib) < budget.gzip_kib
+  );
 }
 
 function main() {
@@ -55,6 +95,7 @@ function main() {
   if (typeof budget.raw_kib !== "number" || typeof budget.gzip_kib !== "number")
     fail("devkit-worker-size", `${file} needs numbers raw_kib and gzip_kib.`);
 
+  const limits = { raw_kib: budget.raw_kib, gzip_kib: budget.gzip_kib };
   const out = mkdtempSync(join(tmpdir(), "worker-size-"));
   const local = join(
     root,
@@ -93,6 +134,17 @@ function main() {
       `wrangler printed no "Total Upload" line:\n${text.trim().slice(-1500)}`,
     );
 
+  if (argv.includes("--write-budget")) {
+    if (size.raw > budget.raw_kib || size.gzip > budget.gzip_kib)
+      fail(
+        "devkit-worker-size",
+        "over the budget: cut the bundle first, a budget is never raised here.",
+      );
+    const next = writeBudget(file, size, limits);
+    console.log(`Budget now raw ${next.raw_kib} KiB, gzip ${next.gzip_kib} KiB.`);
+    return;
+  }
+
   const over = [];
   if (size.raw > budget.raw_kib)
     over.push(`raw ${size.raw.toFixed(2)} KiB is over the budget of ${budget.raw_kib} KiB`);
@@ -109,7 +161,9 @@ function main() {
     "",
     over.length
       ? `Over budget. Cut the bundle (a large dependency, or \`"minify": true\` in the wrangler config), or raise ${file.slice(root.length + 1)} in a reviewed change.`
-      : "Within budget.",
+      : lowerable(size, limits)
+        ? "Within budget. A trim left room: `npx devkit-worker-size --write-budget` lowers it to a round number."
+        : "Within budget.",
   ].join("\n");
   console.log(table);
   appendSummary(table);

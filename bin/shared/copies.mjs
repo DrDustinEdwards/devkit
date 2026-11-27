@@ -107,7 +107,7 @@ const HEADERS_COPY = {
 };
 
 /** The Claude Code hooks in devkit's claude/hooks, one copy for every repository. */
-export const CLAUDE_HOOKS = ["no-em-dash.sh", "scoped-git-add.sh"];
+export const CLAUDE_HOOKS = ["no-em-dash.sh", "scoped-git-add.sh", "pre-push.sh"];
 
 /** Libraries a shared package wraps, so a site that lists one is doing that package's job. */
 const LIBRARIES = [

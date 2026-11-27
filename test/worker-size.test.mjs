@@ -3,7 +3,7 @@
 
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -88,6 +88,46 @@ test(
         run({ raw_kib: 1700, gzip_kib: 350 }, {}, ["--config", "budget.json"]),
         /raise budget\.json in a reviewed change/,
       );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  },
+);
+
+test(
+  "--write-budget lowers each budget to a round number above the size, keeps the file's formatting, and never raises one",
+  { skip: process.platform === "win32" },
+  () => {
+    const dir = mkdtempSync(join(tmpdir(), "worker-size-write-"));
+    try {
+      mkdirSync(join(dir, "node_modules", ".bin"), { recursive: true });
+      const wrangler = join(dir, "node_modules", ".bin", "wrangler");
+      writeFileSync(wrangler, '#!/bin/sh\necho "Total Upload: 9681.96 KiB / gzip: 3413.82 KiB"\n');
+      chmodSync(wrangler, 0o755);
+      const file = join(dir, ".worker-size.json");
+      const run = () =>
+        spawnSync(process.execPath, [BIN, "--write-budget"], {
+          cwd: dir,
+          encoding: "utf8",
+          env: { ...process.env, GITHUB_STEP_SUMMARY: "" },
+        });
+
+      writeFileSync(file, '{ "raw_kib": 9700, "gzip_kib": 3500, "args": ["--x"] }\n');
+      assert.equal(run().status, 0);
+      assert.equal(
+        readFileSync(file, "utf8"),
+        '{ "raw_kib": 9690, "gzip_kib": 3420, "args": ["--x"] }\n',
+      );
+
+      // Already as low as the rounding gives, or lower than it: unchanged, never raised.
+      writeFileSync(file, '{ "raw_kib": 9685, "gzip_kib": 3414 }\n');
+      assert.equal(run().status, 0);
+      assert.equal(readFileSync(file, "utf8"), '{ "raw_kib": 9685, "gzip_kib": 3414 }\n');
+
+      // Over the budget: refused, file untouched.
+      writeFileSync(file, '{ "raw_kib": 9681, "gzip_kib": 3500 }\n');
+      assert.equal(run().status, 1);
+      assert.equal(readFileSync(file, "utf8"), '{ "raw_kib": 9681, "gzip_kib": 3500 }\n');
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
