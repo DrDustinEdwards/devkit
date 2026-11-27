@@ -1,0 +1,23 @@
+name: footer-self
+
+# devkit's own footer strip on an edited description, as examples/footer-caller.yml is a caller's, with this commit's copy
+# of the action.
+
+on:
+  pull_request:
+    types: [edited]
+
+permissions: {}
+
+jobs:
+  footer:
+    if: github.actor != 'renovate[bot]' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/footer
