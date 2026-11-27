@@ -252,7 +252,7 @@ export default defineConfig({ ...format });
 
 ## The shared Claude Code hooks
 
-`claude/hooks/` holds the network's Claude Code hooks, one copy for every repository, in the package: `no-em-dash.sh` blocks a Write, Edit or Bash call that carries an em or en dash, and `scoped-git-add.sh` blocks `git add -A`, `--all` and `.`. Both fail closed, and each file's header says why. A repository runs them from `node_modules` through its committed `.claude/settings.json`, never a copy of its own; `devkit-shared` fails a `.claude/hooks/` copy of either.
+`claude/hooks/` holds the network's Claude Code hooks, one copy for every repository, in the package: `no-em-dash.sh` blocks a Write, Edit or Bash call that carries an em or en dash, and `scoped-git-add.sh` blocks `git add -A`, `--all` and `.`. Both fail closed, and each file's header says why. `pre-push.sh` runs before a `git push` and blocks it on what CI would fail the push on: an AI trailer or Claude author on a commit, `npm run format:check`, `devkit-shared`, `devkit-no-bloat` and `devkit-worker-size`, each only where the repository has it (`bin/pre-push.mjs`, also `npx devkit-pre-push` by hand). It blocks only on a real finding: a check that cannot run (a missing tool such as codespell, a timeout, no `origin/HEAD`) is printed as skipped and passes, so it fails open where the other two fail closed, and CI stays the gate. A caller workflow's one-line `no-bloat-prepare` and `worker-size-prepare` run first; several Workers are left to CI. It reads only a Bash `git push` of commits, not a push through a GitHub tool. A repository runs them from `node_modules` through its committed `.claude/settings.json`, never a copy of its own; `devkit-shared` fails a `.claude/hooks/` copy of either.
 
 ```json
 {
@@ -275,13 +275,23 @@ export default defineConfig({ ...format });
             "command": "h=\"$CLAUDE_PROJECT_DIR/node_modules/@dustinedwards/devkit/claude/hooks/scoped-git-add.sh\"; [ -f \"$h\" ] && exec bash \"$h\"; grep -Eq '\"command\" *: *\"npm (ci|install)( --?[a-z-]+)*\"' && exit 0; echo \"devkit is not installed, so the shared Claude Code hooks cannot run and this call is BLOCKED: run npm ci first.\" >&2; exit 2"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "timeout": 600,
+            "command": "h=\"$CLAUDE_PROJECT_DIR/node_modules/@dustinedwards/devkit/claude/hooks/pre-push.sh\"; [ -f \"$h\" ] && exec bash \"$h\"; exit 0"
+          }
+        ]
       }
     ]
   }
 }
 ```
 
-Each command runs the hook from the installed devkit. Before `npm ci` it is not there, and the command fails closed too: it blocks every call except a Bash `npm ci` or `npm install`, so the session's first step installs and every later call is checked. A cloud session installs in its SessionStart hook where the repository has one. Not a plugin: a Claude Code cloud session loads neither the plugins a repository's `.claude/settings.json` enables nor the ones installed on a machine (code.claude.com/docs/en/plugins/install, "Cloud session"), so the hooks would not run where most of the work happens. A hook only one repository needs (dustinedwards.info's deploy and content guards) stays in that repository.
+Each command runs the hook from the installed devkit. Before `npm ci` it is not there, and the first two fail closed too (the pre-push one passes, since the others already block until devkit is installed): it blocks every call except a Bash `npm ci` or `npm install`, so the session's first step installs and every later call is checked. A cloud session installs in its SessionStart hook where the repository has one. Not a plugin: a Claude Code cloud session loads neither the plugins a repository's `.claude/settings.json` enables nor the ones installed on a machine (code.claude.com/docs/en/plugins/install, "Cloud session"), so the hooks would not run where most of the work happens. A hook only one repository needs (dustinedwards.info's deploy and content guards) stays in that repository.
 
 ## The Node helpers
 
