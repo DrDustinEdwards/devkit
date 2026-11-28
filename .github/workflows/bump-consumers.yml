@@ -116,7 +116,8 @@ jobs:
                 ),
               );
 
-            const repos = other
+            // A dry run reads as the public does: release-pr.yml's own token cannot list a user's repositories.
+            const repos = other || dryRun
               ? await github.paginate(github.rest.repos.listForUser, { username: owner, type: "owner", per_page: 100 })
               : await github.paginate(github.rest.repos.listForAuthenticatedUser, { affiliation: "owner", per_page: 100 });
             const rows = [];
