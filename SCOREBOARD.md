@@ -1,6 +1,6 @@
 # Shared-code completeness
 
-Newest run 2026-11-27 17:22 UTC. Filled only from the live checks and the verifiers' verdicts.
+Newest run 2026-11-28 16:10 UTC. Filled only from the live checks and the verifiers' verdicts.
 
 **Not finished.** Finished means every cell complete and clean for 7 daily runs.
 
@@ -17,7 +17,7 @@ Newest run 2026-11-27 17:22 UTC. Filled only from the live checks and the verifi
 | 7. Speed and caching | 🟡 | ❌ | ❌ | ❌ | 🟡 | 🟡 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | · | · | · | · | · | · | · | +6536 | −3234 |
 | 8. Running and recovery | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | · | · | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | +28958 | −2924 |
 | 9. Accessibility and components | 🟡 | ✅ | 🟡 | ✅ | ✅ | 🟡 | ✅ | 🟡 | ✅ | 🟡 | 🟡 | ✅ | 🟡 | · | · | · | · | · | · | · | +7063 | −801 |
-| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ✅ | ✅ | +33215 | −9539 |
+| 10. Charts | ❌ | ✅ | ✅ | · | · | · | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | · | · | · | · | · | ❔ | ✅ | +33215 | −9539 |
 | 11. AI and MCP | 🟡 | 🟡 | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | · | · | +52017 | −7048 |
 | 12. Checks and tooling | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | 🟡 | +3950 | −382 |
 
@@ -134,18 +134,18 @@ Builder: Complete shared speed and caching. Verifier: Verify speed and caching.
   - B7: https://enarratio.dustinedwards.info/capsomer no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://enarratio.dustinedwards.info/shadcn no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://enarratio.dustinedwards.info/radix no ETag or Last-Modified, so a repeat visit downloads the page again
-- ❌ Capsomer: site-runtime-speed-static: 40 errors
+- ❌ Capsomer: site-runtime-speed-static: 41 errors
   - B7: https://capsomer.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsomer.dustinedwards.info/themes/color/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsomer.dustinedwards.info/components/not-found-report/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsomer.dustinedwards.info/primitives/data/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsomer.dustinedwards.info/icons/ no ETag or Last-Modified, so a repeat visit downloads the page again
-- ❌ Prelum specimen: site-runtime-speed-static: 7 errors
+- ❌ Prelum specimen: site-runtime-speed-static: 6 errors
   - B7: https://prelum.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://prelum.dustinedwards.info/accessibility no ETag or Last-Modified, so a repeat visit downloads the page again
   - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-css-rules: Est savings of 24 KiB
-  - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-javascript: Est savings of 25 KiB
-  - A3: https://prelum.dustinedwards.info/ desktop Lighthouse performance 96 (bar 100)
+  - D4: https://prelum.dustinedwards.info/ mobile Lighthouse unused-javascript: Est savings of 24 KiB
+  - D4: https://prelum.dustinedwards.info/ desktop Lighthouse unused-css-rules: Est savings of 23 KiB
 - ❌ Capsid explorer: site-runtime-speed: 42 errors
   - B7: https://capsid.dustinedwards.info/ no ETag or Last-Modified, so a repeat visit downloads the page again
   - B7: https://capsid.dustinedwards.info/systems/ no ETag or Last-Modified, so a repeat visit downloads the page again
@@ -178,6 +178,7 @@ Builder: Complete accessibility and Capsomer components. Verifier: Fresh verifie
 Builder: Complete shared charts. Verifier: Verify backups, repo settings and remaining charts.
 
 - ❌ Package: no verifier has checked the package
+- ❔ Capsid Portal: chart-audit could not measure: G: https://portal.dustinedwards.info/demos/queue could not measure: the browser could not open it: answered 404
 
 ### 11. AI and MCP
 
