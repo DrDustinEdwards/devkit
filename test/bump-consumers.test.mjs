@@ -224,6 +224,22 @@ test("a dry run ticks nothing", async () => {
   assert.ok(log.info.some((line) => line.includes("would tick #7")));
 });
 
+test("a dry run for this repository's own package lists the public consumers, since release-pr.yml's token cannot list a user's repositories", async () => {
+  const { listed } = await run(
+    {
+      devkit: { files: { "package.json": { name: "devkit" } } },
+      site: {
+        files: {
+          "package.json": { devDependencies: { devkit: "github:DrDustinEdwards/devkit#v0.1.0" } },
+        },
+        issues: [dashboard()],
+      },
+    },
+    { self: "devkit", dryRun: true },
+  );
+  assert.deepEqual(listed, ["public"]);
+});
+
 test("a consumer without Renovate fails the run naming it, and archived repositories and node_modules are skipped", async () => {
   const { updates, log } = await run({
     capsomer: { files: { "package.json": { name: "capsomer" } } },
