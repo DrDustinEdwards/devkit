@@ -1,7 +1,7 @@
 name: review
 
 # The caller a repository keeps: devkit's review.yml asks Capsid to review each pull request and writes the verdict to a
-# "review verdict" check (advisory: never failed). Replace the sha with the commit of devkit that holds the reviewed
+# "review verdict" check (failed, with the job, on a BLOCK verdict). Replace the sha with the commit of devkit that holds the reviewed
 # review.yml, and keep it a full sha: scripts/check-callers.mjs fails on anything else. No secret is passed: Capsid is
 # reached with the job's OIDC token.
 #

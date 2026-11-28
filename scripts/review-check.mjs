@@ -3,9 +3,11 @@
 // verdict where people and sessions read it: a check run named "review verdict" on the head commit, and the job summary.
 // Never a comment: comments notify.
 //
-// ADVISORY. During the trial (from 2026-11-03, four weeks) the check's conclusion is always neutral, or skipped when
-// Capsid skipped the pull request, and this script always exits 0: a reviewer that cannot run, or that Capsid refuses,
-// says so in the check and blocks nothing.
+// A REQUIRED CHECK (Dustin, 2026-11-28). A BLOCK verdict (merging would do harm that is hard to undo) fails the check,
+// and this script exits 1, so the job's own check, the one a ruleset requires, fails too and GitHub's auto-merge waits.
+// APPROVE and CHANGES are neutral, a skipped pull request is skipped. A reviewer that cannot run, or that Capsid refuses,
+// says so in a neutral check and blocks nothing. The job's check is required rather than "review verdict" because GitHub
+// may file a check run made with GITHUB_TOKEN in another workflow's check suite, where a required check does not see it.
 //
 // Capsid is reached with this job's GitHub Actions OIDC token (audience capsid-review), so no key is stored anywhere.
 // Capsid reads the pull request itself through its GitHub App; this sends nothing but the token.
@@ -24,11 +26,9 @@ const CAPSID_TIMEOUT_MS = 8 * 60_000;
 /**
  * The check run's conclusion, title and summary for Capsid's answer (or the reason there is none).
  * @param {any} result Capsid's JSON answer, or { status: "error", error } when it could not be read
- * @returns {{ conclusion: "neutral" | "skipped", title: string, summary: string }}
+ * @returns {{ conclusion: "failure" | "neutral" | "skipped", title: string, summary: string }}
  */
-function checkOutput(result) {
-  const advisory =
-    "\n\n_Advisory: this check never fails during the four-week trial. Read it before asking to merge._";
+export function checkOutput(result) {
   if (result?.status === "skipped") {
     return {
       conclusion: "skipped",
@@ -50,12 +50,16 @@ function checkOutput(result) {
       lines.length ? lines.join("\n") : "No findings.",
       `Model: \`${result.model}\`, head \`${String(result.head_sha).slice(0, 7)}\`.`,
     ];
-    return { conclusion: "neutral", title, summary: body.join("\n\n") + advisory };
+    return {
+      conclusion: result.verdict === "BLOCK" ? "failure" : "neutral",
+      title,
+      summary: body.join("\n\n"),
+    };
   }
   return {
     conclusion: "neutral",
     title: "Reviewer could not run",
-    summary: `The reviewer could not run: ${result?.error ?? "no answer"}.${advisory}`,
+    summary: `The reviewer could not run: ${result?.error ?? "no answer"}. This blocks nothing.`,
   };
 }
 
@@ -114,17 +118,23 @@ async function writeCheck(output) {
     );
 }
 
-const output = checkOutput(await askCapsid());
-console.log(`${output.title}\n\n${output.summary}`);
-if (process.env.GITHUB_STEP_SUMMARY)
-  appendFileSync(
-    process.env.GITHUB_STEP_SUMMARY,
-    `## Review verdict: ${output.title}\n\n${output.summary}\n`,
-  );
-try {
-  await writeCheck(output);
-} catch (err) {
-  console.log(
-    `::warning::could not write the ${CHECK_NAME} check: ${err instanceof Error ? err.message : err}`,
-  );
+if (import.meta.main) {
+  const output = checkOutput(await askCapsid());
+  console.log(`${output.title}\n\n${output.summary}`);
+  if (process.env.GITHUB_STEP_SUMMARY)
+    appendFileSync(
+      process.env.GITHUB_STEP_SUMMARY,
+      `## Review verdict: ${output.title}\n\n${output.summary}\n`,
+    );
+  try {
+    await writeCheck(output);
+  } catch (err) {
+    console.log(
+      `::warning::could not write the ${CHECK_NAME} check: ${err instanceof Error ? err.message : err}`,
+    );
+  }
+  if (output.conclusion === "failure") {
+    console.log("::error::The reviewer's verdict is BLOCK: fix the findings and push.");
+    process.exitCode = 1;
+  }
 }

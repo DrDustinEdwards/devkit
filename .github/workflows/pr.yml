@@ -15,8 +15,8 @@ name: pr
 #      `id-token: write` and `checks: write`: the first job installs and builds the caller's code (dependency lifecycle
 #      scripts, a prepare command), and a step that runs such code can read the OIDC request variables of any job that
 #      holds `id-token: write` and mint a token. GitHub's OIDC hardening guide and zizmor's excessive-permissions audit
-#      both say to grant it to the one job that needs it. The reviewer job runs only devkit's own pinned file. Advisory:
-#      it never fails.
+#      both say to grant it to the one job that needs it. The reviewer job runs only devkit's own pinned file. The job
+#      fails on a BLOCK verdict and is a required check ("checks / Reviewer"), so auto-merge waits for it.
 #
 # EVERY CHECK RUNS AND REPORTS even when another failed: each step runs unless the run was canceled or what it needs
 # (a checkout, the install) failed, keeps its own annotations and its own section of the job summary, and the last step
@@ -139,7 +139,7 @@ on:
         type: string
         default: medium
       review:
-        description: The automatic reviewer (advisory).
+        description: The automatic reviewer (its check fails on a BLOCK verdict).
         required: false
         type: boolean
         default: true
@@ -346,7 +346,9 @@ jobs:
           echo "Every check that ran passed."
 
   # The only job with an OIDC token. It checks out devkit at the caller's pin and runs one file; no caller code runs here.
-  # Same-repository pull requests only (a fork's run gets no OIDC token), never a draft or Renovate's.
+  # Same-repository pull requests only (a fork's run gets no OIDC token), never a draft or Renovate's. The job fails on a
+  # BLOCK verdict, and its own check ("checks / Reviewer" in the callers) is the required one: GitHub files a job's check in
+  # the right check suite, which a check run made with GITHUB_TOKEN is not sure to be, and a skipped job counts as passed.
   review:
     name: Reviewer
     if: ${{ inputs.review && github.event_name == 'pull_request' && github.event.action != 'edited' && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'renovate[bot]' }}
