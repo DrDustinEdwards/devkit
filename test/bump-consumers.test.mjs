@@ -229,7 +229,9 @@ test("a dry run for this repository's own package lists the public consumers, si
     {
       devkit: { files: { "package.json": { name: "devkit" } } },
       site: {
-        files: { "package.json": { devDependencies: { devkit: "github:DrDustinEdwards/devkit#v0.1.0" } } },
+        files: {
+          "package.json": { devDependencies: { devkit: "github:DrDustinEdwards/devkit#v0.1.0" } },
+        },
         issues: [dashboard()],
       },
     },
