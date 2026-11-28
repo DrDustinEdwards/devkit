@@ -55,7 +55,13 @@ jobs:
                 throw error;
               }
               if (!Array.isArray(files) || !files.some((f) => f.name === "config.json")) continue;
-              const notes = files.filter((f) => f.name.endsWith(".md") && f.name !== "README.md");
+              // An empty changeset ("---" twice) names no package, so it bumps no version and releases nothing.
+              const notes = [];
+              for (const f of files.filter((f) => f.name.endsWith(".md") && f.name !== "README.md")) {
+                const { data } = await github.rest.repos.getContent({ owner, repo: repo.name, path: f.path });
+                const front = Buffer.from(data.content, "base64").toString("utf8").replace(/\r\n/g, "\n").match(/^---\n([\s\S]*?)\n?---/);
+                if (front && front[1].trim() !== "") notes.push(f);
+              }
               core.info(`${repo.name}: ${notes.length} changeset(s) waiting`);
               if (notes.length > 0) waiting.push(repo.name);
             }
