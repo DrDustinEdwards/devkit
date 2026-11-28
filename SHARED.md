@@ -88,7 +88,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./render/diagram-draw`: `drawDiagrams`, `pruneDiagrams`, `auditDiagramSvg`, `DIAGRAM_ROLE_NAMES`
 - bins: `prelum-audit`, `prelum-chart-audit`, `prelum-content`, `prelum-icons`, `prelum-indexnow`, `prelum-lastmod`, `prelum-markdown`
 
-## site-runtime 0.183.1 (DrDustinEdwards/site-runtime)
+## site-runtime 0.183.2 (DrDustinEdwards/site-runtime)
 
 - `.`: `LOGOUT_HEADERS`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `UPLOAD_HEADERS`, `applyHeaderSet`, `buildSecurityHeaders`, `hostCookie`, `CLOUDFLARE_WEB_ANALYTICS`, `cloudflareBeaconAttributes`, `CSP_REPORT_GROUP`, `CSP_REPORT_PATH`, `broadSource`, `buildContentSecurityPolicy`, `buildPolicy`, `generateNonce`, `integrityHash`, `integrityPolicy`, `reportingEndpoints`, `scriptHash`, `MAX_REPORT_BYTES`, `MAX_REPORTS`, `receiveCspReport`, `reportBodies`, `summarizeReport`, `trimReportUrl`, `checkSecurityHeaders`, `checkSecurityTxt`, `failures`, `parsePolicy`, `OWASP_RECOMMENDED`, `OWASP_REMOVE`, `OWASP_SOURCE`
 - `./headers`: `permissionsAllowingSelf`, `corpFor`, `entryOverrides`, `buildSecurityHeaders`, `hostCookie`, `cookiePairs`, `readCookie`, `applyHeaderSet`, `headersFile`, `OWASP_SKIPPED`, `STANDARD_SECURITY_HEADERS`, `LOGOUT_HEADERS`, `PASSKEY_OVERRIDES`, `UPLOAD_HEADERS`
@@ -161,7 +161,7 @@ Each job has one owner. A site's MCP server that serves a tool for a job it does
 - `./origin`: `originVerdict`, `originRefusal`, `refuseCrossSite`, `isolationVerdict`, `ORIGIN_REFUSAL`
 - `./url`: `isHttpUrl`, `redirectStatus`, `isSameOriginPath`, `slashRedirect`, `canonicalRedirect`, `pathListed`, `goneResponse`, `renameRedirect`
 - `./log`: `scrubText`, `scrubUrl`, `scrubFields`, `isDatabaseDown`, `errorMessage`, `logEvent`, `reportErrorLines`, `tokenPattern`, `serverErrorHandler`, `databaseDownStatus`, `requestFields`, `withRequestLog`, `routeNamer`, `EMAIL_PATTERN`, `STRIPE_KEY_PATTERN`, `CREDENTIAL_PATTERN`, `DROPPED_FIELD`, `PREVIEW_TOKEN`, `DATABASE_DOWN_RETRY_AFTER`, `handleServerError`, `OWASP_EVENTS`
-- `./sentry`: `sentryOptions`, `withSiteSentry`, `withSentryRequest`
+- `./sentry`: `repeatedReports`, `sentryOptions`, `withSiteSentry`, `withSentryRequest`, `REPORT_REPEAT_MS`
 - `./redact`: `redact`, `redactText`
 - `./not-found`: `notFoundKey`, `referrerHost`, `recordNotFound`, `countNotFound`, `pruneNotFound`, `pruneNotFoundJob`, `notFoundReport`, `redirectEntry`, `tableRedirect`, `d1Redirects`, `addRedirect`, `removeRedirect`, `listRedirects`, `NOT_FOUND_PATH_MAX`, `NOT_FOUND_MAX_PENDING`, `NOT_FOUND_PROBE`, `NOT_FOUND_SQL`, `NOT_FOUND_UPGRADE_SQL`, `NOT_FOUND_DAILY_ROWS`, `NOT_FOUND_OVERFLOW`, `REDIRECTS_SQL`
 - `./cron`: `runJobs`, `runJobNow`, `runJobTool`, `backupStatusTool`, `operatorJobTools`, `describeRuns`, `runsSucceeded`, `carrelSchedulesJob`, `backupJob`, `CRON_ERROR_MAX`, `CRON_TIMEOUT_MS`, `CRON_SQL`, `CRON_LOG_SQL`, `CRON_SKIPPED`, `CRON_RESULT_MAX`, `DAILY_MINUTES`, `CRON_EVENT_WINDOW_MS`, `cronCheck`, `cronFindings`, `cronStates`, `readCronRuns`
